@@ -1,0 +1,156 @@
+package com.tastesync.db.pool;
+
+import org.apache.log4j.Logger;
+
+import java.io.PrintWriter;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import javax.servlet.ServletException;
+
+import javax.sql.DataSource;
+
+
+public class TSDataSource implements DataSource {
+    /**
+     * Logger for this class
+     */
+    private static final Logger logger = Logger.getLogger(TSDataSource.class);
+    private PrintWriter logWriter;
+    private int loginTimeout;
+    DataSource poolDS; // Database connection pool
+
+    public TSDataSource() {
+        super();
+    }
+
+    @Override
+    public PrintWriter getLogWriter() throws SQLException {
+        return logWriter;
+    }
+
+    @Override
+    public void setLogWriter(PrintWriter logWriter) throws SQLException {
+        this.logWriter = logWriter;
+    }
+
+    @Override
+    public void setLoginTimeout(int loginTimeout) throws SQLException {
+        this.loginTimeout = loginTimeout;
+    }
+
+    @Override
+    public int getLoginTimeout() throws SQLException {
+        return loginTimeout;
+    }
+
+    @Override
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public Connection getConnection() throws SQLException {
+        Connection conn = null;
+
+        try {
+            conn = poolDS.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("Connection unavailable: " + e);
+
+            logger.warn("Connection unavailable, close the connection " +
+                "to be able to get another connection ");
+
+            try {
+                if (!conn.isValid(loginTimeout)) {
+                    logger.warn("Connection is no longer valid: " +
+                        e.getMessage());
+                    conn.close();
+                    conn = null;
+                    // retrieving additional connections becomes available
+                    logger.warn("Retrying to obtain a new connection");
+                    conn = poolDS.getConnection();
+                }
+            } catch (SQLException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+            // throw new SQLException(e);
+        }
+
+        return conn;
+    }
+
+    @Override
+    public Connection getConnection(String username, String password)
+        throws SQLException {
+        Connection conn = null;
+
+        try {
+            conn = poolDS.getConnection(username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("Connection unavailable: " + e);
+
+            logger.warn("Connection unavailable, close the connection " +
+                "to be able to get another connection ");
+
+            try {
+                if (!conn.isValid(loginTimeout)) {
+                    logger.warn("Connection is no longer valid: " +
+                        e.getMessage());
+                    conn.close();
+                    conn = null;
+                    // retrieving additional connections becomes available
+                    logger.warn("Retrying to obtain a new connection");
+                    conn = poolDS.getConnection(username, password);
+                }
+            } catch (SQLException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+            // throw new SQLException(e);
+        }
+
+        return conn;
+    }
+
+    public void init() {
+        try {
+            // Create a JNDI Initial context to be able to lookup the DataSource
+            InitialContext ctx = new InitialContext();
+
+            // Lookup the DataSource, which will be backed by a pool
+            // that the application server provides.
+            //pool = (DataSource) ctx.lookup("java:comp/env/jdbc/TastesyncDB");
+            poolDS = (TSDataSource) ctx.lookup("java:comp/env/jdbc/TastesyncDB");
+
+            if (poolDS == null) {
+                throw new IllegalArgumentException(
+                    "Unknown DataSource 'jdbc/TastesyncDB'");
+            }
+
+            if (logger.isDebugEnabled()) {
+                logger.debug(
+                    "init(ServletConfig) - Initialized connection pool with: " +
+                    poolDS.getClass());
+            }
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
