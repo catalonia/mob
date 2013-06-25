@@ -69,7 +69,7 @@
   </ul>
   <a name="C Client Library"></a>
   <h2>C Client Library</h2>
-  <p class="note">Created Jun 10, 2013 6:00:59 PM</p>
+  <p class="note">Created Jun 25, 2013 5:01:15 PM</p>
   <p><h1>
   Introduction
 </h1>
@@ -86,23 +86,6 @@
   <tt>&lt;string.h&gt;</tt>, and <tt>&lt;stdlib.h&gt;</tt> C standard libraries.
 </p>
 
-<h1>
-  REST XML Example
-</h1>
-
-<code class="prettyprint">
-#include &lt;enunciate.c&gt;
-//...
-
-xmlTextReaderPtr reader = ...; //set up the reader to the url.
-enunciate_ns0_TSUserObj *response_element = ...;
-response_element = xml_read_enunciate_ns0_TSUserObj(reader);
-
-//handle the response as needed...
-
-//free the enunciate_ns0_TSUserObj
-free_enunciate_ns0_TSUserObj(response_element);
-</code>
 </p>
   <h3>Files</h3>
   <table>
@@ -124,39 +107,11 @@ free_enunciate_ns0_TSUserObj(response_element);
   </table>
   <a name=".NET Client Library"></a>
   <h2>.NET Client Library</h2>
-  <p class="note">Created Jun 10, 2013 6:01:05 PM</p>
+  <p class="note">Created Jun 25, 2013 5:01:19 PM</p>
   <p><h1>
   Introduction
 </h1>
 
-
-<p>
-  The .NET client-side library defines the classes that can be (de)serialized to/from XML.
-  This is useful for accessing the REST endpoints that are published by this application.
-</p>
-
-<h1>
-  REST Example
-</h1>
-
-<code class="prettyprint">
-//read a resource from a REST url
-Uri uri = new Uri(...);
-
-XmlSerializer s = new XmlSerializer(
-  typeof( TSUserObj )
-);
-
-  //Create the request object
-WebRequest req = WebRequest.Create(uri);
-WebResponse resp = req.GetResponse();
-Stream stream = resp.GetResponseStream();
-TextReader r = new StreamReader( stream );
-
-TSUserObj order = (TSUserObj) s.Deserialize( r );
-
-//handle the result as needed...
-</code>
 <p>
   This bundle contains C# source code.
 </p></p>
@@ -173,7 +128,7 @@ TSUserObj order = (TSUserObj) s.Deserialize( r );
   </table>
   <a name="Java Client Library"></a>
   <h2>Java Client Library</h2>
-  <p class="note">Created Jun 10, 2013 6:01:05 PM</p>
+  <p class="note">Created Jun 25, 2013 5:01:19 PM</p>
   <p><h1>
   Introduction
 </h1>
@@ -182,40 +137,6 @@ TSUserObj order = (TSUserObj) s.Deserialize( r );
   The Java client-side library is used to access the Web service API for this application.
 </p>
 
-<p>
-  The JAX-WS client-side library is used to provide the set of Java objects that can be serialized
-  to/from XML using <a href="https://jaxb.dev.java.net/">JAXB</a>.  This is useful for accessing the
-  REST endpoints that are published by this application.
-</p>
-
-<h1>
-  REST Example (Raw JAXB)
-</h1>
-
-<code class="prettyprint">
-java.net.URL url = new java.net.URL(baseURL + "/user/login");
-JAXBContext context = JAXBContext.newInstance( TSUserObj.class );
-java.net.URLConnection connection = url.openConnection();
-connection.connect();
-
-Unmarshaller unmarshaller = context.createUnmarshaller();
-TSUserObj result = (TSUserObj) unmarshaller.unmarshal( connection.getInputStream() );
-//handle the result as needed...
-</code>
-
-<h1>
-  REST Example (Jersey client)
-</h1>
-
-<code class="prettyprint">
-com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create();
-
-TSUserObj result = client.resource(baseUrl + "/user/login")
-  
-  .post(TSUserObj.class);
-
-//handle the result as needed...
-</code>
 </p>
   <h3>Files</h3>
   <table>
@@ -226,7 +147,7 @@ TSUserObj result = client.resource(baseUrl + "/user/login")
     </tr>
     <tr>
       <td><a href="enunciate-client.jar">enunciate-client.jar</a></td>
-      <td>16.54K</td>
+      <td>16.57K</td>
       <td>The binaries for the Java client library.</td>
     </tr>
     <tr>
@@ -237,7 +158,7 @@ TSUserObj result = client.resource(baseUrl + "/user/login")
   </table>
   <a name="Java JSON Client Library"></a>
   <h2>Java JSON Client Library</h2>
-  <p class="note">Created Jun 10, 2013 6:01:05 PM</p>
+  <p class="note">Created Jun 25, 2013 5:01:19 PM</p>
   <p><h1>
   Introduction
 </h1>
@@ -247,20 +168,6 @@ TSUserObj result = client.resource(baseUrl + "/user/login")
   to/from JSON using <a href="http://jackson.codehaus.org/">Jackson</a>.  This is useful for accessing the
   JSON REST endpoints that are published by this application.
 </p>
-
-<h1>
-  REST Example (Raw Jackson)
-</h1>
-
-<code class="prettyprint">
-java.net.URL url = new java.net.URL(baseURL + "/user/login");
-ObjectMapper mapper = new ObjectMapper();
-java.net.URLConnection connection = url.openConnection();
-connection.connect();
-
-TSUserObj result = (TSUserObj) mapper.readValue( connection.getInputStream(), TSUserObj.class );
-//handle the result as needed...
-</code>
 
 </p>
   <h3>Files</h3>
@@ -283,7 +190,7 @@ TSUserObj result = (TSUserObj) mapper.readValue( connection.getInputStream(), TS
   </table>
   <a name="Objective C Client Library"></a>
   <h2>Objective C Client Library</h2>
-  <p class="note">Created Jun 10, 2013 6:01:00 PM</p>
+  <p class="note">Created Jun 25, 2013 5:01:16 PM</p>
   <p><h1>
   Introduction
 </h1>
@@ -299,31 +206,6 @@ TSUserObj result = (TSUserObj) mapper.readValue( connection.getInputStream(), TS
   and the <a href="http://xmlsoft.org/html/libxml-xmlwriter.html">XML Writer API</a> as well as the base OpenStep foundation classes.
 </p>
 
-<h1>
-  REST XML Example
-</h1>
-
-<code class="prettyprint">
-#import &lt;enunciate.h&gt;
-//...
-
-ENUNCIATENS0TSUserObj *responseElement;
-NSData *responseData; //data holding the XML from the response.
-NSURL *baseURL = ...; //the base url including the host and subpath.
-NSURL *url = [NSURL URLWithString: @"/user/login" relativeToURL: baseURL];
-NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-NSURLResponse *response = nil;
-NSError *error = NULL;
-[request setHTTPMethod: @"POST"];
-
-//this example uses a synchronous request,
-//but you'll probably want to use an asynchronous call
-responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-ENUNCIATENS0TSUserObj *responseElement = [ENUNCIATENS0TSUserObj readFromXML: responseData];
-[responseElement retain];
-
-//handle the response as needed...
-</code>
 </p>
   <h3>Files</h3>
   <table>

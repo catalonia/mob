@@ -2,9 +2,7 @@ package com.tastesync.db.dao;
 
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.UserQueries;
-
 import com.tastesync.exception.TasteSyncException;
-
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSNotificationSettingsObj;
 import com.tastesync.model.objects.TSPrivacySettingsObj;
@@ -12,9 +10,7 @@ import com.tastesync.model.objects.TSSocialSettingsObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
-
 import com.tastesync.util.CommonFunctionsUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,12 +19,53 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
-    public TSUserObj login(String email, String password) {
-        // TODO Auto-generated method stub
-        return null;
+    public TSUserObj login(String email, String password) throws TasteSyncException {
+    	TSUserObj tsUserObj = null;
+        
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+        
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+        
+        try{
+        	connection = tsDataSource.getConnection();
+        	tsDataSource.begin();
+        	System.out.println("UserQueries.USER_SELECT_LOGIN=" + UserQueries.USER_SELECT_LOGIN);
+        	statement = connection.prepareStatement(UserQueries.USER_SELECT_LOGIN);
+        	statement.setString(1, email);
+        	statement.setString(2, password);
+        	resultset = statement.executeQuery();
+        	if(resultset.next())
+        	{
+        		tsUserObj = new TSUserObj();
+        		mapResultsetRowToTSUserVO(tsUserObj, resultset);
+        	}
+        	if(tsUserObj != null)
+        	{
+        		statement = connection.prepareStatement(UserQueries.USER_UPDATE_ONLINE);
+            	statement.setString(1, "Y");
+            	statement.setString(2, tsUserObj.getUserId());
+            	statement.executeUpdate();
+            	
+            	String dateNow = CommonFunctionsUtil.getCurrentDatetime();
+            	statement = connection.prepareStatement(UserQueries.USER_UPDATE_LOGIN);
+            	statement.setString(1, dateNow);
+            	statement.setString(2, tsUserObj.getUserId());
+            	statement.executeUpdate();
+        	}
+       
+        }catch(SQLException e)
+        {
+        	e.printStackTrace();
+            throw new TasteSyncException(e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+        return tsUserObj;
     }
 
     @Override

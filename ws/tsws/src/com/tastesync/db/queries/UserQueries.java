@@ -54,6 +54,19 @@ public interface UserQueries extends TSDBCommonQueries {
         "?," + // "users.CURRENT_STATUS"
         "?" + // "users.USER_FB_ID",
         ")";
+    public static String USER_SELECT_LOGIN = "SELECT " +
+            " users.USER_ID," + " users.TS_USER_ID," + " users.TS_USER_EMAIL," +
+            " users.TS_USER_PW," + " users.TS_FIRST_NAME," +
+            " users.TS_LAST_NAME," + " users.MAX_INVITES," +
+            " users.USER_CREATED_INITIAL_DATETIME," + " users.USER_POINTS," +
+            " users.TWITTER_USR_URL," + " users.USER_DISABLED_FLAG," +
+            " users.USER_ACTIVATION_KEY," + " users.USER_GENDER," +
+            " users.USER_CITY_ID," + " users.USER_STATE," + " users.IS_ONLINE," +
+            " users.USER_COUNTRY," + " users.ABOUT," + " users.CURRENT_STATUS," +
+            " users.USER_FB_ID" + " FROM " + " users " + 
+            " WHERE TS_USER_EMAIL = ? " + "AND TS_USER_PW = ?";
+    public static String USER_UPDATE_ONLINE = "UPDATE users " + "SET IS_ONLINE = ? " + "WHERE USER_ID = ?";
+    public static String USER_UPDATE_LOGIN = "UPDATE users_log " + "SET LOGIN_DATETIME = ? " + "WHERE USER_ID = ?";
     public static String USER_SOCIAL_SETTINGS_SELECT_SQL = "" +
         "SELECT `user_usnc`.`usnc_yn`" + "FROM   user_usnc " +
         "WHERE  `user_usnc`.`user_id` = ? " + "       AND -- userId " +

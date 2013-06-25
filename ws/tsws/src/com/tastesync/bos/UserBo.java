@@ -11,10 +11,10 @@ import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 
 import java.util.List;
-
+import javax.ws.rs.core.Response;
 
 public interface UserBo {
-    TSUserObj login(String email, String password);
+	TSUserObj login(String email, String password) throws TasteSyncException;
 
     void logout(String userId) throws TasteSyncException;
 

@@ -15,12 +15,14 @@ import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 
 public class UserBoImpl implements UserBo {
     private UserDao userDao = new UserDaoImpl();
 
     @Override
-    public TSUserObj login(String email, String password) {
+    public TSUserObj login(String email, String password) throws TasteSyncException{
         return userDao.login(email, password);
     }
 

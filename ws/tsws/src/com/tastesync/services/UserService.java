@@ -56,26 +56,32 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public TSUserObj login(@FormParam("email")
+    public Response login(@FormParam("email")
     String email, @FormParam("password")
     String password) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("login- start");
+    	if (logger.isDebugEnabled()) {
+            logger.debug("login- start+-+-+-");
         }
-
-        System.out.println("in UserService: login is called! email=" + email +
-            " password=" + password);
-
-        TSUserObj tsUserObj = new TSUserObj();
-
-        tsUserObj.setUserId("DummyTestUser0");
-        tsUserObj.setIsOnline("Y");
-
-        if (logger.isDebugEnabled()) {
-            logger.debug("login- end");
-        }
-
-        return tsUserObj;
+        TSUserObj tsUserObj = null;
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        
+		try {
+			tsUserObj = userBo.login(email, password);
+			return Response.status(status).entity(tsUserObj).build();
+		} catch (TasteSyncException e) {
+			e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            return Response.status(status).entity(tsErrorObj).build();
+		}finally {
+			if (tsUserObj == null) {
+				status = TSResponseStatusCode.ERROR.getValue();
+				TSErrorObj tsErrorObj = new TSErrorObj();
+				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+				return Response.status(status).entity(tsErrorObj).build();
+			}
+		}
     }
 
     @POST
