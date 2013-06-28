@@ -68,6 +68,7 @@ public interface UserQueries extends TSDBCommonQueries {
     public static String USER_ONLINE_UPDATE_SQL = "UPDATE users " + "SET IS_ONLINE = ? " + "WHERE USER_ID = ?";
     public static String USER_LOGIN_UPDATE_SQL = "UPDATE users_log " + "SET LOGIN_DATETIME = ? " + 
     	"WHERE USER_ID = ?";
+    public static String USER_STATUS_SELECT_SQL = "SELECT * FROM users WHERE USER_ID = ? AND CURRENT_STATUS = ?";
     public static String FACEBOOK_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID = ?";
     public static String FACEBOOK_INSERT_SQL = "INSERT INTO facebook_user_data " + "(User_FB_ID, " + "NAME, " + "FIRST_NAME, " + "MIDDLE_NAME, " +
 	"LAST_NAME, " + "GENDER, " + "LOCALE, " + "LINK, " + "USERNAME, " + "AGE_RANGE, " + "BIRTHDAY, " +
@@ -142,6 +143,8 @@ public interface UserQueries extends TSDBCommonQueries {
         "             `users_log`.`users_created_latest_datetime`) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
         "              ?, " + "              ? )";
+    public static String USER_LOGOUT_UPDATE_SQL = "UPDATE users_log " + "SET LOGOUT_DATETIME = ? " + "WHERE USER_ID = ?"
+        + " AND LOGOUT_DATETIME IS NULL";
     public static String USER_REPORTED_INFO_INSERT_SQL = "" +
         "INSERT INTO `user_reported_info` " + "            (" +
         "             `user_reported_info`.`id`, " +

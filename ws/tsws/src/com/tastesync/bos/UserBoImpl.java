@@ -32,8 +32,8 @@ public class UserBoImpl implements UserBo {
 	}
     
     @Override
-    public void logout(String userId) throws TasteSyncException {
-        userDao.logout(userId);
+    public boolean logout(String userId) throws TasteSyncException {
+        return userDao.logout(userId);
     }
 
     @Override

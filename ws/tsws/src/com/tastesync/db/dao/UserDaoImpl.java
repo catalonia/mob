@@ -32,7 +32,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     	TSUserObj tsUserObj = null;
         
         TSDataSource tsDataSource = TSDataSource.getInstance();
-        
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
@@ -515,8 +514,48 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	}
 	
     @Override
-    public void logout(String userId) throws TasteSyncException {
-        // TODO Auto-generated method stub
+    public boolean logout(String userId) throws TasteSyncException {
+    	TSUserObj user = null;
+		MySQL mySQL = new MySQL();
+		String dateNow = CommonFunctionsUtil.getCurrentDatetime();
+		
+		try {
+			user = mySQL.getUserInformation(userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(user != null) {
+			TSDataSource tsDataSource = TSDataSource.getInstance();
+	        Connection connection = null;
+	        PreparedStatement statement = null;
+	        
+	        try{
+	        	connection = tsDataSource.getConnection();
+	        	tsDataSource.begin();
+	        	
+	        	//Update IS_ONLINE status 
+	        	System.out.println("UserQueries.USER_ONLINE_UPDATE_SQL=" + UserQueries.USER_ONLINE_UPDATE_SQL);
+	        	statement = connection.prepareStatement(UserQueries.USER_ONLINE_UPDATE_SQL);
+	        	statement.setString(1, String.valueOf("n"));
+	        	statement.setString(2, userId);
+	        	statement.executeUpdate();
+	        	
+	        	connection = tsDataSource.getConnection();
+	        	System.out.println("UserQueries.USER_LOGOUT_UPDATE_SQL=" + UserQueries.USER_LOGOUT_UPDATE_SQL);
+	        	statement = connection.prepareStatement(UserQueries.USER_LOGOUT_UPDATE_SQL);
+	        	statement.setString(1, dateNow);
+	        	statement.setString(2, userId);
+	        	statement.executeUpdate();
+	        }catch(SQLException e){
+	        	return false;
+	        }finally{
+	        	tsDataSource.close();
+	        }
+        	return true;
+		}
+		else
+			return false;
     }
 
     @Override

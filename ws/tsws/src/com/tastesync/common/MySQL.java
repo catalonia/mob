@@ -252,6 +252,34 @@ public class MySQL {
 		}
 		return user;
 	}
+	//Get user information (by user_id)
+	public TSUserObj getUserInformation(String user_id) {
+		TSUserObj user = null;
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	System.out.println("UserQueries.USER_STATUS_SELECT_SQL=" + UserQueries.USER_STATUS_SELECT_SQL);
+	    	statement = connection.prepareStatement(UserQueries.USER_STATUS_SELECT_SQL);
+	    	statement.setString(1, user_id);
+	    	statement.setString(2, String.valueOf("e"));
+	    	resultset = statement.executeQuery();
+	    	if(resultset.next())
+	    	{
+	    		user = new TSUserObj();
+	    		MySQL.mapResultsetRowToTSUserVO(user, resultset);
+	    	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+		}
+		return user;
+	}
 //	//Check facebook id in the system
 //	public boolean checkFacebookIDExist(String user_fb_id) {
 //		boolean check = false;
@@ -272,19 +300,6 @@ public class MySQL {
 //		return check;
 //	}
 //	
-//	//Get user information (by user_id)
-//	public TSUser getUserInformation(String user_id) {
-//		TSUser user = null;
-//		try {
-//			user = (TSUser) jdbcTemplate.queryForObject(
-//					"SELECT * FROM users WHERE USER_ID = ? AND CURRENT_STATUS = ?",
-//					new Object[] {user_id, String.valueOf("e")},
-//					new UserRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		return user;
-//	}
 //	
 //	//Get user information (by ts_user_id)
 //	public TSUser getUserInformationByTSUserID(int ts_user_id) {

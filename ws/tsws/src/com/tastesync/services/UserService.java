@@ -128,34 +128,22 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
-            userBo.logout(userId);
-
+        	responseDone = userBo.logout(userId);
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
-
-            responseDone = true;
-
             return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
-
             TSErrorObj tsErrorObj = new TSErrorObj();
-
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
             responseDone = false;
-
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (!responseDone) {
+            if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
-
                     TSErrorObj tsErrorObj = new TSErrorObj();
-
                     tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
                     return Response.status(status).entity(tsErrorObj).build();
-                }
             }
         }
     }

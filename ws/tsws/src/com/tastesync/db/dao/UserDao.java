@@ -18,7 +18,7 @@ public interface UserDao {
 
 	TSUserObj login_fb(TSListFacebookUserDataObj list_user_profile) throws TasteSyncException;
 	
-    void logout(String userId) throws TasteSyncException;
+	boolean logout(String userId) throws TasteSyncException;
 
     TSUserObj selectUser(String userId) throws TasteSyncException;
 
