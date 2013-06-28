@@ -54,8 +54,8 @@ public interface UserQueries extends TSDBCommonQueries {
         "?," + // "users.CURRENT_STATUS"
         "?" + // "users.USER_FB_ID",
         ")";
-    public static String USER_SELECT_LOGIN = "SELECT " +
-            " users.USER_ID," + " users.TS_USER_ID," + " users.TS_USER_EMAIL," +
+    public static String USER_LOGIN_SELECT_SQL = "SELECT " +
+    		" users.Auto_User_ID," + " users.USER_ID," + " users.TS_USER_ID," + " users.TS_USER_EMAIL," +
             " users.TS_USER_PW," + " users.TS_FIRST_NAME," +
             " users.TS_LAST_NAME," + " users.MAX_INVITES," +
             " users.USER_CREATED_INITIAL_DATETIME," + " users.USER_POINTS," +
@@ -65,8 +65,38 @@ public interface UserQueries extends TSDBCommonQueries {
             " users.USER_COUNTRY," + " users.ABOUT," + " users.CURRENT_STATUS," +
             " users.USER_FB_ID" + " FROM " + " users " + 
             " WHERE TS_USER_EMAIL = ? " + "AND TS_USER_PW = ?";
-    public static String USER_UPDATE_ONLINE = "UPDATE users " + "SET IS_ONLINE = ? " + "WHERE USER_ID = ?";
-    public static String USER_UPDATE_LOGIN = "UPDATE users_log " + "SET LOGIN_DATETIME = ? " + "WHERE USER_ID = ?";
+    public static String USER_ONLINE_UPDATE_SQL = "UPDATE users " + "SET IS_ONLINE = ? " + "WHERE USER_ID = ?";
+    public static String USER_LOGIN_UPDATE_SQL = "UPDATE users_log " + "SET LOGIN_DATETIME = ? " + 
+    	"WHERE USER_ID = ?";
+    public static String FACEBOOK_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID = ?";
+    public static String FACEBOOK_INSERT_SQL = "INSERT INTO facebook_user_data " + "(User_FB_ID, " + "NAME, " + "FIRST_NAME, " + "MIDDLE_NAME, " +
+	"LAST_NAME, " + "GENDER, " + "LOCALE, " + "LINK, " + "USERNAME, " + "AGE_RANGE, " + "BIRTHDAY, " +
+	"THIRD_PARTY_ID, " + "FRIENDLISTS, " + "INSTALLED, " + "TIMEZONE, " + "UPDATE_TIME, " + "VERIFIED, " +
+	"DEVICES, " + "EMAIL, " + "HOMETOWN, " + "LOCATION, " + "PICTURE, " + "RELATIONSHIP_STATUS, " + 
+	"CHECKINS, " + "FRIENDS, " + "LIKES, " + "PERMISSIONS, " + "CREATED)" +
+	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static String FACEBOOK_UPDATE_SQL = "UPDATE facebook_user_data SET " + "NAME = ?, " +
+	"FIRST_NAME = ?, " + "MIDDLE_NAME = ?, " + "LAST_NAME = ?, " + "GENDER = ?, " + "LOCALE = ?, " +
+	"LINK = ?, " + "USERNAME = ?, " + "AGE_RANGE = ?, " + "BIRTHDAY = ?, " + "THIRD_PARTY_ID = ?, " + 
+	"FRIENDLISTS = ?, " + "INSTALLED = ?, " + "TIMEZONE = ?, " + "UPDATE_TIME = ?, " + "VERIFIED = ?, " +
+	"DEVICES = ?, " + "EMAIL = ?, " + "HOMETOWN = ?, " + "LOCATION = ?, " + "PICTURE = ?, " + "RELATIONSHIP_STATUS = ?, " +
+	"CHECKINS = ?, " + "FRIENDS = ?, " + "LIKES = ?, " + "PERMISSIONS = ?, " + "CREATED = ? " + "WHERE User_FB_ID = ?";
+    public static String USER_LOGIN_INSERT_SQL = "INSERT INTO users_log (USER_ID, LOGIN_DATETIME, " +
+    	"USERS_CREATED_LATEST_DATETIME) VALUES (?, ?, ?)";
+    public static String USERLOG_EMAIL_SELECT_SQL = "SELECT * FROM users_log WHERE USER_ID = ?";
+    public static String USER_CHECK_EMAIL_SELECT_SQL = "SELECT * FROM users WHERE TS_USER_EMAIL = ?";
+    public static String USER_CHECK_EMAIL_STATUS_SELECT_SQL = "SELECT * FROM users WHERE TS_USER_EMAIL = ? " +
+    	"AND CURRENT_STATUS = ?";
+    public static String USER_FBID_SELECT_SQL = "SELECT * FROM users WHERE User_FB_ID = ? AND CURRENT_STATUS = ?";
+    public static String USER_FBID_UPDATE_SQL = "UPDATE users SET USER_FB_ID = ? WHERE USER_ID = ?";
+    public static String USER_ID_UPDATE_SQL = "UPDATE users SET USER_ID = ?"+ ", TS_USER_ID = ?" +" WHERE Auto_User_ID = ?";
+    public static String USER_FACEBOOK_INSERT_SQL = "INSERT INTO users " + "(TS_USER_EMAIL, " + 
+    	"USER_CREATED_INITIAL_DATETIME, " + "TS_FIRST_NAME, " + "TS_LAST_NAME, " + 
+    	"USER_GENDER, " + "USER_CITY_ID, " + "USER_CITY, " + "USER_STATE, " + "USER_COUNTRY) " + 
+    	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static String USERLOG_LOGID_UPDATE_SQL = "UPDATE users_log SET LOG_ID = ? WHERE Auto_Log_ID = ?";
+    public static String STORY_INSERT_SQL = "INSERT INTO story (STORY_CREATED_DATETIME, ACTION_ID_TYPE, USER_ID, UPDATED_DATETIME) VALUES (?, ?, ?, ?)";
+    public static String STORY_UPDATE_SQL = "UPDATE story SET STORY_ID = ? WHERE Auto_Story_ID = ?";
     public static String USER_SOCIAL_SETTINGS_SELECT_SQL = "" +
         "SELECT `user_usnc`.`usnc_yn`" + "FROM   user_usnc " +
         "WHERE  `user_usnc`.`user_id` = ? " + "       AND -- userId " +

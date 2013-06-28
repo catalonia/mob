@@ -6,6 +6,7 @@ import com.tastesync.db.dao.UserDaoImpl;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSFacebookUserDataObj;
+import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSNotificationSettingsObj;
 import com.tastesync.model.objects.TSPrivacySettingsObj;
 import com.tastesync.model.objects.TSSocialSettingsObj;
@@ -14,8 +15,6 @@ import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 
 import java.util.List;
-
-import javax.ws.rs.core.Response;
 
 
 public class UserBoImpl implements UserBo {
@@ -26,6 +25,12 @@ public class UserBoImpl implements UserBo {
         return userDao.login(email, password);
     }
 
+	@Override
+	public TSUserObj login_fb(TSListFacebookUserDataObj list_user_profile)
+			throws TasteSyncException {
+		return userDao.login_fb(list_user_profile);
+	}
+    
     @Override
     public void logout(String userId) throws TasteSyncException {
         userDao.logout(userId);
@@ -155,4 +160,5 @@ public class UserBoImpl implements UserBo {
         userDao.submitTrustedFriendStatusChange(userId, viewerUserId,
             trustedFriendStatus);
     }
+
 }

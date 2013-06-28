@@ -1,5 +1,6 @@
 #import "enunciate-common.h"
 
+@class ENUNCIATENS0TSFacebookUserDataObj;
 @class ENUNCIATENS0TSNotificationSettingsObj;
 @class ENUNCIATENS0TSPrivacySettingsObj;
 @class ENUNCIATENS0TSRestaurantDetailsObj;
@@ -12,9 +13,331 @@
 @class ENUNCIATENS0TSRestaurantObj;
 @class ENUNCIATENS0TSRecommendersDetailsObj;
 @class ENUNCIATENS0TSPhotoObj;
+@class ENUNCIATENS0TSListFacebookUserDataObj;
 @class ENUNCIATENS0TSErrorObj;
 @class ENUNCIATENS0TSCurrentRecommendedRestaurantDetailsObj;
 
+#ifndef DEF_ENUNCIATENS0TSFacebookUserDataObj_H
+#define DEF_ENUNCIATENS0TSFacebookUserDataObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSFacebookUserDataObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_userName;
+    NSString *_identifier;
+    NSString *_name;
+    NSString *_firstName;
+    NSString *_middleName;
+    NSString *_lastName;
+    NSString *_gender;
+    NSString *_locale;
+    NSString *_link;
+    NSString *_ageRange;
+    NSString *_birthday;
+    NSString *_thirdPartyId;
+    NSString *_friendlists;
+    NSString *_installed;
+    NSString *_timezone;
+    NSString *_updatedTime;
+    NSString *_verified;
+    NSString *_devices;
+    NSString *_email;
+    NSString *_hometown;
+    NSString *_location;
+    NSString *_picture;
+    NSString *_relationshipStatus;
+    NSString *_checkins;
+    NSString *_friends;
+    NSString *_likes;
+    NSString *_permissions;
+    NSString *_create;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) userName;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserName: (NSString *) newUserName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) identifier;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setIdentifier: (NSString *) newIdentifier;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) name;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setName: (NSString *) newName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) firstName;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setFirstName: (NSString *) newFirstName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) middleName;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setMiddleName: (NSString *) newMiddleName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) lastName;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setLastName: (NSString *) newLastName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) gender;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setGender: (NSString *) newGender;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) locale;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setLocale: (NSString *) newLocale;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) link;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setLink: (NSString *) newLink;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) ageRange;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setAgeRange: (NSString *) newAgeRange;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) birthday;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setBirthday: (NSString *) newBirthday;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) thirdPartyId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setThirdPartyId: (NSString *) newThirdPartyId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) friendlists;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setFriendlists: (NSString *) newFriendlists;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) installed;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setInstalled: (NSString *) newInstalled;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) timezone;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setTimezone: (NSString *) newTimezone;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) updatedTime;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUpdatedTime: (NSString *) newUpdatedTime;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) verified;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setVerified: (NSString *) newVerified;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) devices;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setDevices: (NSString *) newDevices;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) email;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setEmail: (NSString *) newEmail;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) hometown;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setHometown: (NSString *) newHometown;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) location;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setLocation: (NSString *) newLocation;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) picture;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPicture: (NSString *) newPicture;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) relationshipStatus;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRelationshipStatus: (NSString *) newRelationshipStatus;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) checkins;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCheckins: (NSString *) newCheckins;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) friends;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setFriends: (NSString *) newFriends;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) likes;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setLikes: (NSString *) newLikes;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) permissions;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPermissions: (NSString *) newPermissions;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) create;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCreate: (NSString *) newCreate;
+@end /* interface ENUNCIATENS0TSFacebookUserDataObj */
+
+#endif /* DEF_ENUNCIATENS0TSFacebookUserDataObj_H */
 #ifndef DEF_ENUNCIATENS0TSNotificationSettingsObj_H
 #define DEF_ENUNCIATENS0TSNotificationSettingsObj_H
 
@@ -665,6 +988,7 @@
 @interface ENUNCIATENS0TSUserObj : NSObject <EnunciateXML>
 {
   @private
+    NSString *_autoUserId;
     NSString *_userId;
     NSString *_tsUserId;
     NSString *_tsUserEmail;
@@ -686,6 +1010,16 @@
     NSString *_about;
     NSString *_currentStatus;
 }
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) autoUserId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setAutoUserId: (NSString *) newAutoUserId;
 
 /**
  * (no documentation provided)
@@ -1194,6 +1528,41 @@
 @end /* interface ENUNCIATENS0TSPhotoObj */
 
 #endif /* DEF_ENUNCIATENS0TSPhotoObj_H */
+#ifndef DEF_ENUNCIATENS0TSListFacebookUserDataObj_H
+#define DEF_ENUNCIATENS0TSListFacebookUserDataObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSListFacebookUserDataObj : NSObject <EnunciateXML>
+{
+  @private
+    ENUNCIATENS0TSFacebookUserDataObj *_user_profile_current;
+    NSArray *_list_user_profile_fb;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSFacebookUserDataObj *) user_profile_current;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUser_profile_current: (ENUNCIATENS0TSFacebookUserDataObj *) newUser_profile_current;
+
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) list_user_profile_fb;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setList_user_profile_fb: (NSArray *) newList_user_profile_fb;
+@end /* interface ENUNCIATENS0TSListFacebookUserDataObj */
+
+#endif /* DEF_ENUNCIATENS0TSListFacebookUserDataObj_H */
 #ifndef DEF_ENUNCIATENS0TSErrorObj_H
 #define DEF_ENUNCIATENS0TSErrorObj_H
 

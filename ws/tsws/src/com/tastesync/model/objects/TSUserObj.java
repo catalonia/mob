@@ -12,6 +12,7 @@ public class TSUserObj implements Serializable {
 
     // private String authtoken;
     // private Timestamp authtoken_expiration;
+    private String autoUserId;
     private String userId;
     private String tsUserId;
     private String tsUserEmail;
@@ -36,7 +37,12 @@ public class TSUserObj implements Serializable {
     public TSUserObj() {
         super();
     }
-
+    
+    @XmlElement
+	public String getAutoUserId() {
+		return autoUserId;
+	}
+    
     @XmlElement
     public String getUserId() {
         return userId;
@@ -217,6 +223,9 @@ public class TSUserObj implements Serializable {
         this.currentStatus = currentStatus;
     }
 
+	public void setAutoUserId(String autoUserId) {
+		this.autoUserId = autoUserId;
+	}
     @Override
     public String toString() {
         return "TSUserObj [userId=" + userId + ", tsUserId=" + tsUserId +

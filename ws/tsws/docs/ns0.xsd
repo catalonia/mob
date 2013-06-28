@@ -2,6 +2,8 @@
 <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="restaurants" type="TSCurrentRecommendedRestaurantDetailsObj"/>
   <xs:element name="error" type="TSErrorObj"/>
+  <xs:element name="facebook_user_data" type="TSFacebookUserDataObj"/>
+  <xs:element name="list_user_profile_fb" type="TSListFacebookUserDataObj"/>
   <xs:element name="notifications" type="TSNotificationSettingsObj"/>
   <xs:element name="photo" type="TSPhotoObj"/>
   <xs:element name="privacy" type="TSPrivacySettingsObj"/>
@@ -25,6 +27,44 @@
   <xs:complexType name="TSErrorObj">
     <xs:sequence>
       <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSFacebookUserDataObj">
+    <xs:sequence>
+      <xs:element name="userName" type="xs:string" minOccurs="0"/>
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
+      <xs:element name="middleName" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+      <xs:element name="gender" type="xs:string" minOccurs="0"/>
+      <xs:element name="locale" type="xs:string" minOccurs="0"/>
+      <xs:element name="link" type="xs:string" minOccurs="0"/>
+      <xs:element name="ageRange" type="xs:string" minOccurs="0"/>
+      <xs:element name="birthday" type="xs:string" minOccurs="0"/>
+      <xs:element name="thirdPartyId" type="xs:string" minOccurs="0"/>
+      <xs:element name="friendlists" type="xs:string" minOccurs="0"/>
+      <xs:element name="installed" type="xs:string" minOccurs="0"/>
+      <xs:element name="timezone" type="xs:string" minOccurs="0"/>
+      <xs:element name="updatedTime" type="xs:string" minOccurs="0"/>
+      <xs:element name="verified" type="xs:string" minOccurs="0"/>
+      <xs:element name="devices" type="xs:string" minOccurs="0"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="hometown" type="xs:string" minOccurs="0"/>
+      <xs:element name="location" type="xs:string" minOccurs="0"/>
+      <xs:element name="picture" type="xs:string" minOccurs="0"/>
+      <xs:element name="relationshipStatus" type="xs:string" minOccurs="0"/>
+      <xs:element name="checkins" type="xs:string" minOccurs="0"/>
+      <xs:element name="friends" type="xs:string" minOccurs="0"/>
+      <xs:element name="likes" type="xs:string" minOccurs="0"/>
+      <xs:element name="permissions" type="xs:string" minOccurs="0"/>
+      <xs:element name="create" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSListFacebookUserDataObj">
+    <xs:sequence>
+      <xs:element name="user_current_profile" type="TSFacebookUserDataObj" minOccurs="0"/>
+      <xs:element name="list_user_profile" type="TSFacebookUserDataObj" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSNotificationSettingsObj">
@@ -111,6 +151,7 @@
   </xs:complexType>
   <xs:complexType name="TSUserObj">
     <xs:sequence>
+      <xs:element name="autoUserId" type="xs:string" minOccurs="0"/>
       <xs:element name="userId" type="xs:string" minOccurs="0"/>
       <xs:element name="tsUserId" type="xs:string" minOccurs="0"/>
       <xs:element name="tsUserEmail" type="xs:string" minOccurs="0"/>

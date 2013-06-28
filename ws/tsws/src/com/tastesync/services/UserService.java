@@ -7,6 +7,7 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
+import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSNotificationSettingsObj;
 import com.tastesync.model.objects.TSPrivacySettingsObj;
 import com.tastesync.model.objects.TSSocialSettingsObj;
@@ -60,7 +61,7 @@ public class UserService extends BaseService {
     String email, @FormParam("password")
     String password) {
     	if (logger.isDebugEnabled()) {
-            logger.debug("login- start+-+-+-");
+            logger.debug("login - start=================");
         }
         TSUserObj tsUserObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -83,7 +84,37 @@ public class UserService extends BaseService {
 			}
 		}
     }
-
+    
+    @POST
+	@Path("/login_fb")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response login_fb(TSListFacebookUserDataObj list_user_profile) {
+    	logger.debug("---------------------------------------------------------------------------");
+    	TSUserObj tsUserObj = null;
+    	
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        
+		try {
+			tsUserObj = userBo.login_fb(list_user_profile);
+			return Response.status(status).entity(tsUserObj).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            return Response.status(status).entity(tsErrorObj).build();
+		}
+            finally {
+			if (tsUserObj == null) {
+				status = TSResponseStatusCode.ERROR.getValue();
+				TSErrorObj tsErrorObj = new TSErrorObj();
+				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+				return Response.status(status).entity(tsErrorObj).build();
+			}
+		}
+    }
+    
     @POST
     @Path("/logout")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED

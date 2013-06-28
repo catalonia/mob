@@ -221,6 +221,353 @@ static int xmlTextWriterWriteNs0TSErrorObjType(xmlTextWriterPtr writer, struct e
 static void freeNs0TSErrorObjType(struct enunciate_ns0_TSErrorObj *_tSErrorObj);
 
 #endif /* DEF_enunciate_ns0_TSErrorObj_H */
+#ifndef DEF_enunciate_ns0_TSFacebookUserDataObj_H
+#define DEF_enunciate_ns0_TSFacebookUserDataObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSFacebookUserDataObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *userName;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *id;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *name;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *firstName;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *middleName;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *lastName;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *gender;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *locale;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *link;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *ageRange;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *birthday;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *thirdPartyId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *friendlists;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *installed;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *timezone;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *updatedTime;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *verified;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *devices;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *email;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *hometown;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *location;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *picture;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *relationshipStatus;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *checkins;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *friends;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *likes;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *permissions;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *create;
+};
+
+/**
+ * Reads a TSFacebookUserDataObj element from XML. The element to be read is "facebook_user_data", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSFacebookUserDataObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSFacebookUserDataObj *xml_read_enunciate_ns0_TSFacebookUserDataObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSFacebookUserDataObj to XML under element name "facebook_user_data".
+ *
+ * @param writer The XML writer.
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSFacebookUserDataObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj);
+
+/**
+ * Frees a TSFacebookUserDataObj.
+ *
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to free.
+ */
+void free_enunciate_ns0_TSFacebookUserDataObj(struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj);
+
+/**
+ * Reads a TSFacebookUserDataObj element from XML. The element to be read is "facebook_user_data", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSFacebookUserDataObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSFacebookUserDataObj *xmlTextReaderReadNs0Facebook_user_dataElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSFacebookUserDataObj to XML under element name "facebook_user_data".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0Facebook_user_dataElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj);
+
+/**
+ * Writes a TSFacebookUserDataObj to XML under element name "facebook_user_data".
+ *
+ * @param writer The XML writer.
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0Facebook_user_dataElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSFacebookUserDataObj.
+ *
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj whose children are to be free.
+ */
+static void freeNs0Facebook_user_dataElement(struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj);
+
+/**
+ * Reads a TSFacebookUserDataObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSFacebookUserDataObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSFacebookUserDataObj *xmlTextReaderReadNs0TSFacebookUserDataObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSFacebookUserDataObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSFacebookUserDataObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj);
+
+/**
+ * Frees the elements of a TSFacebookUserDataObj.
+ *
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to free.
+ */
+static void freeNs0TSFacebookUserDataObjType(struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj);
+
+#endif /* DEF_enunciate_ns0_TSFacebookUserDataObj_H */
+#ifndef DEF_enunciate_ns0_TSListFacebookUserDataObj_H
+#define DEF_enunciate_ns0_TSListFacebookUserDataObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSListFacebookUserDataObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSFacebookUserDataObj *user_profile_current;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSFacebookUserDataObj *list_user_profile_fb;
+
+  /**
+   * Size of the list_user_profile_fb array.
+   */
+  int _sizeof_list_user_profile_fb;
+};
+
+/**
+ * Reads a TSListFacebookUserDataObj element from XML. The element to be read is "list_user_profile_fb", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSListFacebookUserDataObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSListFacebookUserDataObj *xml_read_enunciate_ns0_TSListFacebookUserDataObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSListFacebookUserDataObj to XML under element name "list_user_profile_fb".
+ *
+ * @param writer The XML writer.
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSListFacebookUserDataObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj);
+
+/**
+ * Frees a TSListFacebookUserDataObj.
+ *
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to free.
+ */
+void free_enunciate_ns0_TSListFacebookUserDataObj(struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj);
+
+/**
+ * Reads a TSListFacebookUserDataObj element from XML. The element to be read is "list_user_profile_fb", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSListFacebookUserDataObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSListFacebookUserDataObj *xmlTextReaderReadNs0List_user_profile_fbElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSListFacebookUserDataObj to XML under element name "list_user_profile_fb".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0List_user_profile_fbElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj);
+
+/**
+ * Writes a TSListFacebookUserDataObj to XML under element name "list_user_profile_fb".
+ *
+ * @param writer The XML writer.
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0List_user_profile_fbElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSListFacebookUserDataObj.
+ *
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj whose children are to be free.
+ */
+static void freeNs0List_user_profile_fbElement(struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj);
+
+/**
+ * Reads a TSListFacebookUserDataObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSListFacebookUserDataObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSListFacebookUserDataObj *xmlTextReaderReadNs0TSListFacebookUserDataObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSListFacebookUserDataObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSListFacebookUserDataObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj);
+
+/**
+ * Frees the elements of a TSListFacebookUserDataObj.
+ *
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to free.
+ */
+static void freeNs0TSListFacebookUserDataObjType(struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj);
+
+#endif /* DEF_enunciate_ns0_TSListFacebookUserDataObj_H */
 #ifndef DEF_enunciate_ns0_TSNotificationSettingsObj_H
 #define DEF_enunciate_ns0_TSNotificationSettingsObj_H
 
@@ -1328,6 +1675,11 @@ static void freeNs0TSSuccessObjType(struct enunciate_ns0_TSSuccessObj *_tSSucces
  */
 struct enunciate_ns0_TSUserObj {
 
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *autoUserId;
 
   /**
    * (no documentation provided)
@@ -2557,6 +2909,2240 @@ static void freeNs0TSErrorObjType(struct enunciate_ns0_TSErrorObj *_tSErrorObj) 
   }
 }
 #endif /* DEF_enunciate_ns0_TSErrorObj_M */
+#ifndef DEF_enunciate_ns0_TSFacebookUserDataObj_M
+#define DEF_enunciate_ns0_TSFacebookUserDataObj_M
+
+/**
+ * Reads a TSFacebookUserDataObj element from XML. The element to be read is "facebook_user_data", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSFacebookUserDataObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSFacebookUserDataObj *xml_read_enunciate_ns0_TSFacebookUserDataObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0Facebook_user_dataElement(reader);
+}
+
+/**
+ * Writes a TSFacebookUserDataObj to XML under element name "facebook_user_data".
+ *
+ * @param writer The XML writer.
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSFacebookUserDataObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj) {
+  return xmlTextWriterWriteNs0Facebook_user_dataElementNS(writer, _tSFacebookUserDataObj, 1);
+}
+
+/**
+ * Frees a TSFacebookUserDataObj.
+ *
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to free.
+ */
+void free_enunciate_ns0_TSFacebookUserDataObj(struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj) {
+  freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+  free(_tSFacebookUserDataObj);
+}
+
+/**
+ * Reads a TSFacebookUserDataObj element from XML. The element to be read is "facebook_user_data", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSFacebookUserDataObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSFacebookUserDataObj *xmlTextReaderReadNs0Facebook_user_dataElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "facebook_user_data", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}facebook_user_data.\n");
+#endif
+    _tSFacebookUserDataObj = xmlTextReaderReadNs0TSFacebookUserDataObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSFacebookUserDataObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}facebook_user_data failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}facebook_user_data failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSFacebookUserDataObj;
+}
+
+/**
+ * Writes a TSFacebookUserDataObj to XML under element name "facebook_user_data".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0Facebook_user_dataElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj) {
+  return xmlTextWriterWriteNs0Facebook_user_dataElementNS(writer, _tSFacebookUserDataObj, 0);
+}
+
+/**
+ * Writes a TSFacebookUserDataObj to XML under element name "facebook_user_data".
+ *
+ * @param writer The XML writer.
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0Facebook_user_dataElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "facebook_user_data", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}facebook_user_data. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSFacebookUserDataObj for root element {}facebook_user_data...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSFacebookUserDataObjType(writer, _tSFacebookUserDataObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}facebook_user_data. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}facebook_user_data. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSFacebookUserDataObj.
+ *
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj whose children are to be free.
+ */
+static void freeNs0Facebook_user_dataElement(struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj) {
+  freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+}
+
+/**
+ * Reads a TSFacebookUserDataObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSFacebookUserDataObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSFacebookUserDataObj *xmlTextReaderReadNs0TSFacebookUserDataObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj = calloc(1, sizeof(struct enunciate_ns0_TSFacebookUserDataObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+        free(_tSFacebookUserDataObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "userName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}userName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}userName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->userName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "id", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}id of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}id of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->id = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "name", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}name of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}name of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->name = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "firstName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}firstName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}firstName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->firstName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "middleName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}middleName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}middleName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->middleName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "lastName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}lastName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}lastName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->lastName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "gender", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}gender of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}gender of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->gender = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "locale", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}locale of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}locale of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->locale = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "link", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}link of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}link of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->link = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "ageRange", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}ageRange of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}ageRange of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->ageRange = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "birthday", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}birthday of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}birthday of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->birthday = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "thirdPartyId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}thirdPartyId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}thirdPartyId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->thirdPartyId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "friendlists", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}friendlists of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}friendlists of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->friendlists = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "installed", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}installed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}installed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->installed = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "timezone", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}timezone of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}timezone of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->timezone = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "updatedTime", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}updatedTime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}updatedTime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->updatedTime = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "verified", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}verified of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}verified of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->verified = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "devices", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}devices of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}devices of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->devices = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "email", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}email of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}email of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->email = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "hometown", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}hometown of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}hometown of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->hometown = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "location", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}location of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}location of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->location = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "picture", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}picture of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}picture of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->picture = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "relationshipStatus", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}relationshipStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}relationshipStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->relationshipStatus = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "checkins", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}checkins of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}checkins of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->checkins = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "friends", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}friends of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}friends of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->friends = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "likes", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}likes of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}likes of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->likes = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "permissions", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}permissions of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}permissions of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->permissions = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "create", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}create of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}create of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSFacebookUserDataObjType(_tSFacebookUserDataObj);
+          free(_tSFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSFacebookUserDataObj->create = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSFacebookUserDataObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSFacebookUserDataObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSFacebookUserDataObj;
+}
+
+/**
+ * Writes a TSFacebookUserDataObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSFacebookUserDataObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSFacebookUserDataObj->userName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "userName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}userName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}userName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->userName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}userName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}userName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->id != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "id", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}id. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}id...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->id));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}id. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}id. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->name != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "name", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}name. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}name...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->name));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}name. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}name. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->firstName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "firstName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}firstName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}firstName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->firstName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}firstName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}firstName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->middleName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "middleName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}middleName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}middleName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->middleName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}middleName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}middleName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->lastName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "lastName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}lastName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}lastName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->lastName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}lastName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}lastName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->gender != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "gender", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}gender. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}gender...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->gender));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}gender. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}gender. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->locale != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "locale", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}locale. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}locale...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->locale));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}locale. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}locale. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->link != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "link", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}link. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}link...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->link));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}link. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}link. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->ageRange != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "ageRange", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}ageRange. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}ageRange...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->ageRange));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}ageRange. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}ageRange. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->birthday != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "birthday", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}birthday. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}birthday...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->birthday));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}birthday. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}birthday. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->thirdPartyId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "thirdPartyId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}thirdPartyId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}thirdPartyId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->thirdPartyId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}thirdPartyId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}thirdPartyId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->friendlists != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friendlists", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}friendlists. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}friendlists...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->friendlists));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}friendlists. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}friendlists. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->installed != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "installed", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}installed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}installed...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->installed));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}installed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}installed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->timezone != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "timezone", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}timezone. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}timezone...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->timezone));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}timezone. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}timezone. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->updatedTime != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "updatedTime", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}updatedTime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}updatedTime...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->updatedTime));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}updatedTime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}updatedTime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->verified != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "verified", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}verified. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}verified...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->verified));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}verified. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}verified. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->devices != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "devices", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}devices. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}devices...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->devices));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}devices. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}devices. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->email != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "email", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}email. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}email...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->email));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}email. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}email. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->hometown != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "hometown", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}hometown. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}hometown...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->hometown));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}hometown. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}hometown. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->location != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "location", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}location. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}location...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->location));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}location. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}location. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->picture != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "picture", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}picture. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}picture...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->picture));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}picture. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}picture. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->relationshipStatus != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "relationshipStatus", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}relationshipStatus. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}relationshipStatus...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->relationshipStatus));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}relationshipStatus. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}relationshipStatus. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->checkins != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "checkins", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}checkins. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}checkins...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->checkins));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}checkins. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}checkins. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->friends != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friends", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}friends. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}friends...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->friends));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}friends. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}friends. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->likes != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "likes", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}likes. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}likes...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->likes));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}likes. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}likes. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->permissions != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "permissions", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}permissions. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}permissions...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->permissions));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}permissions. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}permissions. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSFacebookUserDataObj->create != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "create", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}create. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}create...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSFacebookUserDataObj->create));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}create. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}create. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSFacebookUserDataObj.
+ *
+ * @param _tSFacebookUserDataObj The TSFacebookUserDataObj to free.
+ */
+static void freeNs0TSFacebookUserDataObjType(struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj) {
+  int i;
+  if (_tSFacebookUserDataObj->userName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor userName of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->userName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor userName of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->userName);
+  }
+  if (_tSFacebookUserDataObj->id != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor id of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->id);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor id of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->id);
+  }
+  if (_tSFacebookUserDataObj->name != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor name of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->name);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor name of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->name);
+  }
+  if (_tSFacebookUserDataObj->firstName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor firstName of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->firstName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor firstName of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->firstName);
+  }
+  if (_tSFacebookUserDataObj->middleName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor middleName of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->middleName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor middleName of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->middleName);
+  }
+  if (_tSFacebookUserDataObj->lastName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor lastName of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->lastName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor lastName of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->lastName);
+  }
+  if (_tSFacebookUserDataObj->gender != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor gender of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->gender);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor gender of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->gender);
+  }
+  if (_tSFacebookUserDataObj->locale != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor locale of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->locale);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor locale of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->locale);
+  }
+  if (_tSFacebookUserDataObj->link != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor link of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->link);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor link of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->link);
+  }
+  if (_tSFacebookUserDataObj->ageRange != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor ageRange of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->ageRange);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor ageRange of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->ageRange);
+  }
+  if (_tSFacebookUserDataObj->birthday != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor birthday of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->birthday);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor birthday of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->birthday);
+  }
+  if (_tSFacebookUserDataObj->thirdPartyId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor thirdPartyId of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->thirdPartyId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor thirdPartyId of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->thirdPartyId);
+  }
+  if (_tSFacebookUserDataObj->friendlists != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor friendlists of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->friendlists);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor friendlists of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->friendlists);
+  }
+  if (_tSFacebookUserDataObj->installed != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor installed of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->installed);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor installed of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->installed);
+  }
+  if (_tSFacebookUserDataObj->timezone != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor timezone of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->timezone);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor timezone of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->timezone);
+  }
+  if (_tSFacebookUserDataObj->updatedTime != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor updatedTime of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->updatedTime);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor updatedTime of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->updatedTime);
+  }
+  if (_tSFacebookUserDataObj->verified != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor verified of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->verified);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor verified of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->verified);
+  }
+  if (_tSFacebookUserDataObj->devices != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor devices of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->devices);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor devices of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->devices);
+  }
+  if (_tSFacebookUserDataObj->email != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor email of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->email);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor email of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->email);
+  }
+  if (_tSFacebookUserDataObj->hometown != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor hometown of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->hometown);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor hometown of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->hometown);
+  }
+  if (_tSFacebookUserDataObj->location != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor location of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->location);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor location of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->location);
+  }
+  if (_tSFacebookUserDataObj->picture != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor picture of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->picture);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor picture of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->picture);
+  }
+  if (_tSFacebookUserDataObj->relationshipStatus != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor relationshipStatus of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->relationshipStatus);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor relationshipStatus of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->relationshipStatus);
+  }
+  if (_tSFacebookUserDataObj->checkins != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor checkins of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->checkins);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor checkins of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->checkins);
+  }
+  if (_tSFacebookUserDataObj->friends != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor friends of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->friends);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor friends of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->friends);
+  }
+  if (_tSFacebookUserDataObj->likes != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor likes of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->likes);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor likes of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->likes);
+  }
+  if (_tSFacebookUserDataObj->permissions != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor permissions of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->permissions);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor permissions of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->permissions);
+  }
+  if (_tSFacebookUserDataObj->create != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor create of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSFacebookUserDataObj->create);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor create of type enunciate_ns0_TSFacebookUserDataObj...\n");
+#endif
+    free(_tSFacebookUserDataObj->create);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSFacebookUserDataObj_M */
+#ifndef DEF_enunciate_ns0_TSListFacebookUserDataObj_M
+#define DEF_enunciate_ns0_TSListFacebookUserDataObj_M
+
+/**
+ * Reads a TSListFacebookUserDataObj element from XML. The element to be read is "list_user_profile_fb", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSListFacebookUserDataObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSListFacebookUserDataObj *xml_read_enunciate_ns0_TSListFacebookUserDataObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0List_user_profile_fbElement(reader);
+}
+
+/**
+ * Writes a TSListFacebookUserDataObj to XML under element name "list_user_profile_fb".
+ *
+ * @param writer The XML writer.
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSListFacebookUserDataObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj) {
+  return xmlTextWriterWriteNs0List_user_profile_fbElementNS(writer, _tSListFacebookUserDataObj, 1);
+}
+
+/**
+ * Frees a TSListFacebookUserDataObj.
+ *
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to free.
+ */
+void free_enunciate_ns0_TSListFacebookUserDataObj(struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj) {
+  freeNs0TSListFacebookUserDataObjType(_tSListFacebookUserDataObj);
+  free(_tSListFacebookUserDataObj);
+}
+
+/**
+ * Reads a TSListFacebookUserDataObj element from XML. The element to be read is "list_user_profile_fb", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSListFacebookUserDataObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSListFacebookUserDataObj *xmlTextReaderReadNs0List_user_profile_fbElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "list_user_profile_fb", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}list_user_profile_fb.\n");
+#endif
+    _tSListFacebookUserDataObj = xmlTextReaderReadNs0TSListFacebookUserDataObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSListFacebookUserDataObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}list_user_profile_fb failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}list_user_profile_fb failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSListFacebookUserDataObj;
+}
+
+/**
+ * Writes a TSListFacebookUserDataObj to XML under element name "list_user_profile_fb".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0List_user_profile_fbElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj) {
+  return xmlTextWriterWriteNs0List_user_profile_fbElementNS(writer, _tSListFacebookUserDataObj, 0);
+}
+
+/**
+ * Writes a TSListFacebookUserDataObj to XML under element name "list_user_profile_fb".
+ *
+ * @param writer The XML writer.
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0List_user_profile_fbElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "list_user_profile_fb", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}list_user_profile_fb. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSListFacebookUserDataObj for root element {}list_user_profile_fb...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSListFacebookUserDataObjType(writer, _tSListFacebookUserDataObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}list_user_profile_fb. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}list_user_profile_fb. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSListFacebookUserDataObj.
+ *
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj whose children are to be free.
+ */
+static void freeNs0List_user_profile_fbElement(struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj) {
+  freeNs0TSListFacebookUserDataObjType(_tSListFacebookUserDataObj);
+}
+
+/**
+ * Reads a TSListFacebookUserDataObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSListFacebookUserDataObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSListFacebookUserDataObj *xmlTextReaderReadNs0TSListFacebookUserDataObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj = calloc(1, sizeof(struct enunciate_ns0_TSListFacebookUserDataObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSListFacebookUserDataObjType(_tSListFacebookUserDataObj);
+        free(_tSListFacebookUserDataObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "user_current_profile", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}user_current_profile of type {}TSFacebookUserDataObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSFacebookUserDataObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}user_current_profile of type {}TSFacebookUserDataObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSListFacebookUserDataObjType(_tSListFacebookUserDataObj);
+          free(_tSListFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSListFacebookUserDataObj->user_profile_current = ((struct enunciate_ns0_TSFacebookUserDataObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "list_user_profile", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}list_user_profile of type {}TSFacebookUserDataObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSFacebookUserDataObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}list_user_profile of type {}TSFacebookUserDataObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSListFacebookUserDataObjType(_tSListFacebookUserDataObj);
+          free(_tSListFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSListFacebookUserDataObj->list_user_profile_fb = realloc(_tSListFacebookUserDataObj->list_user_profile_fb, (_tSListFacebookUserDataObj->_sizeof_list_user_profile_fb + 1) * sizeof(struct enunciate_ns0_TSFacebookUserDataObj));
+        memcpy(&(_tSListFacebookUserDataObj->list_user_profile_fb[_tSListFacebookUserDataObj->_sizeof_list_user_profile_fb++]), _child_accessor, sizeof(struct enunciate_ns0_TSFacebookUserDataObj));
+        free(_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSListFacebookUserDataObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSListFacebookUserDataObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSListFacebookUserDataObj;
+}
+
+/**
+ * Writes a TSListFacebookUserDataObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSListFacebookUserDataObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSListFacebookUserDataObj->user_profile_current != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "user_current_profile", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}user_current_profile. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSFacebookUserDataObj for element {}user_current_profile...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSFacebookUserDataObjType(writer, (_tSListFacebookUserDataObj->user_profile_current));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSFacebookUserDataObj for element {}user_current_profile. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}user_current_profile. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  for (i = 0; i < _tSListFacebookUserDataObj->_sizeof_list_user_profile_fb; i++) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "list_user_profile", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}list_user_profile. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSFacebookUserDataObj for element {}list_user_profile...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSFacebookUserDataObjType(writer, &(_tSListFacebookUserDataObj->list_user_profile_fb[i]));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSFacebookUserDataObj for element {}list_user_profile. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}list_user_profile. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSListFacebookUserDataObj.
+ *
+ * @param _tSListFacebookUserDataObj The TSListFacebookUserDataObj to free.
+ */
+static void freeNs0TSListFacebookUserDataObjType(struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj) {
+  int i;
+  if (_tSListFacebookUserDataObj->user_profile_current != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor user_profile_current of type enunciate_ns0_TSListFacebookUserDataObj...\n");
+#endif
+    freeNs0TSFacebookUserDataObjType(_tSListFacebookUserDataObj->user_profile_current);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor user_profile_current of type enunciate_ns0_TSListFacebookUserDataObj...\n");
+#endif
+    free(_tSListFacebookUserDataObj->user_profile_current);
+  }
+  if (_tSListFacebookUserDataObj->list_user_profile_fb != NULL) {
+    for (i = 0; i < _tSListFacebookUserDataObj->_sizeof_list_user_profile_fb; i++) {
+#if DEBUG_ENUNCIATE > 1
+      printf("Freeing accessor list_user_profile_fb[%i] of type enunciate_ns0_TSListFacebookUserDataObj...\n", i);
+#endif
+      freeNs0TSFacebookUserDataObjType(&(_tSListFacebookUserDataObj->list_user_profile_fb[i]));
+    }
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor list_user_profile_fb of type enunciate_ns0_TSListFacebookUserDataObj...\n");
+#endif
+    free(_tSListFacebookUserDataObj->list_user_profile_fb);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSListFacebookUserDataObj_M */
 #ifndef DEF_enunciate_ns0_TSNotificationSettingsObj_M
 #define DEF_enunciate_ns0_TSNotificationSettingsObj_M
 
@@ -7328,6 +9914,27 @@ static struct enunciate_ns0_TSUserObj *xmlTextReaderReadNs0TSUserObjType(xmlText
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "autoUserId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}autoUserId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}autoUserId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSUserObjType(_tSUserObj);
+          free(_tSUserObj);
+          return NULL;
+        }
+
+        _tSUserObj->autoUserId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "userId", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -7774,6 +10381,36 @@ static struct enunciate_ns0_TSUserObj *xmlTextReaderReadNs0TSUserObjType(xmlText
 static int xmlTextWriterWriteNs0TSUserObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSUserObj *_tSUserObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSUserObj->autoUserId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "autoUserId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}autoUserId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}autoUserId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSUserObj->autoUserId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}autoUserId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}autoUserId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSUserObj->userId != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "userId", NULL);
     if (status < 0) {
@@ -8385,6 +11022,16 @@ static int xmlTextWriterWriteNs0TSUserObjType(xmlTextWriterPtr writer, struct en
  */
 static void freeNs0TSUserObjType(struct enunciate_ns0_TSUserObj *_tSUserObj) {
   int i;
+  if (_tSUserObj->autoUserId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor autoUserId of type enunciate_ns0_TSUserObj...\n");
+#endif
+    freeXsStringType(_tSUserObj->autoUserId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor autoUserId of type enunciate_ns0_TSUserObj...\n");
+#endif
+    free(_tSUserObj->autoUserId);
+  }
   if (_tSUserObj->userId != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor userId of type enunciate_ns0_TSUserObj...\n");
