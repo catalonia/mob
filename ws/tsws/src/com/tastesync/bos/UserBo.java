@@ -10,13 +10,14 @@ import com.tastesync.model.objects.TSSocialSettingsObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
+import com.tastesync.model.response.UserResponse;
 
 import java.util.List;
 
 public interface UserBo {
-	TSUserObj login(String email, String password) throws TasteSyncException;
+	UserResponse login(String email, String password) throws TasteSyncException;
 	
-	TSUserObj login_fb(TSListFacebookUserDataObj list_user_profile) throws TasteSyncException;
+	UserResponse login_fb(TSListFacebookUserDataObj list_user_profile) throws TasteSyncException;
 	
 	boolean logout(String userId) throws TasteSyncException;
 

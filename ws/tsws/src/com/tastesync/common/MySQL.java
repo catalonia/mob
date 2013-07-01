@@ -172,6 +172,33 @@ public class MySQL {
 		}
 		return user;
 	}
+	
+	public String getUserIDFromUserLogID(String userLogID)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+        try{
+        	connection = tsDataSource.getConnection();
+        	tsDataSource.begin();
+        	System.out.println("UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL=" + UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL);
+        	statement = connection.prepareStatement(UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL);
+        	statement.setString(1, userLogID);
+        	resultset = statement.executeQuery();
+        	if(resultset.next())
+        	{
+        		return CommonFunctionsUtil.getModifiedValueString(resultset.getString("users_log.USER_ID"));
+        	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+		}
+		return null;
+	}
+	
 	public String getAutoUserLogByUserId(String UserId) {
 		
 		String userId = "";
@@ -183,12 +210,12 @@ public class MySQL {
         try{
         	connection = tsDataSource.getConnection();
         	tsDataSource.begin();
-        	statement = connection.prepareStatement(UserQueries.USERLOG_EMAIL_SELECT_SQL);
+        	statement = connection.prepareStatement(UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL);
         	statement.setString(1, UserId);
         	resultset = statement.executeQuery();
         	if(resultset.next())
         	{
-        		userId = CommonFunctionsUtil.getModifiedValueString(resultset.getString("users_log.Auto_Log_ID"));
+        		userId = CommonFunctionsUtil.getModifiedValueString(resultset.getString("users_log.USER_ID"));
         	}
 		} catch (Exception e) {
 			e.printStackTrace();

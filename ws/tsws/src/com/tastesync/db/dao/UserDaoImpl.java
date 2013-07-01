@@ -14,6 +14,7 @@ import com.tastesync.model.objects.TSSocialSettingsObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
+import com.tastesync.model.response.UserResponse;
 import com.tastesync.util.CommonFunctionsUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,13 +29,15 @@ import java.util.List;
 
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
-    public TSUserObj login(String email, String password) throws TasteSyncException {
+    public UserResponse login(String email, String password) throws TasteSyncException {
     	TSUserObj tsUserObj = null;
         
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
+        String id = null;
+        UserResponse response = null;
         
         try{
         	connection = tsDataSource.getConnection();
@@ -57,10 +60,30 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             	statement.executeUpdate();
             	
             	String dateNow = CommonFunctionsUtil.getCurrentDatetime();
-            	statement = connection.prepareStatement(UserQueries.USER_LOGIN_UPDATE_SQL);
-            	statement.setString(1, dateNow);
-            	statement.setString(2, tsUserObj.getUserId());
+            	String dateNowAppend = CommonFunctionsUtil.getCurrentDatetimeAppendField();
+            	connection = tsDataSource.getConnection();
+            	statement = connection.prepareStatement(UserQueries.USER_LOGIN_INSERT_SQL,Statement.RETURN_GENERATED_KEYS);
+            	statement.setString(1, tsUserObj.getUserId());
+            	statement.setString(2, dateNow);
+            	statement.setString(3, dateNow);
             	statement.executeUpdate();
+            	
+            	resultset = statement.getGeneratedKeys();
+            	int risultato = 0;
+            	if (resultset.next()){
+            	    risultato = resultset.getInt(1);
+            	}
+            	String auto_id = String.valueOf(risultato);
+				id = dateNowAppend + "-" + tsUserObj.getUserId() + "-" + risultato;
+				System.out.println("USERLOG_LOGID_UPDATE_SQL: AUTO_LOG_ID:" + risultato);
+				connection = tsDataSource.getConnection();
+				statement = connection.prepareStatement(UserQueries.USERLOG_LOGID_UPDATE_SQL);
+            	statement.setString(1, id);
+            	statement.setString(2, auto_id);
+            	statement.executeUpdate();
+            	response = new UserResponse();
+                response.setUser(tsUserObj);
+                response.setUser_log_id(id);
         	}
        
         }catch(SQLException e)
@@ -71,18 +94,22 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, resultset);
         }
-        return tsUserObj;
+        
+        return response;
     }
     
 	@Override
-	public TSUserObj login_fb(TSListFacebookUserDataObj list_user_profile)
+	public UserResponse login_fb(TSListFacebookUserDataObj list_user_profile)
 			throws TasteSyncException {
+
+		UserResponse response = null;
 		String dateNow = CommonFunctionsUtil.getCurrentDatetime();
 		String dateNowAppend = CommonFunctionsUtil.getCurrentDatetimeAppendField();
 		//KeyHolder keyHolder = null;
 
 		//String sql;
-		TSUserObj user_response = null;
+		// = new UserResponse();
+	   //     response.setUser(user_response);
 		MySQL mySQL = new MySQL();
 		TSFacebookUserDataObj user_current_profile = null;
 		List<TSFacebookUserDataObj> profiles = new ArrayList<TSFacebookUserDataObj>();
@@ -92,6 +119,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		
 		String auto_id = null;
 		String id = null;
+		String userLogId = null;
 		
 		if(list_user_profile != null) {
 			try {
@@ -197,6 +225,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			            	///////////////////////////////////
 			            	
 							id = dateNowAppend + "-" + user_id + "-" + risultato;
+							userLogId = id;
 							System.out.println("USERLOG_LOGID_UPDATE_SQL: AUTO_LOG_ID:" + risultato);
 							connection = tsDataSource.getConnection();
 							statement = connection.prepareStatement(UserQueries.USERLOG_LOGID_UPDATE_SQL);
@@ -234,7 +263,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			            	statement.executeUpdate();
 							
 							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
-							user_response = user;
+							response = new UserResponse();
+							response.setUser(user);
+							response.setUser_log_id(userLogId);
 							
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -247,7 +278,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						TSDataSource tsDataSource = TSDataSource.getInstance();				 
 				        Connection connection = null;
 				        PreparedStatement statement = null;
-				        //ResultSet resultset = null;
+				        ResultSet resultset = null;
 						try {
 							connection = tsDataSource.getConnection();
 				        	tsDataSource.begin();
@@ -264,12 +295,28 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				            	statement.setString(2, user.getUserId());
 				            	statement.executeUpdate();
 								
-				            	System.out.println(UserQueries.USER_LOGIN_UPDATE_SQL);
-								//Update login time
+				            	System.out.println(UserQueries.USER_LOGIN_INSERT_SQL);
+								//Update login time (users_log table)
 				            	connection = tsDataSource.getConnection();
-				            	statement = connection.prepareStatement(UserQueries.USER_LOGIN_UPDATE_SQL);
-				            	statement.setString(1, dateNow);
-				            	statement.setString(2, user.getUserId());
+				            	statement = connection.prepareStatement(UserQueries.USER_LOGIN_INSERT_SQL,Statement.RETURN_GENERATED_KEYS);
+				            	statement.setString(1, user.getUserId());
+				            	statement.setString(2, dateNow);
+				            	statement.setString(3, dateNow);
+				            	statement.executeUpdate();
+				            	
+				            	resultset = statement.getGeneratedKeys();
+				            	int risultato = 0;
+				            	if (resultset.next()){
+				            	    risultato = resultset.getInt(1);
+				            	}
+				            	auto_id = String.valueOf(risultato);
+								id = dateNowAppend + "-" + user.getUserId() + "-" + risultato;
+								userLogId = id;
+								System.out.println("USERLOG_LOGID_UPDATE_SQL: AUTO_LOG_ID:" + risultato);
+								connection = tsDataSource.getConnection();
+								statement = connection.prepareStatement(UserQueries.USERLOG_LOGID_UPDATE_SQL);
+				            	statement.setString(1, id);
+				            	statement.setString(2, auto_id);
 				            	statement.executeUpdate();
 							}
 							else {
@@ -379,7 +426,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			            	statement.executeUpdate();
 							
 							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
-							user_response = user;
+							response = new UserResponse();
+							response.setUser(user);
+							response.setUser_log_id(userLogId);
 							
 							//Update Facebook's friend infor
 							if(profiles != null && !profiles.isEmpty()) {
@@ -509,18 +558,19 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			}
 			
 		}
-
-		return user_response;
+		return response;
 	}
 	
     @Override
-    public boolean logout(String userId) throws TasteSyncException {
+    public boolean logout(String userLogID) throws TasteSyncException {
     	TSUserObj user = null;
 		MySQL mySQL = new MySQL();
 		String dateNow = CommonFunctionsUtil.getCurrentDatetime();
 		
 		try {
-			user = mySQL.getUserInformation(userId);
+			String userID = mySQL.getAutoUserLogByUserId(userLogID);
+			System.out.println("USERID"+userID);
+			user = mySQL.getUserInformation(userID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -538,14 +588,14 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	        	System.out.println("UserQueries.USER_ONLINE_UPDATE_SQL=" + UserQueries.USER_ONLINE_UPDATE_SQL);
 	        	statement = connection.prepareStatement(UserQueries.USER_ONLINE_UPDATE_SQL);
 	        	statement.setString(1, String.valueOf("n"));
-	        	statement.setString(2, userId);
+	        	statement.setString(2, user.getUserId());
 	        	statement.executeUpdate();
 	        	
 	        	connection = tsDataSource.getConnection();
-	        	System.out.println("UserQueries.USER_LOGOUT_UPDATE_SQL=" + UserQueries.USER_LOGOUT_UPDATE_SQL);
-	        	statement = connection.prepareStatement(UserQueries.USER_LOGOUT_UPDATE_SQL);
+	        	System.out.println("UserQueries.USERSLOG_LOGOUT_UPDATE_SQL=" + UserQueries.USERSLOG_LOGOUT_UPDATE_SQL);
+	        	statement = connection.prepareStatement(UserQueries.USERSLOG_LOGOUT_UPDATE_SQL);
 	        	statement.setString(1, dateNow);
-	        	statement.setString(2, userId);
+	        	statement.setString(2, userLogID);
 	        	statement.executeUpdate();
 	        }catch(SQLException e){
 	        	return false;

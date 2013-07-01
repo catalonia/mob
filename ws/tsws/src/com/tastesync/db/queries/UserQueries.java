@@ -68,6 +68,9 @@ public interface UserQueries extends TSDBCommonQueries {
     public static String USER_ONLINE_UPDATE_SQL = "UPDATE users " + "SET IS_ONLINE = ? " + "WHERE USER_ID = ?";
     public static String USER_LOGIN_UPDATE_SQL = "UPDATE users_log " + "SET LOGIN_DATETIME = ? " + 
     	"WHERE USER_ID = ?";
+    public static String USERSLOG_LOGOUT_UPDATE_SQL = "UPDATE users_log " + "SET LOGOUT_DATETIME = ? " + 
+        	"WHERE LOG_ID = ?";
+    public static String USER_ID_FROM_USERLOG_SELECT_SQL = "SELECT * FROM users_log WHERE LOG_ID = ?";
     public static String USER_STATUS_SELECT_SQL = "SELECT * FROM users WHERE USER_ID = ? AND CURRENT_STATUS = ?";
     public static String FACEBOOK_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID = ?";
     public static String FACEBOOK_INSERT_SQL = "INSERT INTO facebook_user_data " + "(User_FB_ID, " + "NAME, " + "FIRST_NAME, " + "MIDDLE_NAME, " +

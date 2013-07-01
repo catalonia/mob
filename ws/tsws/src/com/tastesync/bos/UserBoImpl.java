@@ -13,6 +13,7 @@ import com.tastesync.model.objects.TSSocialSettingsObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
+import com.tastesync.model.response.UserResponse;
 
 import java.util.List;
 
@@ -21,12 +22,12 @@ public class UserBoImpl implements UserBo {
     private UserDao userDao = new UserDaoImpl();
 
     @Override
-    public TSUserObj login(String email, String password) throws TasteSyncException{
+    public UserResponse login(String email, String password) throws TasteSyncException{
         return userDao.login(email, password);
     }
 
 	@Override
-	public TSUserObj login_fb(TSListFacebookUserDataObj list_user_profile)
+	public UserResponse login_fb(TSListFacebookUserDataObj list_user_profile)
 			throws TasteSyncException {
 		return userDao.login_fb(list_user_profile);
 	}

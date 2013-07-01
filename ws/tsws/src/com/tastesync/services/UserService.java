@@ -15,6 +15,7 @@ import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
+import com.tastesync.model.response.UserResponse;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
@@ -61,14 +62,14 @@ public class UserService extends BaseService {
     String email, @FormParam("password")
     String password) {
     	if (logger.isDebugEnabled()) {
-            logger.debug("login - start=================");
+            logger.debug("login - start");
         }
-        TSUserObj tsUserObj = null;
+    	UserResponse userResponse = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         
 		try {
-			tsUserObj = userBo.login(email, password);
-			return Response.status(status).entity(tsUserObj).build();
+			userResponse = userBo.login(email, password);
+			return Response.status(status).entity(userResponse).build();
 		} catch (TasteSyncException e) {
 			e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -76,7 +77,7 @@ public class UserService extends BaseService {
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
             return Response.status(status).entity(tsErrorObj).build();
 		}finally {
-			if (tsUserObj == null) {
+			if (userResponse == null) {
 				status = TSResponseStatusCode.ERROR.getValue();
 				TSErrorObj tsErrorObj = new TSErrorObj();
 				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
@@ -91,13 +92,13 @@ public class UserService extends BaseService {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response login_fb(TSListFacebookUserDataObj list_user_profile) {
     	logger.debug("---------------------------------------------------------------------------");
-    	TSUserObj tsUserObj = null;
+    	UserResponse userResponse = null;
     	
         int status = TSResponseStatusCode.SUCCESS.getValue();
         
 		try {
-			tsUserObj = userBo.login_fb(list_user_profile);
-			return Response.status(status).entity(tsUserObj).build();
+			userResponse = userBo.login_fb(list_user_profile);
+			return Response.status(status).entity(userResponse).build();
 		} catch (Exception e) {
 			e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -106,7 +107,7 @@ public class UserService extends BaseService {
             return Response.status(status).entity(tsErrorObj).build();
 		}
             finally {
-			if (tsUserObj == null) {
+			if (userResponse == null) {
 				status = TSResponseStatusCode.ERROR.getValue();
 				TSErrorObj tsErrorObj = new TSErrorObj();
 				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
@@ -121,7 +122,7 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response logout(@FormParam("userId")
+    public Response logout(@FormParam("userLogId")
     String userId) {
         // TODO expire access token
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -130,6 +131,7 @@ public class UserService extends BaseService {
         try {
         	responseDone = userBo.logout(userId);
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            tsSuccessObj.setSuccessMsg("Logout success!");
             return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
