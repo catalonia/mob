@@ -60,9 +60,22 @@
             <li class="current">
               <a href="el_ns0_result.html">result element</a>
               <ul>
+                <li><a href="el_ns0_recommenders.html">recommenders element</a></li>
                 <li><a href="el_ns0_result.html">result element</a></li>
-                <li><a href="el_ns0_user.html">user element</a></li>
+                <li><a href="el_ns0_social.html">social element</a></li>
+                <li><a href="el_ns0_restaurantdetails.html">restaurantdetails element</a></li>
+                <li><a href="el_ns0_facebook_user_data.html">facebook_user_data element</a></li>
+                <li><a href="el_ns0_list_user_profile_fb.html">list_user_profile_fb element</a></li>
+                <li><a href="el_ns0_restaurant.html">restaurant element</a></li>
+                <li><a href="el_ns0_userprofilerestaurants.html">userprofilerestaurants element</a></li>
+                <li><a href="el_ns0_autopub.html">autopub element</a></li>
+                <li><a href="el_ns0_userprofile.html">userprofile element</a></li>
+                <li><a href="el_ns0_restaurants.html">restaurants element</a></li>
                 <li><a href="el_ns0_error.html">error element</a></li>
+                <li><a href="el_ns0_photo.html">photo element</a></li>
+                <li><a href="el_ns0_user.html">user element</a></li>
+                <li><a href="el_ns0_notifications.html">notifications element</a></li>
+                <li><a href="el_ns0_privacy.html">privacy element</a></li>
                 <li><a href="el_ns0_success.html">success element</a></li>
               </ul>
             </li>
@@ -88,9 +101,460 @@
       </table>
       <h2>Example XML</h2>
       <code class="prettyprint lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;result /&gt;</code>
+&lt;result&gt;
+  &lt;user&gt;
+    &lt;autoUserId&gt;...&lt;/autoUserId&gt;
+    &lt;userId&gt;...&lt;/userId&gt;
+    &lt;tsUserId&gt;...&lt;/tsUserId&gt;
+    &lt;tsUserEmail&gt;...&lt;/tsUserEmail&gt;
+    &lt;tsUserPw&gt;...&lt;/tsUserPw&gt;
+    &lt;tsFirstName&gt;...&lt;/tsFirstName&gt;
+    &lt;tsLastName&gt;...&lt;/tsLastName&gt;
+    &lt;maxInvites&gt;...&lt;/maxInvites&gt;
+    &lt;userCreatedInitialDatetime&gt;...&lt;/userCreatedInitialDatetime&gt;
+    &lt;userPoints&gt;...&lt;/userPoints&gt;
+    &lt;twitterUsrUrl&gt;...&lt;/twitterUsrUrl&gt;
+    &lt;userDisabledFlag&gt;...&lt;/userDisabledFlag&gt;
+    &lt;userActivationKey&gt;...&lt;/userActivationKey&gt;
+    &lt;userGender&gt;...&lt;/userGender&gt;
+    &lt;userCityId&gt;...&lt;/userCityId&gt;
+    &lt;userState&gt;...&lt;/userState&gt;
+    &lt;isOnline&gt;...&lt;/isOnline&gt;
+    &lt;userCountry&gt;...&lt;/userCountry&gt;
+    &lt;userFbId&gt;...&lt;/userFbId&gt;
+    &lt;about&gt;...&lt;/about&gt;
+    &lt;currentStatus&gt;...&lt;/currentStatus&gt;
+  &lt;/user&gt;
+  &lt;user_profile_obj&gt;
+    &lt;name&gt;...&lt;/name&gt;
+    &lt;photo&gt;...&lt;/photo&gt;
+    &lt;facebookCity&gt;...&lt;/facebookCity&gt;
+    &lt;facebookUrl&gt;...&lt;/facebookUrl&gt;
+    &lt;twitterUrl&gt;...&lt;/twitterUrl&gt;
+    &lt;blogUrl&gt;...&lt;/blogUrl&gt;
+    &lt;aboutMeText&gt;...&lt;/aboutMeText&gt;
+    &lt;numFollowers&gt;...&lt;/numFollowers&gt;
+    &lt;numFollowees&gt;...&lt;/numFollowees&gt;
+    &lt;numFriendsOnTs&gt;...&lt;/numFriendsOnTs&gt;
+    &lt;numPoints&gt;...&lt;/numPoints&gt;
+    &lt;testaurantDetailsList&gt;
+      &lt;openNowFlag&gt;...&lt;/openNowFlag&gt;
+      &lt;dealHeadline&gt;...&lt;/dealHeadline&gt;
+      &lt;photoList&gt;
+        &lt;userId&gt;...&lt;/userId&gt;
+        &lt;name&gt;...&lt;/name&gt;
+        &lt;photo&gt;...&lt;/photo&gt;
+      &lt;/photoList&gt;
+      &lt;photoList&gt;
+        &lt;!--...--&gt;
+      &lt;/photoList&gt;
+      &lt;!--...more &quot;photoList&quot; elements...--&gt;
+      &lt;moreInfoFlag&gt;...&lt;/moreInfoFlag&gt;
+      &lt;menuFlag&gt;...&lt;/menuFlag&gt;
+      &lt;userRestaurantSavedFlag&gt;...&lt;/userRestaurantSavedFlag&gt;
+      &lt;userRestaurantFavFlag&gt;...&lt;/userRestaurantFavFlag&gt;
+      &lt;userRestaurantTipFlag&gt;...&lt;/userRestaurantTipFlag&gt;
+    &lt;/testaurantDetailsList&gt;
+    &lt;testaurantDetailsList&gt;
+      &lt;!--...--&gt;
+    &lt;/testaurantDetailsList&gt;
+    &lt;!--...more &quot;testaurantDetailsList&quot; elements...--&gt;
+  &lt;/user_profile_obj&gt;
+  &lt;user_data&gt;
+    &lt;restauarntId&gt;...&lt;/restauarntId&gt;
+    &lt;restaurantName&gt;...&lt;/restaurantName&gt;
+    &lt;cuisineTier2Name&gt;...&lt;/cuisineTier2Name&gt;
+    &lt;price&gt;...&lt;/price&gt;
+    &lt;restaurantCity&gt;...&lt;/restaurantCity&gt;
+    &lt;restaurantState&gt;...&lt;/restaurantState&gt;
+    &lt;restaurantCountry&gt;...&lt;/restaurantCountry&gt;
+    &lt;restaurantLat&gt;...&lt;/restaurantLat&gt;
+    &lt;restaurantLong&gt;...&lt;/restaurantLong&gt;
+    &lt;restaurantDealFlag&gt;...&lt;/restaurantDealFlag&gt;
+    &lt;restaurantRating&gt;...&lt;/restaurantRating&gt;
+    &lt;userSavedFlag&gt;...&lt;/userSavedFlag&gt;
+    &lt;userFavFlag&gt;...&lt;/userFavFlag&gt;
+    &lt;userRecommendedFlag&gt;...&lt;/userRecommendedFlag&gt;
+    &lt;userTipFlag&gt;...&lt;/userTipFlag&gt;
+  &lt;/user_data&gt;
+  &lt;city&gt;
+    &lt;userName&gt;...&lt;/userName&gt;
+    &lt;id&gt;...&lt;/id&gt;
+    &lt;name&gt;...&lt;/name&gt;
+    &lt;firstName&gt;...&lt;/firstName&gt;
+    &lt;middleName&gt;...&lt;/middleName&gt;
+    &lt;lastName&gt;...&lt;/lastName&gt;
+    &lt;gender&gt;...&lt;/gender&gt;
+    &lt;locale&gt;...&lt;/locale&gt;
+    &lt;link&gt;...&lt;/link&gt;
+    &lt;ageRange&gt;...&lt;/ageRange&gt;
+    &lt;birthday&gt;...&lt;/birthday&gt;
+    &lt;thirdPartyId&gt;...&lt;/thirdPartyId&gt;
+    &lt;friendlists&gt;...&lt;/friendlists&gt;
+    &lt;installed&gt;...&lt;/installed&gt;
+    &lt;timezone&gt;...&lt;/timezone&gt;
+    &lt;updatedTime&gt;...&lt;/updatedTime&gt;
+    &lt;verified&gt;...&lt;/verified&gt;
+    &lt;devices&gt;...&lt;/devices&gt;
+    &lt;email&gt;...&lt;/email&gt;
+    &lt;hometown&gt;...&lt;/hometown&gt;
+    &lt;location&gt;...&lt;/location&gt;
+    &lt;picture&gt;...&lt;/picture&gt;
+    &lt;relationshipStatus&gt;...&lt;/relationshipStatus&gt;
+    &lt;checkins&gt;...&lt;/checkins&gt;
+    &lt;friends&gt;...&lt;/friends&gt;
+    &lt;likes&gt;...&lt;/likes&gt;
+    &lt;permissions&gt;...&lt;/permissions&gt;
+    &lt;create&gt;...&lt;/create&gt;
+  &lt;/city&gt;
+  &lt;fb_user_data&gt;
+    &lt;cityId&gt;...&lt;/cityId&gt;
+    &lt;country&gt;...&lt;/country&gt;
+    &lt;state&gt;...&lt;/state&gt;
+    &lt;city&gt;...&lt;/city&gt;
+  &lt;/fb_user_data&gt;
+  &lt;list_user_data&gt;
+    &lt;autoUserId&gt;...&lt;/autoUserId&gt;
+    &lt;userId&gt;...&lt;/userId&gt;
+    &lt;tsUserId&gt;...&lt;/tsUserId&gt;
+    &lt;tsUserEmail&gt;...&lt;/tsUserEmail&gt;
+    &lt;tsUserPw&gt;...&lt;/tsUserPw&gt;
+    &lt;tsFirstName&gt;...&lt;/tsFirstName&gt;
+    &lt;tsLastName&gt;...&lt;/tsLastName&gt;
+    &lt;maxInvites&gt;...&lt;/maxInvites&gt;
+    &lt;userCreatedInitialDatetime&gt;...&lt;/userCreatedInitialDatetime&gt;
+    &lt;userPoints&gt;...&lt;/userPoints&gt;
+    &lt;twitterUsrUrl&gt;...&lt;/twitterUsrUrl&gt;
+    &lt;userDisabledFlag&gt;...&lt;/userDisabledFlag&gt;
+    &lt;userActivationKey&gt;...&lt;/userActivationKey&gt;
+    &lt;userGender&gt;...&lt;/userGender&gt;
+    &lt;userCityId&gt;...&lt;/userCityId&gt;
+    &lt;userState&gt;...&lt;/userState&gt;
+    &lt;isOnline&gt;...&lt;/isOnline&gt;
+    &lt;userCountry&gt;...&lt;/userCountry&gt;
+    &lt;userFbId&gt;...&lt;/userFbId&gt;
+    &lt;about&gt;...&lt;/about&gt;
+    &lt;currentStatus&gt;...&lt;/currentStatus&gt;
+  &lt;/list_user_data&gt;
+  &lt;list_user_data&gt;
+    &lt;!--...--&gt;
+  &lt;/list_user_data&gt;
+  &lt;!--...more &quot;list_user_data&quot; elements...--&gt;
+  &lt;list_user&gt;
+    &lt;name&gt;...&lt;/name&gt;
+    &lt;photo&gt;...&lt;/photo&gt;
+    &lt;facebookCity&gt;...&lt;/facebookCity&gt;
+    &lt;facebookUrl&gt;...&lt;/facebookUrl&gt;
+    &lt;twitterUrl&gt;...&lt;/twitterUrl&gt;
+    &lt;blogUrl&gt;...&lt;/blogUrl&gt;
+    &lt;aboutMeText&gt;...&lt;/aboutMeText&gt;
+    &lt;numFollowers&gt;...&lt;/numFollowers&gt;
+    &lt;numFollowees&gt;...&lt;/numFollowees&gt;
+    &lt;numFriendsOnTs&gt;...&lt;/numFriendsOnTs&gt;
+    &lt;numPoints&gt;...&lt;/numPoints&gt;
+    &lt;testaurantDetailsList&gt;
+      &lt;openNowFlag&gt;...&lt;/openNowFlag&gt;
+      &lt;dealHeadline&gt;...&lt;/dealHeadline&gt;
+      &lt;photoList&gt;
+        &lt;userId&gt;...&lt;/userId&gt;
+        &lt;name&gt;...&lt;/name&gt;
+        &lt;photo&gt;...&lt;/photo&gt;
+      &lt;/photoList&gt;
+      &lt;photoList&gt;
+        &lt;!--...--&gt;
+      &lt;/photoList&gt;
+      &lt;!--...more &quot;photoList&quot; elements...--&gt;
+      &lt;moreInfoFlag&gt;...&lt;/moreInfoFlag&gt;
+      &lt;menuFlag&gt;...&lt;/menuFlag&gt;
+      &lt;userRestaurantSavedFlag&gt;...&lt;/userRestaurantSavedFlag&gt;
+      &lt;userRestaurantFavFlag&gt;...&lt;/userRestaurantFavFlag&gt;
+      &lt;userRestaurantTipFlag&gt;...&lt;/userRestaurantTipFlag&gt;
+    &lt;/testaurantDetailsList&gt;
+    &lt;testaurantDetailsList&gt;
+      &lt;!--...--&gt;
+    &lt;/testaurantDetailsList&gt;
+    &lt;!--...more &quot;testaurantDetailsList&quot; elements...--&gt;
+  &lt;/list_user&gt;
+  &lt;list_user&gt;
+    &lt;!--...--&gt;
+  &lt;/list_user&gt;
+  &lt;!--...more &quot;list_user&quot; elements...--&gt;
+  &lt;list_user_follow_data&gt;
+    &lt;restauarntId&gt;...&lt;/restauarntId&gt;
+    &lt;restaurantName&gt;...&lt;/restaurantName&gt;
+    &lt;cuisineTier2Name&gt;...&lt;/cuisineTier2Name&gt;
+    &lt;price&gt;...&lt;/price&gt;
+    &lt;restaurantCity&gt;...&lt;/restaurantCity&gt;
+    &lt;restaurantState&gt;...&lt;/restaurantState&gt;
+    &lt;restaurantCountry&gt;...&lt;/restaurantCountry&gt;
+    &lt;restaurantLat&gt;...&lt;/restaurantLat&gt;
+    &lt;restaurantLong&gt;...&lt;/restaurantLong&gt;
+    &lt;restaurantDealFlag&gt;...&lt;/restaurantDealFlag&gt;
+    &lt;restaurantRating&gt;...&lt;/restaurantRating&gt;
+    &lt;userSavedFlag&gt;...&lt;/userSavedFlag&gt;
+    &lt;userFavFlag&gt;...&lt;/userFavFlag&gt;
+    &lt;userRecommendedFlag&gt;...&lt;/userRecommendedFlag&gt;
+    &lt;userTipFlag&gt;...&lt;/userTipFlag&gt;
+  &lt;/list_user_follow_data&gt;
+  &lt;list_user_follow_data&gt;
+    &lt;!--...--&gt;
+  &lt;/list_user_follow_data&gt;
+  &lt;!--...more &quot;list_user_follow_data&quot; elements...--&gt;
+  &lt;list_fb_user_data&gt;
+    &lt;userName&gt;...&lt;/userName&gt;
+    &lt;id&gt;...&lt;/id&gt;
+    &lt;name&gt;...&lt;/name&gt;
+    &lt;firstName&gt;...&lt;/firstName&gt;
+    &lt;middleName&gt;...&lt;/middleName&gt;
+    &lt;lastName&gt;...&lt;/lastName&gt;
+    &lt;gender&gt;...&lt;/gender&gt;
+    &lt;locale&gt;...&lt;/locale&gt;
+    &lt;link&gt;...&lt;/link&gt;
+    &lt;ageRange&gt;...&lt;/ageRange&gt;
+    &lt;birthday&gt;...&lt;/birthday&gt;
+    &lt;thirdPartyId&gt;...&lt;/thirdPartyId&gt;
+    &lt;friendlists&gt;...&lt;/friendlists&gt;
+    &lt;installed&gt;...&lt;/installed&gt;
+    &lt;timezone&gt;...&lt;/timezone&gt;
+    &lt;updatedTime&gt;...&lt;/updatedTime&gt;
+    &lt;verified&gt;...&lt;/verified&gt;
+    &lt;devices&gt;...&lt;/devices&gt;
+    &lt;email&gt;...&lt;/email&gt;
+    &lt;hometown&gt;...&lt;/hometown&gt;
+    &lt;location&gt;...&lt;/location&gt;
+    &lt;picture&gt;...&lt;/picture&gt;
+    &lt;relationshipStatus&gt;...&lt;/relationshipStatus&gt;
+    &lt;checkins&gt;...&lt;/checkins&gt;
+    &lt;friends&gt;...&lt;/friends&gt;
+    &lt;likes&gt;...&lt;/likes&gt;
+    &lt;permissions&gt;...&lt;/permissions&gt;
+    &lt;create&gt;...&lt;/create&gt;
+  &lt;/list_fb_user_data&gt;
+  &lt;list_fb_user_data&gt;
+    &lt;!--...--&gt;
+  &lt;/list_fb_user_data&gt;
+  &lt;!--...more &quot;list_fb_user_data&quot; elements...--&gt;
+  &lt;list_cities&gt;
+    &lt;cityId&gt;...&lt;/cityId&gt;
+    &lt;country&gt;...&lt;/country&gt;
+    &lt;state&gt;...&lt;/state&gt;
+    &lt;city&gt;...&lt;/city&gt;
+  &lt;/list_cities&gt;
+  &lt;list_cities&gt;
+    &lt;!--...--&gt;
+  &lt;/list_cities&gt;
+  &lt;!--...more &quot;list_cities&quot; elements...--&gt;
+  &lt;user_log_id&gt;...&lt;/user_log_id&gt;
+&lt;/result&gt;</code>
       <h2>Example JSON</h2>
       <code class="prettyprint lang-js">{
+  &quot;user&quot; : {
+    &quot;autoUserId&quot; : &quot;...&quot;,
+    &quot;userId&quot; : &quot;...&quot;,
+    &quot;tsUserId&quot; : &quot;...&quot;,
+    &quot;tsUserEmail&quot; : &quot;...&quot;,
+    &quot;tsUserPw&quot; : &quot;...&quot;,
+    &quot;tsFirstName&quot; : &quot;...&quot;,
+    &quot;tsLastName&quot; : &quot;...&quot;,
+    &quot;maxInvites&quot; : &quot;...&quot;,
+    &quot;userCreatedInitialDatetime&quot; : &quot;...&quot;,
+    &quot;userPoints&quot; : &quot;...&quot;,
+    &quot;twitterUsrUrl&quot; : &quot;...&quot;,
+    &quot;userDisabledFlag&quot; : &quot;...&quot;,
+    &quot;userActivationKey&quot; : &quot;...&quot;,
+    &quot;userGender&quot; : &quot;...&quot;,
+    &quot;userCityId&quot; : &quot;...&quot;,
+    &quot;userState&quot; : &quot;...&quot;,
+    &quot;isOnline&quot; : &quot;...&quot;,
+    &quot;userCountry&quot; : &quot;...&quot;,
+    &quot;userFbId&quot; : &quot;...&quot;,
+    &quot;about&quot; : &quot;...&quot;,
+    &quot;currentStatus&quot; : &quot;...&quot;
+  },
+  &quot;user_profile_obj&quot; : {
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;photo&quot; : &quot;...&quot;,
+    &quot;facebookCity&quot; : &quot;...&quot;,
+    &quot;facebookUrl&quot; : &quot;...&quot;,
+    &quot;twitterUrl&quot; : &quot;...&quot;,
+    &quot;blogUrl&quot; : &quot;...&quot;,
+    &quot;aboutMeText&quot; : &quot;...&quot;,
+    &quot;numFollowers&quot; : &quot;...&quot;,
+    &quot;numFollowees&quot; : &quot;...&quot;,
+    &quot;numFriendsOnTs&quot; : &quot;...&quot;,
+    &quot;numPoints&quot; : &quot;...&quot;,
+    &quot;testaurantDetailsList&quot; : [ {
+      &quot;openNowFlag&quot; : &quot;...&quot;,
+      &quot;dealHeadline&quot; : &quot;...&quot;,
+      &quot;photoList&quot; : [ {
+        &quot;userId&quot; : &quot;...&quot;,
+        &quot;name&quot; : &quot;...&quot;,
+        &quot;photo&quot; : &quot;...&quot;
+      }, ... ],
+      &quot;moreInfoFlag&quot; : &quot;...&quot;,
+      &quot;menuFlag&quot; : &quot;...&quot;,
+      &quot;userRestaurantSavedFlag&quot; : &quot;...&quot;,
+      &quot;userRestaurantFavFlag&quot; : &quot;...&quot;,
+      &quot;userRestaurantTipFlag&quot; : &quot;...&quot;
+    }, ... ]
+  },
+  &quot;user_data&quot; : {
+    &quot;restauarntId&quot; : &quot;...&quot;,
+    &quot;restaurantName&quot; : &quot;...&quot;,
+    &quot;cuisineTier2Name&quot; : &quot;...&quot;,
+    &quot;price&quot; : &quot;...&quot;,
+    &quot;restaurantCity&quot; : &quot;...&quot;,
+    &quot;restaurantState&quot; : &quot;...&quot;,
+    &quot;restaurantCountry&quot; : &quot;...&quot;,
+    &quot;restaurantLat&quot; : &quot;...&quot;,
+    &quot;restaurantLong&quot; : &quot;...&quot;,
+    &quot;restaurantDealFlag&quot; : &quot;...&quot;,
+    &quot;restaurantRating&quot; : &quot;...&quot;,
+    &quot;userSavedFlag&quot; : &quot;...&quot;,
+    &quot;userFavFlag&quot; : &quot;...&quot;,
+    &quot;userRecommendedFlag&quot; : &quot;...&quot;,
+    &quot;userTipFlag&quot; : &quot;...&quot;
+  },
+  &quot;city&quot; : {
+    &quot;userName&quot; : &quot;...&quot;,
+    &quot;id&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;firstName&quot; : &quot;...&quot;,
+    &quot;middleName&quot; : &quot;...&quot;,
+    &quot;lastName&quot; : &quot;...&quot;,
+    &quot;gender&quot; : &quot;...&quot;,
+    &quot;locale&quot; : &quot;...&quot;,
+    &quot;link&quot; : &quot;...&quot;,
+    &quot;ageRange&quot; : &quot;...&quot;,
+    &quot;birthday&quot; : &quot;...&quot;,
+    &quot;thirdPartyId&quot; : &quot;...&quot;,
+    &quot;friendlists&quot; : &quot;...&quot;,
+    &quot;installed&quot; : &quot;...&quot;,
+    &quot;timezone&quot; : &quot;...&quot;,
+    &quot;updatedTime&quot; : &quot;...&quot;,
+    &quot;verified&quot; : &quot;...&quot;,
+    &quot;devices&quot; : &quot;...&quot;,
+    &quot;email&quot; : &quot;...&quot;,
+    &quot;hometown&quot; : &quot;...&quot;,
+    &quot;location&quot; : &quot;...&quot;,
+    &quot;picture&quot; : &quot;...&quot;,
+    &quot;relationshipStatus&quot; : &quot;...&quot;,
+    &quot;checkins&quot; : &quot;...&quot;,
+    &quot;friends&quot; : &quot;...&quot;,
+    &quot;likes&quot; : &quot;...&quot;,
+    &quot;permissions&quot; : &quot;...&quot;,
+    &quot;create&quot; : &quot;...&quot;
+  },
+  &quot;fb_user_data&quot; : {
+    &quot;cityId&quot; : &quot;...&quot;,
+    &quot;country&quot; : &quot;...&quot;,
+    &quot;state&quot; : &quot;...&quot;,
+    &quot;city&quot; : &quot;...&quot;
+  },
+  &quot;list_user_data&quot; : [ {
+    &quot;autoUserId&quot; : &quot;...&quot;,
+    &quot;userId&quot; : &quot;...&quot;,
+    &quot;tsUserId&quot; : &quot;...&quot;,
+    &quot;tsUserEmail&quot; : &quot;...&quot;,
+    &quot;tsUserPw&quot; : &quot;...&quot;,
+    &quot;tsFirstName&quot; : &quot;...&quot;,
+    &quot;tsLastName&quot; : &quot;...&quot;,
+    &quot;maxInvites&quot; : &quot;...&quot;,
+    &quot;userCreatedInitialDatetime&quot; : &quot;...&quot;,
+    &quot;userPoints&quot; : &quot;...&quot;,
+    &quot;twitterUsrUrl&quot; : &quot;...&quot;,
+    &quot;userDisabledFlag&quot; : &quot;...&quot;,
+    &quot;userActivationKey&quot; : &quot;...&quot;,
+    &quot;userGender&quot; : &quot;...&quot;,
+    &quot;userCityId&quot; : &quot;...&quot;,
+    &quot;userState&quot; : &quot;...&quot;,
+    &quot;isOnline&quot; : &quot;...&quot;,
+    &quot;userCountry&quot; : &quot;...&quot;,
+    &quot;userFbId&quot; : &quot;...&quot;,
+    &quot;about&quot; : &quot;...&quot;,
+    &quot;currentStatus&quot; : &quot;...&quot;
+  }, ... ],
+  &quot;list_user&quot; : [ {
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;photo&quot; : &quot;...&quot;,
+    &quot;facebookCity&quot; : &quot;...&quot;,
+    &quot;facebookUrl&quot; : &quot;...&quot;,
+    &quot;twitterUrl&quot; : &quot;...&quot;,
+    &quot;blogUrl&quot; : &quot;...&quot;,
+    &quot;aboutMeText&quot; : &quot;...&quot;,
+    &quot;numFollowers&quot; : &quot;...&quot;,
+    &quot;numFollowees&quot; : &quot;...&quot;,
+    &quot;numFriendsOnTs&quot; : &quot;...&quot;,
+    &quot;numPoints&quot; : &quot;...&quot;,
+    &quot;testaurantDetailsList&quot; : [ {
+      &quot;openNowFlag&quot; : &quot;...&quot;,
+      &quot;dealHeadline&quot; : &quot;...&quot;,
+      &quot;photoList&quot; : [ {
+        &quot;userId&quot; : &quot;...&quot;,
+        &quot;name&quot; : &quot;...&quot;,
+        &quot;photo&quot; : &quot;...&quot;
+      }, ... ],
+      &quot;moreInfoFlag&quot; : &quot;...&quot;,
+      &quot;menuFlag&quot; : &quot;...&quot;,
+      &quot;userRestaurantSavedFlag&quot; : &quot;...&quot;,
+      &quot;userRestaurantFavFlag&quot; : &quot;...&quot;,
+      &quot;userRestaurantTipFlag&quot; : &quot;...&quot;
+    }, ... ]
+  }, ... ],
+  &quot;list_user_follow_data&quot; : [ {
+    &quot;restauarntId&quot; : &quot;...&quot;,
+    &quot;restaurantName&quot; : &quot;...&quot;,
+    &quot;cuisineTier2Name&quot; : &quot;...&quot;,
+    &quot;price&quot; : &quot;...&quot;,
+    &quot;restaurantCity&quot; : &quot;...&quot;,
+    &quot;restaurantState&quot; : &quot;...&quot;,
+    &quot;restaurantCountry&quot; : &quot;...&quot;,
+    &quot;restaurantLat&quot; : &quot;...&quot;,
+    &quot;restaurantLong&quot; : &quot;...&quot;,
+    &quot;restaurantDealFlag&quot; : &quot;...&quot;,
+    &quot;restaurantRating&quot; : &quot;...&quot;,
+    &quot;userSavedFlag&quot; : &quot;...&quot;,
+    &quot;userFavFlag&quot; : &quot;...&quot;,
+    &quot;userRecommendedFlag&quot; : &quot;...&quot;,
+    &quot;userTipFlag&quot; : &quot;...&quot;
+  }, ... ],
+  &quot;list_fb_user_data&quot; : [ {
+    &quot;userName&quot; : &quot;...&quot;,
+    &quot;id&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;firstName&quot; : &quot;...&quot;,
+    &quot;middleName&quot; : &quot;...&quot;,
+    &quot;lastName&quot; : &quot;...&quot;,
+    &quot;gender&quot; : &quot;...&quot;,
+    &quot;locale&quot; : &quot;...&quot;,
+    &quot;link&quot; : &quot;...&quot;,
+    &quot;ageRange&quot; : &quot;...&quot;,
+    &quot;birthday&quot; : &quot;...&quot;,
+    &quot;thirdPartyId&quot; : &quot;...&quot;,
+    &quot;friendlists&quot; : &quot;...&quot;,
+    &quot;installed&quot; : &quot;...&quot;,
+    &quot;timezone&quot; : &quot;...&quot;,
+    &quot;updatedTime&quot; : &quot;...&quot;,
+    &quot;verified&quot; : &quot;...&quot;,
+    &quot;devices&quot; : &quot;...&quot;,
+    &quot;email&quot; : &quot;...&quot;,
+    &quot;hometown&quot; : &quot;...&quot;,
+    &quot;location&quot; : &quot;...&quot;,
+    &quot;picture&quot; : &quot;...&quot;,
+    &quot;relationshipStatus&quot; : &quot;...&quot;,
+    &quot;checkins&quot; : &quot;...&quot;,
+    &quot;friends&quot; : &quot;...&quot;,
+    &quot;likes&quot; : &quot;...&quot;,
+    &quot;permissions&quot; : &quot;...&quot;,
+    &quot;create&quot; : &quot;...&quot;
+  }, ... ],
+  &quot;list_cities&quot; : [ {
+    &quot;cityId&quot; : &quot;...&quot;,
+    &quot;country&quot; : &quot;...&quot;,
+    &quot;state&quot; : &quot;...&quot;,
+    &quot;city&quot; : &quot;...&quot;
+  }, ... ],
+  &quot;user_log_id&quot; : &quot;...&quot;
 }</code>
 
       <div class="clear" />

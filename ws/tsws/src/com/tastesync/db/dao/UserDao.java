@@ -14,6 +14,8 @@ import com.tastesync.model.response.UserResponse;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 public interface UserDao {
 	UserResponse login(String email, String password) throws TasteSyncException;
 
@@ -41,8 +43,7 @@ public interface UserDao {
     TSSocialSettingsObj showSettingsSocial(String userId)
         throws TasteSyncException;
 
-    void updateSettingsAutoPublishSettings(String userId,
-        String autoPublishingId, String socialNetworkId, String statusFlag)
+    Response updateSettingsAutoPublishSettings(TSSocialSettingsObj social_setting_obj)
         throws TasteSyncException;
 
     void submitUserReport(String userId, String reportText,

@@ -8364,6 +8364,24 @@
 /**
  * (no documentation provided)
  */
+- (NSString *) email
+{
+  return _email;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setEmail: (NSString *) newEmail
+{
+  [newEmail retain];
+  [_email release];
+  _email = newEmail;
+}
+
+/**
+ * (no documentation provided)
+ */
 - (NSString *) facebookStatus
 {
   return _facebookStatus;
@@ -8436,6 +8454,7 @@
 - (void) dealloc
 {
   [self setTsSocialAutoPubSettingsObj: nil];
+  [self setEmail: nil];
   [self setFacebookStatus: nil];
   [self setTwitterStatus: nil];
   [self setFoursquareStatus: nil];
@@ -8707,6 +8726,22 @@
   } //end "if choice"
 
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "email", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}email of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}email of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setEmail: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
     && xmlStrcmp(BAD_CAST "facebookStatus", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -8833,6 +8868,27 @@
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
                    format: @"Error writing end child element {}tsSocialAutoPubSettingsObj."];
+    }
+  }
+  if ([self email]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "email", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}email."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}email...");
+#endif
+    [[self email] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}email...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}email."];
     }
   }
   if ([self facebookStatus]) {

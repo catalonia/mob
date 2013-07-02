@@ -61,9 +61,23 @@
               <a href="ns0_userResponse.html">userResponse</a>
               <ul>
                 <li><a href="ns0_userResponse.html">userResponse</a></li>
-                <li><a href="ns0_TSErrorObj.html">TSErrorObj</a></li>
+                <li><a href="ns0_TSUserProfileObj.html">TSUserProfileObj</a></li>
                 <li><a href="ns0_TSUserObj.html">TSUserObj</a></li>
+                <li><a href="ns0_TSUserProfileRestaurantsObj.html">TSUserProfileRestaurantsObj</a></li>
+                <li><a href="ns0_TSFacebookUserDataObj.html">TSFacebookUserDataObj</a></li>
+                <li><a href="ns0_TSRestaurantObj.html">TSRestaurantObj</a></li>
+                <li><a href="ns0_TSPhotoObj.html">TSPhotoObj</a></li>
+                <li><a href="ns0_TSRestaurantDetailsObj.html">TSRestaurantDetailsObj</a></li>
                 <li><a href="ns0_TSSuccessObj.html">TSSuccessObj</a></li>
+                <li><a href="ns0_TSErrorObj.html">TSErrorObj</a></li>
+                <li><a href="ns0_TSRecommendersDetailsObj.html">TSRecommendersDetailsObj</a></li>
+                <li><a href="ns0_TSCityObj.html">TSCityObj</a></li>
+                <li><a href="ns0_TSSocialAutoPubSettingsObj.html">TSSocialAutoPubSettingsObj</a></li>
+                <li><a href="ns0_TSSocialSettingsObj.html">TSSocialSettingsObj</a></li>
+                <li><a href="ns0_TSListFacebookUserDataObj.html">TSListFacebookUserDataObj</a></li>
+                <li><a href="ns0_TSNotificationSettingsObj.html">TSNotificationSettingsObj</a></li>
+                <li><a href="ns0_TSPrivacySettingsObj.html">TSPrivacySettingsObj</a></li>
+                <li><a href="ns0_TSCurrentRecommendedRestaurantDetailsObj.html">TSCurrentRecommendedRestaurantDetailsObj</a></li>
               </ul>
             </li>
           </ul>
@@ -84,6 +98,102 @@
       </table>
 
       <h2>XML</h2>
+      <h3>Elements</h3>
+      <table>
+        <tr>
+          <th>name (type)</th>
+          <th>min/max<br/>occurs</th>
+          <th>description</th>
+        </tr>
+        <tr>
+          <td>
+            user (<a href="ns0_TSUserObj.html">TSUserObj</a>)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            user_profile_obj (<a href="ns0_TSUserProfileObj.html">TSUserProfileObj</a>)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            user_data (<a href="ns0_TSUserProfileRestaurantsObj.html">TSUserProfileRestaurantsObj</a>)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            city (<a href="ns0_TSFacebookUserDataObj.html">TSFacebookUserDataObj</a>)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            fb_user_data (<a href="ns0_TSCityObj.html">TSCityObj</a>)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            list_user_data (<a href="ns0_TSUserObj.html">TSUserObj</a>)
+          </td>
+          <td>0/unbounded</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            list_user (<a href="ns0_TSUserProfileObj.html">TSUserProfileObj</a>)
+          </td>
+          <td>0/unbounded</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            list_user_follow_data (<a href="ns0_TSUserProfileRestaurantsObj.html">TSUserProfileRestaurantsObj</a>)
+          </td>
+          <td>0/unbounded</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            list_fb_user_data (<a href="ns0_TSFacebookUserDataObj.html">TSFacebookUserDataObj</a>)
+          </td>
+          <td>0/unbounded</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            list_cities (<a href="ns0_TSCityObj.html">TSCityObj</a>)
+          </td>
+          <td>0/unbounded</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            user_log_id (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+      </table>
 
       <h2>JSON</h2>
       <table>
@@ -91,6 +201,94 @@
           <th>property</th>
           <th>type</th>
           <th>description</th>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>
+              user (<a href="ns0_TSUserObj.html">TSUserObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>user_profile_obj</td>
+          <td>
+              user_profile_obj (<a href="ns0_TSUserProfileObj.html">TSUserProfileObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>user_data</td>
+          <td>
+              user_data (<a href="ns0_TSUserProfileRestaurantsObj.html">TSUserProfileRestaurantsObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>city</td>
+          <td>
+              city (<a href="ns0_TSFacebookUserDataObj.html">TSFacebookUserDataObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>fb_user_data</td>
+          <td>
+              fb_user_data (<a href="ns0_TSCityObj.html">TSCityObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>list_user_data</td>
+          <td>
+              array of list_user_data (<a href="ns0_TSUserObj.html">TSUserObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>list_user</td>
+          <td>
+              array of list_user (<a href="ns0_TSUserProfileObj.html">TSUserProfileObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>list_user_follow_data</td>
+          <td>
+              array of list_user_follow_data (<a href="ns0_TSUserProfileRestaurantsObj.html">TSUserProfileRestaurantsObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>list_fb_user_data</td>
+          <td>
+              array of list_fb_user_data (<a href="ns0_TSFacebookUserDataObj.html">TSFacebookUserDataObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>list_cities</td>
+          <td>
+              array of list_cities (<a href="ns0_TSCityObj.html">TSCityObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>user_log_id</td>
+          <td>
+              user_log_id (string)
+          </td>
+          <td>
+          </td>
         </tr>
       </table>
 

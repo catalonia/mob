@@ -138,6 +138,7 @@
   <xs:complexType name="TSSocialSettingsObj">
     <xs:sequence>
       <xs:element name="tsSocialAutoPubSettingsObj" type="TSSocialAutoPubSettingsObj" minOccurs="0"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
       <xs:element name="facebookStatus" type="xs:string" minOccurs="0"/>
       <xs:element name="twitterStatus" type="xs:string" minOccurs="0"/>
       <xs:element name="foursquareStatus" type="xs:string" minOccurs="0"/>

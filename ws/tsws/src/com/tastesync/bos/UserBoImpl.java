@@ -17,6 +17,8 @@ import com.tastesync.model.response.UserResponse;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 
 public class UserBoImpl implements UserBo {
     private UserDao userDao = new UserDaoImpl();
@@ -85,11 +87,9 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public void updateSettingsAutoPublishSettings(String userId,
-        String autoPublishingId, String socialNetworkId, String statusFlag)
+    public Response updateSettingsAutoPublishSettings(TSSocialSettingsObj social_setting_obj)
         throws TasteSyncException {
-        userDao.updateSettingsAutoPublishSettings(userId, autoPublishingId,
-            socialNetworkId, statusFlag);
+        return userDao.updateSettingsAutoPublishSettings(social_setting_obj);
     }
 
     @Override

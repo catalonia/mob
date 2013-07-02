@@ -1233,6 +1233,7 @@
 {
   @private
     ENUNCIATENS0TSSocialAutoPubSettingsObj *_tsSocialAutoPubSettingsObj;
+    NSString *_email;
     NSString *_facebookStatus;
     NSString *_twitterStatus;
     NSString *_foursquareStatus;
@@ -1248,6 +1249,16 @@
  * (no documentation provided)
  */
 - (void) setTsSocialAutoPubSettingsObj: (ENUNCIATENS0TSSocialAutoPubSettingsObj *) newTsSocialAutoPubSettingsObj;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) email;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setEmail: (NSString *) newEmail;
 
 /**
  * (no documentation provided)

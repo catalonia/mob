@@ -307,6 +307,189 @@ public class MySQL {
 		}
 		return user;
 	}
+	public int getIDUserSocialNetworkConnection(String usncDesc)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	System.out.println(UserQueries.USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL);
+	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL);
+	    	statement.setString(1, usncDesc);
+	    	resultset = statement.executeQuery();
+    	if(resultset.next())
+    	{
+    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_ID")));
+    	}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		tsDataSource.close();
+	}
+		return 0;
+	}
+	public int getIDAutoPublishing(String apDesc)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_SELECT_SQL);
+	    	statement.setString(1, apDesc);
+	    	resultset = statement.executeQuery();
+    	if(resultset.next())
+    	{
+    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("auto_publishing.AP_ID")));
+    	}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		tsDataSource.close();
+	}
+		return 0;
+	}
+	public boolean checkUserUSNC(String userId)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	statement = connection.prepareStatement(UserQueries.USER_USNC_SELECT_SQL);
+	    	statement.setString(1, userId);
+	    	resultset = statement.executeQuery();
+	    	int  i = 0;
+	    	if(resultset.next())
+	    	{
+	    		i++;
+	    	}
+	    	System.out.println("Number row:"+i);
+	    	if(i != 0)
+	    		return true;
+	    	else
+	    		return false;
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+		}
+		return false;
+	}
+	public String[] getDataUserUSNC()
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    String[] array;
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_NETWORK_CONNECTION_SELECT_SQL);
+	    	resultset = statement.executeQuery();
+	    	int  i = 1;
+	    	while(resultset.next())
+	    	{
+	    		i++;
+	    	}
+	    	array = new String[i];
+	    	resultset = statement.executeQuery();
+	    	
+	    	while(resultset.next())
+	    	{
+	    		array[Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_ID")))]
+	    				= CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_DESC"));
+	    	}
+	    	return array;
+	    	
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+		}
+	    array = null;
+		return array;
+	}
+	public boolean checkUserUSNC_AP(String userId)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_USERID_SELECT_SQL);
+	    	statement.setString(1, userId);
+	    	resultset = statement.executeQuery();
+	    	int  i = 0;
+	    	if(resultset.next())
+	    	{
+	    		i++;
+	    	}
+	    	System.out.println("Number row:"+i);
+	    	if(i != 0)
+	    		return true;
+	    	else
+	    		return false;
+    		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		tsDataSource.close();
+	}
+		return false;
+	}
+	public String[] getDataUserUSNC_AP()
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    String[] array;
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_AP_SELECT_SQL);
+	    	resultset = statement.executeQuery();
+	    	int  i = 1;
+	    	while(resultset.next())
+	    	{
+	    		i++;
+	    	}
+	    	array = new String[i];
+	    	resultset = statement.executeQuery();
+	    	
+	    	while(resultset.next())
+	    	{
+	    		array[Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("auto_publishing.AP_ID")))]
+	    				= CommonFunctionsUtil.getModifiedValueString(resultset.getString("auto_publishing.AP_DESC"));
+	    	}
+	    	return array;
+	    	
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+		}
+	    array = null;
+		return array;
+	}
 //	//Check facebook id in the system
 //	public boolean checkFacebookIDExist(String user_fb_id) {
 //		boolean check = false;

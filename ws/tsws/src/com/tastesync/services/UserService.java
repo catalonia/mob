@@ -53,12 +53,12 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/login")
+    @Path("/submitLogin")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response login(@FormParam("email")
+    public Response submitLogin(@FormParam("email")
     String email, @FormParam("password")
     String password) {
     	if (logger.isDebugEnabled()) {
@@ -87,10 +87,10 @@ public class UserService extends BaseService {
     }
     
     @POST
-	@Path("/login_fb")
+	@Path("/submitLoginFacebook")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response login_fb(TSListFacebookUserDataObj list_user_profile) {
+	public Response submitLoginFacebook(TSListFacebookUserDataObj list_user_profile) {
     	logger.debug("---------------------------------------------------------------------------");
     	UserResponse userResponse = null;
     	
@@ -117,12 +117,12 @@ public class UserService extends BaseService {
     }
     
     @POST
-    @Path("/logout")
+    @Path("/submitLogout")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response logout(@FormParam("userLogId")
+    public Response submitLogout(@FormParam("userLogId")
     String userId) {
         // TODO expire access token
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -362,19 +362,21 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/settings/social")
+    @POST
+    @Path("showSettingsSocial")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showSettingsSocial(@QueryParam("userId")
+    public Response showSettingsSocial(@FormParam("userId")
     String userId) {
         TSSocialSettingsObj tsSocialSettingsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
+        	System.out.println(userId);
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+            System.out.println(userId);
             tsSocialSettingsObj = userBo.showSettingsSocial(userId);
 
             return Response.status(status).entity(tsSocialSettingsObj).build();
@@ -403,59 +405,14 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/settings/updateSettingsAutoPublishSettings")
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    @Path("submitOptionsAutoPublish")
+    @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response updateSettingsAutoPublishSettings(
-        @FormParam("userId")
-    String userId, @FormParam("autoPublishingId")
-    String autoPublishingId,
-        @FormParam("socialNetworkId")
-    String socialNetworkId, @FormParam("statusFlag")
-    String statusFlag) {
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-        boolean responseDone = false;
-
-        // BO - DO- DBQuery
-        try {
-            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            autoPublishingId = CommonFunctionsUtil.converStringAsNullIfNeeded(autoPublishingId);
-            socialNetworkId = CommonFunctionsUtil.converStringAsNullIfNeeded(socialNetworkId);
-            statusFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(statusFlag);
-
-            userBo.updateSettingsAutoPublishSettings(userId, autoPublishingId,
-                socialNetworkId, statusFlag);
-
-            TSSuccessObj tsSuccessObj = new TSSuccessObj();
-
-            responseDone = true;
-
-            return Response.status(status).entity(tsSuccessObj).build();
-        } catch (TasteSyncException e) {
-            e.printStackTrace();
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = false;
-
-            return Response.status(status).entity(tsErrorObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (!responseDone) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
-            }
-        }
+    public Response updateSettingsAutoPublishSettings(TSSocialSettingsObj social_setting_obj) throws TasteSyncException 
+    {
+    	return userBo.updateSettingsAutoPublishSettings(social_setting_obj);
     }
 
     @GET

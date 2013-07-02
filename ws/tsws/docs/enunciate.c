@@ -1462,6 +1462,11 @@ struct enunciate_ns0_TSSocialSettingsObj {
   /**
    * (no documentation provided)
    */
+  xmlChar *email;
+
+  /**
+   * (no documentation provided)
+   */
   xmlChar *facebookStatus;
 
   /**
@@ -9169,6 +9174,27 @@ static struct enunciate_ns0_TSSocialSettingsObj *xmlTextReaderReadNs0TSSocialSet
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "email", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}email of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}email of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSSocialSettingsObjType(_tSSocialSettingsObj);
+          free(_tSSocialSettingsObj);
+          return NULL;
+        }
+
+        _tSSocialSettingsObj->email = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "facebookStatus", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -9304,6 +9330,36 @@ static int xmlTextWriterWriteNs0TSSocialSettingsObjType(xmlTextWriterPtr writer,
     if (status < 0) {
 #if DEBUG_ENUNCIATE
       printf("Failed to write end element {}tsSocialAutoPubSettingsObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSSocialSettingsObj->email != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "email", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}email. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}email...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialSettingsObj->email));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}email. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}email. status: %i\n", status);
 #endif
       return status;
     }
@@ -9449,6 +9505,16 @@ static void freeNs0TSSocialSettingsObjType(struct enunciate_ns0_TSSocialSettings
     printf("Freeing accessor tsSocialAutoPubSettingsObj of type enunciate_ns0_TSSocialSettingsObj...\n");
 #endif
     free(_tSSocialSettingsObj->tsSocialAutoPubSettingsObj);
+  }
+  if (_tSSocialSettingsObj->email != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor email of type enunciate_ns0_TSSocialSettingsObj...\n");
+#endif
+    freeXsStringType(_tSSocialSettingsObj->email);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor email of type enunciate_ns0_TSSocialSettingsObj...\n");
+#endif
+    free(_tSSocialSettingsObj->email);
   }
   if (_tSSocialSettingsObj->facebookStatus != NULL) {
 #if DEBUG_ENUNCIATE > 1

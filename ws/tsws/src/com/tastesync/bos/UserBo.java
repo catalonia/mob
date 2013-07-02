@@ -14,6 +14,8 @@ import com.tastesync.model.response.UserResponse;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 public interface UserBo {
 	UserResponse login(String email, String password) throws TasteSyncException;
 	
@@ -43,8 +45,7 @@ public interface UserBo {
     TSSocialSettingsObj showSettingsSocial(String userId)
         throws TasteSyncException;
 
-    void updateSettingsAutoPublishSettings(String userId,
-        String autoPublishingId, String socialNetworkId, String statusFlag)
+    Response updateSettingsAutoPublishSettings(TSSocialSettingsObj social_setting_obj)
         throws TasteSyncException;
 
     TSUserProfileObj showMyProfileHome(String userId) throws TasteSyncException;
