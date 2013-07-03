@@ -9,15 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "notifications")
 public class TSNotificationSettingsObj implements Serializable {
     private static final long serialVersionUID = 5547698257718238717L;
-    private String notificationSettingsId;
     private String phoneFlag;
     private String emailFlag;
-
-    @XmlElement
-    public String getNotificationSettingsId() {
-        return notificationSettingsId;
-    }
-
+    
     @XmlElement
     public String getPhoneFlag() {
         return phoneFlag;
@@ -26,10 +20,6 @@ public class TSNotificationSettingsObj implements Serializable {
     @XmlElement
     public String getEmailFlag() {
         return emailFlag;
-    }
-
-    public void setNotificationSettingsId(String notificationSettingsId) {
-        this.notificationSettingsId = notificationSettingsId;
     }
 
     public void setPhoneFlag(String phoneFlag) {

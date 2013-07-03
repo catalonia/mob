@@ -9,6 +9,7 @@ import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
+import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSNotificationSettingsObj;
 import com.tastesync.model.objects.TSPrivacySettingsObj;
 import com.tastesync.model.objects.TSSocialAutoPubSettingsObj;
@@ -29,6 +30,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -125,7 +129,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		
 		boolean is_disabled = false;
 		
-		String auto_id = null;
 		String id = null;
 		String userLogId = null;
 		
@@ -137,204 +140,18 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				//Get user current Facebook profile 
 				if(user_current_profile != null) {
 					
+
 					boolean check_user = false;
-					TSUserObj user = null;
+					TSUserObj user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());;
 					
 					try {
 						check_user = mySQL.checkEmailExist(user_current_profile.getEmail());
+						
 					} catch(Exception e) {
 						e.printStackTrace();
 					}
-					
-					//Create a new user
-					if(!check_user) {
-						
-						String user_city_id = GlobalVariables.DEFAULT_CITY_ID;
-						String city_name = GlobalVariables.DEFAULT_CITY_NAME;
-						String state = GlobalVariables.DEFAULT_STATE;
-						String country = GlobalVariables.DEFAULT_COUNTRY;
-						
-						if(!user_current_profile.getHometown().trim().equals("")) {
-							TSCityObj city_infor = null;
-							
-							city_name = user_current_profile.getHometown();
-							
-							try {
-								city_infor = mySQL.getCityInforByStateAndCityName(user_current_profile.getLocation(), user_current_profile.getHometown());
-							} catch(Exception e) {
-								e.printStackTrace();
-							}
-							
-							if(city_infor != null) {
-								user_city_id = city_infor.getCityId();
-							}
-						}
-						
-						if(!user_current_profile.getLocation().trim().equals("")) {
-							state = user_current_profile.getLocation();
-						}
-						
-						if(!user_current_profile.getLocale().trim().equals("")) {
-							country = user_current_profile.getLocale();
-						}
-						
-						TSDataSource tsDataSource = TSDataSource.getInstance();				 
-				        Connection connection = null;
-				        PreparedStatement statement = null;
-				        ResultSet resultset = null;
-				        connection = tsDataSource.getConnection();
-			        	tsDataSource.begin();
-				        try{
-				        	statement = connection.prepareStatement(UserQueries.USER_FACEBOOK_INSERT_SQL);
-			            	statement.setString(1, user_current_profile.getEmail());
-			            	statement.setString(2, dateNow);
-			            	statement.setString(3, user_current_profile.getFirstName());
-			            	statement.setString(4, user_current_profile.getLastName());
-			            	statement.setString(5, user_current_profile.getGender());
-			            	statement.setString(6, user_city_id);
-			            	statement.setString(7, city_name);
-			            	statement.setString(8, state);
-			            	statement.setString(9, country);
-			            	statement.execute();
-						
-						try {
-							
-							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
-							
-							//Update user_id
-							String user_id = user.getUserCityId() + "-" + user.getAutoUserId();
-							final String user_id_ps = user_id;
-							final String dateNow_ps = dateNow;
-							
-							System.out.println(UserQueries.USER_ID_UPDATE_SQL);						
-							connection = tsDataSource.getConnection();
-							statement = connection.prepareStatement(UserQueries.USER_ID_UPDATE_SQL);
-			            	statement.setString(1, user_id);
-			            	statement.setString(2, user_id);
-			            	statement.setString(3, user.getAutoUserId());
-			            	statement.executeUpdate();
-			            	
-			            	System.out.println(UserQueries.USER_LOGIN_INSERT_SQL);
-							//Update login time (users_log table)
-			            	connection = tsDataSource.getConnection();
-			            	statement = connection.prepareStatement(UserQueries.USER_LOGIN_INSERT_SQL,Statement.RETURN_GENERATED_KEYS);
-			            	statement.setString(1, user_id_ps);
-			            	statement.setString(2, dateNow_ps);
-			            	statement.setString(3, dateNow_ps);
-			            	statement.executeUpdate();
-			            	
-			            	//FIX HERE
-			            	resultset = statement.getGeneratedKeys();
-			            	int risultato = 0;
-			            	if (resultset.next()){
-			            	    risultato = resultset.getInt(1);
-			            	}
-			            	auto_id = String.valueOf(risultato);
-			            	///////////////////////////////////
-			            	
-							id = dateNowAppend + "-" + user_id + "-" + risultato;
-							userLogId = id;
-							System.out.println("USERLOG_LOGID_UPDATE_SQL: AUTO_LOG_ID:" + risultato);
-							connection = tsDataSource.getConnection();
-							statement = connection.prepareStatement(UserQueries.USERLOG_LOGID_UPDATE_SQL);
-			            	statement.setString(1, id);
-			            	statement.setString(2, auto_id);
-			            	statement.executeUpdate();
-
-							//Story - Join TasteSync
-			            	connection = tsDataSource.getConnection();
-			            	System.out.println(UserQueries.STORY_INSERT_SQL);
-							statement = connection.prepareStatement(UserQueries.STORY_INSERT_SQL,Statement.RETURN_GENERATED_KEYS);
-							statement.setString(1, dateNow_ps);
-							statement.setString(2, GlobalVariables.STORY_USER_JOIN_TASTESYNC);
-							statement.setString(3, user_id_ps);
-							statement.setString(4, dateNow_ps);
-							
-							//FIX HERE
-			            	statement.executeUpdate();
-			            	resultset = statement.getGeneratedKeys();
-			            	if (resultset.next()){
-			            	    risultato = resultset.getInt(1);
-			            	}
-			            	auto_id = String.valueOf(risultato);
-			            	///////////////////////////////////
-			            	
-							id = GlobalVariables.DEFAULT_RESTAURANT_ID + "-" + user_id + "-" + risultato;
-							System.out.println("STORY_UPDATE_SQL: AUTO_LOG_ID:" + risultato);
-							
-							//sql = UserQueries.STORY_UPDATE_SQL;
-							System.out.println(UserQueries.STORY_UPDATE_SQL);
-							connection = tsDataSource.getConnection();
-							statement = connection.prepareStatement(UserQueries.STORY_UPDATE_SQL);
-			            	statement.setString(1, id);
-			            	statement.setString(2, auto_id);
-			            	statement.executeUpdate();
-							
-							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
-							response = new UserResponse();
-							response.setUser(user);
-							response.setUser_log_id(userLogId);
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						}finally{
-							tsDataSource.close();
-						}
-				    }
-					else {
-						TSDataSource tsDataSource = TSDataSource.getInstance();				 
-				        Connection connection = null;
-				        PreparedStatement statement = null;
-				        ResultSet resultset = null;
-						try {
-							connection = tsDataSource.getConnection();
-				        	tsDataSource.begin();
-							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
-							
-							//Check user is disabled by Admin
-							if(user != null) {
-								
-								System.out.println(UserQueries.USER_ONLINE_UPDATE_SQL);
-								//Update Online Status
-								connection = tsDataSource.getConnection();
-								statement = connection.prepareStatement(UserQueries.USER_ONLINE_UPDATE_SQL);
-				            	statement.setString(1, String.valueOf("y"));
-				            	statement.setString(2, user.getUserId());
-				            	statement.executeUpdate();
-								
-				            	System.out.println(UserQueries.USER_LOGIN_INSERT_SQL);
-								//Update login time (users_log table)
-				            	connection = tsDataSource.getConnection();
-				            	statement = connection.prepareStatement(UserQueries.USER_LOGIN_INSERT_SQL,Statement.RETURN_GENERATED_KEYS);
-				            	statement.setString(1, user.getUserId());
-				            	statement.setString(2, dateNow);
-				            	statement.setString(3, dateNow);
-				            	statement.executeUpdate();
-				            	
-				            	resultset = statement.getGeneratedKeys();
-				            	int risultato = 0;
-				            	if (resultset.next()){
-				            	    risultato = resultset.getInt(1);
-				            	}
-				            	auto_id = String.valueOf(risultato);
-								id = dateNowAppend + "-" + user.getUserId() + "-" + risultato;
-								userLogId = id;
-								System.out.println("USERLOG_LOGID_UPDATE_SQL: AUTO_LOG_ID:" + risultato);
-								connection = tsDataSource.getConnection();
-								statement = connection.prepareStatement(UserQueries.USERLOG_LOGID_UPDATE_SQL);
-				            	statement.setString(1, id);
-				            	statement.setString(2, auto_id);
-				            	statement.executeUpdate();
-							}
-							else {
-								is_disabled = true;
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}finally{
-							tsDataSource.close();
-						}
+					if(check_user && user == null) {
+						is_disabled = true;
 					}
 					
 					if(!is_disabled) {
@@ -424,20 +241,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 								statement.setString(28, user_current_profile.getId());
 								statement.executeUpdate();
 							}
-							
-							//Update Facebook ID (in the case, first user register via Signup Form then that user login via Facebook)
-							connection = tsDataSource.getConnection();
-							System.out.println(UserQueries.USER_FBID_UPDATE_SQL);
-							statement = connection.prepareStatement(UserQueries.USER_FBID_UPDATE_SQL);
-			            	statement.setString(1, user_current_profile.getId());
-			            	statement.setString(2, user.getUserId());
-			            	statement.executeUpdate();
-							
-							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
-							response = new UserResponse();
-							response.setUser(user);
-							response.setUser_log_id(userLogId);
-							
+												
 							//Update Facebook's friend infor
 							if(profiles != null && !profiles.isEmpty()) {
 								
@@ -560,6 +364,150 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						//user_response.setMessage(message);
 					}
 					
+					
+					
+					//Create a new user
+					if(!check_user) {
+						
+						String user_city_id = GlobalVariables.DEFAULT_CITY_ID;
+						//String city_name = GlobalVariables.DEFAULT_CITY_NAME;
+						String state = GlobalVariables.DEFAULT_STATE;
+						String country = GlobalVariables.DEFAULT_COUNTRY;
+						
+						if(!user_current_profile.getHometown().trim().equals("")) {
+							TSCityObj city_infor = null;
+							
+							//city_name = user_current_profile.getHometown();
+							
+							try {
+								city_infor = mySQL.getCityInforByStateAndCityName(user_current_profile.getLocation(), user_current_profile.getHometown());
+							} catch(Exception e) {
+								e.printStackTrace();
+							}
+							
+							if(city_infor != null) {
+								user_city_id = city_infor.getCityId();
+							}
+						}
+						
+						if(!user_current_profile.getLocation().trim().equals("")) {
+							state = user_current_profile.getLocation();
+						}
+						
+						if(!user_current_profile.getLocale().trim().equals("")) {
+							country = user_current_profile.getLocale();
+						}
+						
+						TSDataSource tsDataSource = TSDataSource.getInstance();				 
+				        Connection connection = null;
+				        PreparedStatement statement = null;
+				        connection = tsDataSource.getConnection();
+			        	tsDataSource.begin();
+				        try{
+				        	String user_id = user_city_id +"-" + dateNowAppend + "-" + CommonFunctionsUtil.generateRandomString(4, 5);							
+				        	statement = connection.prepareStatement(UserQueries.USER_FACEBOOK_INSERT_SQL);
+			            	statement.setString(1, user_current_profile.getEmail());
+			            	statement.setString(2, dateNow);
+			            	statement.setString(3, user_current_profile.getFirstName());
+			            	statement.setString(4, user_current_profile.getLastName());
+			            	statement.setString(5, user_current_profile.getGender());
+			            	statement.setString(6, user_city_id);
+			            	//statement.setString(7, city_name);
+			            	statement.setString(7, state);
+			            	statement.setString(8, country);
+			            	statement.setString(9, user_current_profile.getId());
+			            	statement.setString(10, user_id);
+			            	statement.setString(11, user_id);
+			            	statement.execute();
+						
+						try {
+							
+							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
+							
+							//Update user_id
+							final String user_id_ps = user_id;
+							final String dateNow_ps = dateNow;
+							
+							id = dateNowAppend + "-" + user_id + "-" + CommonFunctionsUtil.generateRandomString(4, 5);
+							userLogId = id;
+			            	System.out.println(UserQueries.USER_LOGIN_INSERT_SQL);
+							//Update login time (users_log table)
+			            	connection = tsDataSource.getConnection();
+			            	statement = connection.prepareStatement(UserQueries.USER_LOGIN_INSERT_SQL);
+			            	statement.setString(1, user_id_ps);
+			            	statement.setString(2, dateNow_ps);
+			            	statement.setString(3, dateNow_ps);
+			            	statement.setString(4, userLogId);
+			            	statement.execute();
+
+							//Story - Join TasteSync
+//			            	connection = tsDataSource.getConnection();
+//			            	System.out.println(UserQueries.STORY_INSERT_SQL);
+//							statement = connection.prepareStatement(UserQueries.STORY_INSERT_SQL);
+//							statement.setString(1, dateNow_ps);
+//							statement.setString(2, GlobalVariables.STORY_USER_JOIN_TASTESYNC);
+//							statement.setString(3, user_id_ps);
+//							statement.setString(4, dateNow_ps);
+//							statement.execute();
+						
+							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
+							response = new UserResponse();
+							response.setUser(user);
+							response.setUser_log_id(userLogId);
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						}finally{
+							tsDataSource.close();
+						}
+				    }
+					else {
+						TSDataSource tsDataSource = TSDataSource.getInstance();				 
+				        Connection connection = null;
+				        PreparedStatement statement = null;
+						try {
+							connection = tsDataSource.getConnection();
+				        	tsDataSource.begin();
+							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
+							
+							//Check user is disabled by Admin
+							if(user != null) {
+								
+								System.out.println(UserQueries.USER_ONLINE_UPDATE_SQL);
+								//Update Online Status
+								connection = tsDataSource.getConnection();
+								statement = connection.prepareStatement(UserQueries.USER_ONLINE_UPDATE_SQL);
+				            	statement.setString(1, String.valueOf("y"));
+				            	statement.setString(2, user.getUserId());
+				            	statement.executeUpdate();
+								
+				            	id = dateNowAppend + "-" + user.getUserId() + "-" + CommonFunctionsUtil.generateRandomString(4, 5);
+								userLogId = id;
+				            	System.out.println(UserQueries.USER_LOGIN_INSERT_SQL);
+								//Update login time (users_log table)
+				            	connection = tsDataSource.getConnection();
+				            	statement = connection.prepareStatement(UserQueries.USER_LOGIN_INSERT_SQL);
+				            	statement.setString(1, user.getUserId());
+				            	statement.setString(2, dateNow);
+				            	statement.setString(3, dateNow);
+				            	statement.setString(4, userLogId);
+				            	statement.executeUpdate();
+
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}finally{
+							tsDataSource.close();
+						}
+					}
+					
+					if(!is_disabled) {
+						user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
+						response = new UserResponse();
+						response.setUser(user);
+						response.setUser_log_id(userLogId);
+					}
 				}
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -743,18 +691,194 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateSettingsNotificationsRecoMessage(String userId,
-        String[] idList, String[] phoneFlagList, String[] emailFlagList)
+    public boolean updateSettingsNotificationsRecoMessage(TSListNotificationSettingsObj notificationSetting)
         throws TasteSyncException {
-        // TODO Auto-generated method stub
+        boolean responseDone = false;
+	    MySQL mySQL = new MySQL();
+	    Dictionary<TSNotificationSettingsObj, Integer> array = new Hashtable<TSNotificationSettingsObj, Integer>();
+	    array.put(notificationSetting.getFriendsAskReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_ASK_RECO));
+	    array.put(notificationSetting.getFriendsJoinTasteSync(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_JOIN_TASTESYNC));
+	    array.put(notificationSetting.getFriendsPostQuestionForum(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_POST_QUESTION_FORUM));
+	    array.put(notificationSetting.getFriendsSendMeReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_SEND_ME_RECO));
+	    array.put(notificationSetting.getNewslettersDigestsTasteSync(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_NEWSLETTERS_DIGESTS_TASTESYNC));
+	    array.put(notificationSetting.getOtherPeopleAskReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_OTHER_PEOPLE_ASK_RECO));
+	    array.put(notificationSetting.getPeopleAskMeFollowReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_ASK_ME_FOLLOW_RECO));
+	    array.put(notificationSetting.getPeopleFollowAskReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_FOLLOW_ASK_RECO));
+	    array.put(notificationSetting.getPeopleLikeCommentTips(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_COMMENT_TIPS));
+	    array.put(notificationSetting.getPeopleLikeMyReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_MY_RECO));
+	    
+        String userId = notificationSetting.getUserId();
+	    boolean isCheckUSNC = mySQL.checkNotificationDescriptor(userId);
+	    TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        
+        try{
+        	tsDataSource.begin();
+		    if(!isCheckUSNC)
+		    {
+		    	for (Enumeration<TSNotificationSettingsObj> e = array.keys(); e.hasMoreElements();)
+		    	 {
+		    		 TSNotificationSettingsObj data = (TSNotificationSettingsObj)e.nextElement();
+		    		 int index = array.get(data);
+		    		 System.out.println(index);
+		    		 System.out.println("UserQueries.USER_NOTIFICATION_SETTINGS_INSERT_SQL=" + UserQueries.USER_NOTIFICATION_SETTINGS_INSERT_SQL);
+
+		         	 connection = tsDataSource.getConnection();
+		    		 statement = connection.prepareStatement(UserQueries.USER_NOTIFICATION_SETTINGS_INSERT_SQL);
+		         	 statement.setString(1, userId);
+		         	 statement.setInt(2, index);
+		         	 statement.setString(3, data.getPhoneFlag());
+		         	 statement.setString(4, data.getEmailFlag());
+		         	 statement.execute();
+		    	 }
+		    }
+		    else
+		    {
+		    	for (Enumeration<TSNotificationSettingsObj> e = array.keys(); e.hasMoreElements();)
+		    	 {
+		    		 TSNotificationSettingsObj data = (TSNotificationSettingsObj)e.nextElement();
+		    		 int index = array.get(data);
+		    		 System.out.println(index);
+		    		 System.out.println("UserQueries.USER_NOTIFICATION_SETTINGS_ID_UPDATE_SQL = " + UserQueries.USER_NOTIFICATION_SETTINGS_ID_UPDATE_SQL);
+		         	 connection = tsDataSource.getConnection();
+		    		 statement = connection.prepareStatement(UserQueries.USER_NOTIFICATION_SETTINGS_ID_UPDATE_SQL);
+		         	 statement.setString(1, data.getPhoneFlag());
+		         	 statement.setString(2, data.getEmailFlag());
+		         	 statement.setString(3, userId);
+		         	 statement.setInt(4, index);
+		         	 statement.execute();
+		    	 }
+		    }
+		    responseDone = true;
+        }catch(Exception e)
+        {
+        	e.printStackTrace();
+        }
+        finally{
+        }
+        return responseDone;
     }
 
     @Override
-    public TSNotificationSettingsObj[] showSettingsNotifications(String userId)
+    public TSListNotificationSettingsObj showSettingsNotifications(String userId)
         throws TasteSyncException {
-        // TODO Auto-generated method stub
-        //Array of TSNotificationSettingsObj
-        return null;
+    	TSListNotificationSettingsObj notifycation = null;
+    	MySQL mySQL = new MySQL();
+	    boolean isCheck = mySQL.checkNotificationDescriptor(userId);
+	    Dictionary<Integer, String> array = new Hashtable<Integer, String>();
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_ASK_RECO), GlobalVariables.NOTIFICATION_FRIENDS_ASK_RECO);
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_JOIN_TASTESYNC), GlobalVariables.NOTIFICATION_FRIENDS_JOIN_TASTESYNC);
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_POST_QUESTION_FORUM), GlobalVariables.NOTIFICATION_FRIENDS_POST_QUESTION_FORUM);
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_SEND_ME_RECO), GlobalVariables.NOTIFICATION_FRIENDS_SEND_ME_RECO);
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_NEWSLETTERS_DIGESTS_TASTESYNC), GlobalVariables.NOTIFICATION_NEWSLETTERS_DIGESTS_TASTESYNC);
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_OTHER_PEOPLE_ASK_RECO), GlobalVariables.NOTIFICATION_OTHER_PEOPLE_ASK_RECO);
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_ASK_ME_FOLLOW_RECO), GlobalVariables.NOTIFICATION_PEOPLE_ASK_ME_FOLLOW_RECO);
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_FOLLOW_ASK_RECO), GlobalVariables.NOTIFICATION_PEOPLE_FOLLOW_ASK_RECO);
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_COMMENT_TIPS), GlobalVariables.NOTIFICATION_PEOPLE_LIKE_COMMENT_TIPS);
+	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_MY_RECO), GlobalVariables.NOTIFICATION_PEOPLE_LIKE_MY_RECO);
+	    if (!isCheck) {
+			return notifycation;
+		} else {
+			try{
+				notifycation = new TSListNotificationSettingsObj();
+				notifycation.setUserId(userId);
+				TSDataSource tsDataSource = TSDataSource.getInstance();
+				Connection connection = null;
+		        ResultSet resultset = null;
+				PreparedStatement statement = null;
+		    	connection = tsDataSource.getConnection();
+		    	tsDataSource.begin();
+		    	statement = connection.prepareStatement(UserQueries.USER_NOTIFICATION_SETTINGS_ID_SELECT_SQL);
+		    	statement.setString(1, userId);
+		    	resultset = statement.executeQuery();
+		    	while(resultset.next())
+		    	{
+		    		String index_str = CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_notification_settings.NSID"));
+		    		int index = Integer.parseInt(index_str);
+		    		String mobile_flag = CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_notification_settings.NS_MOBILE_FLAG"));
+		    		String email_flag = CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_notification_settings.NS_EMAIL_FLAG"));
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_FRIENDS_ASK_RECO))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setFriendsAskReco(obj);
+		    		}
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_FRIENDS_JOIN_TASTESYNC))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setFriendsJoinTasteSync(obj);
+		    		}
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_FRIENDS_POST_QUESTION_FORUM))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setFriendsPostQuestionForum(obj);
+		    		}
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_FRIENDS_SEND_ME_RECO))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setFriendsSendMeReco(obj);
+		    		}
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_NEWSLETTERS_DIGESTS_TASTESYNC))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setNewslettersDigestsTasteSync(obj);
+		    		}
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_OTHER_PEOPLE_ASK_RECO))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setOtherPeopleAskReco(obj);
+		    		}
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_PEOPLE_ASK_ME_FOLLOW_RECO))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setPeopleAskMeFollowReco(obj);
+		    		}
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_PEOPLE_FOLLOW_ASK_RECO))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setPeopleFollowAskReco(obj);
+		    		}
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_COMMENT_TIPS))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setPeopleLikeCommentTips(obj);
+		    		}
+		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_MY_RECO))
+		    		{
+		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+		    			obj.setEmailFlag(email_flag);
+		    			obj.setPhoneFlag(mobile_flag);
+		    			notifycation.setPeopleLikeMyReco(obj);
+		    		}
+		    	}
+		   
+		    	tsDataSource.close();
+		    	return notifycation;
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+    	
+        return notifycation;
     }
 
     @Override
@@ -763,14 +887,14 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     	int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 	    MySQL mySQL = new MySQL();
-        int facebookID = mySQL.getIDUserSocialNetworkConnection("Facebook");
-        int twitterID = mySQL.getIDUserSocialNetworkConnection("Twitter");
-        int fourSquareID = mySQL.getIDUserSocialNetworkConnection("FourSquare");
-        int tumblrID = mySQL.getIDUserSocialNetworkConnection("Tumblr");
-        int faID = mySQL.getIDAutoPublishing("My Favorite Spots");
-        int recoID = mySQL.getIDAutoPublishing("Recommendations I give to others");
-        int tipID = mySQL.getIDAutoPublishing("My Tips");
-        String userId = mySQL.getUserInformationByEmail(social_setting_obj.getEmail()).getUserId();
+        int facebookID = mySQL.getIDUserSocialNetworkConnection(GlobalVariables.SOCIAL_FACEBOOK);
+        int twitterID = mySQL.getIDUserSocialNetworkConnection(GlobalVariables.SOCIAL_TWITTER);
+        int fourSquareID = mySQL.getIDUserSocialNetworkConnection(GlobalVariables.SOCIAL_FOURSQUARE);
+        int tumblrID = mySQL.getIDUserSocialNetworkConnection(GlobalVariables.SOCIAL_TUMBLR);
+        int faID = mySQL.getIDAutoPublishing(GlobalVariables.SOCIAL_FAV);
+        int recoID = mySQL.getIDAutoPublishing(GlobalVariables.SOCIAL_RECO);
+        int tipID = mySQL.getIDAutoPublishing(GlobalVariables.SOCIAL_TIP);
+        String userId = social_setting_obj.getUserId();
 	    boolean isCheckUSNC = mySQL.checkUserUSNC(userId);
 	    boolean isCheckUSNC_AP = mySQL.checkUserUSNC_AP(userId);
 	    try{
@@ -784,30 +908,30 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    	connection = tsDataSource.getConnection();
 		    	tsDataSource.begin();
 		    	statement = connection.prepareStatement(UserQueries.USER_USNC_UPDATE_SQL);
-		    	statement.setInt(1, facebookID);
-		    	statement.setString(2, social_setting_obj.getFacebookStatus());
-		    	statement.setString(3, userId);
+		    	statement.setString(1, social_setting_obj.getFacebookStatus());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, facebookID);
 		    	statement.executeUpdate();
 		    	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_USNC_UPDATE_SQL);
-		    	statement.setInt(1, twitterID);
-		    	statement.setString(2, social_setting_obj.getTwitterStatus());
-		    	statement.setString(3, userId);
+		    	statement.setString(1, social_setting_obj.getTwitterStatus());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, twitterID);
 		    	statement.executeUpdate();
 		    	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_USNC_UPDATE_SQL);
-		    	statement.setInt(1, fourSquareID);
-		    	statement.setString(2, social_setting_obj.getFoursquareStatus());
-		    	statement.setString(3, userId);
+		    	statement.setString(1, social_setting_obj.getFoursquareStatus());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, fourSquareID);
 		    	statement.executeUpdate();
 		    	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_USNC_UPDATE_SQL);
-		    	statement.setInt(1, tumblrID);
-		    	statement.setString(2, social_setting_obj.getTumblrStatus());
-		    	statement.setString(3, userId);
+		    	statement.setString(1, social_setting_obj.getTumblrStatus());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, tumblrID);
 		    	statement.executeUpdate();
 		    	tsDataSource.close();
 	    	}
@@ -936,74 +1060,74 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    	connection = tsDataSource.getConnection();
 		    	tsDataSource.begin();
 		    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_UPDATE_SQL);
-		    	statement.setInt(1, facebookID);
-		    	statement.setInt(2, faID);
-		    	statement.setString(3, social_setting_obj.getTsSocialAutoPubSettingsObj().getFavFbFlag());
-		    	statement.setString(4, userId);
+		    	statement.setString(1, social_setting_obj.getTsSocialAutoPubSettingsObj().getFavFbFlag());
+		    	statement.setString(2, userId);
+		    	statement.setInt(4, facebookID);
+		    	statement.setInt(3, faID);
 		    	statement.executeUpdate();
 	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_UPDATE_SQL);
-		    	statement.setInt(1, tumblrID);
-		    	statement.setInt(2, faID);
-		    	statement.setString(3, social_setting_obj.getTsSocialAutoPubSettingsObj().getFavTumblrFlag());
-		    	statement.setString(4, userId);
+		    	statement.setString(1, social_setting_obj.getTsSocialAutoPubSettingsObj().getFavTumblrFlag());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, tumblrID);
+		    	statement.setInt(4, faID);
 		    	statement.executeUpdate();
 	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_UPDATE_SQL);
-		    	statement.setInt(1, twitterID);
-		    	statement.setInt(2, faID);
-		    	statement.setString(3, social_setting_obj.getTsSocialAutoPubSettingsObj().getFavTwitterFlag());
-		    	statement.setString(4, userId);
+		    	statement.setString(1, social_setting_obj.getTsSocialAutoPubSettingsObj().getFavTwitterFlag());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, twitterID);
+		    	statement.setInt(4, faID);
 		    	statement.executeUpdate();
 	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_UPDATE_SQL);
-		    	statement.setInt(1, facebookID);
-		    	statement.setInt(2, recoID);
-		    	statement.setString(3, social_setting_obj.getTsSocialAutoPubSettingsObj().getRecoFbFlag());
-		    	statement.setString(4, userId);
+		    	statement.setString(1, social_setting_obj.getTsSocialAutoPubSettingsObj().getRecoFbFlag());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, facebookID);
+		    	statement.setInt(4, recoID);
 		    	statement.executeUpdate();
 	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_UPDATE_SQL);
-		    	statement.setInt(1, tumblrID);
-		    	statement.setInt(2, recoID);
-		    	statement.setString(3, social_setting_obj.getTsSocialAutoPubSettingsObj().getRecoTumblrFlag());
-		    	statement.setString(4, userId);
+		    	statement.setString(1, social_setting_obj.getTsSocialAutoPubSettingsObj().getRecoTumblrFlag());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, tumblrID);
+		    	statement.setInt(4, recoID);
 		    	statement.executeUpdate();
 	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_UPDATE_SQL);
-		    	statement.setInt(1, twitterID);
-		    	statement.setInt(2, recoID);
-		    	statement.setString(3, social_setting_obj.getTsSocialAutoPubSettingsObj().getRecoTwitterFlag());
-		    	statement.setString(4, userId);
+		    	statement.setString(1, social_setting_obj.getTsSocialAutoPubSettingsObj().getRecoTwitterFlag());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, twitterID);
+		    	statement.setInt(4, recoID);
 		    	statement.executeUpdate();
 	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_UPDATE_SQL);
-		    	statement.setInt(1, facebookID);
-		    	statement.setInt(2, tipID);
-		    	statement.setString(3, social_setting_obj.getTsSocialAutoPubSettingsObj().getTipsFbFlag());
-		    	statement.setString(4, userId);
+		    	statement.setString(1, social_setting_obj.getTsSocialAutoPubSettingsObj().getTipsFbFlag());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, facebookID);
+		    	statement.setInt(4, tipID);
 		    	statement.executeUpdate();
 	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_UPDATE_SQL);
-		    	statement.setInt(1, tumblrID);
-		    	statement.setInt(2, tipID);
-		    	statement.setString(3, social_setting_obj.getTsSocialAutoPubSettingsObj().getTipsTumblrFlag());
-		    	statement.setString(4, userId);
+		    	statement.setString(1, social_setting_obj.getTsSocialAutoPubSettingsObj().getTipsTumblrFlag());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, tumblrID);
+		    	statement.setInt(4, tipID);
 		    	statement.executeUpdate();
 	
 		    	connection = tsDataSource.getConnection();
 		    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_UPDATE_SQL);
-		    	statement.setInt(1, twitterID);
-		    	statement.setInt(2, tipID);
-		    	statement.setString(3, social_setting_obj.getTsSocialAutoPubSettingsObj().getTipsTwitterFlag());
-		    	statement.setString(4, userId);
+		    	statement.setString(1, social_setting_obj.getTsSocialAutoPubSettingsObj().getTipsTwitterFlag());
+		    	statement.setString(2, userId);
+		    	statement.setInt(3, twitterID);
+		    	statement.setInt(4, tipID);
 		    	statement.executeUpdate();
 		    	tsDataSource.close();
 	    }
@@ -1052,6 +1176,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		} else {
 			try{
 				social = new TSSocialSettingsObj();
+				social.setUserId(userId);
 				TSDataSource tsDataSource = TSDataSource.getInstance();
 				Connection connection = null;
 		        ResultSet resultset = null;
@@ -1066,13 +1191,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    		String s = CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_usnc.USNC_YN"));
 		    		String index_str = CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_usnc.USNC_ID"));
 		    		int index = Integer.parseInt(index_str);
-		    		if(arrayUSNC[index].equals("Facebook"))
+		    		if(arrayUSNC[index].equals(GlobalVariables.SOCIAL_FACEBOOK))
 		    			social.setFacebookStatus(s);
-		    		if(arrayUSNC[index].equals("Twitter"))
+		    		if(arrayUSNC[index].equals(GlobalVariables.SOCIAL_TWITTER))
 		    			social.setTwitterStatus(s);
-		    		if(arrayUSNC[index].equals("FourSquare"))
+		    		if(arrayUSNC[index].equals(GlobalVariables.SOCIAL_FOURSQUARE))
 		    			social.setFoursquareStatus(s);
-		    		if(arrayUSNC[index].equals("Tumblr"))
+		    		if(arrayUSNC[index].equals(GlobalVariables.SOCIAL_TUMBLR))
 		    			social.setTumblrStatus(s);
 		    	}
 		    	
@@ -1088,31 +1213,31 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    		int index = Integer.parseInt(index_str);
 		    		String indexAP_str = CommonFunctionsUtil.getModifiedValueString(resultset.getString("usg_usnc_ap.AP_ID"));
 		    		int indexAP = Integer.parseInt(indexAP_str);
-		    		if(arrayUSNC[index].equals("Facebook"))
+		    		if(arrayUSNC[index].equals(GlobalVariables.SOCIAL_FACEBOOK))
 		    		{
-		    			if(arrayUSNC_AP[indexAP].equals("My Favorite Spots"))
+		    			if(arrayUSNC_AP[indexAP].equals(GlobalVariables.SOCIAL_FAV))
 		    				tsSocialAutoPubSettingsObj.setFavFbFlag(s);
-		    			if(arrayUSNC_AP[indexAP].equals("My Tips"))
+		    			if(arrayUSNC_AP[indexAP].equals(GlobalVariables.SOCIAL_TIP))
 		    				tsSocialAutoPubSettingsObj.setTipsFbFlag(s);
-		    			if(arrayUSNC_AP[indexAP].equals("Recommendations I give to others"))
+		    			if(arrayUSNC_AP[indexAP].equals(GlobalVariables.SOCIAL_RECO))
 		    				tsSocialAutoPubSettingsObj.setRecoFbFlag(s);
 		    		}
-		    		if(arrayUSNC[index].equals("Twitter"))
+		    		if(arrayUSNC[index].equals(GlobalVariables.SOCIAL_TWITTER))
 		    		{
-		    			if(arrayUSNC_AP[indexAP].equals("My Favorite Spots"))
+		    			if(arrayUSNC_AP[indexAP].equals(GlobalVariables.SOCIAL_FAV))
 		    				tsSocialAutoPubSettingsObj.setFavTwitterFlag(s);
-		    			if(arrayUSNC_AP[indexAP].equals("My Tips"))
+		    			if(arrayUSNC_AP[indexAP].equals(GlobalVariables.SOCIAL_TIP))
 		    				tsSocialAutoPubSettingsObj.setTipsTwitterFlag(s);
-		    			if(arrayUSNC_AP[indexAP].equals("Recommendations I give to others"))
+		    			if(arrayUSNC_AP[indexAP].equals(GlobalVariables.SOCIAL_RECO))
 		    				tsSocialAutoPubSettingsObj.setRecoTwitterFlag(s);
 		    		}
-		    		if(arrayUSNC[index].equals("Tumblr"))
+		    		if(arrayUSNC[index].equals(GlobalVariables.SOCIAL_TUMBLR))
 		    		{
-		    			if(arrayUSNC_AP[indexAP].equals("My Favorite Spots"))
+		    			if(arrayUSNC_AP[indexAP].equals(GlobalVariables.SOCIAL_FAV))
 		    				tsSocialAutoPubSettingsObj.setFavTumblrFlag(s);
-		    			if(arrayUSNC_AP[indexAP].equals("My Tips"))
+		    			if(arrayUSNC_AP[indexAP].equals(GlobalVariables.SOCIAL_TIP))
 		    				tsSocialAutoPubSettingsObj.setTipsTumblrFlag(s);
-		    			if(arrayUSNC_AP[indexAP].equals("Recommendations I give to others"))
+		    			if(arrayUSNC_AP[indexAP].equals(GlobalVariables.SOCIAL_RECO))
 		    				tsSocialAutoPubSettingsObj.setRecoTumblrFlag(s);
 		    		}
 		    	}

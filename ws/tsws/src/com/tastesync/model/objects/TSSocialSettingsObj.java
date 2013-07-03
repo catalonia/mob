@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "social")
 public class TSSocialSettingsObj implements Serializable {
     private static final long serialVersionUID = 6457481134997945030L;
-    private String email;
+    private String userId;
     private String facebookStatus;
     private String twitterStatus;
     private String foursquareStatus;
@@ -22,8 +22,8 @@ public class TSSocialSettingsObj implements Serializable {
     }
 
     @XmlElement
-	public String getEmail() {
-		return email;
+	public String getUserId() {
+		return userId;
 	}
 
     @XmlElement
@@ -66,8 +66,8 @@ public class TSSocialSettingsObj implements Serializable {
         TSSocialAutoPubSettingsObj tsSocialAutoPubSettingsObj) {
         this.tsSocialAutoPubSettingsObj = tsSocialAutoPubSettingsObj;
     }
-    
-	public void setEmail(String email) {
-		this.email = email;
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

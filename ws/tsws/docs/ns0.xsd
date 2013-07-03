@@ -4,6 +4,7 @@
   <xs:element name="error" type="TSErrorObj"/>
   <xs:element name="facebook_user_data" type="TSFacebookUserDataObj"/>
   <xs:element name="list_user_profile_fb" type="TSListFacebookUserDataObj"/>
+  <xs:element name="listNotifications" type="TSListNotificationSettingsObj"/>
   <xs:element name="notifications" type="TSNotificationSettingsObj"/>
   <xs:element name="photo" type="TSPhotoObj"/>
   <xs:element name="privacy" type="TSPrivacySettingsObj"/>
@@ -67,9 +68,23 @@
       <xs:element name="list_user_profile" type="TSFacebookUserDataObj" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="TSListNotificationSettingsObj">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:string" minOccurs="0"/>
+      <xs:element name="friendsAskReco" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="peopleFollowAskReco" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="otherPeopleAskReco" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="peopleLikeMyReco" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="peopleAskMeFollowReco" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="friendsSendMeReco" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="peopleLikeCommentTips" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="friendsPostQuestionForum" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="friendsJoinTasteSync" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="newslettersDigestsTasteSync" type="TSNotificationSettingsObj" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="TSNotificationSettingsObj">
     <xs:sequence>
-      <xs:element name="notificationSettingsId" type="xs:string" minOccurs="0"/>
       <xs:element name="phoneFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="emailFlag" type="xs:string" minOccurs="0"/>
     </xs:sequence>
@@ -138,7 +153,7 @@
   <xs:complexType name="TSSocialSettingsObj">
     <xs:sequence>
       <xs:element name="tsSocialAutoPubSettingsObj" type="TSSocialAutoPubSettingsObj" minOccurs="0"/>
-      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="userId" type="xs:string" minOccurs="0"/>
       <xs:element name="facebookStatus" type="xs:string" minOccurs="0"/>
       <xs:element name="twitterStatus" type="xs:string" minOccurs="0"/>
       <xs:element name="foursquareStatus" type="xs:string" minOccurs="0"/>
@@ -152,7 +167,6 @@
   </xs:complexType>
   <xs:complexType name="TSUserObj">
     <xs:sequence>
-      <xs:element name="autoUserId" type="xs:string" minOccurs="0"/>
       <xs:element name="userId" type="xs:string" minOccurs="0"/>
       <xs:element name="tsUserId" type="xs:string" minOccurs="0"/>
       <xs:element name="tsUserEmail" type="xs:string" minOccurs="0"/>

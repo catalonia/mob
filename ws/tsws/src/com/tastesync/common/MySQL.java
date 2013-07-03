@@ -490,6 +490,62 @@ public class MySQL {
 	    array = null;
 		return array;
 	}
+	public boolean checkNotificationDescriptor(String userId)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	statement = connection.prepareStatement(UserQueries.USER_NOTIFICATION_SETTINGS_ID_SELECT_SQL);
+	    	statement.setString(1, userId);
+	    	resultset = statement.executeQuery();
+	    	int  i = 0;
+	    	if(resultset.next())
+	    	{
+	    		i++;
+	    	}
+	    	System.out.println("Number row:"+i);
+	    	if(i != 0)
+	    		return true;
+	    	else
+	    		return false;
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+		}
+		return false;
+	}
+	public int getIDNotificationDescriptor(String nsIdDesc)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	System.out.println(UserQueries.NOTIFICATION_DESCRIPTOR_SELECT_SQL);
+	    	statement = connection.prepareStatement(UserQueries.NOTIFICATION_DESCRIPTOR_SELECT_SQL);
+	    	statement.setString(1, nsIdDesc);
+	    	resultset = statement.executeQuery();
+    	if(resultset.next())
+    	{
+    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("notification_descriptor.NSID")));
+    	}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		tsDataSource.close();
+	}
+		return 0;
+	}
 //	//Check facebook id in the system
 //	public boolean checkFacebookIDExist(String user_fb_id) {
 //		boolean check = false;
@@ -1130,8 +1186,6 @@ public class MySQL {
 //	}
         public static void mapResultsetRowToTSUserVO(TSUserObj tsUserObj,
                 ResultSet resultset) throws SQLException {
-        		tsUserObj.setAutoUserId(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("users.Auto_User_ID")));
                 tsUserObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("users.USER_ID")));
                 tsUserObj.setTsUserId(CommonFunctionsUtil.getModifiedValueString(

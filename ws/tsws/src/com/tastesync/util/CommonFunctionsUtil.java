@@ -42,10 +42,10 @@ public class CommonFunctionsUtil {
         String ketqua = "";
         String hoa = "QWERTYUIOPASDFGHJKLZXCVBNM";
         String thuong = hoa.toLowerCase();
-        String so = "1234567890";
+        String so = "123456789012345678901234567890";
         String randomchuoi = "";
-        if (loai > 3 || loai < 0) {
-            ketqua = "Loai khong hop le, cho phep tu 0 - 3";
+        if (loai > 4 || loai < 0) {
+            ketqua = "Loai khong hop le, cho phep tu 0 - 4";
         } else if (loai == 0) {
             randomchuoi = thuong;
         } else if (loai == 1) {
@@ -54,7 +54,8 @@ public class CommonFunctionsUtil {
             randomchuoi = hoa + thuong;
         } else if (loai == 3) {
             randomchuoi = hoa + thuong + so;
-        }
+        } else if (loai == 4)
+        	randomchuoi = so;
         for (int i = 0; i < dodai; i++) {
             int temp = (int) Math.round(Math.random() * randomchuoi.length());
             ketqua += randomchuoi.charAt(temp);

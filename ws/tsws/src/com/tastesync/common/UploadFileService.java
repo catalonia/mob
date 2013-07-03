@@ -65,7 +65,7 @@ public class UploadFileService {
 			writeFile(bytes, upload);
 			
 			//Insert/Update user photo
-			MySQL mysql = new MySQL();
+//			MySQL mysql = new MySQL();
 //			check_photo = mysql.checkUserPhotoExist(user_id);
 			
 			if(check_photo) {
