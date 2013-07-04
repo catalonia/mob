@@ -585,52 +585,12 @@ struct enunciate_ns0_TSListNotificationSettingsObj {
   /**
    * (no documentation provided)
    */
-  struct enunciate_ns0_TSNotificationSettingsObj *friendsAskReco;
+  struct enunciate_ns0_TSNotificationSettingsObj *notification;
 
   /**
-   * (no documentation provided)
+   * Size of the notification array.
    */
-  struct enunciate_ns0_TSNotificationSettingsObj *peopleFollowAskReco;
-
-  /**
-   * (no documentation provided)
-   */
-  struct enunciate_ns0_TSNotificationSettingsObj *otherPeopleAskReco;
-
-  /**
-   * (no documentation provided)
-   */
-  struct enunciate_ns0_TSNotificationSettingsObj *peopleLikeMyReco;
-
-  /**
-   * (no documentation provided)
-   */
-  struct enunciate_ns0_TSNotificationSettingsObj *peopleAskMeFollowReco;
-
-  /**
-   * (no documentation provided)
-   */
-  struct enunciate_ns0_TSNotificationSettingsObj *friendsSendMeReco;
-
-  /**
-   * (no documentation provided)
-   */
-  struct enunciate_ns0_TSNotificationSettingsObj *peopleLikeCommentTips;
-
-  /**
-   * (no documentation provided)
-   */
-  struct enunciate_ns0_TSNotificationSettingsObj *friendsPostQuestionForum;
-
-  /**
-   * (no documentation provided)
-   */
-  struct enunciate_ns0_TSNotificationSettingsObj *friendsJoinTasteSync;
-
-  /**
-   * (no documentation provided)
-   */
-  struct enunciate_ns0_TSNotificationSettingsObj *newslettersDigestsTasteSync;
+  int _sizeof_notification;
 };
 
 /**
@@ -727,6 +687,11 @@ static void freeNs0TSListNotificationSettingsObjType(struct enunciate_ns0_TSList
  */
 struct enunciate_ns0_TSNotificationSettingsObj {
 
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *order_id;
 
   /**
    * (no documentation provided)
@@ -948,12 +913,12 @@ struct enunciate_ns0_TSPrivacySettingsObj {
   /**
    * (no documentation provided)
    */
-  xmlChar *privacySettingsIds;
+  xmlChar *privacy_id_order;
 
   /**
    * (no documentation provided)
    */
-  xmlChar *privacyUserFlag;
+  xmlChar *privacy_flag;
 };
 
 /**
@@ -5471,16 +5436,16 @@ static struct enunciate_ns0_TSListNotificationSettingsObj *xmlTextReaderReadNs0T
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "friendsAskReco", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlStrcmp(BAD_CAST "notification", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}friendsAskReco of type {}TSNotificationSettingsObj.\n");
+        printf("Attempting to read choice {}notification of type {}TSNotificationSettingsObj.\n");
 #endif
         _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}friendsAskReco of type {}TSNotificationSettingsObj.\n");
+          printf("Failed to read choice {}notification of type {}TSNotificationSettingsObj.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
@@ -5488,196 +5453,9 @@ static struct enunciate_ns0_TSListNotificationSettingsObj *xmlTextReaderReadNs0T
           return NULL;
         }
 
-        _tSListNotificationSettingsObj->friendsAskReco = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "peopleFollowAskReco", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}peopleFollowAskReco of type {}TSNotificationSettingsObj.\n");
-#endif
-        _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}peopleFollowAskReco of type {}TSNotificationSettingsObj.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
-          free(_tSListNotificationSettingsObj);
-          return NULL;
-        }
-
-        _tSListNotificationSettingsObj->peopleFollowAskReco = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "otherPeopleAskReco", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}otherPeopleAskReco of type {}TSNotificationSettingsObj.\n");
-#endif
-        _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}otherPeopleAskReco of type {}TSNotificationSettingsObj.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
-          free(_tSListNotificationSettingsObj);
-          return NULL;
-        }
-
-        _tSListNotificationSettingsObj->otherPeopleAskReco = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "peopleLikeMyReco", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}peopleLikeMyReco of type {}TSNotificationSettingsObj.\n");
-#endif
-        _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}peopleLikeMyReco of type {}TSNotificationSettingsObj.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
-          free(_tSListNotificationSettingsObj);
-          return NULL;
-        }
-
-        _tSListNotificationSettingsObj->peopleLikeMyReco = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "peopleAskMeFollowReco", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}peopleAskMeFollowReco of type {}TSNotificationSettingsObj.\n");
-#endif
-        _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}peopleAskMeFollowReco of type {}TSNotificationSettingsObj.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
-          free(_tSListNotificationSettingsObj);
-          return NULL;
-        }
-
-        _tSListNotificationSettingsObj->peopleAskMeFollowReco = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "friendsSendMeReco", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}friendsSendMeReco of type {}TSNotificationSettingsObj.\n");
-#endif
-        _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}friendsSendMeReco of type {}TSNotificationSettingsObj.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
-          free(_tSListNotificationSettingsObj);
-          return NULL;
-        }
-
-        _tSListNotificationSettingsObj->friendsSendMeReco = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "peopleLikeCommentTips", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}peopleLikeCommentTips of type {}TSNotificationSettingsObj.\n");
-#endif
-        _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}peopleLikeCommentTips of type {}TSNotificationSettingsObj.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
-          free(_tSListNotificationSettingsObj);
-          return NULL;
-        }
-
-        _tSListNotificationSettingsObj->peopleLikeCommentTips = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "friendsPostQuestionForum", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}friendsPostQuestionForum of type {}TSNotificationSettingsObj.\n");
-#endif
-        _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}friendsPostQuestionForum of type {}TSNotificationSettingsObj.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
-          free(_tSListNotificationSettingsObj);
-          return NULL;
-        }
-
-        _tSListNotificationSettingsObj->friendsPostQuestionForum = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "friendsJoinTasteSync", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}friendsJoinTasteSync of type {}TSNotificationSettingsObj.\n");
-#endif
-        _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}friendsJoinTasteSync of type {}TSNotificationSettingsObj.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
-          free(_tSListNotificationSettingsObj);
-          return NULL;
-        }
-
-        _tSListNotificationSettingsObj->friendsJoinTasteSync = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "newslettersDigestsTasteSync", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}newslettersDigestsTasteSync of type {}TSNotificationSettingsObj.\n");
-#endif
-        _child_accessor = xmlTextReaderReadNs0TSNotificationSettingsObjType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}newslettersDigestsTasteSync of type {}TSNotificationSettingsObj.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSListNotificationSettingsObjType(_tSListNotificationSettingsObj);
-          free(_tSListNotificationSettingsObj);
-          return NULL;
-        }
-
-        _tSListNotificationSettingsObj->newslettersDigestsTasteSync = ((struct enunciate_ns0_TSNotificationSettingsObj*)_child_accessor);
+        _tSListNotificationSettingsObj->notification = realloc(_tSListNotificationSettingsObj->notification, (_tSListNotificationSettingsObj->_sizeof_notification + 1) * sizeof(struct enunciate_ns0_TSNotificationSettingsObj));
+        memcpy(&(_tSListNotificationSettingsObj->notification[_tSListNotificationSettingsObj->_sizeof_notification++]), _child_accessor, sizeof(struct enunciate_ns0_TSNotificationSettingsObj));
+        free(_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else {
@@ -5737,22 +5515,22 @@ static int xmlTextWriterWriteNs0TSListNotificationSettingsObjType(xmlTextWriterP
     }
     totalBytes += status;
   }
-  if (_tSListNotificationSettingsObj->friendsAskReco != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friendsAskReco", NULL);
+  for (i = 0; i < _tSListNotificationSettingsObj->_sizeof_notification; i++) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "notification", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}friendsAskReco. status: %i\n", status);
+      printf("Failed to write start element {}notification. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}friendsAskReco...\n");
+    printf("writing type {}TSNotificationSettingsObj for element {}notification...\n");
 #endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->friendsAskReco));
+    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, &(_tSListNotificationSettingsObj->notification[i]));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}friendsAskReco. status: %i\n", status);
+      printf("Failed to write type {}TSNotificationSettingsObj for element {}notification. status: %i\n", status);
 #endif
       return status;
     }
@@ -5761,277 +5539,7 @@ static int xmlTextWriterWriteNs0TSListNotificationSettingsObjType(xmlTextWriterP
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}friendsAskReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSListNotificationSettingsObj->peopleFollowAskReco != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "peopleFollowAskReco", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}peopleFollowAskReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}peopleFollowAskReco...\n");
-#endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->peopleFollowAskReco));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}peopleFollowAskReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}peopleFollowAskReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSListNotificationSettingsObj->otherPeopleAskReco != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "otherPeopleAskReco", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}otherPeopleAskReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}otherPeopleAskReco...\n");
-#endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->otherPeopleAskReco));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}otherPeopleAskReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}otherPeopleAskReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSListNotificationSettingsObj->peopleLikeMyReco != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "peopleLikeMyReco", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}peopleLikeMyReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}peopleLikeMyReco...\n");
-#endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->peopleLikeMyReco));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}peopleLikeMyReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}peopleLikeMyReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSListNotificationSettingsObj->peopleAskMeFollowReco != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "peopleAskMeFollowReco", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}peopleAskMeFollowReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}peopleAskMeFollowReco...\n");
-#endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->peopleAskMeFollowReco));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}peopleAskMeFollowReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}peopleAskMeFollowReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSListNotificationSettingsObj->friendsSendMeReco != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friendsSendMeReco", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}friendsSendMeReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}friendsSendMeReco...\n");
-#endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->friendsSendMeReco));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}friendsSendMeReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}friendsSendMeReco. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSListNotificationSettingsObj->peopleLikeCommentTips != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "peopleLikeCommentTips", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}peopleLikeCommentTips. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}peopleLikeCommentTips...\n");
-#endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->peopleLikeCommentTips));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}peopleLikeCommentTips. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}peopleLikeCommentTips. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSListNotificationSettingsObj->friendsPostQuestionForum != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friendsPostQuestionForum", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}friendsPostQuestionForum. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}friendsPostQuestionForum...\n");
-#endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->friendsPostQuestionForum));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}friendsPostQuestionForum. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}friendsPostQuestionForum. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSListNotificationSettingsObj->friendsJoinTasteSync != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friendsJoinTasteSync", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}friendsJoinTasteSync. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}friendsJoinTasteSync...\n");
-#endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->friendsJoinTasteSync));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}friendsJoinTasteSync. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}friendsJoinTasteSync. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSListNotificationSettingsObj->newslettersDigestsTasteSync != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "newslettersDigestsTasteSync", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}newslettersDigestsTasteSync. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSNotificationSettingsObj for element {}newslettersDigestsTasteSync...\n");
-#endif
-    status = xmlTextWriterWriteNs0TSNotificationSettingsObjType(writer, (_tSListNotificationSettingsObj->newslettersDigestsTasteSync));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSNotificationSettingsObj for element {}newslettersDigestsTasteSync. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}newslettersDigestsTasteSync. status: %i\n", status);
+      printf("Failed to write end element {}notification. status: %i\n", status);
 #endif
       return status;
     }
@@ -6058,105 +5566,17 @@ static void freeNs0TSListNotificationSettingsObjType(struct enunciate_ns0_TSList
 #endif
     free(_tSListNotificationSettingsObj->userId);
   }
-  if (_tSListNotificationSettingsObj->friendsAskReco != NULL) {
+  if (_tSListNotificationSettingsObj->notification != NULL) {
+    for (i = 0; i < _tSListNotificationSettingsObj->_sizeof_notification; i++) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor friendsAskReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
+      printf("Freeing accessor notification[%i] of type enunciate_ns0_TSListNotificationSettingsObj...\n", i);
 #endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->friendsAskReco);
+      freeNs0TSNotificationSettingsObjType(&(_tSListNotificationSettingsObj->notification[i]));
+    }
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor friendsAskReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
+    printf("Freeing accessor notification of type enunciate_ns0_TSListNotificationSettingsObj...\n");
 #endif
-    free(_tSListNotificationSettingsObj->friendsAskReco);
-  }
-  if (_tSListNotificationSettingsObj->peopleFollowAskReco != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor peopleFollowAskReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->peopleFollowAskReco);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor peopleFollowAskReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    free(_tSListNotificationSettingsObj->peopleFollowAskReco);
-  }
-  if (_tSListNotificationSettingsObj->otherPeopleAskReco != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor otherPeopleAskReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->otherPeopleAskReco);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor otherPeopleAskReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    free(_tSListNotificationSettingsObj->otherPeopleAskReco);
-  }
-  if (_tSListNotificationSettingsObj->peopleLikeMyReco != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor peopleLikeMyReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->peopleLikeMyReco);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor peopleLikeMyReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    free(_tSListNotificationSettingsObj->peopleLikeMyReco);
-  }
-  if (_tSListNotificationSettingsObj->peopleAskMeFollowReco != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor peopleAskMeFollowReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->peopleAskMeFollowReco);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor peopleAskMeFollowReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    free(_tSListNotificationSettingsObj->peopleAskMeFollowReco);
-  }
-  if (_tSListNotificationSettingsObj->friendsSendMeReco != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor friendsSendMeReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->friendsSendMeReco);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor friendsSendMeReco of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    free(_tSListNotificationSettingsObj->friendsSendMeReco);
-  }
-  if (_tSListNotificationSettingsObj->peopleLikeCommentTips != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor peopleLikeCommentTips of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->peopleLikeCommentTips);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor peopleLikeCommentTips of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    free(_tSListNotificationSettingsObj->peopleLikeCommentTips);
-  }
-  if (_tSListNotificationSettingsObj->friendsPostQuestionForum != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor friendsPostQuestionForum of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->friendsPostQuestionForum);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor friendsPostQuestionForum of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    free(_tSListNotificationSettingsObj->friendsPostQuestionForum);
-  }
-  if (_tSListNotificationSettingsObj->friendsJoinTasteSync != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor friendsJoinTasteSync of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->friendsJoinTasteSync);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor friendsJoinTasteSync of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    free(_tSListNotificationSettingsObj->friendsJoinTasteSync);
-  }
-  if (_tSListNotificationSettingsObj->newslettersDigestsTasteSync != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor newslettersDigestsTasteSync of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    freeNs0TSNotificationSettingsObjType(_tSListNotificationSettingsObj->newslettersDigestsTasteSync);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor newslettersDigestsTasteSync of type enunciate_ns0_TSListNotificationSettingsObj...\n");
-#endif
-    free(_tSListNotificationSettingsObj->newslettersDigestsTasteSync);
+    free(_tSListNotificationSettingsObj->notification);
   }
 }
 #endif /* DEF_enunciate_ns0_TSListNotificationSettingsObj_M */
@@ -6321,6 +5741,27 @@ static struct enunciate_ns0_TSNotificationSettingsObj *xmlTextReaderReadNs0TSNot
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "order_id", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}order_id of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}order_id of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotificationSettingsObjType(_tSNotificationSettingsObj);
+          free(_tSNotificationSettingsObj);
+          return NULL;
+        }
+
+        _tSNotificationSettingsObj->order_id = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "phoneFlag", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -6389,6 +5830,36 @@ static struct enunciate_ns0_TSNotificationSettingsObj *xmlTextReaderReadNs0TSNot
 static int xmlTextWriterWriteNs0TSNotificationSettingsObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotificationSettingsObj *_tSNotificationSettingsObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSNotificationSettingsObj->order_id != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "order_id", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}order_id. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}order_id...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotificationSettingsObj->order_id));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}order_id. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}order_id. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSNotificationSettingsObj->phoneFlag != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "phoneFlag", NULL);
     if (status < 0) {
@@ -6460,6 +5931,16 @@ static int xmlTextWriterWriteNs0TSNotificationSettingsObjType(xmlTextWriterPtr w
  */
 static void freeNs0TSNotificationSettingsObjType(struct enunciate_ns0_TSNotificationSettingsObj *_tSNotificationSettingsObj) {
   int i;
+  if (_tSNotificationSettingsObj->order_id != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor order_id of type enunciate_ns0_TSNotificationSettingsObj...\n");
+#endif
+    freeXsStringType(_tSNotificationSettingsObj->order_id);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor order_id of type enunciate_ns0_TSNotificationSettingsObj...\n");
+#endif
+    free(_tSNotificationSettingsObj->order_id);
+  }
   if (_tSNotificationSettingsObj->phoneFlag != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor phoneFlag of type enunciate_ns0_TSNotificationSettingsObj...\n");
@@ -7026,16 +6507,16 @@ static struct enunciate_ns0_TSPrivacySettingsObj *xmlTextReaderReadNs0TSPrivacyS
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "privacySettingsIds", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlStrcmp(BAD_CAST "privacy_id_order", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}privacySettingsIds of type {http://www.w3.org/2001/XMLSchema}string.\n");
+        printf("Attempting to read choice {}privacy_id_order of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
         _child_accessor = xmlTextReaderReadXsStringType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}privacySettingsIds of type {http://www.w3.org/2001/XMLSchema}string.\n");
+          printf("Failed to read choice {}privacy_id_order of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSPrivacySettingsObjType(_tSPrivacySettingsObj);
@@ -7043,20 +6524,20 @@ static struct enunciate_ns0_TSPrivacySettingsObj *xmlTextReaderReadNs0TSPrivacyS
           return NULL;
         }
 
-        _tSPrivacySettingsObj->privacySettingsIds = ((xmlChar*)_child_accessor);
+        _tSPrivacySettingsObj->privacy_id_order = ((xmlChar*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "privacyUserFlag", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlStrcmp(BAD_CAST "privacy_flag", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}privacyUserFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+        printf("Attempting to read choice {}privacy_flag of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
         _child_accessor = xmlTextReaderReadXsStringType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}privacyUserFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+          printf("Failed to read choice {}privacy_flag of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSPrivacySettingsObjType(_tSPrivacySettingsObj);
@@ -7064,7 +6545,7 @@ static struct enunciate_ns0_TSPrivacySettingsObj *xmlTextReaderReadNs0TSPrivacyS
           return NULL;
         }
 
-        _tSPrivacySettingsObj->privacyUserFlag = ((xmlChar*)_child_accessor);
+        _tSPrivacySettingsObj->privacy_flag = ((xmlChar*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else {
@@ -7094,22 +6575,22 @@ static struct enunciate_ns0_TSPrivacySettingsObj *xmlTextReaderReadNs0TSPrivacyS
 static int xmlTextWriterWriteNs0TSPrivacySettingsObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSPrivacySettingsObj *_tSPrivacySettingsObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
-  if (_tSPrivacySettingsObj->privacySettingsIds != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "privacySettingsIds", NULL);
+  if (_tSPrivacySettingsObj->privacy_id_order != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "privacy_id_order", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}privacySettingsIds. status: %i\n", status);
+      printf("Failed to write start element {}privacy_id_order. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}privacySettingsIds...\n");
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}privacy_id_order...\n");
 #endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSPrivacySettingsObj->privacySettingsIds));
+    status = xmlTextWriterWriteXsStringType(writer, (_tSPrivacySettingsObj->privacy_id_order));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}privacySettingsIds. status: %i\n", status);
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}privacy_id_order. status: %i\n", status);
 #endif
       return status;
     }
@@ -7118,28 +6599,28 @@ static int xmlTextWriterWriteNs0TSPrivacySettingsObjType(xmlTextWriterPtr writer
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}privacySettingsIds. status: %i\n", status);
+      printf("Failed to write end element {}privacy_id_order. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
   }
-  if (_tSPrivacySettingsObj->privacyUserFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "privacyUserFlag", NULL);
+  if (_tSPrivacySettingsObj->privacy_flag != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "privacy_flag", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}privacyUserFlag. status: %i\n", status);
+      printf("Failed to write start element {}privacy_flag. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}privacyUserFlag...\n");
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}privacy_flag...\n");
 #endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSPrivacySettingsObj->privacyUserFlag));
+    status = xmlTextWriterWriteXsStringType(writer, (_tSPrivacySettingsObj->privacy_flag));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}privacyUserFlag. status: %i\n", status);
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}privacy_flag. status: %i\n", status);
 #endif
       return status;
     }
@@ -7148,7 +6629,7 @@ static int xmlTextWriterWriteNs0TSPrivacySettingsObjType(xmlTextWriterPtr writer
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}privacyUserFlag. status: %i\n", status);
+      printf("Failed to write end element {}privacy_flag. status: %i\n", status);
 #endif
       return status;
     }
@@ -7165,25 +6646,25 @@ static int xmlTextWriterWriteNs0TSPrivacySettingsObjType(xmlTextWriterPtr writer
  */
 static void freeNs0TSPrivacySettingsObjType(struct enunciate_ns0_TSPrivacySettingsObj *_tSPrivacySettingsObj) {
   int i;
-  if (_tSPrivacySettingsObj->privacySettingsIds != NULL) {
+  if (_tSPrivacySettingsObj->privacy_id_order != NULL) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor privacySettingsIds of type enunciate_ns0_TSPrivacySettingsObj...\n");
+    printf("Freeing type of accessor privacy_id_order of type enunciate_ns0_TSPrivacySettingsObj...\n");
 #endif
-    freeXsStringType(_tSPrivacySettingsObj->privacySettingsIds);
+    freeXsStringType(_tSPrivacySettingsObj->privacy_id_order);
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor privacySettingsIds of type enunciate_ns0_TSPrivacySettingsObj...\n");
+    printf("Freeing accessor privacy_id_order of type enunciate_ns0_TSPrivacySettingsObj...\n");
 #endif
-    free(_tSPrivacySettingsObj->privacySettingsIds);
+    free(_tSPrivacySettingsObj->privacy_id_order);
   }
-  if (_tSPrivacySettingsObj->privacyUserFlag != NULL) {
+  if (_tSPrivacySettingsObj->privacy_flag != NULL) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor privacyUserFlag of type enunciate_ns0_TSPrivacySettingsObj...\n");
+    printf("Freeing type of accessor privacy_flag of type enunciate_ns0_TSPrivacySettingsObj...\n");
 #endif
-    freeXsStringType(_tSPrivacySettingsObj->privacyUserFlag);
+    freeXsStringType(_tSPrivacySettingsObj->privacy_flag);
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor privacyUserFlag of type enunciate_ns0_TSPrivacySettingsObj...\n");
+    printf("Freeing accessor privacy_flag of type enunciate_ns0_TSPrivacySettingsObj...\n");
 #endif
-    free(_tSPrivacySettingsObj->privacyUserFlag);
+    free(_tSPrivacySettingsObj->privacy_flag);
   }
 }
 #endif /* DEF_enunciate_ns0_TSPrivacySettingsObj_M */

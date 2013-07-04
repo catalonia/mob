@@ -163,7 +163,7 @@ public interface UserQueries extends TSDBCommonQueries {
     public static String USER_NOTIFICATION_SETTINGS_ID_UPDATE_SQL = "UPDATE user_notification_settings SET NS_MOBILE_FLAG = ?, NS_EMAIL_FLAG = ? WHERE USER_ID = ? AND NSID = ?";
     
     //NOTIFICATION_DESCRIPTOR
-    public static String NOTIFICATION_DESCRIPTOR_SELECT_SQL = "SELECT * FROM notification_descriptor WHERE NSID_DESC = ?";
+    public static String NOTIFICATION_DESCRIPTOR_SELECT_SQL = "SELECT * FROM notification_descriptor WHERE NSID_ORDER = ?";
     
     //USER_PRIVACY_SETTINGS
     public static String USER_PRIVACY_SETTINGS_SELECT_SQL = "" +
@@ -176,6 +176,13 @@ public interface UserQueries extends TSDBCommonQueries {
         "SET    `user_privacy_settings`.`privacy_flag` = ? " +
         "WHERE  `user_privacy_settings`.`user_id` = ? " +
         "       `user_privacy_settings`.`privacy_id` = ?" + "";
+    public static String USER_PRIVACY_SETTINGS_ID_SELECT_SQL = "SELECT * FROM user_privacy_settings WHERE USER_ID = ?";
+    public static String USER_PRIVACY_SETTINGS_INSERT_SQL = "INSERT INTO user_privacy_settings (USER_ID, PRIVACY_ID, PRIVACY_FLAG) VALUE (?, ?, ?)";
+    public static String USER_PRIVACY_SETTINGS_ID_UPDATE_SQL = "UPDATE user_privacy_settings SET PRIVACY_FLAG = ?WHERE USER_ID = ? AND PRIVACY_ID = ?";
+    
+    //PRIVACY_DESCIPTOR
+    public static String PRIVACY_DESCRIPTOR_SELECT_SQL = "SELECT * FROM privacy_descriptor WHERE PRIVACY_ID_ORDER = ?";
+    public static String PRIVACY_DESCRIPTOR_ORDER_SELECT_SQL = "SELECT * FROM privacy_descriptor WHERE PRIVACY_ID = ?";
     
     //USER_REPORTED_INFO
     public static String USER_REPORTED_INFO_INSERT_SQL = "" +

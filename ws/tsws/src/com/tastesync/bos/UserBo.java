@@ -5,8 +5,7 @@ import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
-import com.tastesync.model.objects.TSNotificationSettingsObj;
-import com.tastesync.model.objects.TSPrivacySettingsObj;
+import com.tastesync.model.objects.TSListPrivacySettingsObj;
 import com.tastesync.model.objects.TSSocialSettingsObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
@@ -30,10 +29,10 @@ public interface UserBo {
 
     void insertUsers(TSUserObj tsUserObj) throws TasteSyncException;
 
-    void updateSettingsPrivacy(String userId, String[] idList, String[] flagList)
+    boolean updateSettingsPrivacy(TSListPrivacySettingsObj privacySettingObj)
         throws TasteSyncException;
 
-    TSPrivacySettingsObj[] showSettingsPrivacy(String userId)
+    TSListPrivacySettingsObj showSettingsPrivacy(String userId)
         throws TasteSyncException;
 
     boolean updateSettingsNotifications(TSListNotificationSettingsObj notificationSetting)

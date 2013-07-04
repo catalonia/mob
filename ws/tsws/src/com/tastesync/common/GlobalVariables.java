@@ -82,22 +82,12 @@ public class GlobalVariables {
 	
 	public static String RESTAURANT_ULTIMATE_SOURCE_NAME = "foursquare for iPhone";
 	
-	public static String SOCIAL_FACEBOOK = "Facebook";
-	public static String SOCIAL_TWITTER = "Twitter";
-	public static String SOCIAL_FOURSQUARE = "FourSquare";
-	public static String SOCIAL_TUMBLR = "Tumblr";
-	public static String SOCIAL_FAV = "My Favorite Spots";
-	public static String SOCIAL_RECO = "Recommendations I give to others";
-	public static String SOCIAL_TIP = "My Tips";
+	public static String SOCIAL_FACEBOOK 	= "Facebook";
+	public static String SOCIAL_TWITTER 	= "Twitter";
+	public static String SOCIAL_FOURSQUARE 	= "FourSquare";
+	public static String SOCIAL_TUMBLR 		= "Tumblr";
+	public static String SOCIAL_FAV 		= "My Favorite Spots";
+	public static String SOCIAL_RECO 		= "Recommendations I give to others";
+	public static String SOCIAL_TIP 		= "My Tips";
 	
-	public static String NOTIFICATION_FRIENDS_ASK_RECO = "When friends ask for recommendations";
-	public static String NOTIFICATION_PEOPLE_FOLLOW_ASK_RECO = "When people I follow ask for recommendations";
-	public static String NOTIFICATION_OTHER_PEOPLE_ASK_RECO = "When other people ask for recommendations";
-	public static String NOTIFICATION_PEOPLE_LIKE_MY_RECO = "When people like my recommendations";
-	public static String NOTIFICATION_PEOPLE_ASK_ME_FOLLOW_RECO = "When people ask me follow for recommendations";
-	public static String NOTIFICATION_FRIENDS_SEND_ME_RECO = "When friends send me a recommendations";
-	public static String NOTIFICATION_PEOPLE_LIKE_COMMENT_TIPS = "When people like or comment on my tips";
-	public static String NOTIFICATION_FRIENDS_POST_QUESTION_FORUM = "When friends post a question to the forum";
-	public static String NOTIFICATION_FRIENDS_JOIN_TASTESYNC = "When friends join TasteSync";
-	public static String NOTIFICATION_NEWSLETTERS_DIGESTS_TASTESYNC = "Newsletters and Digests from TasteSync";
 }

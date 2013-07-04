@@ -8,8 +8,7 @@ import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
-import com.tastesync.model.objects.TSNotificationSettingsObj;
-import com.tastesync.model.objects.TSPrivacySettingsObj;
+import com.tastesync.model.objects.TSListPrivacySettingsObj;
 import com.tastesync.model.objects.TSSocialSettingsObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
@@ -56,13 +55,12 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public void updateSettingsPrivacy(String userId, String[] idList,
-        String[] flagList) throws TasteSyncException {
-        userDao.updateSettingsPrivacy(userId, idList, flagList);
+    public boolean updateSettingsPrivacy(TSListPrivacySettingsObj privacySettingObj) throws TasteSyncException {
+        return userDao.updateSettingsPrivacy(privacySettingObj);
     }
 
     @Override
-    public TSPrivacySettingsObj[] showSettingsPrivacy(String userId)
+    public TSListPrivacySettingsObj showSettingsPrivacy(String userId)
         throws TasteSyncException {
         return userDao.showSettingsPrivacy(userId);
     }

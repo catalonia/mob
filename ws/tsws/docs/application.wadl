@@ -411,6 +411,22 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
+    <wadl:resource path="/rest/user/showSettingsPrivacy">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/user/showSettingsPrivacy">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
     <wadl:resource path="/rest/user/showSettingsSocial">
       <wadl:method name="POST">
         <wadl:request/>
@@ -510,6 +526,26 @@
       </wadl:method>
     </wadl:resource>
     <wadl:resource path="/json/user/submitSettingsNotifications">
+      <wadl:method name="POST">
+        <wadl:request>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:request>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/user/submitSettingsPrivacy">
+      <wadl:method name="POST">
+        <wadl:request>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:request>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/user/submitSettingsPrivacy">
       <wadl:method name="POST">
         <wadl:request>
           <wadl:representation mediaType="application/json"/>
@@ -702,42 +738,6 @@
       </wadl:method>
     </wadl:resource>
     <wadl:resource path="/json/user/profile/userfriends">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userId" style="query"/>
-        </wadl:request>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/rest/user/settings/changeprivacy">
-      <wadl:method name="POST">
-        <wadl:request/>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/json/user/settings/changeprivacy">
-      <wadl:method name="POST">
-        <wadl:request/>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/rest/user/settings/privacy">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userId" style="query"/>
-        </wadl:request>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/json/user/settings/privacy">
       <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="userId" style="query"/>

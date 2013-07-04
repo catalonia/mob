@@ -10,6 +10,7 @@ import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
+import com.tastesync.model.objects.TSListPrivacySettingsObj;
 import com.tastesync.model.objects.TSNotificationSettingsObj;
 import com.tastesync.model.objects.TSPrivacySettingsObj;
 import com.tastesync.model.objects.TSSocialAutoPubSettingsObj;
@@ -678,16 +679,127 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateSettingsPrivacy(String userId, String[] idList,
-        String[] flagList) {
-        // TODO Auto-generated method stub
+    public boolean updateSettingsPrivacy(TSListPrivacySettingsObj privacySettingObj) throws TasteSyncException{
+    	boolean responseDone = false;
+	    MySQL mySQL = new MySQL();
+	    Dictionary<Integer, String> array = new Hashtable<Integer, String>();
+	    
+	    TSPrivacySettingsObj[] privacyArray = privacySettingObj.getPrivacy();
+	    for(int i = 1; i <= privacyArray.length; i++)
+	    {
+	    	TSPrivacySettingsObj privacy = privacyArray[i - 1];
+	    	array.put(mySQL.getIDPrivacySettings(Integer.parseInt(privacy.getPrivacy_id_order())),privacy.getPrivacy_flag());
+	    }
+	    
+	    System.out.println("Size:"+ array.size());
+	    
+	    String userId = privacySettingObj.getUserId();
+	    boolean isCheckUSNC = mySQL.checkPrivacyDescriptor(userId);
+	    TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+	    
+        try{
+        	tsDataSource.begin();
+		    if(!isCheckUSNC)
+		    {
+		    	for (Enumeration<Integer> e = array.keys(); e.hasMoreElements();)
+		    	 {
+		    		 Integer data = (Integer)e.nextElement();
+		    		 String index = (String)array.get(data);
+		    		 System.out.println(index);
+		    		 System.out.println("UserQueries.USER_PRIVACY_SETTINGS_INSERT_SQL=" + UserQueries.USER_PRIVACY_SETTINGS_INSERT_SQL);
+
+		         	 connection = tsDataSource.getConnection();
+		    		 statement = connection.prepareStatement(UserQueries.USER_PRIVACY_SETTINGS_INSERT_SQL);
+		         	 statement.setString(1, userId);
+		         	 statement.setInt(2, data);
+		         	 statement.setString(3, index);
+		         	 statement.execute();
+		    	 }
+		    }
+		    else
+		    {
+		    	for (Enumeration<Integer> e = array.keys(); e.hasMoreElements();)
+		    	 {
+		    		Integer data = (Integer)e.nextElement();
+		    		 String index = (String)array.get(data);
+		    		 System.out.println(index);
+		    		 System.out.println("UserQueries.USER_PRIVACY_SETTINGS_ID_UPDATE_SQL = " + UserQueries.USER_PRIVACY_SETTINGS_ID_UPDATE_SQL);
+		         	 connection = tsDataSource.getConnection();
+		    		 statement = connection.prepareStatement(UserQueries.USER_PRIVACY_SETTINGS_ID_UPDATE_SQL);
+		         	 statement.setString(1, index);
+		         	 statement.setString(2, userId);
+		         	 statement.setInt(3, data);
+		         	 statement.executeUpdate();
+		    	 }
+		    }
+		    responseDone = true;
+        }catch(Exception e)
+        {
+        	e.printStackTrace();
+        }
+        finally{
+        }
+        return responseDone;
     }
 
     @Override
-    public TSPrivacySettingsObj[] showSettingsPrivacy(String userId) {
-        // TODO Auto-generated method stub
-        //Array of TSNotificationSettingsObj
-        return null;
+    public TSListPrivacySettingsObj showSettingsPrivacy(String userId) {
+    	TSListPrivacySettingsObj privacySettingsObj = null;
+    	MySQL mySQL = new MySQL();
+	    Dictionary<Integer, Integer> array = new Hashtable<Integer, Integer>();
+	    boolean isCheck = mySQL.checkPrivacyDescriptor(userId);
+	    
+	    int count = 0;
+	    for(int i = 1; mySQL.getIDPrivacySettings(i) != 0; i++)
+	    {
+	    	count++;
+	    	array.put(mySQL.getIDPrivacySettings(i)	,i);
+	    }
+	    
+        if (!isCheck) {
+			return privacySettingsObj;
+		} else {
+			try{
+				privacySettingsObj = new TSListPrivacySettingsObj();
+				TSPrivacySettingsObj[] arrayPrivacy = new TSPrivacySettingsObj[count];
+				for(int i = 1; i <= count; i++)
+				{
+					TSPrivacySettingsObj obj = new TSPrivacySettingsObj();
+					obj.setPrivacy_id_order(String.valueOf(i));
+					arrayPrivacy[i - 1] = obj;
+				}
+				privacySettingsObj.setUserId(userId);
+				TSDataSource tsDataSource = TSDataSource.getInstance();
+				Connection connection = null;
+		        ResultSet resultset = null;
+				PreparedStatement statement = null;
+		    	connection = tsDataSource.getConnection();
+		    	tsDataSource.begin();
+		    	statement = connection.prepareStatement(UserQueries.USER_PRIVACY_SETTINGS_ID_SELECT_SQL);
+		    	statement.setString(1, userId);
+		    	resultset = statement.executeQuery();
+		    	while(resultset.next())
+		    	{
+		    		String index_str = CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_privacy_settings.PRIVACY_ID"));
+		    		int index = Integer.parseInt(index_str);
+		    		String privacy_flag = CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_privacy_settings.PRIVACY_FLAG"));
+		 	
+		    		TSPrivacySettingsObj obj = arrayPrivacy[array.get(index) - 1];
+		    		obj.setPrivacy_flag(privacy_flag);		    		
+		    	}
+		    	
+		    	privacySettingsObj.setPrivacy(arrayPrivacy);
+		    	
+		    	tsDataSource.close();
+		    	return privacySettingsObj;
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+        return privacySettingsObj;
     }
 
     @Override
@@ -695,18 +807,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         throws TasteSyncException {
         boolean responseDone = false;
 	    MySQL mySQL = new MySQL();
-	    Dictionary<TSNotificationSettingsObj, Integer> array = new Hashtable<TSNotificationSettingsObj, Integer>();
-	    array.put(notificationSetting.getFriendsAskReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_ASK_RECO));
-	    array.put(notificationSetting.getFriendsJoinTasteSync(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_JOIN_TASTESYNC));
-	    array.put(notificationSetting.getFriendsPostQuestionForum(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_POST_QUESTION_FORUM));
-	    array.put(notificationSetting.getFriendsSendMeReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_SEND_ME_RECO));
-	    array.put(notificationSetting.getNewslettersDigestsTasteSync(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_NEWSLETTERS_DIGESTS_TASTESYNC));
-	    array.put(notificationSetting.getOtherPeopleAskReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_OTHER_PEOPLE_ASK_RECO));
-	    array.put(notificationSetting.getPeopleAskMeFollowReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_ASK_ME_FOLLOW_RECO));
-	    array.put(notificationSetting.getPeopleFollowAskReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_FOLLOW_ASK_RECO));
-	    array.put(notificationSetting.getPeopleLikeCommentTips(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_COMMENT_TIPS));
-	    array.put(notificationSetting.getPeopleLikeMyReco(), mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_MY_RECO));
+	    TSNotificationSettingsObj[] arrayNotification = notificationSetting.getNotification();
 	    
+	    Dictionary<TSNotificationSettingsObj, Integer> array = new Hashtable<TSNotificationSettingsObj, Integer>();
+	    for(int i = 1; i <= arrayNotification.length; i++)
+	    {
+	    	array.put(arrayNotification[i - 1], mySQL.getIDNotificationDescriptor(i));
+	    }
         String userId = notificationSetting.getUserId();
 	    boolean isCheckUSNC = mySQL.checkNotificationDescriptor(userId);
 	    TSDataSource tsDataSource = TSDataSource.getInstance();
@@ -747,7 +854,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		         	 statement.setString(2, data.getEmailFlag());
 		         	 statement.setString(3, userId);
 		         	 statement.setInt(4, index);
-		         	 statement.execute();
+		         	 statement.executeUpdate();
 		    	 }
 		    }
 		    responseDone = true;
@@ -766,23 +873,30 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     	TSListNotificationSettingsObj notifycation = null;
     	MySQL mySQL = new MySQL();
 	    boolean isCheck = mySQL.checkNotificationDescriptor(userId);
-	    Dictionary<Integer, String> array = new Hashtable<Integer, String>();
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_ASK_RECO), GlobalVariables.NOTIFICATION_FRIENDS_ASK_RECO);
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_JOIN_TASTESYNC), GlobalVariables.NOTIFICATION_FRIENDS_JOIN_TASTESYNC);
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_POST_QUESTION_FORUM), GlobalVariables.NOTIFICATION_FRIENDS_POST_QUESTION_FORUM);
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_FRIENDS_SEND_ME_RECO), GlobalVariables.NOTIFICATION_FRIENDS_SEND_ME_RECO);
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_NEWSLETTERS_DIGESTS_TASTESYNC), GlobalVariables.NOTIFICATION_NEWSLETTERS_DIGESTS_TASTESYNC);
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_OTHER_PEOPLE_ASK_RECO), GlobalVariables.NOTIFICATION_OTHER_PEOPLE_ASK_RECO);
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_ASK_ME_FOLLOW_RECO), GlobalVariables.NOTIFICATION_PEOPLE_ASK_ME_FOLLOW_RECO);
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_FOLLOW_ASK_RECO), GlobalVariables.NOTIFICATION_PEOPLE_FOLLOW_ASK_RECO);
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_COMMENT_TIPS), GlobalVariables.NOTIFICATION_PEOPLE_LIKE_COMMENT_TIPS);
-	    array.put(mySQL.getIDNotificationDescriptor(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_MY_RECO), GlobalVariables.NOTIFICATION_PEOPLE_LIKE_MY_RECO);
+	    Dictionary<Integer, Integer> array = new Hashtable<Integer, Integer>();
+	    
+	    int count = 0;
+	    for(int i = 1; mySQL.getIDNotificationDescriptor(i) != 0 ; i++)
+	    {
+	    	count++;
+	    	array.put(mySQL.getIDNotificationDescriptor(i), i);
+	    }
+	    	
 	    if (!isCheck) {
 			return notifycation;
 		} else {
 			try{
 				notifycation = new TSListNotificationSettingsObj();
 				notifycation.setUserId(userId);
+				
+				TSNotificationSettingsObj[] arrayNotification = new TSNotificationSettingsObj[count]; 
+				for(int i = 1; i <= count; i++)
+				{
+					TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
+					obj.setOrder_id(String.valueOf(i));
+					arrayNotification[i - 1] = obj;
+				}
+				
 				TSDataSource tsDataSource = TSDataSource.getInstance();
 				Connection connection = null;
 		        ResultSet resultset = null;
@@ -798,78 +912,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    		int index = Integer.parseInt(index_str);
 		    		String mobile_flag = CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_notification_settings.NS_MOBILE_FLAG"));
 		    		String email_flag = CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_notification_settings.NS_EMAIL_FLAG"));
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_FRIENDS_ASK_RECO))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setFriendsAskReco(obj);
-		    		}
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_FRIENDS_JOIN_TASTESYNC))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setFriendsJoinTasteSync(obj);
-		    		}
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_FRIENDS_POST_QUESTION_FORUM))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setFriendsPostQuestionForum(obj);
-		    		}
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_FRIENDS_SEND_ME_RECO))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setFriendsSendMeReco(obj);
-		    		}
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_NEWSLETTERS_DIGESTS_TASTESYNC))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setNewslettersDigestsTasteSync(obj);
-		    		}
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_OTHER_PEOPLE_ASK_RECO))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setOtherPeopleAskReco(obj);
-		    		}
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_PEOPLE_ASK_ME_FOLLOW_RECO))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setPeopleAskMeFollowReco(obj);
-		    		}
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_PEOPLE_FOLLOW_ASK_RECO))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setPeopleFollowAskReco(obj);
-		    		}
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_COMMENT_TIPS))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setPeopleLikeCommentTips(obj);
-		    		}
-		    		if(array.get(index).equals(GlobalVariables.NOTIFICATION_PEOPLE_LIKE_MY_RECO))
-		    		{
-		    			TSNotificationSettingsObj obj = new TSNotificationSettingsObj();
-		    			obj.setEmailFlag(email_flag);
-		    			obj.setPhoneFlag(mobile_flag);
-		    			notifycation.setPeopleLikeMyReco(obj);
-		    		}
+		    		TSNotificationSettingsObj obj = arrayNotification[array.get(index) - 1];
+		    		obj.setEmailFlag(email_flag);
+		    		obj.setPhoneFlag(mobile_flag);
 		    	}
-		   
+		    	
+		    	notifycation.setNotification(arrayNotification);
+		    	
 		    	tsDataSource.close();
 		    	return notifycation;
 			}catch(Exception e)

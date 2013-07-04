@@ -71,20 +71,12 @@
   <xs:complexType name="TSListNotificationSettingsObj">
     <xs:sequence>
       <xs:element name="userId" type="xs:string" minOccurs="0"/>
-      <xs:element name="friendsAskReco" type="TSNotificationSettingsObj" minOccurs="0"/>
-      <xs:element name="peopleFollowAskReco" type="TSNotificationSettingsObj" minOccurs="0"/>
-      <xs:element name="otherPeopleAskReco" type="TSNotificationSettingsObj" minOccurs="0"/>
-      <xs:element name="peopleLikeMyReco" type="TSNotificationSettingsObj" minOccurs="0"/>
-      <xs:element name="peopleAskMeFollowReco" type="TSNotificationSettingsObj" minOccurs="0"/>
-      <xs:element name="friendsSendMeReco" type="TSNotificationSettingsObj" minOccurs="0"/>
-      <xs:element name="peopleLikeCommentTips" type="TSNotificationSettingsObj" minOccurs="0"/>
-      <xs:element name="friendsPostQuestionForum" type="TSNotificationSettingsObj" minOccurs="0"/>
-      <xs:element name="friendsJoinTasteSync" type="TSNotificationSettingsObj" minOccurs="0"/>
-      <xs:element name="newslettersDigestsTasteSync" type="TSNotificationSettingsObj" minOccurs="0"/>
+      <xs:element name="notification" type="TSNotificationSettingsObj" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSNotificationSettingsObj">
     <xs:sequence>
+      <xs:element name="order_id" type="xs:string" minOccurs="0"/>
       <xs:element name="phoneFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="emailFlag" type="xs:string" minOccurs="0"/>
     </xs:sequence>
@@ -98,8 +90,8 @@
   </xs:complexType>
   <xs:complexType name="TSPrivacySettingsObj">
     <xs:sequence>
-      <xs:element name="privacySettingsIds" type="xs:string" minOccurs="0"/>
-      <xs:element name="privacyUserFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="privacy_id_order" type="xs:string" minOccurs="0"/>
+      <xs:element name="privacy_flag" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSRecommendersDetailsObj">

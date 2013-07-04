@@ -103,90 +103,24 @@
       <code class="prettyprint lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;listNotifications&gt;
   &lt;userId&gt;...&lt;/userId&gt;
-  &lt;friendsAskReco&gt;
+  &lt;notification&gt;
+    &lt;order_id&gt;...&lt;/order_id&gt;
     &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
     &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/friendsAskReco&gt;
-  &lt;peopleFollowAskReco&gt;
-    &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
-    &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/peopleFollowAskReco&gt;
-  &lt;otherPeopleAskReco&gt;
-    &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
-    &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/otherPeopleAskReco&gt;
-  &lt;peopleLikeMyReco&gt;
-    &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
-    &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/peopleLikeMyReco&gt;
-  &lt;peopleAskMeFollowReco&gt;
-    &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
-    &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/peopleAskMeFollowReco&gt;
-  &lt;friendsSendMeReco&gt;
-    &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
-    &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/friendsSendMeReco&gt;
-  &lt;peopleLikeCommentTips&gt;
-    &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
-    &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/peopleLikeCommentTips&gt;
-  &lt;friendsPostQuestionForum&gt;
-    &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
-    &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/friendsPostQuestionForum&gt;
-  &lt;friendsJoinTasteSync&gt;
-    &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
-    &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/friendsJoinTasteSync&gt;
-  &lt;newslettersDigestsTasteSync&gt;
-    &lt;phoneFlag&gt;...&lt;/phoneFlag&gt;
-    &lt;emailFlag&gt;...&lt;/emailFlag&gt;
-  &lt;/newslettersDigestsTasteSync&gt;
+  &lt;/notification&gt;
+  &lt;notification&gt;
+    &lt;!--...--&gt;
+  &lt;/notification&gt;
+  &lt;!--...more &quot;notification&quot; elements...--&gt;
 &lt;/listNotifications&gt;</code>
       <h2>Example JSON</h2>
       <code class="prettyprint lang-js">{
   &quot;userId&quot; : &quot;...&quot;,
-  &quot;friendsAskReco&quot; : {
+  &quot;notification&quot; : [ {
+    &quot;order_id&quot; : &quot;...&quot;,
     &quot;phoneFlag&quot; : &quot;...&quot;,
     &quot;emailFlag&quot; : &quot;...&quot;
-  },
-  &quot;peopleFollowAskReco&quot; : {
-    &quot;phoneFlag&quot; : &quot;...&quot;,
-    &quot;emailFlag&quot; : &quot;...&quot;
-  },
-  &quot;otherPeopleAskReco&quot; : {
-    &quot;phoneFlag&quot; : &quot;...&quot;,
-    &quot;emailFlag&quot; : &quot;...&quot;
-  },
-  &quot;peopleLikeMyReco&quot; : {
-    &quot;phoneFlag&quot; : &quot;...&quot;,
-    &quot;emailFlag&quot; : &quot;...&quot;
-  },
-  &quot;peopleAskMeFollowReco&quot; : {
-    &quot;phoneFlag&quot; : &quot;...&quot;,
-    &quot;emailFlag&quot; : &quot;...&quot;
-  },
-  &quot;friendsSendMeReco&quot; : {
-    &quot;phoneFlag&quot; : &quot;...&quot;,
-    &quot;emailFlag&quot; : &quot;...&quot;
-  },
-  &quot;peopleLikeCommentTips&quot; : {
-    &quot;phoneFlag&quot; : &quot;...&quot;,
-    &quot;emailFlag&quot; : &quot;...&quot;
-  },
-  &quot;friendsPostQuestionForum&quot; : {
-    &quot;phoneFlag&quot; : &quot;...&quot;,
-    &quot;emailFlag&quot; : &quot;...&quot;
-  },
-  &quot;friendsJoinTasteSync&quot; : {
-    &quot;phoneFlag&quot; : &quot;...&quot;,
-    &quot;emailFlag&quot; : &quot;...&quot;
-  },
-  &quot;newslettersDigestsTasteSync&quot; : {
-    &quot;phoneFlag&quot; : &quot;...&quot;,
-    &quot;emailFlag&quot; : &quot;...&quot;
-  }
+  }, ... ]
 }</code>
 
       <div class="clear" />

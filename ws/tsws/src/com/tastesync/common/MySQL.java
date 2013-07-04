@@ -521,7 +521,7 @@ public class MySQL {
 		}
 		return false;
 	}
-	public int getIDNotificationDescriptor(String nsIdDesc)
+	public int getIDNotificationDescriptor(int nsId_Order)
 	{
 		TSDataSource tsDataSource = TSDataSource.getInstance();
 	    Connection connection = null;
@@ -533,11 +533,94 @@ public class MySQL {
 	    	tsDataSource.begin();
 	    	System.out.println(UserQueries.NOTIFICATION_DESCRIPTOR_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.NOTIFICATION_DESCRIPTOR_SELECT_SQL);
-	    	statement.setString(1, nsIdDesc);
+	    	statement.setInt(1, nsId_Order);
 	    	resultset = statement.executeQuery();
     	if(resultset.next())
     	{
     		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("notification_descriptor.NSID")));
+    	}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		tsDataSource.close();
+	}
+		return 0;
+	}
+	public boolean checkPrivacyDescriptor(String userId)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	statement = connection.prepareStatement(UserQueries.USER_PRIVACY_SETTINGS_ID_SELECT_SQL);
+	    	statement.setString(1, userId);
+	    	resultset = statement.executeQuery();
+	    	int  i = 0;
+	    	if(resultset.next())
+	    	{
+	    		i++;
+	    	}
+	    	System.out.println("Number row:"+i);
+	    	if(i != 0)
+	    		return true;
+	    	else
+	    		return false;
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+		}
+		return false;
+	}
+	public int getIDPrivacySettings(int privacyIdOrder)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	System.out.println(UserQueries.PRIVACY_DESCRIPTOR_SELECT_SQL);
+	    	statement = connection.prepareStatement(UserQueries.PRIVACY_DESCRIPTOR_SELECT_SQL);
+	    	statement.setInt(1, privacyIdOrder);
+	    	resultset = statement.executeQuery();
+    	if(resultset.next())
+    	{
+    		System.out.println(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID")));
+    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID")));
+    	}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		tsDataSource.close();
+	}
+		return 0;
+	}
+	public int getIDPrivacyOrderSettings(int privacyId)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	System.out.println(UserQueries.PRIVACY_DESCRIPTOR_ORDER_SELECT_SQL);
+	    	statement = connection.prepareStatement(UserQueries.PRIVACY_DESCRIPTOR_ORDER_SELECT_SQL);
+	    	statement.setInt(1, privacyId);
+	    	resultset = statement.executeQuery();
+    	if(resultset.next())
+    	{
+    		System.out.println(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID_ORDER")));
+    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID_ORDER")));
     	}
 	} catch (Exception e) {
 		e.printStackTrace();

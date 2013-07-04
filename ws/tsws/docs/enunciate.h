@@ -349,16 +349,7 @@
 {
   @private
     NSString *_userId;
-    ENUNCIATENS0TSNotificationSettingsObj *_friendsAskReco;
-    ENUNCIATENS0TSNotificationSettingsObj *_peopleFollowAskReco;
-    ENUNCIATENS0TSNotificationSettingsObj *_otherPeopleAskReco;
-    ENUNCIATENS0TSNotificationSettingsObj *_peopleLikeMyReco;
-    ENUNCIATENS0TSNotificationSettingsObj *_peopleAskMeFollowReco;
-    ENUNCIATENS0TSNotificationSettingsObj *_friendsSendMeReco;
-    ENUNCIATENS0TSNotificationSettingsObj *_peopleLikeCommentTips;
-    ENUNCIATENS0TSNotificationSettingsObj *_friendsPostQuestionForum;
-    ENUNCIATENS0TSNotificationSettingsObj *_friendsJoinTasteSync;
-    ENUNCIATENS0TSNotificationSettingsObj *_newslettersDigestsTasteSync;
+    NSArray *_notification;
 }
 
 /**
@@ -374,102 +365,12 @@
 /**
  * (no documentation provided)
  */
-- (ENUNCIATENS0TSNotificationSettingsObj *) friendsAskReco;
+- (NSArray *) notification;
 
 /**
  * (no documentation provided)
  */
-- (void) setFriendsAskReco: (ENUNCIATENS0TSNotificationSettingsObj *) newFriendsAskReco;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) peopleFollowAskReco;
-
-/**
- * (no documentation provided)
- */
-- (void) setPeopleFollowAskReco: (ENUNCIATENS0TSNotificationSettingsObj *) newPeopleFollowAskReco;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) otherPeopleAskReco;
-
-/**
- * (no documentation provided)
- */
-- (void) setOtherPeopleAskReco: (ENUNCIATENS0TSNotificationSettingsObj *) newOtherPeopleAskReco;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) peopleLikeMyReco;
-
-/**
- * (no documentation provided)
- */
-- (void) setPeopleLikeMyReco: (ENUNCIATENS0TSNotificationSettingsObj *) newPeopleLikeMyReco;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) peopleAskMeFollowReco;
-
-/**
- * (no documentation provided)
- */
-- (void) setPeopleAskMeFollowReco: (ENUNCIATENS0TSNotificationSettingsObj *) newPeopleAskMeFollowReco;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) friendsSendMeReco;
-
-/**
- * (no documentation provided)
- */
-- (void) setFriendsSendMeReco: (ENUNCIATENS0TSNotificationSettingsObj *) newFriendsSendMeReco;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) peopleLikeCommentTips;
-
-/**
- * (no documentation provided)
- */
-- (void) setPeopleLikeCommentTips: (ENUNCIATENS0TSNotificationSettingsObj *) newPeopleLikeCommentTips;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) friendsPostQuestionForum;
-
-/**
- * (no documentation provided)
- */
-- (void) setFriendsPostQuestionForum: (ENUNCIATENS0TSNotificationSettingsObj *) newFriendsPostQuestionForum;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) friendsJoinTasteSync;
-
-/**
- * (no documentation provided)
- */
-- (void) setFriendsJoinTasteSync: (ENUNCIATENS0TSNotificationSettingsObj *) newFriendsJoinTasteSync;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) newslettersDigestsTasteSync;
-
-/**
- * (no documentation provided)
- */
-- (void) setNewslettersDigestsTasteSync: (ENUNCIATENS0TSNotificationSettingsObj *) newNewslettersDigestsTasteSync;
+- (void) setNotification: (NSArray *) newNotification;
 @end /* interface ENUNCIATENS0TSListNotificationSettingsObj */
 
 #endif /* DEF_ENUNCIATENS0TSListNotificationSettingsObj_H */
@@ -1591,29 +1492,29 @@
 @interface ENUNCIATENS0TSPrivacySettingsObj : NSObject <EnunciateXML>
 {
   @private
-    NSString *_privacySettingsIds;
-    NSString *_privacyUserFlag;
+    NSString *_privacy_id_order;
+    NSString *_privacy_flag;
 }
 
 /**
  * (no documentation provided)
  */
-- (NSString *) privacySettingsIds;
+- (NSString *) privacy_id_order;
 
 /**
  * (no documentation provided)
  */
-- (void) setPrivacySettingsIds: (NSString *) newPrivacySettingsIds;
+- (void) setPrivacy_id_order: (NSString *) newPrivacy_id_order;
 
 /**
  * (no documentation provided)
  */
-- (NSString *) privacyUserFlag;
+- (NSString *) privacy_flag;
 
 /**
  * (no documentation provided)
  */
-- (void) setPrivacyUserFlag: (NSString *) newPrivacyUserFlag;
+- (void) setPrivacy_flag: (NSString *) newPrivacy_flag;
 @end /* interface ENUNCIATENS0TSPrivacySettingsObj */
 
 #endif /* DEF_ENUNCIATENS0TSPrivacySettingsObj_H */
@@ -1626,9 +1527,20 @@
 @interface ENUNCIATENS0TSNotificationSettingsObj : NSObject <EnunciateXML>
 {
   @private
+    NSString *_order_id;
     NSString *_phoneFlag;
     NSString *_emailFlag;
 }
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) order_id;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setOrder_id: (NSString *) newOrder_id;
 
 /**
  * (no documentation provided)

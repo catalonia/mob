@@ -1904,196 +1904,25 @@
 /**
  * (no documentation provided)
  */
-- (ENUNCIATENS0TSNotificationSettingsObj *) friendsAskReco
+- (NSArray *) notification
 {
-  return _friendsAskReco;
+  return _notification;
 }
 
 /**
  * (no documentation provided)
  */
-- (void) setFriendsAskReco: (ENUNCIATENS0TSNotificationSettingsObj *) newFriendsAskReco
+- (void) setNotification: (NSArray *) newNotification
 {
-  [newFriendsAskReco retain];
-  [_friendsAskReco release];
-  _friendsAskReco = newFriendsAskReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) peopleFollowAskReco
-{
-  return _peopleFollowAskReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setPeopleFollowAskReco: (ENUNCIATENS0TSNotificationSettingsObj *) newPeopleFollowAskReco
-{
-  [newPeopleFollowAskReco retain];
-  [_peopleFollowAskReco release];
-  _peopleFollowAskReco = newPeopleFollowAskReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) otherPeopleAskReco
-{
-  return _otherPeopleAskReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setOtherPeopleAskReco: (ENUNCIATENS0TSNotificationSettingsObj *) newOtherPeopleAskReco
-{
-  [newOtherPeopleAskReco retain];
-  [_otherPeopleAskReco release];
-  _otherPeopleAskReco = newOtherPeopleAskReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) peopleLikeMyReco
-{
-  return _peopleLikeMyReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setPeopleLikeMyReco: (ENUNCIATENS0TSNotificationSettingsObj *) newPeopleLikeMyReco
-{
-  [newPeopleLikeMyReco retain];
-  [_peopleLikeMyReco release];
-  _peopleLikeMyReco = newPeopleLikeMyReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) peopleAskMeFollowReco
-{
-  return _peopleAskMeFollowReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setPeopleAskMeFollowReco: (ENUNCIATENS0TSNotificationSettingsObj *) newPeopleAskMeFollowReco
-{
-  [newPeopleAskMeFollowReco retain];
-  [_peopleAskMeFollowReco release];
-  _peopleAskMeFollowReco = newPeopleAskMeFollowReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) friendsSendMeReco
-{
-  return _friendsSendMeReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setFriendsSendMeReco: (ENUNCIATENS0TSNotificationSettingsObj *) newFriendsSendMeReco
-{
-  [newFriendsSendMeReco retain];
-  [_friendsSendMeReco release];
-  _friendsSendMeReco = newFriendsSendMeReco;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) peopleLikeCommentTips
-{
-  return _peopleLikeCommentTips;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setPeopleLikeCommentTips: (ENUNCIATENS0TSNotificationSettingsObj *) newPeopleLikeCommentTips
-{
-  [newPeopleLikeCommentTips retain];
-  [_peopleLikeCommentTips release];
-  _peopleLikeCommentTips = newPeopleLikeCommentTips;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) friendsPostQuestionForum
-{
-  return _friendsPostQuestionForum;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setFriendsPostQuestionForum: (ENUNCIATENS0TSNotificationSettingsObj *) newFriendsPostQuestionForum
-{
-  [newFriendsPostQuestionForum retain];
-  [_friendsPostQuestionForum release];
-  _friendsPostQuestionForum = newFriendsPostQuestionForum;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) friendsJoinTasteSync
-{
-  return _friendsJoinTasteSync;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setFriendsJoinTasteSync: (ENUNCIATENS0TSNotificationSettingsObj *) newFriendsJoinTasteSync
-{
-  [newFriendsJoinTasteSync retain];
-  [_friendsJoinTasteSync release];
-  _friendsJoinTasteSync = newFriendsJoinTasteSync;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSNotificationSettingsObj *) newslettersDigestsTasteSync
-{
-  return _newslettersDigestsTasteSync;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setNewslettersDigestsTasteSync: (ENUNCIATENS0TSNotificationSettingsObj *) newNewslettersDigestsTasteSync
-{
-  [newNewslettersDigestsTasteSync retain];
-  [_newslettersDigestsTasteSync release];
-  _newslettersDigestsTasteSync = newNewslettersDigestsTasteSync;
+  [newNotification retain];
+  [_notification release];
+  _notification = newNotification;
 }
 
 - (void) dealloc
 {
   [self setUserId: nil];
-  [self setFriendsAskReco: nil];
-  [self setPeopleFollowAskReco: nil];
-  [self setOtherPeopleAskReco: nil];
-  [self setPeopleLikeMyReco: nil];
-  [self setPeopleAskMeFollowReco: nil];
-  [self setFriendsSendMeReco: nil];
-  [self setPeopleLikeCommentTips: nil];
-  [self setFriendsPostQuestionForum: nil];
-  [self setFriendsJoinTasteSync: nil];
-  [self setNewslettersDigestsTasteSync: nil];
+  [self setNotification: nil];
   [super dealloc];
 }
 
@@ -2361,162 +2190,24 @@
   } //end "if choice"
 
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "friendsAskReco", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlStrcmp(BAD_CAST "notification", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}friendsAskReco of type {}TSNotificationSettingsObj.");
+    NSLog(@"Attempting to read choice {}notification of type {}TSNotificationSettingsObj.");
 #endif
+
     __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}friendsAskReco of type {}TSNotificationSettingsObj.");
+    NSLog(@"successfully read choice {}notification of type {}TSNotificationSettingsObj.");
 #endif
 
-    [self setFriendsAskReco: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "peopleFollowAskReco", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}peopleFollowAskReco of type {}TSNotificationSettingsObj.");
-#endif
-    __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}peopleFollowAskReco of type {}TSNotificationSettingsObj.");
-#endif
-
-    [self setPeopleFollowAskReco: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "otherPeopleAskReco", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}otherPeopleAskReco of type {}TSNotificationSettingsObj.");
-#endif
-    __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}otherPeopleAskReco of type {}TSNotificationSettingsObj.");
-#endif
-
-    [self setOtherPeopleAskReco: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "peopleLikeMyReco", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}peopleLikeMyReco of type {}TSNotificationSettingsObj.");
-#endif
-    __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}peopleLikeMyReco of type {}TSNotificationSettingsObj.");
-#endif
-
-    [self setPeopleLikeMyReco: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "peopleAskMeFollowReco", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}peopleAskMeFollowReco of type {}TSNotificationSettingsObj.");
-#endif
-    __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}peopleAskMeFollowReco of type {}TSNotificationSettingsObj.");
-#endif
-
-    [self setPeopleAskMeFollowReco: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "friendsSendMeReco", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}friendsSendMeReco of type {}TSNotificationSettingsObj.");
-#endif
-    __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}friendsSendMeReco of type {}TSNotificationSettingsObj.");
-#endif
-
-    [self setFriendsSendMeReco: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "peopleLikeCommentTips", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}peopleLikeCommentTips of type {}TSNotificationSettingsObj.");
-#endif
-    __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}peopleLikeCommentTips of type {}TSNotificationSettingsObj.");
-#endif
-
-    [self setPeopleLikeCommentTips: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "friendsPostQuestionForum", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}friendsPostQuestionForum of type {}TSNotificationSettingsObj.");
-#endif
-    __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}friendsPostQuestionForum of type {}TSNotificationSettingsObj.");
-#endif
-
-    [self setFriendsPostQuestionForum: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "friendsJoinTasteSync", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}friendsJoinTasteSync of type {}TSNotificationSettingsObj.");
-#endif
-    __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}friendsJoinTasteSync of type {}TSNotificationSettingsObj.");
-#endif
-
-    [self setFriendsJoinTasteSync: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "newslettersDigestsTasteSync", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}newslettersDigestsTasteSync of type {}TSNotificationSettingsObj.");
-#endif
-    __child = [ENUNCIATENS0TSNotificationSettingsObj readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}newslettersDigestsTasteSync of type {}TSNotificationSettingsObj.");
-#endif
-
-    [self setNewslettersDigestsTasteSync: __child];
+    if ([self notification]) {
+      [self setNotification: [[self notification] arrayByAddingObject: __child]];
+    }
+    else {
+      [self setNotification: [NSArray arrayWithObject: __child]];
+    }
     return YES;
   } //end "if choice"
 
@@ -2585,215 +2276,30 @@
                    format: @"Error writing end child element {}userId."];
     }
   }
-  if ([self friendsAskReco]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friendsAskReco", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}friendsAskReco."];
-    }
+  if ([self notification]) {
+    __enumerator = [[self notification] objectEnumerator];
+
+    while ( (__item = [__enumerator nextObject]) ) {
+      status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "notification", NULL);
+      if (status < 0) {
+        [NSException raise: @"XMLWriteError"
+                     format: @"Error writing start child element {}notification."];
+      }
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}friendsAskReco...");
+      NSLog(@"writing element {}notification...");
 #endif
-    [[self friendsAskReco] writeXMLType: writer];
+      [__item writeXMLType: writer];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}friendsAskReco...");
+      NSLog(@"successfully wrote element {}notification...");
 #endif
 
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}friendsAskReco."];
-    }
-  }
-  if ([self peopleFollowAskReco]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "peopleFollowAskReco", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}peopleFollowAskReco."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}peopleFollowAskReco...");
-#endif
-    [[self peopleFollowAskReco] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}peopleFollowAskReco...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}peopleFollowAskReco."];
-    }
-  }
-  if ([self otherPeopleAskReco]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "otherPeopleAskReco", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}otherPeopleAskReco."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}otherPeopleAskReco...");
-#endif
-    [[self otherPeopleAskReco] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}otherPeopleAskReco...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}otherPeopleAskReco."];
-    }
-  }
-  if ([self peopleLikeMyReco]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "peopleLikeMyReco", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}peopleLikeMyReco."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}peopleLikeMyReco...");
-#endif
-    [[self peopleLikeMyReco] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}peopleLikeMyReco...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}peopleLikeMyReco."];
-    }
-  }
-  if ([self peopleAskMeFollowReco]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "peopleAskMeFollowReco", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}peopleAskMeFollowReco."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}peopleAskMeFollowReco...");
-#endif
-    [[self peopleAskMeFollowReco] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}peopleAskMeFollowReco...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}peopleAskMeFollowReco."];
-    }
-  }
-  if ([self friendsSendMeReco]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friendsSendMeReco", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}friendsSendMeReco."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}friendsSendMeReco...");
-#endif
-    [[self friendsSendMeReco] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}friendsSendMeReco...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}friendsSendMeReco."];
-    }
-  }
-  if ([self peopleLikeCommentTips]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "peopleLikeCommentTips", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}peopleLikeCommentTips."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}peopleLikeCommentTips...");
-#endif
-    [[self peopleLikeCommentTips] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}peopleLikeCommentTips...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}peopleLikeCommentTips."];
-    }
-  }
-  if ([self friendsPostQuestionForum]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friendsPostQuestionForum", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}friendsPostQuestionForum."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}friendsPostQuestionForum...");
-#endif
-    [[self friendsPostQuestionForum] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}friendsPostQuestionForum...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}friendsPostQuestionForum."];
-    }
-  }
-  if ([self friendsJoinTasteSync]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "friendsJoinTasteSync", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}friendsJoinTasteSync."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}friendsJoinTasteSync...");
-#endif
-    [[self friendsJoinTasteSync] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}friendsJoinTasteSync...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}friendsJoinTasteSync."];
-    }
-  }
-  if ([self newslettersDigestsTasteSync]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "newslettersDigestsTasteSync", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}newslettersDigestsTasteSync."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}newslettersDigestsTasteSync...");
-#endif
-    [[self newslettersDigestsTasteSync] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}newslettersDigestsTasteSync...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}newslettersDigestsTasteSync."];
-    }
+      status = xmlTextWriterEndElement(writer);
+      if (status < 0) {
+        [NSException raise: @"XMLWriteError"
+                     format: @"Error writing end child element {}notification."];
+      }
+    } //end item iterator.
   }
 }
 @end /* implementation ENUNCIATENS0TSListNotificationSettingsObj (JAXB) */
@@ -10894,43 +10400,43 @@
 /**
  * (no documentation provided)
  */
-- (NSString *) privacySettingsIds
+- (NSString *) privacy_id_order
 {
-  return _privacySettingsIds;
+  return _privacy_id_order;
 }
 
 /**
  * (no documentation provided)
  */
-- (void) setPrivacySettingsIds: (NSString *) newPrivacySettingsIds
+- (void) setPrivacy_id_order: (NSString *) newPrivacy_id_order
 {
-  [newPrivacySettingsIds retain];
-  [_privacySettingsIds release];
-  _privacySettingsIds = newPrivacySettingsIds;
+  [newPrivacy_id_order retain];
+  [_privacy_id_order release];
+  _privacy_id_order = newPrivacy_id_order;
 }
 
 /**
  * (no documentation provided)
  */
-- (NSString *) privacyUserFlag
+- (NSString *) privacy_flag
 {
-  return _privacyUserFlag;
+  return _privacy_flag;
 }
 
 /**
  * (no documentation provided)
  */
-- (void) setPrivacyUserFlag: (NSString *) newPrivacyUserFlag
+- (void) setPrivacy_flag: (NSString *) newPrivacy_flag
 {
-  [newPrivacyUserFlag retain];
-  [_privacyUserFlag release];
-  _privacyUserFlag = newPrivacyUserFlag;
+  [newPrivacy_flag retain];
+  [_privacy_flag release];
+  _privacy_flag = newPrivacy_flag;
 }
 
 - (void) dealloc
 {
-  [self setPrivacySettingsIds: nil];
-  [self setPrivacyUserFlag: nil];
+  [self setPrivacy_id_order: nil];
+  [self setPrivacy_flag: nil];
   [super dealloc];
 }
 
@@ -11182,34 +10688,34 @@
     return YES;
   }
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "privacySettingsIds", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlStrcmp(BAD_CAST "privacy_id_order", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}privacySettingsIds of type {http://www.w3.org/2001/XMLSchema}string.");
+    NSLog(@"Attempting to read choice {}privacy_id_order of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
     __child = [NSString readXMLType: reader];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}privacySettingsIds of type {http://www.w3.org/2001/XMLSchema}string.");
+    NSLog(@"successfully read choice {}privacy_id_order of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
 
-    [self setPrivacySettingsIds: __child];
+    [self setPrivacy_id_order: __child];
     return YES;
   } //end "if choice"
 
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "privacyUserFlag", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlStrcmp(BAD_CAST "privacy_flag", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}privacyUserFlag of type {http://www.w3.org/2001/XMLSchema}string.");
+    NSLog(@"Attempting to read choice {}privacy_flag of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
     __child = [NSString readXMLType: reader];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}privacyUserFlag of type {http://www.w3.org/2001/XMLSchema}string.");
+    NSLog(@"successfully read choice {}privacy_flag of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
 
-    [self setPrivacyUserFlag: __child];
+    [self setPrivacy_flag: __child];
     return YES;
   } //end "if choice"
 
@@ -11257,46 +10763,46 @@
 
   [super writeJAXBChildElements: writer];
 
-  if ([self privacySettingsIds]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "privacySettingsIds", NULL);
+  if ([self privacy_id_order]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "privacy_id_order", NULL);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}privacySettingsIds."];
+                   format: @"Error writing start child element {}privacy_id_order."];
     }
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}privacySettingsIds...");
+    NSLog(@"writing element {}privacy_id_order...");
 #endif
-    [[self privacySettingsIds] writeXMLType: writer];
+    [[self privacy_id_order] writeXMLType: writer];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}privacySettingsIds...");
+    NSLog(@"successfully wrote element {}privacy_id_order...");
 #endif
 
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}privacySettingsIds."];
+                   format: @"Error writing end child element {}privacy_id_order."];
     }
   }
-  if ([self privacyUserFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "privacyUserFlag", NULL);
+  if ([self privacy_flag]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "privacy_flag", NULL);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}privacyUserFlag."];
+                   format: @"Error writing start child element {}privacy_flag."];
     }
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}privacyUserFlag...");
+    NSLog(@"writing element {}privacy_flag...");
 #endif
-    [[self privacyUserFlag] writeXMLType: writer];
+    [[self privacy_flag] writeXMLType: writer];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}privacyUserFlag...");
+    NSLog(@"successfully wrote element {}privacy_flag...");
 #endif
 
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}privacyUserFlag."];
+                   format: @"Error writing end child element {}privacy_flag."];
     }
   }
 }
@@ -11310,6 +10816,24 @@
  * (no documentation provided)
  */
 @implementation ENUNCIATENS0TSNotificationSettingsObj
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) order_id
+{
+  return _order_id;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setOrder_id: (NSString *) newOrder_id
+{
+  [newOrder_id retain];
+  [_order_id release];
+  _order_id = newOrder_id;
+}
 
 /**
  * (no documentation provided)
@@ -11349,6 +10873,7 @@
 
 - (void) dealloc
 {
+  [self setOrder_id: nil];
   [self setPhoneFlag: nil];
   [self setEmailFlag: nil];
   [super dealloc];
@@ -11602,6 +11127,22 @@
     return YES;
   }
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "order_id", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}order_id of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}order_id of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setOrder_id: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
     && xmlStrcmp(BAD_CAST "phoneFlag", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -11677,6 +11218,27 @@
 
   [super writeJAXBChildElements: writer];
 
+  if ([self order_id]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "order_id", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}order_id."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}order_id...");
+#endif
+    [[self order_id] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}order_id...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}order_id."];
+    }
+  }
   if ([self phoneFlag]) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "phoneFlag", NULL);
     if (status < 0) {

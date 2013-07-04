@@ -74,12 +74,14 @@
         <li><a href="#path__user_followunfollow.html">/user/followunfollow</a></li>
         <li><a href="#path__user_report.html">/user/report</a></li>
         <li><a href="#path__user_showSettingsNotifications.html">/user/showSettingsNotifications</a></li>
+        <li><a href="#path__user_showSettingsPrivacy.html">/user/showSettingsPrivacy</a></li>
         <li><a href="#path__user_showSettingsSocial.html">/user/showSettingsSocial</a></li>
         <li><a href="#path__user_submitLogin.html">/user/submitLogin</a></li>
         <li><a href="#path__user_submitLoginFacebook.html">/user/submitLoginFacebook</a></li>
         <li><a href="#path__user_submitLogout.html">/user/submitLogout</a></li>
         <li><a href="#path__user_submitOptionsAutoPublish.html">/user/submitOptionsAutoPublish</a></li>
         <li><a href="#path__user_submitSettingsNotifications.html">/user/submitSettingsNotifications</a></li>
+        <li><a href="#path__user_submitSettingsPrivacy.html">/user/submitSettingsPrivacy</a></li>
         <li><a href="#path__user_userdetails.html">/user/userdetails</a></li>
         <li><a href="#path__user_profile_aboutme.html">/user/profile/aboutme</a></li>
         <li><a href="#path__user_profile_followers.html">/user/profile/followers</a></li>
@@ -89,8 +91,6 @@
         <li><a href="#path__user_profile_restaurants.html">/user/profile/restaurants</a></li>
         <li><a href="#path__user_profile_user.html">/user/profile/user</a></li>
         <li><a href="#path__user_profile_userfriends.html">/user/profile/userfriends</a></li>
-        <li><a href="#path__user_settings_changeprivacy.html">/user/settings/changeprivacy</a></li>
-        <li><a href="#path__user_settings_privacy.html">/user/settings/privacy</a></li>
       </ul>
       <a name="path__user_allusers.html"></a>
       <h1>/user/allusers</h1>
@@ -220,6 +220,40 @@
       <a name="path__user_showSettingsNotifications.html"></a>
       <h1>/user/showSettingsNotifications</h1>
       <p class="note">Mount Point: <a href="./rest/user/showSettingsNotifications">/rest/user/showSettingsNotifications</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__user_showSettingsPrivacy.html"></a>
+      <h1>/user/showSettingsPrivacy</h1>
+      <p class="note">Mount Point: <a href="./rest/user/showSettingsPrivacy">/rest/user/showSettingsPrivacy</a></p>
       <a name="POST"></a>
       <h2>POST</h2>
       <h3>Parameters</h3>
@@ -429,6 +463,35 @@
         <tr>
           <td align="right">element:</td>
           <td><a href="el_ns0_listNotifications.html">listNotifications</a></td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json</td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json</td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__user_submitSettingsPrivacy.html"></a>
+      <h1>/user/submitSettingsPrivacy</h1>
+      <p class="note">Mount Point: <a href="./rest/user/submitSettingsPrivacy">/rest/user/submitSettingsPrivacy</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Request Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
         </tr>
         <tr>
           <td align="right">media types:</td>
@@ -786,90 +849,6 @@
       <a name="path__user_profile_userfriends.html"></a>
       <h1>/user/profile/userfriends</h1>
       <p class="note">Mount Point: <a href="./rest/user/profile/userfriends">/rest/user/profile/userfriends</a></p>
-      <a name="GET"></a>
-      <h2>GET</h2>
-      <h3>Parameters</h3>
-      <table>
-        <tr>
-          <th>name</th>
-          <th>description</th>
-          <th>type</th>
-          <th>default</th>
-        </tr>
-        <tr>
-          <td>userId</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>query</td>
-          <td></td>
-        </tr>
-      </table>
-      <h3>Response Body</h3>
-      <table>
-        <tr>
-          <td align="right">element:</td>
-          <td>(custom)</td>
-        </tr>
-        <tr>
-          <td align="right">media types:</td>
-          <td>application/json<br/></td>
-        </tr>
-      </table>
-      <p>(no documentation provided)</p>
-      <a name="path__user_settings_changeprivacy.html"></a>
-      <h1>/user/settings/changeprivacy</h1>
-      <p class="note">Mount Point: <a href="./rest/user/settings/changeprivacy">/rest/user/settings/changeprivacy</a></p>
-      <a name="POST"></a>
-      <h2>POST</h2>
-      <h3>Parameters</h3>
-      <table>
-        <tr>
-          <th>name</th>
-          <th>description</th>
-          <th>type</th>
-          <th>default</th>
-        </tr>
-        <tr>
-          <td>userId</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>form</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>id</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>form</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>flag</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>form</td>
-          <td></td>
-        </tr>
-      </table>
-      <h3>Response Body</h3>
-      <table>
-        <tr>
-          <td align="right">element:</td>
-          <td>(custom)</td>
-        </tr>
-        <tr>
-          <td align="right">media types:</td>
-          <td>application/json<br/></td>
-        </tr>
-      </table>
-      <p>(no documentation provided)</p>
-      <a name="path__user_settings_privacy.html"></a>
-      <h1>/user/settings/privacy</h1>
-      <p class="note">Mount Point: <a href="./rest/user/settings/privacy">/rest/user/settings/privacy</a></p>
       <a name="GET"></a>
       <h2>GET</h2>
       <h3>Parameters</h3>
