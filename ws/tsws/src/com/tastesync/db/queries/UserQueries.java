@@ -128,7 +128,7 @@ public interface UserQueries extends TSDBCommonQueries {
         "WHERE  `user_usnc`.`user_id` = ? " + "       AND -- userId " +
         "       `user_usnc`.`usnc_id` = ? " + "AND `usg_usnc_ap`.`AP_ID` = ?";
     public static String USER_USNC_UPDATE_SQL = "UPDATE user_usnc SET USNC_YN = ? WHERE USER_ID = ? AND USNC_ID = ?";
-    public static String USER_USNC_INSERT_SQL = "INSERT INTO user_usnc (USNC_ID, USNC_YN, USER_ID) value (?, ?, ?)";
+    public static String USER_USNC_INSERT_SQL = "INSERT INTO user_usnc (USNC_ID, USNC_YN, USER_ID) VALUES (?, ?, ?)";
     public static String USER_USNC_SELECT_SQL = "SELECT * FROM user_usnc WHERE USER_ID = ?";
     
     //USG_USNC_AP
@@ -139,10 +139,10 @@ public interface UserQueries extends TSDBCommonQueries {
         "       `usg_usnc_ap`.`ap_id` = ? " +
         "       AND -- autoPublishingId " +
         "       `usg_usnc_ap`.`usnc_id` = ?-- socialNetworkId " + "";
-    public static String USER_SOCIAL_APID_SELECT_SQL = "SELECT * FROM auto_publishing WHERE AP_DESC = ?";
+    public static String USER_SOCIAL_APID_SELECT_SQL = "SELECT * FROM auto_publishing WHERE AP_ORDER = ?";
     public static String USER_SOCIAL_AP_SELECT_SQL = "SELECT * FROM auto_publishing";
     public static String USER_SOCIAL_APID_UPDATE_SQL = "UPDATE usg_usnc_ap SET USNC_YN = ?" + " WHERE USER_ID = ? AND USNC_ID = ? AND AP_ID = ?";
-    public static String USER_SOCIAL_APID_INSERT_SQL = "INSERT INTO usg_usnc_ap (USNC_ID, AP_ID, USNC_YN, USER_ID) value (?, ?, ?, ?)";
+    public static String USER_SOCIAL_APID_INSERT_SQL = "INSERT INTO usg_usnc_ap (USNC_ID, AP_ID, USNC_YN, USER_ID) VALUES (?, ?, ?, ?)";
     public static String USER_SOCIAL_APID_USERID_SELECT_SQL = "SELECT * FROM usg_usnc_ap WHERE USER_ID = ?";
     
     //USER_NOTIFICATION_SETTINGS
@@ -159,11 +159,15 @@ public interface UserQueries extends TSDBCommonQueries {
         "WHERE  `user_notification_settings`.`user_id` = ? " +
         "       AND `user_notification_settings`.`nsid` = ? ";
     public static String USER_NOTIFICATION_SETTINGS_ID_SELECT_SQL = "SELECT * FROM user_notification_settings WHERE USER_ID = ?";
-    public static String USER_NOTIFICATION_SETTINGS_INSERT_SQL = "INSERT INTO user_notification_settings (USER_ID, NSID, NS_MOBILE_FLAG, NS_EMAIL_FLAG) VALUE (?, ?, ?, ?)";
+    public static String USER_NOTIFICATION_SETTINGS_INSERT_SQL = "INSERT INTO user_notification_settings (USER_ID, NSID, NS_MOBILE_FLAG, NS_EMAIL_FLAG) VALUES (?, ?, ?, ?)";
     public static String USER_NOTIFICATION_SETTINGS_ID_UPDATE_SQL = "UPDATE user_notification_settings SET NS_MOBILE_FLAG = ?, NS_EMAIL_FLAG = ? WHERE USER_ID = ? AND NSID = ?";
     
     //NOTIFICATION_DESCRIPTOR
     public static String NOTIFICATION_DESCRIPTOR_SELECT_SQL = "SELECT * FROM notification_descriptor WHERE NSID_ORDER = ?";
+    
+  //ABOUT_TASTESYNC_ELEMENT_DESCRIPTOR
+    public static String ABOUT_TASTESYNC_ELEMENT_DESCRIPTOR_SELECT_SQL = "SELECT * FROM about_tastesync_element_descriptor WHERE ID_ORDER = ?";
+    public static String ABOUT_TASTESYNC_ELEMENT_ALL_DESCRIPTOR_SELECT_SQL = "SELECT * FROM about_tastesync_element_descriptor";
     
     //USER_PRIVACY_SETTINGS
     public static String USER_PRIVACY_SETTINGS_SELECT_SQL = "" +
@@ -177,12 +181,15 @@ public interface UserQueries extends TSDBCommonQueries {
         "WHERE  `user_privacy_settings`.`user_id` = ? " +
         "       `user_privacy_settings`.`privacy_id` = ?" + "";
     public static String USER_PRIVACY_SETTINGS_ID_SELECT_SQL = "SELECT * FROM user_privacy_settings WHERE USER_ID = ?";
-    public static String USER_PRIVACY_SETTINGS_INSERT_SQL = "INSERT INTO user_privacy_settings (USER_ID, PRIVACY_ID, PRIVACY_FLAG) VALUE (?, ?, ?)";
+    public static String USER_PRIVACY_SETTINGS_INSERT_SQL = "INSERT INTO user_privacy_settings (USER_ID, PRIVACY_ID, PRIVACY_FLAG) VALUES (?, ?, ?)";
     public static String USER_PRIVACY_SETTINGS_ID_UPDATE_SQL = "UPDATE user_privacy_settings SET PRIVACY_FLAG = ?WHERE USER_ID = ? AND PRIVACY_ID = ?";
     
     //PRIVACY_DESCIPTOR
     public static String PRIVACY_DESCRIPTOR_SELECT_SQL = "SELECT * FROM privacy_descriptor WHERE PRIVACY_ID_ORDER = ?";
     public static String PRIVACY_DESCRIPTOR_ORDER_SELECT_SQL = "SELECT * FROM privacy_descriptor WHERE PRIVACY_ID = ?";
+    
+    //CONTACT_SETTINGS_DESCRIPTOR
+    public static String CONTACT_SETTINGS_DESCRIPTOR_SELECT_SQL = "SELECT * FROM contact_settings_descriptor WHERE CONTACT_ID_ORDER = ?";
     
     //USER_REPORTED_INFO
     public static String USER_REPORTED_INFO_INSERT_SQL = "" +
@@ -195,6 +202,10 @@ public interface UserQueries extends TSDBCommonQueries {
         "?," + "?," + "?," + "?," + "?" + ")";
     
     //USER_SOCIAL_NETWORK_CONNECTION
-    public static String USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL = "SELECT * FROM user_social_network_connection WHERE USNC_DESC = ?";
+    public static String USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL = "SELECT * FROM user_social_network_connection WHERE USNC_ORDER = ?";
     public static String USER_SOCIAL_NETWORK_CONNECTION_SELECT_SQL = "SELECT * FROM user_social_network_connection";
+
+    //USER_CONTACT_SETTINGS
+    public static String USER_CONTACT_SETTINGS_INSERT_SQL = "INSERT INTO user_contact_settings(USER_ID, CONTACT_ID, CONTACT_DETAILS_DESC, CONTACT_DATETIME) VALUES (?, ?, ?, ?)";
+
 }

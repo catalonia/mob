@@ -4248,119 +4248,62 @@
 /**
  * (no documentation provided)
  */
-- (ENUNCIATENS0TSSocialAutoPubSettingsObj *) tsSocialAutoPubSettingsObj
+- (NSString *) usncORDER
 {
-  return _tsSocialAutoPubSettingsObj;
+  return _usncORDER;
 }
 
 /**
  * (no documentation provided)
  */
-- (void) setTsSocialAutoPubSettingsObj: (ENUNCIATENS0TSSocialAutoPubSettingsObj *) newTsSocialAutoPubSettingsObj
+- (void) setUsncORDER: (NSString *) newUsncORDER
 {
-  [newTsSocialAutoPubSettingsObj retain];
-  [_tsSocialAutoPubSettingsObj release];
-  _tsSocialAutoPubSettingsObj = newTsSocialAutoPubSettingsObj;
+  [newUsncORDER retain];
+  [_usncORDER release];
+  _usncORDER = newUsncORDER;
 }
 
 /**
  * (no documentation provided)
  */
-- (NSString *) userId
+- (NSString *) usncYN
 {
-  return _userId;
+  return _usncYN;
 }
 
 /**
  * (no documentation provided)
  */
-- (void) setUserId: (NSString *) newUserId
+- (void) setUsncYN: (NSString *) newUsncYN
 {
-  [newUserId retain];
-  [_userId release];
-  _userId = newUserId;
+  [newUsncYN retain];
+  [_usncYN release];
+  _usncYN = newUsncYN;
 }
 
 /**
  * (no documentation provided)
  */
-- (NSString *) facebookStatus
+- (NSArray *) auto_publishing
 {
-  return _facebookStatus;
+  return _auto_publishing;
 }
 
 /**
  * (no documentation provided)
  */
-- (void) setFacebookStatus: (NSString *) newFacebookStatus
+- (void) setAuto_publishing: (NSArray *) newAuto_publishing
 {
-  [newFacebookStatus retain];
-  [_facebookStatus release];
-  _facebookStatus = newFacebookStatus;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) twitterStatus
-{
-  return _twitterStatus;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setTwitterStatus: (NSString *) newTwitterStatus
-{
-  [newTwitterStatus retain];
-  [_twitterStatus release];
-  _twitterStatus = newTwitterStatus;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) foursquareStatus
-{
-  return _foursquareStatus;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setFoursquareStatus: (NSString *) newFoursquareStatus
-{
-  [newFoursquareStatus retain];
-  [_foursquareStatus release];
-  _foursquareStatus = newFoursquareStatus;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) tumblrStatus
-{
-  return _tumblrStatus;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setTumblrStatus: (NSString *) newTumblrStatus
-{
-  [newTumblrStatus retain];
-  [_tumblrStatus release];
-  _tumblrStatus = newTumblrStatus;
+  [newAuto_publishing retain];
+  [_auto_publishing release];
+  _auto_publishing = newAuto_publishing;
 }
 
 - (void) dealloc
 {
-  [self setTsSocialAutoPubSettingsObj: nil];
-  [self setUserId: nil];
-  [self setFacebookStatus: nil];
-  [self setTwitterStatus: nil];
-  [self setFoursquareStatus: nil];
-  [self setTumblrStatus: nil];
+  [self setUsncORDER: nil];
+  [self setUsncYN: nil];
+  [self setAuto_publishing: nil];
   [super dealloc];
 }
 
@@ -4612,98 +4555,56 @@
     return YES;
   }
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "tsSocialAutoPubSettingsObj", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlStrcmp(BAD_CAST "usncORDER", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}tsSocialAutoPubSettingsObj of type {}TSSocialAutoPubSettingsObj.");
+    NSLog(@"Attempting to read choice {}usncORDER of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}usncORDER of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setUsncORDER: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "usncYN", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}usncYN of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}usncYN of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setUsncYN: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "auto_publishing", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}auto_publishing of type {}TSSocialAutoPubSettingsObj.");
+#endif
+
     __child = [ENUNCIATENS0TSSocialAutoPubSettingsObj readXMLType: reader];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}tsSocialAutoPubSettingsObj of type {}TSSocialAutoPubSettingsObj.");
+    NSLog(@"successfully read choice {}auto_publishing of type {}TSSocialAutoPubSettingsObj.");
 #endif
 
-    [self setTsSocialAutoPubSettingsObj: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "userId", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}userId of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}userId of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setUserId: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "facebookStatus", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}facebookStatus of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}facebookStatus of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setFacebookStatus: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "twitterStatus", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}twitterStatus of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}twitterStatus of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setTwitterStatus: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "foursquareStatus", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}foursquareStatus of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}foursquareStatus of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setFoursquareStatus: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "tumblrStatus", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}tumblrStatus of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}tumblrStatus of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setTumblrStatus: __child];
+    if ([self auto_publishing]) {
+      [self setAuto_publishing: [[self auto_publishing] arrayByAddingObject: __child]];
+    }
+    else {
+      [self setAuto_publishing: [NSArray arrayWithObject: __child]];
+    }
     return YES;
   } //end "if choice"
 
@@ -4751,131 +4652,72 @@
 
   [super writeJAXBChildElements: writer];
 
-  if ([self tsSocialAutoPubSettingsObj]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tsSocialAutoPubSettingsObj", NULL);
+  if ([self usncORDER]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "usncORDER", NULL);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}tsSocialAutoPubSettingsObj."];
+                   format: @"Error writing start child element {}usncORDER."];
     }
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}tsSocialAutoPubSettingsObj...");
+    NSLog(@"writing element {}usncORDER...");
 #endif
-    [[self tsSocialAutoPubSettingsObj] writeXMLType: writer];
+    [[self usncORDER] writeXMLType: writer];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}tsSocialAutoPubSettingsObj...");
+    NSLog(@"successfully wrote element {}usncORDER...");
 #endif
 
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}tsSocialAutoPubSettingsObj."];
+                   format: @"Error writing end child element {}usncORDER."];
     }
   }
-  if ([self userId]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "userId", NULL);
+  if ([self usncYN]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "usncYN", NULL);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}userId."];
+                   format: @"Error writing start child element {}usncYN."];
     }
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}userId...");
+    NSLog(@"writing element {}usncYN...");
 #endif
-    [[self userId] writeXMLType: writer];
+    [[self usncYN] writeXMLType: writer];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}userId...");
+    NSLog(@"successfully wrote element {}usncYN...");
 #endif
 
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}userId."];
+                   format: @"Error writing end child element {}usncYN."];
     }
   }
-  if ([self facebookStatus]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "facebookStatus", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}facebookStatus."];
-    }
+  if ([self auto_publishing]) {
+    __enumerator = [[self auto_publishing] objectEnumerator];
+
+    while ( (__item = [__enumerator nextObject]) ) {
+      status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "auto_publishing", NULL);
+      if (status < 0) {
+        [NSException raise: @"XMLWriteError"
+                     format: @"Error writing start child element {}auto_publishing."];
+      }
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}facebookStatus...");
+      NSLog(@"writing element {}auto_publishing...");
 #endif
-    [[self facebookStatus] writeXMLType: writer];
+      [__item writeXMLType: writer];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}facebookStatus...");
+      NSLog(@"successfully wrote element {}auto_publishing...");
 #endif
 
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}facebookStatus."];
-    }
-  }
-  if ([self twitterStatus]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "twitterStatus", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}twitterStatus."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}twitterStatus...");
-#endif
-    [[self twitterStatus] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}twitterStatus...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}twitterStatus."];
-    }
-  }
-  if ([self foursquareStatus]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "foursquareStatus", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}foursquareStatus."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}foursquareStatus...");
-#endif
-    [[self foursquareStatus] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}foursquareStatus...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}foursquareStatus."];
-    }
-  }
-  if ([self tumblrStatus]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tumblrStatus", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}tumblrStatus."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}tumblrStatus...");
-#endif
-    [[self tumblrStatus] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}tumblrStatus...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}tumblrStatus."];
-    }
+      status = xmlTextWriterEndElement(writer);
+      if (status < 0) {
+        [NSException raise: @"XMLWriteError"
+                     format: @"Error writing end child element {}auto_publishing."];
+      }
+    } //end item iterator.
   }
 }
 @end /* implementation ENUNCIATENS0TSSocialSettingsObj (JAXB) */
@@ -8822,176 +8664,43 @@
 /**
  * (no documentation provided)
  */
-- (NSString *) favFbFlag
+- (NSString *) usncORDER
 {
-  return _favFbFlag;
+  return _usncORDER;
 }
 
 /**
  * (no documentation provided)
  */
-- (void) setFavFbFlag: (NSString *) newFavFbFlag
+- (void) setUsncORDER: (NSString *) newUsncORDER
 {
-  [newFavFbFlag retain];
-  [_favFbFlag release];
-  _favFbFlag = newFavFbFlag;
+  [newUsncORDER retain];
+  [_usncORDER release];
+  _usncORDER = newUsncORDER;
 }
 
 /**
  * (no documentation provided)
  */
-- (NSString *) favTwitterFlag
+- (NSString *) usncYN
 {
-  return _favTwitterFlag;
+  return _usncYN;
 }
 
 /**
  * (no documentation provided)
  */
-- (void) setFavTwitterFlag: (NSString *) newFavTwitterFlag
+- (void) setUsncYN: (NSString *) newUsncYN
 {
-  [newFavTwitterFlag retain];
-  [_favTwitterFlag release];
-  _favTwitterFlag = newFavTwitterFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) favTumblrFlag
-{
-  return _favTumblrFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setFavTumblrFlag: (NSString *) newFavTumblrFlag
-{
-  [newFavTumblrFlag retain];
-  [_favTumblrFlag release];
-  _favTumblrFlag = newFavTumblrFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) tipsFbFlag
-{
-  return _tipsFbFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setTipsFbFlag: (NSString *) newTipsFbFlag
-{
-  [newTipsFbFlag retain];
-  [_tipsFbFlag release];
-  _tipsFbFlag = newTipsFbFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) tipsTwitterFlag
-{
-  return _tipsTwitterFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setTipsTwitterFlag: (NSString *) newTipsTwitterFlag
-{
-  [newTipsTwitterFlag retain];
-  [_tipsTwitterFlag release];
-  _tipsTwitterFlag = newTipsTwitterFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) tipsTumblrFlag
-{
-  return _tipsTumblrFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setTipsTumblrFlag: (NSString *) newTipsTumblrFlag
-{
-  [newTipsTumblrFlag retain];
-  [_tipsTumblrFlag release];
-  _tipsTumblrFlag = newTipsTumblrFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) recoFbFlag
-{
-  return _recoFbFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setRecoFbFlag: (NSString *) newRecoFbFlag
-{
-  [newRecoFbFlag retain];
-  [_recoFbFlag release];
-  _recoFbFlag = newRecoFbFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) recoTwitterFlag
-{
-  return _recoTwitterFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setRecoTwitterFlag: (NSString *) newRecoTwitterFlag
-{
-  [newRecoTwitterFlag retain];
-  [_recoTwitterFlag release];
-  _recoTwitterFlag = newRecoTwitterFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) recoTumblrFlag
-{
-  return _recoTumblrFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (void) setRecoTumblrFlag: (NSString *) newRecoTumblrFlag
-{
-  [newRecoTumblrFlag retain];
-  [_recoTumblrFlag release];
-  _recoTumblrFlag = newRecoTumblrFlag;
+  [newUsncYN retain];
+  [_usncYN release];
+  _usncYN = newUsncYN;
 }
 
 - (void) dealloc
 {
-  [self setFavFbFlag: nil];
-  [self setFavTwitterFlag: nil];
-  [self setFavTumblrFlag: nil];
-  [self setTipsFbFlag: nil];
-  [self setTipsTwitterFlag: nil];
-  [self setTipsTumblrFlag: nil];
-  [self setRecoFbFlag: nil];
-  [self setRecoTwitterFlag: nil];
-  [self setRecoTumblrFlag: nil];
+  [self setUsncORDER: nil];
+  [self setUsncYN: nil];
   [super dealloc];
 }
 
@@ -9243,146 +8952,34 @@
     return YES;
   }
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "favFbFlag", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlStrcmp(BAD_CAST "usncORDER", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}favFbFlag of type {http://www.w3.org/2001/XMLSchema}string.");
+    NSLog(@"Attempting to read choice {}usncORDER of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
     __child = [NSString readXMLType: reader];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}favFbFlag of type {http://www.w3.org/2001/XMLSchema}string.");
+    NSLog(@"successfully read choice {}usncORDER of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
 
-    [self setFavFbFlag: __child];
+    [self setUsncORDER: __child];
     return YES;
   } //end "if choice"
 
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "favTwitterFlag", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlStrcmp(BAD_CAST "usncYN", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}favTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.");
+    NSLog(@"Attempting to read choice {}usncYN of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
     __child = [NSString readXMLType: reader];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}favTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.");
+    NSLog(@"successfully read choice {}usncYN of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
 
-    [self setFavTwitterFlag: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "favTumblrFlag", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}favTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}favTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setFavTumblrFlag: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "tipsFbFlag", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}tipsFbFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}tipsFbFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setTipsFbFlag: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "tipsTwitterFlag", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}tipsTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}tipsTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setTipsTwitterFlag: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "tipsTumblrFlag", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}tipsTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}tipsTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setTipsTumblrFlag: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "recoFbFlag", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}recoFbFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}recoFbFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setRecoFbFlag: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "recoTwitterFlag", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}recoTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}recoTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setRecoTwitterFlag: __child];
-    return YES;
-  } //end "if choice"
-
-  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "recoTumblrFlag", xmlTextReaderConstLocalName(reader)) == 0
-    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}recoTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-    __child = [NSString readXMLType: reader];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}recoTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.");
-#endif
-
-    [self setRecoTumblrFlag: __child];
+    [self setUsncYN: __child];
     return YES;
   } //end "if choice"
 
@@ -9430,193 +9027,46 @@
 
   [super writeJAXBChildElements: writer];
 
-  if ([self favFbFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "favFbFlag", NULL);
+  if ([self usncORDER]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "usncORDER", NULL);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}favFbFlag."];
+                   format: @"Error writing start child element {}usncORDER."];
     }
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}favFbFlag...");
+    NSLog(@"writing element {}usncORDER...");
 #endif
-    [[self favFbFlag] writeXMLType: writer];
+    [[self usncORDER] writeXMLType: writer];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}favFbFlag...");
+    NSLog(@"successfully wrote element {}usncORDER...");
 #endif
 
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}favFbFlag."];
+                   format: @"Error writing end child element {}usncORDER."];
     }
   }
-  if ([self favTwitterFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "favTwitterFlag", NULL);
+  if ([self usncYN]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "usncYN", NULL);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}favTwitterFlag."];
+                   format: @"Error writing start child element {}usncYN."];
     }
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}favTwitterFlag...");
+    NSLog(@"writing element {}usncYN...");
 #endif
-    [[self favTwitterFlag] writeXMLType: writer];
+    [[self usncYN] writeXMLType: writer];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}favTwitterFlag...");
+    NSLog(@"successfully wrote element {}usncYN...");
 #endif
 
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}favTwitterFlag."];
-    }
-  }
-  if ([self favTumblrFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "favTumblrFlag", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}favTumblrFlag."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}favTumblrFlag...");
-#endif
-    [[self favTumblrFlag] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}favTumblrFlag...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}favTumblrFlag."];
-    }
-  }
-  if ([self tipsFbFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tipsFbFlag", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}tipsFbFlag."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}tipsFbFlag...");
-#endif
-    [[self tipsFbFlag] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}tipsFbFlag...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}tipsFbFlag."];
-    }
-  }
-  if ([self tipsTwitterFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tipsTwitterFlag", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}tipsTwitterFlag."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}tipsTwitterFlag...");
-#endif
-    [[self tipsTwitterFlag] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}tipsTwitterFlag...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}tipsTwitterFlag."];
-    }
-  }
-  if ([self tipsTumblrFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tipsTumblrFlag", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}tipsTumblrFlag."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}tipsTumblrFlag...");
-#endif
-    [[self tipsTumblrFlag] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}tipsTumblrFlag...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}tipsTumblrFlag."];
-    }
-  }
-  if ([self recoFbFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoFbFlag", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}recoFbFlag."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}recoFbFlag...");
-#endif
-    [[self recoFbFlag] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}recoFbFlag...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}recoFbFlag."];
-    }
-  }
-  if ([self recoTwitterFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoTwitterFlag", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}recoTwitterFlag."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}recoTwitterFlag...");
-#endif
-    [[self recoTwitterFlag] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}recoTwitterFlag...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}recoTwitterFlag."];
-    }
-  }
-  if ([self recoTumblrFlag]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoTumblrFlag", NULL);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}recoTumblrFlag."];
-    }
-
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}recoTumblrFlag...");
-#endif
-    [[self recoTumblrFlag] writeXMLType: writer];
-#if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}recoTumblrFlag...");
-#endif
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-      [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}recoTumblrFlag."];
+                   format: @"Error writing end child element {}usncYN."];
     }
   }
 }

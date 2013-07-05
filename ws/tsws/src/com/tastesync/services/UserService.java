@@ -10,7 +10,7 @@ import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
-import com.tastesync.model.objects.TSSocialSettingsObj;
+import com.tastesync.model.objects.TSListSocialSettingObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
@@ -151,7 +151,7 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("showSettingsPrivacy")
+    @Path("/showSettingsPrivacy")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -198,7 +198,7 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("submitSettingsPrivacy")
+    @Path("/submitSettingsPrivacy")
     @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -246,7 +246,7 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("showSettingsNotifications")
+    @Path("/showSettingsNotifications")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -287,7 +287,7 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("submitSettingsNotifications")
+    @Path("/submitSettingsNotifications")
     @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -338,14 +338,14 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("showSettingsSocial")
+    @Path("/showSettingsSocial")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showSettingsSocial(@FormParam("userId")
     String userId) {
-        TSSocialSettingsObj tsSocialSettingsObj = null;
+    	TSListSocialSettingObj tsSocialSettingsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
@@ -380,23 +380,47 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("submitOptionsAutoPublish")
+    @Path("/submitSettingsSocial")
     @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response updateSettingsAutoPublishSettings(TSSocialSettingsObj social_setting_obj) throws TasteSyncException 
+    public Response updateSettingsAutoPublishSettings(TSListSocialSettingObj social_setting_obj) throws TasteSyncException 
     {
     	return userBo.updateSettingsAutoPublishSettings(social_setting_obj);
     }
-
+    
+    @POST
+    @Path("/submitSettingsContactUs")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response submitSettingscontactUs(@FormParam("userId") String userId,
+    										@FormParam("Contact_Order") String order,
+    										@FormParam("Contact_Desc") String desc) throws TasteSyncException
+    {
+    	return userBo.submitSettingscontactUs(userId, order, desc);
+    }
+    
+    @GET
+    @Path("/showAboutTastesync")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showAboutTastesync() throws TasteSyncException
+    {
+    	return userBo.showAboutTastesync();
+    }
+    
     @GET
     @Path("/userdetails")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showUserDetail(@QueryParam("userid")
+    public Response showUserDetail(@QueryParam("userId")
     String userId) {
         TSUserObj tsUserObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();

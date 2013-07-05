@@ -9,7 +9,7 @@ import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
-import com.tastesync.model.objects.TSSocialSettingsObj;
+import com.tastesync.model.objects.TSListSocialSettingObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
@@ -78,13 +78,13 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public TSSocialSettingsObj showSettingsSocial(String userId)
+    public TSListSocialSettingObj showSettingsSocial(String userId)
         throws TasteSyncException {
         return userDao.showSettingsSocial(userId);
     }
 
     @Override
-    public Response updateSettingsAutoPublishSettings(TSSocialSettingsObj social_setting_obj)
+    public Response updateSettingsAutoPublishSettings(TSListSocialSettingObj social_setting_obj)
         throws TasteSyncException {
         return userDao.updateSettingsAutoPublishSettings(social_setting_obj);
     }
@@ -158,5 +158,16 @@ public class UserBoImpl implements UserBo {
         userDao.submitTrustedFriendStatusChange(userId, viewerUserId,
             trustedFriendStatus);
     }
+
+	@Override
+	public Response submitSettingscontactUs(String userId, String order,
+			String desc) throws TasteSyncException {
+		return userDao.submitSettingscontactUs(userId, order, desc);
+	}
+
+	@Override
+	public Response showAboutTastesync() throws TasteSyncException {
+		return userDao.showAboutTastesync();
+	}
 
 }

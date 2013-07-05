@@ -131,25 +131,15 @@
   </xs:complexType>
   <xs:complexType name="TSSocialAutoPubSettingsObj">
     <xs:sequence>
-      <xs:element name="favFbFlag" type="xs:string" minOccurs="0"/>
-      <xs:element name="favTwitterFlag" type="xs:string" minOccurs="0"/>
-      <xs:element name="favTumblrFlag" type="xs:string" minOccurs="0"/>
-      <xs:element name="tipsFbFlag" type="xs:string" minOccurs="0"/>
-      <xs:element name="tipsTwitterFlag" type="xs:string" minOccurs="0"/>
-      <xs:element name="tipsTumblrFlag" type="xs:string" minOccurs="0"/>
-      <xs:element name="recoFbFlag" type="xs:string" minOccurs="0"/>
-      <xs:element name="recoTwitterFlag" type="xs:string" minOccurs="0"/>
-      <xs:element name="recoTumblrFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="usncORDER" type="xs:string" minOccurs="0"/>
+      <xs:element name="usncYN" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSSocialSettingsObj">
     <xs:sequence>
-      <xs:element name="tsSocialAutoPubSettingsObj" type="TSSocialAutoPubSettingsObj" minOccurs="0"/>
-      <xs:element name="userId" type="xs:string" minOccurs="0"/>
-      <xs:element name="facebookStatus" type="xs:string" minOccurs="0"/>
-      <xs:element name="twitterStatus" type="xs:string" minOccurs="0"/>
-      <xs:element name="foursquareStatus" type="xs:string" minOccurs="0"/>
-      <xs:element name="tumblrStatus" type="xs:string" minOccurs="0"/>
+      <xs:element name="usncORDER" type="xs:string" minOccurs="0"/>
+      <xs:element name="usncYN" type="xs:string" minOccurs="0"/>
+      <xs:element name="auto_publishing" type="TSSocialAutoPubSettingsObj" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSSuccessObj">

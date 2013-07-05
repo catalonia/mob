@@ -1427,47 +1427,12 @@ struct enunciate_ns0_TSSocialAutoPubSettingsObj {
   /**
    * (no documentation provided)
    */
-  xmlChar *favFbFlag;
+  xmlChar *usncORDER;
 
   /**
    * (no documentation provided)
    */
-  xmlChar *favTwitterFlag;
-
-  /**
-   * (no documentation provided)
-   */
-  xmlChar *favTumblrFlag;
-
-  /**
-   * (no documentation provided)
-   */
-  xmlChar *tipsFbFlag;
-
-  /**
-   * (no documentation provided)
-   */
-  xmlChar *tipsTwitterFlag;
-
-  /**
-   * (no documentation provided)
-   */
-  xmlChar *tipsTumblrFlag;
-
-  /**
-   * (no documentation provided)
-   */
-  xmlChar *recoFbFlag;
-
-  /**
-   * (no documentation provided)
-   */
-  xmlChar *recoTwitterFlag;
-
-  /**
-   * (no documentation provided)
-   */
-  xmlChar *recoTumblrFlag;
+  xmlChar *usncYN;
 };
 
 /**
@@ -1568,32 +1533,22 @@ struct enunciate_ns0_TSSocialSettingsObj {
   /**
    * (no documentation provided)
    */
-  struct enunciate_ns0_TSSocialAutoPubSettingsObj *tsSocialAutoPubSettingsObj;
+  xmlChar *usncORDER;
 
   /**
    * (no documentation provided)
    */
-  xmlChar *userId;
+  xmlChar *usncYN;
 
   /**
    * (no documentation provided)
    */
-  xmlChar *facebookStatus;
+  struct enunciate_ns0_TSSocialAutoPubSettingsObj *auto_publishing;
 
   /**
-   * (no documentation provided)
+   * Size of the auto_publishing array.
    */
-  xmlChar *twitterStatus;
-
-  /**
-   * (no documentation provided)
-   */
-  xmlChar *foursquareStatus;
-
-  /**
-   * (no documentation provided)
-   */
-  xmlChar *tumblrStatus;
+  int _sizeof_auto_publishing;
 };
 
 /**
@@ -8836,16 +8791,16 @@ static struct enunciate_ns0_TSSocialAutoPubSettingsObj *xmlTextReaderReadNs0TSSo
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "favFbFlag", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlStrcmp(BAD_CAST "usncORDER", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}favFbFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+        printf("Attempting to read choice {}usncORDER of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
         _child_accessor = xmlTextReaderReadXsStringType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}favFbFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+          printf("Failed to read choice {}usncORDER of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSSocialAutoPubSettingsObjType(_tSSocialAutoPubSettingsObj);
@@ -8853,20 +8808,20 @@ static struct enunciate_ns0_TSSocialAutoPubSettingsObj *xmlTextReaderReadNs0TSSo
           return NULL;
         }
 
-        _tSSocialAutoPubSettingsObj->favFbFlag = ((xmlChar*)_child_accessor);
+        _tSSocialAutoPubSettingsObj->usncORDER = ((xmlChar*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "favTwitterFlag", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlStrcmp(BAD_CAST "usncYN", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}favTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+        printf("Attempting to read choice {}usncYN of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
         _child_accessor = xmlTextReaderReadXsStringType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}favTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+          printf("Failed to read choice {}usncYN of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSSocialAutoPubSettingsObjType(_tSSocialAutoPubSettingsObj);
@@ -8874,154 +8829,7 @@ static struct enunciate_ns0_TSSocialAutoPubSettingsObj *xmlTextReaderReadNs0TSSo
           return NULL;
         }
 
-        _tSSocialAutoPubSettingsObj->favTwitterFlag = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "favTumblrFlag", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}favTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}favTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialAutoPubSettingsObjType(_tSSocialAutoPubSettingsObj);
-          free(_tSSocialAutoPubSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialAutoPubSettingsObj->favTumblrFlag = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "tipsFbFlag", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}tipsFbFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}tipsFbFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialAutoPubSettingsObjType(_tSSocialAutoPubSettingsObj);
-          free(_tSSocialAutoPubSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialAutoPubSettingsObj->tipsFbFlag = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "tipsTwitterFlag", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}tipsTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}tipsTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialAutoPubSettingsObjType(_tSSocialAutoPubSettingsObj);
-          free(_tSSocialAutoPubSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialAutoPubSettingsObj->tipsTwitterFlag = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "tipsTumblrFlag", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}tipsTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}tipsTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialAutoPubSettingsObjType(_tSSocialAutoPubSettingsObj);
-          free(_tSSocialAutoPubSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialAutoPubSettingsObj->tipsTumblrFlag = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "recoFbFlag", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}recoFbFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}recoFbFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialAutoPubSettingsObjType(_tSSocialAutoPubSettingsObj);
-          free(_tSSocialAutoPubSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialAutoPubSettingsObj->recoFbFlag = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "recoTwitterFlag", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}recoTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}recoTwitterFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialAutoPubSettingsObjType(_tSSocialAutoPubSettingsObj);
-          free(_tSSocialAutoPubSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialAutoPubSettingsObj->recoTwitterFlag = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "recoTumblrFlag", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}recoTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}recoTumblrFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialAutoPubSettingsObjType(_tSSocialAutoPubSettingsObj);
-          free(_tSSocialAutoPubSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialAutoPubSettingsObj->recoTumblrFlag = ((xmlChar*)_child_accessor);
+        _tSSocialAutoPubSettingsObj->usncYN = ((xmlChar*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else {
@@ -9051,22 +8859,22 @@ static struct enunciate_ns0_TSSocialAutoPubSettingsObj *xmlTextReaderReadNs0TSSo
 static int xmlTextWriterWriteNs0TSSocialAutoPubSettingsObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSSocialAutoPubSettingsObj *_tSSocialAutoPubSettingsObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
-  if (_tSSocialAutoPubSettingsObj->favFbFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "favFbFlag", NULL);
+  if (_tSSocialAutoPubSettingsObj->usncORDER != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "usncORDER", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}favFbFlag. status: %i\n", status);
+      printf("Failed to write start element {}usncORDER. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}favFbFlag...\n");
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}usncORDER...\n");
 #endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->favFbFlag));
+    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->usncORDER));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}favFbFlag. status: %i\n", status);
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}usncORDER. status: %i\n", status);
 #endif
       return status;
     }
@@ -9075,28 +8883,28 @@ static int xmlTextWriterWriteNs0TSSocialAutoPubSettingsObjType(xmlTextWriterPtr 
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}favFbFlag. status: %i\n", status);
+      printf("Failed to write end element {}usncORDER. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
   }
-  if (_tSSocialAutoPubSettingsObj->favTwitterFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "favTwitterFlag", NULL);
+  if (_tSSocialAutoPubSettingsObj->usncYN != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "usncYN", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}favTwitterFlag. status: %i\n", status);
+      printf("Failed to write start element {}usncYN. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}favTwitterFlag...\n");
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}usncYN...\n");
 #endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->favTwitterFlag));
+    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->usncYN));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}favTwitterFlag. status: %i\n", status);
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}usncYN. status: %i\n", status);
 #endif
       return status;
     }
@@ -9105,217 +8913,7 @@ static int xmlTextWriterWriteNs0TSSocialAutoPubSettingsObjType(xmlTextWriterPtr 
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}favTwitterFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialAutoPubSettingsObj->favTumblrFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "favTumblrFlag", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}favTumblrFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}favTumblrFlag...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->favTumblrFlag));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}favTumblrFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}favTumblrFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialAutoPubSettingsObj->tipsFbFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tipsFbFlag", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}tipsFbFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}tipsFbFlag...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->tipsFbFlag));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}tipsFbFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}tipsFbFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialAutoPubSettingsObj->tipsTwitterFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tipsTwitterFlag", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}tipsTwitterFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}tipsTwitterFlag...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->tipsTwitterFlag));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}tipsTwitterFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}tipsTwitterFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialAutoPubSettingsObj->tipsTumblrFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tipsTumblrFlag", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}tipsTumblrFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}tipsTumblrFlag...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->tipsTumblrFlag));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}tipsTumblrFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}tipsTumblrFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialAutoPubSettingsObj->recoFbFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoFbFlag", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}recoFbFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoFbFlag...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->recoFbFlag));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoFbFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}recoFbFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialAutoPubSettingsObj->recoTwitterFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoTwitterFlag", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}recoTwitterFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoTwitterFlag...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->recoTwitterFlag));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoTwitterFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}recoTwitterFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialAutoPubSettingsObj->recoTumblrFlag != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoTumblrFlag", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}recoTumblrFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoTumblrFlag...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialAutoPubSettingsObj->recoTumblrFlag));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoTumblrFlag. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}recoTumblrFlag. status: %i\n", status);
+      printf("Failed to write end element {}usncYN. status: %i\n", status);
 #endif
       return status;
     }
@@ -9332,95 +8930,25 @@ static int xmlTextWriterWriteNs0TSSocialAutoPubSettingsObjType(xmlTextWriterPtr 
  */
 static void freeNs0TSSocialAutoPubSettingsObjType(struct enunciate_ns0_TSSocialAutoPubSettingsObj *_tSSocialAutoPubSettingsObj) {
   int i;
-  if (_tSSocialAutoPubSettingsObj->favFbFlag != NULL) {
+  if (_tSSocialAutoPubSettingsObj->usncORDER != NULL) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor favFbFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
+    printf("Freeing type of accessor usncORDER of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
 #endif
-    freeXsStringType(_tSSocialAutoPubSettingsObj->favFbFlag);
+    freeXsStringType(_tSSocialAutoPubSettingsObj->usncORDER);
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor favFbFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
+    printf("Freeing accessor usncORDER of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
 #endif
-    free(_tSSocialAutoPubSettingsObj->favFbFlag);
+    free(_tSSocialAutoPubSettingsObj->usncORDER);
   }
-  if (_tSSocialAutoPubSettingsObj->favTwitterFlag != NULL) {
+  if (_tSSocialAutoPubSettingsObj->usncYN != NULL) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor favTwitterFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
+    printf("Freeing type of accessor usncYN of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
 #endif
-    freeXsStringType(_tSSocialAutoPubSettingsObj->favTwitterFlag);
+    freeXsStringType(_tSSocialAutoPubSettingsObj->usncYN);
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor favTwitterFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
+    printf("Freeing accessor usncYN of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
 #endif
-    free(_tSSocialAutoPubSettingsObj->favTwitterFlag);
-  }
-  if (_tSSocialAutoPubSettingsObj->favTumblrFlag != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor favTumblrFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialAutoPubSettingsObj->favTumblrFlag);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor favTumblrFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    free(_tSSocialAutoPubSettingsObj->favTumblrFlag);
-  }
-  if (_tSSocialAutoPubSettingsObj->tipsFbFlag != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor tipsFbFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialAutoPubSettingsObj->tipsFbFlag);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor tipsFbFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    free(_tSSocialAutoPubSettingsObj->tipsFbFlag);
-  }
-  if (_tSSocialAutoPubSettingsObj->tipsTwitterFlag != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor tipsTwitterFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialAutoPubSettingsObj->tipsTwitterFlag);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor tipsTwitterFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    free(_tSSocialAutoPubSettingsObj->tipsTwitterFlag);
-  }
-  if (_tSSocialAutoPubSettingsObj->tipsTumblrFlag != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor tipsTumblrFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialAutoPubSettingsObj->tipsTumblrFlag);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor tipsTumblrFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    free(_tSSocialAutoPubSettingsObj->tipsTumblrFlag);
-  }
-  if (_tSSocialAutoPubSettingsObj->recoFbFlag != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor recoFbFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialAutoPubSettingsObj->recoFbFlag);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor recoFbFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    free(_tSSocialAutoPubSettingsObj->recoFbFlag);
-  }
-  if (_tSSocialAutoPubSettingsObj->recoTwitterFlag != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor recoTwitterFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialAutoPubSettingsObj->recoTwitterFlag);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor recoTwitterFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    free(_tSSocialAutoPubSettingsObj->recoTwitterFlag);
-  }
-  if (_tSSocialAutoPubSettingsObj->recoTumblrFlag != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor recoTumblrFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialAutoPubSettingsObj->recoTumblrFlag);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor recoTumblrFlag of type enunciate_ns0_TSSocialAutoPubSettingsObj...\n");
-#endif
-    free(_tSSocialAutoPubSettingsObj->recoTumblrFlag);
+    free(_tSSocialAutoPubSettingsObj->usncYN);
   }
 }
 #endif /* DEF_enunciate_ns0_TSSocialAutoPubSettingsObj_M */
@@ -9585,16 +9113,58 @@ static struct enunciate_ns0_TSSocialSettingsObj *xmlTextReaderReadNs0TSSocialSet
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "tsSocialAutoPubSettingsObj", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlStrcmp(BAD_CAST "usncORDER", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}tsSocialAutoPubSettingsObj of type {}TSSocialAutoPubSettingsObj.\n");
+        printf("Attempting to read choice {}usncORDER of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}usncORDER of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSSocialSettingsObjType(_tSSocialSettingsObj);
+          free(_tSSocialSettingsObj);
+          return NULL;
+        }
+
+        _tSSocialSettingsObj->usncORDER = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "usncYN", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}usncYN of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}usncYN of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSSocialSettingsObjType(_tSSocialSettingsObj);
+          free(_tSSocialSettingsObj);
+          return NULL;
+        }
+
+        _tSSocialSettingsObj->usncYN = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "auto_publishing", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}auto_publishing of type {}TSSocialAutoPubSettingsObj.\n");
 #endif
         _child_accessor = xmlTextReaderReadNs0TSSocialAutoPubSettingsObjType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}tsSocialAutoPubSettingsObj of type {}TSSocialAutoPubSettingsObj.\n");
+          printf("Failed to read choice {}auto_publishing of type {}TSSocialAutoPubSettingsObj.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSSocialSettingsObjType(_tSSocialSettingsObj);
@@ -9602,112 +9172,9 @@ static struct enunciate_ns0_TSSocialSettingsObj *xmlTextReaderReadNs0TSSocialSet
           return NULL;
         }
 
-        _tSSocialSettingsObj->tsSocialAutoPubSettingsObj = ((struct enunciate_ns0_TSSocialAutoPubSettingsObj*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "userId", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}userId of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}userId of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialSettingsObjType(_tSSocialSettingsObj);
-          free(_tSSocialSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialSettingsObj->userId = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "facebookStatus", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}facebookStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}facebookStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialSettingsObjType(_tSSocialSettingsObj);
-          free(_tSSocialSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialSettingsObj->facebookStatus = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "twitterStatus", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}twitterStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}twitterStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialSettingsObjType(_tSSocialSettingsObj);
-          free(_tSSocialSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialSettingsObj->twitterStatus = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "foursquareStatus", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}foursquareStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}foursquareStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialSettingsObjType(_tSSocialSettingsObj);
-          free(_tSSocialSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialSettingsObj->foursquareStatus = ((xmlChar*)_child_accessor);
-        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
-      }
-      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "tumblrStatus", xmlTextReaderConstLocalName(reader)) == 0
-        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
-
-#if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}tumblrStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
-        if (_child_accessor == NULL) {
-#if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}tumblrStatus of type {http://www.w3.org/2001/XMLSchema}string.\n");
-#endif
-          //panic: unable to read the child element for some reason.
-          freeNs0TSSocialSettingsObjType(_tSSocialSettingsObj);
-          free(_tSSocialSettingsObj);
-          return NULL;
-        }
-
-        _tSSocialSettingsObj->tumblrStatus = ((xmlChar*)_child_accessor);
+        _tSSocialSettingsObj->auto_publishing = realloc(_tSSocialSettingsObj->auto_publishing, (_tSSocialSettingsObj->_sizeof_auto_publishing + 1) * sizeof(struct enunciate_ns0_TSSocialAutoPubSettingsObj));
+        memcpy(&(_tSSocialSettingsObj->auto_publishing[_tSSocialSettingsObj->_sizeof_auto_publishing++]), _child_accessor, sizeof(struct enunciate_ns0_TSSocialAutoPubSettingsObj));
+        free(_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else {
@@ -9737,22 +9204,22 @@ static struct enunciate_ns0_TSSocialSettingsObj *xmlTextReaderReadNs0TSSocialSet
 static int xmlTextWriterWriteNs0TSSocialSettingsObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSSocialSettingsObj *_tSSocialSettingsObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
-  if (_tSSocialSettingsObj->tsSocialAutoPubSettingsObj != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tsSocialAutoPubSettingsObj", NULL);
+  if (_tSSocialSettingsObj->usncORDER != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "usncORDER", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}tsSocialAutoPubSettingsObj. status: %i\n", status);
+      printf("Failed to write start element {}usncORDER. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSSocialAutoPubSettingsObj for element {}tsSocialAutoPubSettingsObj...\n");
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}usncORDER...\n");
 #endif
-    status = xmlTextWriterWriteNs0TSSocialAutoPubSettingsObjType(writer, (_tSSocialSettingsObj->tsSocialAutoPubSettingsObj));
+    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialSettingsObj->usncORDER));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSSocialAutoPubSettingsObj for element {}tsSocialAutoPubSettingsObj. status: %i\n", status);
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}usncORDER. status: %i\n", status);
 #endif
       return status;
     }
@@ -9761,28 +9228,28 @@ static int xmlTextWriterWriteNs0TSSocialSettingsObjType(xmlTextWriterPtr writer,
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}tsSocialAutoPubSettingsObj. status: %i\n", status);
+      printf("Failed to write end element {}usncORDER. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
   }
-  if (_tSSocialSettingsObj->userId != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "userId", NULL);
+  if (_tSSocialSettingsObj->usncYN != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "usncYN", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}userId. status: %i\n", status);
+      printf("Failed to write start element {}usncYN. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}userId...\n");
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}usncYN...\n");
 #endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialSettingsObj->userId));
+    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialSettingsObj->usncYN));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}userId. status: %i\n", status);
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}usncYN. status: %i\n", status);
 #endif
       return status;
     }
@@ -9791,28 +9258,28 @@ static int xmlTextWriterWriteNs0TSSocialSettingsObjType(xmlTextWriterPtr writer,
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}userId. status: %i\n", status);
+      printf("Failed to write end element {}usncYN. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
   }
-  if (_tSSocialSettingsObj->facebookStatus != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "facebookStatus", NULL);
+  for (i = 0; i < _tSSocialSettingsObj->_sizeof_auto_publishing; i++) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "auto_publishing", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}facebookStatus. status: %i\n", status);
+      printf("Failed to write start element {}auto_publishing. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}facebookStatus...\n");
+    printf("writing type {}TSSocialAutoPubSettingsObj for element {}auto_publishing...\n");
 #endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialSettingsObj->facebookStatus));
+    status = xmlTextWriterWriteNs0TSSocialAutoPubSettingsObjType(writer, &(_tSSocialSettingsObj->auto_publishing[i]));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}facebookStatus. status: %i\n", status);
+      printf("Failed to write type {}TSSocialAutoPubSettingsObj for element {}auto_publishing. status: %i\n", status);
 #endif
       return status;
     }
@@ -9821,97 +9288,7 @@ static int xmlTextWriterWriteNs0TSSocialSettingsObjType(xmlTextWriterPtr writer,
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}facebookStatus. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialSettingsObj->twitterStatus != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "twitterStatus", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}twitterStatus. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}twitterStatus...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialSettingsObj->twitterStatus));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}twitterStatus. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}twitterStatus. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialSettingsObj->foursquareStatus != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "foursquareStatus", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}foursquareStatus. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}foursquareStatus...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialSettingsObj->foursquareStatus));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}foursquareStatus. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}foursquareStatus. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-  }
-  if (_tSSocialSettingsObj->tumblrStatus != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tumblrStatus", NULL);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}tumblrStatus. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-#if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}tumblrStatus...\n");
-#endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSSocialSettingsObj->tumblrStatus));
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}tumblrStatus. status: %i\n", status);
-#endif
-      return status;
-    }
-    totalBytes += status;
-
-    status = xmlTextWriterEndElement(writer);
-    if (status < 0) {
-#if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}tumblrStatus. status: %i\n", status);
+      printf("Failed to write end element {}auto_publishing. status: %i\n", status);
 #endif
       return status;
     }
@@ -9928,65 +9305,37 @@ static int xmlTextWriterWriteNs0TSSocialSettingsObjType(xmlTextWriterPtr writer,
  */
 static void freeNs0TSSocialSettingsObjType(struct enunciate_ns0_TSSocialSettingsObj *_tSSocialSettingsObj) {
   int i;
-  if (_tSSocialSettingsObj->tsSocialAutoPubSettingsObj != NULL) {
+  if (_tSSocialSettingsObj->usncORDER != NULL) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor tsSocialAutoPubSettingsObj of type enunciate_ns0_TSSocialSettingsObj...\n");
+    printf("Freeing type of accessor usncORDER of type enunciate_ns0_TSSocialSettingsObj...\n");
 #endif
-    freeNs0TSSocialAutoPubSettingsObjType(_tSSocialSettingsObj->tsSocialAutoPubSettingsObj);
+    freeXsStringType(_tSSocialSettingsObj->usncORDER);
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor tsSocialAutoPubSettingsObj of type enunciate_ns0_TSSocialSettingsObj...\n");
+    printf("Freeing accessor usncORDER of type enunciate_ns0_TSSocialSettingsObj...\n");
 #endif
-    free(_tSSocialSettingsObj->tsSocialAutoPubSettingsObj);
+    free(_tSSocialSettingsObj->usncORDER);
   }
-  if (_tSSocialSettingsObj->userId != NULL) {
+  if (_tSSocialSettingsObj->usncYN != NULL) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor userId of type enunciate_ns0_TSSocialSettingsObj...\n");
+    printf("Freeing type of accessor usncYN of type enunciate_ns0_TSSocialSettingsObj...\n");
 #endif
-    freeXsStringType(_tSSocialSettingsObj->userId);
+    freeXsStringType(_tSSocialSettingsObj->usncYN);
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor userId of type enunciate_ns0_TSSocialSettingsObj...\n");
+    printf("Freeing accessor usncYN of type enunciate_ns0_TSSocialSettingsObj...\n");
 #endif
-    free(_tSSocialSettingsObj->userId);
+    free(_tSSocialSettingsObj->usncYN);
   }
-  if (_tSSocialSettingsObj->facebookStatus != NULL) {
+  if (_tSSocialSettingsObj->auto_publishing != NULL) {
+    for (i = 0; i < _tSSocialSettingsObj->_sizeof_auto_publishing; i++) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor facebookStatus of type enunciate_ns0_TSSocialSettingsObj...\n");
+      printf("Freeing accessor auto_publishing[%i] of type enunciate_ns0_TSSocialSettingsObj...\n", i);
 #endif
-    freeXsStringType(_tSSocialSettingsObj->facebookStatus);
+      freeNs0TSSocialAutoPubSettingsObjType(&(_tSSocialSettingsObj->auto_publishing[i]));
+    }
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor facebookStatus of type enunciate_ns0_TSSocialSettingsObj...\n");
+    printf("Freeing accessor auto_publishing of type enunciate_ns0_TSSocialSettingsObj...\n");
 #endif
-    free(_tSSocialSettingsObj->facebookStatus);
-  }
-  if (_tSSocialSettingsObj->twitterStatus != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor twitterStatus of type enunciate_ns0_TSSocialSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialSettingsObj->twitterStatus);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor twitterStatus of type enunciate_ns0_TSSocialSettingsObj...\n");
-#endif
-    free(_tSSocialSettingsObj->twitterStatus);
-  }
-  if (_tSSocialSettingsObj->foursquareStatus != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor foursquareStatus of type enunciate_ns0_TSSocialSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialSettingsObj->foursquareStatus);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor foursquareStatus of type enunciate_ns0_TSSocialSettingsObj...\n");
-#endif
-    free(_tSSocialSettingsObj->foursquareStatus);
-  }
-  if (_tSSocialSettingsObj->tumblrStatus != NULL) {
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor tumblrStatus of type enunciate_ns0_TSSocialSettingsObj...\n");
-#endif
-    freeXsStringType(_tSSocialSettingsObj->tumblrStatus);
-#if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor tumblrStatus of type enunciate_ns0_TSSocialSettingsObj...\n");
-#endif
-    free(_tSSocialSettingsObj->tumblrStatus);
+    free(_tSSocialSettingsObj->auto_publishing);
   }
 }
 #endif /* DEF_enunciate_ns0_TSSocialSettingsObj_M */

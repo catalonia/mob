@@ -307,7 +307,7 @@ public class MySQL {
 		}
 		return user;
 	}
-	public int getIDUserSocialNetworkConnection(String usncDesc)
+	public int getIDUserSocialNetworkConnection(int usncOrder)
 	{
 		TSDataSource tsDataSource = TSDataSource.getInstance();
 	    Connection connection = null;
@@ -319,11 +319,13 @@ public class MySQL {
 	    	tsDataSource.begin();
 	    	System.out.println(UserQueries.USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL);
-	    	statement.setString(1, usncDesc);
+	    	statement.setInt(1, usncOrder);
 	    	resultset = statement.executeQuery();
     	if(resultset.next())
     	{
-    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_ID")));
+    		int ret = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_ID")));
+    		tsDataSource.close();
+    		return ret;
     	}
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -332,7 +334,7 @@ public class MySQL {
 	}
 		return 0;
 	}
-	public int getIDAutoPublishing(String apDesc)
+	public int getIDAutoPublishing(int apOrder)
 	{
 		TSDataSource tsDataSource = TSDataSource.getInstance();
 	    Connection connection = null;
@@ -343,7 +345,7 @@ public class MySQL {
 	    	connection = tsDataSource.getConnection();
 	    	tsDataSource.begin();
 	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_SELECT_SQL);
-	    	statement.setString(1, apDesc);
+	    	statement.setInt(1, apOrder);
 	    	resultset = statement.executeQuery();
     	if(resultset.next())
     	{
@@ -387,42 +389,6 @@ public class MySQL {
 		}
 		return false;
 	}
-	public String[] getDataUserUSNC()
-	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
-		PreparedStatement statement = null;
-	    ResultSet resultset = null;
-	    String[] array;
-	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_NETWORK_CONNECTION_SELECT_SQL);
-	    	resultset = statement.executeQuery();
-	    	int  i = 1;
-	    	while(resultset.next())
-	    	{
-	    		i++;
-	    	}
-	    	array = new String[i];
-	    	resultset = statement.executeQuery();
-	    	
-	    	while(resultset.next())
-	    	{
-	    		array[Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_ID")))]
-	    				= CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_DESC"));
-	    	}
-	    	return array;
-	    	
-    		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-		}
-	    array = null;
-		return array;
-	}
 	public boolean checkUserUSNC_AP(String userId)
 	{
 		TSDataSource tsDataSource = TSDataSource.getInstance();
@@ -453,42 +419,6 @@ public class MySQL {
 		tsDataSource.close();
 	}
 		return false;
-	}
-	public String[] getDataUserUSNC_AP()
-	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
-		PreparedStatement statement = null;
-	    ResultSet resultset = null;
-	    String[] array;
-	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_AP_SELECT_SQL);
-	    	resultset = statement.executeQuery();
-	    	int  i = 1;
-	    	while(resultset.next())
-	    	{
-	    		i++;
-	    	}
-	    	array = new String[i];
-	    	resultset = statement.executeQuery();
-	    	
-	    	while(resultset.next())
-	    	{
-	    		array[Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("auto_publishing.AP_ID")))]
-	    				= CommonFunctionsUtil.getModifiedValueString(resultset.getString("auto_publishing.AP_DESC"));
-	    	}
-	    	return array;
-	    	
-    		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-		}
-	    array = null;
-		return array;
 	}
 	public boolean checkNotificationDescriptor(String userId)
 	{
@@ -603,7 +533,8 @@ public class MySQL {
 	}
 		return 0;
 	}
-	public int getIDPrivacyOrderSettings(int privacyId)
+
+	public int getIDContactSettings(int contact_order)
 	{
 		TSDataSource tsDataSource = TSDataSource.getInstance();
 	    Connection connection = null;
@@ -613,14 +544,14 @@ public class MySQL {
 	    try{
 	    	connection = tsDataSource.getConnection();
 	    	tsDataSource.begin();
-	    	System.out.println(UserQueries.PRIVACY_DESCRIPTOR_ORDER_SELECT_SQL);
-	    	statement = connection.prepareStatement(UserQueries.PRIVACY_DESCRIPTOR_ORDER_SELECT_SQL);
-	    	statement.setInt(1, privacyId);
+	    	System.out.println(UserQueries.CONTACT_SETTINGS_DESCRIPTOR_SELECT_SQL);
+	    	statement = connection.prepareStatement(UserQueries.CONTACT_SETTINGS_DESCRIPTOR_SELECT_SQL);
+	    	statement.setInt(1, contact_order);
 	    	resultset = statement.executeQuery();
     	if(resultset.next())
     	{
-    		System.out.println(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID_ORDER")));
-    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID_ORDER")));
+    		System.out.println(CommonFunctionsUtil.getModifiedValueString(resultset.getString("contact_settings_descriptor.CONTACT_ID")));
+    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("contact_settings_descriptor.CONTACT_ID")));
     	}
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -629,644 +560,31 @@ public class MySQL {
 	}
 		return 0;
 	}
-//	//Check facebook id in the system
-//	public boolean checkFacebookIDExist(String user_fb_id) {
-//		boolean check = false;
-//		TSUser user = null;
-//		
-//		String query = "SELECT * FROM users WHERE User_FB_ID = ?";
-//		try {
-//			user = (TSUser) jdbcTemplate.queryForObject(
-//					query,
-//					new Object[] {user_fb_id},
-//					new UserRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		if(user != null) check = true;
-//
-//		return check;
-//	}
-//	
-//	
-//	//Get user information (by ts_user_id)
-//	public TSUser getUserInformationByTSUserID(int ts_user_id) {
-//		TSUser user = null;
-//		try {
-//			user = (TSUser) jdbcTemplate.queryForObject(
-//					"SELECT * FROM users WHERE TS_USER_ID = ? AND CURRENT_STATUS = ?",
-//					new Object[] {ts_user_id, String.valueOf("e")},
-//					new UserRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		return user;
-//	}
-//	
-//	//Get user information (by email)
-//	
-//	//Get user information (by user_fb_id)
-//	
-//	//Check user photo already exist in the system
-//	public boolean checkUserPhotoExist(String user_id) {
-//		boolean check = false;
-//		TSUserPhoto user_photo = null;
-//		
-//		String query = "SELECT * FROM user_photo WHERE USER_ID = ?";
-//		try {
-//			user_photo = (TSUserPhoto) jdbcTemplate.queryForObject(
-//					query,
-//					new Object[] {user_id},
-//					new UserPhotoRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		if(user_photo != null) check = true;
-//
-//		return check;
-//	}
-//	
-//	//Get user photo (by user_id)
-//	public TSUserPhoto getUserPhoto(String user_id) {
-//		TSUserPhoto user_photo = null;
-//		try {
-//			user_photo = (TSUserPhoto) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_photo WHERE USER_ID = ?",
-//					new Object[] {user_id},
-//					new UserPhotoRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		return user_photo;
-//	}
-//	
-//	//Insert new user photo
-//	public void insert_user_photo(String user_id, String fileName) {
-//		String dateNow = CommonHelper.getCurrentDatetime();
-//		String link = GlobalVariables.LINK_DIRECT_USER_IMAGE + fileName;
-//		String sql = "INSERT INTO user_photo (USER_ID, FILENAME, LINK, CREATED) VALUES (?, ?, ?, ?)";
-//		
-//		final String sql_user_log_ps = sql;
-//		final String user_id_ps = user_id;
-//		final String fileName_ps = fileName;
-//		final String link_ps = link;
-//		final String dateNow_ps = dateNow;
-//
-//		KeyHolder keyHolder = new GeneratedKeyHolder();
-//		jdbcTemplate.update(new PreparedStatementCreator() {
-//		
-//			@Override
-//			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-//				PreparedStatement ps = connection.prepareStatement(sql_user_log_ps, new String[] {"Auto_User_Photo_ID"});
-//				ps.setString(1, user_id_ps);
-//				ps.setString(2, fileName_ps);
-//				ps.setString(3, link_ps);
-//				ps.setString(4, dateNow_ps);
-//				return ps;
-//			}
-//		}, keyHolder);
-//	
-//		String auto_user_photo_id = String.valueOf(keyHolder.getKey().intValue());
-//		String user_photo_id = user_id + "-" + auto_user_photo_id;
-//		
-//		sql = "UPDATE user_photo SET USER_PHOTO_ID = ? WHERE Auto_User_Photo_ID = ?";
-//		jdbcTemplate.update(sql, new Object[] {user_photo_id, auto_user_photo_id});
-//	}
-//	
-//	//Update user photo
-//	public void update_user_photo(String user_id, String fileName) {
-//		String dateNow = CommonHelper.getCurrentDatetime();
-//		String link = GlobalVariables.LINK_DIRECT_USER_IMAGE + fileName;
-//		String sql = "UPDATE user_photo SET FILENAME = ?, LINK = ?, CREATED = ? WHERE USER_ID = ?";
-//		jdbcTemplate.update(sql, new Object[] {fileName, link, dateNow, user_id});
-//	}
-//	
-//	//Check user's Facebook data exist in the system
-//	//Get Facebook user data
-//	public TSFacebookUserData getFBUserData(String user_fb_id) {
-//		TSFacebookUserData user = null;
-//		try {
-//			user = (TSFacebookUserData) jdbcTemplate.queryForObject(
-//					"SELECT * FROM facebook_user_data WHERE User_FB_ID = ?",
-//					new Object[] {user_fb_id},
-//					new FacebookUserDataRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		return user;
-//	}
-//	
-//	//Check user log
-//	public boolean checkUserLogExist(String user_id) {
-//		boolean check = false;
-//		TSUserLog user_log = null;
-//		
-//		String query = "SELECT * FROM users_log WHERE USER_ID = ?";
-//		try {
-//			user_log = (TSUserLog) jdbcTemplate.queryForObject(
-//					query,
-//					new Object[] {user_id},
-//					new UserLogRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		if(user_log != null) check = true;
-//		
-//		return check;
-//	}
-//	
-//	//Get story information
-//	public TSStory getStoryInformation(String user_id, String action_id_type, String link) {
-//		TSStory story = null;
-//		try {
-//			story = (TSStory) jdbcTemplate.queryForObject(
-//					"SELECT * FROM story WHERE USER_ID = ? AND ACTION_ID_TYPE = ? AND LINK = ?",
-//					new Object[] {user_id, action_id_type, link},
-//					new StoryRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		return story;
-//	}
-//	
-//	//Get story information by Restaurant (in this case, field "LINK" is null)
-//	public TSStory getStoryInformationByRestaurant(String user_id, String restaurant_id, String action_id_type) {
-//		TSStory story = null;
-//		try {
-//			story = (TSStory) jdbcTemplate.queryForObject(
-//					"SELECT * FROM story WHERE USER_ID = ? AND RESTAURANT_ID = ? AND ACTION_ID_TYPE = ?",
-//					new Object[] {user_id, restaurant_id, action_id_type},
-//					new StoryRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		return story;
-//	}
-//	
-//	//Get historical follow data
-//	public TSHistoricalFollowData getHistoricalFollowData(String follower, String followee) {
-//		TSHistoricalFollowData historical = null;
-//		try {
-//			historical = (TSHistoricalFollowData) jdbcTemplate.queryForObject(
-//					"SELECT * FROM historical_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?",
-//					new Object[] {follower, followee},
-//					new HistoricalFollowDataRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		return historical;
-//	}
-//	
-//	//Get User follow data
-//	public TSUserFollowData getUserFollowData(String follower, String followee) {
-//		TSUserFollowData user = null;
-//		try {
-//			user = (TSUserFollowData) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?",
-//					new Object[] {follower, followee},
-//					new UserFollowDataRowMapper());
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return user;
-//	}
-//	
-//	//Check user cuisine (Native - Favourite) exist in the database
-//	public boolean checkNativeFavouriteExist(String user_id, int cuisine_id, String type) {
-//		boolean check = false;
-//		TSUserCuisine user_cuisine = null;
-//		
-//		String query = "SELECT * FROM user_cuisine WHERE USER_ID = ? AND CUISINE_ID = ? AND TYPE = ?";
-//		try {
-//			user_cuisine = (TSUserCuisine) jdbcTemplate.queryForObject(
-//					query,
-//					new Object[] {user_id, cuisine_id, type},
-//					new UserCuisineRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		if(user_cuisine != null) check = true;
-//
-//		return check;
-//	}
-//	
-//	//Check user reported
-//	public boolean checkUserReported(String user_id, String reported_user_id) {
-//		boolean check = false;
-//		TSUserReportedInfo reported = null;
-//			
-//		String query = "SELECT * FROM user_reported_info WHERE USER_ID = ? AND REPORTED_USER_ID = ?";
-//		try {
-//			reported = (TSUserReportedInfo) jdbcTemplate.queryForObject(
-//					query,
-//					new Object[] {user_id, reported_user_id},
-//					new UserReportedInfoRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//			
-//		if(reported != null) check = true;
-//
-//		return check;
-//	}
-//	
-//	//Check user restaurant favourite
-//	public boolean checkUserRestaurantFav(String user_id, String restaurant_id) {
-//		boolean check = false;
-//		TSUserRestaurantFav user_restaurant_fav = null;
-//				
-//		String query = "SELECT * FROM user_restaurant_fav WHERE USER_ID = ? AND RESTAURANT_ID = ?";
-//		try {
-//			user_restaurant_fav = (TSUserRestaurantFav) jdbcTemplate.queryForObject(
-//					query,
-//					new Object[] {user_id, restaurant_id},
-//					new UserRestaurantFavRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//				
-//		if(user_restaurant_fav != null) check = true;
-//
-//		return check;
-//	}
-//	
-//	//Check user friend fb data
-//	public boolean checkUserFriendFbData(String user_id, String friend_user_id) {
-//		boolean check = false;
-//		TSUserFriendFb user_friend_fb_data = null;
-//					
-//		String query = "SELECT * FROM user_friend_fb_data WHERE USER_ID = ? AND FRIEND_USER_ID = ?";
-//		try {
-//			user_friend_fb_data = (TSUserFriendFb) jdbcTemplate.queryForObject(
-//					query,
-//					new Object[] {user_id, friend_user_id},
-//					new UserFriendFbRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//					
-//		if(user_friend_fb_data != null) check = true;
-//
-//		return check;
-//	}
-//	
-//	//Check recommendations from user
-//	public boolean checkRecorequestUser(String recorequest_id) {
-//		boolean check = false;
-//		TSRecorequestUser recorequest_user = null;
-//					
-//		String query = "SELECT * FROM recorequest_user WHERE RECOREQUEST_ID = ?";
-//		try {
-//			recorequest_user = (TSRecorequestUser) jdbcTemplate.queryForObject(
-//					query,
-//					new Object[] {recorequest_id},
-//					new RecorequestUserRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//					
-//		if(recorequest_user != null) check = true;
-//
-//		return check;
-//	}
-//	
-//	//Get restaurant information
-//	public TSRestaurant getRestaurantInformation(String restaurant_id) {
-//		TSRestaurant restaurant = null;
-//		try {
-//			restaurant = (TSRestaurant) jdbcTemplate.queryForObject(
-//					"SELECT * FROM restaurant WHERE RESTAURANT_ID = ?",
-//					new Object[] {restaurant_id},
-//					new RestaurantRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return restaurant;
-//	}
-//	
-//	//Get user photo (by user_id)
-//	public TSRestaurantPhoto getRestaurantPhoto(String restaurant_id) {
-//		TSRestaurantPhoto restaurant_photo = null;
-//		try {
-//			restaurant_photo = (TSRestaurantPhoto) jdbcTemplate.queryForObject(
-//					"SELECT * FROM restaurant_photo WHERE RESTAURANT_ID = ? AND ULTIMATE_SOURCE_NAME = ? GROUP BY RESTAURANT_ID LIMIT 0, 1",
-//					new Object[] {restaurant_id, GlobalVariables.RESTAURANT_ULTIMATE_SOURCE_NAME},
-//					new RestaurantPhotoRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return restaurant_photo;
-//	}
-//	
-//	//Get user restaurant saved
-//	public TSUserRestaurantSaved getUserRestaurantSaved(String user_id, String restaurant_id) {
-//		TSUserRestaurantSaved user_restaurant_saved = null;
-//		try {
-//			user_restaurant_saved = (TSUserRestaurantSaved) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_restaurant_saved WHERE USER_ID = ? AND RESTAURANT_ID = ? LIMIT 0, 1",
-//					new Object[] {user_id, restaurant_id},
-//					new UserRestaurantSavedRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//			
-//		return user_restaurant_saved;
-//	}
-//	
-//	//Get user restaurant saved (by user_id)
-//	public TSUserRestaurantSaved getUserRestaurantSavedByUserID(String user_id) {
-//		TSUserRestaurantSaved user_restaurant_saved = null;
-//		try {
-//			user_restaurant_saved = (TSUserRestaurantSaved) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_restaurant_saved WHERE USER_ID = ?",
-//					new Object[] {user_id},
-//					new UserRestaurantSavedRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//			
-//		return user_restaurant_saved;
-//	}
-//	
-//	//Get user restaurant saved (by restaurant_id)
-//	public TSUserRestaurantSaved getUserRestaurantSavedByRestaurantID(String restaurant_id) {
-//		TSUserRestaurantSaved user_restaurant_saved = null;
-//		try {
-//			user_restaurant_saved = (TSUserRestaurantSaved) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_restaurant_saved WHERE RESTAURANT_ID = ?",
-//					new Object[] {restaurant_id},
-//					new UserRestaurantSavedRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//				
-//		return user_restaurant_saved;
-//	}
-//	
-//	//Get user restaurant tips (by tip_id)
-//	public TSRestaurantTipsTasteSync getRestaurantTipsTasteSync(String tip_id) {
-//		TSRestaurantTipsTasteSync tips = null;
-//		try {
-//			tips = (TSRestaurantTipsTasteSync) jdbcTemplate.queryForObject(
-//					"SELECT * FROM restaurant_tips_tastesync WHERE TIP_ID = ?",
-//					new Object[] {tip_id},
-//					new RestaurantTipsTasteSyncRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//					
-//		return tips;
-//	}
-//	
-//	//Get user restaurant tips (by user_id & restaurant_id)
-//	public TSRestaurantTipsTasteSync getRestaurantTipsTasteSyncByUserIDAndRestaurantID(String user_id, String restaurant_id) {
-//		TSRestaurantTipsTasteSync tips = null;
-//		try {
-//			tips = (TSRestaurantTipsTasteSync) jdbcTemplate.queryForObject(
-//					"SELECT * FROM restaurant_tips_tastesync WHERE USER_ID = ? AND RESTAURANT_ID = ? LIMIT 0, 1",
-//					new Object[] {user_id, restaurant_id},
-//					new RestaurantTipsTasteSyncRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//						
-//		return tips;
-//	}
-//
-//	//Get user restaurant tips (by user_id)
-//	public TSRestaurantTipsTasteSync getRestaurantTipsTasteSyncByUserID(String user_id) {
-//		TSRestaurantTipsTasteSync tips = null;
-//		try {
-//			tips = (TSRestaurantTipsTasteSync) jdbcTemplate.queryForObject(
-//					"SELECT * FROM restaurant_tips_tastesync WHERE USER_ID = ?",
-//					new Object[] {user_id},
-//					new RestaurantTipsTasteSyncRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//						
-//		return tips;
-//	}
-//	
-//	//Get user restaurant tips (by restaurant_id)
-//	public TSRestaurantTipsTasteSync getRestaurantTipsTasteSyncByRestaurantID(String restaurant_id) {
-//		TSRestaurantTipsTasteSync tips = null;
-//		try {
-//			tips = (TSRestaurantTipsTasteSync) jdbcTemplate.queryForObject(
-//					"SELECT * FROM restaurant_tips_tastesync WHERE RESTAURANT_ID = ?",
-//					new Object[] {restaurant_id},
-//					new RestaurantTipsTasteSyncRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//							
-//		return tips;
-//	}
-//	
-//	//Get user restaurant favourite
-//	public TSUserRestaurantFav getUserRestaurantFav(String user_id, String restaurant_id) {
-//		TSUserRestaurantFav fav = null;
-//		try {
-//			fav = (TSUserRestaurantFav) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_restaurant_fav WHERE USER_ID = ? AND RESTAURANT_ID = ? LIMIT 0, 1",
-//					new Object[] {user_id, restaurant_id},
-//					new UserRestaurantFavRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//									
-//		return fav;
-//	}
-//	
-//	//Get user restaurant favourite (by user_id)
-//	public TSUserRestaurantFav getUserRestaurantFavByUserID(String user_id) {
-//		TSUserRestaurantFav fav = null;
-//		try {
-//			fav = (TSUserRestaurantFav) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_restaurant_fav WHERE USER_ID = ?",
-//					new Object[] {user_id},
-//					new UserRestaurantFavRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//										
-//		return fav;
-//	}
-//	
-//	//Get user restaurant favourite (by restaurant_id)
-//	public TSUserRestaurantFav getUserRestaurantFavByRestaurantID(String restaurant_id) {
-//		TSUserRestaurantFav fav = null;
-//		try {
-//			fav = (TSUserRestaurantFav) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_restaurant_fav WHERE RESTAURANT_ID = ?",
-//					new Object[] {restaurant_id},
-//					new UserRestaurantFavRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//								
-//		return fav;
-//	}
-//	
-//	//Get user restaurant reco (by recommender_user_id and restaurant_id)
-//	public TSUserRestaurantReco getUserRestaurantRecoByRecommenderAndRestaurant(String recommender_user_id, String restaurant_id) {
-//		TSUserRestaurantReco reco = null;
-//		try {
-//			reco = (TSUserRestaurantReco) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_restaurant_reco WHERE RECOMMENDER_USER_ID = ? AND RESTAURANT_ID = ? LIMIT 0, 1",
-//					new Object[] {recommender_user_id, restaurant_id},
-//					new UserRestaurantRecoRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//								
-//		return reco;
-//	}
-//	
-//	//Get contact descriptor
-//	public TSContactSettingsDescriptor getContactSettingsDescriptor(int contact_id) {
-//		TSContactSettingsDescriptor contact = null;
-//		try {
-//			contact = (TSContactSettingsDescriptor) jdbcTemplate.queryForObject(
-//					"SELECT * FROM contact_settings_descriptor WHERE CONTACT_ID = ?",
-//					new Object[] {contact_id},
-//					new ContactSettingsDescriptorRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//								
-//		return contact;
-//	}
-//	
-//	//Get user friend on TasteSync
-//	public TSUserFriendTasteSync getUserFriendInfor(String user_id, String friend_id) {
-//		TSUserFriendTasteSync friend = null;
-//		try {
-//			friend = (TSUserFriendTasteSync) jdbcTemplate.queryForObject(
-//					"SELECT * FROM user_friend_tastesync WHERE USER_ID = ? AND FRIEND_ID = ?",
-//					new Object[] {user_id, friend_id},
-//					new UserFriendTasteSyncRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//								
-//		return friend;
-//	}
-//	
-//	//Get notification descriptor
-//	public TSNotificationDescriptor getNotificationDescriptor(int nsid) {
-//		TSNotificationDescriptor notification = null;
-//		try {
-//			notification = (TSNotificationDescriptor) jdbcTemplate.queryForObject(
-//					"SELECT * FROM notification_descriptor WHERE NSID = ?",
-//					new Object[] {nsid},
-//					new NotificationDescriptorRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//								
-//		return notification;
-//	}
-//	
-//	//Get factual restaurant deals infor
-//	public TSFactualRestaurantDeals getFactualRestaurantDealsByRestaurantID(String restaurant_id) {
-//		TSFactualRestaurantDeals deals = null;
-//		try {
-//			deals = (TSFactualRestaurantDeals) jdbcTemplate.queryForObject(
-//					"SELECT * FROM factual_restaurant_deals WHERE RESTAURANT_ID = ?",
-//					new Object[] {restaurant_id},
-//					new FactualRestaurantDealsRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//								
-//		return deals;
-//	}
-//	
-//	//Get 4sq Checkin
-//	public TS4sqCheckin get4sqCheckinByRestaurantID(String restaurant_id) {
-//		TS4sqCheckin checkin = null;
-//		try {
-//			checkin = (TS4sqCheckin) jdbcTemplate.queryForObject(
-//					"SELECT * FROM 4sq_checkin WHERE RESTAURANT_ID = ?",
-//					new Object[] {restaurant_id},
-//					new FoursqCheckinRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//								
-//		return checkin;
-//	}
-//	
-//	//Get city information (by city name)
-//	public TSCity getCityInforByName(String city_name) {
-//		TSCity city = null;
-//		try {
-//			city = (TSCity) jdbcTemplate.queryForObject(
-//					"SELECT * FROM cities WHERE city = ?",
-//					new Object[] {city_name},
-//					new CityRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return city;
-//	}
-//	
-//	//Get city information (by city id)
-//	public TSCity getCityInforByID(String city_id) {
-//		TSCity city = null;
-//		try {
-//			city = (TSCity) jdbcTemplate.queryForObject(
-//					"SELECT * FROM cities WHERE city_id = ?",
-//					new Object[] {city_id},
-//					new CityRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return city;
-//	}
-//	
-//		
-//	//Get recorequest assigned by recorequest_id
-//	public TSRecorequestTSAssigned getRecorequestAssignedByRecorequestID(String recorequest_id) {
-//		TSRecorequestTSAssigned reco = null;
-//		try {
-//			reco = (TSRecorequestTSAssigned) jdbcTemplate.queryForObject(
-//					"SELECT * FROM recorequest_ts_assigned WHERE RECOREQUEST_ID = ?",
-//					new Object[] {recorequest_id},
-//					new RecorequestTSAssignedRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return reco;
-//	}
-//	
-//	//Check restaurant exist in list
-//	public boolean checkRestaurantInList(List<TSRestaurant> list_restaurants, String restaurant_id) {
-//		boolean check = false;
-//		
-//		if(list_restaurants != null && !list_restaurants.isEmpty()) {
-//			for(int i = 0; i < list_restaurants.size(); i++) {
-//				TSRestaurant restaurant = list_restaurants.get(i);
-//				if(restaurant.getRestaurant_id().equals(restaurant_id)) {
-//					check = true;
-//					break;
-//				}
-//			}
-//		}
-//		
-//		return check;
-//	}
+	public String getDescAbout(int ID_ORDER)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	System.out.println(UserQueries.ABOUT_TASTESYNC_ELEMENT_DESCRIPTOR_SELECT_SQL);
+	    	statement = connection.prepareStatement(UserQueries.ABOUT_TASTESYNC_ELEMENT_DESCRIPTOR_SELECT_SQL);
+	    	statement.setInt(1, ID_ORDER);
+	    	resultset = statement.executeQuery();
+    	if(resultset.next())
+    	{
+    		return CommonFunctionsUtil.getModifiedValueString(resultset.getString("about_tastesync_element_descriptor.DESCRIPTION"));
+    	}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		tsDataSource.close();
+	}
+		return null;
+	}
         public static void mapResultsetRowToTSUserVO(TSUserObj tsUserObj,
                 ResultSet resultset) throws SQLException {
                 tsUserObj.setUserId(CommonFunctionsUtil.getModifiedValueString(

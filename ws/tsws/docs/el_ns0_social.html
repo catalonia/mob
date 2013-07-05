@@ -102,41 +102,25 @@
       <h2>Example XML</h2>
       <code class="prettyprint lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;social&gt;
-  &lt;tsSocialAutoPubSettingsObj&gt;
-    &lt;favFbFlag&gt;...&lt;/favFbFlag&gt;
-    &lt;favTwitterFlag&gt;...&lt;/favTwitterFlag&gt;
-    &lt;favTumblrFlag&gt;...&lt;/favTumblrFlag&gt;
-    &lt;tipsFbFlag&gt;...&lt;/tipsFbFlag&gt;
-    &lt;tipsTwitterFlag&gt;...&lt;/tipsTwitterFlag&gt;
-    &lt;tipsTumblrFlag&gt;...&lt;/tipsTumblrFlag&gt;
-    &lt;recoFbFlag&gt;...&lt;/recoFbFlag&gt;
-    &lt;recoTwitterFlag&gt;...&lt;/recoTwitterFlag&gt;
-    &lt;recoTumblrFlag&gt;...&lt;/recoTumblrFlag&gt;
-  &lt;/tsSocialAutoPubSettingsObj&gt;
-  &lt;userId&gt;...&lt;/userId&gt;
-  &lt;facebookStatus&gt;...&lt;/facebookStatus&gt;
-  &lt;twitterStatus&gt;...&lt;/twitterStatus&gt;
-  &lt;foursquareStatus&gt;...&lt;/foursquareStatus&gt;
-  &lt;tumblrStatus&gt;...&lt;/tumblrStatus&gt;
+  &lt;usncORDER&gt;...&lt;/usncORDER&gt;
+  &lt;usncYN&gt;...&lt;/usncYN&gt;
+  &lt;auto_publishing&gt;
+    &lt;usncORDER&gt;...&lt;/usncORDER&gt;
+    &lt;usncYN&gt;...&lt;/usncYN&gt;
+  &lt;/auto_publishing&gt;
+  &lt;auto_publishing&gt;
+    &lt;!--...--&gt;
+  &lt;/auto_publishing&gt;
+  &lt;!--...more &quot;auto_publishing&quot; elements...--&gt;
 &lt;/social&gt;</code>
       <h2>Example JSON</h2>
       <code class="prettyprint lang-js">{
-  &quot;tsSocialAutoPubSettingsObj&quot; : {
-    &quot;favFbFlag&quot; : &quot;...&quot;,
-    &quot;favTwitterFlag&quot; : &quot;...&quot;,
-    &quot;favTumblrFlag&quot; : &quot;...&quot;,
-    &quot;tipsFbFlag&quot; : &quot;...&quot;,
-    &quot;tipsTwitterFlag&quot; : &quot;...&quot;,
-    &quot;tipsTumblrFlag&quot; : &quot;...&quot;,
-    &quot;recoFbFlag&quot; : &quot;...&quot;,
-    &quot;recoTwitterFlag&quot; : &quot;...&quot;,
-    &quot;recoTumblrFlag&quot; : &quot;...&quot;
-  },
-  &quot;userId&quot; : &quot;...&quot;,
-  &quot;facebookStatus&quot; : &quot;...&quot;,
-  &quot;twitterStatus&quot; : &quot;...&quot;,
-  &quot;foursquareStatus&quot; : &quot;...&quot;,
-  &quot;tumblrStatus&quot; : &quot;...&quot;
+  &quot;usncORDER&quot; : &quot;...&quot;,
+  &quot;usncYN&quot; : &quot;...&quot;,
+  &quot;auto_publishing&quot; : [ {
+    &quot;usncORDER&quot; : &quot;...&quot;,
+    &quot;usncYN&quot; : &quot;...&quot;
+  }, ... ]
 }</code>
 
       <div class="clear" />

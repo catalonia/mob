@@ -620,73 +620,40 @@
 @interface ENUNCIATENS0TSSocialSettingsObj : NSObject <EnunciateXML>
 {
   @private
-    ENUNCIATENS0TSSocialAutoPubSettingsObj *_tsSocialAutoPubSettingsObj;
-    NSString *_userId;
-    NSString *_facebookStatus;
-    NSString *_twitterStatus;
-    NSString *_foursquareStatus;
-    NSString *_tumblrStatus;
+    NSString *_usncORDER;
+    NSString *_usncYN;
+    NSArray *_auto_publishing;
 }
 
 /**
  * (no documentation provided)
  */
-- (ENUNCIATENS0TSSocialAutoPubSettingsObj *) tsSocialAutoPubSettingsObj;
+- (NSString *) usncORDER;
 
 /**
  * (no documentation provided)
  */
-- (void) setTsSocialAutoPubSettingsObj: (ENUNCIATENS0TSSocialAutoPubSettingsObj *) newTsSocialAutoPubSettingsObj;
+- (void) setUsncORDER: (NSString *) newUsncORDER;
 
 /**
  * (no documentation provided)
  */
-- (NSString *) userId;
+- (NSString *) usncYN;
 
 /**
  * (no documentation provided)
  */
-- (void) setUserId: (NSString *) newUserId;
+- (void) setUsncYN: (NSString *) newUsncYN;
 
 /**
  * (no documentation provided)
  */
-- (NSString *) facebookStatus;
+- (NSArray *) auto_publishing;
 
 /**
  * (no documentation provided)
  */
-- (void) setFacebookStatus: (NSString *) newFacebookStatus;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) twitterStatus;
-
-/**
- * (no documentation provided)
- */
-- (void) setTwitterStatus: (NSString *) newTwitterStatus;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) foursquareStatus;
-
-/**
- * (no documentation provided)
- */
-- (void) setFoursquareStatus: (NSString *) newFoursquareStatus;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) tumblrStatus;
-
-/**
- * (no documentation provided)
- */
-- (void) setTumblrStatus: (NSString *) newTumblrStatus;
+- (void) setAuto_publishing: (NSArray *) newAuto_publishing;
 @end /* interface ENUNCIATENS0TSSocialSettingsObj */
 
 #endif /* DEF_ENUNCIATENS0TSSocialSettingsObj_H */
@@ -1279,106 +1246,29 @@
 @interface ENUNCIATENS0TSSocialAutoPubSettingsObj : NSObject <EnunciateXML>
 {
   @private
-    NSString *_favFbFlag;
-    NSString *_favTwitterFlag;
-    NSString *_favTumblrFlag;
-    NSString *_tipsFbFlag;
-    NSString *_tipsTwitterFlag;
-    NSString *_tipsTumblrFlag;
-    NSString *_recoFbFlag;
-    NSString *_recoTwitterFlag;
-    NSString *_recoTumblrFlag;
+    NSString *_usncORDER;
+    NSString *_usncYN;
 }
 
 /**
  * (no documentation provided)
  */
-- (NSString *) favFbFlag;
+- (NSString *) usncORDER;
 
 /**
  * (no documentation provided)
  */
-- (void) setFavFbFlag: (NSString *) newFavFbFlag;
+- (void) setUsncORDER: (NSString *) newUsncORDER;
 
 /**
  * (no documentation provided)
  */
-- (NSString *) favTwitterFlag;
+- (NSString *) usncYN;
 
 /**
  * (no documentation provided)
  */
-- (void) setFavTwitterFlag: (NSString *) newFavTwitterFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) favTumblrFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setFavTumblrFlag: (NSString *) newFavTumblrFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) tipsFbFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setTipsFbFlag: (NSString *) newTipsFbFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) tipsTwitterFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setTipsTwitterFlag: (NSString *) newTipsTwitterFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) tipsTumblrFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setTipsTumblrFlag: (NSString *) newTipsTumblrFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) recoFbFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecoFbFlag: (NSString *) newRecoFbFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) recoTwitterFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecoTwitterFlag: (NSString *) newRecoTwitterFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) recoTumblrFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecoTumblrFlag: (NSString *) newRecoTumblrFlag;
+- (void) setUsncYN: (NSString *) newUsncYN;
 @end /* interface ENUNCIATENS0TSSocialAutoPubSettingsObj */
 
 #endif /* DEF_ENUNCIATENS0TSSocialAutoPubSettingsObj_H */

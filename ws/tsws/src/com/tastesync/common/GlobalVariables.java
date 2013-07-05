@@ -82,12 +82,4 @@ public class GlobalVariables {
 	
 	public static String RESTAURANT_ULTIMATE_SOURCE_NAME = "foursquare for iPhone";
 	
-	public static String SOCIAL_FACEBOOK 	= "Facebook";
-	public static String SOCIAL_TWITTER 	= "Twitter";
-	public static String SOCIAL_FOURSQUARE 	= "FourSquare";
-	public static String SOCIAL_TUMBLR 		= "Tumblr";
-	public static String SOCIAL_FAV 		= "My Favorite Spots";
-	public static String SOCIAL_RECO 		= "Recommendations I give to others";
-	public static String SOCIAL_TIP 		= "My Tips";
-	
 }
