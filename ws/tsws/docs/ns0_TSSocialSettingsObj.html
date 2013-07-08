@@ -68,14 +68,15 @@
                 <li><a href="ns0_TSPhotoObj.html">TSPhotoObj</a></li>
                 <li><a href="ns0_TSRestaurantDetailsObj.html">TSRestaurantDetailsObj</a></li>
                 <li><a href="ns0_TSSuccessObj.html">TSSuccessObj</a></li>
-                <li><a href="ns0_TSRecommendersDetailsObj.html">TSRecommendersDetailsObj</a></li>
                 <li><a href="ns0_TSErrorObj.html">TSErrorObj</a></li>
+                <li><a href="ns0_TSRecommendersDetailsObj.html">TSRecommendersDetailsObj</a></li>
                 <li><a href="ns0_TSSocialAutoPubSettingsObj.html">TSSocialAutoPubSettingsObj</a></li>
                 <li><a href="ns0_TSSocialSettingsObj.html">TSSocialSettingsObj</a></li>
                 <li><a href="ns0_TSListFacebookUserDataObj.html">TSListFacebookUserDataObj</a></li>
                 <li><a href="ns0_TSNotificationSettingsObj.html">TSNotificationSettingsObj</a></li>
                 <li><a href="ns0_TSPrivacySettingsObj.html">TSPrivacySettingsObj</a></li>
                 <li><a href="ns0_TSCurrentRecommendedRestaurantDetailsObj.html">TSCurrentRecommendedRestaurantDetailsObj</a></li>
+                <li><a href="ns0_TSListNotificationSettingsObj.html">TSListNotificationSettingsObj</a></li>
               </ul>
             </li>
           </ul>
@@ -105,7 +106,7 @@
         </tr>
         <tr>
           <td>
-            tsSocialAutoPubSettingsObj (<a href="ns0_TSSocialAutoPubSettingsObj.html">TSSocialAutoPubSettingsObj</a>)
+            usncORDER (string)
           </td>
           <td>0/1</td>
           <td>
@@ -113,7 +114,7 @@
         </tr>
         <tr>
           <td>
-            email (string)
+            usncYN (string)
           </td>
           <td>0/1</td>
           <td>
@@ -121,33 +122,9 @@
         </tr>
         <tr>
           <td>
-            facebookStatus (string)
+            auto_publishing (<a href="ns0_TSSocialAutoPubSettingsObj.html">TSSocialAutoPubSettingsObj</a>)
           </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            twitterStatus (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            foursquareStatus (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            tumblrStatus (string)
-          </td>
-          <td>0/1</td>
+          <td>0/unbounded</td>
           <td>
           </td>
         </tr>
@@ -161,49 +138,25 @@
           <th>description</th>
         </tr>
         <tr>
-          <td>tsSocialAutoPubSettingsObj</td>
+          <td>usncORDER</td>
           <td>
-              tsSocialAutoPubSettingsObj (<a href="ns0_TSSocialAutoPubSettingsObj.html">TSSocialAutoPubSettingsObj</a>)
+              usncORDER (string)
           </td>
           <td>
           </td>
         </tr>
         <tr>
-          <td>email</td>
+          <td>usncYN</td>
           <td>
-              email (string)
+              usncYN (string)
           </td>
           <td>
           </td>
         </tr>
         <tr>
-          <td>facebookStatus</td>
+          <td>auto_publishing</td>
           <td>
-              facebookStatus (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>twitterStatus</td>
-          <td>
-              twitterStatus (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>foursquareStatus</td>
-          <td>
-              foursquareStatus (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>tumblrStatus</td>
-          <td>
-              tumblrStatus (string)
+              array of auto_publishing (<a href="ns0_TSSocialAutoPubSettingsObj.html">TSSocialAutoPubSettingsObj</a>)
           </td>
           <td>
           </td>

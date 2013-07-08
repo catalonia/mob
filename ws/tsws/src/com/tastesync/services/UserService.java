@@ -8,9 +8,9 @@ import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
-import com.tastesync.model.objects.TSNotificationSettingsObj;
-import com.tastesync.model.objects.TSPrivacySettingsObj;
-import com.tastesync.model.objects.TSSocialSettingsObj;
+import com.tastesync.model.objects.TSListNotificationSettingsObj;
+import com.tastesync.model.objects.TSListPrivacySettingsObj;
+import com.tastesync.model.objects.TSListSocialSettingObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
@@ -150,22 +150,29 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/settings/privacy")
+    @POST
+    @Path("/showSettingsPrivacy")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showSettingsPrivacy(@QueryParam("userId")
+    public Response showSettingsPrivacy(@FormParam("userId")
     String userId) {
-        TSPrivacySettingsObj[] tsPrivacySettingsObj = null;
+    	TSListPrivacySettingsObj tsPrivacySettingsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
             tsPrivacySettingsObj = userBo.showSettingsPrivacy(userId);
-
-            return Response.status(status).entity(tsPrivacySettingsObj).build();
+            if(tsPrivacySettingsObj != null)
+            	return Response.status(status).entity(tsPrivacySettingsObj).build();
+            else
+            {
+            	status = TSResponseStatusCode.ERROR.getValue();
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                return Response.status(status).entity(tsErrorObj).build();
+            }
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -191,42 +198,28 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/settings/changeprivacy")
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    @Path("/submitSettingsPrivacy")
+    @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response updateSettingsPrivacy(@FormParam("userId")
-    String userId, @FormParam("id")
-    String idList, @FormParam("flag")
-    String flagList) {
+    public Response updateSettingsPrivacy(TSListPrivacySettingsObj privacySettingObj) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
         // BO - DO- DBQuery
         try {
-            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            idList = CommonFunctionsUtil.converStringAsNullIfNeeded(idList);
-            flagList = CommonFunctionsUtil.converStringAsNullIfNeeded(flagList);
-
-            if ((idList != null) && (flagList != null)) {
-                if (idList.length() != flagList.length()) {
-                    throw new TasteSyncException(
-                        "Numbers of Input data for idList.length()" +
-                        idList.length() + " flagList.length()" +
-                        flagList.length() + " do not match.");
-                }
-            }
-
-            userBo.updateSettingsPrivacy(userId,
-                CommonFunctionsUtil.convertStringListAsArrayList(idList),
-                CommonFunctionsUtil.convertStringListAsArrayList(flagList));
-
+            responseDone = userBo.updateSettingsPrivacy(privacySettingObj);
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
-
-            responseDone = true;
-
-            return Response.status(status).entity(tsSuccessObj).build();
+            tsSuccessObj.setSuccessMsg("Settings success!");
+            if(responseDone)
+            	return Response.status(status).entity(tsSuccessObj).build();
+            else
+            {
+            	TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                return Response.status(status).entity(tsErrorObj).build();
+            }
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -252,16 +245,15 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/settings/notifications")
+    @POST
+    @Path("/showSettingsNotifications")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showSettingsNotifications(
-        @QueryParam("userId")
-    String userId) {
-        TSNotificationSettingsObj[] tsNotificationSettingsObj = null;
+        @FormParam("userId") String userId) {
+        TSListNotificationSettingsObj tsNotificationSettingsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
@@ -295,48 +287,31 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/settings/changenotifications")
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    @Path("/submitSettingsNotifications")
+    @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response updateSettingsNotifications(
-        @FormParam("userId")
-    String userId, @FormParam("id")
-    String idList, @FormParam("phoneFlag")
-    String phoneFlagList, @FormParam("emailFlag")
-    String emailFlagList) {
+    public Response updateSettingsNotifications(TSListNotificationSettingsObj notificationSetting) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
         // BO - DO- DBQuery
         try {
-            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            idList = CommonFunctionsUtil.converStringAsNullIfNeeded(idList);
-            phoneFlagList = CommonFunctionsUtil.converStringAsNullIfNeeded(phoneFlagList);
-            emailFlagList = CommonFunctionsUtil.converStringAsNullIfNeeded(emailFlagList);
 
-            if ((idList != null) && (phoneFlagList != null)) {
-                if ((idList.length() != phoneFlagList.length()) &&
-                        (idList.length() != emailFlagList.length())) {
-                    throw new TasteSyncException(
-                        "Numbers of Input data for idList.length()" +
-                        idList.length() + " phoneFlagList.length()" +
-                        phoneFlagList.length() + " emailFlagList.length()" +
-                        emailFlagList.length() + " do not match.");
-                }
-            }
-
-            userBo.updateSettingsNotifications(userId,
-                CommonFunctionsUtil.convertStringListAsArrayList(idList),
-                CommonFunctionsUtil.convertStringListAsArrayList(phoneFlagList),
-                CommonFunctionsUtil.convertStringListAsArrayList(emailFlagList));
+            
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
-
-            responseDone = true;
-
-            return Response.status(status).entity(tsSuccessObj).build();
+            tsSuccessObj.setSuccessMsg("Settings Success!");
+            responseDone = userBo.updateSettingsNotifications(notificationSetting);;
+            if(responseDone)
+            	return Response.status(status).entity(tsSuccessObj).build();
+            else
+            {
+            	 TSErrorObj tsErrorObj = new TSErrorObj();
+                 tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                 return Response.status(status).entity(tsErrorObj).build();
+            }
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -363,14 +338,14 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("showSettingsSocial")
+    @Path("/showSettingsSocial")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showSettingsSocial(@FormParam("userId")
     String userId) {
-        TSSocialSettingsObj tsSocialSettingsObj = null;
+    	TSListSocialSettingObj tsSocialSettingsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
@@ -405,23 +380,48 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("submitOptionsAutoPublish")
+    @Path("/submitSettingsSocial")
     @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response updateSettingsAutoPublishSettings(TSSocialSettingsObj social_setting_obj) throws TasteSyncException 
+    public Response updateSettingsAutoPublishSettings(TSListSocialSettingObj social_setting_obj) throws TasteSyncException 
     {
     	return userBo.updateSettingsAutoPublishSettings(social_setting_obj);
     }
+    
+    @POST
+    @Path("/submitSettingsContactUs")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response submitSettingscontactUs(@FormParam("userId") String userId,
+    										@FormParam("Contact_Order") String order,
+    										@FormParam("Contact_Desc") String desc) throws TasteSyncException
+    {
+    	return userBo.submitSettingscontactUs(userId, order, desc);
+    }
+    
+    @GET
+    @Path("/showAboutTastesync")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showAboutTastesync() throws TasteSyncException
+    {
+    	return userBo.showAboutTastesync();
+    }
 
+    
     @GET
     @Path("/userdetails")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showUserDetail(@QueryParam("userid")
+    public Response showUserDetail(@QueryParam("userId")
     String userId) {
         TSUserObj tsUserObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -630,13 +630,13 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/profile/following")
+    @POST
+    @Path("/showProfileFollowing")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showProfileFollowing(@QueryParam("userId")
+    public Response showProfileFollowing(@FormParam("userId")
     String userId) {
         List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -671,13 +671,13 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/profile/followers")
+    @POST
+    @Path("/showProfileFollowers")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showProfileFollowers(@QueryParam("userId")
+    public Response showProfileFollowers(@FormParam("userId")
     String userId) {
         List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -720,7 +720,7 @@ public class UserService extends BaseService {
     })
     public Response showMyProfileFriends(@QueryParam("userId")
     String userId) {
-        List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
+        List<TSUserObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
@@ -761,7 +761,7 @@ public class UserService extends BaseService {
     })
     public Response showProfileFriends(@QueryParam("userId")
     String userId) {
-        List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
+        List<TSUserObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
@@ -836,13 +836,13 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/profile/aboutme")
+    @Path("/submitMyProfileAboutMe")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitMyProfileAboutMe(@FormParam("userId")
-    String userId, @FormParam("aboutMeText")
+    String userId, @FormParam("Content")
     String aboutMeText) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -851,14 +851,18 @@ public class UserService extends BaseService {
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
             aboutMeText = CommonFunctionsUtil.converStringAsNullIfNeeded(aboutMeText);
-
-            userBo.submitMyProfileAboutMe(userId, aboutMeText);
-
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
-
-            responseDone = true;
-
-            return Response.status(status).entity(tsSuccessObj).build();
+            tsSuccessObj.setSuccessMsg("Updating succesfully!");
+            responseDone = userBo.submitMyProfileAboutMe(userId, aboutMeText);
+            if(responseDone)
+            	return Response.status(status).entity(tsSuccessObj).build();
+            else
+            {
+            	status = TSResponseStatusCode.ERROR.getValue();
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                return Response.status(status).entity(tsErrorObj).build();
+            }
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();

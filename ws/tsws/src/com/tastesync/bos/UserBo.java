@@ -4,9 +4,9 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
-import com.tastesync.model.objects.TSNotificationSettingsObj;
-import com.tastesync.model.objects.TSPrivacySettingsObj;
-import com.tastesync.model.objects.TSSocialSettingsObj;
+import com.tastesync.model.objects.TSListNotificationSettingsObj;
+import com.tastesync.model.objects.TSListPrivacySettingsObj;
+import com.tastesync.model.objects.TSListSocialSettingObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
@@ -29,31 +29,34 @@ public interface UserBo {
 
     void insertUsers(TSUserObj tsUserObj) throws TasteSyncException;
 
-    void updateSettingsPrivacy(String userId, String[] idList, String[] flagList)
+    boolean updateSettingsPrivacy(TSListPrivacySettingsObj privacySettingObj)
         throws TasteSyncException;
 
-    TSPrivacySettingsObj[] showSettingsPrivacy(String userId)
+    TSListPrivacySettingsObj showSettingsPrivacy(String userId)
         throws TasteSyncException;
 
-    void updateSettingsNotifications(String userId, String[] idList,
-        String[] phoneFlagList, String[] emailFlagList)
+    boolean updateSettingsNotifications(TSListNotificationSettingsObj notificationSetting)
         throws TasteSyncException;
 
-    TSNotificationSettingsObj[] showSettingsNotifications(String userId)
+    TSListNotificationSettingsObj showSettingsNotifications(String userId)
         throws TasteSyncException;
 
-    TSSocialSettingsObj showSettingsSocial(String userId)
+    TSListSocialSettingObj showSettingsSocial(String userId)
         throws TasteSyncException;
 
-    Response updateSettingsAutoPublishSettings(TSSocialSettingsObj social_setting_obj)
+    Response updateSettingsAutoPublishSettings(TSListSocialSettingObj social_setting_obj)
         throws TasteSyncException;
 
+    Response submitSettingscontactUs(String userId, String order, String desc) throws TasteSyncException;
+    
+    Response showAboutTastesync() throws TasteSyncException;
+    
     TSUserProfileObj showMyProfileHome(String userId) throws TasteSyncException;
 
     TSUserProfileObj showUserProfileHome(String userId, String viewerUserId)
         throws TasteSyncException;
 
-    void submitMyProfileAboutMe(String userId, String aboutMeText)
+    boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException;
 
     void submitUserReport(String userId, String reportText,
@@ -65,10 +68,10 @@ public interface UserBo {
     List<TSFacebookUserDataObj> showProfileFollowers(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj> showMyProfileFriends(String userId)
+    List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj> showProfileFriends(String userId)
+    List<TSUserObj> showProfileFriends(String userId)
         throws TasteSyncException;
 
     List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)

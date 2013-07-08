@@ -55,7 +55,7 @@ public interface UserQueries extends TSDBCommonQueries {
         "?" + // "users.USER_FB_ID",
         ")";
     public static String USER_LOGIN_SELECT_SQL = "SELECT " +
-    		" users.Auto_User_ID," + " users.USER_ID," + " users.TS_USER_ID," + " users.TS_USER_EMAIL," +
+    		" users.USER_ID," + " users.TS_USER_ID," + " users.TS_USER_EMAIL," +
             " users.TS_USER_PW," + " users.TS_FIRST_NAME," +
             " users.TS_LAST_NAME," + " users.MAX_INVITES," +
             " users.USER_CREATED_INITIAL_DATETIME," + " users.USER_POINTS," +
@@ -72,11 +72,12 @@ public interface UserQueries extends TSDBCommonQueries {
     	"AND CURRENT_STATUS = ?";
     public static String USER_FBID_SELECT_SQL = "SELECT * FROM users WHERE User_FB_ID = ? AND CURRENT_STATUS = ?";
     public static String USER_FBID_UPDATE_SQL = "UPDATE users SET USER_FB_ID = ? WHERE USER_ID = ?";
-    public static String USER_ID_UPDATE_SQL = "UPDATE users SET USER_ID = ?"+ ", TS_USER_ID = ?" +" WHERE Auto_User_ID = ?";
+//    public static String USER_ID_UPDATE_SQL = "UPDATE users SET USER_ID = ?"+ ", TS_USER_ID = ?" +" WHERE Auto_User_ID = ?";
     public static String USER_FACEBOOK_INSERT_SQL = "INSERT INTO users " + "(TS_USER_EMAIL, " + 
     	"USER_CREATED_INITIAL_DATETIME, " + "TS_FIRST_NAME, " + "TS_LAST_NAME, " + 
-    	"USER_GENDER, " + "USER_CITY_ID, " + "USER_CITY, " + "USER_STATE, " + "USER_COUNTRY) " + 
-    	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    	"USER_GENDER, " + "USER_CITY_ID, " + /*"USER_CITY, " +*/ "USER_STATE, " + "USER_COUNTRY," + " USER_FB_ID," + "USER_ID," + "TS_USER_ID)" +
+    	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static String USER_ABOUT_UPDATE_SQL = "UPDATE users SET ABOUT = ? WHERE USER_ID = ?";
     
     //FACEBOOK_USER_DATA
     public static String FACEBOOK_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID = ?";
@@ -95,7 +96,7 @@ public interface UserQueries extends TSDBCommonQueries {
     
     //USERS_LOG
     public static String USER_LOGIN_INSERT_SQL = "INSERT INTO users_log (USER_ID, LOGIN_DATETIME, " +
-    	"USERS_CREATED_LATEST_DATETIME) VALUES (?, ?, ?)";
+    	"USERS_CREATED_LATEST_DATETIME, LOG_ID) VALUES (?, ?, ?, ?)";
     public static String USERLOG_EMAIL_SELECT_SQL = "SELECT * FROM users_log WHERE USER_ID = ?";
     public static String USER_LOGIN_UPDATE_SQL = "UPDATE users_log " + "SET LOGIN_DATETIME = ? " + 
         	"WHERE USER_ID = ?";
@@ -127,8 +128,8 @@ public interface UserQueries extends TSDBCommonQueries {
         "SELECT `user_usnc`.`usnc_yn`" + "FROM   user_usnc " +
         "WHERE  `user_usnc`.`user_id` = ? " + "       AND -- userId " +
         "       `user_usnc`.`usnc_id` = ? " + "AND `usg_usnc_ap`.`AP_ID` = ?";
-    public static String USER_USNC_UPDATE_SQL = "UPDATE user_usnc SET USNC_ID = ?, USNC_YN = ? WHERE USER_ID = ?";
-    public static String USER_USNC_INSERT_SQL = "INSERT INTO user_usnc (USNC_ID, USNC_YN, USER_ID) value (?, ?, ?)";
+    public static String USER_USNC_UPDATE_SQL = "UPDATE user_usnc SET USNC_YN = ? WHERE USER_ID = ? AND USNC_ID = ?";
+    public static String USER_USNC_INSERT_SQL = "INSERT INTO user_usnc (USNC_ID, USNC_YN, USER_ID) VALUES (?, ?, ?)";
     public static String USER_USNC_SELECT_SQL = "SELECT * FROM user_usnc WHERE USER_ID = ?";
     
     //USG_USNC_AP
@@ -139,10 +140,10 @@ public interface UserQueries extends TSDBCommonQueries {
         "       `usg_usnc_ap`.`ap_id` = ? " +
         "       AND -- autoPublishingId " +
         "       `usg_usnc_ap`.`usnc_id` = ?-- socialNetworkId " + "";
-    public static String USER_SOCIAL_APID_SELECT_SQL = "SELECT * FROM auto_publishing WHERE AP_DESC = ?";
+    public static String USER_SOCIAL_APID_SELECT_SQL = "SELECT * FROM auto_publishing WHERE AP_ORDER = ?";
     public static String USER_SOCIAL_AP_SELECT_SQL = "SELECT * FROM auto_publishing";
-    public static String USER_SOCIAL_APID_UPDATE_SQL = "UPDATE usg_usnc_ap SET USNC_ID = ?" + ", AP_ID = ?, USNC_YN = ?" + " WHERE USER_ID = ?";
-    public static String USER_SOCIAL_APID_INSERT_SQL = "INSERT INTO usg_usnc_ap (USNC_ID, AP_ID, USNC_YN, USER_ID) value (?, ?, ?, ?)";
+    public static String USER_SOCIAL_APID_UPDATE_SQL = "UPDATE usg_usnc_ap SET USNC_YN = ?" + " WHERE USER_ID = ? AND USNC_ID = ? AND AP_ID = ?";
+    public static String USER_SOCIAL_APID_INSERT_SQL = "INSERT INTO usg_usnc_ap (USNC_ID, AP_ID, USNC_YN, USER_ID) VALUES (?, ?, ?, ?)";
     public static String USER_SOCIAL_APID_USERID_SELECT_SQL = "SELECT * FROM usg_usnc_ap WHERE USER_ID = ?";
     
     //USER_NOTIFICATION_SETTINGS
@@ -158,6 +159,16 @@ public interface UserQueries extends TSDBCommonQueries {
         "       `user_notification_settings`.`ns_email_flag` = ? " +
         "WHERE  `user_notification_settings`.`user_id` = ? " +
         "       AND `user_notification_settings`.`nsid` = ? ";
+    public static String USER_NOTIFICATION_SETTINGS_ID_SELECT_SQL = "SELECT * FROM user_notification_settings WHERE USER_ID = ?";
+    public static String USER_NOTIFICATION_SETTINGS_INSERT_SQL = "INSERT INTO user_notification_settings (USER_ID, NSID, NS_MOBILE_FLAG, NS_EMAIL_FLAG) VALUES (?, ?, ?, ?)";
+    public static String USER_NOTIFICATION_SETTINGS_ID_UPDATE_SQL = "UPDATE user_notification_settings SET NS_MOBILE_FLAG = ?, NS_EMAIL_FLAG = ? WHERE USER_ID = ? AND NSID = ?";
+    
+    //NOTIFICATION_DESCRIPTOR
+    public static String NOTIFICATION_DESCRIPTOR_SELECT_SQL = "SELECT * FROM notification_descriptor WHERE NSID_ORDER = ?";
+    
+  //ABOUT_TASTESYNC_ELEMENT_DESCRIPTOR
+    public static String ABOUT_TASTESYNC_ELEMENT_DESCRIPTOR_SELECT_SQL = "SELECT * FROM about_tastesync_element_descriptor WHERE ID_ORDER = ?";
+    public static String ABOUT_TASTESYNC_ELEMENT_ALL_DESCRIPTOR_SELECT_SQL = "SELECT * FROM about_tastesync_element_descriptor";
     
     //USER_PRIVACY_SETTINGS
     public static String USER_PRIVACY_SETTINGS_SELECT_SQL = "" +
@@ -170,6 +181,16 @@ public interface UserQueries extends TSDBCommonQueries {
         "SET    `user_privacy_settings`.`privacy_flag` = ? " +
         "WHERE  `user_privacy_settings`.`user_id` = ? " +
         "       `user_privacy_settings`.`privacy_id` = ?" + "";
+    public static String USER_PRIVACY_SETTINGS_ID_SELECT_SQL = "SELECT * FROM user_privacy_settings WHERE USER_ID = ?";
+    public static String USER_PRIVACY_SETTINGS_INSERT_SQL = "INSERT INTO user_privacy_settings (USER_ID, PRIVACY_ID, PRIVACY_FLAG) VALUES (?, ?, ?)";
+    public static String USER_PRIVACY_SETTINGS_ID_UPDATE_SQL = "UPDATE user_privacy_settings SET PRIVACY_FLAG = ?WHERE USER_ID = ? AND PRIVACY_ID = ?";
+    
+    //PRIVACY_DESCIPTOR
+    public static String PRIVACY_DESCRIPTOR_SELECT_SQL = "SELECT * FROM privacy_descriptor WHERE PRIVACY_ID_ORDER = ?";
+    public static String PRIVACY_DESCRIPTOR_ORDER_SELECT_SQL = "SELECT * FROM privacy_descriptor WHERE PRIVACY_ID = ?";
+    
+    //CONTACT_SETTINGS_DESCRIPTOR
+    public static String CONTACT_SETTINGS_DESCRIPTOR_SELECT_SQL = "SELECT * FROM contact_settings_descriptor WHERE CONTACT_ID_ORDER = ?";
     
     //USER_REPORTED_INFO
     public static String USER_REPORTED_INFO_INSERT_SQL = "" +
@@ -182,6 +203,12 @@ public interface UserQueries extends TSDBCommonQueries {
         "?," + "?," + "?," + "?," + "?" + ")";
     
     //USER_SOCIAL_NETWORK_CONNECTION
-    public static String USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL = "SELECT * FROM user_social_network_connection WHERE USNC_DESC = ?";
+    public static String USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL = "SELECT * FROM user_social_network_connection WHERE USNC_ORDER = ?";
     public static String USER_SOCIAL_NETWORK_CONNECTION_SELECT_SQL = "SELECT * FROM user_social_network_connection";
-}
+
+    //USER_CONTACT_SETTINGS
+    public static String USER_CONTACT_SETTINGS_INSERT_SQL = "INSERT INTO user_contact_settings(USER_ID, CONTACT_ID, CONTACT_DETAILS_DESC, CONTACT_DATETIME) VALUES (?, ?, ?, ?)";
+    
+ 	public static String USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWEE_USER_ID FROM user_follow_data WHERE FOLLOWER_USER_ID = ?))";
+    public static String USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWER_USER_ID FROM user_follow_data WHERE FOLLOWEE_USER_ID = ?))";
+    }
