@@ -56,7 +56,7 @@ public interface UserBo {
     TSUserProfileObj showUserProfileHome(String userId, String viewerUserId)
         throws TasteSyncException;
 
-    void submitMyProfileAboutMe(String userId, String aboutMeText)
+    boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException;
 
     void submitUserReport(String userId, String reportText,
@@ -68,10 +68,10 @@ public interface UserBo {
     List<TSFacebookUserDataObj> showProfileFollowers(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj> showMyProfileFriends(String userId)
+    List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj> showProfileFriends(String userId)
+    List<TSUserObj> showProfileFriends(String userId)
         throws TasteSyncException;
 
     List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)

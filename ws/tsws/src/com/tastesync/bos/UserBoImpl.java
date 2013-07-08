@@ -103,9 +103,9 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public void submitMyProfileAboutMe(String userId, String aboutMeText)
+    public boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException {
-        userDao.submitMyProfileAboutMe(userId, aboutMeText);
+         return userDao.submitMyProfileAboutMe(userId, aboutMeText);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public List<TSFacebookUserDataObj> showMyProfileFriends(String userId)
+    public List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException {
         return userDao.showMyProfileFriends(userId);
     }
@@ -146,7 +146,7 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public List<TSFacebookUserDataObj> showProfileFriends(String userId)
+    public List<TSUserObj> showProfileFriends(String userId)
         throws TasteSyncException {
         return userDao.showProfileFriends(userId);
     }

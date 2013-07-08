@@ -1322,17 +1322,40 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public void submitMyProfileAboutMe(String userId, String aboutMeText)
+    public boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException {
-        // TODO Auto-generated method stub
+    	
+    	boolean ret = true;
+    	MySQL mySQL = new MySQL();
+    	TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        if(mySQL.getUserInformation(userId) == null)
+        	ret = false;
+        else
+        {
+	        try {
+	            connection = tsDataSource.getConnection();
+	            tsDataSource.begin();
+	            System.out.println("UserQueries.USER_ABOUT_UPDATE_SQL=" +
+	                UserQueries.USER_ABOUT_UPDATE_SQL);
+	            statement = connection.prepareStatement(UserQueries.USER_ABOUT_UPDATE_SQL);
+	            statement.setString(1, aboutMeText);
+	            statement.setString(2, userId);
+	            statement.executeUpdate();
+	            ret = true;
+	        }catch(SQLException e)
+	        {
+	        	ret = false;
+	        	e.printStackTrace();
+	        }
+	        finally{
+	        	tsDataSource.close();
+	        }
+        }
+        return ret;
     }
 
-    @Override
-    public List<TSFacebookUserDataObj> showProfileFollowing(String userId)
-        throws TasteSyncException {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 	@Override
 	public void followUserStatusChange(String followeeUserId,
@@ -1341,17 +1364,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		
 	}
 
-	@Override
-	public List<TSFacebookUserDataObj> showProfileFollowers(String userId)
-			throws TasteSyncException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public List<TSFacebookUserDataObj> showMyProfileFriends(String userId)
+	public List<TSUserObj> showMyProfileFriends(String userId)
 			throws TasteSyncException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -1370,10 +1387,45 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<TSFacebookUserDataObj> showProfileFriends(String userId)
+	public List<TSUserObj> showProfileFriends(String userId)
 			throws TasteSyncException {
-		// TODO Auto-generated method stub
-		return null;
+		List<TSUserObj> list_data = new ArrayList<TSUserObj>();
+		List<String> dataID = new ArrayList<String>();
+		MySQL mySQL = new MySQL();
+		
+    	TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+	    ResultSet resultset = null;
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.USER_SELECT_SQL=" +
+                UserQueries.USER_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.USER_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset =statement.executeQuery();
+        	while(resultset.next())
+        	{
+        		dataID.add(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_friend_tastesync.FRIEND_ID")));
+        	}
+        	tsDataSource.close();
+        	
+        	int count = 0;
+        	while(dataID.size() != count)
+        	{
+        		TSUserObj obj = mySQL.getUserInformation(dataID.get(count));
+        		list_data.add(obj);
+        		count++;
+        	}
+        }catch(SQLException e)
+        {
+        	e.printStackTrace();
+        }
+        finally{
+        }
+		
+		return list_data;
 	}
 
 	@Override
@@ -1383,5 +1435,66 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	 public List<TSFacebookUserDataObj> showProfileFollowing(String userId)
+	   throws TasteSyncException {
+		ArrayList<TSFacebookUserDataObj> fbUsers = null;
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
 
+		try {
+			 connection = tsDataSource.getConnection();
+			 tsDataSource.begin();
+			 System.out.println("UserQueries.USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL="
+		       + UserQueries.USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL);
+			 statement = connection.prepareStatement(UserQueries.USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL);
+			 statement.setString(1, userId);
+			 resultset = statement.executeQuery();
+			 fbUsers = new ArrayList<TSFacebookUserDataObj>();
+			 while (resultset.next()) {
+				 TSFacebookUserDataObj user = new TSFacebookUserDataObj();
+				 MySQL.mapResultsetRowToTSFacebookVO(user, resultset);
+				 fbUsers.add(user);
+			 }
+		 } catch (Exception e) {
+			 e.printStackTrace();
+		 } finally {
+			 tsDataSource.close();
+		 }
+		 return fbUsers;
+	}
+
+	 @Override
+	 public List<TSFacebookUserDataObj> showProfileFollowers(String userId)
+	   throws TasteSyncException {
+		 ArrayList<TSFacebookUserDataObj> fbUsers = null;
+		 TSDataSource tsDataSource = TSDataSource.getInstance();
+		 Connection connection = null;
+		 PreparedStatement statement = null;
+		 ResultSet resultset = null;
+
+		 try {
+			 connection = tsDataSource.getConnection();
+			 tsDataSource.begin();
+			 System.out.println("UserQueries.USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL="
+					 + UserQueries.USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL);
+			 statement = connection.prepareStatement(UserQueries.USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL);
+			 statement.setString(1, userId);
+			 resultset = statement.executeQuery();
+			 fbUsers = new ArrayList<TSFacebookUserDataObj>();
+			 while (resultset.next()) {
+				 TSFacebookUserDataObj user = new TSFacebookUserDataObj();
+				 MySQL.mapResultsetRowToTSFacebookVO(user, resultset);
+				 fbUsers.add(user);
+			 }
+		 } catch (Exception e) {
+			 e.printStackTrace();
+		 } finally {
+			 tsDataSource.close();
+		 }
+		 return fbUsers;
+	 }
 }

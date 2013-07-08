@@ -62,10 +62,10 @@ public interface UserDao {
     List<TSFacebookUserDataObj> showProfileFollowers(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj> showMyProfileFriends(String userId)
+    List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj>  showProfileFriends(String userId) throws TasteSyncException;
+    List<TSUserObj>  showProfileFriends(String userId) throws TasteSyncException;
     
     List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)
         throws TasteSyncException;
@@ -73,7 +73,7 @@ public interface UserDao {
     void followUserStatusChange(String followeeUserId, String followerUserId,
         String statusFlag) throws TasteSyncException;
 
-    void submitMyProfileAboutMe(String userId, String aboutMeText)
+    boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException;
     
     void submitTrustedFriendStatusChange(String userId, String viewerUserId,

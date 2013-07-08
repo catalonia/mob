@@ -587,14 +587,12 @@ public class MySQL {
 	}
         public static void mapResultsetRowToTSUserVO(TSUserObj tsUserObj,
                 ResultSet resultset) throws SQLException {
-                tsUserObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_ID")));
+                tsUserObj.setUserId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.USER_ID")));
                 tsUserObj.setTsUserId(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("users.TS_USER_ID")));
                 tsUserObj.setTsUserEmail(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("users.TS_USER_EMAIL")));
-                tsUserObj.setTsUserPw(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.TS_USER_PW")));
+                //tsUserObj.setTsUserPw(CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.TS_USER_PW")));
                 tsUserObj.setTsFirstName(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("users.TS_FIRST_NAME")));
                 tsUserObj.setTsLastName(CommonFunctionsUtil.getModifiedValueString(

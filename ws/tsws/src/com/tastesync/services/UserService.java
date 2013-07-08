@@ -413,6 +413,7 @@ public class UserService extends BaseService {
     {
     	return userBo.showAboutTastesync();
     }
+
     
     @GET
     @Path("/userdetails")
@@ -629,13 +630,13 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/profile/following")
+    @POST
+    @Path("/showProfileFollowing")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showProfileFollowing(@QueryParam("userId")
+    public Response showProfileFollowing(@FormParam("userId")
     String userId) {
         List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -670,13 +671,13 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/profile/followers")
+    @POST
+    @Path("/showProfileFollowers")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showProfileFollowers(@QueryParam("userId")
+    public Response showProfileFollowers(@FormParam("userId")
     String userId) {
         List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -719,7 +720,7 @@ public class UserService extends BaseService {
     })
     public Response showMyProfileFriends(@QueryParam("userId")
     String userId) {
-        List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
+        List<TSUserObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
@@ -760,7 +761,7 @@ public class UserService extends BaseService {
     })
     public Response showProfileFriends(@QueryParam("userId")
     String userId) {
-        List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
+        List<TSUserObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
@@ -835,13 +836,13 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/profile/aboutme")
+    @Path("/submitMyProfileAboutMe")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitMyProfileAboutMe(@FormParam("userId")
-    String userId, @FormParam("aboutMeText")
+    String userId, @FormParam("Content")
     String aboutMeText) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -850,14 +851,18 @@ public class UserService extends BaseService {
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
             aboutMeText = CommonFunctionsUtil.converStringAsNullIfNeeded(aboutMeText);
-
-            userBo.submitMyProfileAboutMe(userId, aboutMeText);
-
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
-
-            responseDone = true;
-
-            return Response.status(status).entity(tsSuccessObj).build();
+            tsSuccessObj.setSuccessMsg("Updating succesfully!");
+            responseDone = userBo.submitMyProfileAboutMe(userId, aboutMeText);
+            if(responseDone)
+            	return Response.status(status).entity(tsSuccessObj).build();
+            else
+            {
+            	status = TSResponseStatusCode.ERROR.getValue();
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                return Response.status(status).entity(tsErrorObj).build();
+            }
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();

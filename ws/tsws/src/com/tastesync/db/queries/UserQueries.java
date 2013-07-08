@@ -77,6 +77,7 @@ public interface UserQueries extends TSDBCommonQueries {
     	"USER_CREATED_INITIAL_DATETIME, " + "TS_FIRST_NAME, " + "TS_LAST_NAME, " + 
     	"USER_GENDER, " + "USER_CITY_ID, " + /*"USER_CITY, " +*/ "USER_STATE, " + "USER_COUNTRY," + " USER_FB_ID," + "USER_ID," + "TS_USER_ID)" +
     	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static String USER_ABOUT_UPDATE_SQL = "UPDATE users SET ABOUT = ? WHERE USER_ID = ?";
     
     //FACEBOOK_USER_DATA
     public static String FACEBOOK_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID = ?";
@@ -207,5 +208,7 @@ public interface UserQueries extends TSDBCommonQueries {
 
     //USER_CONTACT_SETTINGS
     public static String USER_CONTACT_SETTINGS_INSERT_SQL = "INSERT INTO user_contact_settings(USER_ID, CONTACT_ID, CONTACT_DETAILS_DESC, CONTACT_DATETIME) VALUES (?, ?, ?, ?)";
-
-}
+    
+ 	public static String USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWEE_USER_ID FROM user_follow_data WHERE FOLLOWER_USER_ID = ?))";
+    public static String USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWER_USER_ID FROM user_follow_data WHERE FOLLOWEE_USER_ID = ?))";
+    }

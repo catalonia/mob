@@ -409,6 +409,38 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
+    <wadl:resource path="/rest/user/showProfileFollowers">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/user/showProfileFollowers">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/user/showProfileFollowing">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/user/showProfileFollowing">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
     <wadl:resource path="/rest/user/showSettingsNotifications">
       <wadl:method name="POST">
         <wadl:request/>
@@ -502,6 +534,22 @@
       </wadl:method>
     </wadl:resource>
     <wadl:resource path="/json/user/submitLogout">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/user/submitMyProfileAboutMe">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/user/submitMyProfileAboutMe">
       <wadl:method name="POST">
         <wadl:request/>
         <wadl:response>
@@ -612,64 +660,10 @@
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
-      <wadl:method name="POST">
-        <wadl:request/>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
     </wadl:resource>
     <wadl:resource path="/json/user/profile/aboutme">
       <wadl:method name="POST">
         <wadl:request/>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/json/user/profile/aboutme">
-      <wadl:method name="POST">
-        <wadl:request/>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/rest/user/profile/followers">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userId" style="query"/>
-        </wadl:request>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/json/user/profile/followers">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userId" style="query"/>
-        </wadl:request>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/rest/user/profile/following">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userId" style="query"/>
-        </wadl:request>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/json/user/profile/following">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userId" style="query"/>
-        </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
