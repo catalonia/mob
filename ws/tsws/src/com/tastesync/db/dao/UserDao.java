@@ -2,6 +2,7 @@ package com.tastesync.db.dao;
 
 import com.tastesync.exception.TasteSyncException;
 
+import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
@@ -70,13 +71,19 @@ public interface UserDao {
     List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)
         throws TasteSyncException;
 
+    boolean getFollowStatus(String followeeUserId, String followerUserId)
+			throws TasteSyncException;
+    
     void followUserStatusChange(String followeeUserId, String followerUserId,
         String statusFlag) throws TasteSyncException;
 
     boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException;
     
-    void submitTrustedFriendStatusChange(String userId, String viewerUserId,
+    boolean submitTrustedFriendStatusChange(String userId, String dest_user_id,
             String trustedFriendStatus) throws TasteSyncException;
     
+    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException;
+    
+    int showTrustedFriend(String userId, String dest_user_id) throws TasteSyncException;
 }

@@ -15,10 +15,11 @@ public class TasteSyncApp extends Application {
     HashSet<Object> singletons = new HashSet<Object>();
 
     public TasteSyncApp() {
-        singletons.add(new UserService());
-        singletons.add(new RestaurantService());
-        singletons.add(new AskReplyService());
-        singletons.add(new AutoPopulateService());
+    	
+    	singletons.add(new UserService());
+		singletons.add(new RestaurantService());
+	 	singletons.add(new AskReplyService());
+	  	singletons.add(new AutoPopulateService());
         
     }
 

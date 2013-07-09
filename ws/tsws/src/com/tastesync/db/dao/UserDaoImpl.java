@@ -6,6 +6,7 @@ import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.UserQueries;
 import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSAboutObj;
+import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
@@ -1360,10 +1361,115 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public void followUserStatusChange(String followeeUserId,
 			String followerUserId, String statusFlag) throws TasteSyncException {
-		// TODO Auto-generated method stub
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+		int isExist = 0;
+		try {
+			connection = tsDataSource.getConnection();
+			tsDataSource.begin();
+			System.out.println("UserQueries.USER_FOLLOW_DATA_CHECK_SELECT_SQL="
+					+ UserQueries.USER_FOLLOW_DATA_CHECK_SELECT_SQL);
+			statement = connection
+					.prepareStatement(UserQueries.USER_FOLLOW_DATA_CHECK_SELECT_SQL);
+			statement.setString(1, followerUserId);
+			statement.setString(2, followeeUserId);
+			resultset = statement.executeQuery();
+			if (resultset.next()) {
+				isExist = 2;
+			} else {
+				isExist = 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new TasteSyncException(e.getMessage());
+		} finally {
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+			if (statusFlag.equalsIgnoreCase("1") && isExist == 1) {
+				try {
+					connection = tsDataSource.getConnection();
+					tsDataSource.begin();
+					System.out
+							.println("UserQueries.USER_FOLLOW_DATA_INSERT_SQL="
+									+ UserQueries.USER_FOLLOW_DATA_INSERT_SQL);
+					statement = connection
+							.prepareStatement(UserQueries.USER_FOLLOW_DATA_INSERT_SQL);
+					statement.setString(
+							1,
+							followeeUserId
+									+ "-"
+									+ CommonFunctionsUtil
+											.getCurrentDatetimeAppendField()
+									+ "-"
+									+ CommonFunctionsUtil.generateRandomString(
+											4, 5));
+
+					statement.setString(2, followerUserId);
+					statement.setString(3, followeeUserId);
+					statement.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new TasteSyncException(e.getMessage());
+				} finally {
+					tsDataSource.close();
+					tsDataSource.closeConnection(connection, statement, null);
+				}
+			} else if (statusFlag.equalsIgnoreCase("0") && isExist == 2) {
+				try {
+					connection = tsDataSource.getConnection();
+					tsDataSource.begin();
+					System.out
+							.println("UserQueries.USER_FOLLOW_DATA_DELETE_SQL="
+									+ UserQueries.USER_FOLLOW_DATA_DELETE_SQL);
+					statement = connection
+							.prepareStatement(UserQueries.USER_FOLLOW_DATA_DELETE_SQL);
+
+					statement.setString(1, followerUserId);
+					statement.setString(2, followeeUserId);
+					statement.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new TasteSyncException(e.getMessage());
+				} finally {
+					tsDataSource.close();
+					tsDataSource.closeConnection(connection, statement, null);
+				}
+			}
+		}
 		
 	}
 
+	@Override
+	public boolean getFollowStatus(String followeeUserId,String followerUserId)throws TasteSyncException{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+		try {
+			connection = tsDataSource.getConnection();
+			tsDataSource.begin();
+			System.out.println("UserQueries.USER_FOLLOW_DATA_CHECK_SELECT_SQL="
+					+ UserQueries.USER_FOLLOW_DATA_CHECK_SELECT_SQL);
+			statement = connection
+					.prepareStatement(UserQueries.USER_FOLLOW_DATA_CHECK_SELECT_SQL);
+			statement.setString(1, followerUserId);
+			statement.setString(2, followeeUserId);
+			resultset = statement.executeQuery();
+			if (resultset.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new TasteSyncException(e.getMessage());
+		} finally {
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+	}
 
 	@Override
 	public List<TSUserObj> showMyProfileFriends(String userId)
@@ -1400,9 +1506,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            System.out.println("UserQueries.USER_SELECT_SQL=" +
-                UserQueries.USER_SELECT_SQL);
-            statement = connection.prepareStatement(UserQueries.USER_SELECT_SQL);
+            System.out.println("UserQueries.USER_FRIEND_TASTESYNC_SELECT_SQL=" +
+                UserQueries.USER_FRIEND_TASTESYNC_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_SELECT_SQL);
             statement.setString(1, userId);
             resultset =statement.executeQuery();
         	while(resultset.next())
@@ -1429,12 +1535,109 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void submitTrustedFriendStatusChange(String userId,
-			String viewerUserId, String trustedFriendStatus)
+	public boolean submitTrustedFriendStatusChange(String userId, String dest_user_id, String trustedFriendStatus)
 			throws TasteSyncException {
-		// TODO Auto-generated method stub
+		MySQL mySQL = new MySQL();
+		boolean response = true;
+		boolean isCheck = mySQL.checkUserFriendTasteSync(userId, dest_user_id);
 		
+		if(!isCheck)
+		{
+			String dayAppent = CommonFunctionsUtil.getCurrentDatetimeAppendField();
+			String dayTime = CommonFunctionsUtil.getCurrentDatetime();
+			String id = userId + "-" + dayAppent + "-" + CommonFunctionsUtil.generateRandomString(4, 5);
+			
+			TSDataSource tsDataSource = TSDataSource.getInstance();
+		    Connection connection = null;
+			PreparedStatement statement = null;		    
+		    try{
+		    	connection = tsDataSource.getConnection();
+		    	tsDataSource.begin();
+		    	statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_INSERT_SQL);
+		    	statement.setString(1, id);
+		    	statement.setString(2, userId);
+		    	statement.setString(3, dest_user_id);
+		    	statement.setString(4, trustedFriendStatus);
+		    	statement.setString(5, dayTime);
+		    	statement.execute();
+		    }catch(Exception e)
+		    {
+		    	e.printStackTrace();
+		    	response = false;
+		    }
+		    finally{
+		    	tsDataSource.close();
+		    }
+		}
+		else
+		{
+			
+			TSDataSource tsDataSource = TSDataSource.getInstance();
+		    Connection connection = null;
+			PreparedStatement statement = null;		    
+		    try{
+		    	connection = tsDataSource.getConnection();
+		    	tsDataSource.begin();
+		    	statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_UPDATE_SQL);
+		    	statement.setString(1, trustedFriendStatus);
+		    	statement.setString(2, userId);
+		    	statement.setString(3, dest_user_id);
+		    	statement.execute();
+		    }catch(Exception e)
+		    {
+		    	e.printStackTrace();
+		    	response = false;
+		    }
+		    finally{
+		    	tsDataSource.close();
+		    }
+		}
+		return response;
 	}
+	
+	@Override
+    public int showTrustedFriend(String userId, String dest_user_id) throws TasteSyncException
+    {
+		MySQL mySQL = new MySQL();
+		int response = 4;
+		boolean isCheck = mySQL.checkUserFriendTasteSync(userId, dest_user_id);
+		
+		if(!isCheck)
+		{
+			TSDataSource tsDataSource = TSDataSource.getInstance();
+		    Connection connection = null;
+		    ResultSet resultSet = null;
+			PreparedStatement statement = null;		    
+		    try{
+		    	connection = tsDataSource.getConnection();
+		    	tsDataSource.begin();
+		    	statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_CHECK_SELECT_SQL);
+		    	statement.setString(1, userId);
+		    	statement.setString(2, dest_user_id);
+		    	resultSet = statement.executeQuery();
+		    	
+		    	String trust = CommonFunctionsUtil.getModifiedValueString(resultSet.getString("user_friend_tastesync.FRIEND_TRUSTED_FLAG"));
+		    	if(trust.equals("1"))
+		    		response = 1;
+		    	else
+		    		if(trust.equals("0"))
+		    			response = 0;
+		    		else
+		    			response = 3;
+		    	
+		    }catch(Exception e)
+		    {
+		    	e.printStackTrace();
+		    	response = 3;
+		    }
+		    finally{
+		    	tsDataSource.close();
+		    }
+		}
+		else
+			response = 2;
+		return response;
+    }
 	
 	@Override
 	 public List<TSFacebookUserDataObj> showProfileFollowing(String userId)
@@ -1497,4 +1700,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		 }
 		 return fbUsers;
 	 }
+	 
+	@Override
+	public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException
+	{
+	 	return false;
+	}
 }

@@ -585,115 +585,149 @@ public class MySQL {
 	}
 		return null;
 	}
-        public static void mapResultsetRowToTSUserVO(TSUserObj tsUserObj,
-                ResultSet resultset) throws SQLException {
-                tsUserObj.setUserId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.USER_ID")));
-                tsUserObj.setTsUserId(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.TS_USER_ID")));
-                tsUserObj.setTsUserEmail(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.TS_USER_EMAIL")));
-                //tsUserObj.setTsUserPw(CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.TS_USER_PW")));
-                tsUserObj.setTsFirstName(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.TS_FIRST_NAME")));
-                tsUserObj.setTsLastName(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.TS_LAST_NAME")));
-                tsUserObj.setMaxInvites(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.MAX_INVITES")));
-                tsUserObj.setUserCreatedInitialDatetime(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_CREATED_INITIAL_DATETIME")));
-                tsUserObj.setUserPoints(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_POINTS")));
-                tsUserObj.setTwitterUsrUrl(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.TWITTER_USR_URL")));
-                tsUserObj.setUserDisabledFlag(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_DISABLED_FLAG")));
-                tsUserObj.setUserActivationKey(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_ACTIVATION_KEY")));
-                tsUserObj.setUserGender(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_GENDER")));
-                tsUserObj.setUserCityId(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_CITY_ID")));
-                tsUserObj.setUserState(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_STATE")));
-                tsUserObj.setIsOnline(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.IS_ONLINE")));
-                tsUserObj.setUserCountry(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_COUNTRY")));
-                tsUserObj.setAbout(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.ABOUT")));
-                tsUserObj.setCurrentStatus(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.CURRENT_STATUS")));
-                tsUserObj.setUserFbId(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_FB_ID")));
-            }
-        public static void mapResultsetRowToTSCityVO(TSCityObj tsCityObj,
-                ResultSet resultset) throws SQLException {
-        	tsCityObj.setCityId(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.city_id")));
-        	tsCityObj.setCountry(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.country")));
-        	tsCityObj.setState(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.state")));
-        	tsCityObj.setCity(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.city")));
-            }
-        public static void mapResultsetRowToTSFacebookVO(TSFacebookUserDataObj tsFacebookUserDataObj,
-                ResultSet resultset) throws SQLException {
-        	tsFacebookUserDataObj.setId(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.User_FB_ID")));
-        	tsFacebookUserDataObj.setName(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.NAME")));
-        	tsFacebookUserDataObj.setFirstName(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.FIRST_NAME")));
-        	tsFacebookUserDataObj.setMiddleName(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.MIDDLE_NAME")));
-        	tsFacebookUserDataObj.setLastName(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.LAST_NAME")));
-        	tsFacebookUserDataObj.setGender(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.GENDER")));
-        	tsFacebookUserDataObj.setLocale(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.LOCALE")));
-        	tsFacebookUserDataObj.setLink(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.LINK")));
-        	tsFacebookUserDataObj.setUserName(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.USERNAME")));
-        	tsFacebookUserDataObj.setAgeRange(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.AGE_RANGE")));
-        	tsFacebookUserDataObj.setBirthday(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.BIRTHDAY")));
-        	tsFacebookUserDataObj.setThirdPartyId(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.THIRD_PARTY_ID")));
-        	tsFacebookUserDataObj.setFriendlists(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.FRIENDLISTS")));
-        	tsFacebookUserDataObj.setInstalled(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.INSTALLED")));
-        	tsFacebookUserDataObj.setTimezone(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.TIMEZONE")));
-        	tsFacebookUserDataObj.setUpdatedTime(CommonFunctionsUtil.getModifiedValueString(
-                    resultset.getString("facebook_user_data.UPDATE_TIME")));
-        	tsFacebookUserDataObj.setVerified(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.VERIFIED")));
-        	tsFacebookUserDataObj.setDevices(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.DEVICES")));
-        	tsFacebookUserDataObj.setEmail(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.EMAIL")));
-        	tsFacebookUserDataObj.setHometown(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.HOMETOWN")));
-        	tsFacebookUserDataObj.setLocation(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.LOCATION")));
-        	tsFacebookUserDataObj.setPicture(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.PICTURE")));
-        	tsFacebookUserDataObj.setRelationshipStatus(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.RELATIONSHIP_STATUS")));
-        	tsFacebookUserDataObj.setCheckins(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.CHECKINS")));
-        	tsFacebookUserDataObj.setFriends(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.FRIENDS")));
-        	tsFacebookUserDataObj.setLikes(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.LIKES")));
-        	tsFacebookUserDataObj.setPermissions(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.PERMISSIONS")));
-        	tsFacebookUserDataObj.setPermissions(CommonFunctionsUtil.getModifiedValueString(
-        			resultset.getString("facebook_user_data.PERMISSIONS")));
-            }
+	
+	public boolean checkUserFriendTasteSync(String userId, String destUserId)
+	{
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_CHECK_SELECT_SQL);
+	    	statement.setString(1, userId);
+	    	statement.setString(2, destUserId);
+	    	resultset = statement.executeQuery();
+	    	int  i = 0;
+	    	if(resultset.next())
+	    	{
+	    		i++;
+	    	}
+	    	System.out.println("Number row:" + i);
+	    	if(i != 0)
+	    		return true;
+	    	else
+	    		return false;
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+		}
+		return false;
+	}
+	
+	public static void mapResultsetRowToTSUserVO(TSUserObj tsUserObj,
+            ResultSet resultset) throws SQLException {
+            tsUserObj.setUserId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.USER_ID")));
+            tsUserObj.setTsUserId(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.TS_USER_ID")));
+            tsUserObj.setTsUserEmail(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.TS_USER_EMAIL")));
+            //tsUserObj.setTsUserPw(CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.TS_USER_PW")));
+            tsUserObj.setTsFirstName(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.TS_FIRST_NAME")));
+            tsUserObj.setTsLastName(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.TS_LAST_NAME")));
+            tsUserObj.setMaxInvites(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.MAX_INVITES")));
+            tsUserObj.setUserCreatedInitialDatetime(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.USER_CREATED_INITIAL_DATETIME")));
+            tsUserObj.setUserPoints(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.USER_POINTS")));
+            tsUserObj.setTwitterUsrUrl(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.TWITTER_USR_URL")));
+            tsUserObj.setUserDisabledFlag(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.USER_DISABLED_FLAG")));
+            tsUserObj.setUserActivationKey(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.USER_ACTIVATION_KEY")));
+            tsUserObj.setUserGender(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.USER_GENDER")));
+            tsUserObj.setUserCityId(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.USER_CITY_ID")));
+            tsUserObj.setUserState(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.USER_STATE")));
+            tsUserObj.setIsOnline(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.IS_ONLINE")));
+            tsUserObj.setUserCountry(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.USER_COUNTRY")));
+            tsUserObj.setAbout(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.ABOUT")));
+            tsUserObj.setCurrentStatus(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.CURRENT_STATUS")));
+            tsUserObj.setUserFbId(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("users.USER_FB_ID")));
+        }
+    public static void mapResultsetRowToTSCityVO(TSCityObj tsCityObj,
+            ResultSet resultset) throws SQLException {
+    	tsCityObj.setCityId(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("cities.city_id")));
+    	tsCityObj.setCountry(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("cities.country")));
+    	tsCityObj.setState(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("cities.state")));
+    	tsCityObj.setCity(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("cities.city")));
+        }
+    public static void mapResultsetRowToTSFacebookVO(TSFacebookUserDataObj tsFacebookUserDataObj,
+            ResultSet resultset) throws SQLException {
+    	tsFacebookUserDataObj.setId(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.User_FB_ID")));
+    	tsFacebookUserDataObj.setName(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.NAME")));
+    	tsFacebookUserDataObj.setFirstName(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.FIRST_NAME")));
+    	tsFacebookUserDataObj.setMiddleName(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.MIDDLE_NAME")));
+    	tsFacebookUserDataObj.setLastName(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.LAST_NAME")));
+    	tsFacebookUserDataObj.setGender(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.GENDER")));
+    	tsFacebookUserDataObj.setLocale(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.LOCALE")));
+    	tsFacebookUserDataObj.setLink(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.LINK")));
+    	tsFacebookUserDataObj.setUserName(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.USERNAME")));
+    	tsFacebookUserDataObj.setAgeRange(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.AGE_RANGE")));
+    	tsFacebookUserDataObj.setBirthday(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.BIRTHDAY")));
+    	tsFacebookUserDataObj.setThirdPartyId(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.THIRD_PARTY_ID")));
+    	tsFacebookUserDataObj.setFriendlists(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.FRIENDLISTS")));
+    	tsFacebookUserDataObj.setInstalled(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.INSTALLED")));
+    	tsFacebookUserDataObj.setTimezone(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.TIMEZONE")));
+    	tsFacebookUserDataObj.setUpdatedTime(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("facebook_user_data.UPDATE_TIME")));
+    	tsFacebookUserDataObj.setVerified(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.VERIFIED")));
+    	tsFacebookUserDataObj.setDevices(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.DEVICES")));
+    	tsFacebookUserDataObj.setEmail(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.EMAIL")));
+    	tsFacebookUserDataObj.setHometown(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.HOMETOWN")));
+    	tsFacebookUserDataObj.setLocation(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.LOCATION")));
+    	tsFacebookUserDataObj.setPicture(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.PICTURE")));
+    	tsFacebookUserDataObj.setRelationshipStatus(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.RELATIONSHIP_STATUS")));
+    	tsFacebookUserDataObj.setCheckins(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.CHECKINS")));
+    	tsFacebookUserDataObj.setFriends(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.FRIENDS")));
+    	tsFacebookUserDataObj.setLikes(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.LIKES")));
+    	tsFacebookUserDataObj.setPermissions(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.PERMISSIONS")));
+    	tsFacebookUserDataObj.setPermissions(CommonFunctionsUtil.getModifiedValueString(
+    			resultset.getString("facebook_user_data.PERMISSIONS")));
+        }
 }

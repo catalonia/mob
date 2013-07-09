@@ -1,6 +1,7 @@
 package com.tastesync.db.dao;
 
 import com.tastesync.exception.TasteSyncException;
+import com.tastesync.model.objects.TSAskSubmitLoginObj;
 
 
 public interface AskReplyDAO {
@@ -15,4 +16,6 @@ public interface AskReplyDAO {
     void submitAskForRecommendationFriends(String recoRequestId,
             String recoRequestFriendText, String[] friendsFacebookIdList,
             String postRecoRequestOnFacebook) throws TasteSyncException;
+    
+    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException;
 }

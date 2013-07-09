@@ -5,6 +5,7 @@ import com.tastesync.db.dao.UserDaoImpl;
 
 import com.tastesync.exception.TasteSyncException;
 
+import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
@@ -121,6 +122,13 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
+    public boolean getFollowStatus(String followeeUserId, String followerUserId)
+			throws TasteSyncException
+	{
+    	return userDao.getFollowStatus(followeeUserId, followerUserId);
+	}
+    
+    @Override
     public void followUserStatusChange(String followeeUserId,
         String followerUserId, String statusFlag) throws TasteSyncException {
         userDao.followUserStatusChange(followeeUserId, followerUserId,
@@ -152,10 +160,10 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public void submitTrustedFriendStatusChange(String userId,
-        String viewerUserId, String trustedFriendStatus)
+    public boolean submitTrustedFriendStatusChange(String userId,
+        String dest_user_id, String trustedFriendStatus)
         throws TasteSyncException {
-        userDao.submitTrustedFriendStatusChange(userId, viewerUserId,
+        return userDao.submitTrustedFriendStatusChange(userId, dest_user_id,
             trustedFriendStatus);
     }
 
@@ -170,4 +178,15 @@ public class UserBoImpl implements UserBo {
 		return userDao.showAboutTastesync();
 	}
 
+	@Override
+    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException
+    {
+    	return userDao.submitSignupDetail(askObj);
+    }
+	
+	@Override
+    public int showTrustedFriend(String userId, String dest_user_id) throws TasteSyncException
+    {
+		return userDao.showTrustedFriend(userId, dest_user_id);
+    }
 }

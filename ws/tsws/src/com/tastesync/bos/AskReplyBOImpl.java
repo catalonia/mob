@@ -36,4 +36,5 @@ public class AskReplyBOImpl implements AskReplyBO {
             recoRequestFriendText, friendsFacebookIdList,
             postRecoRequestOnFacebook);
     }
+
 }

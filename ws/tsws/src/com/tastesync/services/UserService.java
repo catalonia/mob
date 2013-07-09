@@ -5,6 +5,7 @@ import com.tastesync.bos.UserBoImpl;
 
 import com.tastesync.exception.TasteSyncException;
 
+import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
@@ -713,12 +714,12 @@ public class UserService extends BaseService {
     }
 
     @GET
-    @Path("/profile/myfriends")
+    @Path("/showSignupDetail")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showMyProfileFriends(@QueryParam("userId")
+    public Response showSignupDetail(@FormParam("userId")
     String userId) {
         List<TSUserObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -753,13 +754,13 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/profile/userfriends")
+    @POST
+    @Path("/showProfileFriends")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showProfileFriends(@QueryParam("userId")
+    public Response showProfileFriends(@FormParam("userId")
     String userId) {
         List<TSUserObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -889,7 +890,7 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/followunfollow")
+    @Path("/followUser")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -942,35 +943,215 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/profile/aboutme")
+	@Path("/getFollowStatus")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response showFollowStatus(
+			@FormParam("followerUserId") String followerUserId,
+			@FormParam("followeeUserId") String followeeUserId) {
+		int status = TSResponseStatusCode.SUCCESS.getValue();
+		boolean responseDone = false;
+
+		// BO - DO- DBQuery
+		try {
+			followeeUserId = CommonFunctionsUtil
+					.converStringAsNullIfNeeded(followeeUserId);
+			followerUserId = CommonFunctionsUtil
+					.converStringAsNullIfNeeded(followerUserId);
+
+			boolean followed = userBo.getFollowStatus(followeeUserId,
+					followerUserId);
+
+			TSSuccessObj tsSuccessObj = new TSSuccessObj();
+
+			if (followed)
+				tsSuccessObj.setSuccessMsg("1");
+			else
+				tsSuccessObj.setSuccessMsg("0");
+			
+			responseDone = true;
+
+			return Response.status(status).entity(tsSuccessObj).build();
+		} catch (TasteSyncException e) {
+			e.printStackTrace();
+			status = TSResponseStatusCode.ERROR.getValue();
+
+			TSErrorObj tsErrorObj = new TSErrorObj();
+
+			tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+			responseDone = false;
+
+			return Response.status(status).entity(tsErrorObj).build();
+		} finally {
+			if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+				if (!responseDone) {
+					status = TSResponseStatusCode.ERROR.getValue();
+
+					TSErrorObj tsErrorObj = new TSErrorObj();
+
+					tsErrorObj
+							.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+					return Response.status(status).entity(tsErrorObj).build();
+				}
+			}
+		}
+	}
+    
+    @POST
+    @Path("submitTrustedFriendStatusChange")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitTrustedFriendStatusChange(
-        @FormParam("userId")
-    String userId, @FormParam("viewerUserId")
-    String viewerUserId,
-        @FormParam("trustedFriendStatus")
-    String trustedFriendStatus) {
+        @FormParam("userId") String userId, 
+        @FormParam("destUserId") String dest_user_id, 
+        @FormParam("trustedFriendStatus") String trustedFriendStatus) 
+    {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
         // BO - DO- DBQuery
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            viewerUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(viewerUserId);
+            dest_user_id = CommonFunctionsUtil.converStringAsNullIfNeeded(dest_user_id);
             trustedFriendStatus = CommonFunctionsUtil.converStringAsNullIfNeeded(trustedFriendStatus);
 
-            userBo.submitTrustedFriendStatusChange(userId, viewerUserId,
+            responseDone = userBo.submitTrustedFriendStatusChange(userId, dest_user_id,
                 trustedFriendStatus);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            tsSuccessObj.setSuccessMsg("Updating succesfully!");
+            
+            if (responseDone) {
+            	return Response.status(status).entity(tsSuccessObj).build();
+			}
+            else
+            {
+            	status = TSResponseStatusCode.ERROR.getValue();
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                return Response.status(status).entity(tsErrorObj).build();
+            }
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
 
+            TSErrorObj tsErrorObj = new TSErrorObj();
+
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = false;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+    
+    
+    
+    @POST
+    @Path("/submitSignupDetail")
+    @Consumes({MediaType.APPLICATION_JSON
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response submitSignupDetail(TSAskSubmitLoginObj askObj)
+    {
+    	int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        // BO - DO- DBQuery
+        try {
+        	
+        	//System.out.println(restaurandId.get(0) + "" + restaurandId.get(1));
+        	//System.out.println(invitedFriend.size());
+        	
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            tsSuccessObj.setSuccessMsg("Uploading successfully!");
             responseDone = true;
 
             return Response.status(status).entity(tsSuccessObj).build();
-        } catch (TasteSyncException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = false;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+    
+    @POST
+    @Path("/showTrustedFriend")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showTrustedFriend(
+    		@FormParam("userId") String userId, 
+            @FormParam("destUserId") String dest_user_id)
+    {
+    	int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        // BO - DO- DBQuery
+        try {
+        	
+        	int choise = userBo.showTrustedFriend(userId, dest_user_id);
+        	String retString = "";
+        	switch(choise)
+        	{
+        	case 0:
+        		retString = "not trust";
+        		break;
+        	case 1:
+        		retString = "trusted";
+        		break;
+        	case 2:
+        		retString = "no friend";
+        		break;
+        	}
+        	
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            tsSuccessObj.setSuccessMsg(retString);
+            if (choise != 3) {
+            	return Response.status(status).entity(tsSuccessObj).build();
+			} else {
+				status = TSResponseStatusCode.ERROR.getValue();
+	            TSErrorObj tsErrorObj = new TSErrorObj();
+	            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+	            return Response.status(status).entity(tsErrorObj).build();
+			}
+
+            
+        } catch (Exception e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 

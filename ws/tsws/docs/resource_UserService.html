@@ -71,7 +71,8 @@
       <p>The following resources are part of this group:</p>
       <ul>
         <li><a href="#path__user_allusers.html">/user/allusers</a></li>
-        <li><a href="#path__user_followunfollow.html">/user/followunfollow</a></li>
+        <li><a href="#path__user_followUser.html">/user/followUser</a></li>
+        <li><a href="#path__user_getFollowStatus.html">/user/getFollowStatus</a></li>
         <li><a href="#path__user_report.html">/user/report</a></li>
         <li><a href="#path__user_showAboutTastesync.html">/user/showAboutTastesync</a></li>
         <li><a href="#path__user_showProfileFollowers.html">/user/showProfileFollowers</a></li>
@@ -112,9 +113,9 @@
         </tr>
       </table>
       <p>(no documentation provided)</p>
-      <a name="path__user_followunfollow.html"></a>
-      <h1>/user/followunfollow</h1>
-      <p class="note">Mount Point: <a href="./rest/user/followunfollow">/rest/user/followunfollow</a></p>
+      <a name="path__user_followUser.html"></a>
+      <h1>/user/followUser</h1>
+      <p class="note">Mount Point: <a href="./rest/user/followUser">/rest/user/followUser</a></p>
       <a name="POST"></a>
       <h2>POST</h2>
       <h3>Parameters</h3>
@@ -143,6 +144,48 @@
         </tr>
         <tr>
           <td>statusFlag</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__user_getFollowStatus.html"></a>
+      <h1>/user/getFollowStatus</h1>
+      <p class="note">Mount Point: <a href="./rest/user/getFollowStatus">/rest/user/getFollowStatus</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>followerUserId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>followeeUserId</td>
           <td>
             (no documentation provided)
           </td>

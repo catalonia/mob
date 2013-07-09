@@ -37,6 +37,22 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
+    <wadl:resource path="/rest/ask/submitSignupDetail">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/ask/submitSignupDetail">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
     <wadl:resource path="/rest/populate/cuisinetier1">
       <wadl:method name="GET">
         <wadl:response>
@@ -363,7 +379,7 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
-    <wadl:resource path="/rest/user/followunfollow">
+    <wadl:resource path="/rest/user/followUser">
       <wadl:method name="POST">
         <wadl:request/>
         <wadl:response>
@@ -371,7 +387,23 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
-    <wadl:resource path="/json/user/followunfollow">
+    <wadl:resource path="/json/user/followUser">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/user/getFollowStatus">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/user/getFollowStatus">
       <wadl:method name="POST">
         <wadl:request/>
         <wadl:response>

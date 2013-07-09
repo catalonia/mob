@@ -4,6 +4,7 @@ import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
 
 import com.tastesync.exception.TasteSyncException;
+import com.tastesync.model.objects.TSAskSubmitLoginObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
@@ -159,5 +160,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         String recoRequestFriendText, String[] friendsFacebookIdList,
         String postRecoRequestOnFacebook) throws TasteSyncException {
         // TODO Auto-generated method stub
+    }
+    
+    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException
+    {
+    	return false;
     }
 }
