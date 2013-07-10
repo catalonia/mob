@@ -3,6 +3,7 @@ package com.tastesync.db.dao;
 import com.tastesync.common.GlobalVariables;
 import com.tastesync.common.MySQL;
 import com.tastesync.db.pool.TSDataSource;
+import com.tastesync.db.queries.RestaurantQueries;
 import com.tastesync.db.queries.UserQueries;
 import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSAboutObj;
@@ -16,6 +17,7 @@ import com.tastesync.model.objects.TSListPrivacySettingsObj;
 import com.tastesync.model.objects.TSListSocialSettingObj;
 import com.tastesync.model.objects.TSNotificationSettingsObj;
 import com.tastesync.model.objects.TSPrivacySettingsObj;
+import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSocialAutoPubSettingsObj;
 import com.tastesync.model.objects.TSSocialSettingsObj;
 import com.tastesync.model.objects.TSSuccessObj;
@@ -1602,7 +1604,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		int response = 4;
 		boolean isCheck = mySQL.checkUserFriendTasteSync(userId, dest_user_id);
 		
-		if(!isCheck)
+		if(isCheck)
 		{
 			TSDataSource tsDataSource = TSDataSource.getInstance();
 		    Connection connection = null;
@@ -1615,16 +1617,17 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    	statement.setString(1, userId);
 		    	statement.setString(2, dest_user_id);
 		    	resultSet = statement.executeQuery();
-		    	
-		    	String trust = CommonFunctionsUtil.getModifiedValueString(resultSet.getString("user_friend_tastesync.FRIEND_TRUSTED_FLAG"));
-		    	if(trust.equals("1"))
-		    		response = 1;
-		    	else
-		    		if(trust.equals("0"))
-		    			response = 0;
-		    		else
-		    			response = 3;
-		    	
+		    	if(resultSet.next())
+		    	{
+			    	int trust = resultSet.getInt("user_friend_tastesync.FRIEND_TRUSTED_FLAG");
+			    	if(trust == 1)
+			    		response = 1;
+			    	else
+			    		if(trust == 0)
+			    			response = 0;
+			    		else
+			    			response = 3;
+		    	}
 		    }catch(Exception e)
 		    {
 		    	e.printStackTrace();
@@ -1635,7 +1638,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    }
 		}
 		else
+		{
 			response = 2;
+		}
 		return response;
     }
 	
@@ -1705,5 +1710,104 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException
 	{
 	 	return false;
+	}
+	
+	@Override
+	public boolean sendMessageToUser(String sender_ID, String recipient_ID, String content) 
+	    	throws TasteSyncException
+	{
+		boolean response = true;
+		String dayAppent = CommonFunctionsUtil.getCurrentDatetimeAppendField();
+		String dayTime = CommonFunctionsUtil.getCurrentDatetime();
+		String id = sender_ID + "-" + dayAppent + "-" + CommonFunctionsUtil.generateRandomString(4, 5);
+		
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;		    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	statement = connection.prepareStatement(UserQueries.USER_MESSAGE_INSERT_SQL);
+	    	statement.setString(1, id);
+	    	statement.setString(2, sender_ID);
+	    	statement.setString(3, recipient_ID);
+	    	statement.setString(4, content);
+	    	statement.setString(5, dayTime);
+	    	statement.execute();
+	    	
+	    }catch(Exception e)
+	    {
+	    	e.printStackTrace();
+	    	response = false;
+	    }
+	    finally{
+	    	tsDataSource.close();
+	    }
+		return response;
+	}
+	
+	@Override
+	public List<TSRestaurantObj> showRestaurantSuggestion(String key, String userId) throws TasteSyncException
+	{
+		MySQL mySQL = new MySQL();
+		TSUserObj userObj = mySQL.getUserInformation(userId);
+		List<TSRestaurantObj> listData = new ArrayList<TSRestaurantObj>();
+		List<String> cityData = new ArrayList<String>();
+	    if(userObj != null)
+	    {
+		    try{
+		    	TSDataSource tsDataSource = TSDataSource.getInstance();
+			    Connection connection = null;
+			    ResultSet resultset = null;
+				PreparedStatement statement = null;	
+		    	connection = tsDataSource.getConnection();
+		    	tsDataSource.begin();
+		    	System.out.println(UserQueries.CITY_NEIGHOOURHOOD_SELECT_SQL + " + " + userObj.getUserCityId());
+		    	statement = connection.prepareStatement(UserQueries.CITY_NEIGHOOURHOOD_SELECT_SQL);
+		    	statement.setString(1, userObj.getUserCityId());
+		    	cityData.add(userObj.getUserCityId());
+		    	resultset = statement.executeQuery();
+		    	while(resultset.next())
+		    	{
+		    		String cityId = CommonFunctionsUtil.getModifiedValueString(resultset.getString("city_neighbourhood.NEIGHBOUR_ID"));
+		    		String[] arrayID =cityId.split("-");
+		    		System.out.println(arrayID[1]);
+		    		cityData.add(arrayID[1]);
+		    	}
+		    	tsDataSource.close();
+		    }catch(Exception e)
+		    {
+		    	e.printStackTrace();
+		    }
+		    
+		    try{
+		    	TSDataSource tsDataSource = TSDataSource.getInstance();
+			    Connection connection = null;
+			    ResultSet resultset = null;
+				PreparedStatement statement = null;	
+		    	tsDataSource.begin();
+		    	for (int i = 0; i < cityData.size(); i++) {
+			    	connection = tsDataSource.getConnection();
+			    	System.out.println(RestaurantQueries.RESTAURANT_CITY_SELECT_SQL);
+		    		statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_CITY_SELECT_SQL);
+			    	statement.setString(1, cityData.get(i));
+			    	statement.setString(2, key + "%");
+			    	resultset = statement.executeQuery();
+			    	while(resultset.next())
+			    	{
+			    		TSRestaurantObj obj = new TSRestaurantObj();
+			    		mySQL.mapResultsetRowToTSRestaurantVO(obj, resultset);
+			    		listData.add(obj);
+			    	}
+				}
+		    	
+		    	tsDataSource.close();
+		    }catch(Exception e)
+		    {
+		    	e.printStackTrace();
+		    }
+	    
+	    }
+		return listData;
 	}
 }

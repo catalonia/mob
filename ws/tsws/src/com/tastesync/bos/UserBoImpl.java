@@ -11,6 +11,7 @@ import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
 import com.tastesync.model.objects.TSListSocialSettingObj;
+import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
@@ -189,4 +190,17 @@ public class UserBoImpl implements UserBo {
     {
 		return userDao.showTrustedFriend(userId, dest_user_id);
     }
+	
+	@Override
+	public boolean sendMessageToUser(String sender_ID, String recipient_ID, String content) 
+	    	throws TasteSyncException
+	{
+		return userDao.sendMessageToUser(sender_ID, recipient_ID, content);
+	}
+	
+	@Override
+	public List<TSRestaurantObj> showRestaurantSuggestion(String key, String userId) throws TasteSyncException
+	{
+		return userDao.showRestaurantSuggestion(key, userId);
+	}
 }

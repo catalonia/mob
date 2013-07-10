@@ -8,6 +8,7 @@ import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
 import com.tastesync.model.objects.TSListSocialSettingObj;
+import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
@@ -86,4 +87,10 @@ public interface UserDao {
     public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException;
     
     int showTrustedFriend(String userId, String dest_user_id) throws TasteSyncException;
+    
+    boolean sendMessageToUser(String sender_ID, String recipient_ID, String content) 
+        	throws TasteSyncException;
+    
+    List<TSRestaurantObj> showRestaurantSuggestion(String key, String userId) 
+    		throws TasteSyncException;
 }

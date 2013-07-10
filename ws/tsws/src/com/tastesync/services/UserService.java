@@ -12,6 +12,7 @@ import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
 import com.tastesync.model.objects.TSListSocialSettingObj;
+import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileObj;
@@ -890,22 +891,20 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/followUser")
+    @Path("/submitFollowUserStatusChange")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response followUserStatusChange(
-        @FormParam("followeeUserId")
-    String followeeUserId, @FormParam("followerUserId")
-    String followerUserId, @FormParam("statusFlag")
-    String statusFlag) {
+    public Response submitFollowUserStatusChange(
+        @FormParam("followeeUserId") String followeeUserId, 
+        @FormParam("followerUserId") String followerUserId, 
+        @FormParam("statusFlag") String statusFlag) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
         // BO - DO- DBQuery
         try {
-            followeeUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(followeeUserId);
             followerUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(followerUserId);
             statusFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(statusFlag);
 
@@ -913,7 +912,8 @@ public class UserService extends BaseService {
                 statusFlag);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
-
+            tsSuccessObj.setSuccessMsg("Setting succesfully!");
+            
             responseDone = true;
 
             return Response.status(status).entity(tsSuccessObj).build();
@@ -943,7 +943,7 @@ public class UserService extends BaseService {
     }
 
     @POST
-	@Path("/getFollowStatus")
+	@Path("/showFollowStatus")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response showFollowStatus(
@@ -1174,5 +1174,117 @@ public class UserService extends BaseService {
                 }
             }
         }
+    }
+    @POST
+    @Path("/sendMessageToUser")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response sendMessageToUser(
+    		@FormParam("senderID") String senderID, 
+    		@FormParam("recipientID") String recipientID, 
+    		@FormParam("content") String content
+    ){
+    	 int status = TSResponseStatusCode.SUCCESS.getValue();
+         boolean responseDone = false;
+
+         // BO - DO- DBQuery
+         try {
+        	 senderID = CommonFunctionsUtil.converStringAsNullIfNeeded(senderID);
+        	 recipientID = CommonFunctionsUtil.converStringAsNullIfNeeded(recipientID);
+        	 content = CommonFunctionsUtil.converStringAsNullIfNeeded(content);
+
+             responseDone = userBo.sendMessageToUser(senderID, recipientID, content);
+
+             TSSuccessObj tsSuccessObj = new TSSuccessObj();
+             tsSuccessObj.setSuccessMsg("Sending succesfully!");
+             
+             if (responseDone) {
+             	return Response.status(status).entity(tsSuccessObj).build();
+ 			}
+             else
+             {
+             	status = TSResponseStatusCode.ERROR.getValue();
+                 TSErrorObj tsErrorObj = new TSErrorObj();
+                 tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                 return Response.status(status).entity(tsErrorObj).build();
+             }
+         } catch (TasteSyncException e) {
+             e.printStackTrace();
+             status = TSResponseStatusCode.ERROR.getValue();
+
+             TSErrorObj tsErrorObj = new TSErrorObj();
+
+             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+             responseDone = false;
+
+             return Response.status(status).entity(tsErrorObj).build();
+         } finally {
+             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                 if (!responseDone) {
+                     status = TSResponseStatusCode.ERROR.getValue();
+
+                     TSErrorObj tsErrorObj = new TSErrorObj();
+
+                     tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                     return Response.status(status).entity(tsErrorObj).build();
+                 }
+             }
+         }
+    }
+    
+    @POST
+    @Path("/showRestaurantSuggestion")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showRestaurantSuggestion(
+    		@FormParam("key") String key,
+    		@FormParam("userId") String userId
+    ){
+    	 int status = TSResponseStatusCode.SUCCESS.getValue();
+         List<TSRestaurantObj> response = null;
+         
+         // BO - DO- DBQuery
+         try {
+        	 key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);;
+
+        	 response = userBo.showRestaurantSuggestion(key, userId);  
+        	 
+             if (response != null) {
+             	return Response.status(status).entity(response).build();
+ 			}
+             else
+             {
+             	status = TSResponseStatusCode.ERROR.getValue();
+                 TSErrorObj tsErrorObj = new TSErrorObj();
+                 tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                 return Response.status(status).entity(tsErrorObj).build();
+             }
+         } catch (Exception e) {
+             e.printStackTrace();
+             status = TSResponseStatusCode.ERROR.getValue();
+
+             TSErrorObj tsErrorObj = new TSErrorObj();
+
+             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+
+             return Response.status(status).entity(tsErrorObj).build();
+         } finally {
+             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                 if (response == null) {
+                     status = TSResponseStatusCode.ERROR.getValue();
+
+                     TSErrorObj tsErrorObj = new TSErrorObj();
+
+                     tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                     return Response.status(status).entity(tsErrorObj).build();
+                 }
+             }
+         }
     }
 }

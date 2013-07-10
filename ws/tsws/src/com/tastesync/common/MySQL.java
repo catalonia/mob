@@ -9,6 +9,7 @@ import com.tastesync.db.queries.CityQueries;
 import com.tastesync.db.queries.UserQueries;
 import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
+import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.util.CommonFunctionsUtil;
 
@@ -729,5 +730,44 @@ public class MySQL {
     			resultset.getString("facebook_user_data.PERMISSIONS")));
     	tsFacebookUserDataObj.setPermissions(CommonFunctionsUtil.getModifiedValueString(
     			resultset.getString("facebook_user_data.PERMISSIONS")));
+        }
+    public void mapResultsetRowToTSRestaurantVO(
+            TSRestaurantObj tsRestaurantObj, ResultSet resultset)
+            throws SQLException {
+            tsRestaurantObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.RESTAURANT_ID")));
+
+            tsRestaurantObj.setFactualId(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.FACTUAL_ID")));
+
+            tsRestaurantObj.setRestaurantName(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.RESTAURANT_NAME")));
+
+            tsRestaurantObj.setFactualRating(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.FACTUAL_RATING")));
+
+            tsRestaurantObj.setPriceRange(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.PRICE_RANGE")));
+
+            tsRestaurantObj.setRestaurantCityId(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.RESTAURANT_CITY_ID")));
+
+            tsRestaurantObj.setRestaurantHours(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.RESTAURANT_HOURS")));
+
+            tsRestaurantObj.setRestaurantLat(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.RESTAURANT_LAT")));
+
+            tsRestaurantObj.setRestaurantLon(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.RESTAURANT_LON")));
+
+            tsRestaurantObj.setSumVoteCount(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.SUM_VOTE_COUNT")));
+
+            tsRestaurantObj.setSumVoteValue(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.SUM_VOTE_VALUE")));
+
+            tsRestaurantObj.setTbdOpenTableId(CommonFunctionsUtil.getModifiedValueString(
+                    resultset.getString("restaurant.TBD_OPENTABLE_ID")));
         }
 }

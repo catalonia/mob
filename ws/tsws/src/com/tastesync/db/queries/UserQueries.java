@@ -224,4 +224,10 @@ public interface UserQueries extends TSDBCommonQueries {
  	public static String USER_FRIEND_TASTESYNC_INSERT_SQL = "INSERT INTO user_friend_tastesync(ID, USER_ID, FRIEND_ID, FRIEND_TRUSTED_FLAG, FRIEND_TRUSTED_ADDED_DATETIME) VALUES (?, ?, ?, ?, ?)";
  	public static String USER_FRIEND_TASTESYNC_UPDATE_SQL = "UPDATE user_friend_tastesync SET FRIEND_TRUSTED_FLAG = ? WHERE USER_ID = ? AND FRIEND_ID = ?";
  	
+ 	//USER_MESSAGE
+ 	public static String USER_MESSAGE_INSERT_SQL = "INSERT INTO user_message(MESSAGE_ID, SENDER_ID, RECIPIENT_ID, CONTENT, CREATED) VALUES (?, ?, ?, ?, ?)";
+	 
+ 	//CITY_NEIGHOOURHOOD
+ 	public static String CITY_NEIGHOOURHOOD_SELECT_SQL = "SELECT * FROM city_neighbourhood WHERE CITY_ID = ?";
+	
 }

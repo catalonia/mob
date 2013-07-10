@@ -117,4 +117,6 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "WHERE  usg_usnc_ap.user_id = ? " + "       AND" +
         "       usg_usnc_ap.usnc_id = ? " + "       AND " +
         "       usg_usnc_ap.ap_id = ? " + "";
+    
+    public static String RESTAURANT_CITY_SELECT_SQL = "SELECT *  FROM restaurant WHERE RESTAURANT_CITY_ID = ?  AND RESTAURANT_NAME LIKE ?";
 }
