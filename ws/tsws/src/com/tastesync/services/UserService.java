@@ -1080,9 +1080,18 @@ public class UserService extends BaseService {
         	
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             tsSuccessObj.setSuccessMsg("Uploading successfully!");
-            responseDone = true;
-
-            return Response.status(status).entity(tsSuccessObj).build();
+            responseDone = userBo.submitSignupDetail(askObj);
+            if (responseDone) {
+            	return Response.status(status).entity(tsSuccessObj).build();
+			}
+            else
+            {
+            	status = TSResponseStatusCode.ERROR.getValue();
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                return Response.status(status).entity(tsErrorObj).build();
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -1277,11 +1286,8 @@ public class UserService extends BaseService {
              if (status != TSResponseStatusCode.SUCCESS.getValue()) {
                  if (response == null) {
                      status = TSResponseStatusCode.ERROR.getValue();
-
                      TSErrorObj tsErrorObj = new TSErrorObj();
-
                      tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
                      return Response.status(status).entity(tsErrorObj).build();
                  }
              }

@@ -123,11 +123,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		UserResponse response = null;
 		String dateNow = CommonFunctionsUtil.getCurrentDatetime();
 		String dateNowAppend = CommonFunctionsUtil.getCurrentDatetimeAppendField();
-		//KeyHolder keyHolder = null;
-
-		//String sql;
-		// = new UserResponse();
-	   //     response.setUser(user_response);
 		MySQL mySQL = new MySQL();
 		TSFacebookUserDataObj user_current_profile = null;
 		List<TSFacebookUserDataObj> profiles = new ArrayList<TSFacebookUserDataObj>();
@@ -137,6 +132,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		
 		String id = null;
 		String userLogId = null;
+		String userID = null;
+		String user_city_id = GlobalVariables.DEFAULT_CITY_ID;
+		String state = GlobalVariables.DEFAULT_STATE;
+		String country = GlobalVariables.DEFAULT_COUNTRY;
 		
 		if(list_user_profile != null) {
 			try {
@@ -167,7 +166,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						TSDataSource tsDataSource = TSDataSource.getInstance();				 
 				        Connection connection = null;
 				        PreparedStatement statement = null;
-				        //ResultSet resultset = null;
 						try {
 							connection = tsDataSource.getConnection();
 				        	tsDataSource.begin();
@@ -175,6 +173,30 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 							
 							if(!check_fb) {
 								
+								if(!user_current_profile.getHometown().trim().equals("")) {
+									TSCityObj city_infor = null;
+									
+									try {
+										city_infor = mySQL.getCityInforByStateAndCityName(user_current_profile.getLocation(), user_current_profile.getHometown());
+									} catch(Exception e) {
+										e.printStackTrace();
+									}
+									
+									if(city_infor != null) {
+										user_city_id = city_infor.getCityId();
+									}
+								}
+								
+								if(!user_current_profile.getLocation().trim().equals("")) {
+									state = user_current_profile.getLocation();
+								}
+								
+								if(!user_current_profile.getLocale().trim().equals("")) {
+									country = user_current_profile.getLocale();
+								}
+								
+								userID = user_city_id +"-" + dateNowAppend + "-" + CommonFunctionsUtil.generateRandomString(4, 5);							
+					        	
 								//Insert facebook data (Assume user create profile first, then user login app by connecting Facebook so we have to insert Facebook data)
 								//sql = UserQueries.FACEBOOK_INSERT_SQL;
 								System.out.println(UserQueries.FACEBOOK_INSERT_SQL);
@@ -350,6 +372,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 									} catch(Exception e) {
 										e.printStackTrace();
 									}
+									finally
+									{
+										tsDataSource.close();
+										tsDataSource.closeConnection(connection, statement, null);
+									}
 								}
 							}
 							
@@ -375,42 +402,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 					//Create a new user
 					if(!check_user) {
 						
-						String user_city_id = GlobalVariables.DEFAULT_CITY_ID;
-						//String city_name = GlobalVariables.DEFAULT_CITY_NAME;
-						String state = GlobalVariables.DEFAULT_STATE;
-						String country = GlobalVariables.DEFAULT_COUNTRY;
-						
-						if(!user_current_profile.getHometown().trim().equals("")) {
-							TSCityObj city_infor = null;
-							
-							//city_name = user_current_profile.getHometown();
-							
-							try {
-								city_infor = mySQL.getCityInforByStateAndCityName(user_current_profile.getLocation(), user_current_profile.getHometown());
-							} catch(Exception e) {
-								e.printStackTrace();
-							}
-							
-							if(city_infor != null) {
-								user_city_id = city_infor.getCityId();
-							}
-						}
-						
-						if(!user_current_profile.getLocation().trim().equals("")) {
-							state = user_current_profile.getLocation();
-						}
-						
-						if(!user_current_profile.getLocale().trim().equals("")) {
-							country = user_current_profile.getLocale();
-						}
-						
 						TSDataSource tsDataSource = TSDataSource.getInstance();				 
 				        Connection connection = null;
 				        PreparedStatement statement = null;
 				        connection = tsDataSource.getConnection();
 			        	tsDataSource.begin();
 				        try{
-				        	String user_id = user_city_id +"-" + dateNowAppend + "-" + CommonFunctionsUtil.generateRandomString(4, 5);							
 				        	statement = connection.prepareStatement(UserQueries.USER_FACEBOOK_INSERT_SQL);
 			            	statement.setString(1, user_current_profile.getEmail());
 			            	statement.setString(2, dateNow);
@@ -418,12 +415,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			            	statement.setString(4, user_current_profile.getLastName());
 			            	statement.setString(5, user_current_profile.getGender());
 			            	statement.setString(6, user_city_id);
-			            	//statement.setString(7, city_name);
 			            	statement.setString(7, state);
 			            	statement.setString(8, country);
 			            	statement.setString(9, user_current_profile.getId());
-			            	statement.setString(10, user_id);
-			            	statement.setString(11, user_id);
+			            	statement.setString(10, userID);
+			            	statement.setString(11, userID);
 			            	statement.execute();
 						
 						try {
@@ -431,10 +427,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
 							
 							//Update user_id
-							final String user_id_ps = user_id;
+							final String user_id_ps = userID;
 							final String dateNow_ps = dateNow;
 							
-							id = dateNowAppend + "-" + user_id + "-" + CommonFunctionsUtil.generateRandomString(4, 5);
+							id = dateNowAppend + "-" + userID + "-" + CommonFunctionsUtil.generateRandomString(4, 5);
 							userLogId = id;
 			            	System.out.println(UserQueries.USER_LOGIN_INSERT_SQL);
 							//Update login time (users_log table)
@@ -466,6 +462,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						}
 						}finally{
 							tsDataSource.close();
+							tsDataSource.closeConnection(connection, statement, null);
 						}
 				    }
 					else {
@@ -505,6 +502,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 							e.printStackTrace();
 						}finally{
 							tsDataSource.close();
+							tsDataSource.closeConnection(connection, statement, null);
 						}
 					}
 					
@@ -563,6 +561,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	        	return false;
 	        }finally{
 	        	tsDataSource.close();
+	        	tsDataSource.closeConnection(connection, statement, null);
 	        }
         	return true;
 		}
@@ -603,50 +602,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
         return tsUserObj;
     }
-
-    /*private void mapResultsetRowToTSUserVO(TSUserObj tsUserObj,
-        ResultSet resultset) throws SQLException {
-        tsUserObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_ID")));
-        tsUserObj.setTsUserId(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.TS_USER_ID")));
-        tsUserObj.setTsUserEmail(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.TS_USER_EMAIL")));
-        tsUserObj.setTsUserPw(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.TS_USER_PW")));
-        tsUserObj.setTsFirstName(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.TS_FIRST_NAME")));
-        tsUserObj.setTsLastName(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.TS_LAST_NAME")));
-        tsUserObj.setMaxInvites(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.MAX_INVITES")));
-        tsUserObj.setUserCreatedInitialDatetime(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_CREATED_INITIAL_DATETIME")));
-        tsUserObj.setUserPoints(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_POINTS")));
-        tsUserObj.setTwitterUsrUrl(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.TWITTER_USR_URL")));
-        tsUserObj.setUserDisabledFlag(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_DISABLED_FLAG")));
-        tsUserObj.setUserActivationKey(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_ACTIVATION_KEY")));
-        tsUserObj.setUserGender(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_GENDER")));
-        tsUserObj.setUserCityId(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_CITY_ID")));
-        tsUserObj.setUserState(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_STATE")));
-        tsUserObj.setIsOnline(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.IS_ONLINE")));
-        tsUserObj.setUserCountry(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_COUNTRY")));
-        tsUserObj.setAbout(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.ABOUT")));
-        tsUserObj.setCurrentStatus(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.CURRENT_STATUS")));
-        tsUserObj.setUserFbId(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("users.USER_FB_ID")));
-    }*/
 
     public List<TSUserObj> selectUsers() throws TasteSyncException {
         List<TSUserObj> tsUserObjs = new ArrayList<TSUserObj>();
@@ -799,6 +754,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    	privacySettingsObj.setPrivacy(arrayPrivacy);
 		    	
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 		    	return privacySettingsObj;
 			}catch(Exception e)
 			{
@@ -925,6 +881,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    	notifycation.setNotification(arrayNotification);
 		    	
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 		    	return notifycation;
 			}catch(Exception e)
 			{
@@ -981,6 +938,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    	}
 		    	
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 	    	}
 	    	else
 	    	{
@@ -1001,6 +959,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			    	statement.execute();
 		    	}
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 	    	}
 	    	
 	    	
@@ -1036,6 +995,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			    	}
 		    	}
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 	    	}
 	    	else
 	    	{
@@ -1068,6 +1028,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    	}
 		    	
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 	    }
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             tsSuccessObj.setSuccessMsg("Settings success!");
@@ -1183,6 +1144,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    	}
 		    	social.setSocialSettings(arraySocial);
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 		    	return social;
 			}catch(Exception e)
 			{
@@ -1354,6 +1316,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	        }
 	        finally{
 	        	tsDataSource.close();
+	        	tsDataSource.closeConnection(connection, statement, null);
 	        }
         }
         return ret;
@@ -1436,7 +1399,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 					throw new TasteSyncException(e.getMessage());
 				} finally {
 					tsDataSource.close();
-					tsDataSource.closeConnection(connection, statement, null);
+					tsDataSource.closeConnection(connection, statement, resultset);
 				}
 			}
 		}
@@ -1518,6 +1481,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         		dataID.add(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_friend_tastesync.FRIEND_ID")));
         	}
         	tsDataSource.close();
+        	tsDataSource.closeConnection(connection, statement, null);
         	
         	int count = 0;
         	while(dataID.size() != count)
@@ -1569,6 +1533,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    }
 		    finally{
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 		    }
 		}
 		else
@@ -1592,6 +1557,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    }
 		    finally{
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 		    }
 		}
 		return response;
@@ -1635,6 +1601,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    }
 		    finally{
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, null);
 		    }
 		}
 		else
@@ -1671,6 +1638,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			 e.printStackTrace();
 		 } finally {
 			 tsDataSource.close();
+			 tsDataSource.closeConnection(connection, statement, resultset);
 		 }
 		 return fbUsers;
 	}
@@ -1702,6 +1670,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			 e.printStackTrace();
 		 } finally {
 			 tsDataSource.close();
+			 tsDataSource.closeConnection(connection, statement, resultset);
 		 }
 		 return fbUsers;
 	 }
@@ -1709,7 +1678,48 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException
 	{
-	 	return false;
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		boolean response = true;
+		List<String> restaurantId = askObj.getRestaurandId();
+		try {
+			 connection = tsDataSource.getConnection();
+			 tsDataSource.begin();
+			 System.out.println("UserQueries.USER_CUISINE_INSERT_SQL="
+					 + UserQueries.USER_CUISINE_INSERT_SQL);
+			 statement = connection.prepareStatement(UserQueries.USER_CUISINE_INSERT_SQL);
+			 statement.setString(1, askObj.getUserId());
+			 statement.setString(2, askObj.getCuisineId());
+			 statement.execute();
+			 
+			 connection = tsDataSource.getConnection();
+			 System.out.println("UserQueries.USER_FRIEND_FB_UPDATE_SQL="
+					 + UserQueries.USER_FRIEND_FB_UPDATE_SQL);
+			 statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_UPDATE_SQL);
+			 statement.setString(1, "1");
+			 statement.setString(2, askObj.getUserId());
+			 statement.setString(3, askObj.getFacebookFriendId());
+			 statement.executeUpdate();
+			 
+			 for(int i = 0; i < restaurantId.size(); i++)
+			 {
+				 connection = tsDataSource.getConnection();
+				 System.out.println("UserQueries.USER_RESTAURANT_FAV_INSERT_SQL="
+						 + UserQueries.USER_RESTAURANT_FAV_INSERT_SQL);
+				 statement = connection.prepareStatement(UserQueries.USER_RESTAURANT_FAV_INSERT_SQL);
+				 statement.setString(1, askObj.getUserId());
+				 statement.setString(2, restaurantId.get(i));
+				 statement.execute();
+			 }
+		 } catch (Exception e) {
+			 e.printStackTrace();
+			 response = false;
+		 } finally {
+			 tsDataSource.close();
+			 tsDataSource.closeConnection(connection, statement, null);
+		 }
+	 	return response;
 	}
 	
 	@Override
@@ -1741,7 +1751,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	    	response = false;
 	    }
 	    finally{
-	    	tsDataSource.close();
+	    	
 	    }
 		return response;
 	}
@@ -1775,6 +1785,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		    		cityData.add(arrayID[1]);
 		    	}
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, resultset);
 		    }catch(Exception e)
 		    {
 		    	e.printStackTrace();
@@ -1802,6 +1813,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				}
 		    	
 		    	tsDataSource.close();
+		    	tsDataSource.closeConnection(connection, statement, resultset);
 		    }catch(Exception e)
 		    {
 		    	e.printStackTrace();

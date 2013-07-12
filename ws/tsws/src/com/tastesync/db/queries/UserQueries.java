@@ -230,4 +230,14 @@ public interface UserQueries extends TSDBCommonQueries {
  	//CITY_NEIGHOOURHOOD
  	public static String CITY_NEIGHOOURHOOD_SELECT_SQL = "SELECT * FROM city_neighbourhood WHERE CITY_ID = ?";
 	
+ 	//USER_CUISINE
+ 	public static String USER_CUISINE_INSERT_SQL = "INSERT INTO user_cuisine(USER_ID, CUISINE_ID) VALUE  (?, ?)";
+	
+ 	//USER_FRIEND_FB
+ 	public static String USER_FRIEND_FB_UPDATE_SQL = "UPDATE user_friend_fb SET INVITATION_SENT_YN = ? WHERE USER_ID = ? AND USER_FRIEND_FB = ?";
+ 	public static String USER_FRIEND_FB_INSERT_SQL = "INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN) VALUES (?, ?, ?, ?)";
+	
+ 	//USER_RESTAURANT_FAV
+ 	public static String USER_RESTAURANT_FAV_INSERT_SQL = "INSERT INTO user_restaurant_fav(USER_ID, RESTAURANT_ID) VALUES (?, ?)";
+	
 }

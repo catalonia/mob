@@ -109,6 +109,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		
 		if(user != null) 
@@ -141,6 +142,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		
 		return city;
@@ -170,6 +172,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		return user;
 	}
@@ -196,6 +199,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		return null;
 	}
@@ -222,6 +226,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		return userId;
 	}
@@ -248,6 +253,7 @@ public class MySQL {
 		e.printStackTrace();
 	}finally{
 		tsDataSource.close();
+		tsDataSource.closeConnection(connection, statement, resultset);
 	}
 	if(fb_user_data != null) check = true;
 
@@ -277,6 +283,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		return user;
 	}
@@ -305,6 +312,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		return user;
 	}
@@ -326,12 +334,14 @@ public class MySQL {
     	{
     		int ret = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_ID")));
     		tsDataSource.close();
+    		tsDataSource.closeConnection(connection, statement, resultset);
     		return ret;
     	}
 	} catch (Exception e) {
 		e.printStackTrace();
 	}finally{
 		tsDataSource.close();
+		tsDataSource.closeConnection(connection, statement, resultset);
 	}
 		return 0;
 	}
@@ -350,12 +360,16 @@ public class MySQL {
 	    	resultset = statement.executeQuery();
     	if(resultset.next())
     	{
-    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("auto_publishing.AP_ID")));
+    		int retValue = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("auto_publishing.AP_ID")));
+    		tsDataSource.close();
+    		tsDataSource.closeConnection(connection, statement, resultset);
+    		return retValue;
     	}
 	} catch (Exception e) {
 		e.printStackTrace();
 	}finally{
 		tsDataSource.close();
+		tsDataSource.closeConnection(connection, statement, resultset);
 	}
 		return 0;
 	}
@@ -387,6 +401,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		return false;
 	}
@@ -407,7 +422,10 @@ public class MySQL {
 	    	if(resultset.next())
 	    	{
 	    		i++;
+	    		
 	    	}
+	    	tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 	    	System.out.println("Number row:"+i);
 	    	if(i != 0)
 	    		return true;
@@ -418,6 +436,7 @@ public class MySQL {
 		e.printStackTrace();
 	}finally{
 		tsDataSource.close();
+		tsDataSource.closeConnection(connection, statement, resultset);
 	}
 		return false;
 	}
@@ -439,6 +458,8 @@ public class MySQL {
 	    	{
 	    		i++;
 	    	}
+	    	tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 	    	System.out.println("Number row:"+i);
 	    	if(i != 0)
 	    		return true;
@@ -449,6 +470,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		return false;
 	}
@@ -468,12 +490,16 @@ public class MySQL {
 	    	resultset = statement.executeQuery();
     	if(resultset.next())
     	{
-    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("notification_descriptor.NSID")));
+    		int value = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("notification_descriptor.NSID")));
+    		tsDataSource.close();
+    		tsDataSource.closeConnection(connection, statement, resultset);
+    		return value;
     	}
 	} catch (Exception e) {
 		e.printStackTrace();
 	}finally{
 		tsDataSource.close();
+		tsDataSource.closeConnection(connection, statement, resultset);
 	}
 		return 0;
 	}
@@ -496,6 +522,8 @@ public class MySQL {
 	    		i++;
 	    	}
 	    	System.out.println("Number row:"+i);
+	    	tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 	    	if(i != 0)
 	    		return true;
 	    	else
@@ -525,12 +553,16 @@ public class MySQL {
     	if(resultset.next())
     	{
     		System.out.println(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID")));
-    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID")));
+    		int value = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID")));
+    		tsDataSource.close();
+    		tsDataSource.closeConnection(connection, statement, resultset);
+    		return value;
     	}
 	} catch (Exception e) {
 		e.printStackTrace();
 	}finally{
 		tsDataSource.close();
+		tsDataSource.closeConnection(connection, statement, resultset);
 	}
 		return 0;
 	}
@@ -577,12 +609,16 @@ public class MySQL {
 	    	resultset = statement.executeQuery();
     	if(resultset.next())
     	{
-    		return CommonFunctionsUtil.getModifiedValueString(resultset.getString("about_tastesync_element_descriptor.DESCRIPTION"));
+    		String value = CommonFunctionsUtil.getModifiedValueString(resultset.getString("about_tastesync_element_descriptor.DESCRIPTION"));
+    		tsDataSource.close();
+    		tsDataSource.closeConnection(connection, statement, resultset);
+    		return value;
     	}
 	} catch (Exception e) {
 		e.printStackTrace();
 	}finally{
 		tsDataSource.close();
+		tsDataSource.closeConnection(connection, statement, resultset);
 	}
 		return null;
 	}
@@ -607,6 +643,8 @@ public class MySQL {
 	    		i++;
 	    	}
 	    	System.out.println("Number row:" + i);
+	    	tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 	    	if(i != 0)
 	    		return true;
 	    	else
@@ -616,6 +654,7 @@ public class MySQL {
 			e.printStackTrace();
 		}finally{
 			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
 		}
 		return false;
 	}

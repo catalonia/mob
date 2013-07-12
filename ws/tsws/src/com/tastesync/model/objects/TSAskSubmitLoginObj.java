@@ -11,7 +11,7 @@ public class TSAskSubmitLoginObj implements Serializable{
 	private String userId;
 	private String cuisineId;
 	private List<String> restaurandId;
-	private TSFacebookUserDataObj facebookFriendId;
+	private String facebookFriendId;
 	
 	@XmlElement
 	public String getUserId() {
@@ -41,11 +41,11 @@ public class TSAskSubmitLoginObj implements Serializable{
 	}
 	
 	@XmlElement
-	public TSFacebookUserDataObj getFacebookFriendId() {
+	public String getFacebookFriendId() {
 		return facebookFriendId;
 	}
 	
-	public void setFacebookFriendId(TSFacebookUserDataObj facebookFriendId) {
+	public void setFacebookFriendId(String facebookFriendId) {
 		this.facebookFriendId = facebookFriendId;
 	}
 }
