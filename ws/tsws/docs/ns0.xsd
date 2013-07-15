@@ -11,12 +11,21 @@
   <xs:element name="recommenders" type="TSRecommendersDetailsObj"/>
   <xs:element name="restaurantdetails" type="TSRestaurantDetailsObj"/>
   <xs:element name="restaurant" type="TSRestaurantObj"/>
+  <xs:element name="restaurantsUserProfileHome" type="TSRestaurantView"/>
   <xs:element name="autopub" type="TSSocialAutoPubSettingsObj"/>
   <xs:element name="social" type="TSSocialSettingsObj"/>
   <xs:element name="success" type="TSSuccessObj"/>
   <xs:element name="user" type="TSUserObj"/>
   <xs:element name="userprofile" type="TSUserProfileObj"/>
   <xs:element name="userprofilerestaurants" type="TSUserProfileRestaurantsObj"/>
+  <xs:complexType name="TSCityObj">
+    <xs:sequence>
+      <xs:element name="cityId" type="xs:string" minOccurs="0"/>
+      <xs:element name="country" type="xs:string" minOccurs="0"/>
+      <xs:element name="state" type="xs:string" minOccurs="0"/>
+      <xs:element name="city" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="TSCurrentRecommendedRestaurantDetailsObj">
     <xs:sequence>
       <xs:element name="userId" type="xs:string" minOccurs="0"/>
@@ -129,6 +138,26 @@
       <xs:element name="tbdOpenTableId" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="TSRestaurantPhotoObj">
+    <xs:sequence>
+      <xs:element name="restaurantId" type="xs:string" minOccurs="0"/>
+      <xs:element name="photoId" type="xs:string" minOccurs="0"/>
+      <xs:element name="prefix" type="xs:string" minOccurs="0"/>
+      <xs:element name="suffix" type="xs:string" minOccurs="0"/>
+      <xs:element name="width" type="xs:string" minOccurs="0"/>
+      <xs:element name="height" type="xs:string" minOccurs="0"/>
+      <xs:element name="ultimateSourceName" type="xs:string" minOccurs="0"/>
+      <xs:element name="ultimateSourceUrl" type="xs:string" minOccurs="0"/>
+      <xs:element name="photoSource" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRestaurantView">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <xs:element name="photo" type="TSRestaurantPhotoObj" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="TSSocialAutoPubSettingsObj">
     <xs:sequence>
       <xs:element name="usncORDER" type="xs:string" minOccurs="0"/>
@@ -184,7 +213,7 @@
       <xs:element name="numFollowees" type="xs:string" minOccurs="0"/>
       <xs:element name="numFriendsOnTs" type="xs:string" minOccurs="0"/>
       <xs:element name="numPoints" type="xs:string" minOccurs="0"/>
-      <xs:element name="testaurantDetailsList" type="TSRestaurantDetailsObj" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="restaurantList" type="TSRestaurantView" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSUserProfileRestaurantsObj">
@@ -193,9 +222,7 @@
       <xs:element name="restaurantName" type="xs:string" minOccurs="0"/>
       <xs:element name="cuisineTier2Name" type="xs:string" minOccurs="0"/>
       <xs:element name="price" type="xs:string" minOccurs="0"/>
-      <xs:element name="restaurantCity" type="xs:string" minOccurs="0"/>
-      <xs:element name="restaurantState" type="xs:string" minOccurs="0"/>
-      <xs:element name="restaurantCountry" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantCity" type="TSCityObj" minOccurs="0"/>
       <xs:element name="restaurantLat" type="xs:string" minOccurs="0"/>
       <xs:element name="restaurantLong" type="xs:string" minOccurs="0"/>
       <xs:element name="restaurantDealFlag" type="xs:string" minOccurs="0"/>

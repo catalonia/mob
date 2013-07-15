@@ -153,7 +153,7 @@ public class RestaurantService extends BaseService {
         TSMenuObj tsMenuObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
-
+        
         try {
             tsMenuObj = restaurantBO.selectRestaurantMenu(restaurantId);
 

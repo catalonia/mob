@@ -96,4 +96,15 @@ public interface UserBo {
     
     List<TSRestaurantObj> showRestaurantSuggestion(String key, String userId)
     	throws TasteSyncException;
+    
+    TSUserProfileObj getUserHomeProfile(String userId) throws TasteSyncException;
+
+    List<TSUserProfileRestaurantsObj> getUserProfileRestaurants(String userId,
+	int type, int from, int to)throws TasteSyncException;
+    
+    void inviteFriend(String userId, String friendFBId)
+			throws TasteSyncException;
+    
+    void submitUserReport(String userId, String reportedUserId,
+			String reason) throws TasteSyncException;
 }

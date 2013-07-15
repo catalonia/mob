@@ -217,7 +217,9 @@ public interface UserQueries extends TSDBCommonQueries {
  			+ "(`ID`, `FOLLOWER_USER_ID`, `FOLLOWEE_USER_ID`)" + " VALUES ("
  			+ "?" + ",?" + ",?)";
  	public static String USER_FOLLOW_DATA_DELETE_SQL = "DELETE FROM user_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?";
-
+	public static String USER_FOLLOW_DATA_COUNT_FOLLOWING_SELECT_SQL = "SELECT COUNT(*) AS 'count' FROM user_follow_data WHERE FOLLOWER_USER_ID = ?";
+ 	public static String USER_FOLLOW_DATA_COUNT_FOLLOWER_SELECT_SQL = "SELECT COUNT(*) AS 'count' FROM user_follow_data WHERE FOLLOWEE_USER_ID = ?";
+ 
  	//USER_FRIEND_TASTESYNC
  	public static String USER_FRIEND_TASTESYNC_SELECT_SQL = "SELECT * FROM user_friend_tastesync WHERE USER_ID = ?";
  	public static String USER_FRIEND_TASTESYNC_CHECK_SELECT_SQL = "SELECT * FROM user_friend_tastesync WHERE USER_ID = ? AND FRIEND_ID = ?";
@@ -234,10 +236,67 @@ public interface UserQueries extends TSDBCommonQueries {
  	public static String USER_CUISINE_INSERT_SQL = "INSERT INTO user_cuisine(USER_ID, CUISINE_ID) VALUE  (?, ?)";
 	
  	//USER_FRIEND_FB
- 	public static String USER_FRIEND_FB_UPDATE_SQL = "UPDATE user_friend_fb SET INVITATION_SENT_YN = ? WHERE USER_ID = ? AND USER_FRIEND_FB = ?";
- 	public static String USER_FRIEND_FB_INSERT_SQL = "INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN) VALUES (?, ?, ?, ?)";
+ 	public static String USER_FRIEND_SIGNUP_FB_UPDATE_SQL = "UPDATE user_friend_fb SET INVITATION_SENT_YN = ? WHERE USER_ID = ? AND USER_FRIEND_FB = ?";
+ 	public static String USER_FRIEND_SIGNUP_FB_INSERT_SQL = "INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN) VALUES (?, ?, ?, ?)";
 	
  	//USER_RESTAURANT_FAV
  	public static String USER_RESTAURANT_FAV_INSERT_SQL = "INSERT INTO user_restaurant_fav(USER_ID, RESTAURANT_ID) VALUES (?, ?)";
 	
+ // USER_HOME_PROFILE
+ 	public static String USERS_FACEBOOK_USER_DATA_CITIES_SELECT_SQL = "SELECT"
+ 			+ " `facebook_user_data`.NAME,  `facebook_user_data`.PICTURE,  `facebook_user_data`.LINK,  `users`.TWITTER_USR_URL, `users`.Blog_Url,  `cities`.city,  `users`.USER_POINTS, `users`.ABOUT"
+ 			+ " FROM users, facebook_user_data, cities"
+ 			+ " WHERE  `users`.USER_FB_ID =  `FACEBOOK_USER_DATA`.User_FB_ID"
+ 			+ " AND  `users`.USER_CITY_ID = `cities`.city_id"
+ 			+ " AND  `users`.USER_ID =  ?";
+	
+ 	// USER_RESTAURANT_FAV
+ 	public static String USER_RESTAURANT_FAV_SELECT_SQL = "SELECT * "
+ 			+ "FROM user_restaurant_fav " + "WHERE USER_ID = ?";
+ 	public static String USER_RESTAURANT_FAV_CHECK_SELECT_SQL = "SELECT * "
+ 			+ "FROM user_restaurant_fav "
+ 			+ "WHERE USER_ID = ? AND RESTAURANT_ID = ?";
+ 	// USER_RESTAURANT_RECO
+ 	public static String USER_RESTAURANT_RECO_SELECT_SQL = "SELECT * "
+ 			+ "FROM user_restaurant_reco " + "WHERE RECOMMENDER_USER_ID = ? ";
+ 	public static String USER_RESTAURANT_RECO_CHECK_SELECT_SQL = "SELECT * "
+ 			+ "FROM user_restaurant_reco "
+ 			+ "WHERE RECOMMENDER_USER_ID = ? AND RESTAURANT_ID = ?";
+ 	// USER_RESTAURANT_SAVED
+ 	public static String USER_RESTAURANT_SAVED_SELECT_SQL = "SELECT * "
+ 			+ "FROM user_restaurant_saved " + "WHERE USER_ID = ?";
+ 	public static String USER_RESTAURANT_SAVED_CHECK_SELECT_SQL = "SELECT * "
+ 			+ "FROM user_restaurant_saved " + "WHERE USER_ID = ? AND RESTAURANT_ID = ?";
+
+ 	// RESTAURANT_TIPS_TASTESYNC
+ 	public static String RESTAURANT_TIPS_TASTESYNC_SELECT_SQL = "SELECT * "
+ 			+ "FROM restaurant_tips_tastesync " + "WHERE USER_ID = ?";
+ 	public static String RESTAURANT_TIPS_TASTESYNC_CHECK_SELECT_SQL = "SELECT * "
+ 			+ "FROM restaurant_tips_tastesync "
+ 			+ "WHERE USER_ID = ? AND RESTAURANT_ID = ?";
+
+ 	// RESTAURANT
+ 	public static String RESTAURANT_SELECT_SQL = "SELECT * "
+ 			+ "FROM restaurant " + "WHERE RESTAURANT_ID = ?";
+ 	// RESTAURANT_PHOTO
+ 	public static String RESTAURANT_PHOTO_SELECT_SQL = "SELECT * "
+ 			+ "FROM restaurant_photo " + "WHERE RESTAURANT_ID = ?";
+ 	// CITIES
+ 	public static String CITIES_SELECT_SQL = "SELECT * FROM cities WHERE CITY_ID = ? ";
+
+ 	// RESTAURANT_CUISINE
+ 	public static String RESTAURANT_CUISINE_SELECT_SQL = "SELECT * "
+ 			+ "FROM restaurant_cuisine " + "WHERE RESTAURANT_ID=?";
+ 	// CUISINE_TIER2_DESCRIPTOR
+ 	public static String CUISINE_TIER2_DESCRIPTOR_SELECT_SQL = "SELECT * "
+ 			+ "FROM cuisine_tier2_descriptor " + "WHERE CUISINE_ID = ? ";
+ 	
+ // USER_FRIEND_FB
+ 	public static String USER_FRIEND_FB_INSERT_SQL = "INSERT INTO `user_friend_fb`(`USER_ID`, `USER_FRIEND_FB`, `FB_UPDATE_DATETIME`, `INVITATION_SENT_YN`)"
+ 			+ "VALUES (?,?,?,?)";
+ 	public static String USER_FRIEND_FB_UPDATE_SQL = "UPDATE `user_friend_fb`"
+ 			+ " SET `FB_UPDATE_DATETIME`=?,`INVITATION_SENT_YN`=? "
+ 			+ "WHERE USER_ID=? AND USER_FRIEND_FB=?";
+ 	public static String USER_FRIEND_FB_CHECK_SELECT_SQL = "SELECT * "
+ 			+ "FROM `user_friend_fb` " + "WHERE USER_ID=? AND USER_FRIEND_FB=?";
 }

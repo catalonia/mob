@@ -203,4 +203,30 @@ public class UserBoImpl implements UserBo {
 	{
 		return userDao.showRestaurantSuggestion(key, userId);
 	}
+	
+	
+	@Override
+	public TSUserProfileObj getUserHomeProfile(String userId) throws TasteSyncException
+	{
+		return userDao.getUserHomeProfile(userId);
+	}
+	
+	@Override
+	public List<TSUserProfileRestaurantsObj> getUserProfileRestaurants(String userId,
+	int type, int from, int to)throws TasteSyncException
+	{
+		return userDao.getUserProfileRestaurants(userId, type, from, to);
+	}
+	
+	@Override
+	public void inviteFriend(String userId, String friendFBId)
+			throws TasteSyncException {
+		userDao.inviteFriend(userId, friendFBId);
+	}
+
+	@Override
+	public void submitUserReport(String userId, String reportedUserId,
+			String reason) throws TasteSyncException {
+		userDao.submitUserReport(userId, reportedUserId, reason);
+	}
 }

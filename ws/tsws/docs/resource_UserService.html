@@ -71,6 +71,8 @@
       <p>The following resources are part of this group:</p>
       <ul>
         <li><a href="#path__user_allusers.html">/user/allusers</a></li>
+        <li><a href="#path__user_getHomeProfile.html">/user/getHomeProfile</a></li>
+        <li><a href="#path__user_inviteFriend.html">/user/inviteFriend</a></li>
         <li><a href="#path__user_report.html">/user/report</a></li>
         <li><a href="#path__user_sendMessageToUser.html">/user/sendMessageToUser</a></li>
         <li><a href="#path__user_showAboutTastesync.html">/user/showAboutTastesync</a></li>
@@ -78,6 +80,7 @@
         <li><a href="#path__user_showProfileFollowers.html">/user/showProfileFollowers</a></li>
         <li><a href="#path__user_showProfileFollowing.html">/user/showProfileFollowing</a></li>
         <li><a href="#path__user_showProfileFriends.html">/user/showProfileFriends</a></li>
+        <li><a href="#path__user_showProfileRestaurants.html">/user/showProfileRestaurants</a></li>
         <li><a href="#path__user_showRestaurantSuggestion.html">/user/showRestaurantSuggestion</a></li>
         <li><a href="#path__user_showSettingsNotifications.html">/user/showSettingsNotifications</a></li>
         <li><a href="#path__user_showSettingsPrivacy.html">/user/showSettingsPrivacy</a></li>
@@ -95,6 +98,7 @@
         <li><a href="#path__user_submitSettingsSocial.html">/user/submitSettingsSocial</a></li>
         <li><a href="#path__user_submitSignupDetail.html">/user/submitSignupDetail</a></li>
         <li><a href="#path__user_submitTrustedFriendStatusChange.html">/user/submitTrustedFriendStatusChange</a></li>
+        <li><a href="#path__user_submitUserReport.html">/user/submitUserReport</a></li>
         <li><a href="#path__user_userdetails.html">/user/userdetails</a></li>
         <li><a href="#path__user_profile_me.html">/user/profile/me</a></li>
         <li><a href="#path__user_profile_restaurants.html">/user/profile/restaurants</a></li>
@@ -105,6 +109,82 @@
       <p class="note">Mount Point: <a href="./rest/user/allusers">/rest/user/allusers</a></p>
       <a name="GET"></a>
       <h2>GET</h2>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__user_getHomeProfile.html"></a>
+      <h1>/user/getHomeProfile</h1>
+      <p class="note">Mount Point: <a href="./rest/user/getHomeProfile">/rest/user/getHomeProfile</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__user_inviteFriend.html"></a>
+      <h1>/user/inviteFriend</h1>
+      <p class="note">Mount Point: <a href="./rest/user/inviteFriend">/rest/user/inviteFriend</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>friendFBId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
       <h3>Response Body</h3>
       <table>
         <tr>
@@ -367,6 +447,64 @@
         </tr>
         <tr>
           <td>userId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__user_showProfileRestaurants.html"></a>
+      <h1>/user/showProfileRestaurants</h1>
+      <p class="note">Mount Point: <a href="./rest/user/showProfileRestaurants">/rest/user/showProfileRestaurants</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>type</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>from</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>to</td>
           <td>
             (no documentation provided)
           </td>
@@ -1000,6 +1138,56 @@
         </tr>
         <tr>
           <td>trustedFriendStatus</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__user_submitUserReport.html"></a>
+      <h1>/user/submitUserReport</h1>
+      <p class="note">Mount Point: <a href="./rest/user/submitUserReport">/rest/user/submitUserReport</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>reportedUserId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>reason</td>
           <td>
             (no documentation provided)
           </td>

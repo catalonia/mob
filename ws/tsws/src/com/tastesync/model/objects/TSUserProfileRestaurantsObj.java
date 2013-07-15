@@ -13,9 +13,6 @@ public class TSUserProfileRestaurantsObj implements Serializable {
     private String restaurantName;
     private String cuisineTier2Name;
     private String price;
-    private String restaurantCity;
-    private String restaurantState;
-    private String restaurantCountry;
     private String restaurantLat;
     private String restaurantLong;
     private String restaurantDealFlag;
@@ -24,6 +21,7 @@ public class TSUserProfileRestaurantsObj implements Serializable {
     private String userFavFlag;
     private String userRecommendedFlag;
     private String userTipFlag;
+    private TSCityObj restaurantCity;
 
     @XmlElement
     public String getRestauarntId() {
@@ -46,19 +44,11 @@ public class TSUserProfileRestaurantsObj implements Serializable {
     }
 
     @XmlElement
-    public String getRestaurantCity() {
+    public TSCityObj getRestaurantCity() {
         return restaurantCity;
     }
 
-    @XmlElement
-    public String getRestaurantState() {
-        return restaurantState;
-    }
 
-    @XmlElement
-    public String getRestaurantCountry() {
-        return restaurantCountry;
-    }
 
     @XmlElement
     public String getRestaurantLat() {
@@ -116,16 +106,8 @@ public class TSUserProfileRestaurantsObj implements Serializable {
         this.price = price;
     }
 
-    public void setRestaurantCity(String restaurantCity) {
+    public void setRestaurantCity(TSCityObj restaurantCity) {
         this.restaurantCity = restaurantCity;
-    }
-
-    public void setRestaurantState(String restaurantState) {
-        this.restaurantState = restaurantState;
-    }
-
-    public void setRestaurantCountry(String restaurantCountry) {
-        this.restaurantCountry = restaurantCountry;
     }
 
     public void setRestaurantLat(String restaurantLat) {

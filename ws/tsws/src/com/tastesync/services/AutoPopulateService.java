@@ -10,7 +10,6 @@ import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
-import org.apache.log4j.Logger;
 
 import org.codehaus.jettison.json.JSONArray;
 

@@ -11,77 +11,11 @@ import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSUserObj;
+import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.util.CommonFunctionsUtil;
 
 public class MySQL {
-//
-//	public MySQL() {
-//		context = new ClassPathXmlApplicationContext("/spring/database/DataSource.xml");
-//		dataSource = (DriverManagerDataSource) context.getBean("dataSource");
-//		jdbcTemplate = new JdbcTemplate();
-//		jdbcTemplate.setDataSource(dataSource);
-//	}
-//
-//	//Get Last Id in tables
-//	public int getLastId(int order) {
-//		int last_id = 0;
-//		String query = null;
-//		
-//		//Get Last user_id 
-//		if(order == 1) {
-//			
-//			//Table users
-//			query = "SELECT USER_ID FROM users ORDER BY USER_ID DESC LIMIT 0, 1";
-//			
-//			SqlRowSet srs = jdbcTemplate.queryForRowSet(query, new Object[] {});
-//			while (srs.next()) {
-//				last_id = Integer.parseInt(srs.getString("USER_ID"));
-//			}
-//		}
-//		else if(order == 2) {
-//			
-//			//Table user_friend_fb_data
-//			query = "SELECT FRIEND_USER_ID FROM user_friend_fb_data ORDER BY FRIEND_USER_ID DESC LIMIT 0, 1";
-//			
-//			SqlRowSet srs = jdbcTemplate.queryForRowSet(query, new Object[] {});
-//			while (srs.next()) {
-//				last_id = Integer.parseInt(srs.getString("FRIEND_USER_ID"));
-//			}
-//		}
-//		else if(order == 3) {
-//			
-//			//Table story
-//			query = "SELECT STORY_ID FROM story ORDER BY STORY_ID DESC LIMIT 0, 1";
-//			
-//			SqlRowSet srs = jdbcTemplate.queryForRowSet(query, new Object[] {});
-//			while (srs.next()) {
-//				last_id = Integer.parseInt(srs.getString("STORY_ID"));
-//			}
-//		}
-//		
-//		return last_id;
-//	}
-//	
-//	//Check user_id exist in the system
-//	public boolean checkUserIDExist(String user_id) {
-//		boolean check = false;
-//		TSUser user = null;
-//			
-//		String query = "SELECT * FROM users WHERE USER_ID = ?";
-//		try {
-//			user = (TSUser) jdbcTemplate.queryForObject(
-//					query,
-//					new Object[] {user_id},
-//					new UserRowMapper());
-//		} catch (EmptyResultDataAccessException e) {
-//			e.printStackTrace();
-//		}
-//			
-//		if(user != null) check = true;
-//
-//		return check;
-//	}
-//	
+
 	//Check email exist in the system
 	public boolean checkEmailExist(String email) {
 		boolean check = false;
@@ -809,4 +743,78 @@ public class MySQL {
             tsRestaurantObj.setTbdOpenTableId(CommonFunctionsUtil.getModifiedValueString(
                     resultset.getString("restaurant.TBD_OPENTABLE_ID")));
         }
+    public static TSUserProfileRestaurantsObj getTSUserProfileRestaurantsObjFromRS(
+			ResultSet resultset) throws SQLException, Exception {
+		TSUserProfileRestaurantsObj restaurant = new TSUserProfileRestaurantsObj();
+		restaurant.setRestauarntId(CommonFunctionsUtil
+				.getModifiedValueString(resultset.getString("RESTAURANT_ID")));
+		restaurant
+				.setRestaurantName(CommonFunctionsUtil
+						.getModifiedValueString(resultset
+								.getString("RESTAURANT_NAME")));
+
+		restaurant.setPrice(CommonFunctionsUtil
+				.getModifiedValueString(resultset.getString("PRICE_RANGE")));
+		restaurant.setRestaurantRating(CommonFunctionsUtil
+				.getModifiedValueString(resultset.getString("FACTUAL_RATING")));
+		restaurant.setRestaurantLat(CommonFunctionsUtil
+				.getModifiedValueString(resultset.getString("RESTAURANT_LAT")));
+		restaurant.setRestaurantLong(CommonFunctionsUtil
+				.getModifiedValueString(resultset.getString("RESTAURANT_LON")));
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+
+		try {
+			connection = tsDataSource.getConnection();
+			tsDataSource.begin();
+			System.out.println(UserQueries.CITIES_SELECT_SQL);
+			statement = connection
+					.prepareStatement(UserQueries.CITIES_SELECT_SQL);
+			statement.setString(1, CommonFunctionsUtil
+					.getModifiedValueString(resultset
+							.getString("RESTAURANT_CITY_ID")));
+			rs = statement.executeQuery();
+			TSCityObj city = new TSCityObj();
+			if (rs.next()) {
+				mapResultsetRowToTSCityVO(city, rs);
+			}
+			restaurant.setRestaurantCity(city);
+		} catch (Exception e) {
+			throw e;
+
+		}
+		try {
+			connection = tsDataSource.getConnection();
+			tsDataSource.begin();
+			System.out.println(UserQueries.RESTAURANT_CUISINE_SELECT_SQL);
+			statement = connection
+					.prepareStatement(UserQueries.RESTAURANT_CUISINE_SELECT_SQL);
+			statement.setString(1, CommonFunctionsUtil
+					.getModifiedValueString(resultset
+							.getString("RESTAURANT_ID")));
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				String cuisine_id = rs.getString("tier2_cuisine_id");
+				connection = tsDataSource.getConnection();
+				tsDataSource.begin();
+				System.out
+						.println(UserQueries.CUISINE_TIER2_DESCRIPTOR_SELECT_SQL);
+				statement = connection
+						.prepareStatement(UserQueries.CUISINE_TIER2_DESCRIPTOR_SELECT_SQL);
+				statement.setString(1, cuisine_id);
+				rs = statement.executeQuery();
+				if (rs.next()) {
+					restaurant
+							.setCuisineTier2Name(rs.getString("CUISINE_DESC"));
+				}
+			}
+		} catch (Exception e) {
+			throw e;
+
+		}
+
+		return restaurant;
+	}
 }

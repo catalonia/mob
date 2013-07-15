@@ -18,6 +18,8 @@ import com.tastesync.model.objects.TSListSocialSettingObj;
 import com.tastesync.model.objects.TSNotificationSettingsObj;
 import com.tastesync.model.objects.TSPrivacySettingsObj;
 import com.tastesync.model.objects.TSRestaurantObj;
+import com.tastesync.model.objects.TSRestaurantPhotoObj;
+import com.tastesync.model.objects.TSRestaurantView;
 import com.tastesync.model.objects.TSSocialAutoPubSettingsObj;
 import com.tastesync.model.objects.TSSocialSettingsObj;
 import com.tastesync.model.objects.TSSuccessObj;
@@ -382,6 +384,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 							
 							if(list_friends_using_TasteSync != null && !list_friends_using_TasteSync.isEmpty()) {
 								//user_response.setList_user(list_friends_using_TasteSync);
+								
+								
+								
 							}
 
 							//TSMessage message = new TSMessage(TSMessageCode.SUCCESS.getValue(), MessageBinding.SUCCESS_LOGIN);
@@ -1694,9 +1699,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			 statement.execute();
 			 
 			 connection = tsDataSource.getConnection();
-			 System.out.println("UserQueries.USER_FRIEND_FB_UPDATE_SQL="
-					 + UserQueries.USER_FRIEND_FB_UPDATE_SQL);
-			 statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_UPDATE_SQL);
+			 System.out.println("UserQueries.USER_FRIEND_SIGNUP_FB_UPDATE_SQL="
+					 + UserQueries.USER_FRIEND_SIGNUP_FB_UPDATE_SQL);
+			 statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_FB_UPDATE_SQL);
 			 statement.setString(1, "1");
 			 statement.setString(2, askObj.getUserId());
 			 statement.setString(3, askObj.getFacebookFriendId());
@@ -1821,5 +1826,473 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	    
 	    }
 		return listData;
+	}
+	
+	@Override
+	public TSUserProfileObj getUserHomeProfile(String userId)
+			throws TasteSyncException {
+		TSUserProfileObj userProfileObj;
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+
+		try {
+			connection = tsDataSource.getConnection();
+			tsDataSource.begin();
+			System.out
+					.println("UserQueries.USERS_FACEBOOK_USER_DATA_CITIES_SELECT_SQL="
+							+ UserQueries.USERS_FACEBOOK_USER_DATA_CITIES_SELECT_SQL);
+			statement = connection
+					.prepareStatement(UserQueries.USERS_FACEBOOK_USER_DATA_CITIES_SELECT_SQL);
+			statement.setString(1, userId);
+			resultset = statement.executeQuery();
+			userProfileObj = new TSUserProfileObj();
+			while (resultset.next()) {
+				userProfileObj.setName(CommonFunctionsUtil
+						.getModifiedValueString(resultset
+								.getString("facebook_user_data.NAME")));
+				userProfileObj.setPhoto(CommonFunctionsUtil
+						.getModifiedValueString(resultset
+								.getString("facebook_user_data.PICTURE")));
+				userProfileObj.setFacebookUrl(CommonFunctionsUtil
+						.getModifiedValueString(resultset
+								.getString("facebook_user_data.LINK")));
+				userProfileObj.setTwitterUrl(CommonFunctionsUtil
+						.getModifiedValueString(resultset
+								.getString("users.TWITTER_USR_URL")));
+				userProfileObj.setBlogUrl(CommonFunctionsUtil
+						.getModifiedValueString(resultset
+								.getString("users.Blog_Url")));
+				userProfileObj.setFacebookCity(CommonFunctionsUtil
+						.getModifiedValueString(resultset
+								.getString("cities.city")));
+				userProfileObj.setNumPoints(CommonFunctionsUtil
+						.getModifiedValueString(resultset
+								.getString("users.USER_POINTS")));
+				userProfileObj.setAboutMeText(CommonFunctionsUtil
+						.getModifiedValueString(resultset
+								.getString("users.ABOUT")));
+			}
+
+			connection = tsDataSource.getConnection();
+			statement = connection
+					.prepareStatement(UserQueries.USER_FOLLOW_DATA_COUNT_FOLLOWING_SELECT_SQL);
+			statement.setString(1, userId);
+			resultset = statement.executeQuery();
+			if (resultset.next()) {
+				userProfileObj.setNumFollowers(String.valueOf(resultset
+						.getInt("count")));
+			}
+			connection = tsDataSource.getConnection();
+			statement = connection
+					.prepareStatement(UserQueries.USER_FOLLOW_DATA_COUNT_FOLLOWER_SELECT_SQL);
+			statement.setString(1, userId);
+			resultset = statement.executeQuery();
+			if (resultset.next()) {
+				userProfileObj.setNumFollowees(String.valueOf(resultset
+						.getInt("count")));
+			}
+			connection = tsDataSource.getConnection();
+			statement = connection
+					.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_SELECT_SQL);
+			statement.setString(1, userId);
+			resultset = statement.executeQuery();
+			int count = 0;
+			while (resultset.next()) {
+				count++;
+			}
+			userProfileObj.setNumFriendsOnTs(count + "");
+			userProfileObj
+					.setRestaurantList(getRestaurantListHomeProfile(userId));
+			return userProfileObj;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			tsDataSource.close();
+		}
+	}
+	
+	private static List<TSRestaurantView> getRestaurantListHomeProfile(
+			String userId) throws TasteSyncException {
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+
+		try {
+			List<TSRestaurantView> restaurantList = new ArrayList<TSRestaurantView>();
+			connection = tsDataSource.getConnection();
+			statement = connection
+					.prepareStatement(UserQueries.USER_RESTAURANT_FAV_SELECT_SQL
+							+ " LIMIT 0 , 3");
+			System.out.println("UserQueries.USER_RESTAURANT_FAV_SELECT_SQL="
+					+ UserQueries.USER_RESTAURANT_FAV_SELECT_SQL);
+			statement.setString(1, userId);
+			resultset = statement.executeQuery();
+			while (resultset.next()) {
+				TSRestaurantView restaurant = new TSRestaurantView();
+				restaurant.setId(CommonFunctionsUtil
+						.converStringAsNullIfNeeded(resultset
+								.getString("RESTAURANT_ID")));
+				restaurantList.add(restaurant);
+			}
+			if (restaurantList.size() < 3) {
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_RESTAURANT_RECO_SELECT_SQL
+								+ " LIMIT 0 , " + (3 - restaurantList.size()));
+				System.out
+						.println("UserQueries.USER_RESTAURANT_RECO_SELECT_SQL="
+								+ UserQueries.USER_RESTAURANT_RECO_SELECT_SQL);
+				statement.setString(1, userId);
+				resultset = statement.executeQuery();
+				while (resultset.next()) {
+					TSRestaurantView restaurant = new TSRestaurantView();
+					restaurant.setId(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("RESTAURANT_ID")));
+					restaurantList.add(restaurant);
+				}
+			}
+			if (restaurantList.size() < 3) {
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_RESTAURANT_SAVED_SELECT_SQL
+								+ " LIMIT 0 , " + (3 - restaurantList.size()));
+				System.out
+						.println("UserQueries.USER_RESTAURANT_SAVED_SELECT_SQL="
+								+ UserQueries.USER_RESTAURANT_SAVED_SELECT_SQL);
+				statement.setString(1, userId);
+				resultset = statement.executeQuery();
+				while (resultset.next()) {
+					TSRestaurantView restaurant = new TSRestaurantView();
+					restaurant.setId(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("RESTAURANT_ID")));
+					restaurantList.add(restaurant);
+				}
+			}
+			if (restaurantList.size() < 3) {
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL
+								+ " LIMIT 0 , " + (3 - restaurantList.size()));
+				System.out
+						.println("UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL="
+								+ UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL);
+				statement.setString(1, userId);
+				resultset = statement.executeQuery();
+				while (resultset.next()) {
+					TSRestaurantView restaurant = new TSRestaurantView();
+					restaurant.setId(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("RESTAURANT_ID")));
+					restaurantList.add(restaurant);
+				}
+			}
+			for (TSRestaurantView restaurant : restaurantList) {
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.RESTAURANT_SELECT_SQL);
+				System.out.println("UserQueries.RESTAURANT_SELECT_SQL="
+						+ UserQueries.RESTAURANT_SELECT_SQL);
+				statement.setString(1, restaurant.getId());
+				resultset = statement.executeQuery();
+				if (resultset.next()) {
+					restaurant.setName(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("RESTAURANT_NAME")));
+				}
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.RESTAURANT_PHOTO_SELECT_SQL
+								+ " LIMIT 0,1");
+				System.out.println("UserQueries.RESTAURANT_PHOTO_SELECT_SQL="
+						+ UserQueries.RESTAURANT_PHOTO_SELECT_SQL);
+				statement.setString(1, restaurant.getId());
+				statement.setString(1, restaurant.getId());
+				resultset = statement.executeQuery();
+				if (resultset.next()) {
+					TSRestaurantPhotoObj photo = new TSRestaurantPhotoObj();
+					photo.setRestaurantId(restaurant.getId());
+					photo.setPhotoSource(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("PHOTO_SOURCE")));
+					photo.setPrefix(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("PREFIX")));
+					photo.setPhotoId(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("PHOTO_ID")));
+					photo.setSuffix(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("SUFFIX")));
+					photo.setWidth(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("WIDTH")));
+					photo.setHeight(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("HEIGHT")));
+					photo.setUltimateSourceName(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("ULTIMATE_SOURCE_NAME")));
+					photo.setUltimateSourceUrl(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("ULTIMATE_SOURCE_URL")));
+					restaurant.setPhoto(photo);
+				}
+			}
+			return restaurantList;
+
+		} catch (Exception e) {
+			throw new TasteSyncException(e.getMessage());
+		} finally {
+			tsDataSource.close();
+		}
+	}
+	
+	@Override
+	public List<TSUserProfileRestaurantsObj> getUserProfileRestaurants(
+			String userId, int type, int from, int to)
+			throws TasteSyncException {
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+
+		try {
+			List<TSUserProfileRestaurantsObj> subRestaurantList = new ArrayList<TSUserProfileRestaurantsObj>();
+			List<String> restaurantListId = new ArrayList<String>();
+			if (type == GlobalVariables.RESTAURANT_PROFILE_DETAIL_TYPE_ALL
+					|| type == GlobalVariables.RESTAURANT_PROFILE_DETAIL_TYPE_FAV) {
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_RESTAURANT_FAV_SELECT_SQL);
+				System.out
+						.println("UserQueries.USER_RESTAURANT_FAV_SELECT_SQL="
+								+ UserQueries.USER_RESTAURANT_FAV_SELECT_SQL);
+				statement.setString(1, userId);
+				resultset = statement.executeQuery();
+				while (resultset.next()) {
+					restaurantListId.add(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("RESTAURANT_ID")));
+				}
+			}
+			if (type == GlobalVariables.RESTAURANT_PROFILE_DETAIL_TYPE_ALL
+					|| type == GlobalVariables.RESTAURANT_PROFILE_DETAIL_TYPE_RECO) {
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_RESTAURANT_RECO_SELECT_SQL);
+				System.out
+						.println("UserQueries.USER_RESTAURANT_RECO_SELECT_SQL="
+								+ UserQueries.USER_RESTAURANT_RECO_SELECT_SQL);
+				statement.setString(1, userId);
+				resultset = statement.executeQuery();
+				while (resultset.next()) {
+					restaurantListId.add(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("RESTAURANT_ID")));
+				}
+			}
+			if (type == GlobalVariables.RESTAURANT_PROFILE_DETAIL_TYPE_ALL
+					|| type == GlobalVariables.RESTAURANT_PROFILE_DETAIL_TYPE_SAVED) {
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_RESTAURANT_SAVED_SELECT_SQL);
+				System.out
+						.println("UserQueries.USER_RESTAURANT_SAVED_SELECT_SQL="
+								+ UserQueries.USER_RESTAURANT_SAVED_SELECT_SQL);
+				statement.setString(1, userId);
+				resultset = statement.executeQuery();
+				while (resultset.next()) {
+					restaurantListId.add(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("RESTAURANT_ID")));
+				}
+			}
+			if (type == GlobalVariables.RESTAURANT_PROFILE_DETAIL_TYPE_ALL
+					|| type == GlobalVariables.RESTAURANT_PROFILE_DETAIL_TYPE_TIPS) {
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL);
+				System.out
+						.println("UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL="
+								+ UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL);
+				statement.setString(1, userId);
+				resultset = statement.executeQuery();
+				while (resultset.next()) {
+					restaurantListId.add(CommonFunctionsUtil
+							.converStringAsNullIfNeeded(resultset
+									.getString("RESTAURANT_ID")));
+				}
+			}
+			for (int i = from; i < to && i < restaurantListId.size(); i++) {
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.RESTAURANT_SELECT_SQL);
+				System.out.println("UserQueries.RESTAURANT_SELECT_SQL="
+						+ UserQueries.RESTAURANT_SELECT_SQL);
+				statement.setString(1, restaurantListId.get(i));
+				resultset = statement.executeQuery();
+				TSUserProfileRestaurantsObj restaurant = null;
+				if (resultset.next()) {
+					restaurant = MySQL
+							.getTSUserProfileRestaurantsObjFromRS(resultset);
+				}
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_RESTAURANT_FAV_CHECK_SELECT_SQL);
+				System.out
+						.println("UserQueries.USER_RESTAURANT_FAV_CHECK_SELECT_SQL="
+								+ UserQueries.USER_RESTAURANT_FAV_CHECK_SELECT_SQL);
+				statement.setString(1, userId);
+				statement.setString(2, restaurantListId.get(i));
+				resultset = statement.executeQuery();
+				if (resultset.next())
+					restaurant.setUserFavFlag("1");
+				else
+					restaurant.setUserFavFlag("0");
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_RESTAURANT_RECO_CHECK_SELECT_SQL);
+				System.out
+						.println("UserQueries.USER_RESTAURANT_RECO_CHECK_SELECT_SQL="
+								+ UserQueries.USER_RESTAURANT_RECO_CHECK_SELECT_SQL);
+				statement.setString(1, userId);
+				statement.setString(2, restaurantListId.get(i));
+				resultset = statement.executeQuery();
+				if (resultset.next())
+					restaurant.setUserRecommendedFlag("1");
+				else
+					restaurant.setUserRecommendedFlag("0");
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_RESTAURANT_SAVED_CHECK_SELECT_SQL);
+				System.out
+						.println("UserQueries.USER_RESTAURANT_SAVED_CHECK_SELECT_SQL="
+								+ UserQueries.USER_RESTAURANT_SAVED_CHECK_SELECT_SQL);
+				statement.setString(1, userId);
+				statement.setString(2, restaurantListId.get(i));
+				resultset = statement.executeQuery();
+				if (resultset.next())
+					restaurant.setUserSavedFlag("1");
+				else
+					restaurant.setUserSavedFlag("0");
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.RESTAURANT_TIPS_TASTESYNC_CHECK_SELECT_SQL);
+				System.out
+						.println("UserQueries.RESTAURANT_TIPS_TASTESYNC_CHECK_SELECT_SQL="
+								+ UserQueries.RESTAURANT_TIPS_TASTESYNC_CHECK_SELECT_SQL);
+				statement.setString(1, userId);
+				statement.setString(2, restaurantListId.get(i));
+				resultset = statement.executeQuery();
+				if (resultset.next())
+					restaurant.setUserTipFlag("1");
+				else
+					restaurant.setUserTipFlag("0");
+				if (restaurant != null) {
+					subRestaurantList.add(restaurant);
+				}
+			}
+			return subRestaurantList;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new TasteSyncException(e.getMessage());
+		} finally {
+			tsDataSource.close();
+		}
+	}
+	
+	@Override
+	public void inviteFriend(String userId, String friendFBId)
+			throws TasteSyncException {
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+		try {
+			connection = tsDataSource.getConnection();
+			
+			statement = connection
+					.prepareStatement(UserQueries.USER_FRIEND_FB_CHECK_SELECT_SQL);
+			System.out.println("UserQueries.USER_FRIEND_FB_CHECK_SELECT_SQL="
+					+ UserQueries.USER_FRIEND_FB_CHECK_SELECT_SQL);
+			statement.setString(1, userId);
+			statement.setString(2, friendFBId);
+			resultset = statement.executeQuery();
+			
+			
+			if (resultset.next()) {
+				tsDataSource.closeConnection(connection, statement, resultset);
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_FRIEND_FB_UPDATE_SQL);
+				System.out.println("UserQueries.USER_FRIEND_FB_UPDATE_SQL="
+						+ UserQueries.USER_FRIEND_FB_UPDATE_SQL);
+				
+				statement.setTimestamp(1,CommonFunctionsUtil.getCurrentDateTimestamp());
+				statement.setString(2, "1");
+				statement.setString(3, userId);
+				statement.setString(4, friendFBId);
+				statement.executeUpdate();
+			} else {
+				tsDataSource.closeConnection(connection, statement, resultset);
+				connection = tsDataSource.getConnection();
+				statement = connection
+						.prepareStatement(UserQueries.USER_FRIEND_FB_INSERT_SQL);
+				System.out.println("UserQueries.USER_FRIEND_FB_UPDATE_SQL="
+						+ UserQueries.USER_FRIEND_FB_UPDATE_SQL);
+				statement.setString(1, userId);
+				statement.setString(2, friendFBId);
+				statement.setTimestamp(3,
+						CommonFunctionsUtil.getCurrentDateTimestamp());
+				statement.setString(4, "1");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new TasteSyncException(e.getMessage());
+		} finally {
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+	}
+
+	@Override
+	public void submitUserReport(String userId, String reportedUserId,
+			String reason) throws TasteSyncException {
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+		Connection connection = null;
+		PreparedStatement statement = null;
+
+		try {
+			connection = tsDataSource.getConnection();
+			tsDataSource.begin();
+			System.out.println("UserQueries.USER_REPORTED_INFO_INSERT_SQL="
+					+ UserQueries.USER_REPORTED_INFO_INSERT_SQL);
+			statement = connection
+					.prepareStatement(UserQueries.USER_REPORTED_INFO_INSERT_SQL);
+			statement.setString(1,
+					reportedUserId + CommonFunctionsUtil.getCurrentDatetime()
+							+ CommonFunctionsUtil.generateRandomString(4, 5));
+			statement.setTimestamp(2,
+					CommonFunctionsUtil.getCurrentDateTimestamp());
+			statement.setString(3, reason);
+			statement.setString(4, reportedUserId);
+			statement.setString(5, userId);
+			statement.executeUpdate();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			throw new TasteSyncException(e1.getMessage());
+		} finally {
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, null);
+		}
 	}
 }
