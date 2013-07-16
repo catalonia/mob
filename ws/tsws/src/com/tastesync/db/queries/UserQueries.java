@@ -225,7 +225,9 @@ public interface UserQueries extends TSDBCommonQueries {
  	public static String USER_FRIEND_TASTESYNC_CHECK_SELECT_SQL = "SELECT * FROM user_friend_tastesync WHERE USER_ID = ? AND FRIEND_ID = ?";
  	public static String USER_FRIEND_TASTESYNC_INSERT_SQL = "INSERT INTO user_friend_tastesync(ID, USER_ID, FRIEND_ID, FRIEND_TRUSTED_FLAG, FRIEND_TRUSTED_ADDED_DATETIME) VALUES (?, ?, ?, ?, ?)";
  	public static String USER_FRIEND_TASTESYNC_UPDATE_SQL = "UPDATE user_friend_tastesync SET FRIEND_TRUSTED_FLAG = ? WHERE USER_ID = ? AND FRIEND_ID = ?";
- 	
+ 	public static String USER_FRIEND_TASTESYNC_DATETIME_UPDATE_SQL = "UPDATE user_friend_tastesync SET FRIEND_TRUSTED_ADDED_DATETIME = ? WHERE USER_ID = ? AND FRIEND_ID = ?";
+	public static String USER_FRIEND_TASTESYNC_DATETIME_DELETE_SQL = "DELETE FROM user_friend_tastesync WHERE USER_ID = ? AND FRIEND_TRUSTED_ADDED_DATETIME != ?";
+	
  	//USER_MESSAGE
  	public static String USER_MESSAGE_INSERT_SQL = "INSERT INTO user_message(MESSAGE_ID, SENDER_ID, RECIPIENT_ID, CONTENT, CREATED) VALUES (?, ?, ?, ?, ?)";
 	 
@@ -237,6 +239,8 @@ public interface UserQueries extends TSDBCommonQueries {
 	
  	//USER_FRIEND_FB
  	public static String USER_FRIEND_SIGNUP_FB_UPDATE_SQL = "UPDATE user_friend_fb SET INVITATION_SENT_YN = ? WHERE USER_ID = ? AND USER_FRIEND_FB = ?";
+ 	public static String USER_FRIEND_SIGNUP_DATETIME_FB_UPDATE_SQL = "UPDATE user_friend_fb SET FB_UPDATE_DATETIME = ? WHERE USER_ID = ? AND USER_FRIEND_FB = ?";
+	public static String USER_FRIEND_FB_DATETIME_DELETE_SQL = "DELETE FROM user_friend_fb WHERE USER_ID = ? AND FB_UPDATE_DATETIME != ?";
  	public static String USER_FRIEND_SIGNUP_FB_INSERT_SQL = "INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN) VALUES (?, ?, ?, ?)";
 	
  	//USER_RESTAURANT_FAV

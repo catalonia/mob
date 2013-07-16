@@ -149,8 +149,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 					
 
 					boolean check_user = false;
-					TSUserObj user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());;
-					
+					TSUserObj user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
+					if(user != null)
+						userID = user.getUserId();
+					else
+						userID = user_city_id +"-" + dateNowAppend + "-" + CommonFunctionsUtil.generateRandomString(4, 5);							
 					try {
 						check_user = mySQL.checkEmailExist(user_current_profile.getEmail());
 						
@@ -197,8 +200,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 									country = user_current_profile.getLocale();
 								}
 								
-								userID = user_city_id +"-" + dateNowAppend + "-" + CommonFunctionsUtil.generateRandomString(4, 5);							
-					        	
 								//Insert facebook data (Assume user create profile first, then user login app by connecting Facebook so we have to insert Facebook data)
 								//sql = UserQueries.FACEBOOK_INSERT_SQL;
 								System.out.println(UserQueries.FACEBOOK_INSERT_SQL);
@@ -382,15 +383,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 								}
 							}
 							
-							if(list_friends_using_TasteSync != null && !list_friends_using_TasteSync.isEmpty()) {
-								//user_response.setList_user(list_friends_using_TasteSync);
-								
-								
-								
-							}
-
-							//TSMessage message = new TSMessage(TSMessageCode.SUCCESS.getValue(), MessageBinding.SUCCESS_LOGIN);
-							//user_response.setMessage(message);
 							
 						} catch(Exception e) {
 							e.printStackTrace();
@@ -401,8 +393,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						//TSMessage message = new TSMessage(TSMessageCode.ERROR_UNAUTHORIZED.getValue(), MessageBinding.ERROR_USERS_DISABLED);
 						//user_response.setMessage(message);
 					}
-					
-					
 					
 					//Create a new user
 					if(!check_user) {
@@ -446,16 +436,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			            	statement.setString(3, dateNow_ps);
 			            	statement.setString(4, userLogId);
 			            	statement.execute();
-
-							//Story - Join TasteSync
-//			            	connection = tsDataSource.getConnection();
-//			            	System.out.println(UserQueries.STORY_INSERT_SQL);
-//							statement = connection.prepareStatement(UserQueries.STORY_INSERT_SQL);
-//							statement.setString(1, dateNow_ps);
-//							statement.setString(2, GlobalVariables.STORY_USER_JOIN_TASTESYNC);
-//							statement.setString(3, user_id_ps);
-//							statement.setString(4, dateNow_ps);
-//							statement.execute();
 						
 							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
 							response = new UserResponse();
@@ -509,6 +489,79 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 							tsDataSource.close();
 							tsDataSource.closeConnection(connection, statement, null);
 						}
+					}
+					
+					if(!is_disabled) {
+						
+						TSDataSource tsDataSource = TSDataSource.getInstance();				 
+				        Connection connection = null;
+				        PreparedStatement statement = null;
+				        tsDataSource.begin();
+				        
+						if(list_friends_using_TasteSync != null && !list_friends_using_TasteSync.isEmpty()) {
+	
+							for(int i = 0; i < list_friends_using_TasteSync.size(); i++)
+							{
+								TSUserObj obj = list_friends_using_TasteSync.get(i);
+								connection = tsDataSource.getConnection();
+								statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_DATETIME_UPDATE_SQL);
+								statement.setString(1, dateNow);
+								statement.setString(2, userID); 
+								statement.setString(3, obj.getUserId());
+								int query = statement.executeUpdate();
+								if(query == 0)
+								{
+									String indexFB = userID + "-" + dateNowAppend + "-" + CommonFunctionsUtil.generateRandomString(4, 5);
+									System.out.print("index:"+indexFB);
+									statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_INSERT_SQL);
+									statement.setString(1, indexFB);
+									statement.setString(2, userID); 
+									statement.setString(3, obj.getUserId());
+									statement.setString(4, "0");
+									statement.setString(5, dateNow);
+									statement.execute();
+								}
+							}
+							
+							statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_DATETIME_DELETE_SQL);
+							statement.setString(1, userID);
+							statement.setString(2, dateNow);
+							statement.execute();
+						}
+	
+						List<TSFacebookUserDataObj> listFBObj = list_user_profile.getList_user_profile_fb();
+						
+						if(listFBObj != null && !listFBObj.isEmpty()) {
+	
+							for(int i = 0; i < listFBObj.size(); i++)
+							{
+								TSFacebookUserDataObj obj = listFBObj.get(i);
+								connection = tsDataSource.getConnection();
+								statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_DATETIME_FB_UPDATE_SQL);
+								statement.setString(1, dateNow);
+								statement.setString(2, userID); 
+								statement.setString(3, obj.getId());
+								int query = statement.executeUpdate();
+								System.out.println("query: "+query);
+								if(query == 0)
+								{
+									System.out.println("Insert:" + i);
+									statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_FB_INSERT_SQL);
+									statement.setString(1, userID); 
+									statement.setString(2, obj.getId());
+									statement.setString(3, dateNow);
+									statement.setString(4, "0");
+									statement.execute();
+								}
+							}
+							
+							statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_DATETIME_DELETE_SQL);
+							statement.setString(1, userID);
+							statement.setString(2, dateNow);
+							statement.execute();
+						}
+						tsDataSource.close();
+						tsDataSource.closeConnection(connection, statement, null);
 					}
 					
 					if(!is_disabled) {
