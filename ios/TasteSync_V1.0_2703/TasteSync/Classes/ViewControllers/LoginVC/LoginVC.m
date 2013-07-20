@@ -293,7 +293,10 @@
         {
             userDefault.loginStatus = LoginViaFacebook;
             
-           
+            NSMutableArray* array = [[CommonHelpers appDelegate] arrDataFBFriends];
+            for (UserObj *userObj in array) {
+                NSLog(@"%@ %@ Email:%@", userObj.firstname, userObj.lastname, userObj.email);
+            }
             
             ConfigProfileVC *vc = [[ConfigProfileVC alloc] initWithNibName:@"ConfigProfileVC" bundle:nil];
             

@@ -131,6 +131,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		List<TSUserObj> list_friends_using_TasteSync = new ArrayList<TSUserObj>();
 		
 		boolean is_disabled = false;
+		boolean check_user = false;
 		
 		String id = null;
 		String userLogId = null;
@@ -148,12 +149,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				if(user_current_profile != null) {
 					
 
-					boolean check_user = false;
 					TSUserObj user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
-					if(user != null)
-						userID = user.getUserId();
-					else
-						userID = user_city_id +"-" + dateNowAppend + "-" + CommonFunctionsUtil.generateRandomString(4, 5);							
 					try {
 						check_user = mySQL.checkEmailExist(user_current_profile.getEmail());
 						
@@ -200,6 +196,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 									country = user_current_profile.getLocale();
 								}
 								
+								if(user != null)
+									userID = user.getUserId();
+								else
+									userID = user_city_id +"-" + dateNowAppend + "-" + CommonFunctionsUtil.generateRandomString(4, 5);							
+								
+								
 								//Insert facebook data (Assume user create profile first, then user login app by connecting Facebook so we have to insert Facebook data)
 								//sql = UserQueries.FACEBOOK_INSERT_SQL;
 								System.out.println(UserQueries.FACEBOOK_INSERT_SQL);
@@ -220,7 +222,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				            	statement.setString(13, user_current_profile.getFriendlists());
 				            	statement.setString(14, user_current_profile.getInstalled());
 				            	statement.setString(15, user_current_profile.getTimezone());
-				            	statement.setString(16, user_current_profile.getUpdatedTime());
+				            	statement.setString(16, dateNow);
 				            	statement.setString(17, user_current_profile.getVerified());
 				            	statement.setString(18, user_current_profile.getDevices());
 				            	statement.setString(19, user_current_profile.getEmail());
@@ -256,7 +258,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 								statement.setString(12, user_current_profile.getFriendlists());
 								statement.setString(13, user_current_profile.getInstalled());
 								statement.setString(14, user_current_profile.getTimezone());
-								statement.setString(15, user_current_profile.getUpdatedTime());
+								statement.setString(15, dateNow);
 								statement.setString(16, user_current_profile.getVerified());
 								statement.setString(17, user_current_profile.getDevices());
 								statement.setString(18, user_current_profile.getEmail());
@@ -320,7 +322,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 							            	statement.setString(13, item.getFriendlists());
 							            	statement.setString(14, item.getInstalled());
 							            	statement.setString(15, item.getTimezone());
-							            	statement.setString(16, item.getUpdatedTime());
+							            	statement.setString(16, dateNow);
 							            	statement.setString(17, item.getVerified());
 							            	statement.setString(18, item.getDevices());
 							            	statement.setString(19, item.getEmail());
@@ -356,7 +358,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 											statement.setString(12, item.getFriendlists());
 											statement.setString(13, item.getInstalled());
 											statement.setString(14, item.getTimezone());
-											statement.setString(15, item.getUpdatedTime());
+											statement.setString(15, dateNow);
 											statement.setString(16, item.getVerified());
 											statement.setString(17, item.getDevices());
 											statement.setString(18, item.getEmail());
@@ -439,6 +441,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						
 							user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
 							response = new UserResponse();
+							if(check_user)
+								response.setIs_have_account("1");
+							else
+								response.setIs_have_account("0");
 							response.setUser(user);
 							response.setUser_log_id(userLogId);
 							
@@ -567,6 +573,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 					if(!is_disabled) {
 						user = mySQL.getUserInformationByEmail(user_current_profile.getEmail());
 						response = new UserResponse();
+						if(check_user)
+							response.setIs_have_account("1");
+						else
+							response.setIs_have_account("0");
 						response.setUser(user);
 						response.setUser_log_id(userLogId);
 					}
