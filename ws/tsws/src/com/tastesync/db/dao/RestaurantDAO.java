@@ -34,7 +34,7 @@ public interface RestaurantDAO {
     TSRestaurantPhotoObj selectRestaurantPhotos(String restaurantId)
         throws TasteSyncException;
 
-    TSRestaurantTipsAPSettingsObj selectRestaurantDetailTipAPSettings(String userId, String restaurantId) throws TasteSyncException;
+    List<TSRestaurantTipsAPSettingsObj> selectRestaurantDetailTipAPSettings(String userId, String restaurantId) throws TasteSyncException;
     
     void insertDeleteSaveOrUnsaveRestaurant(String userId, String restaurantId,
         String userRestaurantSavedFlag) throws TasteSyncException;
