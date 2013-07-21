@@ -4,50 +4,50 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
 
+
 public class TSRestaurantTipsAPSettingsObj implements Serializable {
+    private static final long serialVersionUID = -3475916144296389812L;
+    private String userId;
+    private String restaurantId;
+    private String autoPublishingSetting;
+    public APSETTINGTYPE apSettingType;
 
-	private static final long serialVersionUID = -3475916144296389812L;
-	
-	private String userId;
-	
-	private String restaurantId;
-	
-	private String facebookApSetting;
-	
-	private String twitterApSetting;
+    @XmlElement
+    public String getUserId() {
+        return userId;
+    }
 
-	@XmlElement
-	public String getUserId() {
-		return userId;
-	}
-	@XmlElement
-	public String getRestaurantId() {
-		return restaurantId;
-	}
-	@XmlElement
-	public String getFacebookApSetting() {
-		return facebookApSetting;
-	}
-	@XmlElement
-	public String getTwitterApSetting() {
-		return twitterApSetting;
-	}
+    @XmlElement
+    public String getAutoPublishingSetting() {
+        return autoPublishingSetting;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    @XmlElement
+    public APSETTINGTYPE getApSettingType() {
+        return apSettingType;
+    }
 
-	public void setRestaurantId(String restaurantId) {
-		this.restaurantId = restaurantId;
-	}
+    @XmlElement
+    public String getRestaurantId() {
+        return restaurantId;
+    }
 
-	public void setFacebookApSetting(String facebookApSetting) {
-		this.facebookApSetting = facebookApSetting;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public void setTwitterApSetting(String twitterApSetting) {
-		this.twitterApSetting = twitterApSetting;
-	}
-	
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 
+    public void setAutoPublishingSetting(String autoPublishingSetting) {
+        this.autoPublishingSetting = autoPublishingSetting;
+    }
+
+    public void setApSettingType(APSETTINGTYPE apSettingType) {
+        this.apSettingType = apSettingType;
+    }
+    public enum APSETTINGTYPE {FACEBOOK,
+        TWITTER;
+    }
 }
