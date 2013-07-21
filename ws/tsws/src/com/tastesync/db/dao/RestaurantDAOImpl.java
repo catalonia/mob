@@ -14,6 +14,7 @@ import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
+import com.tastesync.util.TSConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,17 +61,16 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         return tsRestaurantObj;
     }
 
-    
-    private void mapResultsetRowToTSRestaurantMenuVO(
-    		TSMenuObj tsMenuObj, ResultSet resultset)
-            throws SQLException {
-    	tsMenuObj.setMenuMobileUrl(CommonFunctionsUtil.getModifiedValueString(
+    private void mapResultsetRowToTSRestaurantMenuVO(TSMenuObj tsMenuObj,
+        ResultSet resultset) throws SQLException {
+        tsMenuObj.setMenuMobileUrl(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant_menu.restaurant_id")));
-    	tsMenuObj.setMenuSource(CommonFunctionsUtil.getModifiedValueString(
+        tsMenuObj.setMenuSource(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant_menu.menu_source")));
-    	tsMenuObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString("restaurant_menu.restaurant_id")));
+        tsMenuObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_menu.menu_mobileurl")));
     }
+
     private void mapResultsetRowToTSRestaurantVO(
         TSRestaurantObj tsRestaurantObj, ResultSet resultset)
         throws SQLException {
@@ -109,6 +109,26 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
         tsRestaurantObj.setTbdOpenTableId(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.TBD_OPENTABLE_ID")));
+    }
+
+    private void mapResultsetRowToTSRestaurantTipsAPSettingsVO(String userId,
+        String restaurantId,
+        TSRestaurantTipsAPSettingsObj tsRestaurantTipsAPSettingsObj,
+        ResultSet resultset) throws SQLException {
+        tsRestaurantTipsAPSettingsObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+                restaurantId));
+        tsRestaurantTipsAPSettingsObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
+                userId));
+        tsRestaurantTipsAPSettingsObj.setAutoPublishingSetting(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("usg_usnc_ap.usnc_yn")));
+
+        if (TSConstants.USNC_APP_FACEBOOK.equals(resultset.getString(
+                        "usg_usnc_ap.usnc_yn"))) {
+            tsRestaurantTipsAPSettingsObj.setApSettingType(TSRestaurantTipsAPSettingsObj.APSETTINGTYPE.FACEBOOK);
+        } else if (TSConstants.USNC_APP_TWITTER.equals(resultset.getString(
+                        "usg_usnc_ap.usnc_yn"))) {
+            tsRestaurantTipsAPSettingsObj.setApSettingType(TSRestaurantTipsAPSettingsObj.APSETTINGTYPE.TWITTER);
+        }
     }
 
     @Override
@@ -164,14 +184,13 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     @Override
     public TSMenuObj selectRestaurantMenu(String restaurantId)
         throws TasteSyncException {
-
-        
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
         TSMenuObj tsMenuObj = null;
+
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
@@ -180,11 +199,11 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_MENU_SELECT_SQL);
             statement.setString(1, restaurantId);
             resultset = statement.executeQuery();
-      
+
             //only one result
             if (resultset.next()) {
-            	tsMenuObj = new TSMenuObj();
-            	mapResultsetRowToTSRestaurantMenuVO(tsMenuObj, resultset);
+                tsMenuObj = new TSMenuObj();
+                mapResultsetRowToTSRestaurantMenuVO(tsMenuObj, resultset);
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
@@ -195,7 +214,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         }
 
         return tsMenuObj;
-        
     }
 
     @Override
@@ -212,32 +230,141 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         return null;
     }
 
-	@Override
-	public TSRestaurantTipsAPSettingsObj selectRestaurantDetailTipAPSettings(String userId, String restaurantId)
-			throws TasteSyncException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+    @Override
+    public List<TSRestaurantTipsAPSettingsObj> selectRestaurantDetailTipAPSettings(
+        String userId, String restaurantId) throws TasteSyncException {
+        List<TSRestaurantTipsAPSettingsObj> tsRestaurantTipsAPSettingsObjs = new ArrayList<TSRestaurantTipsAPSettingsObj>();
+
+        //TODO use of restaurantId ??
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println(
+                "RestaurantQueries.RESTAURANT_DETAIL_TIP_APSETTINGS_SELECT_SQL=" +
+                RestaurantQueries.RESTAURANT_DETAIL_TIP_APSETTINGS_SELECT_SQL);
+            statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_DETAIL_TIP_APSETTINGS_SELECT_SQL);
+            statement.setString(1, userId);
+
+            resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                TSRestaurantTipsAPSettingsObj tsRestaurantTipsAPSettingsObj = new TSRestaurantTipsAPSettingsObj();
+                mapResultsetRowToTSRestaurantTipsAPSettingsVO(userId,
+                    restaurantId, tsRestaurantTipsAPSettingsObj, resultset);
+
+                tsRestaurantTipsAPSettingsObjs.add(tsRestaurantTipsAPSettingsObj);
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            throw new TasteSyncException(e1.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+
+        return tsRestaurantTipsAPSettingsObjs;
+    }
+
     @Override
     public void insertDeleteSaveOrUnsaveRestaurant(String userId,
         String restaurantId, String userRestaurantSavedFlag)
+        throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+
+            if (TSConstants.INT_INSERT.equals(userRestaurantSavedFlag)) {
+                statement = connection.prepareStatement(RestaurantQueries.SAVERESTAURANTFAV_INSERT_SQL);
+                statement.setString(1, restaurantId);
+                statement.setString(2, userId);
+                statement.executeUpdate();
+            } else if (TSConstants.INT_DELETE.endsWith(userRestaurantSavedFlag)) {
+                statement = connection.prepareStatement(RestaurantQueries.SAVERESTAURANTFAV_DELETE_SQL);
+                statement.setString(1, restaurantId);
+                statement.setString(2, userId);
+                statement.executeUpdate();
+            } else {
+                throw new TasteSyncException("Error Unknown Operation");
+            }
+
+            tsDataSource.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException(
+                "Error while creating restaurant tips " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+    }
+
+    @Override
+    public void insertDeleteSaveRestaurantFav(String userId,
+        String restaurantId, String userRestaurantFavFlag)
         throws TasteSyncException {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void insertDeleteSaveRestaurantFav(String userId,
-        String restaurantId, String userRestaurantFavFlag) throws TasteSyncException {
-        // TODO Auto-generated method stub
+    public void insertRestaurantTips(String userId, String restaurantId,
+        String tipText) throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+
+            //TODO TIPID
+            String tipId = userId + CommonFunctionsUtil.generateUniqueKey();
+
+            statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_TIP_INSERT_SQL);
+            statement.setString(1, restaurantId);
+            statement.setString(2, tipId);
+            statement.setString(3, tipText);
+            statement.setString(4, userId);
+            statement.executeUpdate();
+
+            tsDataSource.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException(
+                "Error while creating restaurant tips " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
-
-	@Override
-	public void insertRestaurantTips(String userId, String restaurantId,
-			String tipText) throws TasteSyncException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 }
