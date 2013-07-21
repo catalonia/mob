@@ -7,4 +7,9 @@ public interface TSConstants {
     public static final String ERROR_USER_SYSTEM_KEY = "error_user_system";
     public static final String ERROR_UNKNOWN_SYSTEM_KEY = "error_system";
     public static final String ERROR_INVALID_INPUT_DATA_KEY = "error_invalid_data";
+    public static final String USNC_APP_FACEBOOK = "1";
+    public static final String USNC_APP_TWITTER = "2";
+    public static final String INT_INSERT="1";
+    public static final String INT_DELETE="0";
+    
 }
