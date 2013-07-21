@@ -83,7 +83,7 @@ public class RestaurantBOImpl implements RestaurantBO {
 	}
 
 	@Override
-	public TSRestaurantTipsAPSettingsObj selectRestaurantDetailTipAPSettings(String userId, String restaurantId)
+	public List<TSRestaurantTipsAPSettingsObj> selectRestaurantDetailTipAPSettings(String userId, String restaurantId)
 			throws TasteSyncException {
 	
 		return restaurantDAO.selectRestaurantDetailTipAPSettings(userId, restaurantId);
