@@ -12,6 +12,7 @@ import com.tastesync.model.objects.TSRestaurantDetailsObj;
 import com.tastesync.model.objects.TSRestaurantExtendInfoObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
+import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 import com.tastesync.model.objects.TSSuccessObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
@@ -483,14 +484,15 @@ public class RestaurantService extends BaseService {
         @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
-        TSMenuObj tsMenuObj = null;
+    	List<TSRestaurantTipsAPSettingsObj>  tsRestaurantTipsAPSettingsObjList = null;
+    	
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-            tsMenuObj = restaurantBO.selectRestaurantMenu(restaurantId);
+        	tsRestaurantTipsAPSettingsObjList = restaurantBO.selectRestaurantDetailTipAPSettings(userId,restaurantId);
 
-            return Response.status(status).entity(tsMenuObj).build();
+            return Response.status(status).entity(tsRestaurantTipsAPSettingsObjList).build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -501,7 +503,7 @@ public class RestaurantService extends BaseService {
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsMenuObj == null) {
+                if (tsRestaurantTipsAPSettingsObjList == null) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
