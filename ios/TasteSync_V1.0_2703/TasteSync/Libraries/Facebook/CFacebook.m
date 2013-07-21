@@ -188,7 +188,7 @@ done=_done;
                 user.firstname = [objDict objectForKey:@"first_name"];
                 user.lastname = [objDict objectForKey:@"last_name"];
                 user.avatarUrl = [objDict objectForKey:@"pic_square"];
-                if (i== 0) {
+                if (i == 0) {
                     debug(@"Save user's info to UserDefault");
                     
                     user.email = [objDict objectForKey:@"email"];

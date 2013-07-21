@@ -16,6 +16,7 @@ public class UserResponse implements Serializable {
 	
 	private String user_log_id;
 	private TSUserObj user;
+	private String is_have_account;
 	private TSUserProfileObj user_profile_obj;
 	private TSUserProfileRestaurantsObj user_data;
 	private TSFacebookUserDataObj city;
@@ -28,6 +29,11 @@ public class UserResponse implements Serializable {
 	
 	public UserResponse() {
 		
+	}
+
+	@XmlElement
+	public String getIs_have_account() {
+		return is_have_account;
 	}
 	
 	@XmlElement
@@ -127,5 +133,9 @@ public class UserResponse implements Serializable {
 
 	public void setUser_log_id(String user_log_id) {
 		this.user_log_id = user_log_id;
+	}
+
+	public void setIs_have_account(String is_have_account) {
+		this.is_have_account = is_have_account;
 	}
 }
