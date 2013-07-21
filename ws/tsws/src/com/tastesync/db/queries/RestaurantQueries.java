@@ -117,6 +117,35 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "WHERE  usg_usnc_ap.user_id = ? " + "       AND" +
         "       usg_usnc_ap.usnc_id = ? " + "       AND " +
         "       usg_usnc_ap.ap_id = ? " + "";
-    
     public static String RESTAURANT_CITY_SELECT_SQL = "SELECT *  FROM restaurant WHERE RESTAURANT_CITY_ID = ?  AND RESTAURANT_NAME LIKE ?";
+    public static String RESTAURANT_DETAIL_TIP_APSETTINGS_SELECT_SQL = "" +
+        "SELECT usg_usnc_ap.usnc_yn, " + "       usg_usnc_ap.usnc_id " +
+        "FROM   usg_usnc_ap " + "WHERE  usg_usnc_ap.user_id = ? " +
+        "       AND ( usg_usnc_ap.usnc_id = 1 " +
+        "              OR usg_usnc_ap.usnc_id = 2 ) " +
+        "       AND usg_usnc_ap.ap_id = 2 ";
+
+    //TODO test sysdate
+    public static String RESTAURANT_TIP_INSERT_SQL = "" +
+        "INSERT INTO restaurant_tips_tastesync " +
+        "            (restaurant_tips_tastesync.created, " +
+        "             restaurant_tips_tastesync.restaurant_id, " +
+        "             restaurant_tips_tastesync.tbd_tip_placeholders, " +
+        "             restaurant_tips_tastesync.tip_id, " +
+        "             restaurant_tips_tastesync.tip_source, " +
+        "             restaurant_tips_tastesync.tip_text, " +
+        "             restaurant_tips_tastesync.user_id) " +
+        "VALUES      ( SYSDATE()," + "              ?, " +
+        "              '', " + "              ?, " + "              'TS', " +
+        "              ?, " + "              ? )";
+    public static String SAVERESTAURANTFAV_INSERT_SQL = "" +
+        "INSERT INTO user_restaurant_saved " +
+        "            (user_restaurant_saved.restaurant_id, " +
+        "             user_restaurant_saved.saved_notes, " +
+        "             user_restaurant_saved.user_id) " + "VALUES      ( ?, " +
+        "              '', " + "              ? )";
+    public static String SAVERESTAURANTFAV_DELETE_SQL = "" +
+        "DELETE FROM user_restaurant_saved " +
+        "WHERE  user_restaurant_saved.user_id = ? " +
+        "       AND user_restaurant_saved.restaurant_id = ?";
 }
