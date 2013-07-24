@@ -1447,8 +1447,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			}
 			
 			if (statusFlag.equalsIgnoreCase("1") && isExist == 1) {
+<<<<<<< HEAD
+				tsDataSource.closeConnection(connection, statement, resultset);
+				connection = tsDataSource.getConnection();
+=======
 					connection = tsDataSource.getConnection();
 					tsDataSource.begin();
+>>>>>>> 1af58c629a44cee3847963fee71fa8da2a2e40b2
 					System.out
 							.println("UserQueries.USER_FOLLOW_DATA_INSERT_SQL="
 									+ UserQueries.USER_FOLLOW_DATA_INSERT_SQL);
@@ -1469,8 +1474,14 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 					statement.executeUpdate();
 			
 			} else if (statusFlag.equalsIgnoreCase("0") && isExist == 2) {
+<<<<<<< HEAD
+					
+				tsDataSource.closeConnection(connection, statement, resultset);
+				connection = tsDataSource.getConnection();
+=======
 					connection = tsDataSource.getConnection();
 					tsDataSource.begin();
+>>>>>>> 1af58c629a44cee3847963fee71fa8da2a2e40b2
 					System.out
 							.println("UserQueries.USER_FOLLOW_DATA_DELETE_SQL="
 									+ UserQueries.USER_FOLLOW_DATA_DELETE_SQL);
