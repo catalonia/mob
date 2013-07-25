@@ -6,6 +6,8 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.tastesync.model.objects.derived.TSRecommendersDetailsObj;
+
 @XmlRootElement(name = "restaurants")
 public class TSCurrentRecommendedRestaurantDetailsObj implements Serializable {
 
