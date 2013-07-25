@@ -1447,6 +1447,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			}
 			
 			if (statusFlag.equalsIgnoreCase("1") && isExist == 1) {
+
+				tsDataSource.closeConnection(connection, statement, resultset);
+				connection = tsDataSource.getConnection();
+
 					connection = tsDataSource.getConnection();
 					tsDataSource.begin();
 					System.out
@@ -1469,6 +1473,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 					statement.executeUpdate();
 			
 			} else if (statusFlag.equalsIgnoreCase("0") && isExist == 2) {
+					
+				tsDataSource.closeConnection(connection, statement, resultset);
+				connection = tsDataSource.getConnection();
+
 					connection = tsDataSource.getConnection();
 					tsDataSource.begin();
 					System.out
