@@ -231,14 +231,14 @@ public class RestaurantService extends BaseService {
         @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
-    	TSRestaurantPhotoObj tsRestaurantPhotoObj = null;
+    	List<TSRestaurantPhotoObj>  tsRestaurantPhotoObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-        	tsRestaurantPhotoObj = restaurantBO.selectRestaurantPhotos(restaurantId);
+        	tsRestaurantPhotoObjList = restaurantBO.selectRestaurantPhotos(restaurantId);
 
-            return Response.status(status).entity(tsRestaurantPhotoObj).build();
+            return Response.status(status).entity(tsRestaurantPhotoObjList).build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -249,7 +249,7 @@ public class RestaurantService extends BaseService {
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRestaurantPhotoObj == null) {
+                if (tsRestaurantPhotoObjList == null) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -424,27 +424,13 @@ public class RestaurantService extends BaseService {
     public Response submitAddOrRemoveFromFavs(
         @FormParam("userid")
     String userId, @FormParam("restaurantId")
-    String restaurantId,
-        @FormParam("userRestaurantFavFlag")
-    String userRestaurantFavFlag) {
+    String restaurantId) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
-
-        //check userRestaurarntSavedFlag is either 1 or 0
-        try {
-            Integer.parseInt(userRestaurantFavFlag);
-        } catch (NumberFormatException nfe) {
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
-
-            return Response.status(status).entity(tsErrorObj).build();
-        }
 
         boolean responseDone = false;
 
         try {
-            restaurantBO.insertDeleteSaveRestaurantFav(userId, restaurantId, userRestaurantFavFlag);
+            restaurantBO.insertDeleteSaveRestaurantFav(userId, restaurantId);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
