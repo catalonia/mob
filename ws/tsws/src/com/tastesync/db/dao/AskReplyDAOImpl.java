@@ -4,7 +4,14 @@ import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
 
 import com.tastesync.exception.TasteSyncException;
+
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
+import com.tastesync.model.objects.TSRestaurantObj;
+import com.tastesync.model.objects.derived.TSRecoRequestObj;
+import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
+import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
+import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
+import com.tastesync.model.objects.derived.TSSenderUserObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
@@ -13,6 +20,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.List;
 
 
 public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
@@ -161,9 +170,73 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         String postRecoRequestOnFacebook) throws TasteSyncException {
         // TODO Auto-generated method stub
     }
-    
-    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException
-    {
-    	return false;
+
+    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj)
+        throws TasteSyncException {
+        return false;
     }
+
+    @Override
+    public TSRecommendeeUserObj selectRecommendationsShowLikes(
+        String recoLikeId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<TSRestaurantObj> selectRecommendedRestaurantsForUsers(
+        String recorequestId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void submitRecommendationDidYouLikeLikes(String userId,
+        String restaurantId, String likeFlag) throws TasteSyncException {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void insertRecommendationMessageAnswer(String newMessageText,
+        String previousMessageId, String newMessageRecipientUserId,
+        String newMessageSenderUserId, String[] restaurantIdList)
+        throws TasteSyncException {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public TSSenderUserObj selectRecommendationMessage(String messageId,
+        String recipientUserId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+	@Override
+	public TSRecoRequestObj selectRecommendationsRequest(String userId,
+			String recorequestId) throws TasteSyncException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertRecommendationRequestAnswer(String recorequestId,
+			String recommenderUserId, String[] restaurantIdList,
+			String replyText) throws TasteSyncException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TSRecommendationsForYouObj selectRecommendationsForYou(
+			String recorequestId) throws TasteSyncException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TSRecommendationsFollowupObj selectRecommendationsFollowup(
+			String questionId) throws TasteSyncException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
