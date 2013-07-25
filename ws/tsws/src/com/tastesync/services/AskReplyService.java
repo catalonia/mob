@@ -189,7 +189,7 @@ public class AskReplyService extends BaseService {
     }
 
     @GET
-    @Path("/recomsg")
+    @Path("/recorequest")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
