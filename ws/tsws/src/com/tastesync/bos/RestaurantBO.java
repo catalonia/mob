@@ -31,7 +31,7 @@ public interface RestaurantBO {
     TSRestaurantExtendInfoObj selectRestaurantExtendedInfo(String restaurantId)
         throws TasteSyncException;
 
-    TSRestaurantPhotoObj selectRestaurantPhotos(String restaurantId)
+    List<TSRestaurantPhotoObj> selectRestaurantPhotos(String restaurantId)
         throws TasteSyncException;
 
     List<TSRestaurantTipsAPSettingsObj> selectRestaurantDetailTipAPSettings(String userId, String restaurantId) throws TasteSyncException;
@@ -39,8 +39,7 @@ public interface RestaurantBO {
     void insertDeleteSaveOrUnsaveRestaurant(String userId, String restaurantId,
         String userRestaurantSavedFlag) throws TasteSyncException;
 
-    void insertDeleteSaveRestaurantFav(String userId, String restaurantId,
-        String userRestaurantFavFlag) throws TasteSyncException;
+    void insertDeleteSaveRestaurantFav(String userId, String restaurantId) throws TasteSyncException;
     
     void insertRestaurantTips(String userId, String restaurantId,
             String tipText) throws TasteSyncException;
