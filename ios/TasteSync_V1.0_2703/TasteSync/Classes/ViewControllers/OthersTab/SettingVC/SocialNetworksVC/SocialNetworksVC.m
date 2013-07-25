@@ -9,6 +9,7 @@
 #import "SocialNetworksVC.h"
 #import "CommonHelpers.h"
 
+
 @interface SocialNetworksVC ()
 {
     UIImage *_imageOn;
@@ -40,15 +41,14 @@
     
     [self initUI];
     
-    if ([UserDefault userDefault].loginStatus == NotLogin) {
-            self.listCheckStateOfAllConnections = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
-    }
-    else
-        self.listCheckStateOfAllConnections = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], nil];
+    CRequest* request = [[CRequest alloc]initWithURL:@"showSettingsSocial" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+    request.delegate = self;
+    [request setFormPostValue:@"userId" forKey:[UserDefault userDefault].userID];
+    [request startFormRequest];
+    self.listCheckStateOfAllConnections = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
     
     self.listCheckStateOfAllPublishing = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
     
-
     _imageOn = [UIImage imageNamed:@"on.png"];
     _imgageOff = [UIImage imageNamed:@"off.png"];
     
@@ -168,11 +168,61 @@
 
 - (IBAction)actionBack:(id)sender
 {
+    
+//    NSMutableDictionary *nameElements = [NSMutableDictionary dictionary];
+//    
+//    [nameElements setObject:[CommonHelpers getJSONUserObj:userDefault.user] forKey:@"usncORDER"];
+//    
+//    NSMutableArray* dictionnary = [[NSMutableArray alloc] init];
+//    for (UserObj *userObj in (NSMutableArray*)anObj) {
+//        [dictionnary addObject:[CommonHelpers getJSONUserObj:userObj]];
+//    }
+//    
+//    [nameElements setObject:dictionnary forKey:@"list_user_profile_fb"];
+//    
+//    NSString* jsonString = [nameElements JSONString];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)actionNewsfeed:(id)sender
 {
     [[[CommonHelpers appDelegate] tabbarBaseVC] actionNewsfeed];
+}
+
+-(void)responseData:(NSData *)data
+{
+    
+    NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    self.listCheckStateOfAllConnections = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
+    
+    self.listCheckStateOfAllPublishing = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
+    
+//    if (response != NULL) {
+//
+//        NSDictionary* dic = [response objectFromJSONString];
+//        NSArray* array = [dic objectForKey:@"socialSettings"];
+//        for (NSDictionary* dic2 in array) {
+//            int index = [[dic2 objectForKey:@"usncORDER"] intValue] - 1;
+//            [self.listCheckStateOfAllConnections replaceObjectAtIndex:index withObject:[CommonHelpers getBoolValue:[dic2 objectForKey:@"usncYN"]]];
+//            NSArray* array2 = [dic2 objectForKey:@"auto_publishing"];
+//            for (NSDictionary* dic3 in array2) {
+//                if (dic3 != NULL) {
+//                    int index2 = [[dic3 objectForKey:@"usncORDER"] intValue] - 1;
+//                    if (index != 3) {
+//                        [self.listCheckStateOfAllPublishing replaceObjectAtIndex:(index*3 + index2) withObject:[CommonHelpers getBoolValue:[dic3 objectForKey:@"usncYN"]]];
+//                    }
+//                    else
+//                    {
+//                        [self.listCheckStateOfAllPublishing replaceObjectAtIndex:((index - 1)*3 + index2) withObject:[CommonHelpers getBoolValue:[dic3 objectForKey:@"usncYN"]]];
+//                    }
+//                }
+//                
+//            }
+//        }
+//    }
+    [self setStateForSwitchs:self.listCheckStateOfAllConnections];
+    [self setStateForbuttonsCheck:self.listCheckStateOfAllPublishing];
 }
 
 @end

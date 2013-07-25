@@ -7,18 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface SocialNetworksVC : UIViewController
+@interface SocialNetworksVC : UIViewController<RequestDelegate>
 
 @property (nonatomic, strong) IBOutlet UIButton *btn_Facebook;
 @property (nonatomic, strong) IBOutlet UIButton *btn_Twitter;
 @property (nonatomic, strong) IBOutlet UIButton *btn_FourSquare;
 @property (nonatomic, strong) IBOutlet UIButton *btn_Tumblr;
 
-@property (nonatomic, strong) NSMutableArray *arraylistCheckStateOfFavoriteSpot;
-@property (nonatomic, strong) NSMutableArray *arraylistCheckStateOfReviews;
-@property (nonatomic, strong) NSMutableArray *arraylistCheckStateOfRatings;
-@property (nonatomic, strong) NSMutableArray *arraylistCheckStateOfRecommendationsI;
+//@property (nonatomic, strong) NSMutableArray *arraylistCheckStateOfFavoriteSpot;
+//@property (nonatomic, strong) NSMutableArray *arraylistCheckStateOfReviews;
+//@property (nonatomic, strong) NSMutableArray *arraylistCheckStateOfRatings;
+//@property (nonatomic, strong) NSMutableArray *arraylistCheckStateOfRecommendationsI;
 @property (nonatomic, strong) NSMutableArray *listCheckStateOfAllConnections;
 @property (nonatomic, strong) NSMutableArray *listCheckStateOfAllPublishing;
 

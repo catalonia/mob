@@ -181,4 +181,13 @@ void debug(NSString *format, ...)
     else
         return data;
 }
+
++ (NSNumber*)getBoolValue:(NSString*)value
+{
+    if ([value isEqualToString:@"1"]) {
+        return [NSNumber numberWithBool:YES];
+    }
+    else
+        return [NSNumber numberWithBool:NO];
+}
 @end

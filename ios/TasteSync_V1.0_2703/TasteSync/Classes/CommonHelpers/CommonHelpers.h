@@ -50,4 +50,5 @@ void debug(NSString *format, ...);
 
 + (NSString*)commonUntilNull:(NSString*)data;
 
++ (NSNumber*)getBoolValue:(NSString*)value;
 @end
