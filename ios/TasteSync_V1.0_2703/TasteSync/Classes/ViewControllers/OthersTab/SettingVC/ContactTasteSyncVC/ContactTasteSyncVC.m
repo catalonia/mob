@@ -104,6 +104,7 @@ typedef enum _ContactSession
     }
     else
     {
+        
         [self hideKeyboard];
     }
     

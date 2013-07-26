@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface PrivacySettingsVC : UIViewController
+@interface PrivacySettingsVC : UIViewController<RequestDelegate>
 {
     __weak IBOutlet UIScrollView *scrollViewMain;
 }

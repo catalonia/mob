@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CRequest.h"
 
-@interface NotificationSettingsVC : UIViewController
+@interface NotificationSettingsVC : UIViewController<RequestDelegate>
 
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollview;

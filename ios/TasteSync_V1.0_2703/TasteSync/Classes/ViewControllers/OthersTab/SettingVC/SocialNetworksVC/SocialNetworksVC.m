@@ -41,10 +41,6 @@
     
     [self initUI];
     
-    CRequest* request = [[CRequest alloc]initWithURL:@"showSettingsSocial" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
-    request.delegate = self;
-    [request setFormPostValue:@"userId" forKey:[UserDefault userDefault].userID];
-    [request startFormRequest];
     self.listCheckStateOfAllConnections = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
     
     self.listCheckStateOfAllPublishing = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
@@ -52,8 +48,12 @@
     _imageOn = [UIImage imageNamed:@"on.png"];
     _imgageOff = [UIImage imageNamed:@"off.png"];
     
-    [self setStateForSwitchs:self.listCheckStateOfAllConnections];
-    [self setStateForbuttonsCheck:self.listCheckStateOfAllPublishing];
+    
+    CRequest* request = [[CRequest alloc]initWithURL:@"showSettingsSocial" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request startFormRequest];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -169,18 +169,43 @@
 - (IBAction)actionBack:(id)sender
 {
     
-//    NSMutableDictionary *nameElements = [NSMutableDictionary dictionary];
-//    
-//    [nameElements setObject:[CommonHelpers getJSONUserObj:userDefault.user] forKey:@"usncORDER"];
-//    
-//    NSMutableArray* dictionnary = [[NSMutableArray alloc] init];
-//    for (UserObj *userObj in (NSMutableArray*)anObj) {
-//        [dictionnary addObject:[CommonHelpers getJSONUserObj:userObj]];
-//    }
-//    
-//    [nameElements setObject:dictionnary forKey:@"list_user_profile_fb"];
-//    
-//    NSString* jsonString = [nameElements JSONString];
+    NSMutableDictionary *nameElements = [NSMutableDictionary dictionary];
+    
+    [nameElements setObject:[UserDefault userDefault].userID forKey:@"userId"];
+    
+    NSMutableArray* dictionnary = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [self.listCheckStateOfAllConnections count]; i++) {
+        NSMutableDictionary* dicConnection = [NSMutableDictionary dictionary];
+        [dicConnection setObject:[NSString stringWithFormat:@"%d",(i + 1)] forKey:@"usncORDER"];
+        [dicConnection setObject:[CommonHelpers getStringValue:[self.listCheckStateOfAllConnections objectAtIndex:i]] forKey:@"usncYN"];
+        
+        NSMutableArray* arrayConnection = [[NSMutableArray alloc]init];
+        for (int j = 0; j < [self.listCheckStateOfAllPublishing count]/4; j++) {
+            
+            NSMutableDictionary* dicPublishing = [NSMutableDictionary dictionary];
+            [dicPublishing setObject:[NSString stringWithFormat:@"%d",(j + 1)] forKey:@"usncORDER"];
+            [dicPublishing setObject:[CommonHelpers getStringValue:[self.listCheckStateOfAllPublishing objectAtIndex:i*3 + j]] forKey:@"usncYN"];
+                
+            [arrayConnection addObject:dicPublishing];
+        }
+        
+        [dicConnection setObject:arrayConnection forKey:@"auto_publishing"];
+        
+        [dictionnary addObject:dicConnection];
+    }
+    
+    [nameElements setObject:dictionnary forKey:@"socialSettings"];
+    
+    NSString* jsonString = [nameElements JSONString];
+    
+    NSLog(@"JSON STRING: %@", jsonString);
+    
+    CRequest* request = [[CRequest alloc]initWithURL:@"submitSettingsSocial" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationJson];
+    request.delegate = self;
+    [request setHeader:HeaderTypeJSON];
+    [request setJSON:jsonString];
+    [request startRequest];
+    
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -194,33 +219,25 @@
     
     NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    self.listCheckStateOfAllConnections = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
+    NSLog(@"Response: %@", response);
     
-    self.listCheckStateOfAllPublishing = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
-    
-//    if (response != NULL) {
-//
-//        NSDictionary* dic = [response objectFromJSONString];
-//        NSArray* array = [dic objectForKey:@"socialSettings"];
-//        for (NSDictionary* dic2 in array) {
-//            int index = [[dic2 objectForKey:@"usncORDER"] intValue] - 1;
-//            [self.listCheckStateOfAllConnections replaceObjectAtIndex:index withObject:[CommonHelpers getBoolValue:[dic2 objectForKey:@"usncYN"]]];
-//            NSArray* array2 = [dic2 objectForKey:@"auto_publishing"];
-//            for (NSDictionary* dic3 in array2) {
-//                if (dic3 != NULL) {
-//                    int index2 = [[dic3 objectForKey:@"usncORDER"] intValue] - 1;
-//                    if (index != 3) {
-//                        [self.listCheckStateOfAllPublishing replaceObjectAtIndex:(index*3 + index2) withObject:[CommonHelpers getBoolValue:[dic3 objectForKey:@"usncYN"]]];
-//                    }
-//                    else
-//                    {
-//                        [self.listCheckStateOfAllPublishing replaceObjectAtIndex:((index - 1)*3 + index2) withObject:[CommonHelpers getBoolValue:[dic3 objectForKey:@"usncYN"]]];
-//                    }
-//                }
-//                
-//            }
-//        }
-//    }
+    if (response != NULL) {
+
+        NSDictionary* dic = [response objectFromJSONString];
+        NSArray* array = [dic objectForKey:@"socialSettings"];
+        for (NSDictionary* dic2 in array) {
+            int index = [[dic2 objectForKey:@"usncORDER"] intValue] - 1;
+            [self.listCheckStateOfAllConnections replaceObjectAtIndex:index withObject:[CommonHelpers getBoolValue:[dic2 objectForKey:@"usncYN"]]];
+            NSArray* array2 = [dic2 objectForKey:@"auto_publishing"];
+            for (NSDictionary* dic3 in array2) {
+                if (dic3 != NULL) {
+                    int index2 = [[dic3 objectForKey:@"usncORDER"] intValue] - 1;
+                    [self.listCheckStateOfAllPublishing replaceObjectAtIndex:(index*3 + index2) withObject:[CommonHelpers getBoolValue:[dic3 objectForKey:@"usncYN"]]];
+                }
+                
+            }
+        }
+    }
     [self setStateForSwitchs:self.listCheckStateOfAllConnections];
     [self setStateForbuttonsCheck:self.listCheckStateOfAllPublishing];
 }
