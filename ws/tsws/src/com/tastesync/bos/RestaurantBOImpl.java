@@ -56,7 +56,7 @@ public class RestaurantBOImpl implements RestaurantBO {
     }
 
     @Override
-    public TSRestaurantPhotoObj selectRestaurantPhotos(String restaurantId)
+    public List<TSRestaurantPhotoObj> selectRestaurantPhotos(String restaurantId)
         throws TasteSyncException {
         return restaurantDAO.selectRestaurantPhotos(restaurantId);
     }
@@ -71,9 +71,8 @@ public class RestaurantBOImpl implements RestaurantBO {
 
     @Override
     public void insertDeleteSaveRestaurantFav(String userId,
-        String restaurantId, String userRestaurantFavFlag) throws TasteSyncException {
-        restaurantDAO.insertDeleteSaveRestaurantFav(userId, restaurantId,
-            userRestaurantFavFlag);
+        String restaurantId) throws TasteSyncException {
+        restaurantDAO.insertDeleteSaveRestaurantFav(userId, restaurantId);
     }
 
 	@Override

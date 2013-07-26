@@ -1,9 +1,11 @@
-package com.tastesync.model.objects;
+package com.tastesync.model.objects.derived;
 
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.tastesync.model.objects.TSPhotoObj;
 
 @XmlRootElement(name = "recommenders")
 public class TSRecommendersDetailsObj implements Serializable {
