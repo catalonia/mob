@@ -68,7 +68,7 @@ public class RestaurantService extends BaseService {
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-            tsCurrentRecommendedRestaurantDetailsObj = restaurantBO.selectCurrentRestaurantRecommendedDetails(userId,
+            tsCurrentRecommendedRestaurantDetailsObj = restaurantBO.showCurrentRestaurantRecommendedDetails(userId,
                     restaurantId);
 
             return Response.status(status)
@@ -115,7 +115,7 @@ public class RestaurantService extends BaseService {
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-            tsRestaurantDetailsObj = restaurantBO.selectRestaurantDetails(userId,
+            tsRestaurantDetailsObj = restaurantBO.showRestaurantDetail(userId,
                     restaurantId);
 
             return Response.status(status).entity(tsRestaurantDetailsObj).build();
@@ -156,7 +156,7 @@ public class RestaurantService extends BaseService {
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
         
         try {
-            tsMenuObj = restaurantBO.selectRestaurantMenu(restaurantId);
+            tsMenuObj = restaurantBO.showRestaurantDetailMenu(restaurantId);
 
             return Response.status(status).entity(tsMenuObj).build();
         } catch (TasteSyncException e1) {
@@ -196,7 +196,7 @@ public class RestaurantService extends BaseService {
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-        	tsRestaurantExtendInfoObj = restaurantBO.selectRestaurantExtendedInfo(restaurantId);
+        	tsRestaurantExtendInfoObj = restaurantBO.showRestaurantDetailMoreInfo(restaurantId);
 
             return Response.status(status).entity(tsRestaurantExtendInfoObj).build();
         } catch (TasteSyncException e1) {
@@ -236,7 +236,7 @@ public class RestaurantService extends BaseService {
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-        	tsRestaurantPhotoObjList = restaurantBO.selectRestaurantPhotos(restaurantId);
+        	tsRestaurantPhotoObjList = restaurantBO.showRestaurantDetailPhotos(restaurantId);
 
             return Response.status(status).entity(tsRestaurantPhotoObjList).build();
         } catch (TasteSyncException e1) {
@@ -276,7 +276,7 @@ public class RestaurantService extends BaseService {
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-            tsRestaurantObj = restaurantBO.selectRestaurant(restaurantId);
+            tsRestaurantObj = restaurantBO.showRestaurantDetail(restaurantId);
 
             if (printExtra) {
                 try {
@@ -328,7 +328,7 @@ public class RestaurantService extends BaseService {
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         try {
-            tsRestaurantObjList = restaurantBO.selectRestaurants();
+            tsRestaurantObjList = restaurantBO.showRestaurantsDetailsList();
 
             return Response.status(status).entity(tsRestaurantObjList).build();
         } catch (TasteSyncException e) {
@@ -382,7 +382,7 @@ public class RestaurantService extends BaseService {
         boolean responseDone = false;
 
         try {
-            restaurantBO.insertDeleteSaveOrUnsaveRestaurant(userId,
+            restaurantBO.submitSaveOrUnsaveRestaurant(userId,
                 restaurantId, userRestaurantSavedFlag);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
@@ -430,7 +430,7 @@ public class RestaurantService extends BaseService {
         boolean responseDone = false;
 
         try {
-            restaurantBO.insertDeleteSaveRestaurantFav(userId, restaurantId);
+            restaurantBO.submitAddOrRemoveFromFavs(userId, restaurantId);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
@@ -476,7 +476,7 @@ public class RestaurantService extends BaseService {
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-        	tsRestaurantTipsAPSettingsObjList = restaurantBO.selectRestaurantDetailTipAPSettings(userId,restaurantId);
+        	tsRestaurantTipsAPSettingsObjList = restaurantBO.showRestaurantDetailTipAPSettings(userId,restaurantId);
 
             return Response.status(status).entity(tsRestaurantTipsAPSettingsObjList).build();
         } catch (TasteSyncException e1) {
@@ -517,7 +517,7 @@ public class RestaurantService extends BaseService {
         boolean responseDone = false;
 
         try {
-            restaurantBO.insertRestaurantTips(userId, restaurantId, tipText);
+            restaurantBO.submitRestaurantDetailTip(userId, restaurantId, tipText);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
