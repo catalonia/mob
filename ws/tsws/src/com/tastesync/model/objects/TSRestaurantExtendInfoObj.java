@@ -3,8 +3,9 @@ package com.tastesync.model.objects;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-
+@XmlRootElement(name = "restaurantextendedinfo")
 public class TSRestaurantExtendInfoObj implements Serializable {
     private static final long serialVersionUID = 6933222467768293971L;
     private String phoneNumber;
