@@ -26,7 +26,7 @@ import java.util.List;
 
 public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     @Override
-    public void createRecoRequestSearch(String userId,
+    public void submitAskForRecommendationSearch(String userId,
         String[] cuisineTier1IdList, String[] cuisineTier2IdList,
         String[] priceIdList, String[] themeIdList,
         String[] whoareyouwithIdList, String[] typeOfRestaurantIdList,
@@ -177,14 +177,14 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public TSRecommendeeUserObj selectRecommendationsShowLikes(
+    public TSRecommendeeUserObj showRecommendationsShowLikes(
         String recoLikeId) throws TasteSyncException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public List<TSRestaurantObj> selectRecommendedRestaurantsForUsers(
+    public List<TSRestaurantObj> showRecommendationDidYouLike(
         String recorequestId) throws TasteSyncException {
         // TODO Auto-generated method stub
         return null;
@@ -197,7 +197,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public void insertRecommendationMessageAnswer(String newMessageText,
+    public void submitRecommendationMessageAnswer(String newMessageText,
         String previousMessageId, String newMessageRecipientUserId,
         String newMessageSenderUserId, String[] restaurantIdList)
         throws TasteSyncException {
@@ -205,21 +205,21 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public TSSenderUserObj selectRecommendationMessage(String messageId,
+    public TSSenderUserObj showRecommendationMessage(String messageId,
         String recipientUserId) throws TasteSyncException {
         // TODO Auto-generated method stub
         return null;
     }
 
 	@Override
-	public TSRecoRequestObj selectRecommendationsRequest(String userId,
+	public TSRecoRequestObj showRecommendationsRequest(String userId,
 			String recorequestId) throws TasteSyncException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void insertRecommendationRequestAnswer(String recorequestId,
+	public void submitRecommendationRequestAnswer(String recorequestId,
 			String recommenderUserId, String[] restaurantIdList,
 			String replyText) throws TasteSyncException {
 		// TODO Auto-generated method stub
@@ -227,14 +227,14 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 	}
 
 	@Override
-	public TSRecommendationsForYouObj selectRecommendationsForYou(
+	public TSRecommendationsForYouObj showRecommendationsForYou(
 			String recorequestId) throws TasteSyncException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public TSRecommendationsFollowupObj selectRecommendationsFollowup(
+	public TSRecommendationsFollowupObj showRecommendationsFollowup(
 			String questionId) throws TasteSyncException {
 		// TODO Auto-generated method stub
 		return null;

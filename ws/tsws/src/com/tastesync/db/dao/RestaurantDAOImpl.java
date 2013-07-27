@@ -27,7 +27,7 @@ import java.util.List;
 
 public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     @Override
-    public TSRestaurantObj selectRestaurant(String restaurantId)
+    public TSRestaurantObj showRestaurantDetail(String restaurantId)
         throws TasteSyncException {
         TSRestaurantObj tsRestaurantObj = new TSRestaurantObj();
 
@@ -131,21 +131,126 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         }
     }
 
-    private void mapResultsetRowToTSRestaurantPhotoObjVO(TSRestaurantPhotoObj tsRestaurantPhotoObj,
-            ResultSet resultset) throws SQLException {
-    	tsRestaurantPhotoObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString("restaurant_photo.RESTAURANT_ID"));
-    	tsRestaurantPhotoObj.setPhotoId(CommonFunctionsUtil.getModifiedValueString("restaurant_photo.PHOTO_ID"));
-    	tsRestaurantPhotoObj.setPrefix(CommonFunctionsUtil.getModifiedValueString("restaurant_photo.PREFIX"));
-    	tsRestaurantPhotoObj.setSuffix(CommonFunctionsUtil.getModifiedValueString("restaurant_photo.SUFFIX"));
-    	tsRestaurantPhotoObj.setWidth(CommonFunctionsUtil.getModifiedValueString("restaurant_photo.WIDTH"));
-    	tsRestaurantPhotoObj.setHeight(CommonFunctionsUtil.getModifiedValueString("restaurant_photo.HEIGHT"));
-    	tsRestaurantPhotoObj.setUltimateSourceName(CommonFunctionsUtil.getModifiedValueString("restaurant_photo.ULTIMATE_SOURCE_NAME"));
-    	tsRestaurantPhotoObj.setUltimateSourceUrl(CommonFunctionsUtil.getModifiedValueString("restaurant_photo.ULTIMATE_SOURCE_URL"));
-    	tsRestaurantPhotoObj.setPhotoSource(CommonFunctionsUtil.getModifiedValueString("restaurant_photo.PHOTO_SOURCE"));
+    private void mapResultsetRowToTSRestaurantPhotoObjVO(
+        TSRestaurantPhotoObj tsRestaurantPhotoObj, ResultSet resultset)
+        throws SQLException {
+        tsRestaurantPhotoObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+                "restaurant_photo.RESTAURANT_ID"));
+        tsRestaurantPhotoObj.setPhotoId(CommonFunctionsUtil.getModifiedValueString(
+                "restaurant_photo.PHOTO_ID"));
+        tsRestaurantPhotoObj.setPrefix(CommonFunctionsUtil.getModifiedValueString(
+                "restaurant_photo.PREFIX"));
+        tsRestaurantPhotoObj.setSuffix(CommonFunctionsUtil.getModifiedValueString(
+                "restaurant_photo.SUFFIX"));
+        tsRestaurantPhotoObj.setWidth(CommonFunctionsUtil.getModifiedValueString(
+                "restaurant_photo.WIDTH"));
+        tsRestaurantPhotoObj.setHeight(CommonFunctionsUtil.getModifiedValueString(
+                "restaurant_photo.HEIGHT"));
+        tsRestaurantPhotoObj.setUltimateSourceName(CommonFunctionsUtil.getModifiedValueString(
+                "restaurant_photo.ULTIMATE_SOURCE_NAME"));
+        tsRestaurantPhotoObj.setUltimateSourceUrl(CommonFunctionsUtil.getModifiedValueString(
+                "restaurant_photo.ULTIMATE_SOURCE_URL"));
+        tsRestaurantPhotoObj.setPhotoSource(CommonFunctionsUtil.getModifiedValueString(
+                "restaurant_photo.PHOTO_SOURCE"));
     }
-    
+
+    //TODO
+    private void mapResultsetRowToTSRestaurantExtendInfoVO(
+        TSRestaurantExtendInfoObj tsRestaurantExtendInfoObj, ResultSet resultset)
+        throws SQLException {
+        tsRestaurantExtendInfoObj.setPhoneNumber(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.tel")));
+        tsRestaurantExtendInfoObj.setWebsite(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.website")));
+        tsRestaurantExtendInfoObj.setHealthyOptionsFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString(
+                    "restaurant_extended_info.options_healthy")));
+        tsRestaurantExtendInfoObj.setWifiFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.wifi")));
+        tsRestaurantExtendInfoObj.setPayCashonlyFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.payment_cashonly")));
+        tsRestaurantExtendInfoObj.setReservationsFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.reservations")));
+        tsRestaurantExtendInfoObj.setOpen24HoursFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.open_24hrs")));
+        tsRestaurantExtendInfoObj.setAttire(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.attire")));
+        tsRestaurantExtendInfoObj.setAttireRequiredList(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.attire_required")));
+        tsRestaurantExtendInfoObj.setAttireProhibitedList(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString(
+                    "restaurant_extended_info.attire_prohibited")));
+        tsRestaurantExtendInfoObj.setParkingFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.parking")));
+        tsRestaurantExtendInfoObj.setParkingValetFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.parking_valet")));
+        tsRestaurantExtendInfoObj.setParkingFreeFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.parking_free")));
+        tsRestaurantExtendInfoObj.setParkingGarageFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.parking_garage")));
+        tsRestaurantExtendInfoObj.setParkingLotFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.parking_lot")));
+        tsRestaurantExtendInfoObj.setParkingStreetFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.parking_street")));
+        tsRestaurantExtendInfoObj.setParkingValidatedFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString(
+                    "restaurant_extended_info.parking_validated")));
+        tsRestaurantExtendInfoObj.setSmokingFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.smoking")));
+        tsRestaurantExtendInfoObj.setAccessibleWheelchairFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString(
+                    "restaurant_extended_info.accessible_wheelchair")));
+        tsRestaurantExtendInfoObj.setAlcoholFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.alcohol")));
+        tsRestaurantExtendInfoObj.setAlcoholBarFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.alcohol_bar")));
+        tsRestaurantExtendInfoObj.setAlcoholBeerWineFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString(
+                    "restaurant_extended_info.alcohol_beer_wine")));
+        tsRestaurantExtendInfoObj.setAlcoholByobFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.alcohol_byob")));
+        tsRestaurantExtendInfoObj.setGroupsGoodForFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.groups_goodfor")));
+        tsRestaurantExtendInfoObj.setKidsGoodForFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.kids_goodfor")));
+        tsRestaurantExtendInfoObj.setKidsMenuFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.kids_menu")));
+        tsRestaurantExtendInfoObj.setMealBreakfastFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.meal_breakfast")));
+        tsRestaurantExtendInfoObj.setMealCaterFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.meal_cater")));
+        tsRestaurantExtendInfoObj.setMealDeliverFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.meal_deliver")));
+        tsRestaurantExtendInfoObj.setMealDinnerFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.meal_dinner")));
+        tsRestaurantExtendInfoObj.setMealLunchFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.meal_lunch")));
+        tsRestaurantExtendInfoObj.setMealTakeoutFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.meal_takeout")));
+        tsRestaurantExtendInfoObj.setOptionsGlutenfreeFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString(
+                    "restaurant_extended_info.options_glutenfree")));
+        tsRestaurantExtendInfoObj.setOptionsLowfatFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.options_lowfat")));
+        tsRestaurantExtendInfoObj.setOptionsOrganicFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.options_organic")));
+        tsRestaurantExtendInfoObj.setOptionsVeganFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.options_vegan")));
+        tsRestaurantExtendInfoObj.setOptionsVegetarianFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString(
+                    "restaurant_extended_info.options_vegetarian")));
+        tsRestaurantExtendInfoObj.setRoomPrivateFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.room_private")));
+        tsRestaurantExtendInfoObj.setSeatingOutdoorFlag(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant_extended_info.seating_outdoor")));
+        tsRestaurantExtendInfoObj.setLat(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant.restaurant_lat")));
+        tsRestaurantExtendInfoObj.setLon(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("restaurant.restaurant_lon")));
+    }
+
     @Override
-    public List<TSRestaurantObj> selectRestaurants() throws TasteSyncException {
+    public List<TSRestaurantObj> showRestaurantsDetailsList() throws TasteSyncException {
         List<TSRestaurantObj> tsRestaurantObjs = new ArrayList<TSRestaurantObj>();
 
         TSDataSource tsDataSource = TSDataSource.getInstance();
@@ -181,21 +286,21 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public TSRestaurantDetailsObj selectRestaurantDetails(String userId,
+    public TSRestaurantDetailsObj showRestaurantDetail(String userId,
         String restaurantId) throws TasteSyncException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public TSCurrentRecommendedRestaurantDetailsObj selectCurrentRestaurantRecommendedDetails(
+    public TSCurrentRecommendedRestaurantDetailsObj showCurrentRestaurantRecommendedDetails(
         String userId, String restaurantId) throws TasteSyncException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public TSMenuObj selectRestaurantMenu(String restaurantId)
+    public TSMenuObj showRestaurantDetailMenu(String restaurantId)
         throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
@@ -230,15 +335,86 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public TSRestaurantExtendInfoObj selectRestaurantExtendedInfo(
+    public TSRestaurantExtendInfoObj showRestaurantDetailMoreInfo(
         String restaurantId) throws TasteSyncException {
         // TODO Auto-generated method stub
-        return null;
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+        TSRestaurantExtendInfoObj tsRestaurantExtendInfoObj = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_EXTENDED_INFO_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            statement.setString(2, restaurantId);
+            resultset = statement.executeQuery();
+
+            String[] addressList = new String[6];
+
+            //only one result
+            if (resultset.next()) {
+                tsRestaurantExtendInfoObj = new TSRestaurantExtendInfoObj();
+                mapResultsetRowToTSRestaurantExtendInfoVO(tsRestaurantExtendInfoObj,
+                    resultset);
+                addressList[0] = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant_extended_info.address"));
+                addressList[1] = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant_extended_info.address_extended"));
+                addressList[5] = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant_extended_info.postcode"));
+            }
+
+            statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_EXTENDED_INFO_CITY_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                if (tsRestaurantExtendInfoObj == null) {
+                    tsRestaurantExtendInfoObj = new TSRestaurantExtendInfoObj();
+                }
+
+                addressList[2] = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "cities.city"));
+                addressList[3] = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "cities.state"));
+                addressList[4] = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "cities.country"));
+            }
+
+            StringBuffer addressBuffer = new StringBuffer();
+
+            for (int i = 0; i < addressList.length; ++i) {
+                if (addressList[i] != null && !addressList[i].isEmpty()) {
+                    addressBuffer.append(addressList[i]).append(", ");
+                }
+            }
+
+            //TODO remove last , characters
+            if (tsRestaurantExtendInfoObj != null) {
+            	String addressStr = addressBuffer.toString();
+            	if (addressStr != null && addressStr.length() > 2)  {
+            		addressStr = addressStr.substring(0, addressStr.length() - 2);
+            	}
+                tsRestaurantExtendInfoObj.setAddress(addressStr);
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            throw new TasteSyncException(e1.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+
+        return tsRestaurantExtendInfoObj;
     }
 
     @Override
-    public List<TSRestaurantPhotoObj> selectRestaurantPhotos(String restaurantId)
-        throws TasteSyncException {
+    public List<TSRestaurantPhotoObj> showRestaurantDetailPhotos(
+        String restaurantId) throws TasteSyncException {
         List<TSRestaurantPhotoObj> tsRestaurantPhotoObjs = new ArrayList<TSRestaurantPhotoObj>();
 
         TSDataSource tsDataSource = TSDataSource.getInstance();
@@ -256,8 +432,9 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
-            	TSRestaurantPhotoObj tsRestaurantPhotoObj = new TSRestaurantPhotoObj();
-                mapResultsetRowToTSRestaurantPhotoObjVO(tsRestaurantPhotoObj, resultset);
+                TSRestaurantPhotoObj tsRestaurantPhotoObj = new TSRestaurantPhotoObj();
+                mapResultsetRowToTSRestaurantPhotoObjVO(tsRestaurantPhotoObj,
+                    resultset);
 
                 tsRestaurantPhotoObjs.add(tsRestaurantPhotoObj);
             }
@@ -273,7 +450,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public List<TSRestaurantTipsAPSettingsObj> selectRestaurantDetailTipAPSettings(
+    public List<TSRestaurantTipsAPSettingsObj> showRestaurantDetailTipAPSettings(
         String userId, String restaurantId) throws TasteSyncException {
         List<TSRestaurantTipsAPSettingsObj> tsRestaurantTipsAPSettingsObjs = new ArrayList<TSRestaurantTipsAPSettingsObj>();
 
@@ -311,7 +488,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public void insertDeleteSaveOrUnsaveRestaurant(String userId,
+    public void submitSaveOrUnsaveRestaurant(String userId,
         String restaurantId, String userRestaurantSavedFlag)
         throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
@@ -359,8 +536,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public void insertDeleteSaveRestaurantFav(String userId,
-        String restaurantId)
+    public void submitAddOrRemoveFromFavs(String userId, String restaurantId)
         throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
@@ -398,7 +574,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public void insertRestaurantTips(String userId, String restaurantId,
+    public void submitRestaurantDetailTip(String userId, String restaurantId,
         String tipText) throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
