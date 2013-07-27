@@ -20,72 +20,71 @@ public class RestaurantBOImpl implements RestaurantBO {
     private RestaurantDAO restaurantDAO = new RestaurantDAOImpl();
 
     @Override
-    public TSRestaurantObj selectRestaurant(String restaurantId)
+    public TSRestaurantObj showRestaurantDetail(String restaurantId)
         throws TasteSyncException {
-        return restaurantDAO.selectRestaurant(restaurantId);
+        return restaurantDAO.showRestaurantDetail(restaurantId);
     }
 
     @Override
-    public List<TSRestaurantObj> selectRestaurants() throws TasteSyncException {
-        return restaurantDAO.selectRestaurants();
+    public List<TSRestaurantObj> showRestaurantsDetailsList() throws TasteSyncException {
+        return restaurantDAO.showRestaurantsDetailsList();
     }
 
     @Override
-    public TSRestaurantDetailsObj selectRestaurantDetails(String userId,
+    public TSRestaurantDetailsObj showRestaurantDetail(String userId,
         String restaurantId) throws TasteSyncException {
-        return restaurantDAO.selectRestaurantDetails(userId, restaurantId);
+        return restaurantDAO.showRestaurantDetail(userId, restaurantId);
     }
 
     @Override
-    public TSCurrentRecommendedRestaurantDetailsObj selectCurrentRestaurantRecommendedDetails(
+    public TSCurrentRecommendedRestaurantDetailsObj showCurrentRestaurantRecommendedDetails(
         String userId, String restaurantId) throws TasteSyncException {
-        // TODO Auto-generated method stub
-        return null;
+    	return restaurantDAO.showCurrentRestaurantRecommendedDetails(userId, restaurantId);
     }
 
     @Override
-    public TSMenuObj selectRestaurantMenu(String restaurantId)
+    public TSMenuObj showRestaurantDetailMenu(String restaurantId)
         throws TasteSyncException {
-        return restaurantDAO.selectRestaurantMenu(restaurantId);
+        return restaurantDAO.showRestaurantDetailMenu(restaurantId);
     }
 
     @Override
-    public TSRestaurantExtendInfoObj selectRestaurantExtendedInfo(
+    public TSRestaurantExtendInfoObj showRestaurantDetailMoreInfo(
         String restaurantId) throws TasteSyncException {
-        return restaurantDAO.selectRestaurantExtendedInfo(restaurantId);
+        return restaurantDAO.showRestaurantDetailMoreInfo(restaurantId);
     }
 
     @Override
-    public List<TSRestaurantPhotoObj> selectRestaurantPhotos(String restaurantId)
+    public List<TSRestaurantPhotoObj> showRestaurantDetailPhotos(String restaurantId)
         throws TasteSyncException {
-        return restaurantDAO.selectRestaurantPhotos(restaurantId);
+        return restaurantDAO.showRestaurantDetailPhotos(restaurantId);
     }
 
     @Override
-    public void insertDeleteSaveOrUnsaveRestaurant(String userId,
+    public void submitSaveOrUnsaveRestaurant(String userId,
         String restaurantId, String userRestaurantSavedFlag)
         throws TasteSyncException {
-        restaurantDAO.insertDeleteSaveOrUnsaveRestaurant(userId, restaurantId,
+        restaurantDAO.submitSaveOrUnsaveRestaurant(userId, restaurantId,
             userRestaurantSavedFlag);
     }
 
     @Override
-    public void insertDeleteSaveRestaurantFav(String userId,
+    public void submitAddOrRemoveFromFavs(String userId,
         String restaurantId) throws TasteSyncException {
-        restaurantDAO.insertDeleteSaveRestaurantFav(userId, restaurantId);
+        restaurantDAO.submitAddOrRemoveFromFavs(userId, restaurantId);
     }
 
 	@Override
-	public void insertRestaurantTips(String userId, String restaurantId,
+	public void submitRestaurantDetailTip(String userId, String restaurantId,
 			String tipText) throws TasteSyncException {
-		restaurantDAO.insertRestaurantTips(userId, restaurantId, tipText);
+		restaurantDAO.submitRestaurantDetailTip(userId, restaurantId, tipText);
 	}
 
 	@Override
-	public List<TSRestaurantTipsAPSettingsObj> selectRestaurantDetailTipAPSettings(String userId, String restaurantId)
+	public List<TSRestaurantTipsAPSettingsObj> showRestaurantDetailTipAPSettings(String userId, String restaurantId)
 			throws TasteSyncException {
 	
-		return restaurantDAO.selectRestaurantDetailTipAPSettings(userId, restaurantId);
+		return restaurantDAO.showRestaurantDetailTipAPSettings(userId, restaurantId);
 	}
 
 }

@@ -16,7 +16,7 @@ import javax.ws.rs.QueryParam;
 
 
 public interface AskReplyBO {
-    void createRecoRequestSearch(String userId, String[] cuisineTier1IdList,
+    void submitAskForRecommendationSearch(String userId, String[] cuisineTier1IdList,
         String[] cuisineTier2IdList, String[] priceIdList,
         String[] themeIdList, String[] whoareyouwithIdList,
         String[] typeOfRestaurantIdList, String[] occasionIdList,
@@ -33,31 +33,31 @@ public interface AskReplyBO {
         String recoRequestFriendText, String[] friendsFacebookIdList,
         String postRecoRequestOnFacebook) throws TasteSyncException;
 
-    TSRecoRequestObj selectRecommendationsRequest(String userId,
+    TSRecoRequestObj showRecommendationsRequest(String userId,
         String recorequestId) throws TasteSyncException;
 
-    TSSenderUserObj selectRecommendationMessage(String messageId,
+    TSSenderUserObj showRecommendationMessage(String messageId,
         String recipientUserId) throws TasteSyncException;
 
-    void insertRecommendationRequestAnswer(String recorequestId,
+    void submitRecommendationRequestAnswer(String recorequestId,
             String recommenderUserId, String[] restaurantIdList, String replyText)
             throws TasteSyncException;
     
-    void insertRecommendationMessageAnswer(String newMessageText,
+    void submitRecommendationMessageAnswer(String newMessageText,
         String previousMessageId, String newMessageRecipientUserId,
         String newMessageSenderUserId, String[] restaurantIdList)
         throws TasteSyncException;
 
-    TSRecommendationsForYouObj selectRecommendationsForYou(String recorequestId)
+    TSRecommendationsForYouObj showRecommendationsForYou(String recorequestId)
         throws TasteSyncException;
 
-    TSRecommendeeUserObj selectRecommendationsShowLikes(String recoLikeId)
+    TSRecommendeeUserObj showRecommendationsShowLikes(String recoLikeId)
             throws TasteSyncException;
     
-    TSRecommendationsFollowupObj selectRecommendationsFollowup(String questionId)
+    TSRecommendationsFollowupObj showRecommendationsFollowup(String questionId)
             throws TasteSyncException;
     
-    List<TSRestaurantObj> selectRecommendedRestaurantsForUsers(
+    List<TSRestaurantObj> showRecommendationDidYouLike(
         String recorequestId) throws TasteSyncException;
 
     void submitRecommendationDidYouLikeLikes(String userId,

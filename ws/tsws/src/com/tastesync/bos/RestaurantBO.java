@@ -14,34 +14,34 @@ import java.util.List;
 
 
 public interface RestaurantBO {
-    TSRestaurantDetailsObj selectRestaurantDetails(String userId,
+    TSRestaurantDetailsObj showRestaurantDetail(String userId,
         String restaurantId) throws TasteSyncException;
 
-    TSRestaurantObj selectRestaurant(String restaurantId)
+    TSRestaurantObj showRestaurantDetail(String restaurantId)
         throws TasteSyncException;
 
-    List<TSRestaurantObj> selectRestaurants() throws TasteSyncException;
+    List<TSRestaurantObj> showRestaurantsDetailsList() throws TasteSyncException;
 
-    TSCurrentRecommendedRestaurantDetailsObj selectCurrentRestaurantRecommendedDetails(
+    TSCurrentRecommendedRestaurantDetailsObj showCurrentRestaurantRecommendedDetails(
         String userId, String restaurantId) throws TasteSyncException;
 
-    TSMenuObj selectRestaurantMenu(String restaurantId)
+    TSMenuObj showRestaurantDetailMenu(String restaurantId)
         throws TasteSyncException;
 
-    TSRestaurantExtendInfoObj selectRestaurantExtendedInfo(String restaurantId)
+    TSRestaurantExtendInfoObj showRestaurantDetailMoreInfo(String restaurantId)
         throws TasteSyncException;
 
-    List<TSRestaurantPhotoObj> selectRestaurantPhotos(String restaurantId)
+    List<TSRestaurantPhotoObj> showRestaurantDetailPhotos(String restaurantId)
         throws TasteSyncException;
 
-    List<TSRestaurantTipsAPSettingsObj> selectRestaurantDetailTipAPSettings(String userId, String restaurantId) throws TasteSyncException;
+    List<TSRestaurantTipsAPSettingsObj> showRestaurantDetailTipAPSettings(String userId, String restaurantId) throws TasteSyncException;
     
-    void insertDeleteSaveOrUnsaveRestaurant(String userId, String restaurantId,
+    void submitSaveOrUnsaveRestaurant(String userId, String restaurantId,
         String userRestaurantSavedFlag) throws TasteSyncException;
 
-    void insertDeleteSaveRestaurantFav(String userId, String restaurantId) throws TasteSyncException;
+    void submitAddOrRemoveFromFavs(String userId, String restaurantId) throws TasteSyncException;
     
-    void insertRestaurantTips(String userId, String restaurantId,
+    void submitRestaurantDetailTip(String userId, String restaurantId,
             String tipText) throws TasteSyncException;
     
 }
