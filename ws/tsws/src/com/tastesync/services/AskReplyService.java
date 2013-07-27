@@ -80,7 +80,7 @@ public class AskReplyService extends BaseService {
             cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
             stateName = CommonFunctionsUtil.converStringAsNullIfNeeded(stateName);
 
-            askReplyBO.createRecoRequestSearch(userId,
+            askReplyBO.submitAskForRecommendationSearch(userId,
                 CommonFunctionsUtil.convertStringListAsArrayList(
                     cuisineTier1IdList),
                 CommonFunctionsUtil.convertStringListAsArrayList(
@@ -94,6 +94,7 @@ public class AskReplyService extends BaseService {
                 CommonFunctionsUtil.convertStringListAsArrayList(occasionIdList),
                 neighborhoodId, cityId, stateName);
 
+            //TODO return recorequestid
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
 
@@ -205,7 +206,7 @@ public class AskReplyService extends BaseService {
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
         try {
-            tsRecoRequestObj = askReplyBO.selectRecommendationsRequest(userId,
+            tsRecoRequestObj = askReplyBO.showRecommendationsRequest(userId,
                     recorequestId);
 
             return Response.status(status).entity(tsRecoRequestObj).build();
@@ -242,8 +243,8 @@ public class AskReplyService extends BaseService {
     String recorequestId,
         @FormParam("recommenderuserid")
     String recommenderUserId,
-        @FormParam("restaurantidlist}")
-    String restaurantIdList, @FormParam("replytext}")
+        @FormParam("restaurantidlist")
+    String restaurantIdList, @FormParam("replytext")
     String replyText) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
@@ -257,7 +258,7 @@ public class AskReplyService extends BaseService {
             restaurantIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantIdList);
             replyText = CommonFunctionsUtil.converStringAsNullIfNeeded(replyText);
 
-            askReplyBO.insertRecommendationRequestAnswer(recorequestId,
+            askReplyBO.submitRecommendationRequestAnswer(recorequestId,
                 recommenderUserId,
                 CommonFunctionsUtil.convertStringListAsArrayList(
                     restaurantIdList), replyText);
@@ -306,7 +307,7 @@ public class AskReplyService extends BaseService {
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
         try {
-            tsRecommendationsForYou = askReplyBO.selectRecommendationsForYou(recorequestId);
+            tsRecommendationsForYou = askReplyBO.showRecommendationsForYou(recorequestId);
 
             return Response.status(status).entity(tsRecommendationsForYou)
                            .build();
@@ -343,9 +344,9 @@ public class AskReplyService extends BaseService {
     String newMessageText,
         @FormParam("previousmessageid")
     String previousMessageId,
-        @FormParam("newmessagerecipientuserid}")
+        @FormParam("newmessagerecipientuserid")
     String newMessageRecipientUserId,
-        @FormParam("newmessagesenderuserid}")
+        @FormParam("newmessagesenderuserid")
     String newMessageSenderUserId,
         @FormParam("restaurantidlist")
     String restaurantIdList) {
@@ -361,7 +362,7 @@ public class AskReplyService extends BaseService {
             newMessageRecipientUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(newMessageRecipientUserId);
             newMessageSenderUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(newMessageSenderUserId);
             restaurantIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantIdList);
-            askReplyBO.insertRecommendationMessageAnswer(newMessageText,
+            askReplyBO.submitRecommendationMessageAnswer(newMessageText,
                 previousMessageId, newMessageRecipientUserId,
                 newMessageSenderUserId,
                 CommonFunctionsUtil.convertStringListAsArrayList(
@@ -411,7 +412,7 @@ public class AskReplyService extends BaseService {
         recipientUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(recipientUserId);
 
         try {
-            tsSenderUserObj = askReplyBO.selectRecommendationMessage(messageId,
+            tsSenderUserObj = askReplyBO.showRecommendationMessage(messageId,
                     recipientUserId);
 
             return Response.status(status).entity(tsSenderUserObj).build();
@@ -454,7 +455,7 @@ public class AskReplyService extends BaseService {
         questionId = CommonFunctionsUtil.converStringAsNullIfNeeded(questionId);
 
         try {
-            tsRecommendationsFollowupObj = askReplyBO.selectRecommendationsFollowup(questionId);
+            tsRecommendationsFollowupObj = askReplyBO.showRecommendationsFollowup(questionId);
 
             return Response.status(status).entity(tsRecommendationsFollowupObj)
                            .build();
@@ -497,7 +498,7 @@ public class AskReplyService extends BaseService {
         recommenderUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(recommenderUserId);
 
         try {
-            tsRecommendeeUser = askReplyBO.selectRecommendationsShowLikes(recoLikeId);
+            tsRecommendeeUser = askReplyBO.showRecommendationsShowLikes(recoLikeId);
 
             return Response.status(status).entity(tsRecommendeeUser).build();
         } catch (TasteSyncException e) {
@@ -537,7 +538,7 @@ public class AskReplyService extends BaseService {
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
         try {
-            tsRestaurantObjList = askReplyBO.selectRecommendedRestaurantsForUsers(recorequestId);
+            tsRestaurantObjList = askReplyBO.showRecommendationDidYouLike(recorequestId);
 
             return Response.status(status).entity(tsRestaurantObjList).build();
         } catch (TasteSyncException e) {
