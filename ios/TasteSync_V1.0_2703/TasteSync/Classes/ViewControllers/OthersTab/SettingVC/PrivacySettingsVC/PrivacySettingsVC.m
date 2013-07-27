@@ -36,15 +36,13 @@
     // Do any additional setup after loading the view from its nib.
     [self initUI];
     
-    if ([UserDefault userDefault].loginStatus == NotLogin) {
-         self.listCheckStatePrivacySettings = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
-    }
-    else
-    self.listCheckStatePrivacySettings = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], nil];
+        self.listCheckStatePrivacySettings = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
     
+    CRequest* request = [[CRequest alloc]initWithURL:@"showSettingsPrivacy" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request startFormRequest];
     
-    
-    [self setStateForbuttonsCheck:self.listCheckStatePrivacySettings];
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,6 +60,32 @@
 
 - (IBAction)actionBack:(id)sender
 {
+    NSMutableDictionary *nameElements = [NSMutableDictionary dictionary];
+    
+    [nameElements setObject:[UserDefault userDefault].userID forKey:@"userId"];
+    
+    //NSMutableArray* array= [[CommonHelpers appDelegate] arrDataFBFriends];
+    NSMutableArray* dictionnary = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [self.listCheckStatePrivacySettings count]; i++){
+        
+        NSMutableDictionary* mdictionary = [NSMutableDictionary dictionary];
+        [mdictionary setObject:[NSString stringWithFormat:@"%d", (i + 1)] forKey:@"privacy_id_order"];
+        [mdictionary setObject:[CommonHelpers getStringValue:[self.listCheckStatePrivacySettings objectAtIndex:i]] forKey:@"privacy_flag"];
+        [dictionnary addObject:mdictionary];
+    }
+    
+    [nameElements setObject:dictionnary forKey:@"privacy"];
+    
+    NSString* jsonString = [nameElements JSONString];
+    
+    NSLog(@"JSON STRING: %@", jsonString);
+    
+    CRequest* request = [[CRequest alloc]initWithURL:@"submitSettingsPrivacy" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationJson];
+    request.delegate = self;
+    [request setHeader:HeaderTypeJSON];
+    [request setJSON:jsonString];
+    [request startRequest];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)actionNewsfeed:(id)sender
@@ -119,7 +143,24 @@
    //save array self.listCheckStatePrivacySettings nay
 }
 
-
+-(void)responseData:(NSData *)data
+{
+    NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Response: %@", response);
+    
+    if (response != NULL) {
+        
+        NSDictionary* dic = [response objectFromJSONString];
+        NSArray* array = [dic objectForKey:@"privacy"];
+        for (NSDictionary* dic2 in array) {
+            int index = [[dic2 objectForKey:@"privacy_id_order"] intValue] - 1;
+            [self.listCheckStatePrivacySettings replaceObjectAtIndex:index withObject:[CommonHelpers getBoolValue:[dic2 objectForKey:@"privacy_flag"]]];
+        }
+    }
+    
+    [self setStateForbuttonsCheck:self.listCheckStatePrivacySettings];
+}
 
 
 @end

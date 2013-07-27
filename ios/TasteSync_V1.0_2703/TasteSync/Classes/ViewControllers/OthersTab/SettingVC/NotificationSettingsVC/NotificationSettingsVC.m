@@ -8,6 +8,8 @@
 
 #import "NotificationSettingsVC.h"
 #import "CommonHelpers.h"
+#import "JSONKit.h"
+
 @interface NotificationSettingsVC ()
 {
     
@@ -39,17 +41,13 @@
     
    // [self.scrollview setFrame:CGRectMake(0, 0, 300, 348)];
     [self.scrollview setContentSize:CGSizeMake(300, 800)];
-    
-    if ([UserDefault userDefault].loginStatus == NotLogin) {
-        //state all no check
-        self.listCheckStateNotificationSettings = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
 
-    }
-    else //state default
-        self.listCheckStateNotificationSettings = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], nil];
-    
-    
-    [self setStateForbuttonsCheck:self.listCheckStateNotificationSettings];
+        self.listCheckStateNotificationSettings = [NSMutableArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
+
+    CRequest* request = [[CRequest alloc]initWithURL:@"showSettingsNotifications" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request startFormRequest];
 
 }
 
@@ -64,6 +62,33 @@
 
 - (IBAction)actionBack:(id)sender
 {
+    NSMutableDictionary *nameElements = [NSMutableDictionary dictionary];
+    
+    [nameElements setObject:[UserDefault userDefault].userID forKey:@"userId"];
+    
+    //NSMutableArray* array= [[CommonHelpers appDelegate] arrDataFBFriends];
+    NSMutableArray* dictionnary = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [self.listCheckStateNotificationSettings count]/2; i++){
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        [dictionary setObject:[NSString stringWithFormat:@"%d", (i + 1)] forKey:@"order_id"];
+        [dictionary setObject:[CommonHelpers getStringValue:[self.listCheckStateNotificationSettings objectAtIndex:(i*2)]] forKey:@"phoneFlag"];
+        [dictionary setObject:[CommonHelpers getStringValue:[self.listCheckStateNotificationSettings objectAtIndex:(i*2 + 1)]] forKey:@"emailFlag"];
+        [dictionnary addObject:dictionary];
+    }
+    
+    [nameElements setObject:dictionnary forKey:@"notification"];
+    
+    NSString* jsonString = [nameElements JSONString];
+    
+    NSLog(@"JSON STRING: %@", jsonString);
+    
+    CRequest* request = [[CRequest alloc]initWithURL:@"submitSettingsNotifications" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationJson];
+    request.delegate = self;
+    [request setHeader:HeaderTypeJSON];
+    [request setJSON:jsonString];
+    [request startRequest];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)actionNewsfeed:(id)sender
@@ -123,6 +148,27 @@
     
 }
 
+-(void)responseData:(NSData *)data
+{
+    
+    NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Response: %@", response);
+    
+    if (response != NULL) {
+        
+        NSDictionary* dic = [response objectFromJSONString];
+        NSArray* array = [dic objectForKey:@"notification"];
+        for (NSDictionary* dic2 in array) {
+            int index = ([[dic2 objectForKey:@"order_id"] intValue] - 1)*2;
+            [self.listCheckStateNotificationSettings replaceObjectAtIndex:index withObject:[CommonHelpers getBoolValue:[dic2 objectForKey:@"phoneFlag"]]];
+            [self.listCheckStateNotificationSettings replaceObjectAtIndex:(index + 1) withObject:[CommonHelpers getBoolValue:[dic2 objectForKey:@"emailFlag"]]];
+        }
+    }
+    
+    [self setStateForbuttonsCheck:self.listCheckStateNotificationSettings];
+
+}
 
 
 @end

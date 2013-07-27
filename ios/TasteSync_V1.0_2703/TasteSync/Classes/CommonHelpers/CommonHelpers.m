@@ -190,4 +190,13 @@ void debug(NSString *format, ...)
     else
         return [NSNumber numberWithBool:NO];
 }
+
++ (NSString*)getStringValue:(NSNumber*)value
+{
+    if ([value boolValue] == YES) {
+        return @"1";
+    }
+    else
+        return @"0";
+}
 @end
