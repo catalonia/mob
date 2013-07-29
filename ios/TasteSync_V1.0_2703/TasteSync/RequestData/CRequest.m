@@ -8,7 +8,7 @@
 
 #import "CRequest.h"
 
-#define LINK_REQUEST @"http://192.168.0.101:8080/tsws/services/"
+#define LINK_REQUEST @"http://192.168.0.100:8080/tsws/services/"
 #define USER_REQUEST @"user/"
 #define RESTAURANT_REQUEST @"restaurant/"
 

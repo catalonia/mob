@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CRequest.h"
 
 @interface SelfProfileVC : UIViewController <UITableViewDataSource,
-UITableViewDelegate, UIActionSheetDelegate>
+UITableViewDelegate, UIActionSheetDelegate, RequestDelegate>
 {
     __weak IBOutlet UIScrollView *scrollViewMain;
     __weak IBOutlet UITableView *tbvUsersRecommendations;
     __weak IBOutlet UILabel *lbUserName, *lbUserDetail, *lbAboutTitle, *lbAboutDetail, *lbFollowing, *lbFollowers, *lbFriends, *lbPoints, *lbRestaurant1, *lbRestaurant2, *lbRestaurant3;
+    __weak IBOutlet UIView *viewRecentActivity;
     __weak IBOutlet UIImageView *ivAvatar;
 }
 

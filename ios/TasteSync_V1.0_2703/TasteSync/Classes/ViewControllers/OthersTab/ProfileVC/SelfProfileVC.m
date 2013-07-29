@@ -20,6 +20,7 @@
 #import "SettingVC.h"
 #import "RestaurantListsVC.h"
 #import "UserActivityProfileCell.h"
+#import "JSONKit.h"
 
 
 @interface SelfProfileVC ()
@@ -52,16 +53,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    viewRecentActivity.hidden = YES;
     // Do any additional setup after loading the view from its nib.
     [CommonHelpers setBackgroudImageForView:self.view];
     self.navigationController.navigationBarHidden = YES;
     
     user = [UserDefault userDefault].user;
-    
     [self initUI];
     
-   
-    
+    CRequest* request = [[CRequest alloc]initWithURL:@"getHomeProfile" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request startFormRequest];
     
 }
 
@@ -275,7 +278,19 @@
     [self.navigationController pushViewController:detailStoryVC animated:YES];
 }
 
-
+-(void)responseData:(NSData *)data
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"Response: %@",response);
+    if (response != NULL) {
+        NSDictionary* dic = [response objectFromJSONString];
+        lbFollowing.text = [dic objectForKey:@"numFollowees"];
+        lbFollowers.text = [dic objectForKey:@"numFollowers"];
+        lbFriends.text = [dic objectForKey:@"numFriendsOnTs"];
+        lbPoints.text = [dic objectForKey:@"numPoints"];
+        
+    }
+}
 
 
 @end

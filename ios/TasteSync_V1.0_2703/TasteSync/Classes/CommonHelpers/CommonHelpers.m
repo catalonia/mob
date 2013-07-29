@@ -147,7 +147,7 @@ void debug(NSString *format, ...)
     [dic setValue:[CommonHelpers commonUntilNull:user.lastname]             forKey:@"lastName"];
     [dic setValue:[CommonHelpers commonUntilNull:user.email]                forKey:@"email"];
     [dic setValue:[CommonHelpers commonUntilNull:user.avatarUrl]            forKey:@"picture"];
-    [dic setValue:[CommonHelpers commonUntilNull:[NSString stringWithFormat:@"%d", user.friend_count]]         forKey:@"gender"];
+    [dic setValue:[CommonHelpers commonUntilNull:[NSString stringWithFormat:@"%d", user.gender]]         forKey:@"gender"];
     
     [dic setValue:[CommonHelpers commonUntilNull:user.name]                 forKey:@"name"];
     [dic setValue:[CommonHelpers commonUntilNull:user.middle_name]          forKey:@"middleName"];
@@ -172,6 +172,46 @@ void debug(NSString *format, ...)
     [dic setValue:[NSString stringWithFormat:@"%d",user.likes_count]           forKey:@"likes"];
     [dic setValue:[NSString stringWithFormat:@"%hhu",user.verified]            forKey:@"verified"];
     return dic;
+}
+
++ (UserObj*)getUserObj:(NSDictionary*)dic
+{
+    UserObj* user = [[UserObj alloc]init];
+    
+
+    NSString* idNumber = (NSString*)[dic objectForKey:@"id"];
+    unsigned long long ullvalue = strtoull([idNumber UTF8String], NULL, 0);
+    user.uid = ullvalue;
+    user.firstname = [dic objectForKey:@"firstName"];
+    user.lastname = [dic objectForKey:@"lastName"];
+    user.email = [dic objectForKey:@"email"];
+        NSLog(@"picture: %@", [dic objectForKey:@"picture"]);
+    user.avatarUrl = [dic objectForKey:@"picture"];
+    user.gender = [[dic objectForKey:@"gender"] intValue];
+    
+    user.name = [dic objectForKey:@"name"];
+    user.middle_name = [dic objectForKey:@"middleName"];
+    user.username = [dic objectForKey:@"userName"];
+    user.birthday_date = [dic objectForKey:@"birthday"];
+    user.third_party_id = [dic objectForKey:@"thirdPartyId"];
+    user.install_type = [dic objectForKey:@"installed"];
+    user.relationship_status = [dic objectForKey:@"relationshipStatus"];
+    user.locate = [dic objectForKey:@"locale"];
+    user.link = [dic objectForKey:@"link"];
+    user.age_range = [dic objectForKey:@"ageRange"];
+    user.device = [dic objectForKey:@"devices"];
+    user.hometown_location = [dic objectForKey:@"hometown"];
+    user.location = [dic objectForKey:@"location"];
+    user.checkIn = [dic objectForKey:@"checkins"];
+    user.friends = [dic objectForKey:@"friends"];
+    user.permission = [dic objectForKey:@"permissions"];
+    //    [dic setValue:[CommonHelpers commonUntilNull:user.city]                 forKey:@"city"];
+    
+    user.friend_count = [[dic objectForKey:@"friendlists"] intValue];
+    user.timezone = [[dic objectForKey:@"timezone"] intValue];
+    user.likes_count = [[dic objectForKey:@"likes"] intValue];
+    user.verified = [[dic objectForKey:@"verified"] boolValue];
+    return user;
 }
 
 + (NSString*)commonUntilNull:(NSString*)data

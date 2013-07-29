@@ -8,6 +8,7 @@
 
 #import "AboutTasteSyncVC.h"
 #import "CommonHelpers.h"
+#import "ContentAboutUsVC.h"
 @interface AboutTasteSyncVC ()
 {
 }
@@ -89,22 +90,26 @@
     switch (indexPath.row) {
         case 0:
         {
-            
+            ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:1];
+            [self.navigationController pushViewController:about animated:YES];
         }
             break;
         case 1:
         {
-            
+            ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:2];
+            [self.navigationController pushViewController:about animated:YES];
         }
             break;
         case 2:
         {
-            
+            ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:3];
+            [self.navigationController pushViewController:about animated:YES];
         }
             break;
         case 3:
         {
-            
+            ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:4];
+            [self.navigationController pushViewController:about animated:YES];
         }
             break;
             

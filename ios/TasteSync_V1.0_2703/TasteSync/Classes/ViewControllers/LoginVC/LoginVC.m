@@ -318,10 +318,6 @@
             [request startRequest];
             
             NSLog(@"%@", jsonString);
-            
-            ConfigProfileVC *vc = [[ConfigProfileVC alloc] initWithNibName:@"ConfigProfileVC" bundle:nil];
-            
-            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
             
@@ -345,6 +341,17 @@
     NSString* userID = [dic2 objectForKey:@"userId"];
     [UserDefault userDefault].userID = userID;
     [UserDefault update];
+    
+    NSString* is_have_account = [dic objectForKey:@"is_have_account"];
+    if ([[CommonHelpers getBoolValue:is_have_account] boolValue]) {
+        [[CommonHelpers appDelegate] showAskTab];
+    }
+    else
+    {
+        ConfigProfileVC *vc = [[ConfigProfileVC alloc] initWithNibName:@"ConfigProfileVC" bundle:nil];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 
 #pragma mark - CLLocationManagerDelegate

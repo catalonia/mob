@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface ContactTasteSyncVC : UIViewController <UITextViewDelegate>
+
+@interface ContactTasteSyncVC : UIViewController <UITextViewDelegate,RequestDelegate>
 {
     __weak IBOutlet UIView *viewMain;
     __weak IBOutlet UIButton *btReportBugs, *btFeedback, *btRestaurantData, *btRequestBlogger;
