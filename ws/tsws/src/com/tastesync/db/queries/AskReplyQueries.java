@@ -7,12 +7,14 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "recorequest_user.INITIATOR_USER_ID," +
         "recorequest_user.RECOREQUEST_SENT_DATETIME," +
         "recorequest_user.RECOREQUEST_FREE_TEXT," +
-        "recorequest_user.RECOREQUEST_PARAMETER_SELECTION_MERGED" +
+        "recorequest_user.RECOREQUEST_PARAMETER_SELECTION_MERGED," +
+        "recorequest_user.RECOREQUEST_FREE_TEXT" +
         ")    VALUES    (" + "?," + //recorequest_user.RECOREQUEST_ID, 
         "?," + //recorequest_user.INITIATOR_USER_ID, 
         "?," + //recorequest_user.RECOREQUEST_SENT_DATETIME, 
         "?," + //recorequest_user.RECOREQUEST_FREE_TEXT, 
-        "?" + //	recorequest_user.RECOREQUEST_PARAMETER_SELECTION_MERGED, 
+        "?," + //	recorequest_user.RECOREQUEST_PARAMETER_SELECTION_MERGED, 
+        "?" + //	recorequest_user.RECOREQUEST_FREE_TEXT, 
         ")";
 
     //createRecoRequestSearch - sub
@@ -63,4 +65,9 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         ")  VALUES (" + "?," + // recorequest_theme.RECOREQUEST_ID
         "?" + // recorequest_theme.theme_ID
         ")";
+    
+    public static final String RECOREQUEST_TEMPLATE_SENTENCES_SELECT_SQL = "SELECT `recorequest_user`.`reco_request_template_sentences` "
+    		+ "FROM   `recorequest_user` "
+    		+ "WHERE  `recorequest_user`.`recorequest_id` = ? ";
+
 }
