@@ -142,7 +142,7 @@ void debug(NSString *format, ...)
 + (NSDictionary*)getJSONUserObj:(UserObj*)user
 {
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-    [dic setValue:[NSString stringWithFormat:@"%lu", user.uid]  forKey:@"id"];
+    [dic setValue:user.uid  forKey:@"id"];
     [dic setValue:[CommonHelpers commonUntilNull:user.firstname]            forKey:@"firstName"];
     [dic setValue:[CommonHelpers commonUntilNull:user.lastname]             forKey:@"lastName"];
     [dic setValue:[CommonHelpers commonUntilNull:user.email]                forKey:@"email"];
@@ -178,15 +178,13 @@ void debug(NSString *format, ...)
 {
     UserObj* user = [[UserObj alloc]init];
     
-
-    NSString* idNumber = (NSString*)[dic objectForKey:@"id"];
-    unsigned long long ullvalue = strtoull([idNumber UTF8String], NULL, 0);
-    user.uid = ullvalue;
+    user.uid = [dic objectForKey:@"id"];
     user.firstname = [dic objectForKey:@"firstName"];
     user.lastname = [dic objectForKey:@"lastName"];
     user.email = [dic objectForKey:@"email"];
         NSLog(@"picture: %@", [dic objectForKey:@"picture"]);
     user.avatarUrl = [dic objectForKey:@"picture"];
+    user.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:user.avatarUrl]]];
     user.gender = [[dic objectForKey:@"gender"] intValue];
     
     user.name = [dic objectForKey:@"name"];

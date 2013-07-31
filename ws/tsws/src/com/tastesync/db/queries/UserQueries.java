@@ -72,7 +72,8 @@ public interface UserQueries extends TSDBCommonQueries {
     	"AND CURRENT_STATUS = ?";
     public static String USER_FBID_SELECT_SQL = "SELECT * FROM users WHERE User_FB_ID = ? AND CURRENT_STATUS = ?";
     public static String USER_FBID_UPDATE_SQL = "UPDATE users SET USER_FB_ID = ? WHERE USER_ID = ?";
-//    public static String USER_ID_UPDATE_SQL = "UPDATE users SET USER_ID = ?"+ ", TS_USER_ID = ?" +" WHERE Auto_User_ID = ?";
+    public static String USER_FACEBOOK_ID_SELECT_SQL = "SELECT * FROM users WHERE USER_ID IN (SELECT user_friend_tastesync.FRIEND_ID FROM user_friend_tastesync WHERE USER_ID = ?)";
+   //    public static String USER_ID_UPDATE_SQL = "UPDATE users SET USER_ID = ?"+ ", TS_USER_ID = ?" +" WHERE Auto_User_ID = ?";
     public static String USER_FACEBOOK_INSERT_SQL = "INSERT INTO users " + "(TS_USER_EMAIL, " + 
     	"USER_CREATED_INITIAL_DATETIME, " + "TS_FIRST_NAME, " + "TS_LAST_NAME, " + 
     	"USER_GENDER, " + "USER_CITY_ID, " + /*"USER_CITY, " +*/ "USER_STATE, " + "USER_COUNTRY," + " USER_FB_ID," + "USER_ID," + "TS_USER_ID)" +
@@ -212,7 +213,8 @@ public interface UserQueries extends TSDBCommonQueries {
     // USER_FOLLOW
  	public static String USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWEE_USER_ID FROM user_follow_data WHERE FOLLOWER_USER_ID = ?))";
     public static String USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWER_USER_ID FROM user_follow_data WHERE FOLLOWEE_USER_ID = ?))";
- 	public static String USER_FOLLOW_DATA_CHECK_SELECT_SQL = "SELECT * FROM user_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?";
+ 	public static String FACEBOOK_USER_DATA_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT user_friend_fb.USER_FRIEND_FB FROM user_friend_fb WHERE INVITATION_SENT_YN = '0' AND USER_ID = ?)";
+    public static String USER_FOLLOW_DATA_CHECK_SELECT_SQL = "SELECT * FROM user_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?";
  	public static String USER_FOLLOW_DATA_INSERT_SQL = "INSERT INTO `user_follow_data`"
  			+ "(`ID`, `FOLLOWER_USER_ID`, `FOLLOWEE_USER_ID`)" + " VALUES ("
  			+ "?" + ",?" + ",?)";

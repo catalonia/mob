@@ -194,7 +194,7 @@
 - (void)goRate
 {
 
-        NSURL *url = [ [ NSURL alloc ] initWithString: @"http://www.apple.com" ];
+    NSURL *url = [ [ NSURL alloc ] initWithString: @"http://www.apple.com" ];
     [[UIApplication sharedApplication] openURL:url];
 }
 
@@ -213,6 +213,10 @@
     NSString* successMessage = [dic objectForKey:@"successMsg"];
     
     if (successMessage != NULL) {
+        [FBSession.activeSession closeAndClearTokenInformation];
+        [FBSession.activeSession close];
+        [FBSession setActiveSession:nil];
+        
         [[CommonHelpers appDelegate] showLogin];
     }
     

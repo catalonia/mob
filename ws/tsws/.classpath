@@ -72,7 +72,7 @@
 	<classpathentry kind="lib" path="libExtras/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="lib/joda-time-2.1.jar"/>
 	<classpathentry kind="lib" path="libExtras/tomcat-dbcp.jar"/>
-	<classpathentry kind="lib" path="D:/xdox/xdoclet-base-locale-1.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/lib/xdoclet-base-locale-1.2.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
@@ -83,7 +83,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/xampp/tomcat/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="D:/java/tsws/mob/ws/tsws/lib/apns-0.1.6.jar"/>
+	<classpathentry kind="lib" path="D:/TasteSync/tomcat/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/lib/apns-0.1.6.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

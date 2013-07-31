@@ -22,7 +22,7 @@ static UserDefault *globalObject;
 
 @synthesize isLocation,isNotification,
 user,emailID,password,
-loginStatus,userLogID;
+loginStatus, userLogID, IPAdress;
 
 - (id) initWithId:(NSInteger)userID
 {
@@ -57,6 +57,7 @@ loginStatus,userLogID;
 
         self.userLogID = [aDecoder decodeObjectForKey:UserLogID];
         self.userID = [aDecoder decodeObjectForKey:UserID];
+        self.IPAdress = [aDecoder decodeObjectForKey:IPADRESS];
     }
     return self;
     
@@ -84,7 +85,7 @@ loginStatus,userLogID;
     [aCoder encodeObject:self.userLogID forKey:UserLogID];
     [aCoder encodeObject:self.userID forKey:UserID];
 
-
+    [aCoder encodeObject:self.IPAdress forKey:IPADRESS];
 //    [aCoder encodeInteger:self.zapiAccountId forKey:@"zapiAccountId"];
 //    [aCoder encodeObject:self.dictCart forKey:@"dictCart"];
 }

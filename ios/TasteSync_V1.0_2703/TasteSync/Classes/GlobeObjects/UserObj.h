@@ -24,7 +24,7 @@ typedef enum _UserStatusAvatar {
     
 } UserStatusAvatar;
 
-@property (nonatomic, assign) long uid;
+@property (nonatomic, strong) NSString* uid;
 @property (nonatomic, strong) NSString *firstname, *lastname, *email, *city, *state;
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSString *middle_name, *username, *birthday_date, *third_party_id, *install_type, *relationship_status, *name, *locate, *link, *age_range, *hometown_location, *location, *device, *checkIn, *friends, *permission;

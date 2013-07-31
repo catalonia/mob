@@ -67,7 +67,10 @@ public interface UserDao {
     List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSUserObj>  showProfileFriends(String userId) throws TasteSyncException;
+    List<TSFacebookUserDataObj>  showProfileFriends(String userId) throws TasteSyncException;
+    
+    List<TSFacebookUserDataObj> showInviteFriends(String userId)
+            throws TasteSyncException;
     
     List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)
         throws TasteSyncException;

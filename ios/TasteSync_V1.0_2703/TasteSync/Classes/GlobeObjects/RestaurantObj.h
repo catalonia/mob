@@ -10,7 +10,7 @@
 
 @interface RestaurantObj : NSObject
 
-@property (nonatomic, assign) int uid;
+@property (nonatomic, assign) NSString* uid;
 
 @property (nonatomic, strong) NSString *name,*nation;
 

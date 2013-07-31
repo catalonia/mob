@@ -7,13 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JSONKit.h"
+#import "CRequest.h"
+@protocol EditAboutMeDelegate
+-(void)getAboutText:(NSString*)text;
+@end
 
-@interface EditAboutMeVC : UIViewController
+@interface EditAboutMeVC : UIViewController<RequestDelegate>
 
 // if isYourProfile allow edit
 // else don't allow
 
 @property (nonatomic, assign) BOOL isYourProfile;
+@property (nonatomic, assign) NSString* aboutText;
+@property (nonatomic, assign) id<EditAboutMeDelegate> delegate;
 - (IBAction)actionEdit:(id)sender;
-
+-(id)initWithAboutText:(NSString*)text;
 @end

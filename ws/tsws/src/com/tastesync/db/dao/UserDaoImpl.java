@@ -1541,9 +1541,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<TSUserObj> showProfileFriends(String userId)
+	public List<TSFacebookUserDataObj> showProfileFriends(String userId)
 			throws TasteSyncException {
-		List<TSUserObj> list_data = new ArrayList<TSUserObj>();
+		List<TSFacebookUserDataObj> list_data = new ArrayList<TSFacebookUserDataObj>();
 		List<String> dataID = new ArrayList<String>();
 		MySQL mySQL = new MySQL();
 		
@@ -1554,14 +1554,14 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            System.out.println("UserQueries.USER_FRIEND_TASTESYNC_SELECT_SQL=" +
-                UserQueries.USER_FRIEND_TASTESYNC_SELECT_SQL);
-            statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_SELECT_SQL);
+            System.out.println("UserQueries.USER_FACEBOOK_ID_SELECT_SQL=" +
+                UserQueries.USER_FACEBOOK_ID_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.USER_FACEBOOK_ID_SELECT_SQL);
             statement.setString(1, userId);
-            resultset =statement.executeQuery();
+            resultset = statement.executeQuery();
         	while(resultset.next())
         	{
-        		dataID.add(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_friend_tastesync.FRIEND_ID")));
+        		dataID.add(CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.USER_FB_ID")));
         	}
         	tsDataSource.close();
         	tsDataSource.closeConnection(connection, statement, null);
@@ -1569,7 +1569,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         	int count = 0;
         	while(dataID.size() != count)
         	{
-        		TSUserObj obj = mySQL.getUserInformation(dataID.get(count));
+        		TSFacebookUserDataObj obj = mySQL.getFacebookUserInformation(dataID.get(count));
         		list_data.add(obj);
         		count++;
         	}
@@ -2384,4 +2384,41 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			tsDataSource.closeConnection(connection, statement, null);
 		}
 	}
+	
+	@Override
+	public List<TSFacebookUserDataObj> showInviteFriends(String userId)
+            throws TasteSyncException {
+		List<TSFacebookUserDataObj> list_data = new ArrayList<TSFacebookUserDataObj>();
+		
+    	TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+	    ResultSet resultset = null;
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.FACEBOOK_USER_DATA_SELECT_SQL=" +
+                UserQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+        	while(resultset.next())
+        	{
+        		TSFacebookUserDataObj obj = new TSFacebookUserDataObj();
+        		MySQL.mapResultsetRowToTSFacebookVO(obj, resultset);
+        		list_data.add(obj);
+        	}
+        	tsDataSource.close();
+        	tsDataSource.closeConnection(connection, statement, null);
+        }catch(SQLException e)
+        {
+        	e.printStackTrace();
+			throw new TasteSyncException(e.getMessage());
+		} finally {
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+		
+		return list_data;
+    }
 }

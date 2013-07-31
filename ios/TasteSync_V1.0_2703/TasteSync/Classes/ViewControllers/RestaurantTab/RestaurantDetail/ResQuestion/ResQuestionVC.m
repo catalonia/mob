@@ -66,7 +66,7 @@ restaurantObj=_restaurantObj;
             for (int i=1; i<5; i++) {
                 UserObj *obj = [[UserObj alloc] init];
                 {
-                    obj.uid = i;
+                    obj.uid = [NSString stringWithFormat:@"%d",i];
                     obj.avatar = [UIImage imageNamed:@"avatar.png"];
                     obj.firstname = @"Penny";
                     obj.lastname = @"NGO";

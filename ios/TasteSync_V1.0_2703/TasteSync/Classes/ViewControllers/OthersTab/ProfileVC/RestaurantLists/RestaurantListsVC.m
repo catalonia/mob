@@ -217,8 +217,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[[CommonHelpers appDelegate] tabbarBaseVC] actionSelectRestaurant:[_arrDataRestaurant objectAtIndex:indexPath.row]
- selectedIndex:3];
+    [[[CommonHelpers appDelegate] tabbarBaseVC] actionSelectRestaurant:[_arrDataRestaurant objectAtIndex:indexPath.row] selectedIndex:3];
 
 }
 

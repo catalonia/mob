@@ -21,7 +21,7 @@
 #import "UserActivityProfileCell.h"
 @interface ProfileVC ()<UIAlertViewDelegate>
 {
- 
+    
     BOOL trusted,follow;
 }
 - (IBAction)actionBack:(id)sender;

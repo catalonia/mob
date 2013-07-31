@@ -73,9 +73,13 @@ public interface UserBo {
     List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSUserObj> showProfileFriends(String userId)
+    List<TSFacebookUserDataObj> showProfileFriends(String userId)
         throws TasteSyncException;
 
+    List<TSFacebookUserDataObj> showInviteFriends(String userId)
+            throws TasteSyncException;
+
+    
     List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)
         throws TasteSyncException;
 

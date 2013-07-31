@@ -241,7 +241,10 @@ typedef enum _TextFieldSelect
             UserObj *userObj = [_arrDataFilter objectAtIndex:indexPath.row];
             tfFriend.text = [NSString stringWithFormat:@"%@ %@", userObj.firstname, userObj.lastname];
             ivAvatarFriend.image = userObj.avatar;
-            if (userObj.uid %2) {
+            
+            //check here
+            
+            if (2 % 2) {
                 btInvite.hidden = NO;
                 btCheck.hidden = YES;
                 
