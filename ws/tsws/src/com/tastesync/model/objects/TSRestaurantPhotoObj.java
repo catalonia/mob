@@ -3,8 +3,9 @@ package com.tastesync.model.objects;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-
+@XmlRootElement(name = "restaurantphoto")
 public class TSRestaurantPhotoObj implements Serializable {
     private static final long serialVersionUID = 2415797406344215226L;
     private String restaurantId;

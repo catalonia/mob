@@ -3,7 +3,9 @@ package com.tastesync.model.objects;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "menu")
 public class TSMenuObj implements Serializable {
 
 	private static final long serialVersionUID = 2102340212375291293L;
