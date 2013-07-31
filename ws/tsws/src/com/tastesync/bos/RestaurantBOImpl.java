@@ -12,6 +12,7 @@ import com.tastesync.model.objects.TSRestaurantExtendInfoObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
+import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class RestaurantBOImpl implements RestaurantBO {
     }
 
     @Override
-    public TSRestaurantDetailsObj showRestaurantDetail(String userId,
+    public TSRestaurantCusineTier2Obj showRestaurantDetail(String userId,
         String restaurantId) throws TasteSyncException {
         return restaurantDAO.showRestaurantDetail(userId, restaurantId);
     }

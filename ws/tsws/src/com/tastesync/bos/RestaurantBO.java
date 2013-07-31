@@ -9,12 +9,13 @@ import com.tastesync.model.objects.TSRestaurantExtendInfoObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
+import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 
 import java.util.List;
 
 
 public interface RestaurantBO {
-    TSRestaurantDetailsObj showRestaurantDetail(String userId,
+	TSRestaurantCusineTier2Obj showRestaurantDetail(String userId,
         String restaurantId) throws TasteSyncException;
 
     TSRestaurantObj showRestaurantDetail(String restaurantId)

@@ -10,6 +10,7 @@ import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
+import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 
 import java.util.List;
@@ -19,22 +20,28 @@ public class AskReplyBOImpl implements AskReplyBO {
     private AskReplyDAO askReplyDAO = new AskReplyDAOImpl();
 
     @Override
-    public void submitAskForRecommendationSearch(String userId,
+    public String submitAskForRecommendationSearch(String userId,
         String[] cuisineTier1IdList, String[] cuisineTier2IdList,
         String[] priceIdList, String[] themeIdList,
         String[] whoareyouwithIdList, String[] typeOfRestaurantIdList,
         String[] occasionIdList, String neighborhoodId, String cityId,
         String stateName) throws TasteSyncException {
-        askReplyDAO.submitAskForRecommendationSearch(userId, cuisineTier1IdList,
-            cuisineTier2IdList, priceIdList, themeIdList, whoareyouwithIdList,
-            typeOfRestaurantIdList, occasionIdList, neighborhoodId, cityId,
-            stateName);
+        return askReplyDAO.submitAskForRecommendationSearch(userId,
+            cuisineTier1IdList, cuisineTier2IdList, priceIdList, themeIdList,
+            whoareyouwithIdList, typeOfRestaurantIdList, occasionIdList,
+            neighborhoodId, cityId, stateName);
     }
 
     //TODO createRecoRequestTemplateText
     @Override
     public void routeRecoRequestSearchToSimilarTasteUsers() {
         // TODO Implementation Logics
+    }
+
+    @Override
+    public String showAskForRecommendationFriends(String recoRequestId)
+        throws TasteSyncException {
+        return askReplyDAO.showAskForRecommendationFriends(recoRequestId);
     }
 
     @Override
@@ -70,16 +77,15 @@ public class AskReplyBOImpl implements AskReplyBO {
     }
 
     @Override
-    public TSRecommendeeUserObj showRecommendationsShowLikes(
-        String recoLikeId) throws TasteSyncException {
+    public TSRecommendeeUserObj showRecommendationsShowLikes(String recoLikeId)
+        throws TasteSyncException {
         return askReplyDAO.showRecommendationsShowLikes(recoLikeId);
     }
 
     @Override
     public TSSenderUserObj showRecommendationMessage(String messageId,
         String recipientUserId) throws TasteSyncException {
-        return askReplyDAO.showRecommendationMessage(messageId,
-            recipientUserId);
+        return askReplyDAO.showRecommendationMessage(messageId, recipientUserId);
     }
 
     @Override
@@ -106,5 +112,33 @@ public class AskReplyBOImpl implements AskReplyBO {
     public TSRecommendationsFollowupObj showRecommendationsFollowup(
         String questionId) throws TasteSyncException {
         return askReplyDAO.showRecommendationsFollowup(questionId);
+    }
+
+    public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResultsBasedOnRecoId(
+        String recoRequestId) throws TasteSyncException {
+        return askReplyDAO.showListOfRestaurantsSearchResultsBasedOnRecoId(recoRequestId);
+    }
+
+    @Override
+    public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResults(
+        String restaurantId, String neighborhoodId, String cityId,
+        String stateName, String[] cuisineIdList, String[] priceIdList,
+        String rating, String savedFlag, String favFlag, String dealFlag,
+        String chainFlag) throws TasteSyncException {
+        return askReplyDAO.showListOfRestaurantsSearchResults(restaurantId,
+            neighborhoodId, cityId, stateName, cuisineIdList, priceIdList,
+            rating, savedFlag, favFlag, dealFlag, chainFlag);
+    }
+
+    @Override
+    public void showRecommendationsListActioned(String userId,
+        String paginationId) throws TasteSyncException {
+        askReplyDAO.showRecommendationsListActioned(userId, paginationId);
+    }
+
+    @Override
+    public void showRecommendationsListUnactioned(String userId,
+        String paginationId) throws TasteSyncException {
+        askReplyDAO.showRecommendationsListUnactioned(userId, paginationId);
     }
 }
