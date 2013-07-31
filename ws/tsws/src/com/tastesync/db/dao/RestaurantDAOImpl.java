@@ -7,11 +7,11 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSCurrentRecommendedRestaurantDetailsObj;
 import com.tastesync.model.objects.TSMenuObj;
-import com.tastesync.model.objects.TSRestaurantDetailsObj;
 import com.tastesync.model.objects.TSRestaurantExtendInfoObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
+import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
@@ -163,8 +163,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         tsRestaurantExtendInfoObj.setWebsite(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant_extended_info.website")));
         tsRestaurantExtendInfoObj.setHealthyOptionsFlag(CommonFunctionsUtil.getModifiedValueString(
-                resultset.getString(
-                    "restaurant_extended_info.options_healthy")));
+                resultset.getString("restaurant_extended_info.options_healthy")));
         tsRestaurantExtendInfoObj.setWifiFlag(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant_extended_info.wifi")));
         tsRestaurantExtendInfoObj.setPayCashonlyFlag(CommonFunctionsUtil.getModifiedValueString(
@@ -250,7 +249,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public List<TSRestaurantObj> showRestaurantsDetailsList() throws TasteSyncException {
+    public List<TSRestaurantObj> showRestaurantsDetailsList()
+        throws TasteSyncException {
         List<TSRestaurantObj> tsRestaurantObjs = new ArrayList<TSRestaurantObj>();
 
         TSDataSource tsDataSource = TSDataSource.getInstance();
@@ -286,7 +286,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public TSRestaurantDetailsObj showRestaurantDetail(String userId,
+    public TSRestaurantCusineTier2Obj showRestaurantDetail(String userId,
         String restaurantId) throws TasteSyncException {
         // TODO Auto-generated method stub
         return null;
@@ -388,17 +388,20 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             StringBuffer addressBuffer = new StringBuffer();
 
             for (int i = 0; i < addressList.length; ++i) {
-                if (addressList[i] != null && !addressList[i].isEmpty()) {
+                if ((addressList[i] != null) && !addressList[i].isEmpty()) {
                     addressBuffer.append(addressList[i]).append(", ");
                 }
             }
 
             //TODO remove last , characters
             if (tsRestaurantExtendInfoObj != null) {
-            	String addressStr = addressBuffer.toString();
-            	if (addressStr != null && addressStr.length() > 2)  {
-            		addressStr = addressStr.substring(0, addressStr.length() - 2);
-            	}
+                String addressStr = addressBuffer.toString();
+
+                if ((addressStr != null) && (addressStr.length() > 2)) {
+                    addressStr = addressStr.substring(0, addressStr.length() -
+                            2);
+                }
+
                 tsRestaurantExtendInfoObj.setAddress(addressStr);
             }
         } catch (SQLException e1) {

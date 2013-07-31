@@ -8,18 +8,31 @@ import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
+import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 
 import java.util.List;
 
 
 public interface AskReplyDAO {
-    void submitAskForRecommendationSearch(String userId, String[] cuisineTier1IdList,
-        String[] cuisineTier2IdList, String[] priceIdList,
-        String[] themeIdList, String[] whoareyouwithIdList,
-        String[] typeOfRestaurantIdList, String[] occasionIdList,
-        String neighborhoodId, String cityId, String stateName)
+    String submitAskForRecommendationSearch(String userId,
+        String[] cuisineTier1IdList, String[] cuisineTier2IdList,
+        String[] priceIdList, String[] themeIdList,
+        String[] whoareyouwithIdList, String[] typeOfRestaurantIdList,
+        String[] occasionIdList, String neighborhoodId, String cityId,
+        String stateName) throws TasteSyncException;
+
+    String showAskForRecommendationFriends(String recoRequestId)
         throws TasteSyncException;
+
+    List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResultsBasedOnRecoId(
+        String recoRequestId) throws TasteSyncException;
+
+    List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResults(
+        String restaurantId, String neighborhoodId, String cityId,
+        String stateName, String[] cuisineIdList, String[] priceIdList,
+        String rating, String savedFlag, String favFlag, String dealFlag,
+        String chainFlag) throws TasteSyncException;
 
     //TODO createRecoRequestTemplateText
     void submitAskForRecommendationFriends(String recoRequestId,
@@ -51,11 +64,17 @@ public interface AskReplyDAO {
         throws TasteSyncException;
 
     TSRecommendationsFollowupObj showRecommendationsFollowup(String questionId)
-            throws TasteSyncException;
-    
-    List<TSRestaurantObj> showRecommendationDidYouLike(
-        String recorequestId) throws TasteSyncException;
+        throws TasteSyncException;
+
+    List<TSRestaurantObj> showRecommendationDidYouLike(String recorequestId)
+        throws TasteSyncException;
 
     void submitRecommendationDidYouLikeLikes(String userId,
         String restaurantId, String likeFlag) throws TasteSyncException;
+
+    void showRecommendationsListActioned(String userId, String paginationId)
+        throws TasteSyncException;
+
+    void showRecommendationsListUnactioned(String userId, String paginationId)
+        throws TasteSyncException;
 }

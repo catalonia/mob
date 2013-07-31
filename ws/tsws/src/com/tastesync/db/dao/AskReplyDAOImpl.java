@@ -11,10 +11,14 @@ import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
+import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,11 +26,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.List;
+import java.util.Properties;
 
 
 public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     @Override
-    public void submitAskForRecommendationSearch(String userId,
+    public String submitAskForRecommendationSearch(String userId,
         String[] cuisineTier1IdList, String[] cuisineTier2IdList,
         String[] priceIdList, String[] themeIdList,
         String[] whoareyouwithIdList, String[] typeOfRestaurantIdList,
@@ -84,7 +89,13 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             System.out.println("AskReplyQueries.RECOREQUEST_USER_INSERT_SQL=" +
                 AskReplyQueries.RECOREQUEST_USER_INSERT_SQL);
+
             statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_INSERT_SQL);
+
+            String templateString = createRecoRequestTemplateText(cuisineTier1IdList,
+                    cuisineTier2IdList, priceIdList, themeIdList,
+                    whoareyouwithIdList, typeOfRestaurantIdList,
+                    occasionIdList, neighborhoodId, cityId, stateName);
 
             statement.setString(1, recoRequestId);
             statement.setString(2, userId);
@@ -92,6 +103,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 CommonFunctionsUtil.getCurrentDateTimestamp());
             statement.setString(4, TSConstants.EMPTY_STRING);
             statement.setString(5, mergedTextBuffer.toString());
+            statement.setString(6, templateString);
 
             statement.executeUpdate();
 
@@ -145,6 +157,95 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             }
 
             tsDataSource.commit();
+
+            return recoRequestId;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException("Error while creating reco request " +
+                e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+    }
+
+    //TODO need to load in static block
+    private String createRecoRequestTemplateText(String[] cuisineTier1IdList,
+        String[] cuisineTier2IdList, String[] priceIdList,
+        String[] themeIdList, String[] whoareyouwithIdList,
+        String[] typeOfRestaurantIdList, String[] occasionIdList,
+        String neighborhoodId, String cityId, String stateName)
+        throws TasteSyncException {
+        String templateString = null;
+        InputStream ifile = null;
+        Properties prop = new Properties();
+
+        try {
+            ClassLoader loader = this.getClass().getClassLoader();
+            //loader.getResourceAsStream("Resources/SomeConfig.xml");
+            ifile = loader.getResourceAsStream("/Resources/config.properties");
+
+            //load a properties file
+            prop.load(ifile);
+
+            //TODO define the data with variable
+            //get the property value and print it out
+            System.out.println("search.cuisine.location=" +
+                prop.getProperty("search.cuisine.location"));
+            templateString = prop.getProperty("search.cuisine.location");
+
+            //TODO use stringutil
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            throw new TasteSyncException(ex.getMessage());
+        } finally {
+            if (ifile != null) {
+                try {
+                    ifile.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return templateString;
+    }
+
+    @Override
+    public String showAskForRecommendationFriends(String recoRequestId)
+        throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TEMPLATE_SENTENCES_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            String recoRequestTemplateSentences = "";
+
+            //only one result
+            if (resultset.next()) {
+                recoRequestTemplateSentences = resultset.getString(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString(
+                                "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES")));
+            }
+
+            return recoRequestTemplateSentences;
         } catch (SQLException e) {
             e.printStackTrace();
 
@@ -177,8 +278,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public TSRecommendeeUserObj showRecommendationsShowLikes(
-        String recoLikeId) throws TasteSyncException {
+    public TSRecommendeeUserObj showRecommendationsShowLikes(String recoLikeId)
+        throws TasteSyncException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -211,32 +312,62 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         return null;
     }
 
-	@Override
-	public TSRecoRequestObj showRecommendationsRequest(String userId,
-			String recorequestId) throws TasteSyncException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public TSRecoRequestObj showRecommendationsRequest(String userId,
+        String recorequestId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public void submitRecommendationRequestAnswer(String recorequestId,
-			String recommenderUserId, String[] restaurantIdList,
-			String replyText) throws TasteSyncException {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void submitRecommendationRequestAnswer(String recorequestId,
+        String recommenderUserId, String[] restaurantIdList, String replyText)
+        throws TasteSyncException {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public TSRecommendationsForYouObj showRecommendationsForYou(
-			String recorequestId) throws TasteSyncException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public TSRecommendationsForYouObj showRecommendationsForYou(
+        String recorequestId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public TSRecommendationsFollowupObj showRecommendationsFollowup(
-			String questionId) throws TasteSyncException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public TSRecommendationsFollowupObj showRecommendationsFollowup(
+        String questionId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResultsBasedOnRecoId(
+        String recoRequestId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResults(
+        String restaurantId, String neighborhoodId, String cityId,
+        String stateName, String[] cuisineIdList, String[] priceIdList,
+        String rating, String savedFlag, String favFlag, String dealFlag,
+        String chainFlag) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void showRecommendationsListActioned(String userId,
+        String paginationId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        //TODO return type to be defined!!
+    }
+
+    @Override
+    public void showRecommendationsListUnactioned(String userId,
+        String paginationId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        //TODO return type to be defined!!
+    }
 }

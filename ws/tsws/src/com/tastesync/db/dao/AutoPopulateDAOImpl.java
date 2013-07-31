@@ -89,8 +89,8 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
             resultset = statement.executeQuery();
 
             JSONArray jsonArray = new JSONArray();
-            String idColumnName = "cuisine_tier1_descriptor.cuisine_id";
-            String valueColumnName = "cuisine_tier1_descriptor.cuisine_desc";
+            String idColumnName = "cuisine_tier2_descriptor.cuisine_id";
+            String valueColumnName = "cuisine_tier2_descriptor.cuisine_desc";
 
             while (resultset.next()) {
                 JSONObject jsonObject = new JSONObject();
