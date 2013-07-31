@@ -207,7 +207,7 @@ public interface UserQueries extends TSDBCommonQueries {
     public static String USER_SOCIAL_NETWORK_CONNECTION_SELECT_SQL = "SELECT * FROM user_social_network_connection";
 
     //USER_CONTACT_SETTINGS
-    public static String USER_CONTACT_SETTINGS_INSERT_SQL = "INSERT INTO user_contact_settings(USER_ID, CONTACT_ID, CONTACT_DETAILS_DESC, CONTACT_DATETIME) VALUES (?, ?, ?, ?)";
+    public static String USER_CONTACT_SETTINGS_INSERT_SQL = "INSERT INTO user_contact_settings(UCS_ID, USER_ID, CONTACT_ID, CONTACT_DETAILS_DESC, CONTACT_DATETIME) VALUES (?, ?, ?, ?, ?)";
     
     // USER_FOLLOW
  	public static String USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWEE_USER_ID FROM user_follow_data WHERE FOLLOWER_USER_ID = ?))";

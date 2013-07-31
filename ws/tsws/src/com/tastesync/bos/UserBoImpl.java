@@ -175,8 +175,8 @@ public class UserBoImpl implements UserBo {
 	}
 
 	@Override
-	public Response showAboutTastesync() throws TasteSyncException {
-		return userDao.showAboutTastesync();
+	public Response showAboutTastesync(String aboutId) throws TasteSyncException {
+		return userDao.showAboutTastesync(aboutId);
 	}
 
 	@Override

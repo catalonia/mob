@@ -11,7 +11,7 @@
        Remove this if you use the .htaccess -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>TSUserProfileRestaurantsObj</title>
+  <title>TSRecommendationsForYouObj</title>
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,7 @@
   <div class="container">
     <header>
       <div id="header" class="column first last span-20">
-        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">TSUserProfileRestaurantsObj</a></div>
+        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">TSRecommendationsForYouObj</a></div>
         <div id="primary" class="column span-18 append-1 prepend-1 first last">
           <ul class="navigation">
             <li id="nav-rest"><a href="rest.html">REST</a></li>
@@ -58,7 +58,7 @@
               </ul>
             </li>
             <li class="current">
-              <a href="ns0_TSUserProfileRestaurantsObj.html">TSUserProfileRestaurantsObj</a>
+              <a href="ns0_TSRecommendationsForYouObj.html">TSRecommendationsForYouObj</a>
               <ul>
                 <li><a href="ns0_TSRestaurantExtendInfoObj.html">TSRestaurantExtendInfoObj</a></li>
                 <li><a href="ns0_TSUserObj.html">TSUserObj</a></li>
@@ -94,7 +94,7 @@
       </div>
     </header>
     <div id="main" class="column first last span-20">
-      <h1>TSUserProfileRestaurantsObj</h1>
+      <h1>TSRecommendationsForYouObj</h1>
       <table>
         <tr>
           <td align="right">Namespace:</td>
@@ -116,105 +116,17 @@
         </tr>
         <tr>
           <td>
-            restauarntId (string)
+            recoRequestList (<a href="ns0_TSRecoRequestObj.html">TSRecoRequestObj</a>)
           </td>
-          <td>0/1</td>
+          <td>0/unbounded</td>
           <td>
           </td>
         </tr>
         <tr>
           <td>
-            restaurantName (string)
+            restaurantList (<a href="ns0_TSRestaurantObj.html">TSRestaurantObj</a>)
           </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            cuisineTier2Name (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            price (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            restaurantCity (<a href="ns0_TSCityObj.html">TSCityObj</a>)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            restaurantLat (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            restaurantLong (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            restaurantDealFlag (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            restaurantRating (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            userSavedFlag (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            userFavFlag (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            userRecommendedFlag (string)
-          </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            userTipFlag (string)
-          </td>
-          <td>0/1</td>
+          <td>0/unbounded</td>
           <td>
           </td>
         </tr>
@@ -228,105 +140,17 @@
           <th>description</th>
         </tr>
         <tr>
-          <td>restauarntId</td>
+          <td>recoRequestList</td>
           <td>
-              restauarntId (string)
+              array of recoRequestList (<a href="ns0_TSRecoRequestObj.html">TSRecoRequestObj</a>)
           </td>
           <td>
           </td>
         </tr>
         <tr>
-          <td>restaurantName</td>
+          <td>restaurantList</td>
           <td>
-              restaurantName (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>cuisineTier2Name</td>
-          <td>
-              cuisineTier2Name (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>price</td>
-          <td>
-              price (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>restaurantCity</td>
-          <td>
-              restaurantCity (<a href="ns0_TSCityObj.html">TSCityObj</a>)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>restaurantLat</td>
-          <td>
-              restaurantLat (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>restaurantLong</td>
-          <td>
-              restaurantLong (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>restaurantDealFlag</td>
-          <td>
-              restaurantDealFlag (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>restaurantRating</td>
-          <td>
-              restaurantRating (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>userSavedFlag</td>
-          <td>
-              userSavedFlag (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>userFavFlag</td>
-          <td>
-              userFavFlag (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>userRecommendedFlag</td>
-          <td>
-              userRecommendedFlag (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>userTipFlag</td>
-          <td>
-              userTipFlag (string)
+              array of restaurantList (<a href="ns0_TSRestaurantObj.html">TSRestaurantObj</a>)
           </td>
           <td>
           </td>

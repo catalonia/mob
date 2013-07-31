@@ -386,12 +386,12 @@ public class UserService extends BaseService {
 		return userBo.submitSettingscontactUs(userId, order, desc);
 	}
 
-	@GET
+	@POST
 	@Path("/showAboutTastesync")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response showAboutTastesync() throws TasteSyncException {
-		return userBo.showAboutTastesync();
+	public Response showAboutTastesync(@FormParam("AboutId") String aboutId) throws TasteSyncException {
+		return userBo.showAboutTastesync(aboutId);
 	}
 
 	@GET

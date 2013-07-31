@@ -51,7 +51,7 @@ public interface UserBo {
 
     Response submitSettingscontactUs(String userId, String order, String desc) throws TasteSyncException;
     
-    Response showAboutTastesync() throws TasteSyncException;
+    Response showAboutTastesync(String aboutId) throws TasteSyncException;
     
     TSUserProfileObj showMyProfileHome(String userId) throws TasteSyncException;
 

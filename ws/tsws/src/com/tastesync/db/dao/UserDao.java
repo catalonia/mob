@@ -49,7 +49,7 @@ public interface UserDao {
 
     Response submitSettingscontactUs(String userId, String order, String desc) throws TasteSyncException;
     
-    Response showAboutTastesync() throws TasteSyncException;
+    Response showAboutTastesync(String aboutId) throws TasteSyncException;
     
     void submitUserReport(String userId, String reportText,
         String reportedUser, String reportedByUser) throws TasteSyncException;

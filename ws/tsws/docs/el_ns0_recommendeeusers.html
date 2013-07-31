@@ -11,7 +11,7 @@
        Remove this if you use the .htaccess -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>user</title>
+  <title>recommendeeusers</title>
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,7 @@
   <div class="container">
     <header>
       <div id="header" class="column first last span-20">
-        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">user</a></div>
+        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">recommendeeusers</a></div>
         <div id="primary" class="column span-18 append-1 prepend-1 first last">
           <ul class="navigation">
             <li id="nav-rest"><a href="rest.html">REST</a></li>
@@ -58,7 +58,7 @@
               </ul>
             </li>
             <li class="current">
-              <a href="el_ns0_user.html">user element</a>
+              <a href="el_ns0_recommendeeusers.html">recommendeeusers element</a>
               <ul>
                 <li><a href="el_ns0_recommendeeusers.html">recommendeeusers element</a></li>
                 <li><a href="el_ns0_social.html">social element</a></li>
@@ -92,11 +92,11 @@
       </div>
     </header>
     <div id="main" class="column first last span-20">
-      <h1>user element</h1>
+      <h1>recommendeeusers element</h1>
       <table>
         <tr>
           <td align="right">Type:</td>
-          <td><a href="ns0_TSUserObj.html">TSUserObj</a></td>
+          <td><a href="ns0_TSRecommendeeUserObj.html">TSRecommendeeUserObj</a></td>
         </tr>
         <tr>
           <td align="right">Namespace:</td>
@@ -109,50 +109,34 @@
       </table>
       <h2>Example XML</h2>
       <code class="prettyprint lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;user&gt;
-  &lt;userId&gt;...&lt;/userId&gt;
-  &lt;tsUserId&gt;...&lt;/tsUserId&gt;
-  &lt;tsUserEmail&gt;...&lt;/tsUserEmail&gt;
-  &lt;tsUserPw&gt;...&lt;/tsUserPw&gt;
-  &lt;tsFirstName&gt;...&lt;/tsFirstName&gt;
-  &lt;tsLastName&gt;...&lt;/tsLastName&gt;
-  &lt;maxInvites&gt;...&lt;/maxInvites&gt;
-  &lt;userCreatedInitialDatetime&gt;...&lt;/userCreatedInitialDatetime&gt;
-  &lt;userPoints&gt;...&lt;/userPoints&gt;
-  &lt;twitterUsrUrl&gt;...&lt;/twitterUsrUrl&gt;
-  &lt;userDisabledFlag&gt;...&lt;/userDisabledFlag&gt;
-  &lt;userActivationKey&gt;...&lt;/userActivationKey&gt;
-  &lt;userGender&gt;...&lt;/userGender&gt;
-  &lt;userCityId&gt;...&lt;/userCityId&gt;
-  &lt;userState&gt;...&lt;/userState&gt;
-  &lt;isOnline&gt;...&lt;/isOnline&gt;
-  &lt;userCountry&gt;...&lt;/userCountry&gt;
-  &lt;userFbId&gt;...&lt;/userFbId&gt;
-  &lt;about&gt;...&lt;/about&gt;
-  &lt;currentStatus&gt;...&lt;/currentStatus&gt;
-&lt;/user&gt;</code>
+&lt;recommendeeusers&gt;
+  &lt;recommendeeUser&gt;
+    &lt;userId&gt;...&lt;/userId&gt;
+    &lt;name&gt;...&lt;/name&gt;
+    &lt;photo&gt;
+      &lt;userId&gt;...&lt;/userId&gt;
+      &lt;name&gt;...&lt;/name&gt;
+      &lt;photo&gt;...&lt;/photo&gt;
+    &lt;/photo&gt;
+  &lt;/recommendeeUser&gt;
+  &lt;replyId&gt;...&lt;/replyId&gt;
+  &lt;replyText&gt;...&lt;/replyText&gt;
+  &lt;addedPoints&gt;...&lt;/addedPoints&gt;
+&lt;/recommendeeusers&gt;</code>
       <h2>Example JSON</h2>
       <code class="prettyprint lang-js">{
-  &quot;userId&quot; : &quot;...&quot;,
-  &quot;tsUserId&quot; : &quot;...&quot;,
-  &quot;tsUserEmail&quot; : &quot;...&quot;,
-  &quot;tsUserPw&quot; : &quot;...&quot;,
-  &quot;tsFirstName&quot; : &quot;...&quot;,
-  &quot;tsLastName&quot; : &quot;...&quot;,
-  &quot;maxInvites&quot; : &quot;...&quot;,
-  &quot;userCreatedInitialDatetime&quot; : &quot;...&quot;,
-  &quot;userPoints&quot; : &quot;...&quot;,
-  &quot;twitterUsrUrl&quot; : &quot;...&quot;,
-  &quot;userDisabledFlag&quot; : &quot;...&quot;,
-  &quot;userActivationKey&quot; : &quot;...&quot;,
-  &quot;userGender&quot; : &quot;...&quot;,
-  &quot;userCityId&quot; : &quot;...&quot;,
-  &quot;userState&quot; : &quot;...&quot;,
-  &quot;isOnline&quot; : &quot;...&quot;,
-  &quot;userCountry&quot; : &quot;...&quot;,
-  &quot;userFbId&quot; : &quot;...&quot;,
-  &quot;about&quot; : &quot;...&quot;,
-  &quot;currentStatus&quot; : &quot;...&quot;
+  &quot;recommendeeUser&quot; : {
+    &quot;userId&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;photo&quot; : {
+      &quot;userId&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;photo&quot; : &quot;...&quot;
+    }
+  },
+  &quot;replyId&quot; : &quot;...&quot;,
+  &quot;replyText&quot; : &quot;...&quot;,
+  &quot;addedPoints&quot; : &quot;...&quot;
 }</code>
 
       <div class="clear" />
