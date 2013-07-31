@@ -6,12 +6,14 @@ import com.tastesync.bos.AskReplyBOImpl;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSErrorObj;
+import com.tastesync.model.objects.TSKeyValueObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
+import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
@@ -41,6 +43,7 @@ public class AskReplyService extends BaseService {
 
     @POST
     @Path("/recosearch")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -80,32 +83,37 @@ public class AskReplyService extends BaseService {
             cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
             stateName = CommonFunctionsUtil.converStringAsNullIfNeeded(stateName);
 
-            askReplyBO.submitAskForRecommendationSearch(userId,
-                CommonFunctionsUtil.convertStringListAsArrayList(
-                    cuisineTier1IdList),
-                CommonFunctionsUtil.convertStringListAsArrayList(
-                    cuisineTier2IdList),
-                CommonFunctionsUtil.convertStringListAsArrayList(priceIdList),
-                CommonFunctionsUtil.convertStringListAsArrayList(themeIdList),
-                CommonFunctionsUtil.convertStringListAsArrayList(
-                    whoareyouwithIdList),
-                CommonFunctionsUtil.convertStringListAsArrayList(
-                    typeOfRestaurantIdList),
-                CommonFunctionsUtil.convertStringListAsArrayList(occasionIdList),
-                neighborhoodId, cityId, stateName);
+            String recoRequestId = askReplyBO.submitAskForRecommendationSearch(userId,
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        cuisineTier1IdList),
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        cuisineTier2IdList),
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        priceIdList),
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        themeIdList),
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        whoareyouwithIdList),
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        typeOfRestaurantIdList),
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        occasionIdList), neighborhoodId, cityId, stateName);
 
-            //TODO return recorequestid
-            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            TSKeyValueObj tsKeyValueObj = new TSKeyValueObj();
+            tsKeyValueObj.setKeyName(TSKeyValueObj.KEY);
+            tsKeyValueObj.setKeyNameValue("recorequestid");
+            tsKeyValueObj.setValueName(TSKeyValueObj.VALUE);
+            tsKeyValueObj.setValueNameValue(recoRequestId);
             responseDone = true;
 
-            return Response.status(status).entity(tsSuccessObj).build();
+            return Response.status(status).entity(tsKeyValueObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = false;
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
@@ -124,6 +132,7 @@ public class AskReplyService extends BaseService {
 
     @POST
     @Path("/recofriends")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSKeyValueObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -172,7 +181,7 @@ public class AskReplyService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = false;
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
@@ -191,6 +200,7 @@ public class AskReplyService extends BaseService {
 
     @GET
     @Path("/recorequest")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRecoRequestObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -200,7 +210,7 @@ public class AskReplyService extends BaseService {
     String userId, @QueryParam("recorequestid")
     String recorequestId) {
         TSRecoRequestObj tsRecoRequestObj = null;
-
+        boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
@@ -209,6 +219,8 @@ public class AskReplyService extends BaseService {
             tsRecoRequestObj = askReplyBO.showRecommendationsRequest(userId,
                     recorequestId);
 
+            responseDone = true;
+
             return Response.status(status).entity(tsRecoRequestObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
@@ -216,11 +228,64 @@ public class AskReplyService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRecoRequestObj == null) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
+    @GET
+    @Path("/recofriends")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSKeyValueObj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showAskForRecommendationFriends(
+        @QueryParam("recorequestid")
+    String recoRequestId) {
+        boolean responseDone = false;
+
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        recoRequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recoRequestId);
+
+        try {
+            String recoRequestText = askReplyBO.showAskForRecommendationFriends(recoRequestId);
+
+            responseDone = true;
+
+            TSKeyValueObj tsKeyValueObj = new TSKeyValueObj();
+            tsKeyValueObj.setKeyName(TSKeyValueObj.KEY);
+            tsKeyValueObj.setKeyNameValue("recorequesttext");
+
+            tsKeyValueObj.setValueName(TSKeyValueObj.VALUE);
+            tsKeyValueObj.setValueNameValue(recoRequestText);
+            responseDone = true;
+
+            return Response.status(status).entity(tsKeyValueObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -234,6 +299,7 @@ public class AskReplyService extends BaseService {
 
     @POST
     @Path("/recoreqans")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -273,7 +339,7 @@ public class AskReplyService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = false;
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
@@ -292,6 +358,7 @@ public class AskReplyService extends BaseService {
 
     @GET
     @Path("/recos4you")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRecommendationsForYouObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -301,13 +368,14 @@ public class AskReplyService extends BaseService {
     String userId, @QueryParam("recorequestid")
     String recorequestId) {
         TSRecommendationsForYouObj tsRecommendationsForYou = null;
-
+        boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
         try {
             tsRecommendationsForYou = askReplyBO.showRecommendationsForYou(recorequestId);
+            responseDone = true;
 
             return Response.status(status).entity(tsRecommendationsForYou)
                            .build();
@@ -317,11 +385,12 @@ public class AskReplyService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRecommendationsForYou == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -335,6 +404,7 @@ public class AskReplyService extends BaseService {
 
     @POST
     @Path("/likesunlikes")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -378,7 +448,7 @@ public class AskReplyService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = false;
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
@@ -397,6 +467,7 @@ public class AskReplyService extends BaseService {
 
     @GET
     @Path("/recomsg")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSenderUserObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -411,9 +482,12 @@ public class AskReplyService extends BaseService {
         messageId = CommonFunctionsUtil.converStringAsNullIfNeeded(messageId);
         recipientUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(recipientUserId);
 
+        boolean responseDone = false;
+
         try {
             tsSenderUserObj = askReplyBO.showRecommendationMessage(messageId,
                     recipientUserId);
+            responseDone = true;
 
             return Response.status(status).entity(tsSenderUserObj).build();
         } catch (TasteSyncException e) {
@@ -422,11 +496,12 @@ public class AskReplyService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsSenderUserObj == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -440,6 +515,7 @@ public class AskReplyService extends BaseService {
 
     @GET
     @Path("/recosfollowup")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRecommendationsFollowupObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -454,8 +530,11 @@ public class AskReplyService extends BaseService {
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         questionId = CommonFunctionsUtil.converStringAsNullIfNeeded(questionId);
 
+        boolean responseDone = false;
+
         try {
             tsRecommendationsFollowupObj = askReplyBO.showRecommendationsFollowup(questionId);
+            responseDone = true;
 
             return Response.status(status).entity(tsRecommendationsFollowupObj)
                            .build();
@@ -465,11 +544,12 @@ public class AskReplyService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRecommendationsFollowupObj == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -483,6 +563,7 @@ public class AskReplyService extends BaseService {
 
     @GET
     @Path("/recosandlikes")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRecommendeeUserObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -497,8 +578,11 @@ public class AskReplyService extends BaseService {
         recoLikeId = CommonFunctionsUtil.converStringAsNullIfNeeded(recoLikeId);
         recommenderUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(recommenderUserId);
 
+        boolean responseDone = false;
+
         try {
             tsRecommendeeUser = askReplyBO.showRecommendationsShowLikes(recoLikeId);
+            responseDone = true;
 
             return Response.status(status).entity(tsRecommendeeUser).build();
         } catch (TasteSyncException e) {
@@ -511,7 +595,7 @@ public class AskReplyService extends BaseService {
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRecommendeeUser == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -525,6 +609,7 @@ public class AskReplyService extends BaseService {
 
     @GET
     @Path("/recommendedrestaurants")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -537,8 +622,11 @@ public class AskReplyService extends BaseService {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
+        boolean responseDone = false;
+
         try {
             tsRestaurantObjList = askReplyBO.showRecommendationDidYouLike(recorequestId);
+            responseDone = true;
 
             return Response.status(status).entity(tsRestaurantObjList).build();
         } catch (TasteSyncException e) {
@@ -547,11 +635,12 @@ public class AskReplyService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRestaurantObjList == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -565,6 +654,7 @@ public class AskReplyService extends BaseService {
 
     @POST
     @Path("/likesunlikes")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -602,7 +692,225 @@ public class AskReplyService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = false;
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
+    @GET
+    @Path("/recosidrestaurantsearchresults")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantCusineTier2Obj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showListOfRestaurantsSearchResultsBasedOnRecoId(
+        @QueryParam("recoRequestId")
+    String recoRequestId) {
+        List<TSRestaurantCusineTier2Obj> tsRestaurantCusineTier2Obj = null;
+
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        recoRequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recoRequestId);
+
+        boolean responseDone = false;
+
+        try {
+            tsRestaurantCusineTier2Obj = askReplyBO.showListOfRestaurantsSearchResultsBasedOnRecoId(recoRequestId);
+            responseDone = true;
+
+            return Response.status(status).entity(tsRestaurantCusineTier2Obj)
+                           .build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
+    @GET
+    @Path("/recosrestaurantsearchresults")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantCusineTier2Obj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showListOfRestaurantsSearchResults(
+        @QueryParam("restaurantId")
+    String restaurantId, @QueryParam("neighborhoodId")
+    String neighborhoodId, @QueryParam("cityid")
+    String cityId, @QueryParam("statename")
+    String stateName, @QueryParam("cuisineidlist")
+    String cuisineIdList, @QueryParam("priceidlist")
+    String priceIdList, @QueryParam("rating")
+    String rating, @QueryParam("savedFlag")
+    String savedFlag, @QueryParam("favFlag")
+    String favFlag, @QueryParam("dealFlag")
+    String dealFlag, @QueryParam("chainFlag")
+    String chainFlag) {
+        List<TSRestaurantCusineTier2Obj> tsRestaurantCusineTier2Obj = null;
+
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
+        neighborhoodId = CommonFunctionsUtil.converStringAsNullIfNeeded(neighborhoodId);
+        cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
+        stateName = CommonFunctionsUtil.converStringAsNullIfNeeded(stateName);
+        cuisineIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(cuisineIdList);
+        priceIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(priceIdList);
+        rating = CommonFunctionsUtil.converStringAsNullIfNeeded(rating);
+        savedFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(savedFlag);
+        favFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(favFlag);
+        dealFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(dealFlag);
+        chainFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(chainFlag);
+
+        boolean responseDone = false;
+
+        try {
+            tsRestaurantCusineTier2Obj = askReplyBO.showListOfRestaurantsSearchResults(restaurantId,
+                    neighborhoodId, cityId, stateName,
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        cuisineIdList),
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        priceIdList), rating, savedFlag, favFlag, dealFlag,
+                    chainFlag);
+            responseDone = true;
+
+            return Response.status(status).entity(tsRestaurantCusineTier2Obj)
+                           .build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
+    @GET
+    @Path("/recounactioned")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showRecommendationsListUnactioned(
+        @QueryParam("userid")
+    String userId, @QueryParam("paginationId")
+    String paginationId) {
+        //TODO type to be defined...
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+
+        boolean responseDone = false;
+
+        // BO - DO- DBQuery
+        try {
+            //parameters check
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+            paginationId = CommonFunctionsUtil.converStringAsNullIfNeeded(paginationId);
+            askReplyBO.showRecommendationsListUnactioned(userId, paginationId);
+
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            responseDone = true;
+
+            return Response.status(status).entity(tsSuccessObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
+    @GET
+    @Path("/recoactioned")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showRecommendationsListActioned(
+        @QueryParam("userid")
+    String userId, @QueryParam("paginationId")
+    String paginationId) {
+        //TODO type to be defined...
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+
+        boolean responseDone = false;
+
+        // BO - DO- DBQuery
+        try {
+            //parameters check
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+            paginationId = CommonFunctionsUtil.converStringAsNullIfNeeded(paginationId);
+            askReplyBO.showRecommendationsListActioned(userId, paginationId);
+
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            responseDone = true;
+
+            return Response.status(status).entity(tsSuccessObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {

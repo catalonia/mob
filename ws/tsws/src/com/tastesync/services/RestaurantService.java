@@ -8,12 +8,12 @@ import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSCurrentRecommendedRestaurantDetailsObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSMenuObj;
-import com.tastesync.model.objects.TSRestaurantDetailsObj;
 import com.tastesync.model.objects.TSRestaurantExtendInfoObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 import com.tastesync.model.objects.TSSuccessObj;
+import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
@@ -49,11 +49,11 @@ public class RestaurantService extends BaseService {
      * Logger for this class
      */
     private static final Logger logger = Logger.getLogger(RestaurantService.class);
-
     private RestaurantBO restaurantBO = new RestaurantBOImpl();
 
     @GET
     @Path("/recodetails")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSCurrentRecommendedRestaurantDetailsObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -67,9 +67,12 @@ public class RestaurantService extends BaseService {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
+        boolean responseDone = false;
+
         try {
             tsCurrentRecommendedRestaurantDetailsObj = restaurantBO.showCurrentRestaurantRecommendedDetails(userId,
                     restaurantId);
+            responseDone = true;
 
             return Response.status(status)
                            .entity(tsCurrentRecommendedRestaurantDetailsObj)
@@ -80,11 +83,12 @@ public class RestaurantService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsCurrentRecommendedRestaurantDetailsObj == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -98,6 +102,7 @@ public class RestaurantService extends BaseService {
 
     @GET
     @Path("/details")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantCusineTier2Obj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -110,26 +115,31 @@ public class RestaurantService extends BaseService {
         //    	-- TODO: PHOTOS: LIMIT PHOTO RESULTS TO 3. Show INSTAGRAM PHOTOS first (on top)
         //    	-- TODO: CALCULATE openNowFlag BASED ON HOURS
         //    	-- TODO: Define factual_restaurant_deals table
-        TSRestaurantDetailsObj tsRestaurantDetailsObj = null;
+        TSRestaurantCusineTier2Obj tsRestaurantCusineTier2Obj = null;
+        boolean responseDone = false;
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-            tsRestaurantDetailsObj = restaurantBO.showRestaurantDetail(userId,
+            tsRestaurantCusineTier2Obj = restaurantBO.showRestaurantDetail(userId,
                     restaurantId);
+            responseDone = true;
 
-            return Response.status(status).entity(tsRestaurantDetailsObj).build();
+            return Response.status(status).entity(tsRestaurantCusineTier2Obj)
+                           .build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRestaurantDetailsObj == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -143,6 +153,7 @@ public class RestaurantService extends BaseService {
 
     @GET
     @Path("/menu")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSMenuObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -152,11 +163,13 @@ public class RestaurantService extends BaseService {
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
         TSMenuObj tsMenuObj = null;
+        boolean responseDone = true;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
-        
+
         try {
             tsMenuObj = restaurantBO.showRestaurantDetailMenu(restaurantId);
+            responseDone = true;
 
             return Response.status(status).entity(tsMenuObj).build();
         } catch (TasteSyncException e1) {
@@ -165,11 +178,12 @@ public class RestaurantService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsMenuObj == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -183,6 +197,7 @@ public class RestaurantService extends BaseService {
 
     @GET
     @Path("/extendedinfo")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantExtendInfoObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -191,25 +206,29 @@ public class RestaurantService extends BaseService {
         @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
-    	TSRestaurantExtendInfoObj tsRestaurantExtendInfoObj = null;
+        TSRestaurantExtendInfoObj tsRestaurantExtendInfoObj = null;
+        boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-        	tsRestaurantExtendInfoObj = restaurantBO.showRestaurantDetailMoreInfo(restaurantId);
+            tsRestaurantExtendInfoObj = restaurantBO.showRestaurantDetailMoreInfo(restaurantId);
+            responseDone = true;
 
-            return Response.status(status).entity(tsRestaurantExtendInfoObj).build();
+            return Response.status(status).entity(tsRestaurantExtendInfoObj)
+                           .build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRestaurantExtendInfoObj == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -220,9 +239,10 @@ public class RestaurantService extends BaseService {
             }
         }
     }
-    
+
     @GET
     @Path("/photos")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantPhotoObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -231,25 +251,29 @@ public class RestaurantService extends BaseService {
         @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
-    	List<TSRestaurantPhotoObj>  tsRestaurantPhotoObjList = null;
+        List<TSRestaurantPhotoObj> tsRestaurantPhotoObjList = null;
+        boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-        	tsRestaurantPhotoObjList = restaurantBO.showRestaurantDetailPhotos(restaurantId);
+            tsRestaurantPhotoObjList = restaurantBO.showRestaurantDetailPhotos(restaurantId);
+            responseDone = true;
 
-            return Response.status(status).entity(tsRestaurantPhotoObjList).build();
+            return Response.status(status).entity(tsRestaurantPhotoObjList)
+                           .build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRestaurantPhotoObjList == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -261,9 +285,9 @@ public class RestaurantService extends BaseService {
         }
     }
 
-    
     @GET
     @Path("/restaurantdetails")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -272,6 +296,7 @@ public class RestaurantService extends BaseService {
         @QueryParam("restaurantid")
     String restaurantId) {
         TSRestaurantObj tsRestaurantObj = null;
+        boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
@@ -294,108 +319,16 @@ public class RestaurantService extends BaseService {
                 }
             }
 
-            return Response.status(200).entity(tsRestaurantObj).build();
+            responseDone = true;
+
+            return Response.status(status).entity(tsRestaurantObj).build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-
-            return Response.status(status).entity(tsErrorObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRestaurantObj == null) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
-            }
-        }
-    }
-
-    @GET
-    @Path("/allrestaurants")
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    })
-    @Produces({MediaType.APPLICATION_JSON
-    })
-    public Response showRestaurantsDetailsList() {
-        List<TSRestaurantObj> tsRestaurantObjList = null;
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-
-        try {
-            tsRestaurantObjList = restaurantBO.showRestaurantsDetailsList();
-
-            return Response.status(status).entity(tsRestaurantObjList).build();
-        } catch (TasteSyncException e) {
-            e.printStackTrace();
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-
-            return Response.status(status).entity(tsErrorObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRestaurantObjList == null) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
-            }
-        }
-    }
-
-    @POST
-    @Path("/save")
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    })
-    @Produces({MediaType.APPLICATION_JSON
-    })
-    public Response submitSaveOrUnsaveRestaurant(
-        @FormParam("userid")
-    String userId, @FormParam("restaurantId")
-    String restaurantId,
-        @FormParam("userRestaurantSavedFlag")
-    String userRestaurantSavedFlag) {
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-
-        //check userRestaurarntSavedFlag is either 1 or 0
-        try {
-            Integer.parseInt(userRestaurantSavedFlag);
-        } catch (NumberFormatException nfe) {
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
-
-            return Response.status(status).entity(tsErrorObj).build();
-        }
-
-        boolean responseDone = false;
-
-        try {
-            restaurantBO.submitSaveOrUnsaveRestaurant(userId,
-                restaurantId, userRestaurantSavedFlag);
-
-            TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
-
-            return Response.status(status).entity(tsSuccessObj).build();
-        } catch (TasteSyncException e) {
-            e.printStackTrace();
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = false;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
@@ -411,12 +344,114 @@ public class RestaurantService extends BaseService {
             }
         }
     }
-    
-    
-    
-    
+
+    @GET
+    @Path("/allrestaurants")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantObj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showRestaurantsDetailsList() {
+        List<TSRestaurantObj> tsRestaurantObjList = null;
+        boolean responseDone = false;
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+
+        try {
+            tsRestaurantObjList = restaurantBO.showRestaurantsDetailsList();
+            responseDone = true;
+
+            return Response.status(status).entity(tsRestaurantObjList).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
+    @POST
+    @Path("/save")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response submitSaveOrUnsaveRestaurant(
+        @FormParam("userid")
+    String userId, @FormParam("restaurantId")
+    String restaurantId,
+        @FormParam("userRestaurantSavedFlag")
+    String userRestaurantSavedFlag) {
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        //check userRestaurarntSavedFlag is either 1 or 0
+        try {
+            Integer.parseInt(userRestaurantSavedFlag);
+        } catch (NumberFormatException nfe) {
+            status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+            responseDone = true;
+
+            return Response.status(status)
+                           .header("userrestaurantsavedflag",
+                (userRestaurantSavedFlag != null) ? userRestaurantSavedFlag
+                                                  : TSConstants.EMPTY)
+                           .entity(tsErrorObj).build();
+        }
+
+        try {
+            restaurantBO.submitSaveOrUnsaveRestaurant(userId, restaurantId,
+                userRestaurantSavedFlag);
+
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            responseDone = true;
+
+            return Response.status(status).entity(tsSuccessObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
     @POST
     @Path("/savefavs")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -442,7 +477,7 @@ public class RestaurantService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = false;
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
@@ -458,10 +493,10 @@ public class RestaurantService extends BaseService {
             }
         }
     }
-    
-    
+
     @GET
     @Path("/aptips")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantTipsAPSettingsObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -470,26 +505,32 @@ public class RestaurantService extends BaseService {
         @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
-    	List<TSRestaurantTipsAPSettingsObj>  tsRestaurantTipsAPSettingsObjList = null;
-    	
+        List<TSRestaurantTipsAPSettingsObj> tsRestaurantTipsAPSettingsObjList = null;
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
-        try {
-        	tsRestaurantTipsAPSettingsObjList = restaurantBO.showRestaurantDetailTipAPSettings(userId,restaurantId);
+        boolean responseDone = false;
 
-            return Response.status(status).entity(tsRestaurantTipsAPSettingsObjList).build();
+        try {
+            tsRestaurantTipsAPSettingsObjList = restaurantBO.showRestaurantDetailTipAPSettings(userId,
+                    restaurantId);
+            responseDone = true;
+
+            return Response.status(status)
+                           .entity(tsRestaurantTipsAPSettingsObjList).build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (tsRestaurantTipsAPSettingsObjList == null) {
+                if (!responseDone) {
                     status = TSResponseStatusCode.ERROR.getValue();
 
                     TSErrorObj tsErrorObj = new TSErrorObj();
@@ -503,6 +544,7 @@ public class RestaurantService extends BaseService {
 
     @POST
     @Path("/savetips")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -510,8 +552,7 @@ public class RestaurantService extends BaseService {
     public Response submitRestaurantDetailTip(
         @FormParam("userid")
     String userId, @FormParam("restaurantId")
-    String restaurantId,
-        @FormParam("tipText")
+    String restaurantId, @FormParam("tipText")
     String tipText) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -529,7 +570,7 @@ public class RestaurantService extends BaseService {
 
             TSErrorObj tsErrorObj = new TSErrorObj();
             tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = false;
+            responseDone = true;
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
@@ -545,7 +586,7 @@ public class RestaurantService extends BaseService {
             }
         }
     }
-    
+
     //TODO
     //    @POST
     //    @Path("/question")
