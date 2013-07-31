@@ -97,7 +97,7 @@
             </fileset>
         </copy>
     </target>
-    <target depends="init,prepare.repo,serverJar,enundocs" name="createWar">
+    <target depends="clean,init,prepare.repo,serverJar,enundocs" name="createWar">
         <!--<target depends="init,prepare.repo,serverJar,enundocs" name="createWar"> -->
         <!-- <war destfile="${dist}/${filename.war}" webxml="webapp/WEB-INF/web.xml"> -->
         <war destfile="${dist}/${filename.war}" webxml="WebContent/WEB-INF/web.xml">
@@ -124,7 +124,19 @@
     </target>
     <target name="clean">
         <delete dir="${build.dir}" />
+	<echo message="starting target clean"/>
+	<antcall target="clean_classes"/>
+	<echo message="...finished target clean."/>
     </target>
+  <target name="clean_classes">
+	<echo message="starting target clean_classes"/>
+	<mkdir dir="${build.dir}/classes"/>
+	<delete>
+	    <fileset dir="${build.dir}/classes" includes="**/*.class"/>
+	</delete>
+	<echo message="...finished target clean_classes."/>
+  </target>
+  
     <target name="enundocs" description="Run enunicate task on the rest services">
         <enunciate basedir="${basedir}/src">
             <include name="**/*.java" />
