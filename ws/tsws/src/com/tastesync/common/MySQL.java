@@ -165,33 +165,33 @@ public class MySQL {
 		return userId;
 	}
 	public boolean checkFBUserDataExist(String user_fb_id) {
-	boolean check = false;
-	TSFacebookUserDataObj fb_user_data = null;
-	TSDataSource tsDataSource = TSDataSource.getInstance();
-    Connection connection = null;
-	PreparedStatement statement = null;
-    ResultSet resultset = null;
-	try{
-    	connection = tsDataSource.getConnection();
-    	tsDataSource.begin();
-    	System.out.println("UserQueries.USER_CHECK_EMAIL_SELECT_SQL=" + UserQueries.FACEBOOK_SELECT_SQL);
-    	statement = connection.prepareStatement(UserQueries.FACEBOOK_SELECT_SQL);
-    	statement.setString(1, user_fb_id);
-    	resultset = statement.executeQuery();
-    	if(resultset.next())
-    	{
-    		fb_user_data = new TSFacebookUserDataObj();
-    		MySQL.mapResultsetRowToTSFacebookVO(fb_user_data, resultset);
-    	}
-	} catch (Exception e) {
-		e.printStackTrace();
-	}finally{
-		tsDataSource.close();
-		tsDataSource.closeConnection(connection, statement, resultset);
-	}
-	if(fb_user_data != null) check = true;
-
-	return check;
+		boolean check = false;
+		TSFacebookUserDataObj fb_user_data = null;
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+		try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	System.out.println("UserQueries.USER_CHECK_EMAIL_SELECT_SQL=" + UserQueries.FACEBOOK_SELECT_SQL);
+	    	statement = connection.prepareStatement(UserQueries.FACEBOOK_SELECT_SQL);
+	    	statement.setString(1, user_fb_id);
+	    	resultset = statement.executeQuery();
+	    	if(resultset.next())
+	    	{
+	    		fb_user_data = new TSFacebookUserDataObj();
+	    		MySQL.mapResultsetRowToTSFacebookVO(fb_user_data, resultset);
+	    	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+		if(fb_user_data != null) check = true;
+	
+		return check;
 	}
 	public TSUserObj getUserInformationByFacebookID(String user_fb_id) {
 		TSUserObj user = null;
@@ -241,6 +241,33 @@ public class MySQL {
 	    	{
 	    		user = new TSUserObj();
 	    		MySQL.mapResultsetRowToTSUserVO(user, resultset);
+	    	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+		return user;
+	}
+	public TSFacebookUserDataObj getFacebookUserInformation(String User_FB_ID) {
+		TSFacebookUserDataObj user = null;
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+	    try{
+	    	connection = tsDataSource.getConnection();
+	    	tsDataSource.begin();
+	    	System.out.println("UserQueries.FACEBOOK_SELECT_SQL=" + UserQueries.FACEBOOK_SELECT_SQL);
+	    	statement = connection.prepareStatement(UserQueries.FACEBOOK_SELECT_SQL);
+	    	statement.setString(1, User_FB_ID);
+	    	resultset = statement.executeQuery();
+	    	if(resultset.next())
+	    	{
+	    		user = new TSFacebookUserDataObj();
+	    		MySQL.mapResultsetRowToTSFacebookVO(user, resultset);
 	    	}
 		} catch (Exception e) {
 			e.printStackTrace();

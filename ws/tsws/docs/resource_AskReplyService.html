@@ -70,9 +70,130 @@
       <p></p>
       <p>The following resources are part of this group:</p>
       <ul>
+        <li><a href="#path__ask_likesunlikes.html">/ask/likesunlikes</a></li>
         <li><a href="#path__ask_recofriends.html">/ask/recofriends</a></li>
+        <li><a href="#path__ask_recommendedrestaurants.html">/ask/recommendedrestaurants</a></li>
+        <li><a href="#path__ask_recomsg.html">/ask/recomsg</a></li>
+        <li><a href="#path__ask_recoreqans.html">/ask/recoreqans</a></li>
+        <li><a href="#path__ask_recorequest.html">/ask/recorequest</a></li>
+        <li><a href="#path__ask_recos4you.html">/ask/recos4you</a></li>
+        <li><a href="#path__ask_recosandlikes.html">/ask/recosandlikes</a></li>
         <li><a href="#path__ask_recosearch.html">/ask/recosearch</a></li>
+        <li><a href="#path__ask_recosfollowup.html">/ask/recosfollowup</a></li>
       </ul>
+      <a name="path__ask_likesunlikes.html"></a>
+      <h1>/ask/likesunlikes</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/likesunlikes">/rest/ask/likesunlikes</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>newmessagetext</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>previousmessageid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>newmessagerecipientuserid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>newmessagesenderuserid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>restaurantidlist</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>restaurantId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>likeFlag</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
       <a name="path__ask_recofriends.html"></a>
       <h1>/ask/recofriends</h1>
       <p class="note">Mount Point: <a href="./rest/ask/recofriends">/rest/ask/recofriends</a></p>
@@ -116,6 +237,266 @@
             (no documentation provided)
           </td>
           <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__ask_recommendedrestaurants.html"></a>
+      <h1>/ask/recommendedrestaurants</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recommendedrestaurants">/rest/ask/recommendedrestaurants</a></p>
+      <a name="GET"></a>
+      <h2>GET</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>recorequestid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__ask_recomsg.html"></a>
+      <h1>/ask/recomsg</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recomsg">/rest/ask/recomsg</a></p>
+      <a name="GET"></a>
+      <h2>GET</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>messageid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>recipientuserid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__ask_recoreqans.html"></a>
+      <h1>/ask/recoreqans</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recoreqans">/rest/ask/recoreqans</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>recorequestid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>recommenderuserid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>restaurantidlist</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>replytext</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__ask_recorequest.html"></a>
+      <h1>/ask/recorequest</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recorequest">/rest/ask/recorequest</a></p>
+      <a name="GET"></a>
+      <h2>GET</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>recorequestid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__ask_recos4you.html"></a>
+      <h1>/ask/recos4you</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recos4you">/rest/ask/recos4you</a></p>
+      <a name="GET"></a>
+      <h2>GET</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>recorequestid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__ask_recosandlikes.html"></a>
+      <h1>/ask/recosandlikes</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recosandlikes">/rest/ask/recosandlikes</a></p>
+      <a name="GET"></a>
+      <h2>GET</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>recolikeid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>recommenderuserid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
           <td></td>
         </tr>
       </table>
@@ -230,6 +611,48 @@
             (no documentation provided)
           </td>
           <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__ask_recosfollowup.html"></a>
+      <h1>/ask/recosfollowup</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recosfollowup">/rest/ask/recosfollowup</a></p>
+      <a name="GET"></a>
+      <h2>GET</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>questionid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
           <td></td>
         </tr>
       </table>

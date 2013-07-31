@@ -146,7 +146,7 @@ done=_done;
             
             
             for (NSDictionary *objDict in dataArray) {
-                user.uid = [[objDict objectForKey:@"uid"] longValue];
+                user.uid = [objDict objectForKey:@"uid"];
                 user.firstname = [objDict objectForKey:@"first_name"];
                 user.lastname = [objDict objectForKey:@"last_name"];
                 user.email = [objDict objectForKey:@"email"];
@@ -185,7 +185,8 @@ done=_done;
             for (NSDictionary *objDict in dataArray) {
                 UserObj *user = [[UserObj alloc] init];
                 
-                user.uid                    = [[objDict objectForKey:@"uid"] longValue];
+                user.uid                    = [objDict objectForKey:@"uid"];
+                NSLog(@"ID: %@",[objDict objectForKey:@"uid"]);
                 user.firstname              = [objDict objectForKey:@"first_name"];
                 user.lastname               = [objDict objectForKey:@"last_name"];
                 user.avatarUrl              = [objDict objectForKey:@"pic_square"];
@@ -238,46 +239,35 @@ done=_done;
                     user.location = [hometown_locationDict objectForKey:@"state"];
                 }
                 
-                if (i== 0) {
+                if (i == 0) {
                     debug(@"Add user infor");
                     user.friend_count = [[objDict objectForKey:@"friend_count"] intValue];
                     user.timezone = [[objDict objectForKey:@"timezone"] intValue];
                     user.likes_count = [[objDict objectForKey:@"likes_count"] intValue];
                     user.verified = [[objDict objectForKey:@"verified"] boolValue];
                     
-                    user.uid = [[objDict objectForKey:@"uid"] longValue];
-                    user.firstname = [objDict objectForKey:@"first_name"];
-                    user.lastname = [objDict objectForKey:@"last_name"];
-                    user.avatarUrl = [objDict objectForKey:@"pic_square"];
+//                    user.uid = [[objDict objectForKey:@"uid"] longValue];
+//                    user.firstname = [objDict objectForKey:@"first_name"];
+//                    user.lastname = [objDict objectForKey:@"last_name"];
+//                    user.avatarUrl = [objDict objectForKey:@"pic_square"];
                     debug(@"Save user's info to UserDefault");
                         
                     [UserDefault userDefault].user = user;
                     [UserDefault update];
                         
                 }
-                    else
-                    {
-                        //                    random tasteSync User remove in UAT
-                        
-                        user.isTasteSyncUser = user.uid%2;
-                        //                    end random
-                        
-                        [arrFriends addObject:user];
-                        
-                    }
+                else
+                {
+                    //                    random tasteSync User remove in UAT
                     
-                    i++;
+                    //user.isTasteSyncUser = user.uid%2;
+                    //                    end random
                     
-                    /*
-                     user.gender = [[objDict objectForKey:@"sex"] isEqualToString:@"male"];
-                     id locationDict = [objDict objectForKey:@"current_location"];
-                     
-                     if (![locationDict isKindOfClass:([NSNull class])]) {
-                     user.city = [locationDict objectForKey:@"city"];
-                     user.state = [locationDict objectForKey:@"state"];
-                     }
-                     
-                     */
+                    [arrFriends addObject:user];
+                    
+                }
+                
+                i++;
                     
                     
                 }
@@ -308,7 +298,6 @@ done=_done;
     {
 #ifdef DEBUG
         NSLog(@"USER - INFO");
-        NSLog(@"uid -> %ld, firstname - > %@ , lastname -> %@",user.uid,user.firstname,user.lastname);
         NSLog(@"email -> %@, city - > %@ , state -> %@ ",user.email,user.city,user.state);
         
         

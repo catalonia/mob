@@ -23,7 +23,7 @@
             NotificationObj *obj = [[NotificationObj alloc] init];
             obj.type = i;
             UserObj *user = [[UserObj alloc] init];
-            user.uid = i;            
+            //user.uid = i;
             user.firstname = @"Person";
             user.lastname = [NSString stringWithFormat:@"%d",i];
             user.avatar = [UIImage imageNamed:@"avatar.png"];

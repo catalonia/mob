@@ -11,6 +11,7 @@
 #import "CommonHelpers.h"
 #import "FriendFilterCell.h"
 #import "UserProfileCell.h"
+#import "JSONKit.h"
 
 @interface UsersFollowing ()<UserProfileCellDelegate>
 {
@@ -30,6 +31,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -38,7 +40,7 @@
     
        
     [self initUI];
-    [self initData];
+    
 }
 
 - (void) initUI
@@ -54,6 +56,12 @@
             lbTitle.text = @"You are following";
             lbSwipe.hidden = NO;
         }
+        
+        CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFollowers" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+        request.delegate = self;
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+        [request startFormRequest];
+        
     }else
     {
         viewSearch.hidden = YES;
@@ -66,20 +74,22 @@
         {
             lbTitle.text = @"Your followers";
         }
+        
+        CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFollowing" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+        request.delegate = self;
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+        [request startFormRequest];
     }
 }
 
-- (void) initData
+- (void) initData:(NSArray*)array
 {
     self.arrData = [[NSMutableArray alloc] init];
     self.arrDataFilter = [[NSMutableArray alloc] init];
     self.arrDataUser = [[NSMutableArray alloc] init];
     self.arrDataUser = [[CommonHelpers appDelegate] arrDataFBFriends];
-    for (int i= 0; i<5; i++) {
-        UserObj *obj = [[UserObj alloc] init];
-        obj.firstname = @"Victor";
-        obj.lastname = [NSString stringWithFormat:@"NGO %i",i];
-        obj.avatar = [UIImage imageNamed:@"avatar.png"];
+    for (NSDictionary* dic in array) {
+        UserObj *obj = [CommonHelpers getUserObj:dic];
         [self.arrData addObject:obj];
     }
 }
@@ -375,7 +385,17 @@
     
 }
 
-
+-(void)responseData:(NSData *)data
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",response);
+    if (response != NULL) {
+        NSArray* array = [response objectFromJSONString];
+        
+        [self initData:array];
+    }
+    
+}
 
 @end
 

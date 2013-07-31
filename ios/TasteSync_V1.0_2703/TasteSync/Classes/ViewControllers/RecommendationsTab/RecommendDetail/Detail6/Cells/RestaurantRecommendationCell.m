@@ -64,7 +64,7 @@
             user.firstname  = @"Victor";
             user.lastname = @"Ngo";
             user.avatar = [UIImage imageNamed:@"avatar.png"];
-            user.uid = 1;
+            user.uid = @"1";
             
             [[[CommonHelpers appDelegate] tabbarBaseVC] actionProfile:user];
         }
@@ -76,7 +76,7 @@
             user.firstname  = @"Penny";
             user.lastname = @"Ngo";
             user.avatar = [UIImage imageNamed:@"avatar.png"];
-            user.uid = 1;
+            user.uid = @"1";
             
             [[[CommonHelpers appDelegate] tabbarBaseVC] actionProfile:user];
         }
@@ -88,7 +88,7 @@
             user.firstname  = @"Robin";
             user.lastname = @"Trinh";
             user.avatar = [UIImage imageNamed:@"avatar.png"];
-            user.uid = 1;
+            user.uid = @"1";
             
             [[[CommonHelpers appDelegate] tabbarBaseVC] actionProfile:user];
         }

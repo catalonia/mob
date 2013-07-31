@@ -161,7 +161,7 @@
                 
         }
         obj.avatar = [UIImage imageNamed:@"avatar.png"];
-        obj.uid = i+1;
+        //obj.uid = i+1;
         
         [arr addObject:obj];
     }
@@ -187,7 +187,14 @@
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TasteSync Would Like to Send You Push Notifications" message:MSG_NOTIFICATION delegate:self cancelButtonTitle:@"Don't Allow" otherButtonTitles:@"OK", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TasteSync Would Like to Send You Push Notifications" message:nil/*MSG_NOTIFICATION*/ delegate:self cancelButtonTitle:@"Don't Allow" otherButtonTitles:@"OK", nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        UITextField* textField = [alert textFieldAtIndex:0];
+        textField.frame = CGRectMake(15, 75, 255, 30);
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+        textField.placeholder = @"192.168.0.100";
+        textField.text = @"192.168.0.100";
+        [alert addSubview:textField];
         alert.tag =1;
         [alert show];
     }
@@ -221,8 +228,10 @@
     if (alertView.tag ==1) {
         if (buttonIndex==1) {
             userDefault.isNotification = YES;
+            UITextField* textField = [alertView textFieldAtIndex:0];
+            userDefault.IPAdress = textField.text;
             [UserDefault update];
-            NSLog(@"isNotification = YES");
+            NSLog(@"isNotification = YES %@", userDefault.IPAdress);
             
             
         }
@@ -318,10 +327,6 @@
             [request startRequest];
             
             NSLog(@"%@", jsonString);
-            
-            ConfigProfileVC *vc = [[ConfigProfileVC alloc] initWithNibName:@"ConfigProfileVC" bundle:nil];
-            
-            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
             
@@ -345,6 +350,17 @@
     NSString* userID = [dic2 objectForKey:@"userId"];
     [UserDefault userDefault].userID = userID;
     [UserDefault update];
+    
+    NSString* is_have_account = [dic objectForKey:@"is_have_account"];
+    if ([[CommonHelpers getBoolValue:is_have_account] boolValue]) {
+        [[CommonHelpers appDelegate] showAskTab];
+    }
+    else
+    {
+        ConfigProfileVC *vc = [[ConfigProfileVC alloc] initWithNibName:@"ConfigProfileVC" bundle:nil];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 
 #pragma mark - CLLocationManagerDelegate

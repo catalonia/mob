@@ -589,6 +589,8 @@
 		C3D18087179F66F7007B71A0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D18086179F66F7007B71A0 /* FacebookSDK.framework */; };
 		C3D180BA179F69AF007B71A0 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B6179F69AF007B71A0 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C3D180BB179F69AF007B71A0 /* CRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B9179F69AF007B71A0 /* CRequest.m */; };
+		C3DA7DDF17A34A1100641DE7 /* ContentAboutUsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA7DDD17A34A1000641DE7 /* ContentAboutUsVC.m */; };
+		C3DA7DE017A34A1100641DE7 /* ContentAboutUsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3DA7DDE17A34A1100641DE7 /* ContentAboutUsVC.xib */; };
 		E02DE78416F94ABC005C193C /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = E02DE78216F94ABA005C193C /* topbar.png */; };
 		E02DE78516F94ABC005C193C /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02DE78316F94ABB005C193C /* topbar@2x.png */; };
 		E05B563C17000897007B938B /* ic_like_on.png in Resources */ = {isa = PBXBuildFile; fileRef = E05B563817000897007B938B /* ic_like_on.png */; };
@@ -1300,6 +1302,9 @@
 		C3D180B6179F69AF007B71A0 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../JSONKit.m; sourceTree = "<group>"; };
 		C3D180B8179F69AF007B71A0 /* CRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRequest.h; sourceTree = "<group>"; };
 		C3D180B9179F69AF007B71A0 /* CRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRequest.m; sourceTree = "<group>"; };
+		C3DA7DDC17A34A1000641DE7 /* ContentAboutUsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentAboutUsVC.h; sourceTree = "<group>"; };
+		C3DA7DDD17A34A1000641DE7 /* ContentAboutUsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentAboutUsVC.m; sourceTree = "<group>"; };
+		C3DA7DDE17A34A1100641DE7 /* ContentAboutUsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentAboutUsVC.xib; sourceTree = "<group>"; };
 		E02DE78216F94ABA005C193C /* topbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topbar.png; sourceTree = "<group>"; };
 		E02DE78316F94ABB005C193C /* topbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topbar@2x.png"; sourceTree = "<group>"; };
 		E05B563817000897007B938B /* ic_like_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_like_on.png; sourceTree = "<group>"; };
@@ -2313,6 +2318,9 @@
 				5E7776BC16D6035C00B0F363 /* AboutTasteSyncVC.h */,
 				5E7776BD16D6035C00B0F363 /* AboutTasteSyncVC.m */,
 				5E7776BE16D6035C00B0F363 /* AboutTasteSyncVC.xib */,
+				C3DA7DDC17A34A1000641DE7 /* ContentAboutUsVC.h */,
+				C3DA7DDD17A34A1000641DE7 /* ContentAboutUsVC.m */,
+				C3DA7DDE17A34A1100641DE7 /* ContentAboutUsVC.xib */,
 				5E7FE43A16D746F100F976B4 /* Cell */,
 			);
 			path = AboutTasteSyncVC;
@@ -3500,6 +3508,7 @@
 				E05B563D17000897007B938B /* ic_like_on@2x.png in Resources */,
 				E05B563E17000897007B938B /* ic_like.png in Resources */,
 				E05B563F17000897007B938B /* ic_like@2x.png in Resources */,
+				C3DA7DE017A34A1100641DE7 /* ContentAboutUsVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3622,6 +3631,7 @@
 				C39F9599179F6EC600C91BAA /* ASIInputStream.m in Sources */,
 				C39F959A179F6EC600C91BAA /* ASINetworkQueue.m in Sources */,
 				C39F959B179F6EC600C91BAA /* Reachability.m in Sources */,
+				C3DA7DDF17A34A1100641DE7 /* ContentAboutUsVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3649,7 +3659,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Loc Le Quy (32P9GKUH4E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Loc Le Quy (32P9GKUH4E)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3667,7 +3677,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "46DFC540-7631-44E5-858A-0DF042B476DE";
+				PROVISIONING_PROFILE = "E72AF406-6616-4F3C-968A-0CA263329CBD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E72AF406-6616-4F3C-968A-0CA263329CBD";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3682,7 +3693,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Loc Le Quy (32P9GKUH4E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Loc Le Quy (32P9GKUH4E)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3694,7 +3705,8 @@
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "46DFC540-7631-44E5-858A-0DF042B476DE";
+				PROVISIONING_PROFILE = "E72AF406-6616-4F3C-968A-0CA263329CBD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E72AF406-6616-4F3C-968A-0CA263329CBD";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3707,9 +3719,9 @@
 					armv7,
 					armv6,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ngo Van Trung (ZWE528XU8B)";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Ngo Van Trung (ZWE528XU8B)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ngo Van Trung (ZWE528XU8B)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Loc Le Quy (32P9GKUH4E)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Loc Le Quy (32P9GKUH4E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Loc Le Quy (32P9GKUH4E)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)\"/TasteSync/Libraries/",
 					"\"$(SRCROOT)\"",
@@ -3720,9 +3732,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "464D2649-3F85-49C4-9168-A9378799CD18";
-				"PROVISIONING_PROFILE[sdk=*]" = "464D2649-3F85-49C4-9168-A9378799CD18";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "464D2649-3F85-49C4-9168-A9378799CD18";
+				PROVISIONING_PROFILE = "E72AF406-6616-4F3C-968A-0CA263329CBD";
+				"PROVISIONING_PROFILE[sdk=*]" = "E72AF406-6616-4F3C-968A-0CA263329CBD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E72AF406-6616-4F3C-968A-0CA263329CBD";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3734,8 +3746,8 @@
 					armv7,
 					armv6,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ngo Van Trung (ZWE528XU8B)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ngo Van Trung (ZWE528XU8B)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Loc Le Quy (32P9GKUH4E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Loc Le Quy (32P9GKUH4E)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)\"/TasteSync/Libraries/",
 					"\"$(SRCROOT)\"",
@@ -3746,8 +3758,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "464D2649-3F85-49C4-9168-A9378799CD18";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "464D2649-3F85-49C4-9168-A9378799CD18";
+				PROVISIONING_PROFILE = "E72AF406-6616-4F3C-968A-0CA263329CBD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E72AF406-6616-4F3C-968A-0CA263329CBD";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

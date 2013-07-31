@@ -27,7 +27,7 @@
 #define LOGIN_STATUS    @"LOGIN_STATUS"
 #define UserLogID @"User_LOG_ID"
 #define UserID @"User_ID"
-
+#define IPADRESS @"IPAdress"
 
 @interface UserDefault : NSObject<NSCoding>
 {
@@ -50,6 +50,7 @@ typedef enum _LoginStatus
 @property (nonatomic, strong) NSString *city,*state;
 @property (nonatomic, strong) UserObj *user;
 @property (nonatomic, strong) NSString *userLogID, *userID;
+@property (nonatomic, strong) NSString *IPAdress;
 
 
 

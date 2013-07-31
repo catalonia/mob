@@ -31,6 +31,8 @@ askSubmited=_askSubmited;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
     }
     
+    
+    
 //    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound)];
    
     [self getNotifications];
@@ -49,16 +51,19 @@ askSubmited=_askSubmited;
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-  
+    NSLog(@"12312");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-   
+    NSLog(@"abcde");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    
+
+    
     if (FBSession.activeSession.state == FBSessionStateCreatedOpening) {       
 //       [FBSession.activeSession close];
     }
@@ -67,7 +72,6 @@ askSubmited=_askSubmited;
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -89,6 +93,8 @@ askSubmited=_askSubmited;
     
     return [FBSession.activeSession handleOpenURL:url];
 }
+
+
 #pragma mark - Init Data
 
 // init static data 
@@ -275,5 +281,6 @@ askSubmited=_askSubmited;
             break;
     }
 }
+
 
 @end

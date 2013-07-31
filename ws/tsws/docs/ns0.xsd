@@ -8,16 +8,23 @@
   <xs:element name="notifications" type="TSNotificationSettingsObj"/>
   <xs:element name="photo" type="TSPhotoObj"/>
   <xs:element name="privacy" type="TSPrivacySettingsObj"/>
-  <xs:element name="recommenders" type="TSRecommendersDetailsObj"/>
   <xs:element name="restaurantdetails" type="TSRestaurantDetailsObj"/>
+  <xs:element name="restaurantextendedinfo" type="TSRestaurantExtendInfoObj"/>
   <xs:element name="restaurant" type="TSRestaurantObj"/>
   <xs:element name="restaurantsUserProfileHome" type="TSRestaurantView"/>
   <xs:element name="autopub" type="TSSocialAutoPubSettingsObj"/>
   <xs:element name="social" type="TSSocialSettingsObj"/>
   <xs:element name="success" type="TSSuccessObj"/>
   <xs:element name="user" type="TSUserObj"/>
+  <xs:element name="userprofilebasic" type="TSUserProfileBasicObj"/>
   <xs:element name="userprofile" type="TSUserProfileObj"/>
   <xs:element name="userprofilerestaurants" type="TSUserProfileRestaurantsObj"/>
+  <xs:element name="recorequest" type="TSRecoRequestObj"/>
+  <xs:element name="recosfollowup" type="TSRecommendationsFollowupObj"/>
+  <xs:element name="recos4u" type="TSRecommendationsForYouObj"/>
+  <xs:element name="recommendeeusers" type="TSRecommendeeUserObj"/>
+  <xs:element name="recommenders" type="TSRecommendersDetailsObj"/>
+  <xs:element name="senderuser" type="TSSenderUserObj"/>
   <xs:complexType name="TSCityObj">
     <xs:sequence>
       <xs:element name="cityId" type="xs:string" minOccurs="0"/>
@@ -103,13 +110,6 @@
       <xs:element name="privacy_flag" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="TSRecommendersDetailsObj">
-    <xs:sequence>
-      <xs:element name="userId" type="xs:string" minOccurs="0"/>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="photo" type="TSPhotoObj" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="TSRestaurantDetailsObj">
     <xs:sequence>
       <xs:element name="openNowFlag" type="xs:string" minOccurs="0"/>
@@ -120,6 +120,52 @@
       <xs:element name="userRestaurantSavedFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="userRestaurantFavFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="userRestaurantTipFlag" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRestaurantExtendInfoObj">
+    <xs:sequence>
+      <xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="website" type="xs:string" minOccurs="0"/>
+      <xs:element name="healthyOptionsFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="wifiFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="payCashonlyFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="reservationsFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="open24HoursFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="attire" type="xs:string" minOccurs="0"/>
+      <xs:element name="attireRequiredList" type="xs:string" minOccurs="0"/>
+      <xs:element name="attireProhibitedList" type="xs:string" minOccurs="0"/>
+      <xs:element name="parkingFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="parkingValetFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="parkingFreeFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="parkingGarageFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="parkingLotFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="parkingStreetFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="parkingValidatedFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="smokingFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="accessibleWheelchairFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="alcoholFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="alcoholBarFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="alcoholBeerWineFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="alcoholByobFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="groupsGoodForFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="kidsGoodForFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="kidsMenuFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="mealBreakfastFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="mealCaterFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="mealDeliverFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="mealDinnerFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="mealLunchFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="mealTakeoutFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="optionsGlutenfreeFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="optionsLowfatFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="optionsOrganicFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="optionsVeganFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="optionsVegetarianFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="roomPrivateFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="seatingOutdoorFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="address" type="xs:string" minOccurs="0"/>
+      <xs:element name="lat" type="xs:string" minOccurs="0"/>
+      <xs:element name="lon" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSRestaurantObj">
@@ -200,6 +246,13 @@
       <xs:element name="currentStatus" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="TSUserProfileBasicObj">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="photo" type="TSPhotoObj" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="TSUserProfileObj">
     <xs:sequence>
       <xs:element name="name" type="xs:string" minOccurs="0"/>
@@ -231,6 +284,49 @@
       <xs:element name="userFavFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="userRecommendedFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="userTipFlag" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRecoRequestObj">
+    <xs:sequence>
+      <xs:element name="recommendeeUser" type="TSRecommendeeUserObj" minOccurs="0"/>
+      <xs:element name="recorequestText" type="xs:string" minOccurs="0"/>
+      <xs:element name="recommendeeUserFolloweeFlag" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRecommendationsFollowupObj">
+    <xs:sequence>
+      <xs:element name="questionUse" type="TSUserProfileBasicObj" minOccurs="0"/>
+      <xs:element name="questionText" type="xs:string" minOccurs="0"/>
+      <xs:element name="questionUserFolloweeFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurant" type="TSRestaurantObj" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRecommendationsForYouObj">
+    <xs:sequence>
+      <xs:element name="recoRequestList" type="TSRecoRequestObj" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="restaurantList" type="TSRestaurantObj" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRecommendeeUserObj">
+    <xs:sequence>
+      <xs:element name="recommendeeUser" type="TSUserProfileBasicObj" minOccurs="0"/>
+      <xs:element name="replyId" type="xs:string" minOccurs="0"/>
+      <xs:element name="replyText" type="xs:string" minOccurs="0"/>
+      <xs:element name="addedPoints" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRecommendersDetailsObj">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="photo" type="TSPhotoObj" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSSenderUserObj">
+    <xs:sequence>
+      <xs:element name="senderUser" type="TSUserProfileBasicObj" minOccurs="0"/>
+      <xs:element name="senderUserFolloweeFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

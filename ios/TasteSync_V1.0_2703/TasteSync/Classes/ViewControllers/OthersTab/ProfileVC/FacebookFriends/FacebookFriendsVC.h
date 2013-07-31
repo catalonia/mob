@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface FacebookFriendsVC : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIActionSheetDelegate,UIAlertViewDelegate>
+#import "JSONKit.h"
+#import "CRequest.h"
+
+@interface FacebookFriendsVC : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIActionSheetDelegate,UIAlertViewDelegate, RequestDelegate>
 {
     __weak IBOutlet UITableView *tbvFriends,*tbvResult,*tbvFilter;
     __weak IBOutlet UITextField *tfSearch;

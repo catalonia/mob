@@ -34,7 +34,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [CommonHelpers setBackgroudImageForView:self.view];
-   
+    
+    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFriends" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request startFormRequest];
+    
     [self initUI];
     [self initData];
 }
@@ -58,21 +63,10 @@
 
 - (void) initData
 {
-    self.arrData1 = [[NSMutableArray alloc] init ];
-    self.arrData2 = [[NSMutableArray alloc] init ];
-    for(int i=0; i<10; i++)
-    {
-        UserObj *obj = [[UserObj alloc] init];
-        obj.firstname = @"Persion";
-        obj.lastname = [NSString stringWithFormat:@"%d",i];
-        obj.avatar = [UIImage imageNamed:@"avatar.png"];
-        [self.arrData1 addObject:obj];
-        [self.arrData2 addObject:obj];
-    }
     
     self.arrDataFilter = [[NSMutableArray alloc] init];
     self.arrDataFriends = [[NSMutableArray alloc] init];
-    if ([[CommonHelpers appDelegate] arrDataFBFriends].count >0) {
+    if ([[CommonHelpers appDelegate] arrDataFBFriends].count > 0) {
         self.arrDataFriends = [[CommonHelpers appDelegate] arrDataFBFriends];
     }
         
@@ -398,7 +392,41 @@
     [self hideKeyBoard];
 }
 
-
+- (void)responseData:(NSData *)data
+{
+    self.arrData1 = [[NSMutableArray alloc] init ];
+    self.arrData2 = [[NSMutableArray alloc] init ];
+    
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"Response: %@",response);
+    NSDictionary* dic = [response objectFromJSONString];
+    NSArray* arrayFriend = [dic objectForKey:@"friendTasteSync"];
+    NSArray* arrayInviteFriend = [dic objectForKey:@"inviteFriend"];
+    
+    NSMutableArray* arrayFriendReload = [[NSMutableArray alloc]init];
+    int i = 0;
+    for (NSDictionary* dic in arrayFriend) {
+        UserObj *obj = [CommonHelpers getUserObj:dic];
+        [self.arrData1 addObject:obj];
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        i++;
+        [arrayFriendReload addObject:indexPath];
+    }
+    
+    NSMutableArray* arrayInviteFriendReload = [[NSMutableArray alloc]init];
+    i = 0;
+    
+    for (NSDictionary* dic in arrayInviteFriend) {
+        UserObj *obj = [CommonHelpers getUserObj:dic];
+        [self.arrData2 addObject:obj];
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        i++;
+        [arrayInviteFriendReload addObject:indexPath];
+    }
+    
+    [tbvFriends reloadRowsAtIndexPaths:arrayFriendReload withRowAnimation:UITableViewRowAnimationFade];
+    [tbvResult reloadRowsAtIndexPaths:arrayInviteFriendReload withRowAnimation:UITableViewRowAnimationFade];
+}
 
 
 

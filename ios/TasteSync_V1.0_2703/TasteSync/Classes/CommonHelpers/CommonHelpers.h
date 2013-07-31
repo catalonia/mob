@@ -48,6 +48,8 @@ void debug(NSString *format, ...);
 
 + (NSDictionary*)getJSONUserObj:(UserObj*)user;
 
++ (UserObj*)getUserObj:(NSDictionary*)dictionary;
+
 + (NSString*)commonUntilNull:(NSString*)data;
 
 + (NSNumber*)getBoolValue:(NSString*)value;

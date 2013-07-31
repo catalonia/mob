@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "UserObj.h"
-@interface UsersFollowing : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
+#import "CRequest.h"
+
+@interface UsersFollowing : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, RequestDelegate>
 {
     __weak IBOutlet UITableView *tbvResult, *tbvFilter;
     __weak IBOutlet UITextField *tfSearch;

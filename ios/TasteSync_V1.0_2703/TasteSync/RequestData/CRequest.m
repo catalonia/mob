@@ -7,8 +7,8 @@
 //
 
 #import "CRequest.h"
-
-#define LINK_REQUEST @"http://192.168.0.101:8080/tsws/services/"
+#import "UserDefault.h"
+#define LINK_REQUEST @":8080/tsws/services/"
 #define USER_REQUEST @"user/"
 #define RESTAURANT_REQUEST @"restaurant/"
 
@@ -26,11 +26,15 @@
 {
     self = [super init];
     if (self) {
+        _url = [@"http://" stringByAppendingString:[UserDefault userDefault].IPAdress];
+        _url = [_url stringByAppendingString:LINK_REQUEST];
         if (data == RequestDataUser)
-            _url = [LINK_REQUEST stringByAppendingString:USER_REQUEST];
+            _url = [_url stringByAppendingString:USER_REQUEST];
         if (data == RequestDataRestaurant) 
-            _url = [LINK_REQUEST stringByAppendingString:RESTAURANT_REQUEST];
+            _url = [_url stringByAppendingString:RESTAURANT_REQUEST];
         _url = [_url stringByAppendingString:url];
+        
+        NSLog(@"url: %@", _url);
         
         _data = [[NSMutableData alloc]init];
         

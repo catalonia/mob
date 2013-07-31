@@ -51,7 +51,7 @@ public interface UserBo {
 
     Response submitSettingscontactUs(String userId, String order, String desc) throws TasteSyncException;
     
-    Response showAboutTastesync() throws TasteSyncException;
+    Response showAboutTastesync(String aboutId) throws TasteSyncException;
     
     TSUserProfileObj showMyProfileHome(String userId) throws TasteSyncException;
 
@@ -73,9 +73,13 @@ public interface UserBo {
     List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSUserObj> showProfileFriends(String userId)
+    List<TSFacebookUserDataObj> showProfileFriends(String userId)
         throws TasteSyncException;
 
+    List<TSFacebookUserDataObj> showInviteFriends(String userId)
+            throws TasteSyncException;
+
+    
     List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)
         throws TasteSyncException;
 

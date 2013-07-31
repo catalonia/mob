@@ -8,6 +8,7 @@ import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
+import com.tastesync.model.objects.TSFriendObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
@@ -386,12 +387,12 @@ public class UserService extends BaseService {
 		return userBo.submitSettingscontactUs(userId, order, desc);
 	}
 
-	@GET
+	@POST
 	@Path("/showAboutTastesync")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response showAboutTastesync() throws TasteSyncException {
-		return userBo.showAboutTastesync();
+	public Response showAboutTastesync(@FormParam("AboutId") String aboutId) throws TasteSyncException {
+		return userBo.showAboutTastesync(aboutId);
 	}
 
 	@GET
@@ -726,14 +727,19 @@ public class UserService extends BaseService {
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response showProfileFriends(@FormParam("userId") String userId) {
-		List<TSUserObj> tsFacebookUserDataObjList = null;
+		TSFriendObj tsfriend = null;
 		int status = TSResponseStatusCode.SUCCESS.getValue();
 
 		try {
 			userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-			tsFacebookUserDataObjList = userBo.showMyProfileFriends(userId);
-
-			return Response.status(status).entity(tsFacebookUserDataObjList)
+			List<TSFacebookUserDataObj> tsFacebookUserDataObjList = userBo.showProfileFriends(userId);
+			List<TSFacebookUserDataObj> tsInviteFacebookUserDataObjList = userBo.showInviteFriends(userId);
+			
+			tsfriend = new TSFriendObj();
+			tsfriend.setFriendTasteSync(tsFacebookUserDataObjList);
+			tsfriend.setInviteFriend(tsInviteFacebookUserDataObjList);
+			
+			return Response.status(status).entity(tsfriend)
 					.build();
 		} catch (TasteSyncException e1) {
 			e1.printStackTrace();
@@ -746,7 +752,7 @@ public class UserService extends BaseService {
 			return Response.status(status).entity(tsErrorObj).build();
 		} finally {
 			if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-				if (tsFacebookUserDataObjList == null) {
+				if (tsfriend == null) {
 					status = TSResponseStatusCode.ERROR.getValue();
 
 					TSErrorObj tsErrorObj = new TSErrorObj();
@@ -759,7 +765,7 @@ public class UserService extends BaseService {
 			}
 		}
 	}
-
+	
 	@GET
 	@Path("/profile/restaurants")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })

@@ -30,6 +30,15 @@
     return self;
 }
 
+-(id)initWithAboutText:(NSString*)text
+{
+    self = [super initWithNibName:@"EditAboutMeVC" bundle:nil];
+    if (self) {
+        self.aboutText = text;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -56,6 +65,7 @@
         btEdit.hidden = YES;
         btDone.hidden = YES;
     }
+    tvAbout.text = self.aboutText;
 }
 
 #pragma mark - IBAction's Define
@@ -77,9 +87,16 @@
         
         return ;
     }
+    else
+    {
+        CRequest* request = [[CRequest alloc]initWithURL:@"submitMyProfileAboutMe" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+        request.delegate = self;
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+        [request setFormPostValue:tvAbout.text forKey:@"Content"];
+        [request startFormRequest];
+    }
     btDone.hidden = NO;
     btEdit.hidden = YES;
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UIAlerViewDelegate
@@ -106,6 +123,17 @@
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [tvAbout resignFirstResponder];
+}
+
+-(void)responseData:(NSData *)data
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSDictionary* dic = [response objectFromJSONString];
+    if ([dic objectForKey:@"successMsg"] != NULL) {
+        [CommonHelpers showInfoAlertWithTitle:APP_NAME message:@"Updating successfully!" delegate:nil tag:1];
+        [self.delegate getAboutText:tvAbout.text];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

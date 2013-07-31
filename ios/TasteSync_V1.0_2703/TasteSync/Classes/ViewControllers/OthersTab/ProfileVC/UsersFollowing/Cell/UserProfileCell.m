@@ -25,7 +25,7 @@
 {
     userObj = anUserObj;
     if (anUserObj) {
-        ivAvatar.image = anUserObj.avatar;
+        ivAvatar.image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:anUserObj.avatarUrl]]];
         lbName.text = [NSString stringWithFormat:@"%@ %@", anUserObj.firstname, anUserObj.lastname];
     }
     

@@ -42,10 +42,9 @@ typedef enum _ContactSession
 {
     [super viewDidLoad];
     [CommonHelpers setBackgroudImageForView:self.view];
-
+    ContactSessionStatus = ContactSessionReportBugs;
     // Do any additional setup after loading the view from its nib.
-   
-    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,7 +103,13 @@ typedef enum _ContactSession
     }
     else
     {
-        
+        NSLog(@"Send: %@ in %d", tvContent.text, ContactSessionStatus);
+        CRequest* request = [[CRequest alloc]initWithURL:@"submitSettingsContactUs" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+        request.delegate = self;
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+        [request setFormPostValue:[NSString stringWithFormat:@"%d",ContactSessionStatus] forKey:@"Contact_Order"];
+        [request setFormPostValue:tvContent.text forKey:@"Contact_Desc"];
+        [request startFormRequest];
         [self hideKeyboard];
     }
     
@@ -197,6 +202,25 @@ typedef enum _ContactSession
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self hideKeyboard];
+}
+
+-(void)responseData:(NSData *)data
+{
+    NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Response: %@", response);
+    
+    if (response != NULL) {
+        
+        NSDictionary* dic = [response objectFromJSONString];
+        NSString* successStr = [dic objectForKey:@"successMsg"];
+        if (successStr != NULL) {
+            [CommonHelpers showInfoAlertWithTitle:APP_NAME message:@"Send contact TasteSync finished." delegate:nil tag:0];
+        }
+        
+    }
+    
+    tvContent.text = @"";
 }
 
 @end
