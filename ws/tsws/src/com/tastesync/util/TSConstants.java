@@ -11,5 +11,8 @@ public interface TSConstants {
     public static final String USNC_APP_TWITTER = "2";
     public static final String INT_INSERT="1";
     public static final String INT_DELETE="0";
+    public static final String EX_CLASS="EX_CLASS";
+    public static final String ERR_CODE="ERR_CODE";
+    public static final String EMPTY="EMPTY";
     
 }
