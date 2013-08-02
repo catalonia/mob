@@ -14,6 +14,7 @@ import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
+import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
@@ -587,69 +588,117 @@ public class RestaurantService extends BaseService {
         }
     }
 
-    //TODO
-    //    @POST
-    //    @Path("/question")
-    //    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    //    })
-    //    @Produces({MediaType.APPLICATION_JSON
-    //    })
-    //    public Response submitRestaurantDetailAsk(
-    //        @FormParam("userid")
-    //    String userId, @FormParam("questionId")
-    //    String restaurantId,
-    //    @FormParam("questionText")
-    //    String questionText,
-    //    @FormParam("postQuestionOnForum")
-    //    String postQuestionOnForum,
-    //    @FormParam("recommendersUserIdList") String recommendersUserIdList,
-    //    @FormParam("friendsFacebookIdList") String friendsFacebookIdList) {
-    //    
-    //    	int status = TSResponseStatusCode.SUCCESS.getValue();
-    //
-    //        //check postQuestionOnForum is either 1 or 0
-    //        try {
-    //            Integer.parseInt(postQuestionOnForum);
-    //        } catch (NumberFormatException nfe) {
-    //            status = TSResponseStatusCode.ERROR.getValue();
-    //
-    //            TSErrorObj tsErrorObj = new TSErrorObj();
-    //            tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
-    //
-    //            return Response.status(status).entity(tsErrorObj).build();
-    //        }
-    //
-    //        boolean responseDone = false;
-    //
-    //        try {
-    //            restaurantBO.insertDeleteSaveOrUnsaveRestaurant(userId,
-    //                restaurantId, userRestaurantSavedFlag);
-    //
-    //            TSSuccessObj tsSuccessObj = new TSSuccessObj();
-    //            responseDone = true;
-    //
-    //            return Response.status(status).entity(tsSuccessObj).build();
-    //        } catch (TasteSyncException e) {
-    //            e.printStackTrace();
-    //            status = TSResponseStatusCode.ERROR.getValue();
-    //
-    //            TSErrorObj tsErrorObj = new TSErrorObj();
-    //            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-    //            responseDone = false;
-    //
-    //            return Response.status(status).entity(tsErrorObj).build();
-    //        } finally {
-    //            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-    //                if (!responseDone) {
-    //                    status = TSResponseStatusCode.ERROR.getValue();
-    //
-    //                    TSErrorObj tsErrorObj = new TSErrorObj();
-    //                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-    //
-    //                    return Response.status(status).entity(tsErrorObj).build();
-    //                }
-    //            }
-    //        }
-    //    	
-    //    }
+    @GET
+    @Path("/askdetails")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantRecommendersDetailsObj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showRestaurantDetailAsk(
+        @QueryParam("userid")
+    String userId, @QueryParam("restaurantid")
+    String restaurantId) {
+    	TSRestaurantRecommendersDetailsObj tsRestaurantRecommendersDetailsObj =
+            null;
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
+
+        boolean responseDone = false;
+
+        try {
+        	tsRestaurantRecommendersDetailsObj = restaurantBO.showRestaurantDetailAsk(userId,
+                    restaurantId);
+            responseDone = true;
+
+            return Response.status(status)
+                           .entity(tsRestaurantRecommendersDetailsObj)
+                           .build();
+        } catch (TasteSyncException e1) {
+            e1.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
+    @POST
+    @Path("/askquestion")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response submitRestaurantDetailAsk(
+        @FormParam("userid")
+    String userId, @FormParam("questionId")
+    String restaurantId, @FormParam("questionText")
+    String questionText,
+        @FormParam("postQuestionOnForum")
+    String postQuestionOnForum,
+        @FormParam("recommendersUserIdList")
+    String recommendersUserIdList,
+        @FormParam("friendsFacebookIdList")
+    String friendsFacebookIdList) {
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+
+        //check postQuestionOnForum is either 1 or 0
+        try {
+            Integer.parseInt(postQuestionOnForum);
+        } catch (NumberFormatException nfe) {
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+
+            return Response.status(status).entity(tsErrorObj).build();
+        }
+
+        boolean responseDone = false;
+
+        try {
+            restaurantBO.submitRestaurantDetailAsk(userId, restaurantId,
+                questionText, postQuestionOnForum, recommendersUserIdList,
+                friendsFacebookIdList);
+
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            responseDone = true;
+
+            return Response.status(status).entity(tsSuccessObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = false;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
 }

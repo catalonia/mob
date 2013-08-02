@@ -131,7 +131,7 @@ public class AskReplyService extends BaseService {
     }
 
     @POST
-    @Path("/recofriends")
+    @Path("/saverecofriends")
     @org.codehaus.enunciate.jaxrs.TypeHint(TSKeyValueObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
@@ -561,6 +561,56 @@ public class AskReplyService extends BaseService {
         }
     }
 
+    @POST
+    @Path("/recofollowupanswer")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response submitRecommendationFollowupAnswer(
+        @FormParam("userid")
+    String userId, @FormParam("questiondid")
+    String questionId, @FormParam("replytext")
+    String replyText) {
+    	int status = TSResponseStatusCode.SUCCESS.getValue();
+
+        boolean responseDone = false;
+
+        // BO - DO- DBQuery
+        try {
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+            questionId = CommonFunctionsUtil.converStringAsNullIfNeeded(questionId);
+            replyText = CommonFunctionsUtil.converStringAsNullIfNeeded(replyText);
+
+            askReplyBO.submitRecommendationFollowupAnswer(userId, questionId, replyText);
+
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            responseDone = true;
+
+            return Response.status(status).entity(tsSuccessObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
     @GET
     @Path("/recosandlikes")
     @org.codehaus.enunciate.jaxrs.TypeHint(TSRecommendeeUserObj.class)
