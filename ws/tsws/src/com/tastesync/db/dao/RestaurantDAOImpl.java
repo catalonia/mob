@@ -12,6 +12,7 @@ import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
+import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
@@ -617,4 +618,21 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             tsDataSource.closeConnection(connection, statement, resultset);
         }
     }
+
+	@Override
+	public TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(
+			String userId, String restaurantId) throws TasteSyncException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+    @Override
+    public void submitRestaurantDetailAsk(String userId, String restaurantId,
+        String questionText, String postQuestionOnForum,
+        String recommendersUserIdList, String friendsFacebookIdList)
+        throws TasteSyncException {
+        // TODO Auto-generated method stub
+    }
+
+
 }

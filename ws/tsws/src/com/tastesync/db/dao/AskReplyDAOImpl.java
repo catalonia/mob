@@ -370,4 +370,11 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         // TODO Auto-generated method stub
         //TODO return type to be defined!!
     }
+
+	@Override
+	public void submitRecommendationFollowupAnswer(String userId,
+			String questionId, String replyText) throws TasteSyncException {
+		// TODO Auto-generated method stub
+		
+	}
 }
