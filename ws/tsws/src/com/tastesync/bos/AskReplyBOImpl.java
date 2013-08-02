@@ -141,4 +141,11 @@ public class AskReplyBOImpl implements AskReplyBO {
         String paginationId) throws TasteSyncException {
         askReplyDAO.showRecommendationsListUnactioned(userId, paginationId);
     }
+
+	@Override
+	public void submitRecommendationFollowupAnswer(String userId,
+			String questionId, String replyText) throws TasteSyncException {
+		askReplyDAO.submitRecommendationFollowupAnswer(userId, questionId, replyText);
+		
+	}
 }

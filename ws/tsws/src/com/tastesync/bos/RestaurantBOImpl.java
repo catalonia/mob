@@ -7,12 +7,12 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSCurrentRecommendedRestaurantDetailsObj;
 import com.tastesync.model.objects.TSMenuObj;
-import com.tastesync.model.objects.TSRestaurantDetailsObj;
 import com.tastesync.model.objects.TSRestaurantExtendInfoObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
+import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
 import java.util.List;
 
@@ -27,7 +27,8 @@ public class RestaurantBOImpl implements RestaurantBO {
     }
 
     @Override
-    public List<TSRestaurantObj> showRestaurantsDetailsList() throws TasteSyncException {
+    public List<TSRestaurantObj> showRestaurantsDetailsList()
+        throws TasteSyncException {
         return restaurantDAO.showRestaurantsDetailsList();
     }
 
@@ -40,7 +41,8 @@ public class RestaurantBOImpl implements RestaurantBO {
     @Override
     public TSCurrentRecommendedRestaurantDetailsObj showCurrentRestaurantRecommendedDetails(
         String userId, String restaurantId) throws TasteSyncException {
-    	return restaurantDAO.showCurrentRestaurantRecommendedDetails(userId, restaurantId);
+        return restaurantDAO.showCurrentRestaurantRecommendedDetails(userId,
+            restaurantId);
     }
 
     @Override
@@ -56,8 +58,8 @@ public class RestaurantBOImpl implements RestaurantBO {
     }
 
     @Override
-    public List<TSRestaurantPhotoObj> showRestaurantDetailPhotos(String restaurantId)
-        throws TasteSyncException {
+    public List<TSRestaurantPhotoObj> showRestaurantDetailPhotos(
+        String restaurantId) throws TasteSyncException {
         return restaurantDAO.showRestaurantDetailPhotos(restaurantId);
     }
 
@@ -70,22 +72,37 @@ public class RestaurantBOImpl implements RestaurantBO {
     }
 
     @Override
-    public void submitAddOrRemoveFromFavs(String userId,
-        String restaurantId) throws TasteSyncException {
+    public void submitAddOrRemoveFromFavs(String userId, String restaurantId)
+        throws TasteSyncException {
         restaurantDAO.submitAddOrRemoveFromFavs(userId, restaurantId);
     }
 
-	@Override
-	public void submitRestaurantDetailTip(String userId, String restaurantId,
-			String tipText) throws TasteSyncException {
-		restaurantDAO.submitRestaurantDetailTip(userId, restaurantId, tipText);
-	}
+    @Override
+    public void submitRestaurantDetailTip(String userId, String restaurantId,
+        String tipText) throws TasteSyncException {
+        restaurantDAO.submitRestaurantDetailTip(userId, restaurantId, tipText);
+    }
 
-	@Override
-	public List<TSRestaurantTipsAPSettingsObj> showRestaurantDetailTipAPSettings(String userId, String restaurantId)
-			throws TasteSyncException {
-	
-		return restaurantDAO.showRestaurantDetailTipAPSettings(userId, restaurantId);
-	}
+    @Override
+    public List<TSRestaurantTipsAPSettingsObj> showRestaurantDetailTipAPSettings(
+        String userId, String restaurantId) throws TasteSyncException {
+        return restaurantDAO.showRestaurantDetailTipAPSettings(userId,
+            restaurantId);
+    }
 
+    @Override
+    public void submitRestaurantDetailAsk(String userId, String restaurantId,
+        String questionText, String postQuestionOnForum,
+        String recommendersUserIdList, String friendsFacebookIdList)
+        throws TasteSyncException {
+        restaurantDAO.submitRestaurantDetailAsk(userId, restaurantId,
+            questionText, postQuestionOnForum, recommendersUserIdList,
+            friendsFacebookIdList);
+    }
+
+    @Override
+    public TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(
+        String userId, String restaurantId) throws TasteSyncException {
+        return restaurantDAO.showRestaurantDetailAsk(userId, restaurantId);
+    }
 }

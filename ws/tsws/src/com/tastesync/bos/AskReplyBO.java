@@ -12,6 +12,7 @@ import com.tastesync.model.objects.derived.TSSenderUserObj;
 
 import java.util.List;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
 
 
@@ -69,6 +70,9 @@ public interface AskReplyBO {
     TSRecommendationsFollowupObj showRecommendationsFollowup(String questionId)
         throws TasteSyncException;
 
+    void submitRecommendationFollowupAnswer(String userId, String questionId,
+        String replyText) throws TasteSyncException;
+
     List<TSRestaurantObj> showRecommendationDidYouLike(String recorequestId)
         throws TasteSyncException;
 
@@ -80,4 +84,5 @@ public interface AskReplyBO {
 
     void showRecommendationsListUnactioned(String userId, String paginationId)
         throws TasteSyncException;
+
 }
