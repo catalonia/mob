@@ -269,7 +269,79 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     public void submitAskForRecommendationFriends(String recoRequestId,
         String recoRequestFriendText, String[] friendsFacebookIdList,
         String postRecoRequestOnFacebook) throws TasteSyncException {
-        // TODO Auto-generated method stub
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        //TODO Incomplete
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+
+            for (String friendsFacebookId : friendsFacebookIdList) {
+                statement = connection.prepareStatement(AskReplyQueries.CHECK_FB_USER_AS_TS_USER_SELECT_SQL);
+                statement.setString(1, friendsFacebookId);
+                resultset = statement.executeQuery();
+
+                //only one result
+                //-- Pick only those friends' facebook ID who are TS users
+                if (resultset.next()) {
+                    statement = connection.prepareStatement(AskReplyQueries.USER_ID_FRM_FB_ID_SELECT_SQL);
+                    statement.setString(1, friendsFacebookId);
+                    resultset = statement.executeQuery();
+
+                    String friendId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "users.user_id"));
+
+                    statement = connection.prepareStatement(AskReplyQueries.FRIEND_TRUSTED_FLAG_SELECT_SQL);
+                    statement.setString(1, friendsFacebookId); //TODO id check if input?
+                    statement.setString(2, friendId);
+
+                    resultset = statement.executeQuery();
+
+                    String friendTrustedFlag = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "user_friend_tastesync.FRIEND_TRUSTED_FLAG"));
+
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_INSERT_SQL);
+                    statement.setString(1, "N");
+                    statement.setString(2, friendTrustedFlag);
+                    statement.setString(3, "user-assigned-friend");
+                    statement.setString(4, friendId);
+                    statement.setString(5, "Y");
+                    statement.setString(6, recoRequestId);
+                    statement.executeUpdate();
+                } else {
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_NON_TS_ASSIGNED_INSERT_SQL);
+                    statement.setString(1, recoRequestId);
+                    statement.setString(2, friendsFacebookId);
+                    statement.setString(3, "user-assigned-friend");
+                    statement.setString(4, "N");
+                    statement.setString(5, "N");
+                    statement.setString(6, "N");
+                    statement.executeUpdate();
+                }
+            }
+
+            tsDataSource.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException("Error while creating reco request " +
+                e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 
     public boolean submitSignupDetail(TSAskSubmitLoginObj askObj)
@@ -371,10 +443,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         //TODO return type to be defined!!
     }
 
-	@Override
-	public void submitRecommendationFollowupAnswer(String userId,
-			String questionId, String replyText) throws TasteSyncException {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void submitRecommendationFollowupAnswer(String userId,
+        String questionId, String replyText) throws TasteSyncException {
+        // TODO Auto-generated method stub
+    }
 }
