@@ -9,6 +9,7 @@ import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSKeyValueObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
+import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
@@ -132,13 +133,14 @@ public class AskReplyService extends BaseService {
 
     @POST
     @Path("/saverecofriends")
-    @org.codehaus.enunciate.jaxrs.TypeHint(TSKeyValueObj.class)
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRecoRequestNonAssignedObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitAskForRecommendationFriends(
-        @FormParam("recorequestid")
+        @FormParam("userid")
+    String userId, @FormParam("recorequestid")
     String recoRequestId,
         @FormParam("recorequestfriendtext")
     String recoRequestFriendText,
@@ -153,6 +155,7 @@ public class AskReplyService extends BaseService {
         //    	-- solved for single facebookId below
         //
         //    	-- calculate1 Logic
+        TSRecoRequestNonAssignedObj tsRecoRequestNonAssignedObj = null;
 
         //parameters check
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -161,20 +164,21 @@ public class AskReplyService extends BaseService {
 
         // BO - DO- DBQuery
         try {
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
             recoRequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recoRequestId);
             recoRequestFriendText = CommonFunctionsUtil.converStringAsNullIfNeeded(recoRequestFriendText);
             friendsFacebookIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(friendsFacebookIdList);
             postRecoRequestOnFacebook = CommonFunctionsUtil.converStringAsNullIfNeeded(postRecoRequestOnFacebook);
 
-            askReplyBO.submitAskForRecommendationFriends(recoRequestId,
-                recoRequestFriendText,
-                CommonFunctionsUtil.convertStringListAsArrayList(
-                    friendsFacebookIdList), postRecoRequestOnFacebook);
+            tsRecoRequestNonAssignedObj = askReplyBO.submitAskForRecommendationFriends(userId,
+                    recoRequestId, recoRequestFriendText,
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        friendsFacebookIdList), postRecoRequestOnFacebook);
 
-            TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
 
-            return Response.status(status).entity(tsSuccessObj).build();
+            return Response.status(status).entity(tsRecoRequestNonAssignedObj)
+                           .build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -573,7 +577,7 @@ public class AskReplyService extends BaseService {
     String userId, @FormParam("questiondid")
     String questionId, @FormParam("replytext")
     String replyText) {
-    	int status = TSResponseStatusCode.SUCCESS.getValue();
+        int status = TSResponseStatusCode.SUCCESS.getValue();
 
         boolean responseDone = false;
 
@@ -583,7 +587,8 @@ public class AskReplyService extends BaseService {
             questionId = CommonFunctionsUtil.converStringAsNullIfNeeded(questionId);
             replyText = CommonFunctionsUtil.converStringAsNullIfNeeded(replyText);
 
-            askReplyBO.submitRecommendationFollowupAnswer(userId, questionId, replyText);
+            askReplyBO.submitRecommendationFollowupAnswer(userId, questionId,
+                replyText);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
@@ -611,6 +616,7 @@ public class AskReplyService extends BaseService {
             }
         }
     }
+
     @GET
     @Path("/recosandlikes")
     @org.codehaus.enunciate.jaxrs.TypeHint(TSRecommendeeUserObj.class)
