@@ -6,6 +6,7 @@ import com.tastesync.db.dao.AskReplyDAOImpl;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSRestaurantObj;
+import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
@@ -45,11 +46,12 @@ public class AskReplyBOImpl implements AskReplyBO {
     }
 
     @Override
-    public void submitAskForRecommendationFriends(String recoRequestId,
-        String recoRequestFriendText, String[] friendsFacebookIdList,
-        String postRecoRequestOnFacebook) throws TasteSyncException {
-        askReplyDAO.submitAskForRecommendationFriends(recoRequestId,
-            recoRequestFriendText, friendsFacebookIdList,
+    public TSRecoRequestNonAssignedObj submitAskForRecommendationFriends(
+        String userId, String recoRequestId, String recoRequestFriendText,
+        String[] friendsFacebookIdList, String postRecoRequestOnFacebook)
+        throws TasteSyncException {
+        return askReplyDAO.submitAskForRecommendationFriends(userId,
+            recoRequestId, recoRequestFriendText, friendsFacebookIdList,
             postRecoRequestOnFacebook);
     }
 
@@ -142,10 +144,10 @@ public class AskReplyBOImpl implements AskReplyBO {
         askReplyDAO.showRecommendationsListUnactioned(userId, paginationId);
     }
 
-	@Override
-	public void submitRecommendationFollowupAnswer(String userId,
-			String questionId, String replyText) throws TasteSyncException {
-		askReplyDAO.submitRecommendationFollowupAnswer(userId, questionId, replyText);
-		
-	}
+    @Override
+    public void submitRecommendationFollowupAnswer(String userId,
+        String questionId, String replyText) throws TasteSyncException {
+        askReplyDAO.submitRecommendationFollowupAnswer(userId, questionId,
+            replyText);
+    }
 }

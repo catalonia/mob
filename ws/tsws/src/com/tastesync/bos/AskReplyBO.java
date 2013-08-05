@@ -3,6 +3,7 @@ package com.tastesync.bos;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSRestaurantObj;
+import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
@@ -42,9 +43,10 @@ public interface AskReplyBO {
         String rating, String savedFlag, String favFlag, String dealFlag,
         String chainFlag) throws TasteSyncException;
 
-    void submitAskForRecommendationFriends(String recoRequestId,
-        String recoRequestFriendText, String[] friendsFacebookIdList,
-        String postRecoRequestOnFacebook) throws TasteSyncException;
+    TSRecoRequestNonAssignedObj submitAskForRecommendationFriends(
+        String userId, String recoRequestId, String recoRequestFriendText,
+        String[] friendsFacebookIdList, String postRecoRequestOnFacebook)
+        throws TasteSyncException;
 
     TSRecoRequestObj showRecommendationsRequest(String userId,
         String recorequestId) throws TasteSyncException;
@@ -84,5 +86,4 @@ public interface AskReplyBO {
 
     void showRecommendationsListUnactioned(String userId, String paginationId)
         throws TasteSyncException;
-
 }
