@@ -1,12 +1,15 @@
 package com.tastesync.util;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.sql.Timestamp;
+
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.List;
 
 
 public class CommonFunctionsUtil {
@@ -18,20 +21,22 @@ public class CommonFunctionsUtil {
 
         //return inputString;
     }
-    
+
     public static String converStringAsNullIfNeeded(String inputString) {
-    	if (inputString == null || inputString.isEmpty()) {
-    		return null;
-    	}
+        if ((inputString == null) || inputString.isEmpty()) {
+            return null;
+        }
+
         return inputString;
     }
-    
-	public static String getCurrentDatetimeAppendField() {
-		Calendar currentDate = Calendar.getInstance();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-		return formatter.format(currentDate.getTime());
-	}
-    
+
+    public static String getCurrentDatetimeAppendField() {
+        Calendar currentDate = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+
+        return formatter.format(currentDate.getTime());
+    }
+
     public static String generateRandomString(int loai, int dodai) {
         ////////Code ho tro lay chu ngau nhien, phat trien boi Congdongjava - Tran Huy
         //Loai : kieu ran dom
@@ -44,7 +49,8 @@ public class CommonFunctionsUtil {
         String thuong = hoa.toLowerCase();
         String so = "123456789012345678901234567890";
         String randomchuoi = "";
-        if (loai > 4 || loai < 0) {
+
+        if ((loai > 4) || (loai < 0)) {
             ketqua = "Loai khong hop le, cho phep tu 0 - 4";
         } else if (loai == 0) {
             randomchuoi = thuong;
@@ -54,36 +60,49 @@ public class CommonFunctionsUtil {
             randomchuoi = hoa + thuong;
         } else if (loai == 3) {
             randomchuoi = hoa + thuong + so;
-        } else if (loai == 4)
-        	randomchuoi = so;
+        } else if (loai == 4) {
+            randomchuoi = so;
+        }
+
         for (int i = 0; i < dodai; i++) {
             int temp = (int) Math.round(Math.random() * randomchuoi.length());
             ketqua += randomchuoi.charAt(temp);
         }
+
         return ketqua;
     }
-    
 
     public static String[] convertStringListAsArrayList(String inputString) {
-    	return inputString != null ? inputString.split(",") : TSConstants.EMPTY_STRING_ARRAY;
-    	
+        return (inputString != null) ? inputString.split(",")
+                                     : TSConstants.EMPTY_STRING_ARRAY;
     }
-    
+
     public static String getCurrentDatetime() {
-		Calendar currentDate = Calendar.getInstance();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return formatter.format(currentDate.getTime());
-	}
-    
+        Calendar currentDate = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        return formatter.format(currentDate.getTime());
+    }
+
     private static String getCurrentDateTime() {
         //TODO YYYYMMDDHHMMSS.SSS  (TIME ZONE set to EST/EDT!)
         return tsDateTimeFormatWithMilliseconds.print(new DateTime());
     }
-    
+
     public static String generateUniqueKey() {
-        return getCurrentDateTime()+System.nanoTime();
+        return getCurrentDateTime() + System.nanoTime();
     }
-    
+
+    public static String generateUniqueKey(List<String> inputMiddleKeys) {
+        StringBuffer key = new StringBuffer();
+
+        for (String middleKey : inputMiddleKeys) {
+            key.append(middleKey).append("-");
+        }
+
+        return getCurrentDateTime() + key.toString() + System.nanoTime();
+    }
+
     public static Timestamp getCurrentDateTimestamp() {
         //TODO YYYYMMDDHHMMSS.SSS  (TIME ZONE set to EST/EDT!)
         return new Timestamp(new java.util.Date().getTime());
