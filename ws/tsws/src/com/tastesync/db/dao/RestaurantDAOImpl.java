@@ -136,23 +136,23 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         TSRestaurantPhotoObj tsRestaurantPhotoObj, ResultSet resultset)
         throws SQLException {
         tsRestaurantPhotoObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
-        		resultset.getString("restaurant_photo.RESTAURANT_ID")));
+                resultset.getString("restaurant_photo.RESTAURANT_ID")));
         tsRestaurantPhotoObj.setPhotoId(CommonFunctionsUtil.getModifiedValueString(
-        		resultset.getString("restaurant_photo.PHOTO_ID")));
+                resultset.getString("restaurant_photo.PHOTO_ID")));
         tsRestaurantPhotoObj.setPrefix(CommonFunctionsUtil.getModifiedValueString(
-        		resultset.getString("restaurant_photo.PREFIX")));
+                resultset.getString("restaurant_photo.PREFIX")));
         tsRestaurantPhotoObj.setSuffix(CommonFunctionsUtil.getModifiedValueString(
-        		resultset.getString("restaurant_photo.SUFFIX")));
+                resultset.getString("restaurant_photo.SUFFIX")));
         tsRestaurantPhotoObj.setWidth(CommonFunctionsUtil.getModifiedValueString(
-        		resultset.getString("restaurant_photo.WIDTH")));
+                resultset.getString("restaurant_photo.WIDTH")));
         tsRestaurantPhotoObj.setHeight(CommonFunctionsUtil.getModifiedValueString(
-        		resultset.getString("restaurant_photo.HEIGHT")));
+                resultset.getString("restaurant_photo.HEIGHT")));
         tsRestaurantPhotoObj.setUltimateSourceName(CommonFunctionsUtil.getModifiedValueString(
-        		resultset.getString("restaurant_photo.ULTIMATE_SOURCE_NAME")));
+                resultset.getString("restaurant_photo.ULTIMATE_SOURCE_NAME")));
         tsRestaurantPhotoObj.setUltimateSourceUrl(CommonFunctionsUtil.getModifiedValueString(
-        		resultset.getString("restaurant_photo.ULTIMATE_SOURCE_URL")));
+                resultset.getString("restaurant_photo.ULTIMATE_SOURCE_URL")));
         tsRestaurantPhotoObj.setPhotoSource(CommonFunctionsUtil.getModifiedValueString(
-        		resultset.getString("restaurant_photo.PHOTO_SOURCE")));
+                resultset.getString("restaurant_photo.PHOTO_SOURCE")));
     }
 
     //TODO
@@ -518,13 +518,20 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             } else {
                 throw new TasteSyncException("Error Unknown Operation");
             }
-            
+
             statement = connection.prepareStatement(RestaurantQueries.SAVERESTAURANTFAV_HISTORICAL_INSERT_SQL);
-            statement.setString(1, restaurantId);
-            statement.setString(2, userRestaurantSavedFlag);
-            statement.setString(3, userId);
+
+            List<String> inputKeyStr = new ArrayList<String>();
+            inputKeyStr.add(userId);
+            statement.setString(1,
+                CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
+            statement.setString(2, restaurantId);
+            statement.setString(3, userRestaurantSavedFlag);
+            statement.setTimestamp(4,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+            statement.setString(5, userId);
             statement.executeUpdate();
-            
+
             tsDataSource.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -596,7 +603,10 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
 
-            String tipId = userId + CommonFunctionsUtil.generateUniqueKey();
+            List<String> inputKeyStr = new ArrayList<String>();
+            inputKeyStr.add(userId);
+
+            String tipId = CommonFunctionsUtil.generateUniqueKey(inputKeyStr);
 
             statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_TIP_INSERT_SQL);
             statement.setString(1, restaurantId);
@@ -625,13 +635,13 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         }
     }
 
-	@Override
-	public TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(
-			String userId, String restaurantId) throws TasteSyncException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+    @Override
+    public TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(
+        String userId, String restaurantId) throws TasteSyncException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
     @Override
     public void submitRestaurantDetailAsk(String userId, String restaurantId,
         String questionText, String postQuestionOnForum,
@@ -639,6 +649,4 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         throws TasteSyncException {
         // TODO Auto-generated method stub
     }
-
-
 }

@@ -7,6 +7,8 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSRestaurantObj;
+import com.tastesync.model.objects.TSUserProfileBasicObj;
+import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
@@ -25,6 +27,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -156,6 +159,14 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.executeUpdate();
             }
 
+            statement = connection.prepareStatement(AskReplyQueries.USER_RECO_SUPPPLY_TIER_INSERT_SQL);
+            statement.setString(1, userId);
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement(AskReplyQueries.USER_RECO_DEMAND_TIER_INSERT_SQL);
+            statement.setString(1, userId);
+            statement.executeUpdate();
+
             tsDataSource.commit();
 
             return recoRequestId;
@@ -266,10 +277,13 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public void submitAskForRecommendationFriends(String recoRequestId,
-        String recoRequestFriendText, String[] friendsFacebookIdList,
-        String postRecoRequestOnFacebook) throws TasteSyncException {
+    public TSRecoRequestNonAssignedObj submitAskForRecommendationFriends(
+        String userId, String recoRequestId, String recoRequestFriendText,
+        String[] friendsFacebookIdList, String postRecoRequestOnFacebook)
+        throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
+        TSRecoRequestNonAssignedObj tsRecoRequestNonAssignedObj = new TSRecoRequestNonAssignedObj();
+        tsRecoRequestNonAssignedObj.setRecoRequestId(recoRequestId);
 
         //TODO Incomplete
         Connection connection = null;
@@ -279,6 +293,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
+
+            List<String> nonassignedFacebookIdList = new ArrayList<String>();
 
             for (String friendsFacebookId : friendsFacebookIdList) {
                 statement = connection.prepareStatement(AskReplyQueries.CHECK_FB_USER_AS_TS_USER_SELECT_SQL);
@@ -296,7 +312,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                                 "users.user_id"));
 
                     statement = connection.prepareStatement(AskReplyQueries.FRIEND_TRUSTED_FLAG_SELECT_SQL);
-                    statement.setString(1, friendsFacebookId); //TODO id check if input?
+                    statement.setString(1, userId);
                     statement.setString(2, friendId);
 
                     resultset = statement.executeQuery();
@@ -313,6 +329,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     statement.setString(6, recoRequestId);
                     statement.executeUpdate();
                 } else {
+                    nonassignedFacebookIdList.add(friendsFacebookId);
                     statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_NON_TS_ASSIGNED_INSERT_SQL);
                     statement.setString(1, recoRequestId);
                     statement.setString(2, friendsFacebookId);
@@ -324,7 +341,49 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 }
             }
 
+            tsRecoRequestNonAssignedObj.setNonassignedFacebookIdList(nonassignedFacebookIdList);
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_UPDATE_SQL);
+            statement.setString(1, recoRequestFriendText);
+            statement.setString(2, recoRequestId);
+            statement.setString(3, userId);
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                String facebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "users.user_fb_id"));
+                statement = connection.prepareStatement(AskReplyQueries.HISTORICAL_USER_SHARED_DATA_INSERT_SQL);
+
+                //datetime userid random number
+                statement.setString(1, facebookId);
+
+                List<String> inputKeyStr = new ArrayList<String>();
+                inputKeyStr.add(userId);
+                statement.setString(2,
+                    CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
+                statement.setTimestamp(3,
+                    CommonFunctionsUtil.getCurrentDateTimestamp());
+                statement.setString(4, recoRequestFriendText);
+                statement.setString(5, "facebook_post");
+                statement.setString(6, userId);
+
+                statement.setString(1, userId);
+                resultset = statement.executeQuery();
+            } else {
+                System.out.println("FB ser Id does not exist for user id=" +
+                    userId);
+            }
+
+            statement = connection.prepareStatement(AskReplyQueries.USER_RECO_SUPPPLY_TIER_INSERT_SQL);
+            statement.setString(1, userId);
+            statement.executeUpdate();
+
             tsDataSource.commit();
+
+            return tsRecoRequestNonAssignedObj;
         } catch (SQLException e) {
             e.printStackTrace();
 
@@ -387,8 +446,129 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     @Override
     public TSRecoRequestObj showRecommendationsRequest(String userId,
         String recorequestId) throws TasteSyncException {
-        // TODO Auto-generated method stub
-        return null;
+        TSRecoRequestObj tsRecoRequestObj = null;
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            //TODO first do select count(*). If needed, add data as fav or delete
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_UPDATE_SQL);
+            statement.setString(1, recorequestId);
+            statement.setString(2, userId);
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_SELECT_SQL);
+            statement.setString(1, recorequestId);
+            statement.setString(2, userId);
+            resultset = statement.executeQuery();
+
+            String friendOrNot = null;
+
+            //only one result
+            if (resultset.next()) {
+                friendOrNot = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_ts_assigned.ASSIGNED_USERTYPE"));
+            }
+
+            String recommendeeUserFacebookId = null;
+            String recommendeeUserName = null;
+            String recommendeeUserPhoto = null;
+            String recommendeeUserUserId = null;
+            String recorequestText = null;
+            String recommendeeUserFolloweeFlag = "0"; // default
+            statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                recommendeeUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "users.user_fb_id"));
+
+                statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                statement.setString(1, recommendeeUserFacebookId);
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    recommendeeUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "facebook_user_data.name"));
+                    recommendeeUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "facebook_user_data.picture"));
+                }
+
+                //-- this means userId is friend of recommendeeUserId and we should use the free text field
+                if ("user-assigned-friend".equals(friendOrNot) ||
+                        "system-assigned-friend".equals(friendOrNot)) {
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FRIEND_SELECT_SQL);
+                    statement.setString(1, recorequestId);
+                    resultset = statement.executeQuery();
+
+                    if (resultset.next()) {
+                        recommendeeUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.initiator_user_id"));
+                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.recorequest_free_text"));
+                    }
+                } else if ("user-assigned-other".equals(friendOrNot) ||
+                        "system-assigned-other".equals(friendOrNot)) {
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_OTHER_SELECT_SQL);
+                    statement.setString(1, recorequestId);
+                    resultset = statement.executeQuery();
+
+                    if (resultset.next()) {
+                        recommendeeUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.initiator_user_id"));
+                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.reco_request_template_sentences"));
+                    }
+                }
+
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FOLLOWEEFLAG_SELECT_SQL);
+                statement.setString(1, recommendeeUserUserId);
+                statement.setString(2, userId);
+
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    recommendeeUserFolloweeFlag = "1";
+                }
+
+                TSUserProfileBasicObj recommendeeUser = new TSUserProfileBasicObj();
+                recommendeeUser.setName(recommendeeUserName);
+                recommendeeUser.setPhoto(recommendeeUserPhoto);
+                recommendeeUser.setUserId(recommendeeUserUserId);
+
+                tsRecoRequestObj = new TSRecoRequestObj();
+                tsRecoRequestObj.setRecommendeeUser(recommendeeUser);
+                tsRecoRequestObj.setRecorequestText(recorequestText);
+                tsRecoRequestObj.setRecommendeeUserFolloweeFlag(recommendeeUserFolloweeFlag);
+                tsRecoRequestObj.setRecommendeeUser(recommendeeUser);
+            }
+
+            tsDataSource.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException(
+                "Error while creating restaurant tips " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+
+        return tsRecoRequestObj;
     }
 
     @Override
