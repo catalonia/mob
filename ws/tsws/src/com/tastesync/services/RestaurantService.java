@@ -599,21 +599,19 @@ public class RestaurantService extends BaseService {
         @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
-    	TSRestaurantRecommendersDetailsObj tsRestaurantRecommendersDetailsObj =
-            null;
+        TSRestaurantRecommendersDetailsObj tsRestaurantRecommendersDetailsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         boolean responseDone = false;
 
         try {
-        	tsRestaurantRecommendersDetailsObj = restaurantBO.showRestaurantDetailAsk(userId,
+            tsRestaurantRecommendersDetailsObj = restaurantBO.showRestaurantDetailAsk(userId,
                     restaurantId);
             responseDone = true;
 
             return Response.status(status)
-                           .entity(tsRestaurantRecommendersDetailsObj)
-                           .build();
+                           .entity(tsRestaurantRecommendersDetailsObj).build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
