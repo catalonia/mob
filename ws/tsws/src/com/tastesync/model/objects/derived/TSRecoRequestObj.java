@@ -5,15 +5,18 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.tastesync.model.objects.TSUserProfileBasicObj;
+
+
 @XmlRootElement(name = "recorequest")
 public class TSRecoRequestObj implements Serializable {
     private static final long serialVersionUID = 5456082843562113302L;
-    private TSRecommendeeUserObj recommendeeUser;
+    private TSUserProfileBasicObj recommendeeUser;
     private String recorequestText;
     private String recommendeeUserFolloweeFlag;
 
     @XmlElement
-    public TSRecommendeeUserObj getRecommendeeUser() {
+    public TSUserProfileBasicObj getRecommendeeUser() {
         return recommendeeUser;
     }
 
@@ -27,7 +30,7 @@ public class TSRecoRequestObj implements Serializable {
         return recommendeeUserFolloweeFlag;
     }
 
-    public void setRecommendeeUser(TSRecommendeeUserObj recommendeeUser) {
+    public void setRecommendeeUser(TSUserProfileBasicObj recommendeeUser) {
         this.recommendeeUser = recommendeeUser;
     }
 
