@@ -10,6 +10,7 @@
 #import "CommonHelpers.h"
 #import "AskRecommendationsVC.h"
 #import "TagView.h"
+#import "TSGlobalObj.h"
 
 @interface AskVC ()<TagObjDelegate,TagViewDelegate>
 {
@@ -70,34 +71,56 @@
 {
     [CommonHelpers setBackgroudImageForView:self.view];
     [scrollViewMain setContentSize:CGSizeMake(320, 700)];    
-    [scrollViewCusine setContentSize:CGSizeMake(2100, 30)];
-    [scrollViewOccassion setContentSize:CGSizeMake(1100, 30)];
-    [scrollViewWho setContentSize:CGSizeMake(800, 30)];
-    [scrollViewPrice setContentSize:CGSizeMake(500, 30)];
-    [scrollViewTheme setContentSize:CGSizeMake(1500, 30)];
-    [scrollViewTypeOf setContentSize:CGSizeMake(1200, 30)];
+    [scrollViewCusine setContentSize:CGSizeMake(segCtrCusine.frame.size.width + 40, 30)];
+    [scrollViewOccassion setContentSize:CGSizeMake(segCtrOccasion.frame.size.width + 20, 30)];
+    [scrollViewWho setContentSize:CGSizeMake(segCtrWho.frame.size.width + 20, 30)];
+    [scrollViewPrice setContentSize:CGSizeMake(segCtrPrice.frame.size.width + 20, 30)];
+    [scrollViewTheme setContentSize:CGSizeMake(segCtrTheme.frame.size.width + 20, 30)];
+    [scrollViewTypeOf setContentSize:CGSizeMake(segCtrTypeOf.frame.size.width + 30, 30)];
     
     
-    for (int i= 0; i< [[[CommonHelpers appDelegate] arrCuisine] count]; i++) {
-        [segCtrCusine setTitle:[[[CommonHelpers appDelegate ] arrCuisine ] objectAtIndex:i] forSegmentAtIndex:i];
-        
-        
+    for (int i = 0; i< [[[CommonHelpers appDelegate] arrCuisine] count]; i++) {
+        TSGlobalObj* cuisine = [[[CommonHelpers appDelegate ] arrCuisine] objectAtIndex:i];
+        if (i < 5) 
+            [segCtrCusine setTitle:cuisine.name forSegmentAtIndex:i];
+        else 
+            [segCtrCusine insertSegmentWithTitle:cuisine.name atIndex:i animated:NO];
     }
     for (int i= 0; i< [[[CommonHelpers appDelegate] arrOccasion] count]; i++) {
-        [segCtrOccasion setTitle:[[[CommonHelpers appDelegate ] arrOccasion ] objectAtIndex:i] forSegmentAtIndex:i];
+        TSGlobalObj* occasion = [[[CommonHelpers appDelegate ] arrOccasion] objectAtIndex:i];
+        if (i < 5) 
+            [segCtrOccasion setTitle:occasion.name forSegmentAtIndex:i];
+        else
+            [segCtrOccasion insertSegmentWithTitle:occasion.name atIndex:i animated:NO];  
         
     }
     for (int i= 0; i< [[[CommonHelpers appDelegate] arrPrice] count]; i++) {
-        [segCtrPrice setTitle:[[[CommonHelpers appDelegate ] arrPrice ] objectAtIndex:i] forSegmentAtIndex:i];
+        TSGlobalObj* price = [[[CommonHelpers appDelegate ] arrPrice ] objectAtIndex:i];
+        if (i < 5) 
+            [segCtrPrice setTitle:price.name forSegmentAtIndex:i];
+        else
+            [segCtrPrice insertSegmentWithTitle:price.name atIndex:i animated:NO];  
     }
     for (int i= 0; i< [[[CommonHelpers appDelegate] arrTheme] count]; i++) {
-        [segCtrTheme setTitle:[[[CommonHelpers appDelegate ] arrTheme ] objectAtIndex:i] forSegmentAtIndex:i];
+        TSGlobalObj* theme = [[[CommonHelpers appDelegate ] arrTheme ] objectAtIndex:i];
+        if (i < 5) 
+            [segCtrTheme setTitle:theme.name forSegmentAtIndex:i];
+        else
+            [segCtrTheme insertSegmentWithTitle:theme.name atIndex:i animated:NO];
     }
-    for (int i= 0; i< [[[CommonHelpers appDelegate] arrTypeOfRestaurant] count]; i++) {
-        [segCtrTypeOf setTitle:[[[CommonHelpers appDelegate ] arrTypeOfRestaurant ] objectAtIndex:i] forSegmentAtIndex:i];
+    for (int i= 0; i< [[[CommonHelpers appDelegate] arrTypeOfRestaurant] count]; i++){
+        TSGlobalObj* typeOfRestaurant = [[[CommonHelpers appDelegate ] arrTypeOfRestaurant ] objectAtIndex:i];
+        if (i < 5) 
+            [segCtrTypeOf setTitle:typeOfRestaurant.name forSegmentAtIndex:i];
+        else
+            [segCtrTypeOf insertSegmentWithTitle:typeOfRestaurant.name atIndex:i animated:NO];
     }
     for (int i= 0; i< [[[CommonHelpers appDelegate] arrWhoAreUWith] count]; i++) {
-        [segCtrWho setTitle:[[[CommonHelpers appDelegate ] arrWhoAreUWith ] objectAtIndex:i] forSegmentAtIndex:i];
+        TSGlobalObj* whoAreYou = [[[CommonHelpers appDelegate ] arrWhoAreUWith ] objectAtIndex:i];
+        if (i < 5) 
+            [segCtrWho setTitle:whoAreYou.name forSegmentAtIndex:i];
+        else
+            [segCtrWho insertSegmentWithTitle:whoAreYou.name atIndex:i animated:NO];
         
     }
 
@@ -326,22 +349,28 @@
     NSString *strObj;
 
     if (segCtr == segCtrCusine) {
-        strObj = [[[CommonHelpers appDelegate] arrCuisine] objectAtIndex:segCtr.selectedSegmentIndex];
+        TSGlobalObj* global = [[[CommonHelpers appDelegate] arrCuisine] objectAtIndex:segCtr.selectedSegmentIndex];
+        strObj = global.name;
     }else
     if (segCtr == segCtrOccasion) {
-        strObj =[[[CommonHelpers appDelegate] arrOccasion] objectAtIndex:segCtr.selectedSegmentIndex];
+        TSGlobalObj* global = [[[CommonHelpers appDelegate] arrOccasion] objectAtIndex:segCtr.selectedSegmentIndex];
+        strObj = global.name;
     }else
     if (segCtr == segCtrPrice) {
-        strObj =[[[CommonHelpers appDelegate] arrPrice] objectAtIndex:segCtr.selectedSegmentIndex];
+        TSGlobalObj* global = [[[CommonHelpers appDelegate] arrPrice] objectAtIndex:segCtr.selectedSegmentIndex];
+        strObj = global.name;
     }else
     if (segCtr == segCtrTheme) {
-        strObj =[[[CommonHelpers appDelegate] arrTheme] objectAtIndex:segCtr.selectedSegmentIndex];
+        TSGlobalObj* global = [[[CommonHelpers appDelegate] arrTheme] objectAtIndex:segCtr.selectedSegmentIndex];
+        strObj = global.name;
     }else
     if (segCtr == segCtrTypeOf) {
-        strObj = [[[CommonHelpers appDelegate] arrTypeOfRestaurant] objectAtIndex:segCtr.selectedSegmentIndex];
+        TSGlobalObj* global = [[[CommonHelpers appDelegate] arrTypeOfRestaurant] objectAtIndex:segCtr.selectedSegmentIndex];
+        strObj = global.name;
     }else
     if (segCtr == segCtrWho) {
-        strObj =[[[CommonHelpers appDelegate] arrWhoAreUWith] objectAtIndex:segCtr.selectedSegmentIndex];
+        TSGlobalObj* global = [[[CommonHelpers appDelegate] arrWhoAreUWith] objectAtIndex:segCtr.selectedSegmentIndex];
+        strObj = global.name;
     }else
     {
         

@@ -14,7 +14,6 @@
 
 @interface FacebookFriendsVC ()
 {
-    
 }
 @end
 
@@ -33,6 +32,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     [CommonHelpers setBackgroudImageForView:self.view];
     
     CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFriends" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
@@ -42,12 +48,6 @@
     
     [self initUI];
     [self initData];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -172,7 +172,7 @@
         
         if (cell==nil) {
             NSLog(@"cell is nil");
-            cell =(FriendProfileCell *) [[[NSBundle mainBundle ] loadNibNamed:@"FriendProfileCell" owner:self options:nil] objectAtIndex:0];
+            cell = (FriendProfileCell *) [[[NSBundle mainBundle ] loadNibNamed:@"FriendProfileCell" owner:self options:nil] objectAtIndex:0];
             
             
         }
@@ -392,7 +392,7 @@
     [self hideKeyBoard];
 }
 
-- (void)responseData:(NSData *)data
+- (void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
     self.arrData1 = [[NSMutableArray alloc] init ];
     self.arrData2 = [[NSMutableArray alloc] init ];
@@ -427,8 +427,6 @@
     [tbvFriends reloadRowsAtIndexPaths:arrayFriendReload withRowAnimation:UITableViewRowAnimationFade];
     [tbvResult reloadRowsAtIndexPaths:arrayInviteFriendReload withRowAnimation:UITableViewRowAnimationFade];
 }
-
-
 
 
 @end

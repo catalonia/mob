@@ -42,51 +42,7 @@
 {
     userObj = user;
     
-    if (user) {
-        
-        if (/*[UserDefault userDefault].loginStatus != STASTUS_LOGIN_EMAIL_ID*/TRUE) {
-            lbName.text = [NSString stringWithFormat:@"%@ %@",user.firstname,user.lastname];
-
-        }else
-        {
-            lbName.text = user.email;
-
-        }
-        
-        if (user.avatar !=nil) {
-            debug(@"FriendCell -> avatar # nil");
-            ivAvatar.image = user.avatar;
-        }
-        else if(user.avatarUrl != nil)
-        {
-            debug(@"FriendCell -> avatar == nil");
-
-            if(user.status_avatar == UserAvatarStatusNotLoad)
-            {
-                debug(@"FriendCell -> avatar not load  urlAvatar-> %@",user.avatarUrl);
-
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                    
-                    user.status_avatar = UserAvatarStatusLoading;
-                    user.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:user.avatarUrl]]];
-                    debug(@"load image finish -> user name -> %@", user.firstname);
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        ivAvatar.image = user.avatar;
-                        user.status_avatar = UserAvatarStatusLoaded;
-                    });
-                    
-                });
-                
-            }
-        }
-        else
-        {
-            debug(@"FriendCell -> no avatar");
-
-        }
-       
-    }
+    [self loadData];
     
 }
 
@@ -98,6 +54,58 @@
     
 }
 
+- (void)loadData
+{
+    if (userObj) {
+        
+        if (/*[UserDefault userDefault].loginStatus != STASTUS_LOGIN_EMAIL_ID*/TRUE) {
+            lbName.text = [NSString stringWithFormat:@"%@ %@",userObj.firstname,userObj.lastname];
+            
+        }else
+        {
+            lbName.text = userObj.email;
+            
+        }
+        
+        if (userObj.avatar != nil) {
+            debug(@"FriendCell -> avatar # nil");
+            ivAvatar.image = userObj.avatar;
+        }
+        else if(userObj.avatarUrl != nil)
+        {
+            debug(@"FriendCell -> avatar == nil");
+            
+            if(userObj.status_avatar == UserAvatarStatusNotLoad)
+            {
+                debug(@"FriendCell -> avatar not load  urlAvatar-> %@",userObj.avatarUrl);
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                    
+                    userObj.status_avatar = UserAvatarStatusLoading;
+                    if (userObj.avatar == nil) {
+                        [NSThread detachNewThreadSelector:@selector(loadAvatar) toTarget:self withObject:nil];
+                    }
+                    else
+                        ivAvatar.image = userObj.avatar;
+                    debug(@"load image finish -> user name -> %@", userObj.firstname);
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        ivAvatar.image = userObj.avatar;
+                        userObj.status_avatar = UserAvatarStatusLoaded;
+                    });
+                    
+                });
+                
+            }
+        }
+        else
+        {
+            debug(@"FriendCell -> no avatar");
+            
+        }
+        
+    }
+}
 
 - (IBAction)actionAvatar:(id)sender
 {
@@ -105,5 +113,10 @@
     [[[CommonHelpers appDelegate] tabbarBaseVC] actionProfile:userObj];
 }
 
+-(void)loadAvatar
+{
+    userObj.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:userObj.avatarUrl]]];
+    ivAvatar.image = userObj.avatar;
+}
 
 @end

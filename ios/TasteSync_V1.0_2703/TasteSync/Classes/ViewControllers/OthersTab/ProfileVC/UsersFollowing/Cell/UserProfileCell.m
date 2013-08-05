@@ -25,7 +25,13 @@
 {
     userObj = anUserObj;
     if (anUserObj) {
-        ivAvatar.image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:anUserObj.avatarUrl]]];
+        
+        if (userObj.avatar == nil) {
+            [NSThread detachNewThreadSelector:@selector(loadAvatar) toTarget:self withObject:nil];
+        }
+        else
+            ivAvatar.image = userObj.avatar;
+        
         lbName.text = [NSString stringWithFormat:@"%@ %@", anUserObj.firstname, anUserObj.lastname];
     }
     
@@ -67,6 +73,11 @@
     }
 }
 
+-(void)loadAvatar
+{
+    userObj.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:userObj.avatarUrl]]];
+    ivAvatar.image = userObj.avatar;
+}
 /*
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

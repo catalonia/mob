@@ -9,6 +9,7 @@ import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSFriendObj;
+import com.tastesync.model.objects.TSInitObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
@@ -277,6 +278,44 @@ public class UserService extends BaseService {
 		}
 	}
 
+	@POST
+	@Path("/getAllData")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response showSettingsNotifications() {
+		TSInitObj tsInitObj = null;
+		int status = TSResponseStatusCode.SUCCESS.getValue();
+
+		try {
+			tsInitObj = userBo.getAllData();
+
+			return Response.status(status).entity(tsInitObj)
+					.build();
+		} catch (TasteSyncException e1) {
+			e1.printStackTrace();
+			status = TSResponseStatusCode.ERROR.getValue();
+
+			TSErrorObj tsErrorObj = new TSErrorObj();
+
+			tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+
+			return Response.status(status).entity(tsErrorObj).build();
+		} finally {
+			if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+				if (tsInitObj == null) {
+					status = TSResponseStatusCode.ERROR.getValue();
+
+					TSErrorObj tsErrorObj = new TSErrorObj();
+
+					tsErrorObj
+							.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+					return Response.status(status).entity(tsErrorObj).build();
+				}
+			}
+		}
+	}
+	
 	@POST
 	@Path("/submitSettingsNotifications")
 	@Consumes({ MediaType.APPLICATION_JSON })
@@ -721,7 +760,7 @@ public class UserService extends BaseService {
 			}
 		}
 	}
-
+	
 	@POST
 	@Path("/showProfileFriends")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
@@ -1264,6 +1303,36 @@ public class UserService extends BaseService {
 			return Response.status(status).entity(tsErrorObj).build();
 		} finally {
 			if (userProfileObj == null) {
+				status = TSResponseStatusCode.ERROR.getValue();
+				TSErrorObj tsErrorObj = new TSErrorObj();
+				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+				return Response.status(status).entity(tsErrorObj).build();
+			}
+		}
+	}
+	
+	@POST
+	@Path("/getUserId")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getUserId(@FormParam("userFBID") String userFBID) {
+		String userId = null;
+
+		int status = TSResponseStatusCode.SUCCESS.getValue();
+
+		try {
+			userId = userBo.getUserId(userFBID);
+			TSSuccessObj tsSuccessObj = new TSSuccessObj();
+			tsSuccessObj.setSuccessMsg(userId);
+			return Response.status(status).entity(tsSuccessObj).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			status = TSResponseStatusCode.ERROR.getValue();
+			TSErrorObj tsErrorObj = new TSErrorObj();
+			tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+			return Response.status(status).entity(tsErrorObj).build();
+		} finally {
+			if (userId == null) {
 				status = TSResponseStatusCode.ERROR.getValue();
 				TSErrorObj tsErrorObj = new TSErrorObj();
 				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);

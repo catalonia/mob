@@ -3,14 +3,17 @@
   <xs:element name="restaurants" type="TSCurrentRecommendedRestaurantDetailsObj"/>
   <xs:element name="error" type="TSErrorObj"/>
   <xs:element name="facebook_user_data" type="TSFacebookUserDataObj"/>
+  <xs:element name="keyvalue" type="TSKeyValueObj"/>
   <xs:element name="list_user_profile_fb" type="TSListFacebookUserDataObj"/>
   <xs:element name="listNotifications" type="TSListNotificationSettingsObj"/>
+  <xs:element name="menu" type="TSMenuObj"/>
   <xs:element name="notifications" type="TSNotificationSettingsObj"/>
   <xs:element name="photo" type="TSPhotoObj"/>
   <xs:element name="privacy" type="TSPrivacySettingsObj"/>
   <xs:element name="restaurantdetails" type="TSRestaurantDetailsObj"/>
   <xs:element name="restaurantextendedinfo" type="TSRestaurantExtendInfoObj"/>
   <xs:element name="restaurant" type="TSRestaurantObj"/>
+  <xs:element name="restaurantphoto" type="TSRestaurantPhotoObj"/>
   <xs:element name="restaurantsUserProfileHome" type="TSRestaurantView"/>
   <xs:element name="autopub" type="TSSocialAutoPubSettingsObj"/>
   <xs:element name="social" type="TSSocialSettingsObj"/>
@@ -24,6 +27,7 @@
   <xs:element name="recos4u" type="TSRecommendationsForYouObj"/>
   <xs:element name="recommendeeusers" type="TSRecommendeeUserObj"/>
   <xs:element name="recommenders" type="TSRecommendersDetailsObj"/>
+  <xs:element name="restaurantcuisinetier2" type="TSRestaurantCusineTier2Obj"/>
   <xs:element name="senderuser" type="TSSenderUserObj"/>
   <xs:complexType name="TSCityObj">
     <xs:sequence>
@@ -31,6 +35,13 @@
       <xs:element name="country" type="xs:string" minOccurs="0"/>
       <xs:element name="state" type="xs:string" minOccurs="0"/>
       <xs:element name="city" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSCuisineTier2Obj">
+    <xs:sequence>
+      <xs:element name="cuisineId" type="xs:string" minOccurs="0"/>
+      <xs:element name="cuisineDesc" type="xs:string" minOccurs="0"/>
+      <xs:element name="cuisineValidCurrent" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSCurrentRecommendedRestaurantDetailsObj">
@@ -78,6 +89,18 @@
       <xs:element name="create" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="TSKeyValueObj">
+    <xs:complexContent>
+      <xs:extension base="JSONObject">
+        <xs:sequence>
+          <xs:element name="keyName" type="xs:string" minOccurs="0"/>
+          <xs:element name="keyNameValue" type="xs:string" minOccurs="0"/>
+          <xs:element name="valueName" type="xs:string" minOccurs="0"/>
+          <xs:element name="valueNameValue" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="TSListFacebookUserDataObj">
     <xs:sequence>
       <xs:element name="user_current_profile" type="TSFacebookUserDataObj" minOccurs="0"/>
@@ -88,6 +111,13 @@
     <xs:sequence>
       <xs:element name="userId" type="xs:string" minOccurs="0"/>
       <xs:element name="notification" type="TSNotificationSettingsObj" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSMenuObj">
+    <xs:sequence>
+      <xs:element name="restaurantId" type="xs:string" minOccurs="0"/>
+      <xs:element name="menuSource" type="xs:string" minOccurs="0"/>
+      <xs:element name="menuMobileUrl" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSNotificationSettingsObj">
@@ -322,6 +352,12 @@
       <xs:element name="photo" type="TSPhotoObj" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="TSRestaurantCusineTier2Obj">
+    <xs:sequence>
+      <xs:element name="tsRestaurantDetailsObj" type="TSRestaurantDetailsObj" minOccurs="0"/>
+      <xs:element name="tsCuisineTier2Obj" type="TSCuisineTier2Obj" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="TSSenderUserObj">
     <xs:sequence>
       <xs:element name="senderUser" type="TSUserProfileBasicObj" minOccurs="0"/>
@@ -329,4 +365,5 @@
       <xs:element name="message" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="JSONObject"/>
 </xs:schema>

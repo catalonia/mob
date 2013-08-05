@@ -203,7 +203,7 @@ done=_done;
                 user.relationship_status    = [objDict objectForKey:@"relationship_status"];
                 NSString* locate            = [objDict objectForKey:@"locale"];
                 
-                user.locate = [[locate componentsSeparatedByString:@"_"] objectAtIndex:1];
+                user.state = [[locate componentsSeparatedByString:@"_"] objectAtIndex:1];
                 
                 user.device = @"iOS";
                 user.checkIn = @"";
@@ -216,7 +216,17 @@ done=_done;
                 id locationDict = [objDict objectForKey:@"current_location"];
                 if (![locationDict isKindOfClass:([NSNull class])]) {
                     user.city = [locationDict objectForKey:@"city"];
-                    user.state = [locationDict objectForKey:@"state"];
+                    
+                    user.locate = [[CommonHelpers getSymbolLocation:[locationDict objectForKey:@"country"]] uppercaseString];
+                    user.hometown_location = [locationDict objectForKey:@"city"];
+                    user.location = [CommonHelpers getSymbolLocation:[locationDict objectForKey:@"state"]];
+                    
+                    NSLog(@"CITY: %@, STATE: %@, COUNTRY: %@, ZIP: %@, NAME: %@",    [locationDict objectForKey:@"city"],
+                          user.location,
+                          user.locate,
+                          [locationDict objectForKey:@"zip"],
+                          [locationDict objectForKey:@"name"]
+                          );
                 }
                 
                 id ageDic = [objDict objectForKey:@"age_range"];
@@ -233,11 +243,15 @@ done=_done;
                     }
                 }
                 
-                id hometown_locationDict = [objDict objectForKey:@"hometown_location"];
-                if (![hometown_locationDict isKindOfClass:([NSNull class])]) {
-                    user.hometown_location = [hometown_locationDict objectForKey:@"city"];
-                    user.location = [hometown_locationDict objectForKey:@"state"];
-                }
+//                id hometown_locationDict = [objDict objectForKey:@"hometown_location"];
+//                if (![hometown_locationDict isKindOfClass:([NSNull class])]) {
+//                    user.hometown_location = [hometown_locationDict objectForKey:@"city"];
+//                    
+//                    NSLog(@"CITY: %@, STATE: %@, COUNTRY: %@, ZIP: %@, NAME: %@", [hometown_locationDict objectForKey:@"city"], [hometown_locationDict objectForKey:@"state"], [hometown_locationDict objectForKey:@"country"], [hometown_locationDict objectForKey:@"zip"], [hometown_locationDict objectForKey:@"name"]
+//                          );
+//                    
+//                    user.location = [hometown_locationDict objectForKey:@"state"];
+//                }
                 
                 if (i == 0) {
                     debug(@"Add user infor");

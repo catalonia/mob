@@ -494,7 +494,7 @@
 																<bool key="IBUIOpaque">NO</bool>
 																<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 																<int key="IBSegmentControlStyle">2</int>
-																<int key="IBNumberOfSegments">21</int>
+																<int key="IBNumberOfSegments">5</int>
 																<int key="IBSelectedSegmentIndex">0</int>
 																<array key="IBSegmentTitles">
 																	<string>First</string>
@@ -502,40 +502,8 @@
 																	<string/>
 																	<string/>
 																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentWidths">
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
@@ -548,40 +516,8 @@
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentContentOffsets">
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
@@ -590,22 +526,6 @@
 																</array>
 																<array class="NSMutableArray" key="IBSegmentImages">
 																	<object class="NSNull" id="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
@@ -660,7 +580,7 @@
 																<bool key="IBUIOpaque">NO</bool>
 																<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 																<int key="IBSegmentControlStyle">2</int>
-																<int key="IBNumberOfSegments">11</int>
+																<int key="IBNumberOfSegments">5</int>
 																<int key="IBSelectedSegmentIndex">0</int>
 																<array key="IBSegmentTitles">
 																	<string>First</string>
@@ -668,20 +588,8 @@
 																	<string/>
 																	<string/>
 																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentWidths">
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
@@ -694,12 +602,6 @@
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentContentOffsets">
 																	<string>{0, 0}</string>
@@ -707,20 +609,8 @@
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentImages">
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
@@ -776,7 +666,7 @@
 																<bool key="IBUIOpaque">NO</bool>
 																<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 																<int key="IBSegmentControlStyle">2</int>
-																<int key="IBNumberOfSegments">8</int>
+																<int key="IBNumberOfSegments">5</int>
 																<int key="IBSelectedSegmentIndex">0</int>
 																<array key="IBSegmentTitles">
 																	<string>First</string>
@@ -784,14 +674,8 @@
 																	<string/>
 																	<string/>
 																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentWidths">
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
@@ -804,9 +688,6 @@
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentContentOffsets">
 																	<string>{0, 0}</string>
@@ -814,14 +695,8 @@
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentImages">
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
@@ -963,7 +838,7 @@
 																<bool key="IBUIOpaque">NO</bool>
 																<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 																<int key="IBSegmentControlStyle">2</int>
-																<int key="IBNumberOfSegments">15</int>
+																<int key="IBNumberOfSegments">5</int>
 																<int key="IBSelectedSegmentIndex">0</int>
 																<array key="IBSegmentTitles">
 																	<string>First</string>
@@ -971,28 +846,8 @@
 																	<string/>
 																	<string/>
 																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentWidths">
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
@@ -1005,16 +860,6 @@
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentContentOffsets">
 																	<string>{0, 0}</string>
@@ -1022,28 +867,8 @@
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentImages">
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
@@ -1099,7 +924,7 @@
 																<bool key="IBUIOpaque">NO</bool>
 																<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 																<int key="IBSegmentControlStyle">2</int>
-																<int key="IBNumberOfSegments">12</int>
+																<int key="IBNumberOfSegments">5</int>
 																<int key="IBSelectedSegmentIndex">0</int>
 																<array key="IBSegmentTitles">
 																	<string>First</string>
@@ -1107,22 +932,8 @@
 																	<string/>
 																	<string/>
 																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
-																	<string/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentWidths">
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
-																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
 																	<real value="0.0"/>
@@ -1135,13 +946,6 @@
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
 																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
-																	<boolean value="YES"/>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentContentOffsets">
 																	<string>{0, 0}</string>
@@ -1149,22 +953,8 @@
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
 																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
-																	<string>{0, 0}</string>
 																</array>
 																<array class="NSMutableArray" key="IBSegmentImages">
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
-																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
 																	<reference ref="4"/>
@@ -1316,6 +1106,7 @@
 												<string key="NSFrame">{{188, 26}, {119, 32}}</string>
 												<reference key="NSSuperview" ref="538994141"/>
 												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

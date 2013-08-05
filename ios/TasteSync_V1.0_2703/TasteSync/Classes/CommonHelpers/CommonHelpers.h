@@ -55,4 +55,6 @@ void debug(NSString *format, ...);
 + (NSNumber*)getBoolValue:(NSString*)value;
 
 + (NSString*)getStringValue:(NSNumber*)value;
+
++ (NSString*)getSymbolLocation:(NSString*)location;
 @end

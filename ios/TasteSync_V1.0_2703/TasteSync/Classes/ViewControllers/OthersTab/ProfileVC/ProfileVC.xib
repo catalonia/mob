@@ -446,7 +446,7 @@
 												<string key="NSFrame">{{280, 30}, {14, 21}}</string>
 												<reference key="NSSuperview" ref="226102817"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="28484988"/>
+												<reference key="NSNextKeyView" ref="437453141"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -916,7 +916,7 @@
 												<string key="NSFrame">{{240, 20}, {70, 21}}</string>
 												<reference key="NSSuperview" ref="235129035"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="437453141"/>
+												<reference key="NSNextKeyView" ref="392940324"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<bool key="IBUIClipsSubviews">YES</bool>
@@ -1098,6 +1098,7 @@
 												</object>
 												<nil key="IBUIHighlightedColor"/>
 												<int key="IBUIBaselineAdjustment">0</int>
+												<int key="IBUINumberOfLines">2</int>
 												<int key="IBUITextAlignment">1</int>
 												<object class="IBUIFontDescription" key="IBUIFontDescription" id="743412809">
 													<int key="type">1</int>
@@ -1109,6 +1110,7 @@
 													<int key="NSfFlags">16</int>
 												</object>
 												<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+												<double key="preferredMaxLayoutWidth">70</double>
 											</object>
 											<object class="IBUILabel" id="515809807">
 												<reference key="NSNextResponder" ref="437453141"/>
@@ -1131,10 +1133,12 @@
 												</object>
 												<nil key="IBUIHighlightedColor"/>
 												<int key="IBUIBaselineAdjustment">0</int>
+												<int key="IBUINumberOfLines">2</int>
 												<int key="IBUITextAlignment">1</int>
 												<reference key="IBUIFontDescription" ref="743412809"/>
 												<reference key="IBUIFont" ref="942215937"/>
 												<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+												<double key="preferredMaxLayoutWidth">70</double>
 											</object>
 											<object class="IBUILabel" id="499889000">
 												<reference key="NSNextResponder" ref="437453141"/>
@@ -1142,7 +1146,7 @@
 												<string key="NSFrame">{{195, 90}, {70, 30}}</string>
 												<reference key="NSSuperview" ref="437453141"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="392940324"/>
+												<reference key="NSNextKeyView" ref="28484988"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<bool key="IBUIClipsSubviews">YES</bool>
@@ -1220,6 +1224,7 @@
 												<string key="NSFrame">{{20, 30}, {280, 90}}</string>
 												<reference key="NSSuperview" ref="392940324"/>
 												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<reference key="IBUIBackgroundColor" ref="118679214"/>
 												<bool key="IBUIClipsSubviews">YES</bool>
@@ -1776,6 +1781,70 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">recentlyView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="392940324"/>
+					</object>
+					<int key="connectionID">288</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">lbFollowing</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="645496830"/>
+					</object>
+					<int key="connectionID">289</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">lbFollowers</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="151387108"/>
+					</object>
+					<int key="connectionID">290</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">lbFriends</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="1019219841"/>
+					</object>
+					<int key="connectionID">291</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">lbPoints</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="977852332"/>
+					</object>
+					<int key="connectionID">292</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">btRestaurant1</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="256899975"/>
+					</object>
+					<int key="connectionID">293</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">btRestaurant2</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="530529417"/>
+					</object>
+					<int key="connectionID">294</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">btRestaurant3</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="6493116"/>
+					</object>
+					<int key="connectionID">295</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="201202764"/>
 						<reference key="destination" ref="372490531"/>
@@ -1825,6 +1894,33 @@
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">214</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">actionTwitter:</string>
+						<reference key="source" ref="958074522"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">297</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">actionFacebook:</string>
+						<reference key="source" ref="772466652"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">296</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">actionBlog:</string>
+						<reference key="source" ref="315489708"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">298</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -2594,7 +2690,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">287</int>
+			<int key="maxID">298</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2676,14 +2772,21 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="btRestaurant1">UIButton</string>
+						<string key="btRestaurant2">UIButton</string>
+						<string key="btRestaurant3">UIButton</string>
 						<string key="ivAvatar">UIImageView</string>
 						<string key="lbAboutDetail">UILabel</string>
 						<string key="lbAboutTitle">UILabel</string>
 						<string key="lbDetail">UILabel</string>
 						<string key="lbFollow">UILabel</string>
+						<string key="lbFollowers">UILabel</string>
+						<string key="lbFollowing">UILabel</string>
+						<string key="lbFriends">UILabel</string>
 						<string key="lbHoverReport">UILabel</string>
 						<string key="lbHoverSendMsg">UILabel</string>
 						<string key="lbName">UILabel</string>
+						<string key="lbPoints">UILabel</string>
 						<string key="lbReport">UILabel</string>
 						<string key="lbRestaurant1">UILabel</string>
 						<string key="lbRestaurant2">UILabel</string>
@@ -2691,6 +2794,7 @@
 						<string key="lbSend">UILabel</string>
 						<string key="lbTrust">UILabel</string>
 						<string key="lbYouFollow">UILabel</string>
+						<string key="recentlyView">UIView</string>
 						<string key="scrollView">UIScrollView</string>
 						<string key="tbvUserActionRecently">UITableView</string>
 						<string key="tvReportUser">UITextView</string>
@@ -2699,6 +2803,18 @@
 						<string key="viewSendMsg">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="btRestaurant1">
+							<string key="name">btRestaurant1</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btRestaurant2">
+							<string key="name">btRestaurant2</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btRestaurant3">
+							<string key="name">btRestaurant3</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="ivAvatar">
 							<string key="name">ivAvatar</string>
 							<string key="candidateClassName">UIImageView</string>
@@ -2719,6 +2835,18 @@
 							<string key="name">lbFollow</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="lbFollowers">
+							<string key="name">lbFollowers</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lbFollowing">
+							<string key="name">lbFollowing</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lbFriends">
+							<string key="name">lbFriends</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="lbHoverReport">
 							<string key="name">lbHoverReport</string>
 							<string key="candidateClassName">UILabel</string>
@@ -2729,6 +2857,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="lbName">
 							<string key="name">lbName</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lbPoints">
+							<string key="name">lbPoints</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="lbReport">
@@ -2758,6 +2890,10 @@
 						<object class="IBToOneOutletInfo" key="lbYouFollow">
 							<string key="name">lbYouFollow</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="recentlyView">
+							<string key="name">recentlyView</string>
+							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="scrollView">
 							<string key="name">scrollView</string>

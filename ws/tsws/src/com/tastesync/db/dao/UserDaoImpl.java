@@ -11,6 +11,8 @@ import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
+import com.tastesync.model.objects.TSGlobalObj;
+import com.tastesync.model.objects.TSInitObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
@@ -1436,47 +1438,38 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			}
 			
 			if (statusFlag.equalsIgnoreCase("1") && isExist == 1) {
-
-				tsDataSource.closeConnection(connection, statement, resultset);
 				connection = tsDataSource.getConnection();
+				tsDataSource.begin();
+				System.out
+						.println("UserQueries.USER_FOLLOW_DATA_INSERT_SQL="
+								+ UserQueries.USER_FOLLOW_DATA_INSERT_SQL);
+				statement = connection
+						.prepareStatement(UserQueries.USER_FOLLOW_DATA_INSERT_SQL);
+				statement.setString(
+						1,
+						followeeUserId
+								+ "-"
+								+ CommonFunctionsUtil
+										.getCurrentDatetimeAppendField()
+								+ "-"
+								+ CommonFunctionsUtil.generateRandomString(
+										4, 5));
 
-					connection = tsDataSource.getConnection();
-					tsDataSource.begin();
-					System.out
-							.println("UserQueries.USER_FOLLOW_DATA_INSERT_SQL="
-									+ UserQueries.USER_FOLLOW_DATA_INSERT_SQL);
-					statement = connection
-							.prepareStatement(UserQueries.USER_FOLLOW_DATA_INSERT_SQL);
-					statement.setString(
-							1,
-							followeeUserId
-									+ "-"
-									+ CommonFunctionsUtil
-											.getCurrentDatetimeAppendField()
-									+ "-"
-									+ CommonFunctionsUtil.generateRandomString(
-											4, 5));
-
-					statement.setString(2, followerUserId);
-					statement.setString(3, followeeUserId);
-					statement.executeUpdate();
-			
+				statement.setString(2, followerUserId);
+				statement.setString(3, followeeUserId);
+				statement.executeUpdate();
 			} else if (statusFlag.equalsIgnoreCase("0") && isExist == 2) {
-					
-				tsDataSource.closeConnection(connection, statement, resultset);
 				connection = tsDataSource.getConnection();
+				tsDataSource.begin();
+				System.out
+						.println("UserQueries.USER_FOLLOW_DATA_DELETE_SQL="
+								+ UserQueries.USER_FOLLOW_DATA_DELETE_SQL);
+				statement = connection
+						.prepareStatement(UserQueries.USER_FOLLOW_DATA_DELETE_SQL);
 
-					connection = tsDataSource.getConnection();
-					tsDataSource.begin();
-					System.out
-							.println("UserQueries.USER_FOLLOW_DATA_DELETE_SQL="
-									+ UserQueries.USER_FOLLOW_DATA_DELETE_SQL);
-					statement = connection
-							.prepareStatement(UserQueries.USER_FOLLOW_DATA_DELETE_SQL);
-
-					statement.setString(1, followerUserId);
-					statement.setString(2, followeeUserId);
-					statement.executeUpdate();
+				statement.setString(1, followerUserId);
+				statement.setString(2, followeeUserId);
+				statement.executeUpdate();
 			}
 			//tsDataSource.commit();
 		} catch (Exception e) {
@@ -1485,6 +1478,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		} finally {
 			tsDataSource.close();
 			tsDataSource.closeConnection(connection, statement, resultset);
+
 		}
 		
 	}
@@ -1770,23 +1764,30 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		boolean response = true;
 		List<String> restaurantId = askObj.getRestaurandId();
 		try {
-			 connection = tsDataSource.getConnection();
-			 tsDataSource.begin();
-			 System.out.println("UserQueries.USER_CUISINE_INSERT_SQL="
-					 + UserQueries.USER_CUISINE_INSERT_SQL);
-			 statement = connection.prepareStatement(UserQueries.USER_CUISINE_INSERT_SQL);
-			 statement.setString(1, askObj.getUserId());
-			 statement.setString(2, askObj.getCuisineId());
-			 statement.execute();
-			 
-			 connection = tsDataSource.getConnection();
-			 System.out.println("UserQueries.USER_FRIEND_SIGNUP_FB_UPDATE_SQL="
-					 + UserQueries.USER_FRIEND_SIGNUP_FB_UPDATE_SQL);
-			 statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_FB_UPDATE_SQL);
-			 statement.setString(1, "1");
-			 statement.setString(2, askObj.getUserId());
-			 statement.setString(3, askObj.getFacebookFriendId());
-			 statement.executeUpdate();
+			if(askObj.getCuisineId() != null)
+			{
+				 connection = tsDataSource.getConnection();
+				 tsDataSource.begin();
+				 System.out.println("UserQueries.USER_CUISINE_INSERT_SQL="
+						 + UserQueries.USER_CUISINE_INSERT_SQL);
+				 statement = connection.prepareStatement(UserQueries.USER_CUISINE_INSERT_SQL);
+				 statement.setString(1, askObj.getUserId());
+				 statement.setString(2, askObj.getCuisineId());
+				 statement.execute();
+			}
+			
+			if(askObj.getFacebookFriendId() != null)
+			{
+				 connection = tsDataSource.getConnection();
+				 System.out.println("UserQueries.USER_FRIEND_SIGNUP_FB_UPDATE_SQL="
+						 + UserQueries.USER_FRIEND_SIGNUP_FB_UPDATE_SQL);
+				 statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_FB_UPDATE_SQL);
+				 statement.setString(1, "1");
+				 statement.setString(2, askObj.getUserId());
+				 statement.setString(3, askObj.getFacebookFriendId());
+				 statement.executeUpdate();
+			}
+			
 			 connection = tsDataSource.getConnection();
 			 System.out.println("UserQueries.USER_RESTAURANT_FAV_INSERT_SQL="
 					 + UserQueries.USER_RESTAURANT_FAV_INSERT_SQL);
@@ -1797,6 +1798,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				 statement.setString(2, restaurantId.get(i));
 				 statement.execute();
 			 }
+			 
 			 //tsDataSource.commit();
 		 } catch (Exception e) {
 			 e.printStackTrace();
@@ -2100,8 +2102,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				statement.setString(1, restaurant.getId());
 				statement.setString(1, restaurant.getId());
 				resultset = statement.executeQuery();
+				TSRestaurantPhotoObj photo = new TSRestaurantPhotoObj();
 				if (resultset.next()) {
-					TSRestaurantPhotoObj photo = new TSRestaurantPhotoObj();
 					photo.setRestaurantId(restaurant.getId());
 					photo.setPhotoSource(CommonFunctionsUtil
 							.converStringAsNullIfNeeded(resultset
@@ -2127,8 +2129,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 					photo.setUltimateSourceUrl(CommonFunctionsUtil
 							.converStringAsNullIfNeeded(resultset
 									.getString("ULTIMATE_SOURCE_URL")));
-					restaurant.setPhoto(photo);
 				}
+				restaurant.setPhoto(photo);
 			}
 			return restaurantList;
 
@@ -2421,4 +2423,175 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		
 		return list_data;
     }
+	
+	@Override
+	public TSInitObj getAllData() throws TasteSyncException
+	{
+		TSInitObj data = new TSInitObj();
+		
+    	TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+	    ResultSet resultset = null;
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL=" +
+                UserQueries.CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL);
+            resultset = statement.executeQuery();
+            List<TSGlobalObj> cuisine1 = new ArrayList<TSGlobalObj>();
+        	while(resultset.next())
+        	{
+        		TSGlobalObj obj = new TSGlobalObj();
+        		obj.setId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier1_descriptor.CUISINE_ID")));
+        		obj.setName(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier1_descriptor.CUISINE_DESC")));
+        		cuisine1.add(obj);
+        	}
+        	data.setCuisine1(cuisine1);
+        	
+        	connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.CUISINE_TIER2_DESCRIPTOR_ALL_SELECT_SQL=" +
+                UserQueries.CUISINE_TIER2_DESCRIPTOR_ALL_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.CUISINE_TIER2_DESCRIPTOR_ALL_SELECT_SQL);
+            resultset = statement.executeQuery();
+            List<TSGlobalObj> cuisine2 = new ArrayList<TSGlobalObj>();
+        	while(resultset.next())
+        	{
+        		TSGlobalObj obj = new TSGlobalObj();
+        		obj.setId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier2_descriptor.CUISINE_ID")));
+        		obj.setName(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier2_descriptor.CUISINE_DESC")));
+        		cuisine2.add(obj);
+        	}
+        	data.setCuisine2(cuisine2);
+        	
+        	connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.OCCASION_DESCRIPTOR_SELECT_SQL=" +
+                UserQueries.OCCASION_DESCRIPTOR_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.OCCASION_DESCRIPTOR_SELECT_SQL);
+            resultset = statement.executeQuery();
+            List<TSGlobalObj> occasion = new ArrayList<TSGlobalObj>();
+        	while(resultset.next())
+        	{
+        		TSGlobalObj obj = new TSGlobalObj();
+        		obj.setId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("occasion_descriptor.Occasion_ID")));
+        		obj.setName(CommonFunctionsUtil.getModifiedValueString(resultset.getString("occasion_descriptor.Occasion_DESC")));
+        		occasion.add(obj);
+        	}
+        	data.setOccasion(occasion);
+        	
+        	connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.PRICE_DESCRIPTOR_SELECT_SQL=" +
+                UserQueries.PRICE_DESCRIPTOR_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.PRICE_DESCRIPTOR_SELECT_SQL);
+            resultset = statement.executeQuery();
+            List<TSGlobalObj> price = new ArrayList<TSGlobalObj>();
+        	while(resultset.next())
+        	{
+        		TSGlobalObj obj = new TSGlobalObj();
+        		obj.setId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("price_descriptor.price_ID")));
+        		obj.setName(CommonFunctionsUtil.getModifiedValueString(resultset.getString("price_descriptor.price_DESC")));
+        		price.add(obj);
+        	}
+        	data.setPrice(price);
+        	
+        	connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.THEME_DESCRIPTOR_SELECT_SQL=" +
+                UserQueries.THEME_DESCRIPTOR_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.THEME_DESCRIPTOR_SELECT_SQL);
+            resultset = statement.executeQuery();
+            List<TSGlobalObj> theme = new ArrayList<TSGlobalObj>();
+        	while(resultset.next())
+        	{
+        		TSGlobalObj obj = new TSGlobalObj();
+        		obj.setId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("theme_descriptor.theme_ID")));
+        		obj.setName(CommonFunctionsUtil.getModifiedValueString(resultset.getString("theme_descriptor.theme_DESC")));
+        		theme.add(obj);
+        	}
+        	data.setTheme(theme);
+        	
+        	connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.TYPEOFREST_DESCRIPTOR_SELECT_SQL=" +
+                UserQueries.TYPEOFREST_DESCRIPTOR_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.TYPEOFREST_DESCRIPTOR_SELECT_SQL);
+            resultset = statement.executeQuery();
+            List<TSGlobalObj> typeOfRest = new ArrayList<TSGlobalObj>();
+        	while(resultset.next())
+        	{
+        		TSGlobalObj obj = new TSGlobalObj();
+        		obj.setId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("typeofrest_descriptor.typeofrest_ID")));
+        		obj.setName(CommonFunctionsUtil.getModifiedValueString(resultset.getString("typeofrest_descriptor.typeofrest_DESC")));
+        		typeOfRest.add(obj);
+        	}
+        	data.setTypeOfRestaurant(typeOfRest);
+        	
+        	connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.WHOAREYOUWITH_DESCRIPTOR_SELECT_SQL=" +
+                UserQueries.WHOAREYOUWITH_DESCRIPTOR_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.WHOAREYOUWITH_DESCRIPTOR_SELECT_SQL);
+            resultset = statement.executeQuery();
+            List<TSGlobalObj> whoareyou = new ArrayList<TSGlobalObj>();
+        	while(resultset.next())
+        	{
+        		TSGlobalObj obj = new TSGlobalObj();
+        		obj.setId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("whoareyouwith_descriptor.whoareyouwith_ID")));
+        		obj.setName(CommonFunctionsUtil.getModifiedValueString(resultset.getString("whoareyouwith_descriptor.whoareyouwith_DESC")));
+        		whoareyou.add(obj);
+        	}
+        	data.setWhoAreYou(whoareyou);
+        	
+        	tsDataSource.close();
+        	tsDataSource.closeConnection(connection, statement, null);
+        }catch(SQLException e)
+        {
+        	e.printStackTrace();
+			throw new TasteSyncException(e.getMessage());
+		} finally {
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+		
+		return data;
+	}
+	
+	@Override
+	public String getUserId(String userFBID) throws TasteSyncException
+	{
+		String retString = null;
+		
+    	TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+	    ResultSet resultset = null;
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            System.out.println("UserQueries.USERID_SELECT_SQL=" +
+                UserQueries.USERID_SELECT_SQL);
+            statement = connection.prepareStatement(UserQueries.USERID_SELECT_SQL);
+            statement.setString(1, userFBID);
+            resultset = statement.executeQuery();
+        	while(resultset.next())
+        	{
+        		retString = CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.USER_ID"));
+        	}
+        	tsDataSource.close();
+        	tsDataSource.closeConnection(connection, statement, null);
+        }catch(SQLException e)
+        {
+        	e.printStackTrace();
+			throw new TasteSyncException(e.getMessage());
+		} finally {
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+		
+		return retString;
+	}
 }

@@ -16,6 +16,7 @@
 #import "ConfigProfileVC.h"
 #import "JSONKit.h"
 #import "CRequest.h"
+#import "TSGlobalObj.h"
 
 @interface LoginVC ()<UIAlertViewDelegate,CFacebookDelegate,CLLocationManagerDelegate,RequestDelegate>
 {
@@ -232,7 +233,7 @@
             userDefault.IPAdress = textField.text;
             [UserDefault update];
             NSLog(@"isNotification = YES %@", userDefault.IPAdress);
-            
+            [self requestData];
             
         }
         
@@ -337,29 +338,123 @@
     
 }
 
-- (void)responseData:(NSData *)data
+- (void)requestData
 {
-    NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    NSDictionary* dic = [response objectFromJSONString];
-    NSString* userLogID = [dic objectForKey:@"user_log_id"];
-    [UserDefault userDefault].userLogID = userLogID;
-    [UserDefault update];
+    CRequest* request = [[CRequest alloc]initWithURL:@"getAllData" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:1];
+    request.delegate = self;
+    [request setFormPostValue:@"" forKey:@""];
+    [request startFormRequest];
     
-    NSDictionary* dic2 = [dic objectForKey:@"user"];
-    NSString* userID = [dic2 objectForKey:@"userId"];
-    [UserDefault userDefault].userID = userID;
-    [UserDefault update];
-    
-    NSString* is_have_account = [dic objectForKey:@"is_have_account"];
-    if ([[CommonHelpers getBoolValue:is_have_account] boolValue]) {
-        [[CommonHelpers appDelegate] showAskTab];
+}
+
+- (void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    if (key == 0) {
+        NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSDictionary* dic = [response objectFromJSONString];
+        NSString* userLogID = [dic objectForKey:@"user_log_id"];
+        [UserDefault userDefault].userLogID = userLogID;
+        [UserDefault update];
+        
+        NSDictionary* dic2 = [dic objectForKey:@"user"];
+        NSString* userID = [dic2 objectForKey:@"userId"];
+        [UserDefault userDefault].userID = userID;
+        [UserDefault update];
+        
+        NSString* is_have_account = [dic objectForKey:@"is_have_account"];
+        if ([[CommonHelpers getBoolValue:is_have_account] boolValue]) {
+            [[CommonHelpers appDelegate] showAskTab];
+        }
+        else
+        {
+            ConfigProfileVC *vc = [[ConfigProfileVC alloc] initWithNibName:@"ConfigProfileVC" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
     else
     {
-        ConfigProfileVC *vc = [[ConfigProfileVC alloc] initWithNibName:@"ConfigProfileVC" bundle:nil];
-        [self.navigationController pushViewController:vc animated:YES];
+        NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"Response: %@",response);
+        
+        NSDictionary* dic = [response objectFromJSONString];
+        
+        //parse cuisine 1
+        NSArray* arrayCuisine1 = [dic objectForKey:@"cuisine1"];
+        for (NSDictionary* dic in arrayCuisine1) {
+            TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.uid = [dic objectForKey:@"id"];
+            obj.name = [dic objectForKey:@"name"];
+            [[CommonHelpers appDelegate].arrCuisine addObject:obj];
+        }
+        
+        //parse cuisine 2
+        NSArray* arrayCuisine2 = [dic objectForKey:@"cuisine2"];
+        for (NSDictionary* dic in arrayCuisine2) {
+            TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.uid = [dic objectForKey:@"id"];
+            obj.name = [dic objectForKey:@"name"];
+            [[CommonHelpers appDelegate].arrDropdown addObject:obj];
+        }
+        
+        //parse occasion
+        NSArray* arrayOccasion = [dic objectForKey:@"occasion"];
+        for (NSDictionary* dic in arrayOccasion) {
+            TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.uid = [dic objectForKey:@"id"];
+            obj.name = [dic objectForKey:@"name"];
+            [[CommonHelpers appDelegate].arrOccasion addObject:obj];
+        }
+        
+        //parse price
+        NSArray* arrayPrice = [dic objectForKey:@"price"];
+        for (NSDictionary* dic in arrayPrice) {
+            TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.uid = [dic objectForKey:@"id"];
+            obj.name = [dic objectForKey:@"name"];
+            [[CommonHelpers appDelegate].arrPrice addObject:obj];
+        }
+        
+        //parse theme
+        NSArray* arrayTheme = [dic objectForKey:@"theme"];
+        for (NSDictionary* dic in arrayTheme) {
+            TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.uid = [dic objectForKey:@"id"];
+            obj.name = [dic objectForKey:@"name"];
+            [[CommonHelpers appDelegate].arrTheme addObject:obj];
+        }
+        
+        //parse typeOfRestaurant
+        NSArray* arrayTypeOfRestaurant = [dic objectForKey:@"typeOfRestaurant"];
+        for (NSDictionary* dic in arrayTypeOfRestaurant) {
+            TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.uid = [dic objectForKey:@"id"];
+            obj.name = [dic objectForKey:@"name"];
+            [[CommonHelpers appDelegate].arrTypeOfRestaurant addObject:obj];
+        }
+        
+        //parse whoAreYou
+        NSArray* arrayWhoAreYou = [dic objectForKey:@"whoAreYou"];
+        for (NSDictionary* dic in arrayWhoAreYou) {
+            TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.uid = [dic objectForKey:@"id"];
+            obj.name = [dic objectForKey:@"name"];
+            [[CommonHelpers appDelegate].arrWhoAreUWith addObject:obj];
+        }
+        
+        
+        NSLog(@"arrCuisine: %d"         , [[CommonHelpers appDelegate].arrCuisine count]);
+        NSLog(@"arrOccasion: %d"        , [[CommonHelpers appDelegate].arrOccasion count]);
+        NSLog(@"arrPrice: %d"           , [[CommonHelpers appDelegate].arrPrice count]);
+        NSLog(@"arrTheme: %d"           , [[CommonHelpers appDelegate].arrTheme count]);
+        NSLog(@"arrTypeOfRestaurant: %d", [[CommonHelpers appDelegate].arrTypeOfRestaurant count]);
+        NSLog(@"arrWhoAreUWith: %d"     , [[CommonHelpers appDelegate].arrWhoAreUWith count]);
+        NSLog(@"arrDropdown: %d"        , [[CommonHelpers appDelegate].arrDropdown count]);
     }
+    
+    
     
 }
 

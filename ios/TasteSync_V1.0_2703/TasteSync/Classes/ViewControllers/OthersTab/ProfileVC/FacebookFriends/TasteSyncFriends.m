@@ -36,8 +36,11 @@
     [self initData];
     // Do any additional setup after loading the view from its nib.
     
-     
-      
+    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFriends" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+    request.delegate = self;
+    [request setFormPostValue:self.userID forKey:@"userId"];
+    [request startFormRequest];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -61,16 +64,9 @@
 - (void) initData
 {
     self.arrData = [[NSMutableArray alloc] init ];
-    for (int i=0; i<10; i++) {
-        UserObj *obj = [[UserObj alloc] init];
-        obj.firstname = @"Persion";
-        obj.lastname = [NSString stringWithFormat:@"%d",i];
-        obj.avatar = [UIImage imageNamed:@"avatar.png"];
-        [self.arrData addObject:obj];
-    }
     
     self.arrDataFriends = [[NSMutableArray alloc] init];
-    if ([[CommonHelpers appDelegate] arrDataFBFriends].count >0) {
+    if ([[CommonHelpers appDelegate] arrDataFBFriends].count > 0) {
         self.arrDataFriends = [[CommonHelpers appDelegate] arrDataFBFriends];
     }
     
@@ -320,7 +316,28 @@
     [self hideKeyBoard];
 }
 
-
+- (void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    self.arrData = [[NSMutableArray alloc] init ];
+    
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"Response: %@",response);
+    NSDictionary* dic = [response objectFromJSONString];
+    NSArray* arrayFriend = [dic objectForKey:@"friendTasteSync"];
+    
+    NSMutableArray* arrayFriendReload = [[NSMutableArray alloc]init];
+    int i = 0;
+    for (NSDictionary* dic in arrayFriend) {
+        UserObj *obj = [CommonHelpers getUserObj:dic];
+        [self.arrData addObject:obj];
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        i++;
+        [arrayFriendReload addObject:indexPath];
+    }
+    
+    
+    [tbvResult reloadRowsAtIndexPaths:arrayFriendReload withRowAnimation:UITableViewRowAnimationFade];
+}
 
 
 @end

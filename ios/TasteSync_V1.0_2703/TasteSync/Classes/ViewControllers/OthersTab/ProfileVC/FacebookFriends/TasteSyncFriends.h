@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "UserObj.h"
-@interface TasteSyncFriends : UIViewController <UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate, UIActionSheetDelegate>
+#import "CRequest.h"
+#import "JSONKit.h"
+
+@interface TasteSyncFriends : UIViewController <UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate, UIActionSheetDelegate, RequestDelegate>
 {
     __weak IBOutlet UITableView *tbvResult, *tbvFilter;
     __weak IBOutlet UILabel *lbTitle;
@@ -16,6 +19,7 @@
 }
 
 @property (nonatomic, strong) UserObj  *user;
+@property (nonatomic, strong) NSString* userID;
 @property (nonatomic, strong) NSMutableArray *arrData, *arrDataFilter, *arrDataFriends;
 
 

@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "UserObj.h"
 #import "RestaurantProfileCell.h"
+#import "JSONKit.h"
+#import "CRequest.h"
 
-@interface RestaurantListsVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface RestaurantListsVC : UIViewController<UITableViewDataSource,UITableViewDelegate, RequestDelegate>
 {
     __weak IBOutlet UIView *viewMain, *viewFilter, *viewFilterExtends;
     __weak IBOutlet UIScrollView *scrollViewMain;

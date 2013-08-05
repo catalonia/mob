@@ -9,5 +9,30 @@
 #import "RestaurantObj.h"
 
 @implementation RestaurantObj
+@synthesize 
+uid = _uid,
 
+name = _name,
+nation = _nation,
+
+longtitude = _longtitude,
+lattitude = _lattitude,
+
+rates = _rates,
+
+isSelected = _isSelected,
+
+isDeal = _isDeal,
+
+isSaved = _isSaved,
+
+isFavs = _isFavs,
+
+isCheckin = _isCheckin,
+
+isLike = _isLike,
+
+
+imageUrl = _imageUrl,
+allowSize = _allowSize;
 @end

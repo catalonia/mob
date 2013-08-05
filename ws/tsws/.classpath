@@ -85,5 +85,11 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/TasteSync/tomcat/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/lib/apns-0.1.6.jar"/>
+	<classpathentry kind="lib" path="D:/TasteSync/enunciate-1.26.2/samples"/>
+	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/libExtras/bootstrap.jar"/>
+	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/libExtras/enunciate-core-annotations-1.27.jar"/>
+	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/libExtras/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/libExtras/tomcat-dbcp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/libExtras/tomcat-juli.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

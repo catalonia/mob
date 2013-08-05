@@ -57,7 +57,7 @@
 {
     [[[CommonHelpers appDelegate] tabbarBaseVC] actionNewsfeed];
 }
--(void)responseData:(NSData *)data
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
     NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if (response != NULL) {

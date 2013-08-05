@@ -72,6 +72,7 @@ public interface UserQueries extends TSDBCommonQueries {
     	"AND CURRENT_STATUS = ?";
     public static String USER_FBID_SELECT_SQL = "SELECT * FROM users WHERE User_FB_ID = ? AND CURRENT_STATUS = ?";
     public static String USER_FBID_UPDATE_SQL = "UPDATE users SET USER_FB_ID = ? WHERE USER_ID = ?";
+    public static String USERID_SELECT_SQL = "SELECT * FROM users WHERE USER_FB_ID = ?";
     public static String USER_FACEBOOK_ID_SELECT_SQL = "SELECT * FROM users WHERE USER_ID IN (SELECT user_friend_tastesync.FRIEND_ID FROM user_friend_tastesync WHERE USER_ID = ?)";
    //    public static String USER_ID_UPDATE_SQL = "UPDATE users SET USER_ID = ?"+ ", TS_USER_ID = ?" +" WHERE Auto_User_ID = ?";
     public static String USER_FACEBOOK_INSERT_SQL = "INSERT INTO users " + "(TS_USER_EMAIL, " + 
@@ -296,8 +297,35 @@ public interface UserQueries extends TSDBCommonQueries {
  	// CUISINE_TIER2_DESCRIPTOR
  	public static String CUISINE_TIER2_DESCRIPTOR_SELECT_SQL = "SELECT * "
  			+ "FROM cuisine_tier2_descriptor " + "WHERE CUISINE_ID = ? ";
+ 	public static String CUISINE_TIER2_DESCRIPTOR_ALL_SELECT_SQL = "SELECT * "
+ 			+ "FROM cuisine_tier2_descriptor  WHERE CUISINE_VALID_CURRENT = '1'";
  	
- // USER_FRIEND_FB
+ 	// CUISINE_TIER1_DESCRIPTOR
+  	public static String CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL = "SELECT * "
+  			+ "FROM cuisine_tier1_descriptor WHERE CUISINE_VALID_CURRENT = '1'";
+  	
+  	//OCCASION_DESCRIPTOR
+  	public static String OCCASION_DESCRIPTOR_SELECT_SQL = "SELECT * "
+  			+ "FROM occasion_descriptor WHERE Occasion_VALID_CURRENT = '1'";
+  	
+  	//PRICE_DESCRIPTOR
+  	public static String PRICE_DESCRIPTOR_SELECT_SQL = "SELECT * "
+  			+ "FROM price_descriptor WHERE price_VALID_CURRENT = '1'";
+  	
+  //THEME_DESCRIPTOR
+  	public static String THEME_DESCRIPTOR_SELECT_SQL = "SELECT * "
+  			+ "FROM theme_descriptor WHERE theme_VALID_CURRENT = '1'";
+  	
+  	//TYPEOFREST_DESCRIPTOR
+  	public static String TYPEOFREST_DESCRIPTOR_SELECT_SQL = "SELECT * "
+  			+ "FROM typeofrest_descriptor WHERE typeofrest_VALID_CURRENT = '1'";
+  	
+  	//WHOAREYOUWITH_DESCRIPTOR
+  	public static String WHOAREYOUWITH_DESCRIPTOR_SELECT_SQL = "SELECT * "
+  			+ "FROM whoareyouwith_descriptor WHERE whoareyouwith_VALID_CURRENT = '1'";
+  	
+  	
+  	// USER_FRIEND_FB
  	public static String USER_FRIEND_FB_INSERT_SQL = "INSERT INTO `user_friend_fb`(`USER_ID`, `USER_FRIEND_FB`, `FB_UPDATE_DATETIME`, `INVITATION_SENT_YN`)"
  			+ "VALUES (?,?,?,?)";
  	public static String USER_FRIEND_FB_UPDATE_SQL = "UPDATE `user_friend_fb`"

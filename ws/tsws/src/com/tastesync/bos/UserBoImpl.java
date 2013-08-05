@@ -7,6 +7,7 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
+import com.tastesync.model.objects.TSInitObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
@@ -235,4 +236,16 @@ public class UserBoImpl implements UserBo {
             throws TasteSyncException {
 		return userDao.showInviteFriends(userId);
     }
+	
+	@Override
+	public TSInitObj getAllData() throws TasteSyncException
+	{
+		return userDao.getAllData();
+	}
+	
+	@Override
+	public String getUserId(String userFBID) throws TasteSyncException
+	{
+		return userDao.getUserId(userFBID);
+	}
 }

@@ -52,9 +52,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     facebookURL     = @"";
     twiterURL       = @"";
     blogURL    = @"";
+    
+    _restaurantObj1 = [[RestaurantObj alloc]init];
+    _restaurantObj2 = [[RestaurantObj alloc]init];
+    _restaurantObj3 = [[RestaurantObj alloc]init];
+    _arryRestaurantsVisible = [[NSMutableArray alloc]init];
+    _arryListRestaurantShort = [[NSMutableArray alloc]init];
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     viewRecentActivity.hidden = YES;
     // Do any additional setup after loading the view from its nib.
     [CommonHelpers setBackgroudImageForView:self.view];
@@ -63,16 +76,11 @@
     user = [UserDefault userDefault].user;
     [self initUI];
     
-    CRequest* request = [[CRequest alloc]initWithURL:@"getHomeProfile" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
-    request.delegate = self;
-    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
-    [request startFormRequest];
+    CRequest* request1 = [[CRequest alloc]initWithURL:@"getHomeProfile" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+    request1.delegate = self;
+    [request1 setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request1 startFormRequest];
     
-}
-
-- (void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     if ([UserDefault userDefault].loginStatus != NotLogin) {
         debug(@"logined with emailID - > %@",user.email);
     }
@@ -93,15 +101,15 @@
 
 - (void) initUI
 {
-    [scrollViewMain setContentSize:CGSizeMake(320, 560)];//660)];
+    [scrollViewMain setContentSize:CGSizeMake(320, 520)];//660)];
     if (user) {
         ivAvatar.image = user.avatar;
         lbUserName.text = [NSString stringWithFormat:@"%@ %@", user.firstname, user.lastname];
         
-        lbUserDetail.text = [NSString stringWithFormat:@"%@, %@",[UserDefault userDefault].city,[UserDefault userDefault].state];
+        lbUserDetail.text = [NSString stringWithFormat:@"%@, %@",[UserDefault userDefault].user.hometown_location,[UserDefault userDefault].user.locate];
         lbAboutTitle.text = [NSString stringWithFormat:@"About %@", user.firstname];
         
-         lbAboutDetail.text = @"Favorite Cuisines - Indian, Ethiopian \n some text about user...more";
+         lbAboutDetail.text = @"";
         
     }
     
@@ -292,7 +300,7 @@
     [self.navigationController pushViewController:detailStoryVC animated:YES];
 }
 
--(void)responseData:(NSData *)data
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
     NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"Response: %@",response);
@@ -331,9 +339,14 @@
             if (photo != NULL) {
                 NSString* server = [photo objectForKey:@"prefix"];
                 NSString* name = [photo objectForKey:@"suffix"];
-                NSRange range = NSMakeRange(0, 1);
-                name = [name stringByReplacingCharactersInRange:range withString:@""];
-                _restaurantObj1.imageUrl = [server stringByAppendingString:name];
+                if (name != (id)[NSNull null]) {
+                    NSRange range = NSMakeRange(0, 1);
+                    name = [name stringByReplacingCharactersInRange:range withString:@""];
+                    _restaurantObj1.imageUrl = [server stringByAppendingString:name];
+                }
+                else
+                    _restaurantObj1.imageUrl = @"";
+                
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj1.imageUrl);
             }
             
@@ -355,12 +368,18 @@
             if (photo != NULL) {
                 NSString* server = [photo objectForKey:@"prefix"];
                 NSString* name = [photo objectForKey:@"suffix"];
-                NSRange range = NSMakeRange(0, 1);
-                name = [name stringByReplacingCharactersInRange:range withString:@""];
-                _restaurantObj1.imageUrl = [server stringByAppendingString:name];
+                if (name != (id)[NSNull null]) {
+                    NSRange range = NSMakeRange(0, 1);
+                    name = [name stringByReplacingCharactersInRange:range withString:@""];
+                    _restaurantObj1.imageUrl = [server stringByAppendingString:name];
+                }
+                else
+                    _restaurantObj1.imageUrl = @"";
+                
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj1.imageUrl);
             }
             lbRestaurant1.text = _restaurantObj1.name;
+            NSLog(@"lbRestaurant1.text: %@", [dicRes objectForKey:@"name"]);
             btRestaurant1.backgroundColor = [UIColor colorWithPatternImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj1.imageUrl]]]];
             [_arryRestaurantsVisible addObject:_restaurantObj1];
             
@@ -371,9 +390,14 @@
             if (photo2 != NULL) {
                 NSString* server = [photo2 objectForKey:@"prefix"];
                 NSString* name = [photo2 objectForKey:@"suffix"];
-                NSRange range = NSMakeRange(0, 1);
-                name = [name stringByReplacingCharactersInRange:range withString:@""];
-                _restaurantObj2.imageUrl = [server stringByAppendingString:name];
+                if (name != (id)[NSNull null]) {
+                    NSRange range = NSMakeRange(0, 1);
+                    name = [name stringByReplacingCharactersInRange:range withString:@""];
+                    _restaurantObj2.imageUrl = [server stringByAppendingString:name];
+                }
+                else
+                    _restaurantObj2.imageUrl = @"";
+                
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj2.imageUrl);
             }
             lbRestaurant2.text = _restaurantObj2.name;
@@ -389,9 +413,14 @@
             if (photo != NULL) {
                 NSString* server = [photo objectForKey:@"prefix"];
                 NSString* name = [photo objectForKey:@"suffix"];
-                NSRange range = NSMakeRange(0, 1);
-                name = [name stringByReplacingCharactersInRange:range withString:@""];
-                _restaurantObj1.imageUrl = [server stringByAppendingString:name];
+                if (name != (id)[NSNull null]) {
+                    NSRange range = NSMakeRange(0, 1);
+                    name = [name stringByReplacingCharactersInRange:range withString:@""];
+                    _restaurantObj1.imageUrl = [server stringByAppendingString:name];
+                }
+                else
+                    _restaurantObj1.imageUrl = @"";
+                
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj1.imageUrl);
             }
             lbRestaurant1.text = _restaurantObj1.name;
@@ -405,9 +434,14 @@
             if (photo2 != NULL) {
                 NSString* server = [photo2 objectForKey:@"prefix"];
                 NSString* name = [photo2 objectForKey:@"suffix"];
-                NSRange range = NSMakeRange(0, 1);
-                name = [name stringByReplacingCharactersInRange:range withString:@""];
-                _restaurantObj2.imageUrl = [server stringByAppendingString:name];
+                if (name != (id)[NSNull null]) {
+                    NSRange range = NSMakeRange(0, 1);
+                    name = [name stringByReplacingCharactersInRange:range withString:@""];
+                    _restaurantObj2.imageUrl = [server stringByAppendingString:name];
+                }
+                else
+                    _restaurantObj2.imageUrl = @"";
+                
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj2.imageUrl);
             }
             lbRestaurant2.text = _restaurantObj2.name;
@@ -421,9 +455,14 @@
             if (photo3 != NULL) {
                 NSString* server = [photo3 objectForKey:@"prefix"];
                 NSString* name = [photo3 objectForKey:@"suffix"];
-                NSRange range = NSMakeRange(0, 1);
-                name = [name stringByReplacingCharactersInRange:range withString:@""];
-                _restaurantObj3.imageUrl = [server stringByAppendingString:name];
+                if (name != (id)[NSNull null]) {
+                    NSRange range = NSMakeRange(0, 1);
+                    name = [name stringByReplacingCharactersInRange:range withString:@""];
+                    _restaurantObj3.imageUrl = [server stringByAppendingString:name];
+                }
+                else
+                    _restaurantObj3.imageUrl = @"";
+                
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj3.imageUrl);
             }
             lbRestaurant3.text = _restaurantObj3.name;

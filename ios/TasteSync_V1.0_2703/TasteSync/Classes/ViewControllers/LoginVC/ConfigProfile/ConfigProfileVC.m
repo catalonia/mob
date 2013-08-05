@@ -9,6 +9,8 @@
 #import "ConfigProfileVC.h"
 #import "FriendFilterCell.h"
 #import "CommonHelpers.h"
+#import "JSONKit.h"
+#import "TSGlobalObj.h"
 
 @interface ConfigProfileVC ()<UIGestureRecognizerDelegate,UIScrollViewDelegate>
 {
@@ -16,10 +18,22 @@
     int textFieldSelected ;
     BOOL keypadShown;
     
+    //NSString* restaurantVariable;
+    
     CGPoint offset;
     
     CGFloat TBV_POINT_Y ;
-
+    
+    UserObj* inviteUserObj;
+    TSGlobalObj* cuisineObj;
+    
+    NSMutableArray* arrayRestaurant1;
+    NSMutableArray* arrayRestaurant2;
+    NSMutableArray* arrayRestaurant3;
+    NSMutableArray* arrayRestaurant4;
+    NSMutableArray* arrayRestaurant5;
+    
+    NSMutableArray* variableRestaurant;
 }
 
 
@@ -82,22 +96,36 @@ typedef enum _TextFieldSelect
     {
         
     }
- */   
+ */
+    
     ivAvatarFriend.image = nil;
   
 }
 - (void) initData
 {
+    
+    arrayRestaurant1 = [[NSMutableArray alloc]init];
+    arrayRestaurant2 = [[NSMutableArray alloc]init];
+    arrayRestaurant3 = [[NSMutableArray alloc]init];
+    arrayRestaurant4 = [[NSMutableArray alloc]init];
+    arrayRestaurant5 = [[NSMutableArray alloc]init];
+    
+    variableRestaurant = [[NSMutableArray alloc]initWithObjects:@"", @"", @"", @"", @"", nil];
+    
     userDefault = [UserDefault userDefault];
     if (_arrData == nil) {
-        self.arrData = [[NSMutableArray alloc] initWithObjects:@"",@"",@"",@"",@"", nil ];
-        
-//        arrData contains 5 of top restaurant 
+        self.arrData = [[NSMutableArray alloc] init];
+        for (int i = 0; i < 5; i++) {
+            TSGlobalObj* global = [[TSGlobalObj alloc]init];
+            global.uid = @"";
+            global.name = @"";
+            [self.arrData addObject:global];
+        }
         
     }
     if (_arrDataCusine == nil) {
         self.arrDataCusine = [[NSMutableArray alloc] init ];
-        self.arrDataCusine = [[CommonHelpers appDelegate] arrCuisine];
+        self.arrDataCusine = [[CommonHelpers appDelegate] arrDropdown];
     }
     
     if (_arrDataFriends == nil) {
@@ -109,9 +137,6 @@ typedef enum _TextFieldSelect
         self.arrDataFilter = [[NSMutableArray alloc] init ];
     }
     
-    if (_arrDataRestaurant == nil) {
-        self.arrDataRestaurant = [[NSMutableArray alloc] initWithObjects:@"Chinese",@"KFC Danang", @"Lotteria Danang", @"KSX", nil ];
-    }
     
     UserObj *userObj = userDefault.user;
     if (userObj != nil) {
@@ -133,8 +158,39 @@ typedef enum _TextFieldSelect
 
 - (IBAction)actionDone:(id)sender
 {
-    debug(@"actionDone");
-    [[CommonHelpers appDelegate] showAskTab];
+    CRequest* request = [[CRequest alloc]initWithURL:@"submitSignupDetail" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationJson withKey:10    ];
+    [request setHeader:HeaderTypeJSON];
+    request.delegate = self;
+    
+    NSMutableDictionary *nameElements = [NSMutableDictionary dictionary];
+    
+    [nameElements setObject:[UserDefault userDefault].userID forKey:@"userId"];
+
+    if (inviteUserObj != nil) {
+        [nameElements setObject:inviteUserObj.uid forKey:@"facebookFriendId"];
+        NSLog(@"userName: %@, userID: %@", inviteUserObj.name, inviteUserObj.uid);
+    }
+    if (cuisineObj != nil) {
+        [nameElements setObject:cuisineObj.uid forKey:@"cuisineId"];
+        NSLog(@"cuisinName: %@, cuisinID: %@", cuisineObj.name, cuisineObj.uid);
+    }
+    
+    NSMutableArray* arrayRest = [[NSMutableArray alloc]init];
+    for (TSGlobalObj* global in _arrData) {
+        if (![global.uid isEqualToString:@""]) {
+            [arrayRest addObject:global.uid];
+            NSLog(@"globalName: %@, globalID: %@", global.name, global.uid);
+        }
+        
+    }
+    [nameElements setObject:arrayRest forKey:@"restaurandId"];
+    
+    
+    NSString* jsonString = [nameElements JSONString];
+    NSLog(@"%@",jsonString);
+    [request setJSON:jsonString];
+    [request startRequest];
+    
 }
 
 - (IBAction)actionInvite:(id)sender;
@@ -181,9 +237,9 @@ typedef enum _TextFieldSelect
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIndentifier];
         }
         
-        NSString *obj = [_arrDataFilter objectAtIndex:indexPath.row];
+        UserObj *obj = [_arrDataFilter objectAtIndex:indexPath.row];
         
-        cell.textLabel.text = obj;
+        cell.textLabel.text = obj.name;
         [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
         //        cell.textLabel.textAlignment = UITextAlignmentRight;
         cell.textLabel.textColor = [UIColor whiteColor];
@@ -241,7 +297,7 @@ typedef enum _TextFieldSelect
             UserObj *userObj = [_arrDataFilter objectAtIndex:indexPath.row];
             tfFriend.text = [NSString stringWithFormat:@"%@ %@", userObj.firstname, userObj.lastname];
             ivAvatarFriend.image = userObj.avatar;
-            
+            inviteUserObj = userObj;
             //check here
             
             if (2 % 2) {
@@ -263,44 +319,46 @@ typedef enum _TextFieldSelect
             
         case TextFieldCusine:
         {
-            NSString *txt = [_arrDataFilter objectAtIndex:indexPath.row];            
-            tfCusine.text = txt;
+            TSGlobalObj *global = [_arrDataFilter objectAtIndex:indexPath.row];            
+            tfCusine.text = global.name;
+            cuisineObj = global;
         }
             break;
             
         case TextFieldRestaurant1:
         {
-            NSString *txt = [_arrDataFilter objectAtIndex:indexPath.row];
-            tfRestaurant1.text = txt;
-            [self.arrData replaceObjectAtIndex:0 withObject:txt];
+            
+            TSGlobalObj *global = [_arrDataFilter objectAtIndex:indexPath.row];
+            tfRestaurant1.text = global.name;
+            [self.arrData replaceObjectAtIndex:0 withObject:global];
         }
             break;
         case TextFieldRestaurant2:
         {
-            NSString *txt = [_arrDataFilter objectAtIndex:indexPath.row];
-            tfRestaurant2.text = txt;
-            [self.arrData replaceObjectAtIndex:0 withObject:txt];
+            TSGlobalObj *global = [_arrDataFilter objectAtIndex:indexPath.row];
+            tfRestaurant2.text = global.name;
+            [self.arrData replaceObjectAtIndex:1 withObject:global];
         }
             break;
         case TextFieldRestaurant3:
         {
-            NSString *txt = [_arrDataFilter objectAtIndex:indexPath.row];
-            tfRestaurant3.text = txt;
-            [self.arrData replaceObjectAtIndex:0 withObject:txt];
+            TSGlobalObj *global = [_arrDataFilter objectAtIndex:indexPath.row];
+            tfRestaurant3.text = global.name;
+            [self.arrData replaceObjectAtIndex:2 withObject:global];
         }
             break;
         case TextFieldRestaurant4:
         {
-            NSString *txt = [_arrDataFilter objectAtIndex:indexPath.row];
-            tfRestaurant4.text = txt;
-            [self.arrData replaceObjectAtIndex:0 withObject:txt];
+            TSGlobalObj *global = [_arrDataFilter objectAtIndex:indexPath.row];
+            tfRestaurant4.text = global.name;
+            [self.arrData replaceObjectAtIndex:3 withObject:global];
         }
             break;
         case TextFieldRestaurant5:
         {
-            NSString *txt = [_arrDataFilter objectAtIndex:indexPath.row];
-            tfRestaurant5.text = txt;
-            [self.arrData replaceObjectAtIndex:0 withObject:txt];
+            TSGlobalObj *global = [_arrDataFilter objectAtIndex:indexPath.row];
+            tfRestaurant5.text = global.name;
+            [self.arrData replaceObjectAtIndex:4 withObject:global];
         }
             break;
         default:
@@ -321,48 +379,71 @@ typedef enum _TextFieldSelect
     ivAvatarFriend.image = nil;
     btInvite.hidden = YES;
     btCheck.hidden = YES;
+    tbvFilter.hidden = YES;
     
     keypadShown = TRUE;
     
     if (textField == tfFriend) {
         textFieldSelected = TextFieldFriend;
         TBV_POINT_Y = 690;
+        inviteUserObj = nil;
     }
     else if (textField == tfCusine)
     {
         textFieldSelected = TextFieldCusine;
         TBV_POINT_Y = 250;
+        cuisineObj = nil;
 
     }
     else if (textField == tfRestaurant1)
     {
         textFieldSelected = TextFieldRestaurant1;
         TBV_POINT_Y = 340;
-
+        
+        TSGlobalObj* global = [[TSGlobalObj alloc]init];
+        global.uid = @"";
+        global.name = @"";
+        [self.arrData replaceObjectAtIndex:0 withObject:global];
     }
     else if (textField == tfRestaurant2)
     {
         textFieldSelected = TextFieldRestaurant2;
         TBV_POINT_Y = 400;
-
+        
+        TSGlobalObj* global = [[TSGlobalObj alloc]init];
+        global.uid = @"";
+        global.name = @"";
+        [self.arrData replaceObjectAtIndex:1 withObject:global];
     }
     else if (textField == tfRestaurant3)
     {
         textFieldSelected = TextFieldRestaurant3;
         TBV_POINT_Y = 460;
-
+        
+        TSGlobalObj* global = [[TSGlobalObj alloc]init];
+        global.uid = @"";
+        global.name = @"";
+        [self.arrData replaceObjectAtIndex:2 withObject:global];
     }
     else if (textField == tfRestaurant4)
     {
         textFieldSelected = TextFieldRestaurant4;
         TBV_POINT_Y = 520;
-
+        
+        TSGlobalObj* global = [[TSGlobalObj alloc]init];
+        global.uid = @"";
+        global.name = @"";
+        [self.arrData replaceObjectAtIndex:3 withObject:global];
     }
     else if (textField == tfRestaurant5)
     {
         textFieldSelected = TextFieldRestaurant5;
         TBV_POINT_Y = 570;
-
+        
+        TSGlobalObj* global = [[TSGlobalObj alloc]init];
+        global.uid = @"";
+        global.name = @"";
+        [self.arrData replaceObjectAtIndex:4 withObject:global];
     }
    
     else
@@ -469,8 +550,9 @@ typedef enum _TextFieldSelect
             break;
         case TextFieldCusine:
         {
-            for (NSString *strObj in _arrDataCusine) {
-                              
+            for (TSGlobalObj *globalObj in _arrDataCusine) {
+                
+                NSString* strObj = globalObj.name;
                 NSString  *ustrObj =  [strObj uppercaseString];
                 NSString *utxt =   [txt uppercaseString];
                 
@@ -482,11 +564,8 @@ typedef enum _TextFieldSelect
                 if (/*p!=NULL*/ diff == 0) {
                     debug(@"TextFieldCusine added");
 
-                    [arrTmp addObject:strObj];
+                    [arrTmp addObject:globalObj];
                 }
-                
-            
-
             }
         }
             break;
@@ -498,37 +577,67 @@ typedef enum _TextFieldSelect
         default:
         {
             // case restaurant
-            for (NSString *strObj in _arrDataRestaurant) {
-              /*  char *p;
-                p = strstr([strObj UTF8String], [txt UTF8String]);
-                if (p!=NULL) {
-                    [arrTmp addObject:strObj];
-                }
-               */
-                NSString  *ustrObj =  [strObj uppercaseString];
-                NSString *utxt =   [txt uppercaseString];
             
-                int diff = strncmp([ustrObj UTF8String], [utxt UTF8String], utxt.length);
-                
-                debug(@"ustrObj -  utxt  -> %@ - %@ ",ustrObj,utxt);
-                
-                if (/*p!=NULL*/ diff == 0) {
-                    debug(@"added");
-                    [arrTmp addObject:strObj];
-                }
-                
+            NSMutableArray* arrayRestaurant;
             
-                
+            if (textFieldSelected == TextFieldRestaurant1) {
+                arrayRestaurant = arrayRestaurant1;
+            }
+            if (textFieldSelected == TextFieldRestaurant2) {
+                arrayRestaurant = arrayRestaurant2;
+            }
+            if (textFieldSelected == TextFieldRestaurant3) {
+                arrayRestaurant = arrayRestaurant3;
+            }
+            if (textFieldSelected == TextFieldRestaurant4) {
+                arrayRestaurant = arrayRestaurant4;
+            }
+            if (textFieldSelected == TextFieldRestaurant5) {
+                arrayRestaurant = arrayRestaurant5;
             }
             
-            for (NSString *str in _arrData) {
-                if ([arrTmp containsObject:str]) {
-                    [arrTmp removeObject:str];
+            if (txt.length >= 3) {
+                if (txt.length == 3) {
+                    if (![[txt uppercaseString] isEqualToString:[variableRestaurant objectAtIndex:(textFieldSelected - 1)]]) {
+                        
+                        CRequest* request = [[CRequest alloc]initWithURL:@"showRestaurantSuggestion" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:textFieldSelected];
+                        request.delegate = self;
+                        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+                        [request setFormPostValue:[txt uppercaseString] forKey:@"key"];
+                        [request startFormRequest];
+                        
+                        NSLog(@"request here Value: %@ of Index: %d", [txt uppercaseString], textFieldSelected);
+                        [variableRestaurant replaceObjectAtIndex:(textFieldSelected - 1) withObject:[txt uppercaseString]];
+                    }
                 }
+                
+                for (RestaurantObj *restObj in arrayRestaurant) {
+                    
+                    NSString* strObj = restObj.name;
+                    
+                    NSString  *ustrObj =  [strObj uppercaseString];
+                    NSString *utxt =   [txt uppercaseString];
+                    
+                    int diff = strncmp([ustrObj UTF8String], [utxt UTF8String], utxt.length);
+                    
+                    debug(@"ustrObj -  utxt restaurent  -> %@ - %@ ",ustrObj,utxt);
+                    
+                    if ( diff == 0 ) {
+                        debug(@"added");
+                        [arrTmp addObject:restObj];
+                    }
+                }
+                
+                for (TSGlobalObj *global in _arrData) {
+                    if ([arrTmp containsObject:global]) {
+                        [arrTmp removeObject:global];
+                    }
+                }
+                
             }
             
         }
-            break;
+        break;
     }
    
     
@@ -607,5 +716,47 @@ typedef enum _TextFieldSelect
     offset = scrollView.contentOffset;
     debug(@"ConfigProfile ->scrollViewDidEndScrollingAnimation with offset(%f,%f)",offset.x, offset.y);
 
+}
+
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    if (key != 10) {
+        NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",response);
+        NSArray* arrayRestaurant = [response objectFromJSONString];
+        for (NSDictionary* dic in arrayRestaurant) {
+            TSGlobalObj* restObj = [[TSGlobalObj alloc]init];
+            restObj.uid = [dic objectForKey:@"restaurantId"];
+            restObj.name = [dic objectForKey:@"restaurantName"];
+            if (key == TextFieldRestaurant1) {
+                [arrayRestaurant1 removeAllObjects];
+                [arrayRestaurant1 addObject:restObj];
+            }
+            if (key == TextFieldRestaurant2) {
+                [arrayRestaurant2 removeAllObjects];
+                [arrayRestaurant2 addObject:restObj];
+            }
+            if (key == TextFieldRestaurant3) {
+                [arrayRestaurant3 removeAllObjects];
+                [arrayRestaurant3 addObject:restObj];
+            }
+            if (key == TextFieldRestaurant4) {
+                [arrayRestaurant4 removeAllObjects];
+                [arrayRestaurant4 addObject:restObj];
+            }
+            if (key == TextFieldRestaurant5) {
+                [arrayRestaurant5 removeAllObjects];
+                [arrayRestaurant5 addObject:restObj];
+            }
+        }
+    }
+    else
+    {
+        NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSDictionary* dic = [response objectFromJSONString];
+        if ([dic objectForKey:@"successMsg"] != nil) {
+            [[CommonHelpers appDelegate] showAskTab];
+        }
+    }
 }
 @end

@@ -33,6 +33,7 @@
     [super viewDidLoad];
     [CommonHelpers setBackgroudImageForView:self.view];
     [self initUI];
+    
     [self initData];
     // Do any additional setup after loading the view from its nib.
 }
@@ -73,6 +74,17 @@
         
         [self.arrDataRestaurant addObject:obj];
     }
+}
+
+- (void)requestData:(int)type
+{
+    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request setFormPostValue:[NSString stringWithFormat:@"%d",type] forKey:@"type"];
+    [request setFormPostValue:@"0" forKey:@"from"];
+    [request setFormPostValue:@"10" forKey:@"to"];
+    [request startFormRequest];
 }
 
 # pragma mark - IBAction's Define
@@ -221,5 +233,9 @@
 
 }
 
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    
+}
 
 @end

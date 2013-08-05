@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "CommonHelpers.h"
 #import "LoginVC.h"
+#import "TSGlobalObj.h"
 
 NSString *const SessionStateChangedNotification = @"com.facebook.CFacebook:SessionStateChangedNotification";
 
@@ -69,6 +70,16 @@ askSubmited=_askSubmited;
     }
 }
 
+-(void)initData
+{
+    self.arrCuisine = [[NSMutableArray alloc] init];
+    self.arrOccasion = [[NSMutableArray alloc] init];
+    self.arrPrice = [[NSMutableArray alloc] init];
+    self.arrTheme = [[NSMutableArray alloc] init];
+    self.arrTypeOfRestaurant = [[NSMutableArray alloc] init];
+    self.arrWhoAreUWith = [[NSMutableArray alloc] init];
+    self.arrDropdown = [[NSMutableArray alloc] init];
+}
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
@@ -99,19 +110,6 @@ askSubmited=_askSubmited;
 
 // init static data 
 
-- (void) initData
-{
-    self.arrCuisine = [[NSMutableArray alloc] initWithObjects:@"Chinese",@"Italian",@"Mexican",@"Mediterranean",@"Thai",@"Asian",@"American",@"Latin American",@"Regional American",@"Indian",@"Vegetarian",@"Organic",@"French",@"Spanish",@"Japanese",@"Middle Eastern",@"European",@"Dessert",@"Seafood",@"Kosher",@"Halal", nil];
-    self.arrOccasion = [[NSMutableArray alloc] initWithObjects:@"Anniversary",@"Birthday",@"Date",@"Drinks",@"Dinner",@"Lunch",@"Coffee",@"Quick Bite",@"Brunch",@"Breakfast",@"Liquid Lunch", nil];
-    self.arrPrice = [[NSMutableArray alloc] initWithObjects:@"$",@"$$",@"$$$",@"$$$$",@"$$$$$", nil];
-    self.arrTheme = [[NSMutableArray alloc] initWithObjects:@"Romantic",@"Fine Dinning",@"Modern",@"Busness Friendly",@"Live Music",@"Bar Scene",@"Casual",@"Outdoor Seating",@"Rooftop",@"Kid Friendly",@"Formal",@"Pet Friendly",@"Group Friendly",@"Family Friendly",@"Traditional", nil];
-    self.arrTypeOfRestaurant = [[NSMutableArray alloc] initWithObjects:@"BBQ joint",@"Steakhouse",@"Gourmet restaurant",@"Cafe",@"Bakery",@"Bistro",@"Diner",@"Grill",@"BYOB restaurant",@"Restaurant with Extensive Wine List",@"Teahouse",@"Restaurant with Live kitchen", nil];
-    self.arrWhoAreUWith = [[NSMutableArray alloc] initWithObjects:@"My phone",@"A Data",@"Friends",@"Family",@"Kids",@"Teens",@"Pets",@"Colleagues", nil];
-   
-    
-    self.arrDropdown = [[NSMutableArray alloc] initWithObjects:@"Dessert",@"Seafood",@"Arabic",@"Regional American",@"Cajun",@"Barbecue",@"Soul Food",@"Southern",@"Californian",@"Hawaiian",@"Southwestern",@"Tex Mex",@"Creole",@"Italian",@"French",@"Asian",@"Chinese",@"Indian",@"Afghan",@"Bangladeshi",@"Pakistani",@"Japanese",@"Austrailian",@"Korean",@"Pacific Rim",@"Spanish",@"Portuguese",@"Mediterranean",@"Greek",@"Lebanese",@"Turkish",@"Moroccan",@"Asian",@"Cantonese",@"Latin American",@"Caribbean",@"Cuban",@"Brazillian",@"Argentine",@"Latin",@"Colombian",@"Jamaican",@"Peruvian",@"Dominican",@"South American",@"Chilean",@"Puerto Rican",@"Haitian",@"Ecuadorean",@"Savadoran",@"Venezuelan",@"Café",@"Coffee",@"Bakery",@"Grill",@"Bistro",@"Diner",@"Thai",@"Mexican",@"Gluten free",@"Kids Menu",@"Vegan",@"Vegeterian",@"Organic",@"Kosher",@"Halal",@"Continental",@"Egyptian",@"European",@"Fusion",@"Game",@"Indonesian",@"Irish",@"Malaysian",@"Middle Eastern",@"Mongolian",@"Morrocan",@"Nepalese",@"Indian Fusian",@"Oriental",@"Persian",@"Polish",@"Healthy",@"Low Fat",@"Steakhouse",@"Upscale",@"Affordable",@"Hole in the wall",@"Pricey",@"Expensive",@"Budget",@"Medium Priced",@"Traditional",@"stylish",@"Upscale",@"finr dining",@"modern",@"contemporary",@"Romantic",@"Old World",@"Live Music",@"intimate",@"formal",@"informal",@"Homely",@"Friendly",@"Cosy",@"Family Friendly",@"Cool",@"Kid Friendly",@"Group Friendly",@"Takeout",@"outdoor seating",@"Scenic View",@"Roof top",@"Artsy",@"Bar Scene",@"Business friendly",@"Cool",@"Casual",@"Casual fine dining",@"casual Dining",@"Swanky", nil];
-
-}
 
 # pragma mark - global's function
 
@@ -282,5 +280,9 @@ askSubmited=_askSubmited;
     }
 }
 
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    
+}
 
 @end

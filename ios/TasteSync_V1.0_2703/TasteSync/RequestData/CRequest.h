@@ -12,7 +12,7 @@
 
 @protocol RequestDelegate <NSObject>
 
-- (void)responseData:(NSData*)data;
+- (void)responseData:(NSData*)data WithKey:(int)key UserData:(id)userData;
 
 @end
 
@@ -43,8 +43,11 @@ typedef enum
 }RequestCategory;
 
 @property(nonatomic,assign) id<RequestDelegate> delegate;
+@property(nonatomic,assign) int key;
+@property(nonatomic,assign) id userData;
 
 -(id)initWithURL:(NSString*)url RQType:(RequestType)type RQData:(RequestData)data RQCategory:(RequestCategory)category;
+-(id)initWithURL:(NSString*)url RQType:(RequestType)type RQData:(RequestData)data RQCategory:(RequestCategory)category withKey:(int)key;
 -(void)setHeader:(HeaderType)type;
 -(void)setJSON:(NSString*)JsonText;
 -(void)startRequest;

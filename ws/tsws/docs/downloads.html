@@ -69,7 +69,7 @@
   </ul>
   <a name="C Client Library"></a>
   <h2>C Client Library</h2>
-  <p class="note">Created Jul 31, 2013 10:31:04 PM</p>
+  <p class="note">Created Aug 5, 2013 9:56:57 AM</p>
   <p><h1>
   Introduction
 </h1>
@@ -86,6 +86,23 @@
   <tt>&lt;string.h&gt;</tt>, and <tt>&lt;stdlib.h&gt;</tt> C standard libraries.
 </p>
 
+<h1>
+  REST XML Example
+</h1>
+
+<code class="prettyprint">
+#include &lt;enunciate.c&gt;
+//...
+
+xmlTextReaderPtr reader = ...; //set up the reader to the url.
+enunciate_ns0_TSSuccessObj *response_element = ...;
+response_element = xml_read_enunciate_ns0_TSSuccessObj(reader);
+
+//handle the response as needed...
+
+//free the enunciate_ns0_TSSuccessObj
+free_enunciate_ns0_TSSuccessObj(response_element);
+</code>
 </p>
   <h3>Files</h3>
   <table>
@@ -96,7 +113,7 @@
     </tr>
     <tr>
       <td><a href="enunciate.c">enunciate.c</a></td>
-      <td>754.04K</td>
+      <td>826.00K</td>
       <td></td>
     </tr>
     <tr>
@@ -107,11 +124,39 @@
   </table>
   <a name=".NET Client Library"></a>
   <h2>.NET Client Library</h2>
-  <p class="note">Created Jul 31, 2013 10:31:17 PM</p>
+  <p class="note">Created Aug 5, 2013 9:57:13 AM</p>
   <p><h1>
   Introduction
 </h1>
 
+
+<p>
+  The .NET client-side library defines the classes that can be (de)serialized to/from XML.
+  This is useful for accessing the REST endpoints that are published by this application.
+</p>
+
+<h1>
+  REST Example
+</h1>
+
+<code class="prettyprint">
+//read a resource from a REST url
+Uri uri = new Uri(...);
+
+XmlSerializer s = new XmlSerializer(
+  typeof( TSSuccessObj )
+);
+
+  //Create the request object
+WebRequest req = WebRequest.Create(uri);
+WebResponse resp = req.GetResponse();
+Stream stream = resp.GetResponseStream();
+TextReader r = new StreamReader( stream );
+
+TSSuccessObj order = (TSSuccessObj) s.Deserialize( r );
+
+//handle the result as needed...
+</code>
 <p>
   This bundle contains C# source code.
 </p></p>
@@ -123,12 +168,12 @@
     </tr>
     <tr>
       <td><a href="enunciate-dotnet.zip">enunciate-dotnet.zip</a></td>
-      <td>6.79K</td>
+      <td>7.28K</td>
     </tr>
   </table>
   <a name="Java Client Library"></a>
   <h2>Java Client Library</h2>
-  <p class="note">Created Jul 31, 2013 10:31:17 PM</p>
+  <p class="note">Created Aug 5, 2013 9:57:13 AM</p>
   <p><h1>
   Introduction
 </h1>
@@ -137,6 +182,40 @@
   The Java client-side library is used to access the Web service API for this application.
 </p>
 
+<p>
+  The JAX-WS client-side library is used to provide the set of Java objects that can be serialized
+  to/from XML using <a href="https://jaxb.dev.java.net/">JAXB</a>.  This is useful for accessing the
+  REST endpoints that are published by this application.
+</p>
+
+<h1>
+  REST Example (Raw JAXB)
+</h1>
+
+<code class="prettyprint">
+java.net.URL url = new java.net.URL(baseURL + "/ask/recosearch");
+JAXBContext context = JAXBContext.newInstance( TSSuccessObj.class );
+java.net.URLConnection connection = url.openConnection();
+connection.connect();
+
+Unmarshaller unmarshaller = context.createUnmarshaller();
+TSSuccessObj result = (TSSuccessObj) unmarshaller.unmarshal( connection.getInputStream() );
+//handle the result as needed...
+</code>
+
+<h1>
+  REST Example (Jersey client)
+</h1>
+
+<code class="prettyprint">
+com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create();
+
+TSSuccessObj result = client.resource(baseUrl + "/ask/recosearch")
+  
+  .post(TSSuccessObj.class);
+
+//handle the result as needed...
+</code>
 </p>
   <h3>Files</h3>
   <table>
@@ -147,18 +226,18 @@
     </tr>
     <tr>
       <td><a href="enunciate-client.jar">enunciate-client.jar</a></td>
-      <td>31.74K</td>
+      <td>35.81K</td>
       <td>The binaries for the Java client library.</td>
     </tr>
     <tr>
       <td><a href="enunciate-client-sources.jar">enunciate-client-sources.jar</a></td>
-      <td>21.24K</td>
+      <td>24.07K</td>
       <td>The sources for the Java client library.</td>
     </tr>
   </table>
   <a name="Java JSON Client Library"></a>
   <h2>Java JSON Client Library</h2>
-  <p class="note">Created Jul 31, 2013 10:31:17 PM</p>
+  <p class="note">Created Aug 5, 2013 9:57:13 AM</p>
   <p><h1>
   Introduction
 </h1>
@@ -168,6 +247,20 @@
   to/from JSON using <a href="http://jackson.codehaus.org/">Jackson</a>.  This is useful for accessing the
   JSON REST endpoints that are published by this application.
 </p>
+
+<h1>
+  REST Example (Raw Jackson)
+</h1>
+
+<code class="prettyprint">
+java.net.URL url = new java.net.URL(baseURL + "/ask/recosearch");
+ObjectMapper mapper = new ObjectMapper();
+java.net.URLConnection connection = url.openConnection();
+connection.connect();
+
+TSSuccessObj result = (TSSuccessObj) mapper.readValue( connection.getInputStream(), TSSuccessObj.class );
+//handle the result as needed...
+</code>
 
 </p>
   <h3>Files</h3>
@@ -179,18 +272,18 @@
     </tr>
     <tr>
       <td><a href="enunciate-json-client.jar">enunciate-json-client.jar</a></td>
-      <td>27.92K</td>
+      <td>31.37K</td>
       <td>The binaries for the Java JSON client library.</td>
     </tr>
     <tr>
       <td><a href="enunciate-json-client-sources.jar">enunciate-json-client-sources.jar</a></td>
-      <td>20.64K</td>
+      <td>23.35K</td>
       <td>The sources for the Java JSON client library.</td>
     </tr>
   </table>
   <a name="Objective C Client Library"></a>
   <h2>Objective C Client Library</h2>
-  <p class="note">Created Jul 31, 2013 10:31:05 PM</p>
+  <p class="note">Created Aug 5, 2013 9:56:58 AM</p>
   <p><h1>
   Introduction
 </h1>
@@ -206,6 +299,31 @@
   and the <a href="http://xmlsoft.org/html/libxml-xmlwriter.html">XML Writer API</a> as well as the base OpenStep foundation classes.
 </p>
 
+<h1>
+  REST XML Example
+</h1>
+
+<code class="prettyprint">
+#import &lt;enunciate.h&gt;
+//...
+
+ENUNCIATENS0TSSuccessObj *responseElement;
+NSData *responseData; //data holding the XML from the response.
+NSURL *baseURL = ...; //the base url including the host and subpath.
+NSURL *url = [NSURL URLWithString: @"/ask/recosearch" relativeToURL: baseURL];
+NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+NSURLResponse *response = nil;
+NSError *error = NULL;
+[request setHTTPMethod: @"POST"];
+
+//this example uses a synchronous request,
+//but you'll probably want to use an asynchronous call
+responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+ENUNCIATENS0TSSuccessObj *responseElement = [ENUNCIATENS0TSSuccessObj readFromXML: responseData];
+[responseElement retain];
+
+//handle the response as needed...
+</code>
 </p>
   <h3>Files</h3>
   <table>
@@ -216,12 +334,12 @@
     </tr>
     <tr>
       <td><a href="enunciate.h">enunciate.h</a></td>
-      <td>47.03K</td>
+      <td>51.13K</td>
       <td></td>
     </tr>
     <tr>
       <td><a href="enunciate.m">enunciate.m</a></td>
-      <td>519.94K</td>
+      <td>574.29K</td>
       <td></td>
     </tr>
     <tr>

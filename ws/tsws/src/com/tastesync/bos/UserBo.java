@@ -4,6 +4,7 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
+import com.tastesync.model.objects.TSInitObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
@@ -111,4 +112,8 @@ public interface UserBo {
     
     void submitUserReport(String userId, String reportedUserId,
 			String reason) throws TasteSyncException;
+    
+    TSInitObj getAllData() throws TasteSyncException;
+    
+    String getUserId(String userFBID) throws TasteSyncException;
 }

@@ -152,7 +152,7 @@
 {
     NSLog(@"actionNewsfeed");
     NSArray *viewControllersArr = self.viewControllers;
-    if (viewControllersArr.count>4) {
+    if (viewControllersArr.count > 4) {
         self.selectedViewController = [viewControllersArr objectAtIndex:4];
         if (self.selectedIndex ==selected) {
             [(UINavigationController *)self.selectedViewController popToRootViewControllerAnimated:NO];
@@ -233,9 +233,14 @@
 }
 - (void) actionProfile:(UserObj *) user
 {
-    ProfileVC *vc = [[ProfileVC alloc] initWithNibName:@"ProfileVC" bundle:nil];
-    vc.user = user;
-    [(UINavigationController *) self.selectedViewController pushViewController:vc animated:YES];
+    
+    CRequest* request = [[CRequest alloc]initWithURL:@"getUserId" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:TabbarRequestProfile];
+    request.delegate = self;
+    request.userData = user;
+    [request setFormPostValue:user.uid forKey:@"userFBID"];
+    [request startFormRequest];
+    
+
 
 }
 
@@ -323,5 +328,19 @@
 }
 
 
-
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    if (key == TabbarRequestProfile) {
+        NSDictionary* dic = [response objectFromJSONString];
+        NSString* str = [dic objectForKey:@"successMsg"];
+        if (str != (id)[NSNull null] && str != NULL) {
+            NSLog(@"UserID_Profile: %@", str);
+            ProfileVC *vc = [[ProfileVC alloc] initWithNibName:@"ProfileVC" bundle:nil];
+            vc.user = userData;
+            vc.userID = str;
+            [(UINavigationController *) self.selectedViewController pushViewController:vc animated:YES];
+        }
+    }
+}
 @end

@@ -9,9 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "UserObj.h"
 #import "RestaurantObj.h"
+#import "CRequest.h"
+#import "JSONKit.h"
 
+typedef enum
+{
+    TabbarRequestProfile = 1
+}TabbarRequestKey;
 
-@interface TabbarBaseVC : UITabBarController
+@interface TabbarBaseVC : UITabBarController<RequestDelegate>
 
 - (id) init;
 

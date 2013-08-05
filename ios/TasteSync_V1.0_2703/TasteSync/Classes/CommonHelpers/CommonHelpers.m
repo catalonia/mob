@@ -184,7 +184,7 @@ void debug(NSString *format, ...)
     user.email = [dic objectForKey:@"email"];
         NSLog(@"picture: %@", [dic objectForKey:@"picture"]);
     user.avatarUrl = [dic objectForKey:@"picture"];
-    user.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:user.avatarUrl]]];
+    user.avatar = nil;//[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:user.avatarUrl]]];
     user.gender = [[dic objectForKey:@"gender"] intValue];
     
     user.name = [dic objectForKey:@"name"];
@@ -236,5 +236,21 @@ void debug(NSString *format, ...)
     }
     else
         return @"0";
+}
+
++ (NSString*)getSymbolLocation:(NSString*)location
+{
+    char array[location.length + 1];
+    int count = 0;
+    for (int i = 0; i < location.length; i++) {
+        char c = [location characterAtIndex:i];
+        if (c >= 65 && c <= 90) {
+            array[count] = c;
+            count++;
+        }
+    }
+    array[count] = '\0';
+    return [NSString stringWithCString:array encoding:NSASCIIStringEncoding];
+    
 }
 @end

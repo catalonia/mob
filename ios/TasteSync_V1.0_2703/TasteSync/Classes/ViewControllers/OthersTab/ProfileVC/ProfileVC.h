@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "UserObj.h"
 #import <MessageUI/MFMessageComposeViewController.h>
-@interface ProfileVC : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate,MFMessageComposeViewControllerDelegate,UITextViewDelegate>
+#import "CRequest.h"
+#import "JSONKit.h"
+
+@interface ProfileVC : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate,MFMessageComposeViewControllerDelegate,UITextViewDelegate, RequestDelegate>
 {
     __weak IBOutlet UIView *viewReportUser, *viewSendMsg;
     __weak IBOutlet UITextView *tvReportUser, *tvSendMsg;
@@ -19,9 +22,15 @@
     __weak IBOutlet UIImageView *ivAvatar;
     
     __weak IBOutlet UILabel *lbTrust, *lbReport, *lbFollow, *lbSend, *lbHoverReport, *lbHoverSendMsg;
+    
+    __weak IBOutlet UIView* recentlyView;
+    
+    __weak IBOutlet UILabel *lbFollowing, *lbFollowers, *lbFriends, *lbPoints;
+    __weak IBOutlet UIButton* btRestaurant1, *btRestaurant2, *btRestaurant3;
 }
 
 @property (nonatomic, strong) UserObj *user;
+@property (nonatomic, strong) NSString *userID;
 
 
 

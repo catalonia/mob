@@ -586,6 +586,7 @@
 		C39F959D179F717E00C91BAA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39F959C179F717E00C91BAA /* SystemConfiguration.framework */; };
 		C39F959F179F718800C91BAA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39F959E179F718800C91BAA /* MobileCoreServices.framework */; };
 		C39F95A1179F719700C91BAA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C39F95A0179F719700C91BAA /* libz.dylib */; };
+		C3CA914A17A9EA5A002C2618 /* TSGlobalObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */; };
 		C3D18087179F66F7007B71A0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D18086179F66F7007B71A0 /* FacebookSDK.framework */; };
 		C3D180BA179F69AF007B71A0 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B6179F69AF007B71A0 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C3D180BB179F69AF007B71A0 /* CRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B9179F69AF007B71A0 /* CRequest.m */; };
@@ -1297,6 +1298,8 @@
 		C39F959C179F717E00C91BAA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C39F959E179F718800C91BAA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		C39F95A0179F719700C91BAA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		C3CA914817A9EA5A002C2618 /* TSGlobalObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSGlobalObj.h; sourceTree = "<group>"; };
+		C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSGlobalObj.m; sourceTree = "<group>"; };
 		C3D18086179F66F7007B71A0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		C3D180B5179F69AF007B71A0 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../JSONKit.h; sourceTree = "<group>"; };
 		C3D180B6179F69AF007B71A0 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../JSONKit.m; sourceTree = "<group>"; };
@@ -2670,6 +2673,8 @@
 				5E8D404E16D3648500FF5EEC /* UserObj.m */,
 				5E8D40D116D367ED00FF5EEC /* RestaurantObj.h */,
 				5E8D40D216D367EE00FF5EEC /* RestaurantObj.m */,
+				C3CA914817A9EA5A002C2618 /* TSGlobalObj.h */,
+				C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */,
 			);
 			path = GlobeObjects;
 			sourceTree = "<group>";
@@ -3632,6 +3637,7 @@
 				C39F959A179F6EC600C91BAA /* ASINetworkQueue.m in Sources */,
 				C39F959B179F6EC600C91BAA /* Reachability.m in Sources */,
 				C3DA7DDF17A34A1100641DE7 /* ContentAboutUsVC.m in Sources */,
+				C3CA914A17A9EA5A002C2618 /* TSGlobalObj.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

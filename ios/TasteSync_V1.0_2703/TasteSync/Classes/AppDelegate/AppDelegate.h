@@ -12,8 +12,10 @@
 #import "TabbarBaseVC.h"
 #import "GlobalNotification.h"
 #import "CFacebook.h"
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,CFacebookDelegate,UIAlertViewDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,CFacebookDelegate,UIAlertViewDelegate, RequestDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

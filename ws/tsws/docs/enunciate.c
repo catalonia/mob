@@ -54,6 +54,56 @@ static int xmlTextWriterWriteNs0TSCityObjType(xmlTextWriterPtr writer, struct en
 static void freeNs0TSCityObjType(struct enunciate_ns0_TSCityObj *_tSCityObj);
 
 #endif /* DEF_enunciate_ns0_TSCityObj_H */
+#ifndef DEF_enunciate_ns0_TSCuisineTier2Obj_H
+#define DEF_enunciate_ns0_TSCuisineTier2Obj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSCuisineTier2Obj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *cuisineId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *cuisineDesc;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *cuisineValidCurrent;
+};
+
+/**
+ * Reads a TSCuisineTier2Obj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSCuisineTier2Obj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSCuisineTier2Obj *xmlTextReaderReadNs0TSCuisineTier2ObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSCuisineTier2Obj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSCuisineTier2Obj The TSCuisineTier2Obj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSCuisineTier2ObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSCuisineTier2Obj *_tSCuisineTier2Obj);
+
+/**
+ * Frees the elements of a TSCuisineTier2Obj.
+ *
+ * @param _tSCuisineTier2Obj The TSCuisineTier2Obj to free.
+ */
+static void freeNs0TSCuisineTier2ObjType(struct enunciate_ns0_TSCuisineTier2Obj *_tSCuisineTier2Obj);
+
+#endif /* DEF_enunciate_ns0_TSCuisineTier2Obj_H */
 #ifndef DEF_enunciate_ns0_TSCurrentRecommendedRestaurantDetailsObj_H
 #define DEF_enunciate_ns0_TSCurrentRecommendedRestaurantDetailsObj_H
 
@@ -512,6 +562,122 @@ static int xmlTextWriterWriteNs0TSFacebookUserDataObjType(xmlTextWriterPtr write
 static void freeNs0TSFacebookUserDataObjType(struct enunciate_ns0_TSFacebookUserDataObj *_tSFacebookUserDataObj);
 
 #endif /* DEF_enunciate_ns0_TSFacebookUserDataObj_H */
+#ifndef DEF_enunciate_ns0_TSKeyValueObj_H
+#define DEF_enunciate_ns0_TSKeyValueObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSKeyValueObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *keyName;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *keyNameValue;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *valueName;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *valueNameValue;
+};
+
+/**
+ * Reads a TSKeyValueObj element from XML. The element to be read is "keyvalue", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSKeyValueObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSKeyValueObj *xml_read_enunciate_ns0_TSKeyValueObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSKeyValueObj to XML under element name "keyvalue".
+ *
+ * @param writer The XML writer.
+ * @param _tSKeyValueObj The TSKeyValueObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSKeyValueObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj);
+
+/**
+ * Frees a TSKeyValueObj.
+ *
+ * @param _tSKeyValueObj The TSKeyValueObj to free.
+ */
+void free_enunciate_ns0_TSKeyValueObj(struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj);
+
+/**
+ * Reads a TSKeyValueObj element from XML. The element to be read is "keyvalue", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSKeyValueObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSKeyValueObj *xmlTextReaderReadNs0KeyvalueElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSKeyValueObj to XML under element name "keyvalue".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSKeyValueObj The TSKeyValueObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0KeyvalueElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj);
+
+/**
+ * Writes a TSKeyValueObj to XML under element name "keyvalue".
+ *
+ * @param writer The XML writer.
+ * @param _tSKeyValueObj The TSKeyValueObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0KeyvalueElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSKeyValueObj.
+ *
+ * @param _tSKeyValueObj The TSKeyValueObj whose children are to be free.
+ */
+static void freeNs0KeyvalueElement(struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj);
+
+/**
+ * Reads a TSKeyValueObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSKeyValueObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSKeyValueObj *xmlTextReaderReadNs0TSKeyValueObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSKeyValueObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSKeyValueObj The TSKeyValueObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSKeyValueObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj);
+
+/**
+ * Frees the elements of a TSKeyValueObj.
+ *
+ * @param _tSKeyValueObj The TSKeyValueObj to free.
+ */
+static void freeNs0TSKeyValueObjType(struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj);
+
+#endif /* DEF_enunciate_ns0_TSKeyValueObj_H */
 #ifndef DEF_enunciate_ns0_TSListFacebookUserDataObj_H
 #define DEF_enunciate_ns0_TSListFacebookUserDataObj_H
 
@@ -734,6 +900,117 @@ static int xmlTextWriterWriteNs0TSListNotificationSettingsObjType(xmlTextWriterP
 static void freeNs0TSListNotificationSettingsObjType(struct enunciate_ns0_TSListNotificationSettingsObj *_tSListNotificationSettingsObj);
 
 #endif /* DEF_enunciate_ns0_TSListNotificationSettingsObj_H */
+#ifndef DEF_enunciate_ns0_TSMenuObj_H
+#define DEF_enunciate_ns0_TSMenuObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSMenuObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *menuSource;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *menuMobileUrl;
+};
+
+/**
+ * Reads a TSMenuObj element from XML. The element to be read is "menu", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSMenuObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSMenuObj *xml_read_enunciate_ns0_TSMenuObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSMenuObj to XML under element name "menu".
+ *
+ * @param writer The XML writer.
+ * @param _tSMenuObj The TSMenuObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSMenuObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSMenuObj *_tSMenuObj);
+
+/**
+ * Frees a TSMenuObj.
+ *
+ * @param _tSMenuObj The TSMenuObj to free.
+ */
+void free_enunciate_ns0_TSMenuObj(struct enunciate_ns0_TSMenuObj *_tSMenuObj);
+
+/**
+ * Reads a TSMenuObj element from XML. The element to be read is "menu", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSMenuObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSMenuObj *xmlTextReaderReadNs0MenuElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSMenuObj to XML under element name "menu".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSMenuObj The TSMenuObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0MenuElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSMenuObj *_tSMenuObj);
+
+/**
+ * Writes a TSMenuObj to XML under element name "menu".
+ *
+ * @param writer The XML writer.
+ * @param _tSMenuObj The TSMenuObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0MenuElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSMenuObj *_tSMenuObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSMenuObj.
+ *
+ * @param _tSMenuObj The TSMenuObj whose children are to be free.
+ */
+static void freeNs0MenuElement(struct enunciate_ns0_TSMenuObj *_tSMenuObj);
+
+/**
+ * Reads a TSMenuObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSMenuObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSMenuObj *xmlTextReaderReadNs0TSMenuObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSMenuObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSMenuObj The TSMenuObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSMenuObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSMenuObj *_tSMenuObj);
+
+/**
+ * Frees the elements of a TSMenuObj.
+ *
+ * @param _tSMenuObj The TSMenuObj to free.
+ */
+static void freeNs0TSMenuObjType(struct enunciate_ns0_TSMenuObj *_tSMenuObj);
+
+#endif /* DEF_enunciate_ns0_TSMenuObj_H */
 #ifndef DEF_enunciate_ns0_TSNotificationSettingsObj_H
 #define DEF_enunciate_ns0_TSNotificationSettingsObj_H
 
@@ -1719,6 +1996,67 @@ struct enunciate_ns0_TSRestaurantPhotoObj {
    */
   xmlChar *photoSource;
 };
+
+/**
+ * Reads a TSRestaurantPhotoObj element from XML. The element to be read is "restaurantphoto", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantPhotoObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantPhotoObj *xml_read_enunciate_ns0_TSRestaurantPhotoObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantPhotoObj to XML under element name "restaurantphoto".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSRestaurantPhotoObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj);
+
+/**
+ * Frees a TSRestaurantPhotoObj.
+ *
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantPhotoObj(struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj);
+
+/**
+ * Reads a TSRestaurantPhotoObj element from XML. The element to be read is "restaurantphoto", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantPhotoObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantPhotoObj *xmlTextReaderReadNs0RestaurantphotoElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantPhotoObj to XML under element name "restaurantphoto".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0RestaurantphotoElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj);
+
+/**
+ * Writes a TSRestaurantPhotoObj to XML under element name "restaurantphoto".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0RestaurantphotoElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSRestaurantPhotoObj.
+ *
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj whose children are to be free.
+ */
+static void freeNs0RestaurantphotoElement(struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj);
 
 /**
  * Reads a TSRestaurantPhotoObj from XML. The reader is assumed to be at the start element.
@@ -3378,6 +3716,112 @@ static int xmlTextWriterWriteNs0TSRecommendersDetailsObjType(xmlTextWriterPtr wr
 static void freeNs0TSRecommendersDetailsObjType(struct enunciate_ns0_TSRecommendersDetailsObj *_tSRecommendersDetailsObj);
 
 #endif /* DEF_enunciate_ns0_TSRecommendersDetailsObj_H */
+#ifndef DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_H
+#define DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSRestaurantCusineTier2Obj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSRestaurantDetailsObj *tsRestaurantDetailsObj;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSCuisineTier2Obj *tsCuisineTier2Obj;
+};
+
+/**
+ * Reads a TSRestaurantCusineTier2Obj element from XML. The element to be read is "restaurantcuisinetier2", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantCusineTier2Obj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantCusineTier2Obj *xml_read_enunciate_ns0_TSRestaurantCusineTier2Obj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantCusineTier2Obj to XML under element name "restaurantcuisinetier2".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSRestaurantCusineTier2Obj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj);
+
+/**
+ * Frees a TSRestaurantCusineTier2Obj.
+ *
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to free.
+ */
+void free_enunciate_ns0_TSRestaurantCusineTier2Obj(struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj);
+
+/**
+ * Reads a TSRestaurantCusineTier2Obj element from XML. The element to be read is "restaurantcuisinetier2", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantCusineTier2Obj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantCusineTier2Obj *xmlTextReaderReadNs0Restaurantcuisinetier2Element(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantCusineTier2Obj to XML under element name "restaurantcuisinetier2".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0Restaurantcuisinetier2Element(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj);
+
+/**
+ * Writes a TSRestaurantCusineTier2Obj to XML under element name "restaurantcuisinetier2".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0Restaurantcuisinetier2ElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSRestaurantCusineTier2Obj.
+ *
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj whose children are to be free.
+ */
+static void freeNs0Restaurantcuisinetier2Element(struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj);
+
+/**
+ * Reads a TSRestaurantCusineTier2Obj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantCusineTier2Obj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantCusineTier2Obj *xmlTextReaderReadNs0TSRestaurantCusineTier2ObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantCusineTier2Obj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSRestaurantCusineTier2ObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj);
+
+/**
+ * Frees the elements of a TSRestaurantCusineTier2Obj.
+ *
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to free.
+ */
+static void freeNs0TSRestaurantCusineTier2ObjType(struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj);
+
+#endif /* DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_H */
 #ifndef DEF_enunciate_ns0_TSSenderUserObj_H
 #define DEF_enunciate_ns0_TSSenderUserObj_H
 
@@ -3489,6 +3933,41 @@ static int xmlTextWriterWriteNs0TSSenderUserObjType(xmlTextWriterPtr writer, str
 static void freeNs0TSSenderUserObjType(struct enunciate_ns0_TSSenderUserObj *_tSSenderUserObj);
 
 #endif /* DEF_enunciate_ns0_TSSenderUserObj_H */
+#ifndef DEF_enunciate_ns0_JSONObject_H
+#define DEF_enunciate_ns0_JSONObject_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_JSONObject {
+
+};
+
+/**
+ * Reads a JSONObject from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The JSONObject, or NULL in case of error.
+ */
+static struct enunciate_ns0_JSONObject *xmlTextReaderReadNs0JSONObjectType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a JSONObject to XML.
+ *
+ * @param writer The XML writer.
+ * @param _jSONObject The JSONObject to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0JSONObjectType(xmlTextWriterPtr writer, struct enunciate_ns0_JSONObject *_jSONObject);
+
+/**
+ * Frees the elements of a JSONObject.
+ *
+ * @param _jSONObject The JSONObject to free.
+ */
+static void freeNs0JSONObjectType(struct enunciate_ns0_JSONObject *_jSONObject);
+
+#endif /* DEF_enunciate_ns0_JSONObject_H */
 #ifndef DEF_enunciate_ns0_TSCityObj_M
 #define DEF_enunciate_ns0_TSCityObj_M
 
@@ -3802,6 +4281,258 @@ static void freeNs0TSCityObjType(struct enunciate_ns0_TSCityObj *_tSCityObj) {
   }
 }
 #endif /* DEF_enunciate_ns0_TSCityObj_M */
+#ifndef DEF_enunciate_ns0_TSCuisineTier2Obj_M
+#define DEF_enunciate_ns0_TSCuisineTier2Obj_M
+
+/**
+ * Reads a TSCuisineTier2Obj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSCuisineTier2Obj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSCuisineTier2Obj *xmlTextReaderReadNs0TSCuisineTier2ObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSCuisineTier2Obj *_tSCuisineTier2Obj = calloc(1, sizeof(struct enunciate_ns0_TSCuisineTier2Obj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSCuisineTier2ObjType(_tSCuisineTier2Obj);
+        free(_tSCuisineTier2Obj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "cuisineId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}cuisineId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}cuisineId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSCuisineTier2ObjType(_tSCuisineTier2Obj);
+          free(_tSCuisineTier2Obj);
+          return NULL;
+        }
+
+        _tSCuisineTier2Obj->cuisineId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "cuisineDesc", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}cuisineDesc of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}cuisineDesc of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSCuisineTier2ObjType(_tSCuisineTier2Obj);
+          free(_tSCuisineTier2Obj);
+          return NULL;
+        }
+
+        _tSCuisineTier2Obj->cuisineDesc = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "cuisineValidCurrent", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}cuisineValidCurrent of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}cuisineValidCurrent of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSCuisineTier2ObjType(_tSCuisineTier2Obj);
+          free(_tSCuisineTier2Obj);
+          return NULL;
+        }
+
+        _tSCuisineTier2Obj->cuisineValidCurrent = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSCuisineTier2Obj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSCuisineTier2Obj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSCuisineTier2Obj;
+}
+
+/**
+ * Writes a TSCuisineTier2Obj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSCuisineTier2Obj The TSCuisineTier2Obj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSCuisineTier2ObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSCuisineTier2Obj *_tSCuisineTier2Obj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSCuisineTier2Obj->cuisineId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cuisineId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}cuisineId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}cuisineId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSCuisineTier2Obj->cuisineId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}cuisineId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}cuisineId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSCuisineTier2Obj->cuisineDesc != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cuisineDesc", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}cuisineDesc. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}cuisineDesc...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSCuisineTier2Obj->cuisineDesc));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}cuisineDesc. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}cuisineDesc. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSCuisineTier2Obj->cuisineValidCurrent != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cuisineValidCurrent", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}cuisineValidCurrent. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}cuisineValidCurrent...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSCuisineTier2Obj->cuisineValidCurrent));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}cuisineValidCurrent. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}cuisineValidCurrent. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSCuisineTier2Obj.
+ *
+ * @param _tSCuisineTier2Obj The TSCuisineTier2Obj to free.
+ */
+static void freeNs0TSCuisineTier2ObjType(struct enunciate_ns0_TSCuisineTier2Obj *_tSCuisineTier2Obj) {
+  int i;
+  if (_tSCuisineTier2Obj->cuisineId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor cuisineId of type enunciate_ns0_TSCuisineTier2Obj...\n");
+#endif
+    freeXsStringType(_tSCuisineTier2Obj->cuisineId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor cuisineId of type enunciate_ns0_TSCuisineTier2Obj...\n");
+#endif
+    free(_tSCuisineTier2Obj->cuisineId);
+  }
+  if (_tSCuisineTier2Obj->cuisineDesc != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor cuisineDesc of type enunciate_ns0_TSCuisineTier2Obj...\n");
+#endif
+    freeXsStringType(_tSCuisineTier2Obj->cuisineDesc);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor cuisineDesc of type enunciate_ns0_TSCuisineTier2Obj...\n");
+#endif
+    free(_tSCuisineTier2Obj->cuisineDesc);
+  }
+  if (_tSCuisineTier2Obj->cuisineValidCurrent != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor cuisineValidCurrent of type enunciate_ns0_TSCuisineTier2Obj...\n");
+#endif
+    freeXsStringType(_tSCuisineTier2Obj->cuisineValidCurrent);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor cuisineValidCurrent of type enunciate_ns0_TSCuisineTier2Obj...\n");
+#endif
+    free(_tSCuisineTier2Obj->cuisineValidCurrent);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSCuisineTier2Obj_M */
 #ifndef DEF_enunciate_ns0_TSCurrentRecommendedRestaurantDetailsObj_M
 #define DEF_enunciate_ns0_TSCurrentRecommendedRestaurantDetailsObj_M
 
@@ -6419,6 +7150,450 @@ static void freeNs0TSFacebookUserDataObjType(struct enunciate_ns0_TSFacebookUser
   }
 }
 #endif /* DEF_enunciate_ns0_TSFacebookUserDataObj_M */
+#ifndef DEF_enunciate_ns0_TSKeyValueObj_M
+#define DEF_enunciate_ns0_TSKeyValueObj_M
+
+/**
+ * Reads a TSKeyValueObj element from XML. The element to be read is "keyvalue", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSKeyValueObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSKeyValueObj *xml_read_enunciate_ns0_TSKeyValueObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0KeyvalueElement(reader);
+}
+
+/**
+ * Writes a TSKeyValueObj to XML under element name "keyvalue".
+ *
+ * @param writer The XML writer.
+ * @param _tSKeyValueObj The TSKeyValueObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSKeyValueObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj) {
+  return xmlTextWriterWriteNs0KeyvalueElementNS(writer, _tSKeyValueObj, 1);
+}
+
+/**
+ * Frees a TSKeyValueObj.
+ *
+ * @param _tSKeyValueObj The TSKeyValueObj to free.
+ */
+void free_enunciate_ns0_TSKeyValueObj(struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj) {
+  freeNs0TSKeyValueObjType(_tSKeyValueObj);
+  free(_tSKeyValueObj);
+}
+
+/**
+ * Reads a TSKeyValueObj element from XML. The element to be read is "keyvalue", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSKeyValueObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSKeyValueObj *xmlTextReaderReadNs0KeyvalueElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "keyvalue", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}keyvalue.\n");
+#endif
+    _tSKeyValueObj = xmlTextReaderReadNs0TSKeyValueObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSKeyValueObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}keyvalue failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}keyvalue failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSKeyValueObj;
+}
+
+/**
+ * Writes a TSKeyValueObj to XML under element name "keyvalue".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSKeyValueObj The TSKeyValueObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0KeyvalueElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj) {
+  return xmlTextWriterWriteNs0KeyvalueElementNS(writer, _tSKeyValueObj, 0);
+}
+
+/**
+ * Writes a TSKeyValueObj to XML under element name "keyvalue".
+ *
+ * @param writer The XML writer.
+ * @param _tSKeyValueObj The TSKeyValueObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0KeyvalueElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "keyvalue", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}keyvalue. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSKeyValueObj for root element {}keyvalue...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSKeyValueObjType(writer, _tSKeyValueObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}keyvalue. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}keyvalue. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSKeyValueObj.
+ *
+ * @param _tSKeyValueObj The TSKeyValueObj whose children are to be free.
+ */
+static void freeNs0KeyvalueElement(struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj) {
+  freeNs0TSKeyValueObjType(_tSKeyValueObj);
+}
+
+/**
+ * Reads a TSKeyValueObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSKeyValueObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSKeyValueObj *xmlTextReaderReadNs0TSKeyValueObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj = calloc(1, sizeof(struct enunciate_ns0_TSKeyValueObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSKeyValueObjType(_tSKeyValueObj);
+        free(_tSKeyValueObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "keyName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}keyName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}keyName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSKeyValueObjType(_tSKeyValueObj);
+          free(_tSKeyValueObj);
+          return NULL;
+        }
+
+        _tSKeyValueObj->keyName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "keyNameValue", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}keyNameValue of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}keyNameValue of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSKeyValueObjType(_tSKeyValueObj);
+          free(_tSKeyValueObj);
+          return NULL;
+        }
+
+        _tSKeyValueObj->keyNameValue = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "valueName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}valueName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}valueName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSKeyValueObjType(_tSKeyValueObj);
+          free(_tSKeyValueObj);
+          return NULL;
+        }
+
+        _tSKeyValueObj->valueName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "valueNameValue", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}valueNameValue of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}valueNameValue of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSKeyValueObjType(_tSKeyValueObj);
+          free(_tSKeyValueObj);
+          return NULL;
+        }
+
+        _tSKeyValueObj->valueNameValue = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSKeyValueObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSKeyValueObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSKeyValueObj;
+}
+
+/**
+ * Writes a TSKeyValueObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSKeyValueObj The TSKeyValueObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSKeyValueObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSKeyValueObj->keyName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "keyName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}keyName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}keyName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSKeyValueObj->keyName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}keyName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}keyName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSKeyValueObj->keyNameValue != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "keyNameValue", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}keyNameValue. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}keyNameValue...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSKeyValueObj->keyNameValue));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}keyNameValue. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}keyNameValue. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSKeyValueObj->valueName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "valueName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}valueName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}valueName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSKeyValueObj->valueName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}valueName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}valueName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSKeyValueObj->valueNameValue != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "valueNameValue", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}valueNameValue. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}valueNameValue...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSKeyValueObj->valueNameValue));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}valueNameValue. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}valueNameValue. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSKeyValueObj.
+ *
+ * @param _tSKeyValueObj The TSKeyValueObj to free.
+ */
+static void freeNs0TSKeyValueObjType(struct enunciate_ns0_TSKeyValueObj *_tSKeyValueObj) {
+  int i;
+  if (_tSKeyValueObj->keyName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor keyName of type enunciate_ns0_TSKeyValueObj...\n");
+#endif
+    freeXsStringType(_tSKeyValueObj->keyName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor keyName of type enunciate_ns0_TSKeyValueObj...\n");
+#endif
+    free(_tSKeyValueObj->keyName);
+  }
+  if (_tSKeyValueObj->keyNameValue != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor keyNameValue of type enunciate_ns0_TSKeyValueObj...\n");
+#endif
+    freeXsStringType(_tSKeyValueObj->keyNameValue);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor keyNameValue of type enunciate_ns0_TSKeyValueObj...\n");
+#endif
+    free(_tSKeyValueObj->keyNameValue);
+  }
+  if (_tSKeyValueObj->valueName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor valueName of type enunciate_ns0_TSKeyValueObj...\n");
+#endif
+    freeXsStringType(_tSKeyValueObj->valueName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor valueName of type enunciate_ns0_TSKeyValueObj...\n");
+#endif
+    free(_tSKeyValueObj->valueName);
+  }
+  if (_tSKeyValueObj->valueNameValue != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor valueNameValue of type enunciate_ns0_TSKeyValueObj...\n");
+#endif
+    freeXsStringType(_tSKeyValueObj->valueNameValue);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor valueNameValue of type enunciate_ns0_TSKeyValueObj...\n");
+#endif
+    free(_tSKeyValueObj->valueNameValue);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSKeyValueObj_M */
 #ifndef DEF_enunciate_ns0_TSListFacebookUserDataObj_M
 #define DEF_enunciate_ns0_TSListFacebookUserDataObj_M
 
@@ -7071,6 +8246,389 @@ static void freeNs0TSListNotificationSettingsObjType(struct enunciate_ns0_TSList
   }
 }
 #endif /* DEF_enunciate_ns0_TSListNotificationSettingsObj_M */
+#ifndef DEF_enunciate_ns0_TSMenuObj_M
+#define DEF_enunciate_ns0_TSMenuObj_M
+
+/**
+ * Reads a TSMenuObj element from XML. The element to be read is "menu", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSMenuObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSMenuObj *xml_read_enunciate_ns0_TSMenuObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0MenuElement(reader);
+}
+
+/**
+ * Writes a TSMenuObj to XML under element name "menu".
+ *
+ * @param writer The XML writer.
+ * @param _tSMenuObj The TSMenuObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSMenuObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSMenuObj *_tSMenuObj) {
+  return xmlTextWriterWriteNs0MenuElementNS(writer, _tSMenuObj, 1);
+}
+
+/**
+ * Frees a TSMenuObj.
+ *
+ * @param _tSMenuObj The TSMenuObj to free.
+ */
+void free_enunciate_ns0_TSMenuObj(struct enunciate_ns0_TSMenuObj *_tSMenuObj) {
+  freeNs0TSMenuObjType(_tSMenuObj);
+  free(_tSMenuObj);
+}
+
+/**
+ * Reads a TSMenuObj element from XML. The element to be read is "menu", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSMenuObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSMenuObj *xmlTextReaderReadNs0MenuElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSMenuObj *_tSMenuObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "menu", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}menu.\n");
+#endif
+    _tSMenuObj = xmlTextReaderReadNs0TSMenuObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSMenuObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}menu failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}menu failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSMenuObj;
+}
+
+/**
+ * Writes a TSMenuObj to XML under element name "menu".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSMenuObj The TSMenuObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0MenuElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSMenuObj *_tSMenuObj) {
+  return xmlTextWriterWriteNs0MenuElementNS(writer, _tSMenuObj, 0);
+}
+
+/**
+ * Writes a TSMenuObj to XML under element name "menu".
+ *
+ * @param writer The XML writer.
+ * @param _tSMenuObj The TSMenuObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0MenuElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSMenuObj *_tSMenuObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "menu", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}menu. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSMenuObj for root element {}menu...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSMenuObjType(writer, _tSMenuObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}menu. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}menu. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSMenuObj.
+ *
+ * @param _tSMenuObj The TSMenuObj whose children are to be free.
+ */
+static void freeNs0MenuElement(struct enunciate_ns0_TSMenuObj *_tSMenuObj) {
+  freeNs0TSMenuObjType(_tSMenuObj);
+}
+
+/**
+ * Reads a TSMenuObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSMenuObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSMenuObj *xmlTextReaderReadNs0TSMenuObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSMenuObj *_tSMenuObj = calloc(1, sizeof(struct enunciate_ns0_TSMenuObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSMenuObjType(_tSMenuObj);
+        free(_tSMenuObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSMenuObjType(_tSMenuObj);
+          free(_tSMenuObj);
+          return NULL;
+        }
+
+        _tSMenuObj->restaurantId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "menuSource", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}menuSource of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}menuSource of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSMenuObjType(_tSMenuObj);
+          free(_tSMenuObj);
+          return NULL;
+        }
+
+        _tSMenuObj->menuSource = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "menuMobileUrl", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}menuMobileUrl of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}menuMobileUrl of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSMenuObjType(_tSMenuObj);
+          free(_tSMenuObj);
+          return NULL;
+        }
+
+        _tSMenuObj->menuMobileUrl = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSMenuObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSMenuObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSMenuObj;
+}
+
+/**
+ * Writes a TSMenuObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSMenuObj The TSMenuObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSMenuObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSMenuObj *_tSMenuObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSMenuObj->restaurantId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSMenuObj->restaurantId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSMenuObj->menuSource != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "menuSource", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}menuSource. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}menuSource...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSMenuObj->menuSource));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}menuSource. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}menuSource. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSMenuObj->menuMobileUrl != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "menuMobileUrl", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}menuMobileUrl. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}menuMobileUrl...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSMenuObj->menuMobileUrl));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}menuMobileUrl. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}menuMobileUrl. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSMenuObj.
+ *
+ * @param _tSMenuObj The TSMenuObj to free.
+ */
+static void freeNs0TSMenuObjType(struct enunciate_ns0_TSMenuObj *_tSMenuObj) {
+  int i;
+  if (_tSMenuObj->restaurantId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantId of type enunciate_ns0_TSMenuObj...\n");
+#endif
+    freeXsStringType(_tSMenuObj->restaurantId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantId of type enunciate_ns0_TSMenuObj...\n");
+#endif
+    free(_tSMenuObj->restaurantId);
+  }
+  if (_tSMenuObj->menuSource != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor menuSource of type enunciate_ns0_TSMenuObj...\n");
+#endif
+    freeXsStringType(_tSMenuObj->menuSource);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor menuSource of type enunciate_ns0_TSMenuObj...\n");
+#endif
+    free(_tSMenuObj->menuSource);
+  }
+  if (_tSMenuObj->menuMobileUrl != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor menuMobileUrl of type enunciate_ns0_TSMenuObj...\n");
+#endif
+    freeXsStringType(_tSMenuObj->menuMobileUrl);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor menuMobileUrl of type enunciate_ns0_TSMenuObj...\n");
+#endif
+    free(_tSMenuObj->menuMobileUrl);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSMenuObj_M */
 #ifndef DEF_enunciate_ns0_TSNotificationSettingsObj_M
 #define DEF_enunciate_ns0_TSNotificationSettingsObj_M
 
@@ -12547,6 +14105,137 @@ static void freeNs0TSRestaurantObjType(struct enunciate_ns0_TSRestaurantObj *_tS
 #endif /* DEF_enunciate_ns0_TSRestaurantObj_M */
 #ifndef DEF_enunciate_ns0_TSRestaurantPhotoObj_M
 #define DEF_enunciate_ns0_TSRestaurantPhotoObj_M
+
+/**
+ * Reads a TSRestaurantPhotoObj element from XML. The element to be read is "restaurantphoto", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantPhotoObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantPhotoObj *xml_read_enunciate_ns0_TSRestaurantPhotoObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0RestaurantphotoElement(reader);
+}
+
+/**
+ * Writes a TSRestaurantPhotoObj to XML under element name "restaurantphoto".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSRestaurantPhotoObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj) {
+  return xmlTextWriterWriteNs0RestaurantphotoElementNS(writer, _tSRestaurantPhotoObj, 1);
+}
+
+/**
+ * Frees a TSRestaurantPhotoObj.
+ *
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantPhotoObj(struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj) {
+  freeNs0TSRestaurantPhotoObjType(_tSRestaurantPhotoObj);
+  free(_tSRestaurantPhotoObj);
+}
+
+/**
+ * Reads a TSRestaurantPhotoObj element from XML. The element to be read is "restaurantphoto", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantPhotoObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantPhotoObj *xmlTextReaderReadNs0RestaurantphotoElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantphoto", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}restaurantphoto.\n");
+#endif
+    _tSRestaurantPhotoObj = xmlTextReaderReadNs0TSRestaurantPhotoObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSRestaurantPhotoObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}restaurantphoto failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}restaurantphoto failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSRestaurantPhotoObj;
+}
+
+/**
+ * Writes a TSRestaurantPhotoObj to XML under element name "restaurantphoto".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0RestaurantphotoElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj) {
+  return xmlTextWriterWriteNs0RestaurantphotoElementNS(writer, _tSRestaurantPhotoObj, 0);
+}
+
+/**
+ * Writes a TSRestaurantPhotoObj to XML under element name "restaurantphoto".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0RestaurantphotoElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantphoto", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}restaurantphoto. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSRestaurantPhotoObj for root element {}restaurantphoto...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSRestaurantPhotoObjType(writer, _tSRestaurantPhotoObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}restaurantphoto. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}restaurantphoto. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSRestaurantPhotoObj.
+ *
+ * @param _tSRestaurantPhotoObj The TSRestaurantPhotoObj whose children are to be free.
+ */
+static void freeNs0RestaurantphotoElement(struct enunciate_ns0_TSRestaurantPhotoObj *_tSRestaurantPhotoObj) {
+  freeNs0TSRestaurantPhotoObjType(_tSRestaurantPhotoObj);
+}
 
 /**
  * Reads a TSRestaurantPhotoObj from XML. The reader is assumed to be at the start element.
@@ -20232,6 +21921,328 @@ static void freeNs0TSRecommendersDetailsObjType(struct enunciate_ns0_TSRecommend
   }
 }
 #endif /* DEF_enunciate_ns0_TSRecommendersDetailsObj_M */
+#ifndef DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_M
+#define DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_M
+
+/**
+ * Reads a TSRestaurantCusineTier2Obj element from XML. The element to be read is "restaurantcuisinetier2", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantCusineTier2Obj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantCusineTier2Obj *xml_read_enunciate_ns0_TSRestaurantCusineTier2Obj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0Restaurantcuisinetier2Element(reader);
+}
+
+/**
+ * Writes a TSRestaurantCusineTier2Obj to XML under element name "restaurantcuisinetier2".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSRestaurantCusineTier2Obj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj) {
+  return xmlTextWriterWriteNs0Restaurantcuisinetier2ElementNS(writer, _tSRestaurantCusineTier2Obj, 1);
+}
+
+/**
+ * Frees a TSRestaurantCusineTier2Obj.
+ *
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to free.
+ */
+void free_enunciate_ns0_TSRestaurantCusineTier2Obj(struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj) {
+  freeNs0TSRestaurantCusineTier2ObjType(_tSRestaurantCusineTier2Obj);
+  free(_tSRestaurantCusineTier2Obj);
+}
+
+/**
+ * Reads a TSRestaurantCusineTier2Obj element from XML. The element to be read is "restaurantcuisinetier2", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantCusineTier2Obj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantCusineTier2Obj *xmlTextReaderReadNs0Restaurantcuisinetier2Element(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantcuisinetier2", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}restaurantcuisinetier2.\n");
+#endif
+    _tSRestaurantCusineTier2Obj = xmlTextReaderReadNs0TSRestaurantCusineTier2ObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSRestaurantCusineTier2Obj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}restaurantcuisinetier2 failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}restaurantcuisinetier2 failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSRestaurantCusineTier2Obj;
+}
+
+/**
+ * Writes a TSRestaurantCusineTier2Obj to XML under element name "restaurantcuisinetier2".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0Restaurantcuisinetier2Element(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj) {
+  return xmlTextWriterWriteNs0Restaurantcuisinetier2ElementNS(writer, _tSRestaurantCusineTier2Obj, 0);
+}
+
+/**
+ * Writes a TSRestaurantCusineTier2Obj to XML under element name "restaurantcuisinetier2".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0Restaurantcuisinetier2ElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantcuisinetier2", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}restaurantcuisinetier2. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSRestaurantCusineTier2Obj for root element {}restaurantcuisinetier2...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSRestaurantCusineTier2ObjType(writer, _tSRestaurantCusineTier2Obj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}restaurantcuisinetier2. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}restaurantcuisinetier2. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSRestaurantCusineTier2Obj.
+ *
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj whose children are to be free.
+ */
+static void freeNs0Restaurantcuisinetier2Element(struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj) {
+  freeNs0TSRestaurantCusineTier2ObjType(_tSRestaurantCusineTier2Obj);
+}
+
+/**
+ * Reads a TSRestaurantCusineTier2Obj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSRestaurantCusineTier2Obj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantCusineTier2Obj *xmlTextReaderReadNs0TSRestaurantCusineTier2ObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj = calloc(1, sizeof(struct enunciate_ns0_TSRestaurantCusineTier2Obj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSRestaurantCusineTier2ObjType(_tSRestaurantCusineTier2Obj);
+        free(_tSRestaurantCusineTier2Obj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "tsRestaurantDetailsObj", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}tsRestaurantDetailsObj of type {}TSRestaurantDetailsObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSRestaurantDetailsObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}tsRestaurantDetailsObj of type {}TSRestaurantDetailsObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantCusineTier2ObjType(_tSRestaurantCusineTier2Obj);
+          free(_tSRestaurantCusineTier2Obj);
+          return NULL;
+        }
+
+        _tSRestaurantCusineTier2Obj->tsRestaurantDetailsObj = ((struct enunciate_ns0_TSRestaurantDetailsObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "tsCuisineTier2Obj", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}tsCuisineTier2Obj of type {}TSCuisineTier2Obj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSCuisineTier2ObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}tsCuisineTier2Obj of type {}TSCuisineTier2Obj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantCusineTier2ObjType(_tSRestaurantCusineTier2Obj);
+          free(_tSRestaurantCusineTier2Obj);
+          return NULL;
+        }
+
+        _tSRestaurantCusineTier2Obj->tsCuisineTier2Obj = ((struct enunciate_ns0_TSCuisineTier2Obj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSRestaurantCusineTier2Obj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSRestaurantCusineTier2Obj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSRestaurantCusineTier2Obj;
+}
+
+/**
+ * Writes a TSRestaurantCusineTier2Obj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSRestaurantCusineTier2ObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSRestaurantCusineTier2Obj->tsRestaurantDetailsObj != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tsRestaurantDetailsObj", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}tsRestaurantDetailsObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSRestaurantDetailsObj for element {}tsRestaurantDetailsObj...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSRestaurantDetailsObjType(writer, (_tSRestaurantCusineTier2Obj->tsRestaurantDetailsObj));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSRestaurantDetailsObj for element {}tsRestaurantDetailsObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}tsRestaurantDetailsObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantCusineTier2Obj->tsCuisineTier2Obj != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "tsCuisineTier2Obj", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}tsCuisineTier2Obj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSCuisineTier2Obj for element {}tsCuisineTier2Obj...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSCuisineTier2ObjType(writer, (_tSRestaurantCusineTier2Obj->tsCuisineTier2Obj));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSCuisineTier2Obj for element {}tsCuisineTier2Obj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}tsCuisineTier2Obj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSRestaurantCusineTier2Obj.
+ *
+ * @param _tSRestaurantCusineTier2Obj The TSRestaurantCusineTier2Obj to free.
+ */
+static void freeNs0TSRestaurantCusineTier2ObjType(struct enunciate_ns0_TSRestaurantCusineTier2Obj *_tSRestaurantCusineTier2Obj) {
+  int i;
+  if (_tSRestaurantCusineTier2Obj->tsRestaurantDetailsObj != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor tsRestaurantDetailsObj of type enunciate_ns0_TSRestaurantCusineTier2Obj...\n");
+#endif
+    freeNs0TSRestaurantDetailsObjType(_tSRestaurantCusineTier2Obj->tsRestaurantDetailsObj);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor tsRestaurantDetailsObj of type enunciate_ns0_TSRestaurantCusineTier2Obj...\n");
+#endif
+    free(_tSRestaurantCusineTier2Obj->tsRestaurantDetailsObj);
+  }
+  if (_tSRestaurantCusineTier2Obj->tsCuisineTier2Obj != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor tsCuisineTier2Obj of type enunciate_ns0_TSRestaurantCusineTier2Obj...\n");
+#endif
+    freeNs0TSCuisineTier2ObjType(_tSRestaurantCusineTier2Obj->tsCuisineTier2Obj);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor tsCuisineTier2Obj of type enunciate_ns0_TSRestaurantCusineTier2Obj...\n");
+#endif
+    free(_tSRestaurantCusineTier2Obj->tsCuisineTier2Obj);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_M */
 #ifndef DEF_enunciate_ns0_TSSenderUserObj_M
 #define DEF_enunciate_ns0_TSSenderUserObj_M
 
@@ -20615,3 +22626,45 @@ static void freeNs0TSSenderUserObjType(struct enunciate_ns0_TSSenderUserObj *_tS
   }
 }
 #endif /* DEF_enunciate_ns0_TSSenderUserObj_M */
+#ifndef DEF_enunciate_ns0_JSONObject_M
+#define DEF_enunciate_ns0_JSONObject_M
+
+/**
+ * Reads a JSONObject from XML. The reader is assumed to be at the start element.
+ *
+ * @return the JSONObject, or NULL in case of error.
+ */
+static struct enunciate_ns0_JSONObject *xmlTextReaderReadNs0JSONObjectType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_JSONObject *_jSONObject = calloc(1, sizeof(struct enunciate_ns0_JSONObject));
+
+
+
+
+  return _jSONObject;
+}
+
+/**
+ * Writes a JSONObject to XML.
+ *
+ * @param writer The XML writer.
+ * @param _jSONObject The JSONObject to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0JSONObjectType(xmlTextWriterPtr writer, struct enunciate_ns0_JSONObject *_jSONObject) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a JSONObject.
+ *
+ * @param _jSONObject The JSONObject to free.
+ */
+static void freeNs0JSONObjectType(struct enunciate_ns0_JSONObject *_jSONObject) {
+  int i;
+}
+#endif /* DEF_enunciate_ns0_JSONObject_M */

@@ -24,7 +24,11 @@
         ivAvatar.hidden = NO;
         lbName.hidden = NO;
         lbName.text = [NSString stringWithFormat:@"%@ %@", anUserObj.firstname, anUserObj.lastname];
-        ivAvatar.image = anUserObj.avatar;
+        if (userObj.avatar == nil) {
+            [NSThread detachNewThreadSelector:@selector(loadAvatar) toTarget:self withObject:nil];
+        }
+        else
+            ivAvatar.image = userObj.avatar;
     }
     else
     {
@@ -49,6 +53,12 @@
             break;
     }
     
+}
+
+-(void)loadAvatar
+{
+    userObj.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:userObj.avatarUrl]]];
+    ivAvatar.image = userObj.avatar;
 }
 
 @end

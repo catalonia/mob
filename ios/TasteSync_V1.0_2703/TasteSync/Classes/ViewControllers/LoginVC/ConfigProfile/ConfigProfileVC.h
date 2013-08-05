@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CRequest.h"
 
-@interface ConfigProfileVC : UIViewController<UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate>
+@interface ConfigProfileVC : UIViewController<UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate,RequestDelegate>
 {
     __weak IBOutlet UIView *viewMain, *viewUserInfo;
     __weak IBOutlet UIScrollView *scrollViewMain;
@@ -21,7 +22,7 @@
     __weak IBOutlet UILabel *lbTitle;
 }
 
-@property (nonatomic, strong) NSMutableArray *arrDataFriends, *arrDataCusine, *arrDataRestaurant, *arrDataFilter;
+@property (nonatomic, strong) NSMutableArray *arrDataFriends, *arrDataCusine, *arrDataFilter;//*arrDataRestaurant,
 @property (nonatomic, strong) NSMutableArray *arrData ; // data of top 5 restaurant
 
 - (IBAction)actionDone:(id)sender;
