@@ -75,8 +75,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "WHERE  restaurant_extended_info.restaurant_id = ? " +
         "       AND restaurant.restaurant_id = ? ";
     public static String RESTAURANT_EXTENDED_INFO_CITY_SELECT_SQL = "" +
-        "SELECT cities.city, " +
-        "       cities.state," +
+        "SELECT cities.city, " + "       cities.state," +
         "       cities.country " +
         "FROM   (SELECT restaurant.restaurant_city_id " +
         "        FROM   restaurant " +
@@ -142,19 +141,15 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "WHERE  user_restaurant_saved.user_id = ? " +
         "       AND user_restaurant_saved.restaurant_id = ?";
     public static String SAVERESTAURANTFAV_HISTORICAL_INSERT_SQL = "" +
-    				  "INSERT INTO `historical_user_restaurant_saved` "
-    				+ "            (`historical_user_restaurant_saved`.`restaurant_id`, "
-    				+ "             `historical_user_restaurant_saved`.`saved_flag`, "
-    				+ "             `historical_user_restaurant_saved`.`saved_notes`, "
-    				+ "             `historical_user_restaurant_saved`.`updated_datetime`, "
-    				+ "             `historical_user_restaurant_saved`.`user_id`) "
-    				+ "VALUES      ( ?, "
-    				+ "              ?, "
-    				+ "              '', "
-    				+ "              SYSDATE(), "
-    				+ "              ? )";
-
-        
+        "INSERT INTO historical_user_restaurant_saved " +
+        "            (historical_user_restaurant_saved.ID, " +
+        "            (historical_user_restaurant_saved.restaurant_id, " +
+        "             historical_user_restaurant_saved.saved_flag, " +
+        "             historical_user_restaurant_saved.saved_notes, " +
+        "             historical_user_restaurant_saved.updated_datetime, " +
+        "             historical_user_restaurant_saved.user_id) " +
+        "VALUES      ( ?, " + "              ?, " + "              ?, " +
+        "              '', " + "              ?, " + "              ? )";
     public static String RESTAURANT_FAV_SELECT_SQL = "" +
         "SELECT count(*) from user_restaurant_fav " +
         "WHERE user_restaurant_fav.restaurant_id = ? " +
