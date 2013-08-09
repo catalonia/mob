@@ -22,12 +22,14 @@
   <xs:element name="userprofilebasic" type="TSUserProfileBasicObj"/>
   <xs:element name="userprofile" type="TSUserProfileObj"/>
   <xs:element name="userprofilerestaurants" type="TSUserProfileRestaurantsObj"/>
+  <xs:element name="recorequestnonassigned" type="TSRecoRequestNonAssignedObj"/>
   <xs:element name="recorequest" type="TSRecoRequestObj"/>
   <xs:element name="recosfollowup" type="TSRecommendationsFollowupObj"/>
   <xs:element name="recos4u" type="TSRecommendationsForYouObj"/>
   <xs:element name="recommendeeusers" type="TSRecommendeeUserObj"/>
   <xs:element name="recommenders" type="TSRecommendersDetailsObj"/>
   <xs:element name="restaurantcuisinetier2" type="TSRestaurantCusineTier2Obj"/>
+  <xs:element name="restaurantrecommenders" type="TSRestaurantRecommendersDetailsObj"/>
   <xs:element name="senderuser" type="TSSenderUserObj"/>
   <xs:complexType name="TSCityObj">
     <xs:sequence>
@@ -280,7 +282,8 @@
     <xs:sequence>
       <xs:element name="userId" type="xs:string" minOccurs="0"/>
       <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="photo" type="TSPhotoObj" minOccurs="0"/>
+      <xs:element name="photo" type="xs:string" minOccurs="0"/>
+      <xs:element name="photoDetails" type="TSPhotoObj" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSUserProfileObj">
@@ -316,9 +319,15 @@
       <xs:element name="userTipFlag" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="TSRecoRequestNonAssignedObj">
+    <xs:sequence>
+      <xs:element name="recoRequestId" type="xs:string" minOccurs="0"/>
+      <xs:element name="nonassignedFacebookIdList" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="TSRecoRequestObj">
     <xs:sequence>
-      <xs:element name="recommendeeUser" type="TSRecommendeeUserObj" minOccurs="0"/>
+      <xs:element name="recommendeeUser" type="TSUserProfileBasicObj" minOccurs="0"/>
       <xs:element name="recorequestText" type="xs:string" minOccurs="0"/>
       <xs:element name="recommendeeUserFolloweeFlag" type="xs:string" minOccurs="0"/>
     </xs:sequence>
@@ -356,6 +365,13 @@
     <xs:sequence>
       <xs:element name="tsRestaurantDetailsObj" type="TSRestaurantDetailsObj" minOccurs="0"/>
       <xs:element name="tsCuisineTier2Obj" type="TSCuisineTier2Obj" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRestaurantRecommendersDetailsObj">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantId" type="xs:string" minOccurs="0"/>
+      <xs:element name="recommendersDetailsList" type="TSRecommendersDetailsObj" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSSenderUserObj">

@@ -72,6 +72,8 @@
       <ul>
         <li><a href="#path__restaurant_allrestaurants.html">/restaurant/allrestaurants</a></li>
         <li><a href="#path__restaurant_aptips.html">/restaurant/aptips</a></li>
+        <li><a href="#path__restaurant_askdetails.html">/restaurant/askdetails</a></li>
+        <li><a href="#path__restaurant_askquestion.html">/restaurant/askquestion</a></li>
         <li><a href="#path__restaurant_details.html">/restaurant/details</a></li>
         <li><a href="#path__restaurant_extendedinfo.html">/restaurant/extendedinfo</a></li>
         <li><a href="#path__restaurant_menu.html">/restaurant/menu</a></li>
@@ -126,6 +128,122 @@
             (no documentation provided)
           </td>
           <td>query</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__restaurant_askdetails.html"></a>
+      <h1>/restaurant/askdetails</h1>
+      <p class="note">Mount Point: <a href="./rest/restaurant/askdetails">/rest/restaurant/askdetails</a></p>
+      <a name="GET"></a>
+      <h2>GET</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>restaurantid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>query</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td><a href="el_ns0_restaurantrecommenders.html">restaurantrecommenders</a></td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__restaurant_askquestion.html"></a>
+      <h1>/restaurant/askquestion</h1>
+      <p class="note">Mount Point: <a href="./rest/restaurant/askquestion">/rest/restaurant/askquestion</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>questionId</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>questionText</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>postQuestionOnForum</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>recommendersUserIdList</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>friendsFacebookIdList</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
           <td></td>
         </tr>
       </table>

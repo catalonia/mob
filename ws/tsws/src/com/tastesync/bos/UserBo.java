@@ -3,6 +3,7 @@ package com.tastesync.bos;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
+import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSInitObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
@@ -116,4 +117,6 @@ public interface UserBo {
     TSInitObj getAllData() throws TasteSyncException;
     
     String getUserId(String userFBID) throws TasteSyncException;
+    
+    List<TSCityObj> getCityName(String key) throws TasteSyncException;
 }

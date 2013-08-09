@@ -6,6 +6,7 @@ import com.tastesync.bos.UserBoImpl;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
+import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSFriendObj;
@@ -1417,6 +1418,36 @@ public class UserService extends BaseService {
 			TSErrorObj tsErrorObj = new TSErrorObj();
 			tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
 			return Response.status(status).entity(tsErrorObj).build();
+		}
+	}
+	
+	@POST
+	@Path("/getUserCity")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getUserCity(@FormParam("key") String key) {
+
+		List<TSCityObj> neighbourhoodCityObj = null;
+
+		int status = TSResponseStatusCode.SUCCESS.getValue();
+
+		try {
+			neighbourhoodCityObj = userBo.getCityName(key);
+			return Response.status(status).entity(neighbourhoodCityObj)
+					.build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			status = TSResponseStatusCode.ERROR.getValue();
+			TSErrorObj tsErrorObj = new TSErrorObj();
+			tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+			return Response.status(status).entity(tsErrorObj).build();
+		} finally {
+			if (neighbourhoodCityObj == null) {
+				status = TSResponseStatusCode.ERROR.getValue();
+				TSErrorObj tsErrorObj = new TSErrorObj();
+				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+				return Response.status(status).entity(tsErrorObj).build();
+			}
 		}
 	}
 }

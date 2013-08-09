@@ -6,6 +6,7 @@ import com.tastesync.db.dao.UserDaoImpl;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
+import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSInitObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
@@ -247,5 +248,10 @@ public class UserBoImpl implements UserBo {
 	public String getUserId(String userFBID) throws TasteSyncException
 	{
 		return userDao.getUserId(userFBID);
+	}
+	
+	@Override
+	public List<TSCityObj> getCityName(String key) throws TasteSyncException{
+		return userDao.getCityName(key);
 	}
 }

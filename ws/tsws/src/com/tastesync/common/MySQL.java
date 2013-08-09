@@ -81,6 +81,33 @@ public class MySQL {
 		
 		return city;
 	}
+	public TSCityObj getCityInforByCityID(String cityID) {
+		TSCityObj city = null;
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+		try {
+			connection = tsDataSource.getConnection();
+        	tsDataSource.begin();
+        	System.out.println("CityQueries.CITY_SELECT_SQL" + CityQueries.CITY_SELECT_SQL);
+        	statement = connection.prepareStatement(CityQueries.CITY_SELECT_SQL);
+        	statement.setString(1, cityID);
+        	resultset = statement.executeQuery();
+        	if(resultset.next())
+        	{
+        		city = new TSCityObj();
+        		MySQL.mapResultsetRowToTSCityVO(city, resultset);
+        	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+		
+		return city;
+	}
 	public TSUserObj getUserInformationByEmail(String email) {
 		
 		TSUserObj user = null;

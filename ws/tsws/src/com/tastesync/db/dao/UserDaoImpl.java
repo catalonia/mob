@@ -3,6 +3,7 @@ package com.tastesync.db.dao;
 import com.tastesync.common.GlobalVariables;
 import com.tastesync.common.MySQL;
 import com.tastesync.db.pool.TSDataSource;
+import com.tastesync.db.queries.CityQueries;
 import com.tastesync.db.queries.RestaurantQueries;
 import com.tastesync.db.queries.UserQueries;
 import com.tastesync.exception.TasteSyncException;
@@ -2593,5 +2594,49 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		}
 		
 		return retString;
+	}
+	
+	@Override
+	public List<TSCityObj> getCityName(String key) throws TasteSyncException
+	{
+		List<TSCityObj> listCityObj = new ArrayList<TSCityObj>();
+		
+    	TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    
+        try {
+            tsDataSource.begin();
+            connection = tsDataSource.getConnection();
+            System.out.println("CityQueries.CITY_KEY_SELECT_SQL=" +
+                CityQueries.CITY_KEY_SELECT_SQL);
+            statement = connection.prepareStatement(CityQueries.CITY_KEY_SELECT_SQL);
+            statement.setString(1, "%" + key + "%");
+            resultset = statement.executeQuery();
+
+        	while(resultset.next())
+        	{
+        		TSCityObj obj = new TSCityObj();
+        		
+        		obj.setCity(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.city")));
+        		obj.setCityId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.city_id")));
+        		obj.setCountry(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.country")));
+        		obj.setState(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.state")));
+        		
+        		listCityObj.add(obj);
+        	}
+        	tsDataSource.close();
+        	tsDataSource.closeConnection(connection, statement, null);
+        }catch(SQLException e)
+        {
+        	e.printStackTrace();
+			throw new TasteSyncException(e.getMessage());
+		} finally {
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+		
+		return listCityObj;
 	}
 }

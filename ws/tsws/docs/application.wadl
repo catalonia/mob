@@ -57,25 +57,27 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
-    <wadl:resource path="/rest/ask/recofriends">
+    <wadl:resource path="/rest/ask/recofollowupanswer">
       <wadl:method name="POST">
         <wadl:request/>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="recorequestid" style="query"/>
-        </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
     </wadl:resource>
-    <wadl:resource path="/json/ask/recofriends">
+    <wadl:resource path="/json/ask/recofollowupanswer">
       <wadl:method name="POST">
         <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/ask/recofriends">
+      <wadl:method name="GET">
+        <wadl:request>
+          <wadl:param name="recorequestid" style="query"/>
+        </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
@@ -335,6 +337,22 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
+    <wadl:resource path="/rest/ask/saverecofriends">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/ask/saverecofriends">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
     <wadl:resource path="/rest/populate/cuisinetier1">
       <wadl:method name="GET">
         <wadl:response>
@@ -498,6 +516,44 @@
           <wadl:param name="userid" style="query"/>
           <wadl:param name="restaurantid" style="query"/>
         </wadl:request>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/restaurant/askdetails">
+      <wadl:method name="GET">
+        <wadl:request>
+          <wadl:param name="userid" style="query"/>
+          <wadl:param name="restaurantid" style="query"/>
+        </wadl:request>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/restaurant/askdetails">
+      <wadl:method name="GET">
+        <wadl:request>
+          <wadl:param name="userid" style="query"/>
+          <wadl:param name="restaurantid" style="query"/>
+        </wadl:request>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/restaurant/askquestion">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/restaurant/askquestion">
+      <wadl:method name="POST">
+        <wadl:request/>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
@@ -718,6 +774,22 @@
       </wadl:method>
     </wadl:resource>
     <wadl:resource path="/json/user/getHomeProfile">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/user/getUserCity">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/user/getUserCity">
       <wadl:method name="POST">
         <wadl:request/>
         <wadl:response>

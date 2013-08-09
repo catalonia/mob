@@ -72,6 +72,7 @@
       <ul>
         <li><a href="#path__ask_likesunlikes.html">/ask/likesunlikes</a></li>
         <li><a href="#path__ask_recoactioned.html">/ask/recoactioned</a></li>
+        <li><a href="#path__ask_recofollowupanswer.html">/ask/recofollowupanswer</a></li>
         <li><a href="#path__ask_recofriends.html">/ask/recofriends</a></li>
         <li><a href="#path__ask_recommendedrestaurants.html">/ask/recommendedrestaurants</a></li>
         <li><a href="#path__ask_recomsg.html">/ask/recomsg</a></li>
@@ -84,6 +85,7 @@
         <li><a href="#path__ask_recosidrestaurantsearchresults.html">/ask/recosidrestaurantsearchresults</a></li>
         <li><a href="#path__ask_recosrestaurantsearchresults.html">/ask/recosrestaurantsearchresults</a></li>
         <li><a href="#path__ask_recounactioned.html">/ask/recounactioned</a></li>
+        <li><a href="#path__ask_saverecofriends.html">/ask/saverecofriends</a></li>
       </ul>
       <a name="path__ask_likesunlikes.html"></a>
       <h1>/ask/likesunlikes</h1>
@@ -240,9 +242,9 @@
         </tr>
       </table>
       <p>(no documentation provided)</p>
-      <a name="path__ask_recofriends.html"></a>
-      <h1>/ask/recofriends</h1>
-      <p class="note">Mount Point: <a href="./rest/ask/recofriends">/rest/ask/recofriends</a></p>
+      <a name="path__ask_recofollowupanswer.html"></a>
+      <h1>/ask/recofollowupanswer</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recofollowupanswer">/rest/ask/recofollowupanswer</a></p>
       <a name="POST"></a>
       <h2>POST</h2>
       <h3>Parameters</h3>
@@ -254,7 +256,7 @@
           <th>default</th>
         </tr>
         <tr>
-          <td>recorequestid</td>
+          <td>userid</td>
           <td>
             (no documentation provided)
           </td>
@@ -262,7 +264,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>recorequestfriendtext</td>
+          <td>questiondid</td>
           <td>
             (no documentation provided)
           </td>
@@ -270,15 +272,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>friendsfacebookidlist</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>form</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>postonfacebook</td>
+          <td>replytext</td>
           <td>
             (no documentation provided)
           </td>
@@ -290,7 +284,7 @@
       <table>
         <tr>
           <td align="right">element:</td>
-          <td><a href="el_ns0_keyvalue.html">keyvalue</a></td>
+          <td><a href="el_ns0_success.html">success</a></td>
         </tr>
         <tr>
           <td align="right">media types:</td>
@@ -298,6 +292,9 @@
         </tr>
       </table>
       <p>(no documentation provided)</p>
+      <a name="path__ask_recofriends.html"></a>
+      <h1>/ask/recofriends</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recofriends">/rest/ask/recofriends</a></p>
       <a name="GET"></a>
       <h2>GET</h2>
       <h3>Parameters</h3>
@@ -928,6 +925,72 @@
         <tr>
           <td align="right">element:</td>
           <td><a href="el_ns0_success.html">success</a></td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__ask_saverecofriends.html"></a>
+      <h1>/ask/saverecofriends</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/saverecofriends">/rest/ask/saverecofriends</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>userid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>recorequestid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>recorequestfriendtext</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>friendsfacebookidlist</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>postonfacebook</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td><a href="el_ns0_recorequestnonassigned.html">recorequestnonassigned</a></td>
         </tr>
         <tr>
           <td align="right">media types:</td>
