@@ -537,7 +537,8 @@ public class AskReplyService extends BaseService {
         boolean responseDone = false;
 
         try {
-            tsRecommendationsFollowupObj = askReplyBO.showRecommendationsFollowup(questionId);
+            tsRecommendationsFollowupObj = askReplyBO.showRecommendationsFollowup(userId,
+                    questionId);
             responseDone = true;
 
             return Response.status(status).entity(tsRecommendationsFollowupObj)

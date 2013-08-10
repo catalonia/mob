@@ -460,13 +460,36 @@ public class RestaurantService extends BaseService {
     public Response submitAddOrRemoveFromFavs(
         @FormParam("userid")
     String userId, @FormParam("restaurantId")
-    String restaurantId) {
+    String restaurantId,
+        @FormParam("userRestaurantFavFlag")
+    String userRestaurantFavFlag) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
-
         boolean responseDone = false;
 
+        //check userRestaurantFavFlag is either 1 or 0
         try {
-            restaurantBO.submitAddOrRemoveFromFavs(userId, restaurantId);
+            Integer.parseInt(userRestaurantFavFlag);
+        } catch (NumberFormatException nfe) {
+            status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+            responseDone = true;
+
+            return Response.status(status)
+                           .header("userrestaurantfavflag",
+                (userRestaurantFavFlag != null) ? userRestaurantFavFlag
+                                                : TSConstants.EMPTY)
+                           .entity(tsErrorObj).build();
+        }
+
+        try {
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+            restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
+            userRestaurantFavFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(userRestaurantFavFlag);
+
+            restaurantBO.submitAddOrRemoveFromFavs(userId, restaurantId,
+                userRestaurantFavFlag);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
@@ -504,18 +527,16 @@ public class RestaurantService extends BaseService {
     })
     public Response showRestaurantDetailTipAPSettings(
         @QueryParam("userid")
-    String userId, @QueryParam("restaurantid")
-    String restaurantId) {
+    String userId) {
         List<TSRestaurantTipsAPSettingsObj> tsRestaurantTipsAPSettingsObjList = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
-        restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
+        userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
 
         boolean responseDone = false;
 
         try {
-            tsRestaurantTipsAPSettingsObjList = restaurantBO.showRestaurantDetailTipAPSettings(userId,
-                    restaurantId);
+            tsRestaurantTipsAPSettingsObjList = restaurantBO.showRestaurantDetailTipAPSettings(userId);
             responseDone = true;
 
             return Response.status(status)
