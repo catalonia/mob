@@ -5,11 +5,11 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-//@XmlRootElement(name = "restauranttipsapsettings")
+
+@XmlRootElement(name = "restauranttipsapsettings")
 public class TSRestaurantTipsAPSettingsObj implements Serializable {
     private static final long serialVersionUID = -3475916144296389812L;
     private String userId;
-    private String restaurantId;
     private String autoPublishingSetting;
     public APSETTINGTYPE apSettingType;
 
@@ -28,17 +28,8 @@ public class TSRestaurantTipsAPSettingsObj implements Serializable {
         return apSettingType;
     }
 
-    @XmlElement
-    public String getRestaurantId() {
-        return restaurantId;
-    }
-
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public void setRestaurantId(String restaurantId) {
-        this.restaurantId = restaurantId;
     }
 
     public void setAutoPublishingSetting(String autoPublishingSetting) {
