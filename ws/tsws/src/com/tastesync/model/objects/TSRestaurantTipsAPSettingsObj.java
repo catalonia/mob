@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
-@XmlRootElement(name = "restauranttipsapsettings")
+//@XmlRootElement(name = "restauranttipsapsettings")
 public class TSRestaurantTipsAPSettingsObj implements Serializable {
     private static final long serialVersionUID = -3475916144296389812L;
     private String userId;
