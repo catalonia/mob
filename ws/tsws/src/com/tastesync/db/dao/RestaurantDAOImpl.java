@@ -51,6 +51,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             if (resultset.next()) {
                 mapResultsetRowToTSRestaurantVO(tsRestaurantObj, resultset);
             }
+
+            statement.close();
         } catch (SQLException e1) {
             e1.printStackTrace();
             throw new TasteSyncException(e1.getMessage());
@@ -113,11 +115,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     private void mapResultsetRowToTSRestaurantTipsAPSettingsVO(String userId,
-        String restaurantId,
         TSRestaurantTipsAPSettingsObj tsRestaurantTipsAPSettingsObj,
         ResultSet resultset) throws SQLException {
-        tsRestaurantTipsAPSettingsObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
-                restaurantId));
         tsRestaurantTipsAPSettingsObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
                 userId));
         tsRestaurantTipsAPSettingsObj.setAutoPublishingSetting(CommonFunctionsUtil.getModifiedValueString(
@@ -275,6 +274,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
                 tsRestaurantObjs.add(tsRestaurantObj);
             }
+
+            statement.close();
         } catch (SQLException e1) {
             e1.printStackTrace();
             throw new TasteSyncException(e1.getMessage());
@@ -324,6 +325,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 tsMenuObj = new TSMenuObj();
                 mapResultsetRowToTSRestaurantMenuVO(tsMenuObj, resultset);
             }
+
+            statement.close();
         } catch (SQLException e1) {
             e1.printStackTrace();
             throw new TasteSyncException(e1.getMessage());
@@ -369,6 +372,10 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                             "restaurant_extended_info.postcode"));
             }
 
+            if (statement != null) {
+                statement.close();
+            }
+
             statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_EXTENDED_INFO_CITY_SELECT_SQL);
             statement.setString(1, restaurantId);
             resultset = statement.executeQuery();
@@ -384,6 +391,10 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                             "cities.state"));
                 addressList[4] = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "cities.country"));
+            }
+
+            if (statement != null) {
+                statement.close();
             }
 
             StringBuffer addressBuffer = new StringBuffer();
@@ -442,6 +453,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
                 tsRestaurantPhotoObjs.add(tsRestaurantPhotoObj);
             }
+
+            statement.close();
         } catch (SQLException e1) {
             e1.printStackTrace();
             throw new TasteSyncException(e1.getMessage());
@@ -455,10 +468,9 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
     @Override
     public List<TSRestaurantTipsAPSettingsObj> showRestaurantDetailTipAPSettings(
-        String userId, String restaurantId) throws TasteSyncException {
+        String userId) throws TasteSyncException {
         List<TSRestaurantTipsAPSettingsObj> tsRestaurantTipsAPSettingsObjs = new ArrayList<TSRestaurantTipsAPSettingsObj>();
 
-        //TODO use of restaurantId ??
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
@@ -476,10 +488,12 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             while (resultset.next()) {
                 TSRestaurantTipsAPSettingsObj tsRestaurantTipsAPSettingsObj = new TSRestaurantTipsAPSettingsObj();
                 mapResultsetRowToTSRestaurantTipsAPSettingsVO(userId,
-                    restaurantId, tsRestaurantTipsAPSettingsObj, resultset);
+                    tsRestaurantTipsAPSettingsObj, resultset);
 
                 tsRestaurantTipsAPSettingsObjs.add(tsRestaurantTipsAPSettingsObj);
             }
+
+            statement.close();
         } catch (SQLException e1) {
             e1.printStackTrace();
             throw new TasteSyncException(e1.getMessage());
@@ -519,6 +533,10 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 throw new TasteSyncException("Error Unknown Operation");
             }
 
+            if (statement != null) {
+                statement.close();
+            }
+
             statement = connection.prepareStatement(RestaurantQueries.SAVERESTAURANTFAV_HISTORICAL_INSERT_SQL);
 
             List<String> inputKeyStr = new ArrayList<String>();
@@ -531,7 +549,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 CommonFunctionsUtil.getCurrentDateTimestamp());
             statement.setString(5, userId);
             statement.executeUpdate();
-
+            statement.close();
             tsDataSource.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -553,8 +571,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public void submitAddOrRemoveFromFavs(String userId, String restaurantId)
-        throws TasteSyncException {
+    public void submitAddOrRemoveFromFavs(String userId, String restaurantId,
+        String userRestaurantFavFlag) throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
@@ -564,11 +582,40 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            //TODO first do select count(*). If needed, add data as fav or delete
-            statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_INSERT_SQL);
-            statement.setString(1, restaurantId);
-            statement.setString(2, userId);
+
+            if ("0".equals(userRestaurantFavFlag)) {
+                statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_DELETE_SQL);
+                statement.setString(1, restaurantId);
+                statement.setString(2, userId);
+                statement.executeUpdate();
+                statement.close();
+            } else {
+                //TODO first do select count(*). If needed, add data as fav or delete
+                statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_INSERT_SQL);
+                statement.setString(1, restaurantId);
+                statement.setString(2, userId);
+                statement.executeUpdate();
+                statement.close();
+            }
+
+            statement = connection.prepareStatement(RestaurantQueries.HISTORICAL_RESTAURANT_FAV_INSERT_SQL);
+
+            statement.setString(1, userRestaurantFavFlag);
+
+            List<String> inputKeyStr = new ArrayList<String>();
+            inputKeyStr.add(userId);
+            statement.setString(2,
+                CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
+
+            statement.setString(3, restaurantId);
+
+            statement.setTimestamp(4,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+
+            statement.setString(5, userId);
+
             statement.executeUpdate();
+            statement.close();
 
             tsDataSource.commit();
         } catch (SQLException e) {
@@ -614,7 +661,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             statement.setString(3, tipText);
             statement.setString(4, userId);
             statement.executeUpdate();
-
+            statement.close();
             tsDataSource.commit();
         } catch (SQLException e) {
             e.printStackTrace();

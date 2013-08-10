@@ -65,8 +65,8 @@ public interface AskReplyDAO {
     TSRecommendeeUserObj showRecommendationsShowLikes(String recoLikeId)
         throws TasteSyncException;
 
-    TSRecommendationsFollowupObj showRecommendationsFollowup(String questionId)
-        throws TasteSyncException;
+    TSRecommendationsFollowupObj showRecommendationsFollowup(String userId,
+        String questionId) throws TasteSyncException;
 
     void submitRecommendationFollowupAnswer(String userId, String questionId,
         String replyText) throws TasteSyncException;

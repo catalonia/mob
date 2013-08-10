@@ -42,7 +42,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
             tsDataSource.begin();
 
             System.out.println("AutoPopulateQueries.CUISINE_TIER1_SELECT_SQL=" +
-            		AutoPopulateQueries.CUISINE_TIER1_SELECT_SQL);
+                AutoPopulateQueries.CUISINE_TIER1_SELECT_SQL);
             statement = connection.prepareStatement(AutoPopulateQueries.CUISINE_TIER1_SELECT_SQL);
             resultset = statement.executeQuery();
 
@@ -56,6 +56,10 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 mapResultsetRowToJSONArrayVO(jsonObject, resultset,
                     idColumnName, valueColumnName);
                 jsonArray.put(jsonObject);
+            }
+
+            if (statement != null) {
+                statement.close();
             }
 
             return jsonArray;
@@ -84,7 +88,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
             tsDataSource.begin();
 
             System.out.println("AutoPopulateQueries.CUISINE_TIER2_SELECT_SQL=" +
-            		AutoPopulateQueries.CUISINE_TIER2_SELECT_SQL);
+                AutoPopulateQueries.CUISINE_TIER2_SELECT_SQL);
             statement = connection.prepareStatement(AutoPopulateQueries.CUISINE_TIER2_SELECT_SQL);
             resultset = statement.executeQuery();
 
@@ -100,6 +104,10 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
+            if (statement != null) {
+                statement.close();
+            }
+
             return jsonArray;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -112,7 +120,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
             tsDataSource.closeConnection(connection, statement, resultset);
         }
     }
-    
+
     @Override
     public JSONArray populateOccasionDescriptor() throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
@@ -140,6 +148,10 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 mapResultsetRowToJSONArrayVO(jsonObject, resultset,
                     idColumnName, valueColumnName);
                 jsonArray.put(jsonObject);
+            }
+
+            if (statement != null) {
+                statement.close();
             }
 
             return jsonArray;
@@ -184,6 +196,10 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
+            if (statement != null) {
+                statement.close();
+            }
+
             return jsonArray;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -224,6 +240,10 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 mapResultsetRowToJSONArrayVO(jsonObject, resultset,
                     idColumnName, valueColumnName);
                 jsonArray.put(jsonObject);
+            }
+
+            if (statement != null) {
+                statement.close();
             }
 
             return jsonArray;
@@ -268,6 +288,10 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
+            if (statement != null) {
+                statement.close();
+            }
+
             return jsonArray;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -309,6 +333,10 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 mapResultsetRowToJSONArrayVO(jsonObject, resultset,
                     idColumnName, valueColumnName);
                 jsonArray.put(jsonObject);
+            }
+
+            if (statement != null) {
+                statement.close();
             }
 
             return jsonArray;

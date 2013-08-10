@@ -37,20 +37,20 @@ public interface RestaurantDAO {
         throws TasteSyncException;
 
     List<TSRestaurantTipsAPSettingsObj> showRestaurantDetailTipAPSettings(
-        String userId, String restaurantId) throws TasteSyncException;
+        String userId) throws TasteSyncException;
 
     void submitSaveOrUnsaveRestaurant(String userId, String restaurantId,
         String userRestaurantSavedFlag) throws TasteSyncException;
 
-    void submitAddOrRemoveFromFavs(String userId, String restaurantId)
-        throws TasteSyncException;
+    void submitAddOrRemoveFromFavs(String userId, String restaurantId,
+        String userRestaurantFavFlag) throws TasteSyncException;
 
     void submitRestaurantDetailTip(String userId, String restaurantId,
         String tipText) throws TasteSyncException;
 
-    TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(
-            String userId, String restaurantId) throws TasteSyncException;
-    
+    TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(String userId,
+        String restaurantId) throws TasteSyncException;
+
     void submitRestaurantDetailAsk(String userId, String restaurantId,
         String questionText, String postQuestionOnForum,
         String recommendersUserIdList, String friendsFacebookIdList)
