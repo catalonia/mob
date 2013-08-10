@@ -72,9 +72,10 @@ public class RestaurantBOImpl implements RestaurantBO {
     }
 
     @Override
-    public void submitAddOrRemoveFromFavs(String userId, String restaurantId)
-        throws TasteSyncException {
-        restaurantDAO.submitAddOrRemoveFromFavs(userId, restaurantId);
+    public void submitAddOrRemoveFromFavs(String userId, String restaurantId,
+        String userRestaurantFavFlag) throws TasteSyncException {
+        restaurantDAO.submitAddOrRemoveFromFavs(userId, restaurantId,
+            userRestaurantFavFlag);
     }
 
     @Override
@@ -85,9 +86,8 @@ public class RestaurantBOImpl implements RestaurantBO {
 
     @Override
     public List<TSRestaurantTipsAPSettingsObj> showRestaurantDetailTipAPSettings(
-        String userId, String restaurantId) throws TasteSyncException {
-        return restaurantDAO.showRestaurantDetailTipAPSettings(userId,
-            restaurantId);
+        String userId) throws TasteSyncException {
+        return restaurantDAO.showRestaurantDetailTipAPSettings(userId);
     }
 
     @Override

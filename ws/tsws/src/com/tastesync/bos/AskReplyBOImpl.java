@@ -112,8 +112,8 @@ public class AskReplyBOImpl implements AskReplyBO {
 
     @Override
     public TSRecommendationsFollowupObj showRecommendationsFollowup(
-        String questionId) throws TasteSyncException {
-        return askReplyDAO.showRecommendationsFollowup(questionId);
+        String userId, String questionId) throws TasteSyncException {
+        return askReplyDAO.showRecommendationsFollowup(userId, questionId);
     }
 
     public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResultsBasedOnRecoId(
