@@ -66,11 +66,11 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
     private void mapResultsetRowToTSRestaurantMenuVO(TSMenuObj tsMenuObj,
         ResultSet resultset) throws SQLException {
-        tsMenuObj.setMenuMobileUrl(CommonFunctionsUtil.getModifiedValueString(
+        tsMenuObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant_menu.restaurant_id")));
         tsMenuObj.setMenuSource(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant_menu.menu_source")));
-        tsMenuObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+        tsMenuObj.setMenuMobileUrl(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant_menu.menu_mobileurl")));
     }
 
