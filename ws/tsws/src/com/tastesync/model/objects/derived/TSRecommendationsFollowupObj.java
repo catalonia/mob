@@ -15,7 +15,7 @@ public class TSRecommendationsFollowupObj implements Serializable {
     private TSUserProfileBasicObj questionUse;
     private String questionText;
     private String questionUserFolloweeFlag;
-    private TSRestaurantObj restaurant;
+    private TSRestaurantObj questionRestaurant;
 
     @XmlElement
     public TSUserProfileBasicObj getQuestionUse() {
@@ -33,8 +33,8 @@ public class TSRecommendationsFollowupObj implements Serializable {
     }
 
     @XmlElement
-    public TSRestaurantObj getRestaurant() {
-        return restaurant;
+    public TSRestaurantObj getQuestionRestaurant() {
+        return questionRestaurant;
     }
 
     public void setQuestionUse(TSUserProfileBasicObj questionUse) {
@@ -49,7 +49,7 @@ public class TSRecommendationsFollowupObj implements Serializable {
         this.questionUserFolloweeFlag = questionUserFolloweeFlag;
     }
 
-    public void setRestaurant(TSRestaurantObj restaurant) {
-        this.restaurant = restaurant;
+    public void setQuestionRestaurant(TSRestaurantObj questionRestaurant) {
+        this.questionRestaurant = questionRestaurant;
     }
 }

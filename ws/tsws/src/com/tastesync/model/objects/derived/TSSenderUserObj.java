@@ -1,12 +1,12 @@
 package com.tastesync.model.objects.derived;
 
+import com.tastesync.model.objects.TSUserProfileBasicObj;
+
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tastesync.model.objects.TSUserProfileBasicObj;
-import com.tastesync.model.objects.TSUserProfileObj;
 
 @XmlRootElement(name = "senderuser")
 public class TSSenderUserObj implements Serializable {
