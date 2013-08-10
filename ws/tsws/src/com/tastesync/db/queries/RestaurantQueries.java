@@ -159,9 +159,19 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "            (user_restaurant_fav.restaurant_id, " +
         "             user_restaurant_fav.user_id) " + "VALUES      ( ?, " +
         "              ? )" + "ON DUPLICATE KEY UPDATE USER_ID=USER_ID";
-
-    //TODO 
-    public static String HISTORICAL_RESTAURANT_FAV_INSERT_SQL = "";
+    public static String RESTAURANT_FAV_DELETE_SQL = "" +
+        "DELETE FROM user_restaurant_fav " +
+        "WHERE  user_restaurant_fav.restaurant_id = ? " +
+        "       AND user_restaurant_fav.user_id = ?";
+    public static String HISTORICAL_RESTAURANT_FAV_INSERT_SQL = "" +
+        "INSERT INTO historical_user_restaurant_fav " +
+        "            (historical_user_restaurant_fav.fav_spot_yn, " +
+        "             historical_user_restaurant_fav.id, " +
+        "             historical_user_restaurant_fav.restaurant_id, " +
+        "             historical_user_restaurant_fav.updated_datetime, " +
+        "             historical_user_restaurant_fav.user_id) " +
+        "VALUES      ( ?, " + "              ?, " + "              ?, " +
+        "              ?, " + "              ?)";
     public static String RESTAURANT_PHOTOS_SELECT_SQL = "" +
         "SELECT restaurant_photo.restaurant_id, " +
         "       restaurant_photo.photo_id, " +

@@ -98,14 +98,10 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "WHERE  users.user_fb_id = ?";
     public static final String USER_ID_FRM_FB_ID_SELECT_SQL = "" +
         "SELECT users.user_id " + "FROM   users " + "WHERE  user_fb_id = ?";
-    
-    public static final String FACEBOOK_USER_DATA_SELECT_SQL = ""
-    		+ "SELECT facebook_user_data.name, "
-    		+ "       facebook_user_data.picture "
-    		+ "FROM   facebook_user_data "
-    		+ "WHERE  facebook_user_data.user_fb_id = ? ";
-
-    
+    public static final String FACEBOOK_USER_DATA_SELECT_SQL = "" +
+        "SELECT facebook_user_data.name, " +
+        "       facebook_user_data.picture " + "FROM   facebook_user_data " +
+        "WHERE  facebook_user_data.user_fb_id = ? ";
     public static final String FRIEND_TRUSTED_FLAG_SELECT_SQL = "" +
         "SELECT user_friend_tastesync.friend_trusted_flag " +
         "FROM   user_friend_tastesync " +
@@ -116,25 +112,20 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "SET    recorequest_user.recorequest_free_text = ? " +
         "WHERE  recorequest_user.recorequest_id = ? " +
         "       AND recorequest_user.initiator_user_id = ?";
-    
     public static final String RECOREQUEST_USER_FRIEND_SELECT_SQL = "" +
-    		  "SELECT recorequest_user.initiator_user_id, "
-    		+ "       recorequest_user.recorequest_free_text "
-    		+ "FROM   recorequest_user "
-    		+ "WHERE  recorequest_user.recorequest_id = ? ";
-
+        "SELECT recorequest_user.initiator_user_id, " +
+        "       recorequest_user.recorequest_free_text " +
+        "FROM   recorequest_user " +
+        "WHERE  recorequest_user.recorequest_id = ? ";
     public static final String RECOREQUEST_USER_OTHER_SELECT_SQL = "" +
-    		  "SELECT recorequest_user.initiator_user_id, "
-    		+ "       recorequest_user.reco_request_template_sentences "
-    		+ "FROM   recorequest_user "
-    		+ "WHERE  recorequest_user.recorequest_id = ? ";
-    		
+        "SELECT recorequest_user.initiator_user_id, " +
+        "       recorequest_user.reco_request_template_sentences " +
+        "FROM   recorequest_user " +
+        "WHERE  recorequest_user.recorequest_id = ? ";
     public static final String RECOREQUEST_USER_FOLLOWEEFLAG_SELECT_SQL = "" +
-    		  "SELECT user_follow_data.id "
-    		+ "FROM   user_follow_data "
-    		+ "WHERE  user_follow_data.followee_user_id = ? "
-    		+ "       AND user_follow_data.follower_user_id = ? ";
-    
+        "SELECT user_follow_data.id " + "FROM   user_follow_data " +
+        "WHERE  user_follow_data.followee_user_id = ? " +
+        "       AND user_follow_data.follower_user_id = ? ";
     public static final String HISTORICAL_USER_SHARED_DATA_INSERT_SQL = "" +
         "INSERT INTO historical_user_shared_data " +
         "            (historical_user_shared_data.app_user_id, " +
@@ -155,4 +146,73 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "FROM   recorequest_ts_assigned " +
         "WHERE  recorequest_ts_assigned.recorequest_id = ? " +
         "       AND recorequest_ts_assigned.assigned_user_id = ? ";
+    public static String QUESTION_DETAILS_RESTAURANT_SELECT_SQL = "" +
+        "SELECT restaurant_question_user.initiator_user_id, " +
+        "       restaurant_question_user.restaurant_id, " +
+        "       restaurant_question_user.question_text " +
+        "FROM   restaurant_question_user " +
+        "WHERE  restaurant_question_user.question_id = ? ";
+    public static String RESTAURANT_NAME_SELECT_SQL = "" +
+        "SELECT restaurant.restaurant_name " + "FROM   restaurant " +
+        "WHERE  restaurant.restaurant_id = ? ";
+    public static String USER_FOLLOW_DATA_SELECT = "" +
+        "SELECT user_follow_data.id " + "FROM   user_follow_data " +
+        "WHERE  user_follow_data.followee_user_id = ? " +
+        "       AND user_follow_data.follower_user_id = ? ";
+    public static String QUESTION_REPLY_USER_INSERT_SQL = "" +
+        "INSERT INTO question_reply_user " +
+        "            (question_reply_user.question_id, " +
+        "             question_reply_user.reply_datetime, " +
+        "             question_reply_user.reply_id, " +
+        "             question_reply_user.reply_text, " +
+        "             question_reply_user.reply_ts_id, " +
+        "             question_reply_user.reply_user_id) " +
+        "VALUES      ( ?, " + "              ?, " + "              ?, " +
+        "              ?, " + "              ?, " + "              ? )";
+    public static String QUESTION_RECIPIENT_SELECT_SQL = "" +
+        "SELECT restaurant_question_user.initiator_user_id " +
+        "FROM   restaurant_question_user " +
+        "WHERE  restaurant_question_user.question_id = ?";
+    public static String USER_MESSAGE_INSERT_SQL = "" +
+        "INSERT INTO user_message " + "            (user_message.content, " +
+        "             user_message.created, " +
+        "             user_message.message_id, " +
+        "             user_message.previous_message_id, " +
+        "             user_message.question_id, " +
+        "             user_message.recipient_id, " +
+        "             user_message.recorequest_id, " +
+        "             user_message.sender_id) " + "VALUES      ( ?, " +
+        "              ?, " + "              ?, " + "              '', " +
+        "              ?, " + "              ?, " + "              '', " +
+        "              ? )";
+    public static String USER_MESSAGE_UPDATE_SQL = "" + "UPDATE user_message " +
+        "SET    user_message.message_recipient_viewed = 1 " +
+        "WHERE  user_message.message_id = ? " +
+        "       AND user_message.recipient_id = ? ";
+    public static String USER_MESSAGE_SELECT_SQL = "" +
+        "SELECT user_message.sender_id, " + "       user_message.content " +
+        "FROM   user_message " + "WHERE  user_message.recipient_id = ? " +
+        "       AND user_message.message_id = ? ";
+    public static String MESSAGE_RESTAURANT_INSERT_SQL = "" +
+        "INSERT INTO message_restaurant " +
+        "            (message_restaurant.message_id, " +
+        "             message_restaurant.restaurant_id) " +
+        "VALUES      ( ?, " + "              ? )";
+    public static String RECO_LIKE_UPDATE_SQL = "" + "UPDATE reco_like " +
+        "SET    reco_like.like_recommender_viewed = 1 " +
+        "WHERE  reco_like.id = ? ";
+    public static String RECO_LIKE_SELECT_SQL = "" +
+        "SELECT reco_like.reply_id, " + "       reco_like.like_user_id " +
+        "FROM   reco_like " + "WHERE  reco_like.id = ? " +
+        "       AND reco_like.status_y_n = 1 ";
+    public static String RECOREQUEST_REPLY_USER_SELECT_SQL = "" +
+        "SELECT recorequest_reply_user.reply_text " +
+        "FROM   recorequest_reply_user " +
+        "WHERE  recorequest_reply_user.reply_id = ? ";
+    public static String RECOREQUEST_RESTAURANT_SELECT_SQL = "" +
+        "SELECT y.restaurant_id " +
+        "FROM   (SELECT recorequest_reply_user.reply_id " +
+        "        FROM   recorequest_reply_user " +
+        "        WHERE  recorequest_reply_user.recorequest_id = ?) x, " +
+        "       restaurant_reply y " + "WHERE  x.reply_id = y.reply_id ";
 }
