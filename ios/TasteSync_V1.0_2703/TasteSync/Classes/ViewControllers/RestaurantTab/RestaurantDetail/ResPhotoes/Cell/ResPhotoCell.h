@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TSPhotoRestaurantObj.h"
 
 @class ResPhotoCell;
 
@@ -19,6 +20,6 @@
 
 @property (nonatomic, strong) id<ResPhotoCellDelegate> delegate;
 
-- (void) initForCell:(UIImage *) image1 image2:(UIImage *)image2 image3:(UIImage *) image3;
+- (void) initForCell:(TSPhotoRestaurantObj *) image1 Index1:(int)index1 image2:(TSPhotoRestaurantObj *)image2 Index2:(int)index2 image3:(TSPhotoRestaurantObj *) image3 Index3:(int)index3;
 
 @end

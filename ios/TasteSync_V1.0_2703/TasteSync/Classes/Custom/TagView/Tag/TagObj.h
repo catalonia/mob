@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TSGlobalObj.h"
 
 typedef enum {
     
@@ -28,7 +29,7 @@ typedef enum {
 - (void) tagObj:(TagObj *)tagObj option:(int) anOption;
 - (void) tagObj:(TagObj *)tagObj shouldBeginEditingTextField:(UITextField *)aTextField option:(int) anOption;
 - (void) tagObj:(TagObj *)tagObj didChangeTextFieldWithString:(NSString *) aString;
-- (void) tagObj:(TagObj *)tagObj didDeleteString:(NSString *)aString;
+- (void) tagObj:(TagObj *)tagObj didDeleteGlobalObj:(TSGlobalObj *)aString;
 
 @end
 
@@ -39,9 +40,9 @@ typedef enum {
 }
 
 @property(nonatomic, strong) id<TagObjDelegate> delegate;
-@property (nonatomic, strong) NSString *txt;
+@property (nonatomic, strong) TSGlobalObj *txt;
 
-- (id) initWithString:(NSString *) aTxt option:(int) anOption delegate:(id<TagObjDelegate>) aDelegate;
+- (id) initWithString:(TSGlobalObj *) aTxt option:(int) anOption delegate:(id<TagObjDelegate>) aDelegate;
 
 - (void) becomeFirstResponder;
 @end

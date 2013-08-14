@@ -3400,7 +3400,7 @@ struct enunciate_ns0_TSRecommendationsFollowupObj {
   /**
    * (no documentation provided)
    */
-  struct enunciate_ns0_TSRestaurantObj *restaurant;
+  struct enunciate_ns0_TSRestaurantObj *questionRestaurant;
 };
 
 /**
@@ -21163,16 +21163,16 @@ static struct enunciate_ns0_TSRecommendationsFollowupObj *xmlTextReaderReadNs0TS
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "restaurant", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlStrcmp(BAD_CAST "questionRestaurant", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}restaurant of type {}TSRestaurantObj.\n");
+        printf("Attempting to read choice {}questionRestaurant of type {}TSRestaurantObj.\n");
 #endif
         _child_accessor = xmlTextReaderReadNs0TSRestaurantObjType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}restaurant of type {}TSRestaurantObj.\n");
+          printf("Failed to read choice {}questionRestaurant of type {}TSRestaurantObj.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSRecommendationsFollowupObjType(_tSRecommendationsFollowupObj);
@@ -21180,7 +21180,7 @@ static struct enunciate_ns0_TSRecommendationsFollowupObj *xmlTextReaderReadNs0TS
           return NULL;
         }
 
-        _tSRecommendationsFollowupObj->restaurant = ((struct enunciate_ns0_TSRestaurantObj*)_child_accessor);
+        _tSRecommendationsFollowupObj->questionRestaurant = ((struct enunciate_ns0_TSRestaurantObj*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else {
@@ -21300,22 +21300,22 @@ static int xmlTextWriterWriteNs0TSRecommendationsFollowupObjType(xmlTextWriterPt
     }
     totalBytes += status;
   }
-  if (_tSRecommendationsFollowupObj->restaurant != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurant", NULL);
+  if (_tSRecommendationsFollowupObj->questionRestaurant != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "questionRestaurant", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}restaurant. status: %i\n", status);
+      printf("Failed to write start element {}questionRestaurant. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSRestaurantObj for element {}restaurant...\n");
+    printf("writing type {}TSRestaurantObj for element {}questionRestaurant...\n");
 #endif
-    status = xmlTextWriterWriteNs0TSRestaurantObjType(writer, (_tSRecommendationsFollowupObj->restaurant));
+    status = xmlTextWriterWriteNs0TSRestaurantObjType(writer, (_tSRecommendationsFollowupObj->questionRestaurant));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSRestaurantObj for element {}restaurant. status: %i\n", status);
+      printf("Failed to write type {}TSRestaurantObj for element {}questionRestaurant. status: %i\n", status);
 #endif
       return status;
     }
@@ -21324,7 +21324,7 @@ static int xmlTextWriterWriteNs0TSRecommendationsFollowupObjType(xmlTextWriterPt
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}restaurant. status: %i\n", status);
+      printf("Failed to write end element {}questionRestaurant. status: %i\n", status);
 #endif
       return status;
     }
@@ -21371,15 +21371,15 @@ static void freeNs0TSRecommendationsFollowupObjType(struct enunciate_ns0_TSRecom
 #endif
     free(_tSRecommendationsFollowupObj->questionUserFolloweeFlag);
   }
-  if (_tSRecommendationsFollowupObj->restaurant != NULL) {
+  if (_tSRecommendationsFollowupObj->questionRestaurant != NULL) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor restaurant of type enunciate_ns0_TSRecommendationsFollowupObj...\n");
+    printf("Freeing type of accessor questionRestaurant of type enunciate_ns0_TSRecommendationsFollowupObj...\n");
 #endif
-    freeNs0TSRestaurantObjType(_tSRecommendationsFollowupObj->restaurant);
+    freeNs0TSRestaurantObjType(_tSRecommendationsFollowupObj->questionRestaurant);
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor restaurant of type enunciate_ns0_TSRecommendationsFollowupObj...\n");
+    printf("Freeing accessor questionRestaurant of type enunciate_ns0_TSRecommendationsFollowupObj...\n");
 #endif
-    free(_tSRecommendationsFollowupObj->restaurant);
+    free(_tSRecommendationsFollowupObj->questionRestaurant);
   }
 }
 #endif /* DEF_enunciate_ns0_TSRecommendationsFollowupObj_M */

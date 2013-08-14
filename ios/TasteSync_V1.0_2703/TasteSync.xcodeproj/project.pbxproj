@@ -587,9 +587,11 @@
 		C39F959F179F718800C91BAA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39F959E179F718800C91BAA /* MobileCoreServices.framework */; };
 		C39F95A1179F719700C91BAA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C39F95A0179F719700C91BAA /* libz.dylib */; };
 		C3CA914A17A9EA5A002C2618 /* TSGlobalObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */; };
+		C3D0AF6A17B61F9400D91294 /* TSCityObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0AF6917B61F9400D91294 /* TSCityObj.m */; };
 		C3D18087179F66F7007B71A0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D18086179F66F7007B71A0 /* FacebookSDK.framework */; };
 		C3D180BA179F69AF007B71A0 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B6179F69AF007B71A0 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C3D180BB179F69AF007B71A0 /* CRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B9179F69AF007B71A0 /* CRequest.m */; };
+		C3D8025617B9CC410025E69F /* TSPhotoRestaurantObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D8025517B9CC410025E69F /* TSPhotoRestaurantObj.m */; };
 		C3DA7DDF17A34A1100641DE7 /* ContentAboutUsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C3DA7DDD17A34A1000641DE7 /* ContentAboutUsVC.m */; };
 		C3DA7DE017A34A1100641DE7 /* ContentAboutUsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3DA7DDE17A34A1100641DE7 /* ContentAboutUsVC.xib */; };
 		E02DE78416F94ABC005C193C /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = E02DE78216F94ABA005C193C /* topbar.png */; };
@@ -1300,11 +1302,15 @@
 		C39F95A0179F719700C91BAA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		C3CA914817A9EA5A002C2618 /* TSGlobalObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSGlobalObj.h; sourceTree = "<group>"; };
 		C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSGlobalObj.m; sourceTree = "<group>"; };
+		C3D0AF6817B61F9400D91294 /* TSCityObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCityObj.h; sourceTree = "<group>"; };
+		C3D0AF6917B61F9400D91294 /* TSCityObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCityObj.m; sourceTree = "<group>"; };
 		C3D18086179F66F7007B71A0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		C3D180B5179F69AF007B71A0 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../JSONKit.h; sourceTree = "<group>"; };
 		C3D180B6179F69AF007B71A0 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../JSONKit.m; sourceTree = "<group>"; };
 		C3D180B8179F69AF007B71A0 /* CRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRequest.h; sourceTree = "<group>"; };
 		C3D180B9179F69AF007B71A0 /* CRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRequest.m; sourceTree = "<group>"; };
+		C3D8025417B9CC410025E69F /* TSPhotoRestaurantObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPhotoRestaurantObj.h; sourceTree = "<group>"; };
+		C3D8025517B9CC410025E69F /* TSPhotoRestaurantObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPhotoRestaurantObj.m; sourceTree = "<group>"; };
 		C3DA7DDC17A34A1000641DE7 /* ContentAboutUsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentAboutUsVC.h; sourceTree = "<group>"; };
 		C3DA7DDD17A34A1000641DE7 /* ContentAboutUsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentAboutUsVC.m; sourceTree = "<group>"; };
 		C3DA7DDE17A34A1100641DE7 /* ContentAboutUsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentAboutUsVC.xib; sourceTree = "<group>"; };
@@ -2675,6 +2681,10 @@
 				5E8D40D216D367EE00FF5EEC /* RestaurantObj.m */,
 				C3CA914817A9EA5A002C2618 /* TSGlobalObj.h */,
 				C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */,
+				C3D0AF6817B61F9400D91294 /* TSCityObj.h */,
+				C3D0AF6917B61F9400D91294 /* TSCityObj.m */,
+				C3D8025417B9CC410025E69F /* TSPhotoRestaurantObj.h */,
+				C3D8025517B9CC410025E69F /* TSPhotoRestaurantObj.m */,
 			);
 			path = GlobeObjects;
 			sourceTree = "<group>";
@@ -3638,6 +3648,8 @@
 				C39F959B179F6EC600C91BAA /* Reachability.m in Sources */,
 				C3DA7DDF17A34A1100641DE7 /* ContentAboutUsVC.m in Sources */,
 				C3CA914A17A9EA5A002C2618 /* TSGlobalObj.m in Sources */,
+				C3D0AF6A17B61F9400D91294 /* TSCityObj.m in Sources */,
+				C3D8025617B9CC410025E69F /* TSPhotoRestaurantObj.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

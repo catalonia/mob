@@ -17,6 +17,8 @@
     __weak IBOutlet UILabel *lbResName,*lbResDetail;
     __weak IBOutlet UIView *viewRes;
     __weak IBOutlet UITableView *tbvmenu;
+    __weak IBOutlet UIWebView* _webview;
+    NSString* _url;
 }
 
 - (IBAction)actionBack:(id)sender;
@@ -40,12 +42,30 @@ restaurantObj=_restaurantObj;
     return self;
 }
 
+-(id)initWithRestaurantObj:(RestaurantObj*)restaurantObj
+{
+    self = [super initWithNibName:@"ResMenuVC" bundle:nil];
+    if (self) {
+        self.restaurantObj = restaurantObj;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [CommonHelpers setBackgroudImageForViewRestaurant:self.view];
     tbvmenu.separatorStyle = UITableViewCellSelectionStyleNone ;
-
+    _webview.scrollView.showsHorizontalScrollIndicator = NO;
+    _webview.scrollView.showsVerticalScrollIndicator = NO;
+    
+    
+    
+    NSString* link = [NSString stringWithFormat:@"menu?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
+    NSLog(@"%@, %@", [UserDefault userDefault].userID, self.restaurantObj.uid);
+    CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:1];
+    request.delegate = self;
+    [request startFormRequest];
     
     if (_arrData==nil) {
         self.arrData = [[NSMutableArray alloc] init ];
@@ -184,5 +204,22 @@ restaurantObj=_restaurantObj;
     
 }
 
-
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",response);
+    NSDictionary* dicResponse = [response objectFromJSONString];
+    if (key == 1) {
+        _url = [dicResponse objectForKey:@"menuMobileUrl"];
+        NSLog(@"%@",_url);
+        [NSThread detachNewThreadSelector:@selector(loadWebview) toTarget:self withObject:nil];
+    }
+}
+-(void)loadWebview
+{
+    NSURL* url = [NSURL URLWithString:_url];
+    NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    [_webview setScalesPageToFit:YES];
+    [_webview loadRequest:request];
+}
 @end

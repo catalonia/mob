@@ -200,16 +200,22 @@
 
 - (IBAction)actionRestaurant:(id)sender
 {
-    debug(@"actionRestaurant");
-    /*
-    RestaurantObj *obj = [[RestaurantObj alloc] init];
-    obj.name = @"Test Restaurant";
-    [[[CommonHelpers appDelegate] tabbarBaseVC] actionSelectRestaurant:obj checkBack:YES];
-     
-     */
-    
-    RestaurantListsVC *vc = [[RestaurantListsVC alloc] initWithNibName:@"RestaurantListsVC" bundle:nil];
-    [self.navigationController pushViewController:vc animated:YES];
+    UIButton* button = (UIButton*)sender;
+    if (button.tag == 1) {
+        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantID:_restaurantObj1.uid];
+        vc.selectedIndex = 2;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (button.tag == 2) {
+        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantID:_restaurantObj2.uid];
+        vc.selectedIndex = 2;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (button.tag == 3) {
+        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantID:_restaurantObj3.uid];
+        vc.selectedIndex = 2;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 - (IBAction)actionMoreRestaurant:(id)sender
 {

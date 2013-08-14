@@ -8,9 +8,16 @@
 
 #import "ResPhotoCell.h"
 
+
 @interface ResPhotoCell ()
 {
     __weak IBOutlet UIImageView *iv1,*iv2,*iv3;
+    __weak IBOutlet UIActivityIndicatorView *activity1,*activity2,*activity3;
+    __weak IBOutlet UIButton *bt1,*bt2,*bt3;
+    int _index1, _index2, _index3;
+    
+    TSPhotoRestaurantObj* photoRestaurant;
+    int _location;
 }
 
 - (IBAction)actionSelect:(id)sender;
@@ -19,16 +26,55 @@
 
 @implementation ResPhotoCell
 
-- (void) initForCell:(UIImage *) image1 image2:(UIImage *)image2 image3:(UIImage *) image3
+- (void) initForCell:(TSPhotoRestaurantObj *) image1 Index1:(int)index1 image2:(TSPhotoRestaurantObj *)image2 Index2:(int)index2 image3:(TSPhotoRestaurantObj *) image3 Index3:(int)index3
 {
-    if (image1) {
-        iv1.image = image1;
+    
+    _index1 = index1;
+    _index2 = index2;
+    _index3 = index3;
+    
+    if (image1.image != nil) {
+        iv1.image = image1.image;
+        bt1.enabled = YES;
+        [activity1 stopAnimating];
+        [activity1 removeFromSuperview];
     }
-    if (image2) {
-        iv2.image = image2;
+    else
+    {
+        bt1.enabled = NO;
+        [activity1 startAnimating];
+        photoRestaurant = image1;
+        _location = 1;
+        [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
     }
-    if (image3) {
-        iv3.image = image3;
+    if (image2.image != nil) {
+        iv2.image = image2.image;
+        bt2.enabled = YES;
+        [activity2 stopAnimating];
+        [activity2 removeFromSuperview];
+    }
+    else
+    {
+        bt2.enabled = NO;
+        [activity2 startAnimating];
+        photoRestaurant = image2;
+        _location = 2;
+        [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
+    }
+    
+    if (image3.image != nil) {
+        iv3.image = image3.image;
+        bt3.enabled = YES;
+        [activity3 stopAnimating];
+        [activity3 removeFromSuperview];
+    }
+    else
+    {
+        bt3.enabled = NO;
+        [activity3 startAnimating];
+        photoRestaurant = image2;
+        _location = 2;
+        [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
     }
 }
 
@@ -38,18 +84,18 @@
     switch (bt.tag) {
         case 1:
         {
-            [self.delegate resPhotoCell:self tag:1];
+            [self.delegate resPhotoCell:self tag:_index1];
         }
             break;
         case 2:
         {
-            [self.delegate resPhotoCell:self tag:2];
+            [self.delegate resPhotoCell:self tag:_index2];
 
         }
             break;
         case 3:
         {
-            [self.delegate resPhotoCell:self tag:3];
+            [self.delegate resPhotoCell:self tag:_index3];
 
         }
             break;
@@ -59,5 +105,34 @@
     }
 }
 
+-(void)loadImage
+{
+    int location = _location;
+    TSPhotoRestaurantObj* photo = photoRestaurant;
+    while (YES) {
+        if (photo.image != nil) {
+            if (location == 1) {
+                iv1.image = photo.image;
+                bt1.enabled = YES;
+                [activity1 stopAnimating];
+                [activity1 removeFromSuperview];
+            }
+            if (location == 2) {
+                iv2.image = photo.image;
+                bt2.enabled = YES;
+                [activity2 stopAnimating];
+                [activity2 removeFromSuperview];
+            }
+            if (location == 3) {
+                iv3.image = photo.image;
+                bt3.enabled = YES;
+                [activity3 stopAnimating];
+                [activity3 removeFromSuperview];
+            }
+            break;
+        }
+    }
+
+}
 
 @end

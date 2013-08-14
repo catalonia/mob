@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TagObj.h"
 #import "TagDefault.h"
+#import "TSGlobalObj.h"
 
 @class TagView;
 
@@ -42,7 +43,7 @@ typedef enum{
 
 - (void) addTagDefault;
 
-- (void) addTagObj:(NSString *) aTxt delegate:(id<TagObjDelegate>) aDelegate;
+- (void) addTagObj:(TSGlobalObj *) aTxt delegate:(id<TagObjDelegate>) aDelegate;
 
-- (void) addTagObj:(NSString *)aTxt delegate:(id<TagObjDelegate>)aDelegate andTagDefault:(BOOL) aBoolValue;
+- (void) addTagObj:(TSGlobalObj *)aTxt delegate:(id<TagObjDelegate>)aDelegate andTagDefault:(BOOL) aBoolValue;
 @end

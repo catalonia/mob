@@ -17,22 +17,22 @@ nation = _nation,
 
 longtitude = _longtitude,
 lattitude = _lattitude,
-
 rates = _rates,
-
 isSelected = _isSelected,
-
 isDeal = _isDeal,
-
 isSaved = _isSaved,
-
 isFavs = _isFavs,
-
 isCheckin = _isCheckin,
-
 isLike = _isLike,
-
-
 imageUrl = _imageUrl,
-allowSize = _allowSize;
+allowSize = _allowSize,
+
+factualId = _factualId,
+factualRating = _factualRating,
+priceRange = _priceRange,
+restaurantHours = _restaurantHours,
+sumVoteCount = _sumVoteCount,
+sumVoteValue = _sumVoteValue,
+tbdOpenTableId = _tbdOpenTableId,
+cityObj = _cityObj;
 @end

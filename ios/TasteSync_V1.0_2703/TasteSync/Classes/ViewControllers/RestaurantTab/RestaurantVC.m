@@ -446,8 +446,6 @@ typedef enum _TFSelect
         if (cell==nil) {
             NSLog(@"cell is nil");
             cell =(RestaurantCell *) [[[NSBundle mainBundle ] loadNibNamed:@"RestaurantCell" owner:self options:nil] objectAtIndex:0];
-            
-            
         }
         
         [cell initForView:[_arrData objectAtIndex:indexPath.row]];
@@ -511,8 +509,7 @@ typedef enum _TFSelect
     }
     else
     {
-        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithNibName:@"RestaurantDetailVC" bundle:nil];
-        vc.restaurantObj = [_arrData objectAtIndex:indexPath.row];
+        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantID:@"002b38d0-e4b5-012e-6305-003048c87378"];
         vc.selectedIndex = 2;
         [self.navigationController pushViewController:vc animated:YES];
     }

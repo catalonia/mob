@@ -11,9 +11,12 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "AddressAnnotation.h"
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface ResMoreInfoVC : UIViewController
+@interface ResMoreInfoVC : UIViewController<RequestDelegate>
 
 @property (nonatomic, strong) RestaurantObj *restaurantObj;
 
+- (id)initWithRestaurantObj:(RestaurantObj*)restaurantObj;
 @end

@@ -1303,7 +1303,7 @@
     ENUNCIATENS0TSUserProfileBasicObj *_questionUse;
     NSString *_questionText;
     NSString *_questionUserFolloweeFlag;
-    ENUNCIATENS0TSRestaurantObj *_restaurant;
+    ENUNCIATENS0TSRestaurantObj *_questionRestaurant;
 }
 
 /**
@@ -1339,12 +1339,12 @@
 /**
  * (no documentation provided)
  */
-- (ENUNCIATENS0TSRestaurantObj *) restaurant;
+- (ENUNCIATENS0TSRestaurantObj *) questionRestaurant;
 
 /**
  * (no documentation provided)
  */
-- (void) setRestaurant: (ENUNCIATENS0TSRestaurantObj *) newRestaurant;
+- (void) setQuestionRestaurant: (ENUNCIATENS0TSRestaurantObj *) newQuestionRestaurant;
 @end /* interface ENUNCIATENS0TSRecommendationsFollowupObj */
 
 #endif /* DEF_ENUNCIATENS0TSRecommendationsFollowupObj_H */

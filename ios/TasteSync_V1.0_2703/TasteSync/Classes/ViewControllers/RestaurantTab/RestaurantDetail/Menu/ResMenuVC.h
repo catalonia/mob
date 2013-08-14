@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "RestaurantObj.h"
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface ResMenuVC : UIViewController
+@interface ResMenuVC : UIViewController<RequestDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrData;
 @property (nonatomic, strong) RestaurantObj *restaurantObj;
 
+-(id)initWithRestaurantObj:(RestaurantObj*)restaurantObj;
 
 @end

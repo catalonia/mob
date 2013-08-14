@@ -337,7 +337,7 @@
       <xs:element name="questionUse" type="TSUserProfileBasicObj" minOccurs="0"/>
       <xs:element name="questionText" type="xs:string" minOccurs="0"/>
       <xs:element name="questionUserFolloweeFlag" type="xs:string" minOccurs="0"/>
-      <xs:element name="restaurant" type="TSRestaurantObj" minOccurs="0"/>
+      <xs:element name="questionRestaurant" type="TSRestaurantObj" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSRecommendationsForYouObj">

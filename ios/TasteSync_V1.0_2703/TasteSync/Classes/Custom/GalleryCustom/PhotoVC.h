@@ -20,4 +20,7 @@
 //Main
 @property (nonatomic, strong) IBOutlet CTScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet CTZoomView *zoomView;
+
+
+-(id)initWithArrayPhotos:(NSMutableArray*)arrayPhotos AtIndex:(NSUInteger)index;
 @end

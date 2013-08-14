@@ -503,7 +503,6 @@
       <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="userid" style="query"/>
-          <wadl:param name="restaurantid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -514,7 +513,6 @@
       <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="userid" style="query"/>
-          <wadl:param name="restaurantid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>

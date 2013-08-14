@@ -21,7 +21,7 @@
     NSMutableArray *arrDataAsk;
     UITextField *cTextField;
     NSString *region;
-
+    NSString* cityLocal;
 }
 
 @end
@@ -334,8 +334,12 @@
     }
     else
     {
-        AskRecommendationsVC *vc = [[AskRecommendationsVC alloc] initWithNibName:@"AskRecommendationsVC" bundle:nil];
-        [self.navigationController pushViewController:vc animated:YES];
+        for (TSGlobalObj* global in arrDataAsk) {
+            NSLog(@"%@ - %d - %@", global.name, global.type, global.uid);
+        }
+        
+        //AskRecommendationsVC *vc = [[AskRecommendationsVC alloc] initWithNibName:@"AskRecommendationsVC" bundle:nil];
+       // [self.navigationController pushViewController:vc animated:YES];
     }
 
 }
@@ -347,29 +351,43 @@
     
     
     NSString *strObj;
-
+    
+    TSGlobalObj* globalObj;
+    
     if (segCtr == segCtrCusine) {
         TSGlobalObj* global = [[[CommonHelpers appDelegate] arrCuisine] objectAtIndex:segCtr.selectedSegmentIndex];
+        global.type = GlobalDataCuisine_1;
+        globalObj = global;
         strObj = global.name;
     }else
     if (segCtr == segCtrOccasion) {
         TSGlobalObj* global = [[[CommonHelpers appDelegate] arrOccasion] objectAtIndex:segCtr.selectedSegmentIndex];
+        global.type = GlobalDataOccasion;
+        globalObj = global;
         strObj = global.name;
     }else
     if (segCtr == segCtrPrice) {
         TSGlobalObj* global = [[[CommonHelpers appDelegate] arrPrice] objectAtIndex:segCtr.selectedSegmentIndex];
+        global.type = GlobalDataPrice;
+        globalObj = global;
         strObj = global.name;
     }else
     if (segCtr == segCtrTheme) {
         TSGlobalObj* global = [[[CommonHelpers appDelegate] arrTheme] objectAtIndex:segCtr.selectedSegmentIndex];
+        global.type = GlobalDataTheme;
+        globalObj = global;
         strObj = global.name;
     }else
     if (segCtr == segCtrTypeOf) {
         TSGlobalObj* global = [[[CommonHelpers appDelegate] arrTypeOfRestaurant] objectAtIndex:segCtr.selectedSegmentIndex];
+        global.type = GlobalDataTypeOfRestaurant;
+        globalObj = global;
         strObj = global.name;
     }else
     if (segCtr == segCtrWho) {
         TSGlobalObj* global = [[[CommonHelpers appDelegate] arrWhoAreUWith] objectAtIndex:segCtr.selectedSegmentIndex];
+        global.type = GlobalDataWhoAreUWith;
+        globalObj = global;
         strObj = global.name;
     }else
     {
@@ -377,10 +395,10 @@
     }
     
       
-    if ([arrDataAsk containsObject:strObj]) {
+    if ([arrDataAsk containsObject:globalObj]) {
         
         debug(@"unselect obj");
-        [arrDataAsk removeObject:strObj];
+        [arrDataAsk removeObject:globalObj];
         
         tagView = nil;
         
@@ -411,8 +429,8 @@
     else
     {
         debug(@"select obj");       
-        [arrDataAsk addObject:strObj];
-        [tagView addTagObj:strObj delegate:self andTagDefault:NO];
+        [arrDataAsk addObject:globalObj];
+        [tagView addTagObj:globalObj delegate:self andTagDefault:NO];
         [self refreshAskTextView];
 
         for (int i= 0; i< [[sender subviews] count]; i++) {
@@ -459,9 +477,9 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIndentifier];
     }
     
-    NSString *strtxt = [_arrDataFilter objectAtIndex:indexPath.row];
+    TSGlobalObj* globalObj = [_arrDataFilter objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = strtxt;
+    cell.textLabel.text = globalObj.name;
     //        cell.textLabel.textAlignment = UITextAlignmentRight;
     cell.textLabel.textColor = [UIColor whiteColor];
     [cell.textLabel setFont:[UIFont boldSystemFontOfSize:13]];
@@ -476,9 +494,9 @@
     
     if (chooseRegion) {
         
-        NSString *strObj = [_arrDataFilter objectAtIndex:indexPath.row];
-        tfRegion.text = strObj;
-        region = strObj;
+        TSGlobalObj *globalObj = [_arrDataFilter objectAtIndex:indexPath.row];
+        tfRegion.text = globalObj.name;
+        region = globalObj.name;
         tbvFilter.hidden = YES;
         [_arrDataFilter removeAllObjects];
 
@@ -487,9 +505,9 @@
     else
     {
         
-        NSString *strObj = [_arrDataFilter objectAtIndex:indexPath.row];
-        [arrDataAsk addObject:strObj];
-        [tagView addTagObj:strObj delegate:self];
+        TSGlobalObj *globalObj = [_arrDataFilter objectAtIndex:indexPath.row];
+        [arrDataAsk addObject:globalObj];
+        [tagView addTagObj:globalObj delegate:self];
         [self refreshAskTextView];
         tbvFilter.hidden = YES;
        
@@ -584,7 +602,11 @@
         return;
         
     }
-        
+    if (txt.length == 3 && [[txt uppercaseString] isEqualToString:[cityLocal uppercaseString]]) {
+        NSLog(@"request");
+        cityLocal = txt;
+    }
+    
     if (chooseRegion) {
         
         for (NSString *strObj in _arrDataRegion) {
@@ -596,7 +618,10 @@
                        
             
             if (/*p!=NULL*/ diff == 0) {
-                [self.arrDataFilter addObject:strObj];
+                TSGlobalObj* globalObj = [[TSGlobalObj alloc]init];
+                globalObj.name = strObj;
+                globalObj.type = GlobalDataCuisine_2;
+                [self.arrDataFilter addObject:globalObj];
             }
             
         }
@@ -604,28 +629,23 @@
     }else
     {
         
-        debug(@"SearchLocal : txt -> %@",txt);
-        for (NSString *strObj in _arrData) {
-            /*
-            char *p;
-            p = strstr([strObj UTF8String], [txt UTF8String]);
-             
-             */
+        NSLog(@"SearchLocal : txt -> %@",txt);
+        for (TSGlobalObj *global in _arrData) {
             
-         NSString  *ustrObj =  [strObj uppercaseString];
+         NSString  *ustrObj =  [global.name uppercaseString];
          NSString *utxt =   [txt uppercaseString];
             
             int diff = strncmp([ustrObj UTF8String], [utxt UTF8String], utxt.length);
             
                         
             if (/*p!=NULL*/ diff == 0) {
-                [self.arrDataFilter addObject:strObj];
+                [self.arrDataFilter addObject:global];
             }
             
         }
         
         
-        for (NSString *obj in arrDataAsk) {
+        for (TSGlobalObj *obj in arrDataAsk) {
             if ([self.arrDataFilter containsObject:obj]) {
                 [self.arrDataFilter removeObject:obj];
             }
@@ -642,10 +662,10 @@
 
     }
        
-    if (self.arrDataFilter.count>0) {
+    if (self.arrDataFilter.count > 0) {
         
         CGRect frame = tbvFilter.frame;
-        if (self.arrDataFilter.count>5) {
+        if (self.arrDataFilter.count > 5) {
             frame.size.height = 5*44;
             
         }
@@ -721,17 +741,17 @@
                      }];
 }
 
-- (void) tagObj:(TagObj *)tagObj didChangeTextFieldWithString:(NSString *) aString
+- (void) tagObj:(TagObj *)tagObj didChangeTextFieldWithString:(NSString *)aString
 {
     debug(@"AskVC -> tagObj-> didChangeTextFieldWithString:%@",aString);
     [self searchLocal:aString];
 }
 
-- (void) tagObj:(TagObj *)tagObj didDeleteString:(NSString *)aString
+- (void) tagObj:(TagObj *)tagObj didDeleteGlobalObj:(TSGlobalObj *)aString
 {
     debug(@"AskVC -> tagObj-> didDeleteString:%@",aString);
     if (aString == nil) {
-        if (arrDataAsk.count>0) {
+        if (arrDataAsk.count > 0) {
             [arrDataAsk removeLastObject];
             
         }
@@ -788,6 +808,9 @@
     [self refreshAskTextView];
 }
 
-
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    
+}
 
 @end

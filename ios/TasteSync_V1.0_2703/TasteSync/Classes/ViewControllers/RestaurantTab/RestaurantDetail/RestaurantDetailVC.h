@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "NotificationObj.h"
 #import "RestaurantObj.h"
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface RestaurantDetailVC : UIViewController
+@interface RestaurantDetailVC : UIViewController<RequestDelegate>
 
 @property (nonatomic, strong) RestaurantObj *restaurantObj;
 @property (nonatomic, assign) int selectedIndex;
 
+- (id)initWithRestaurantID:(NSString *)uid;
 @end

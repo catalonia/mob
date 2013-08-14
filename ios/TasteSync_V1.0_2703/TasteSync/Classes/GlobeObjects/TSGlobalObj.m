@@ -10,6 +10,7 @@
 
 @implementation TSGlobalObj
 @synthesize
-uid     = _uid,
-name    = _name;
+uid          = _uid,
+name      = _name,
+type        = _type;
 @end

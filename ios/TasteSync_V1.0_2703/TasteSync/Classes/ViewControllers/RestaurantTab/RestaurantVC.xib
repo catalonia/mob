@@ -977,7 +977,6 @@
 										<string key="NSFrame">{{20, 500}, {280, 200}}</string>
 										<reference key="NSSuperview" ref="174182737"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<reference key="IBUIBackgroundColor" ref="328630056"/>
 										<bool key="IBUIClipsSubviews">YES</bool>

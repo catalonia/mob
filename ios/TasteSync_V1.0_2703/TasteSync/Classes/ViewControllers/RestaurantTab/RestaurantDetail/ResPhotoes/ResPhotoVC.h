@@ -15,4 +15,6 @@
 @property (nonatomic, strong) NSMutableArray *arrData;
 @property (nonatomic, strong) RestaurantObj *restaurantObj;
 
+
+-(id)initWithArrayPhoto:(NSMutableArray*)array RestaurantObj:(RestaurantObj*)restaurant;
 @end

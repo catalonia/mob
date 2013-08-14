@@ -211,6 +211,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 								//Insert facebook data (Assume user create profile first, then user login app by connecting Facebook so we have to insert Facebook data)
 								//sql = UserQueries.FACEBOOK_INSERT_SQL;
 								System.out.println(UserQueries.FACEBOOK_INSERT_SQL);
+								tsDataSource.begin();
 								connection = tsDataSource.getConnection();
 								statement = connection.prepareStatement(UserQueries.FACEBOOK_INSERT_SQL);
 				            	statement.setString(1, user_current_profile.getId());
@@ -248,6 +249,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 								//Update facebook data
 								//sql = UserQueries.FACEBOOK_UPDATE_SQL;
 								System.out.println(UserQueries.FACEBOOK_UPDATE_SQL);
+								tsDataSource.begin();
 								connection = tsDataSource.getConnection();
 								statement = connection.prepareStatement(UserQueries.FACEBOOK_UPDATE_SQL);
 								statement.setString(1, user_current_profile.getName());
@@ -311,6 +313,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 											System.out.println(UserQueries.FACEBOOK_INSERT_SQL);
 											//Insert facebook data (Assume user create profile first, then user login app by connecting Facebook so we have to insert Facebook data)
 											//sql = UserQueries.FACEBOOK_INSERT_SQL;
+											tsDataSource.begin();
 											connection = tsDataSource.getConnection();
 											statement = connection.prepareStatement(UserQueries.FACEBOOK_INSERT_SQL);
 							            	statement.setString(1, item.getId());
@@ -348,6 +351,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 											//Update facebook data
 											System.out.println(UserQueries.FACEBOOK_UPDATE_SQL);
 											//sql = UserQueries.FACEBOOK_UPDATE_SQL;
+											tsDataSource.begin();
 											connection = tsDataSource.getConnection();
 											statement = connection.prepareStatement(UserQueries.FACEBOOK_UPDATE_SQL);
 											statement.setString(1, item.getName());

@@ -192,7 +192,7 @@ done=_done;
                 user.avatarUrl              = [objDict objectForKey:@"pic_square"];
                 user.email                  = [objDict objectForKey:@"email"];
                 user.gender                 = [[objDict objectForKey:@"sex"] isEqualToString:@"male"];
-                user.avatar                 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:user.avatarUrl]]];
+                
                 
                 user.name                   = [objDict objectForKey:@"name"];
                 user.middle_name            = [objDict objectForKey:@"middle_name"];
@@ -255,6 +255,7 @@ done=_done;
                 
                 if (i == 0) {
                     debug(@"Add user infor");
+                    user.avatar                 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:user.avatarUrl]]];
                     user.friend_count = [[objDict objectForKey:@"friend_count"] intValue];
                     user.timezone = [[objDict objectForKey:@"timezone"] intValue];
                     user.likes_count = [[objDict objectForKey:@"likes_count"] intValue];

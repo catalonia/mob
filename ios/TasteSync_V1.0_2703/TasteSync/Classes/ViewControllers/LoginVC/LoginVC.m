@@ -385,6 +385,7 @@
         NSArray* arrayCuisine1 = [dic objectForKey:@"cuisine1"];
         for (NSDictionary* dic in arrayCuisine1) {
             TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.type = GlobalDataCuisine_1;
             obj.uid = [dic objectForKey:@"id"];
             obj.name = [dic objectForKey:@"name"];
             [[CommonHelpers appDelegate].arrCuisine addObject:obj];
@@ -394,6 +395,7 @@
         NSArray* arrayCuisine2 = [dic objectForKey:@"cuisine2"];
         for (NSDictionary* dic in arrayCuisine2) {
             TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.type = GlobalDataCuisine_2;
             obj.uid = [dic objectForKey:@"id"];
             obj.name = [dic objectForKey:@"name"];
             [[CommonHelpers appDelegate].arrDropdown addObject:obj];
@@ -403,6 +405,7 @@
         NSArray* arrayOccasion = [dic objectForKey:@"occasion"];
         for (NSDictionary* dic in arrayOccasion) {
             TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.type = GlobalDataOccasion;
             obj.uid = [dic objectForKey:@"id"];
             obj.name = [dic objectForKey:@"name"];
             [[CommonHelpers appDelegate].arrOccasion addObject:obj];
@@ -412,6 +415,7 @@
         NSArray* arrayPrice = [dic objectForKey:@"price"];
         for (NSDictionary* dic in arrayPrice) {
             TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.type = GlobalDataPrice;
             obj.uid = [dic objectForKey:@"id"];
             obj.name = [dic objectForKey:@"name"];
             [[CommonHelpers appDelegate].arrPrice addObject:obj];
@@ -421,6 +425,7 @@
         NSArray* arrayTheme = [dic objectForKey:@"theme"];
         for (NSDictionary* dic in arrayTheme) {
             TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.type = GlobalDataTheme;
             obj.uid = [dic objectForKey:@"id"];
             obj.name = [dic objectForKey:@"name"];
             [[CommonHelpers appDelegate].arrTheme addObject:obj];
@@ -430,6 +435,7 @@
         NSArray* arrayTypeOfRestaurant = [dic objectForKey:@"typeOfRestaurant"];
         for (NSDictionary* dic in arrayTypeOfRestaurant) {
             TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.type = GlobalDataTypeOfRestaurant;
             obj.uid = [dic objectForKey:@"id"];
             obj.name = [dic objectForKey:@"name"];
             [[CommonHelpers appDelegate].arrTypeOfRestaurant addObject:obj];
@@ -439,19 +445,20 @@
         NSArray* arrayWhoAreYou = [dic objectForKey:@"whoAreYou"];
         for (NSDictionary* dic in arrayWhoAreYou) {
             TSGlobalObj* obj = [[TSGlobalObj alloc]init];
+            obj.type = GlobalDataWhoAreUWith;
             obj.uid = [dic objectForKey:@"id"];
             obj.name = [dic objectForKey:@"name"];
             [[CommonHelpers appDelegate].arrWhoAreUWith addObject:obj];
         }
         
         
-        NSLog(@"arrCuisine: %d"         , [[CommonHelpers appDelegate].arrCuisine count]);
-        NSLog(@"arrOccasion: %d"        , [[CommonHelpers appDelegate].arrOccasion count]);
-        NSLog(@"arrPrice: %d"           , [[CommonHelpers appDelegate].arrPrice count]);
-        NSLog(@"arrTheme: %d"           , [[CommonHelpers appDelegate].arrTheme count]);
-        NSLog(@"arrTypeOfRestaurant: %d", [[CommonHelpers appDelegate].arrTypeOfRestaurant count]);
-        NSLog(@"arrWhoAreUWith: %d"     , [[CommonHelpers appDelegate].arrWhoAreUWith count]);
-        NSLog(@"arrDropdown: %d"        , [[CommonHelpers appDelegate].arrDropdown count]);
+        NSLog(@"arrCuisine: %d"                     , [[CommonHelpers appDelegate].arrCuisine count]                      );
+        NSLog(@"arrOccasion: %d"                  , [[CommonHelpers appDelegate].arrOccasion count]                   );
+        NSLog(@"arrPrice: %d"                         , [[CommonHelpers appDelegate].arrPrice count]                          );
+        NSLog(@"arrTheme: %d"                      , [[CommonHelpers appDelegate].arrTheme count]                       );
+        NSLog(@"arrTypeOfRestaurant: %d"   , [[CommonHelpers appDelegate].arrTypeOfRestaurant count]    );
+        NSLog(@"arrWhoAreUWith: %d"          , [[CommonHelpers appDelegate].arrWhoAreUWith count]           );
+        NSLog(@"arrDropdown: %d"                 , [[CommonHelpers appDelegate].arrDropdown count]                 );
     }
     
     

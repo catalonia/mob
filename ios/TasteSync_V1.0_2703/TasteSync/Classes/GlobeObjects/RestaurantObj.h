@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TSCityObj.h"
 
 @interface RestaurantObj : NSObject
 
-@property (nonatomic, assign) NSString* uid;
+@property (nonatomic, strong) NSString* uid;
 
 @property (nonatomic, strong) NSString *name,*nation;
 
@@ -29,9 +30,11 @@
 @property (nonatomic, assign) BOOL isCheckin;
 
 @property (nonatomic, assign) BOOL isLike;
-
-
 @property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, assign) int allowSize;
+
+@property(nonatomic,strong)  NSString* factualId, *factualRating, *priceRange, *restaurantHours, *sumVoteCount, *sumVoteValue, *tbdOpenTableId;
+
+@property(nonatomic,strong) TSCityObj* cityObj;
 
 @end

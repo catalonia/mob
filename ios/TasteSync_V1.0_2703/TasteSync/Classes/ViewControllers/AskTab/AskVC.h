@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CRequest.h"
+#import "JSONKit.h"
 
-
-@interface AskVC : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate>
+@interface AskVC : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RequestDelegate>
 {
     __weak IBOutlet UIView *viewFilter, *viewFilterExtends,*viewGetLiveRec, *viewMain, *viewAsk, *viewWhiteBoxFilter;
     __weak IBOutlet UIScrollView *scrollViewMain,*scrollViewCusine, *scrollViewOccassion, *scrollViewWho , *scrollViewPrice, *scrollViewTheme, *scrollViewTypeOf;

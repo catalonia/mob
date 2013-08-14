@@ -18,6 +18,8 @@
 #import "RateCustom.h"
 #import "ResDealVC.h"
 #import "LeaveATipVC.h"
+#import "TSPhotoRestaurantObj.h"
+#import "PhotoVC.h"
 
 @interface RestaurantDetailVC ()<UIScrollViewDelegate,ResShareViewDelegate,UIAlertViewDelegate>
 {
@@ -31,7 +33,10 @@
     ResRecommendObj *resRecommendObj ;
     UITextView *tvNote ;
     
-    
+    NSMutableArray* _arrayPhoto;
+    CGFloat _locationImage;
+    NSString* _urlImage;
+    int _tagImage;
     CGFloat *offset;
 }
 
@@ -66,7 +71,7 @@
 
 @implementation RestaurantDetailVC
 
-@synthesize restaurantObj=_restaurantObj;
+@synthesize restaurantObj = _restaurantObj;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -77,19 +82,38 @@
     return self;
 }
 
+- (id)initWithRestaurantID:(NSString *)uid
+{
+    self = [super initWithNibName:@"RestaurantDetailVC" bundle:nil];
+    if (self) {
+        self.restaurantObj = [[RestaurantObj alloc]init];
+        self.restaurantObj.uid = uid;
+        _arrayPhoto = [[NSMutableArray alloc]init];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [CommonHelpers setBackgroudImageForViewRestaurant:self.view];
+    NSString* link = [NSString stringWithFormat:@"restaurantdetails?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
+    CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:1];
+    request.delegate = self;
+    [request startFormRequest];
     
-   
-    [self configView];
+    NSString* photo_link = [NSString stringWithFormat:@"photos?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
+    CRequest* photo_request = [[CRequest alloc]initWithURL:photo_link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:2];
+    photo_request.delegate = self;
+    [photo_request startFormRequest];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     self.navigationController.navigationBarHidden = YES;
     if (_restaurantObj.isSaved) {
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_saved_on.png"] forButton:btSave];
@@ -185,8 +209,7 @@
 - (IBAction)actionMenu:(id)sender
 {
     debug(@"actionMenu");
-    ResMenuVC *vc = [[ResMenuVC alloc] initWithNibName:@"ResMenuVC" bundle:nil];
-    vc.restaurantObj = _restaurantObj;
+    ResMenuVC *vc = [[ResMenuVC alloc] initWithRestaurantObj:_restaurantObj];
     [self.navigationController pushViewController:vc animated:YES];
 
 }
@@ -194,8 +217,7 @@
 - (IBAction)actionMoreInfo:(id)sender
 {
     debug(@"actionMoreInfo");
-    ResMoreInfoVC *vc = [[ResMoreInfoVC alloc] initWithNibName:@"ResMoreInfoVC" bundle:nil];
-    vc.restaurantObj = _restaurantObj;
+    ResMoreInfoVC *vc = [[ResMoreInfoVC alloc] initWithRestaurantObj:self.restaurantObj];
     [self.navigationController pushViewController:vc animated:YES];
 
 }
@@ -254,7 +276,8 @@
 
 - (IBAction)actionMorePhoto:(id)sender
 {
-    [self showPhotoDetail:nil];
+    ResPhotoVC* restPhoto = [[ResPhotoVC alloc]initWithArrayPhoto:_arrayPhoto RestaurantObj:_restaurantObj];
+    [self.navigationController pushViewController:restPhoto animated:YES];
 }
 
 # pragma mark - others
@@ -271,59 +294,62 @@
     user.firstname = @"Victor";
     user.lastname = @"NGO";
     resRecommendObj.user = user;
-    [self setupHorizontalScrollView];
+//    [self setupHorizontalScrollView];
     if (_restaurantObj) {
-        lbName.text = _restaurantObj.name;
         lbDetail.text = @"Chinese, $$, New York, 3.1mi";
-       
+        lbName.text = self.restaurantObj.name;
     }
 }
 - (void)setupHorizontalScrollView
 {
     scrollViewPhotos.delegate = self;
-    
-    [scrollViewPhotos setCanCancelContentTouches:NO];
+    [scrollViewPhotos setContentSize:CGSizeMake(90*[_arrayPhoto count], [scrollViewPhotos bounds].size.height)];
+   // [scrollViewPhotos setCanCancelContentTouches:NO];
     
     scrollViewPhotos.indicatorStyle = UIScrollViewIndicatorStyleWhite;
-    scrollViewPhotos.clipsToBounds = NO;
-    scrollViewPhotos.scrollEnabled = NO;
+    scrollViewPhotos.clipsToBounds = YES;
+    scrollViewPhotos.scrollEnabled = YES;
     scrollViewPhotos.pagingEnabled = YES;
     
-    NSUInteger nimages = 0;
     NSInteger tot=0;
-    CGFloat cx = 0;
-    for (; ; nimages++) {
-        NSString *imageName = [NSString stringWithFormat:@"frame1.png"];
-        UIImage *image = [UIImage imageNamed:imageName];
-        if (tot==3) {
-            break;
-        }
-        if (4==nimages) {
-            nimages=0;
-        }
+    CGFloat cx = 15;
+    //for (; ; nimages++)
+    for (TSPhotoRestaurantObj* photoObj in _arrayPhoto)
+    {
+       _urlImage = [NSString stringWithFormat:@"%@%dx%d%@", photoObj.prefix, photoObj.width, photoObj.height, photoObj.suffix];
+        _locationImage = cx;
+        _tagImage = [_arrayPhoto count] + tot ;
+        [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        UIButton *btn = [[UIButton alloc] init];
-        
-        CGRect rect = imageView.frame;
+        CGRect rect;
         rect.size.height = 60;
         rect.size.width = 60;
         rect.origin.x = cx;
         rect.origin.y = 0;
         
-        imageView.frame = rect;
+        UIButton *btn = [[UIButton alloc] init];
+        
+        UIImage* image = [UIImage imageNamed:@"frame1.png"];
+        
         btn.frame = rect;
+        btn.tag = tot;
+        [btn setBackgroundImage:image forState:UIControlStateNormal];
+        [btn setBackgroundImage:image forState:UIControlStateHighlighted];
         [btn addTarget:self action:@selector(showPhotoDetail:) forControlEvents:UIControlEventTouchUpInside];
         [scrollViewPhotos addSubview:btn];
-        [scrollViewPhotos addSubview:imageView];
         
-        cx += imageView.frame.size.width+30;
+        UIActivityIndicatorView *activityView=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        activityView.frame = rect;
+        activityView.tag = [_arrayPhoto count] + tot;
+        [activityView startAnimating];
+        [scrollViewPhotos addSubview:activityView];
+        
+        cx += rect.size.width+30;
         tot++;
     }
    
 //    [scrollViewPhotos setFrame:CGRectMake(30, 340, 260, 90)];
     
-//    [scrollViewPhotos setContentSize:CGSizeMake(260, [scrollViewPhotos bounds].size.height)];
     
     debug(@"scrollview x-> %f, y-> %f, width-> %f, height-> %f",scrollViewPhotos.frame.origin.x,scrollViewPhotos.frame.origin.y,scrollViewPhotos.frame.size.width,scrollViewPhotos.frame.size.height) ;
 }
@@ -331,9 +357,25 @@
 - (void) showPhotoDetail:(id) params
 {
     debug(@"showPhotoDetail");
-    ResPhotoVC *vc = [[ResPhotoVC alloc] initWithNibName:@"ResPhotoVC" bundle:nil];
-    vc.restaurantObj = _restaurantObj;
-    [self.navigationController pushViewController:vc animated:YES];
+    UIButton* button = (UIButton*)params;
+    NSLog(@"TAG: %d",button.tag);
+    int data;
+    
+    NSMutableArray* array = [[NSMutableArray alloc]init];
+    for (int i = 0; i < [_arrayPhoto count]; i++) {
+        TSPhotoRestaurantObj* obj = [_arrayPhoto objectAtIndex:i];
+        if (obj.image != nil) {
+            if (i == button.tag) {
+                data = [array count];
+            }
+            [array addObject:obj];
+        }
+        
+        
+    }
+    
+    PhotoVC* photo = [[PhotoVC alloc]initWithArrayPhotos:array AtIndex:button.tag];
+    [self.navigationController pushViewController:photo animated:YES];
     
 }
 
@@ -354,6 +396,63 @@
         default:
             break;
     }
+}
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",response);
+    if (key == 1) {
+        NSDictionary* dicResponse = [response objectFromJSONString];
+        self.restaurantObj.name                     = [dicResponse objectForKey:@"restaurantName"];
+        self.restaurantObj.factualId                =  [dicResponse objectForKey:@"factualId"];
+        self.restaurantObj.factualRating        =  [dicResponse objectForKey:@"factualId"];
+        self.restaurantObj.priceRange           =  [dicResponse objectForKey:@"priceRange"];
+        self.restaurantObj.cityObj.uid            =  [dicResponse objectForKey:@"restaurantCityId"];
+        self.restaurantObj.restaurantHours   =  [dicResponse objectForKey:@"restaurantHours"];
+        self.restaurantObj.lattitude                 =  [[dicResponse objectForKey:@"restaurantLat"] floatValue];
+        self.restaurantObj.longtitude              =  [[dicResponse objectForKey:@"restaurantLon"] floatValue];
+        self.restaurantObj.sumVoteCount      =  [dicResponse objectForKey:@"sumVoteCount"];
+        self.restaurantObj.sumVoteValue       =  [dicResponse objectForKey:@"sumVoteValue"];
+        self.restaurantObj.tbdOpenTableId    =  [dicResponse objectForKey:@"tbdOpenTableId"];
+        [self configView];
+    }
+    if (key == 2) {
+        NSArray* dicResponse = [response objectFromJSONString];
+        for (NSDictionary* dic in dicResponse) {
+            TSPhotoRestaurantObj* obj = [[TSPhotoRestaurantObj alloc]init];
+            obj.uid                              = [dic objectForKey:@"restaurantId"];
+            obj.photoId                       = [dic objectForKey:@"photoId"];
+            obj.prefix                          = [dic objectForKey:@"prefix"];
+            obj.suffix                           = [dic objectForKey:@"suffix"];
+            obj.width                           = [[dic objectForKey:@"width"] intValue];
+            obj.height                          = [[dic objectForKey:@"height"] intValue];
+            obj.ultimateSourceName = [dic objectForKey:@"ultimateSourceName"];
+            obj.ultimateSourceUrl      = [dic objectForKey:@"ultimateSourceUrl"];
+            obj.photoSource               =  [dic objectForKey:@"photoSource"];
+            [_arrayPhoto addObject:obj];
+        }
+        [self setupHorizontalScrollView];
+    }
+}
+
+-(void)loadImage
+{
+    int tag = _tagImage;
+    CGRect rect = CGRectMake(_locationImage, 0, 60, 60);
+    UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage]]];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.frame = rect;
+    [scrollViewPhotos addSubview:imageView];
+    for (UIView* view in scrollViewPhotos.subviews) {
+        if (view.tag == tag) {
+            UIActivityIndicatorView* activity= ( UIActivityIndicatorView*)view;
+            [activity stopAnimating];
+            [activity removeFromSuperview];
+        }
+    }
+    
+    TSPhotoRestaurantObj* obj = [_arrayPhoto objectAtIndex:tag - [_arrayPhoto count]];
+    obj.image = image;
 }
 
 @end

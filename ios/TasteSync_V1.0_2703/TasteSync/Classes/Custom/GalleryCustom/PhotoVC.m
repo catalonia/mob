@@ -13,9 +13,7 @@
 #import "CTScrollView.h"
 #import "CTZoomView.h"
 #import "CTImageViewDetail.h"
-//#import "PhotoObj.h"
-//#import "CommonHelper.h"
-//#import "CoreDataManager.h"
+#import "TSPhotoRestaurantObj.h"
 #import <Twitter/Twitter.h>
 #import "AppDelegate.h"
 #import "RestaurantObj.h"
@@ -63,6 +61,16 @@
     return self;
 }
 
+-(id)initWithArrayPhotos:(NSMutableArray*)arrayPhotos AtIndex:(NSUInteger)index
+{
+    self = [super initWithNibName:@"PhotoVC" bundle:nil];
+    if (self) {
+        self.arrayObjects = arrayPhotos;
+        self.indexSelected = index;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -81,9 +89,6 @@
     topView.alpha = 0;
     [scrollView handleRotateOrientation];
     [zoomView handleRotateOrientation];
-    
-    RestaurantObj *obj = [[RestaurantObj alloc] init];
-    self.arrayObjects = [[NSMutableArray alloc] initWithObjects:obj,obj,obj, nil];
    
     // Do any additional setup after loading the view from its nib.
 }
@@ -179,15 +184,14 @@
 
 - (void)handleSelectedIndex:(NSUInteger)index
 {
-//    RestaurantObj *photoObj = [arrayObjects objectAtIndex:index];
+    TSPhotoRestaurantObj *photoObj = [arrayObjects objectAtIndex:index];
     
 //    int actualSize = size < photoObj.allowSize ? size : photoObj.allowSize;
     lblImg.text = [NSString stringWithFormat:@"%d | %d", index+1, [arrayObjects count]];
 #ifdef DEBUG
 //    NSLog(@"actualSize %i", actualSize);
 #endif
-    UIImage *image = nil;
-    image = [UIImage imageNamed:BG_IMAGE];
+    UIImage *image = photoObj.image;
     
     if(image)
     {
@@ -237,10 +241,9 @@
         NSLog(@"right");
 #endif
         
-//        RestaurantObj *photoObj = [arrayObjects objectAtIndex:index + 1];
-        
-        UIImage *image = nil;
-        image = [UIImage imageNamed:BG_IMAGE];
+        TSPhotoRestaurantObj *photoObj = [arrayObjects objectAtIndex:index + 1];
+        UIImage *image = photoObj.image;
+        //image = [UIImage imageNamed:BG_IMAGE];
         if(image)
         {
             scrollView.imvRight.image = image;
@@ -289,14 +292,14 @@
             zoomView.bounces = NO;
         }
         
-//        RestaurantObj *photoObj = [arrayObjects objectAtIndex:index - 1];
+        TSPhotoRestaurantObj *photoObj = [arrayObjects objectAtIndex:index - 1];
 //        int actualSize = size < photoObj.allowSize ? size : photoObj.allowSize;
         lblImg.text = [NSString stringWithFormat:@"%d | %d", index+1, [arrayObjects count]];
 #ifdef DEBUG
 //        NSLog(@"actualSize %i", actualSize);
 #endif
         UIImage *image = nil;
-        image = [UIImage imageNamed:BG_IMAGE];
+        image = photoObj.image;
         if(image)
         {
             scrollView.imvLeft.image = image;
@@ -615,6 +618,4 @@
     [[[CommonHelpers appDelegate] tabbarBaseVC] showTabBar];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
 @end

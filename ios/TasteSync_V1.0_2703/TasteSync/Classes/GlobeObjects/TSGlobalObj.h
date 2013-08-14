@@ -8,8 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum GlobalDataType {
+    GlobalDataCuisine_1 =  0,
+    GlobalDataCuisine_2  =   1,
+    GlobalDataOccasion  =   2,
+    GlobalDataPrice  =   3,
+    GlobalDataTheme  =   4,
+    GlobalDataTypeOfRestaurant  =   5,
+    GlobalDataWhoAreUWith  =   6,
+    GlobalDataCity = 7
+    
+} GlobalDataType;
+
 @interface TSGlobalObj : NSObject
 @property (nonatomic, strong) NSString* uid;
-
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, assign) GlobalDataType type;
 @end

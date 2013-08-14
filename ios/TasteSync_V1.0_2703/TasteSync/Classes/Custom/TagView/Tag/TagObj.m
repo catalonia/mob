@@ -28,7 +28,7 @@ txt=_txt;
     return self;
 }
 
-- (id) initWithString:(NSString *) aTxt option:(int) anOption delegate:(id<TagObjDelegate>) aDelegate
+- (id) initWithString:(TSGlobalObj *) aTxt option:(int) anOption delegate:(id<TagObjDelegate>) aDelegate
 {
     
        self = [self initWithFrame:CGRectZero];
@@ -51,7 +51,7 @@ txt=_txt;
             break;
         case TagObjEnumDefault:
         {
-            lbTxt.text = aTxt;
+            lbTxt.text = aTxt.name;
             tfAdd.hidden = YES;
             lbTxt.hidden = NO;
             tfDelete.hidden = NO;
@@ -140,7 +140,7 @@ txt=_txt;
     if (textField == tfDelete) {
         if (range.length == 1) {
             NSLog(@"TagObj -> Delete");
-            [self.delegate tagObj:self didDeleteString:self.txt];        
+            [self.delegate tagObj:self didDeleteGlobalObj:self.txt];
             return YES;
         }
         else {
@@ -156,7 +156,7 @@ txt=_txt;
            
             NSString *txt = [textField.text stringByReplacingCharactersInRange:range withString:string];
             if (txt.length ==0) {
-                [self.delegate tagObj:self didDeleteString:nil];
+                [self.delegate tagObj:self didDeleteGlobalObj:nil];
 
             }
             
@@ -164,7 +164,6 @@ txt=_txt;
         }
         else {
             
-           
             [self.delegate tagObj:self didChangeTextFieldWithString:[textField.text stringByReplacingCharactersInRange:range withString:string]];
             
         }

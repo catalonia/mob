@@ -8,6 +8,7 @@
 
 #import "CRequest.h"
 #import "UserDefault.h"
+
 #define LINK_REQUEST @":8080/tsws/services/"
 #define USER_REQUEST @"user/"
 #define RESTAURANT_REQUEST @"restaurant/"
@@ -51,6 +52,7 @@
             else
             {
                 [_formRequest setRequestMethod:@"GET"];
+                [_formRequest addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded"];
             }
         }
         else
@@ -99,6 +101,7 @@
             else
             {
                 [_formRequest setRequestMethod:@"GET"];
+                 [_formRequest addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded"];
             }
         }
         else
@@ -120,7 +123,6 @@
 
 -(void)setHeader:(HeaderType)type
 {
-    
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
     if (type == HeaderTypeJSON) 
         [dic setValue:@"application/json" forKey:@"Content-Type"];
@@ -145,6 +147,7 @@
     [_formRequest setPostValue:value forKey:key];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
+
 
 -(void)startFormRequest
 {

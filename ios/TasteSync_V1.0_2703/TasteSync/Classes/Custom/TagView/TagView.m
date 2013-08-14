@@ -44,9 +44,9 @@ owidth=owidth, oheigh = oheigh;
     switch (anOption) {
         case TagViewEnumData:
         {
-            for (NSString *txt in anArray) {
-
-                TagObj *tagObj = [[TagObj alloc] initWithString:txt option:TagObjEnumDefault delegate:aDelegate];
+            for (TSGlobalObj *global in anArray) {
+                
+                TagObj *tagObj = [[TagObj alloc] initWithString:global option:TagObjEnumDefault delegate:aDelegate];
                 CGRect tagObjFrame = tagObj.frame;
                         
                 if ((width + tagObjFrame.size.width) >280) {
@@ -130,8 +130,9 @@ owidth=owidth, oheigh = oheigh;
     owidth = width, oheigh = heigh;
 
     
-    
-    tagObjAdd = [[TagObj alloc] initWithString:@"" option:TagObjEnumAdd delegate:self.delegate];    
+    TSGlobalObj* gloabal = [[TSGlobalObj alloc]init];
+    gloabal.name = @"";
+    tagObjAdd = [[TagObj alloc] initWithString:gloabal option:TagObjEnumAdd delegate:self.delegate];
    
     
     CGRect tagObjFrame = tagObjAdd.frame;
@@ -220,7 +221,7 @@ owidth=owidth, oheigh = oheigh;
     NSLog(@"AddTagDefault -> added change frame  width - heigh -> %f - %f", width, heigh);
 }
 
-- (void) addTagObj:(NSString *) aTxt delegate:(id<TagObjDelegate>) aDelegate
+- (void) addTagObj:(TSGlobalObj *) aTxt delegate:(id<TagObjDelegate>) aDelegate
 {
     
     if (tagObjAdd !=nil) {
@@ -280,7 +281,7 @@ owidth=owidth, oheigh = oheigh;
     [self actionTouchOnView:nil];
 }
 
-- (void) addTagObj:(NSString *)aTxt delegate:(id<TagObjDelegate>)aDelegate andTagDefault:(BOOL) aBoolValue
+- (void) addTagObj:(TSGlobalObj *)aTxt delegate:(id<TagObjDelegate>)aDelegate andTagDefault:(BOOL) aBoolValue
 {
     if (aBoolValue) {
         NSLog(@"TagView - addTagObj and tagDefault ");

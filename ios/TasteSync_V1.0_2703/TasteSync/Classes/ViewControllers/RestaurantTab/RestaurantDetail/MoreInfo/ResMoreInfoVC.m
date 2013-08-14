@@ -13,6 +13,9 @@
 @interface ResMoreInfoVC ()<MKMapViewDelegate>
 {
     __weak IBOutlet MKMapView *mapView;
+    __weak IBOutlet UILabel* lbName;
+    __weak IBOutlet UILabel* _phone;
+    __weak IBOutlet UILabel* _address;
 }
 
 - (IBAction)actionBack:(id)sender;
@@ -35,15 +38,28 @@
     return self;
 }
 
+- (id)initWithRestaurantObj:(RestaurantObj*)restaurantObj
+{
+    self = [super initWithNibName:@"ResMoreInfoVC" bundle:nil];
+    if (self) {
+        self.restaurantObj = restaurantObj;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [CommonHelpers setBackgroudImageForViewRestaurant:self.view];
     // Do any additional setup after loading the view from its nib.
+    lbName.text = self.restaurantObj.name ;
     
-    CLLocationCoordinate2D coordi = CLLocationCoordinate2DMake(40.624, -73.7183);
-    AddressAnnotation *restaurantPlace = [[AddressAnnotation alloc] initWithName:@"Nanking" details:@"143 Broadway, New york, USA" coordinate:coordi];
-    [self displayLocation:restaurantPlace];
+    NSString* link = [NSString stringWithFormat:@"extendedinfo?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
+    CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:1];
+    request.delegate = self;
+    [request startFormRequest];
+    
+   
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,6 +102,17 @@
     [mapView regionThatFits:region];
     
     
+}
+
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSDictionary* dic = [response objectFromJSONString];
+    _phone.text = [dic objectForKey:@"phoneNumber"];
+    _address.text = [dic objectForKey:@"address"];
+    CLLocationCoordinate2D coordi = CLLocationCoordinate2DMake(self.restaurantObj.lattitude, self.restaurantObj.longtitude);
+    AddressAnnotation *restaurantPlace = [[AddressAnnotation alloc] initWithName:self.restaurantObj.name details:[dic objectForKey:@"address"] coordinate:coordi];
+    [self displayLocation:restaurantPlace];
 }
 
 

@@ -10,6 +10,7 @@
 #import "CommonHelpers.h"
 #import "ResQuestionVC.h"
 #import "PhotoVC.h"
+#import "TSPhotoRestaurantObj.h"
 
 @interface ResPhotoVC ()<UITableViewDataSource,UITableViewDelegate,ResPhotoCellDelegate>
 {
@@ -38,17 +39,29 @@ restaurantObj=_restaurantObj;
     return self;
 }
 
+-(id)initWithArrayPhoto:(NSMutableArray*)array RestaurantObj:(RestaurantObj*)restaurant
+{
+    self = [super initWithNibName:@"ResPhotoVC" bundle:nil];
+    if (self) {
+        self.restaurantObj = restaurant;
+        self.arrData = array;
+        NSLog(@"count1: %d", [array count]);
+        NSLog(@"count2: %d", [self.arrData count]);
+//        self.arrData = [[NSMutableArray alloc]init];
+//        for (TSPhotoRestaurantObj* photo in array) {
+//            if (photo.image != nil) {
+//                [self.arrData addObject:photo];
+//            }
+//        }
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [CommonHelpers setBackgroudImageForViewRestaurant:self.view];
-    if (_arrData==nil) {
-        self.arrData = [[NSMutableArray alloc] init ];
-        for (int i=0; i<17; i++) {
-            UIImage *image = [UIImage imageNamed:@"frame1.png"];
-            [self.arrData addObject:image];
-        }
-    }
+    
     
     [self configView];
     // Do any additional setup after loading the view from its nib.
@@ -98,7 +111,7 @@ restaurantObj=_restaurantObj;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    if ((_arrData.count %3)) {
+    if (_arrData.count %3 == 0) {
         return _arrData.count/3;
     }
     else
@@ -125,19 +138,19 @@ restaurantObj=_restaurantObj;
     }
     
     
-    UIImage *image1,*image2,*image3;
+    TSPhotoRestaurantObj *photoImage1,*photoImage2,*photoImage3;
     
-    if (_arrData.count>indexPath.row) {
-        image1 = [_arrData objectAtIndex:indexPath.row];
+    if (_arrData.count > indexPath.row*3) {
+        photoImage1 = [_arrData objectAtIndex:indexPath.row*3];
     }
-    if (_arrData.count>indexPath.row+1) {
-        image2 = [_arrData objectAtIndex:indexPath.row+1];
+    if (_arrData.count > indexPath.row*3+1) {
+        photoImage2 = [_arrData objectAtIndex:indexPath.row*3+1];
     }
-    if (_arrData.count>indexPath.row) {
-        image3 = [_arrData objectAtIndex:indexPath.row+2];
+    if (_arrData.count > indexPath.row*3 + 2) {
+        photoImage3 = [_arrData objectAtIndex:indexPath.row*3+2];
     }
     
-    [cell initForCell:image1 image2:image2 image3:image3];
+    [cell initForCell:photoImage1 Index1:indexPath.row*3 image2:photoImage2 Index2:(indexPath.row*3+1) image3:photoImage3 Index3:(indexPath.row*3+2)];
     
     cell.delegate = self;
     
@@ -149,29 +162,8 @@ restaurantObj=_restaurantObj;
 - (void) resPhotoCell:(ResPhotoCell *) resPhotoCell tag:(int) anTag
 {
     
-    PhotoVC *vc = [[PhotoVC alloc] initWithNibName:@"PhotoVC" bundle:nil];
+    PhotoVC *vc = [[PhotoVC alloc] initWithArrayPhotos:self.arrData AtIndex:anTag];
     [self.navigationController pushViewController:vc animated:YES];
-    
-    switch (anTag) {
-        case 1:
-        {
-            
-        }
-            break;
-        case 2:
-        {
-            
-        }
-            break;
-        case 3:
-        {
-            
-        }
-            break;
-            
-        default:
-            break;
-    }
 }
 
 

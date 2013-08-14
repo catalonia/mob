@@ -9420,19 +9420,19 @@
 /**
  * (no documentation provided)
  */
-- (ENUNCIATENS0TSRestaurantObj *) restaurant
+- (ENUNCIATENS0TSRestaurantObj *) questionRestaurant
 {
-  return _restaurant;
+  return _questionRestaurant;
 }
 
 /**
  * (no documentation provided)
  */
-- (void) setRestaurant: (ENUNCIATENS0TSRestaurantObj *) newRestaurant
+- (void) setQuestionRestaurant: (ENUNCIATENS0TSRestaurantObj *) newQuestionRestaurant
 {
-  [newRestaurant retain];
-  [_restaurant release];
-  _restaurant = newRestaurant;
+  [newQuestionRestaurant retain];
+  [_questionRestaurant release];
+  _questionRestaurant = newQuestionRestaurant;
 }
 
 - (void) dealloc
@@ -9440,7 +9440,7 @@
   [self setQuestionUse: nil];
   [self setQuestionText: nil];
   [self setQuestionUserFolloweeFlag: nil];
-  [self setRestaurant: nil];
+  [self setQuestionRestaurant: nil];
   [super dealloc];
 }
 
@@ -9740,18 +9740,18 @@
   } //end "if choice"
 
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-    && xmlStrcmp(BAD_CAST "restaurant", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlStrcmp(BAD_CAST "questionRestaurant", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}restaurant of type {}TSRestaurantObj.");
+    NSLog(@"Attempting to read choice {}questionRestaurant of type {}TSRestaurantObj.");
 #endif
     __child = [ENUNCIATENS0TSRestaurantObj readXMLType: reader];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}restaurant of type {}TSRestaurantObj.");
+    NSLog(@"successfully read choice {}questionRestaurant of type {}TSRestaurantObj.");
 #endif
 
-    [self setRestaurant: __child];
+    [self setQuestionRestaurant: __child];
     return YES;
   } //end "if choice"
 
@@ -9862,25 +9862,25 @@
                    format: @"Error writing end child element {}questionUserFolloweeFlag."];
     }
   }
-  if ([self restaurant]) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurant", NULL);
+  if ([self questionRestaurant]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "questionRestaurant", NULL);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing start child element {}restaurant."];
+                   format: @"Error writing start child element {}questionRestaurant."];
     }
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"writing element {}restaurant...");
+    NSLog(@"writing element {}questionRestaurant...");
 #endif
-    [[self restaurant] writeXMLType: writer];
+    [[self questionRestaurant] writeXMLType: writer];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully wrote element {}restaurant...");
+    NSLog(@"successfully wrote element {}questionRestaurant...");
 #endif
 
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
-                   format: @"Error writing end child element {}restaurant."];
+                   format: @"Error writing end child element {}questionRestaurant."];
     }
   }
 }
