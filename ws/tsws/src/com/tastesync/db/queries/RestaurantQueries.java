@@ -104,6 +104,11 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "?," + "?," + "''," //Phasse 2
          +"?" + "'TS'," //FIXED
          +"?," + "?" + ")";
+    public static String USER_RESTAURANT_TIPS_EXIST_SELECT_SQL = "" +
+        "SELECT restaurant_tips_tastesync.user_id " +
+        "FROM   restaurant_tips_tastesync " +
+        "WHERE  restaurant_tips_tastesync.user_id = ? " +
+        "       AND restaurant_tips_tastesync.restaurant_id = ? ";
     public static String RESTAURANT_TIPS_AP_SELECT_SQL = "" + "SELECT " +
         "usg_usnc_ap.usnc_yn " + "FROM   usg_usnc_ap " +
         "WHERE  usg_usnc_ap.user_id = ? " + "       AND" +
@@ -150,6 +155,10 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "             historical_user_restaurant_saved.user_id) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
         "              '', " + "              ?, " + "              ? )";
+    public static String RESTAURANT_FAV_DATA_EXISTS_SELECT_SQL = "" +
+        "SELECT user_restaurant_fav.user_id " + "FROM   user_restaurant_fav " +
+        "WHERE  user_restaurant_fav.user_id = ? " +
+        "       AND user_restaurant_fav.restaurant_id = ? ";
     public static String RESTAURANT_FAV_SELECT_SQL = "" +
         "SELECT count(*) from user_restaurant_fav " +
         "WHERE user_restaurant_fav.restaurant_id = ? " +
@@ -182,4 +191,46 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "       restaurant_photo.ultimate_source_url, " +
         "       restaurant_photo.photo_source " + "FROM   restaurant_photo " +
         "WHERE  restaurant_photo.restaurant_id = ? ";
+    public static String RECOMMENDER_USER_SELECT_SQL = "" +
+        "SELECT user_restaurant_reco.recommender_user_id, " +
+        "       user_restaurant_reco.recommendee_user_id " +
+        "       user_restaurant_reco.RESTAURANT_ID " +
+        "FROM   user_restaurant_reco " +
+        "WHERE  user_restaurant_reco.recommendee_user_id = ? " +
+        "       AND user_restaurant_reco.restaurant_id = ? " +
+        "       AND user_restaurant_reco.updated_datetime BETWEEN " +
+        "           Sysdate() - INTERVAL 90 day AND Sysdate() ";
+    public static String RESTAURANT_QUESTION_TS_ASSIGNED_INSERT_SQL = "" +
+        "INSERT INTO restaurant_question_ts_assigned " +
+        "            (restaurant_question_ts_assigned.assigned_prepopulated_yn, " +
+        "             restaurant_question_ts_assigned.assigned_trusted_type, " +
+        "             restaurant_question_ts_assigned.assigned_ts_id, " +
+        "             restaurant_question_ts_assigned.assigned_usertype, " +
+        "             restaurant_question_ts_assigned.assigned_user_id, " +
+        "             restaurant_question_ts_assigned.assigned_user_registerd_yn, " +
+        "             restaurant_question_ts_assigned.question_id, " +
+        "             restaurant_question_ts_assigned.restaurant_id) " +
+        "VALUES      ( ?, " + "              ?, " + "              ?, " +
+        "              ?, " + "              ?, " + "              'Y', " +
+        "              ?, " + "              ?)";
+    public static String RESTAURANT_QUESTION_NON_TS_ASSIGNED_INSERT_SQL = "" +
+        "INSERT INTO restaurant_question_non_ts_assigned " +
+        "            (restaurant_question_non_ts_assigned.assigned_fb_id, " +
+        "             restaurant_question_non_ts_assigned.assigned_prepopulated_yn, " +
+        "             restaurant_question_non_ts_assigned.assigned_trusted_type, " +
+        "             restaurant_question_non_ts_assigned.assigned_usertype, " +
+        "             restaurant_question_non_ts_assigned.assigned_user_registerd_yn, " +
+        "             restaurant_question_non_ts_assigned.question_id, " +
+        "             restaurant_question_non_ts_assigned.restaurant_id) " +
+        "VALUES      ( ?, " + "              ?, " + "              ?, " +
+        "              ?, " + "              ?, " + "              ?, " +
+        "              ? )";
+    public static String USER_RESTAURANT_SAVED_DATA_EXIST_SELECT_SQL = "" +
+        "SELECT user_restaurant_saved.user_id = ? " +
+        "FROM   user_restaurant_saved " +
+        "WHERE  user_restaurant_saved.user_id = ? " +
+        "       AND user_restaurant_saved.restaurant_id = ? ";
+    public static String USERS_ID_SELECT_SQL = "" + "SELECT users.user_id, " +
+        "       users.ts_user_id, " + "       users.user_fb_id " +
+        "FROM   users " + "WHERE  user_fb_id = ? ";
 }

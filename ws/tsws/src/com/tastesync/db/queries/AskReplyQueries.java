@@ -103,8 +103,8 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "       facebook_user_data.picture " + "FROM   facebook_user_data " +
         "WHERE  facebook_user_data.user_fb_id = ? ";
     public static final String FRIEND_TRUSTED_FLAG_SELECT_SQL = "" +
-        "SELECT user_friend_tastesync.friend_trusted_flag " +
-        "FROM   user_friend_tastesync " +
+        "SELECT user_friend_tastesync.friend_trusted_flag, " +
+        "       user_friend_tastesync.id " + "FROM   user_friend_tastesync " +
         "WHERE  user_friend_tastesync.user_id = ? " +
         "       AND user_friend_tastesync.friend_id = ?";
     public static final String RECOREQUEST_USER_UPDATE_SQL = "" +
@@ -173,6 +173,16 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "SELECT restaurant_question_user.initiator_user_id " +
         "FROM   restaurant_question_user " +
         "WHERE  restaurant_question_user.question_id = ?";
+    public static String RESTAURANT_QUESTION_INSERT_SQL = "" +
+        "INSERT INTO restaurant_question_user " +
+        "            (restaurant_question_user.initiator_user_id, " +
+        "             restaurant_question_user.posted_onforum_flag, " +
+        "             restaurant_question_user.question_datetime, " +
+        "             restaurant_question_user.question_id, " +
+        "             restaurant_question_user.question_text, " +
+        "             restaurant_question_user.restaurant_id) " +
+        "VALUES      ( ?, " + "              ?, " + "              ?, " +
+        "              ?, " + "              ?, " + "              ? )";
     public static String USER_MESSAGE_INSERT_SQL = "" +
         "INSERT INTO user_message " + "            (user_message.content, " +
         "             user_message.created, " +
