@@ -1,5 +1,7 @@
 package com.tastesync.model.objects.derived;
 
+import com.tastesync.model.objects.TSUserProfileBasicObj;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class TSRestaurantRecommendersDetailsObj implements Serializable {
     private static final long serialVersionUID = 8522302350787297163L;
     private String userId;
     private String restaurantId;
-    private List<TSRecommendersDetailsObj> recommendersDetailsList = new ArrayList<TSRecommendersDetailsObj>();
+    private List<TSUserProfileBasicObj> recommendersDetailsList = new ArrayList<TSUserProfileBasicObj>();
 
     public TSRestaurantRecommendersDetailsObj() {
         super();
@@ -31,7 +33,7 @@ public class TSRestaurantRecommendersDetailsObj implements Serializable {
     }
 
     @XmlElement
-    public List<TSRecommendersDetailsObj> getRecommendersDetailsList() {
+    public List<TSUserProfileBasicObj> getRecommendersDetailsList() {
         return recommendersDetailsList;
     }
 
@@ -44,7 +46,7 @@ public class TSRestaurantRecommendersDetailsObj implements Serializable {
     }
 
     public void setRecommendersDetailsList(
-        List<TSRecommendersDetailsObj> recommendersDetailsList) {
+        List<TSUserProfileBasicObj> recommendersDetailsList) {
         this.recommendersDetailsList = recommendersDetailsList;
     }
 }
