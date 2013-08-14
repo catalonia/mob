@@ -13,7 +13,7 @@ public class TSRestaurantDetailsObj implements Serializable {
     private static final long serialVersionUID = 1521205761276319693L;
     private String openNowFlag;
     private String dealHeadline;
-    private List<TSPhotoObj> photoList;
+    private List<TSRestaurantPhotoObj> photoList;
     private String moreInfoFlag;
     private String menuFlag;
     private String userRestaurantSavedFlag;
@@ -31,7 +31,7 @@ public class TSRestaurantDetailsObj implements Serializable {
     }
 
     @XmlElement
-    public List<TSPhotoObj> getPhotoList() {
+    public List<TSRestaurantPhotoObj> getPhotoList() {
         return photoList;
     }
 
@@ -68,7 +68,7 @@ public class TSRestaurantDetailsObj implements Serializable {
         this.dealHeadline = dealHeadline;
     }
 
-    public void setPhotoList(List<TSPhotoObj> photoList) {
+    public void setPhotoList(List<TSRestaurantPhotoObj> photoList) {
         this.photoList = photoList;
     }
 

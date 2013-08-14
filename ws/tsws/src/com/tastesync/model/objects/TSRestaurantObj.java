@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 @XmlRootElement(name = "restaurant")
 public class TSRestaurantObj implements Serializable {
     private static final long serialVersionUID = 2113162995960225661L;
@@ -20,9 +21,29 @@ public class TSRestaurantObj implements Serializable {
     private String sumVoteCount;
     private String sumVoteValue;
     private String tbdOpenTableId;
+    private String moreInfoFlag;
+    private String openNowFlag;
 
     public TSRestaurantObj() {
         super();
+    }
+
+    @XmlElement
+    public String getMoreInfoFlag() {
+        return moreInfoFlag;
+    }
+
+    @XmlElement
+    public String getOpenNowFlag() {
+        return openNowFlag;
+    }
+
+    public void setMoreInfoFlag(String moreInfoFlag) {
+        this.moreInfoFlag = moreInfoFlag;
+    }
+
+    public void setOpenNowFlag(String openNowFlag) {
+        this.openNowFlag = openNowFlag;
     }
 
     @XmlElement
