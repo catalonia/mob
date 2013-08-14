@@ -8,9 +8,11 @@ import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSCurrentRecommendedRestaurantDetailsObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSMenuObj;
+import com.tastesync.model.objects.TSRestaurantDetailsObj;
 import com.tastesync.model.objects.TSRestaurantExtendInfoObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
+import com.tastesync.model.objects.TSRestaurantQuesionNonTsAssignedObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
@@ -116,19 +118,18 @@ public class RestaurantService extends BaseService {
         //    	-- TODO: PHOTOS: LIMIT PHOTO RESULTS TO 3. Show INSTAGRAM PHOTOS first (on top)
         //    	-- TODO: CALCULATE openNowFlag BASED ON HOURS
         //    	-- TODO: Define factual_restaurant_deals table
-        TSRestaurantCusineTier2Obj tsRestaurantCusineTier2Obj = null;
+        TSRestaurantDetailsObj tsRestaurantDetailsObj = null;
         boolean responseDone = false;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-            tsRestaurantCusineTier2Obj = restaurantBO.showRestaurantDetail(userId,
+            tsRestaurantDetailsObj = restaurantBO.showRestaurantDetail(userId,
                     restaurantId);
             responseDone = true;
 
-            return Response.status(status).entity(tsRestaurantCusineTier2Obj)
-                           .build();
+            return Response.status(status).entity(tsRestaurantDetailsObj).build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -622,7 +623,9 @@ public class RestaurantService extends BaseService {
     String restaurantId) {
         TSRestaurantRecommendersDetailsObj tsRestaurantRecommendersDetailsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
+
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
+        userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
 
         boolean responseDone = false;
 
@@ -688,16 +691,20 @@ public class RestaurantService extends BaseService {
         }
 
         boolean responseDone = false;
+        TSRestaurantQuesionNonTsAssignedObj tsRestaurantQuesionNonTsAssignedObj = null;
 
         try {
-            restaurantBO.submitRestaurantDetailAsk(userId, restaurantId,
-                questionText, postQuestionOnForum, recommendersUserIdList,
-                friendsFacebookIdList);
+            tsRestaurantQuesionNonTsAssignedObj = restaurantBO.submitRestaurantDetailAsk(userId,
+                    restaurantId, questionText, postQuestionOnForum,
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        recommendersUserIdList),
+                    CommonFunctionsUtil.convertStringListAsArrayList(
+                        friendsFacebookIdList));
 
-            TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
 
-            return Response.status(status).entity(tsSuccessObj).build();
+            return Response.status(status)
+                           .entity(tsRestaurantQuesionNonTsAssignedObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
