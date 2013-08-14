@@ -1,17 +1,20 @@
 package com.tastesync.db.dao;
 
 import com.tastesync.db.pool.TSDataSource;
+import com.tastesync.db.queries.AskReplyQueries;
 import com.tastesync.db.queries.RestaurantQueries;
 
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSCurrentRecommendedRestaurantDetailsObj;
 import com.tastesync.model.objects.TSMenuObj;
+import com.tastesync.model.objects.TSRestaurantDetailsObj;
 import com.tastesync.model.objects.TSRestaurantExtendInfoObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
+import com.tastesync.model.objects.TSRestaurantQuesionNonTsAssignedObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
-import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
+import com.tastesync.model.objects.TSUserProfileBasicObj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
@@ -98,11 +101,24 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         tsRestaurantObj.setRestaurantHours(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.RESTAURANT_HOURS")));
 
+        //TODO
+        //TODO - calculate from restaurantHours
+        // e.g. {"monday":[["00:00","24:00"]],"tuesday":[["00:00","24:00"]],"wednesday":[["00:00","24:00"]],"thursday":[["00:00","24:00"]],"friday":[["00:00","24:00"]],"saturday":[["00:00","24:00"]],"sunday":[["00:00","24:00"]]}
+        // e.g. {"monday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"tuesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"wednesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"thursday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"friday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"saturday":[["12:00","23:00","Dinner"]],"sunday":[["12:00","23:00","Dinner"]]}
+        //FOR NY, Get today day and current time. check whether it falls
+        tsRestaurantObj.setOpenNowFlag("1");
         tsRestaurantObj.setRestaurantLat(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.RESTAURANT_LAT")));
 
         tsRestaurantObj.setRestaurantLon(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.RESTAURANT_LON")));
+
+        if ((tsRestaurantObj.getRestaurantLat() == null) &&
+                (tsRestaurantObj.getRestaurantLon() == null)) {
+            tsRestaurantObj.setMoreInfoFlag("1");
+        } else {
+            tsRestaurantObj.setMoreInfoFlag("0");
+        }
 
         tsRestaurantObj.setSumVoteCount(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.SUM_VOTE_COUNT")));
@@ -267,7 +283,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             statement = connection.prepareStatement(RestaurantQueries.RESTAURANTS_SELECT_SQL);
             resultset = statement.executeQuery();
 
-            //only one result
             while (resultset.next()) {
                 TSRestaurantObj tsRestaurantObj = new TSRestaurantObj();
                 mapResultsetRowToTSRestaurantVO(tsRestaurantObj, resultset);
@@ -288,10 +303,169 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public TSRestaurantCusineTier2Obj showRestaurantDetail(String userId,
+    public TSRestaurantDetailsObj showRestaurantDetail(String userId,
         String restaurantId) throws TasteSyncException {
-        // TODO Auto-generated method stub
-        return null;
+        TSRestaurantDetailsObj tsRestaurantDetailsObj = null;
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            String openNowFlag = "0";
+            String moreInfoFlag = "0";
+
+            //only one result
+            if (resultset.next()) {
+                String restaurantHours = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.RESTAURANT_HOURS"));
+
+                //TODO
+                //TODO - calculate from restaurantHours
+                // e.g. {"monday":[["00:00","24:00"]],"tuesday":[["00:00","24:00"]],"wednesday":[["00:00","24:00"]],"thursday":[["00:00","24:00"]],"friday":[["00:00","24:00"]],"saturday":[["00:00","24:00"]],"sunday":[["00:00","24:00"]]}
+                // e.g. {"monday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"tuesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"wednesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"thursday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"friday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"saturday":[["12:00","23:00","Dinner"]],"sunday":[["12:00","23:00","Dinner"]]}
+                //FOR NY, Get today day and current time. check whether it falls
+                openNowFlag = "1";
+
+                String restaurantLat = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.RESTAURANT_LAT"));
+
+                String restaurantLon = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.RESTAURANT_LON"));
+
+                if ((restaurantLat == null) && (restaurantLon == null)) {
+                    moreInfoFlag = "1";
+                }
+            }
+
+            statement.close();
+            statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_PHOTO_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            int instgramPhoto = 0;
+            int nonInstgramPhoto = 0;
+            List<TSRestaurantPhotoObj> nonInstagramTsRestaurantPhotoObjs = new ArrayList<TSRestaurantPhotoObj>();
+            List<TSRestaurantPhotoObj> photoList = new ArrayList<TSRestaurantPhotoObj>();
+
+            while (resultset.next()) {
+                TSRestaurantPhotoObj tsRestaurantPhotoObj = new TSRestaurantPhotoObj();
+                mapResultsetRowToTSRestaurantPhotoObjVO(tsRestaurantPhotoObj,
+                    resultset);
+
+                if ("Instagram".equalsIgnoreCase(
+                            CommonFunctionsUtil.getModifiedValueString(
+                                resultset.getString(
+                                    "restaurant_photo.ULTIMATE_SOURCE_NAME")))) {
+                    photoList.add(tsRestaurantPhotoObj);
+                    ++instgramPhoto;
+                } else {
+                    nonInstagramTsRestaurantPhotoObjs.add(tsRestaurantPhotoObj);
+                    ++nonInstgramPhoto;
+                }
+
+                if (instgramPhoto == 3) {
+                    break;
+                }
+            }
+
+            int tsRestaurantPhotoObjsSize = photoList.size();
+            int nonInstagrapmPhotoLeft = (3 - tsRestaurantPhotoObjsSize);
+
+            int nonInstagramTsRestaurantPhotoObjsSize = nonInstagramTsRestaurantPhotoObjs.size();
+
+            if (nonInstagramTsRestaurantPhotoObjsSize < nonInstagrapmPhotoLeft) {
+                nonInstagrapmPhotoLeft = nonInstagramTsRestaurantPhotoObjsSize;
+            }
+
+            if (nonInstagrapmPhotoLeft > 0) {
+                for (int i = 0; i < nonInstagrapmPhotoLeft; ++i) {
+                    photoList.add(nonInstagramTsRestaurantPhotoObjs.get(i));
+                }
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_MENU_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            String menuFlag = "0";
+
+            //only one result
+            if (resultset.next()) {
+                String mobileMenuUrl = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant_menu.menu_mobileurl"));
+
+                if (mobileMenuUrl != null) {
+                    menuFlag = "1";
+                } else {
+                    menuFlag = "0";
+                }
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(RestaurantQueries.USER_RESTAURANT_SAVED_DATA_EXIST_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            String userRestaurantSavedFlag = "0";
+
+            if (resultset.next()) {
+                userRestaurantSavedFlag = "1";
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_DATA_EXISTS_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            String userRestaurantFavFlag = "0";
+
+            if (resultset.next()) {
+                userRestaurantFavFlag = "1";
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(RestaurantQueries.USER_RESTAURANT_TIPS_EXIST_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            String userRestaurantTipFlag = "0";
+
+            if (resultset.next()) {
+                userRestaurantTipFlag = "1";
+            }
+
+            statement.close();
+
+            tsRestaurantDetailsObj = new TSRestaurantDetailsObj();
+            tsRestaurantDetailsObj.setOpenNowFlag(openNowFlag);
+            tsRestaurantDetailsObj.setMoreInfoFlag(moreInfoFlag);
+            tsRestaurantDetailsObj.setMenuFlag(menuFlag);
+            tsRestaurantDetailsObj.setUserRestaurantFavFlag(userRestaurantFavFlag);
+            tsRestaurantDetailsObj.setUserRestaurantSavedFlag(userRestaurantSavedFlag);
+            tsRestaurantDetailsObj.setUserRestaurantTipFlag(userRestaurantTipFlag);
+            tsRestaurantDetailsObj.setDealHeadline("");
+            tsRestaurantDetailsObj.setPhotoList(photoList);
+
+            return tsRestaurantDetailsObj;
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            throw new TasteSyncException(e1.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 
     @Override
@@ -685,15 +859,250 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     @Override
     public TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(
         String userId, String restaurantId) throws TasteSyncException {
-        // TODO Auto-generated method stub
-        return null;
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+        TSRestaurantRecommendersDetailsObj tsRestaurantRecommendersDetailsObj = null;
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+
+            statement = connection.prepareStatement(RestaurantQueries.RECOMMENDER_USER_SELECT_SQL);
+            statement.setString(1, userId);
+            statement.setString(2, restaurantId);
+            resultset = statement.executeQuery();
+
+            List<String> recommenderUserIdList = new ArrayList<String>();
+
+            while (resultset.next()) {
+                recommenderUserIdList.add(resultset.getString(
+                        CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString(
+                                "user_restaurant_reco.RECOMMENDER_USER_ID"))));
+            }
+
+            statement.close();
+
+            String recommenderUserName = null;
+            String recommenderUserPhoto = null;
+            List<TSUserProfileBasicObj> recommendersDetailsList = new ArrayList<TSUserProfileBasicObj>();
+
+            for (String recommenderUserId : recommenderUserIdList) {
+                recommenderUserName = null;
+                recommenderUserPhoto = null;
+
+                statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                statement.setString(1, recommenderUserId);
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    recommenderUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "facebook_user_data.name"));
+                    recommenderUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "facebook_user_data.picture"));
+                }
+
+                TSUserProfileBasicObj recommendeeUser = new TSUserProfileBasicObj();
+                recommendeeUser.setName(recommenderUserName);
+                recommendeeUser.setPhoto(recommenderUserPhoto);
+                recommendeeUser.setUserId(recommenderUserId);
+                recommendersDetailsList.add(recommendeeUser);
+                statement.close();
+            }
+
+            tsRestaurantRecommendersDetailsObj = new TSRestaurantRecommendersDetailsObj();
+
+            tsRestaurantRecommendersDetailsObj.setRecommendersDetailsList(recommendersDetailsList);
+            tsRestaurantRecommendersDetailsObj.setRestaurantId(restaurantId);
+            tsRestaurantRecommendersDetailsObj.setUserId(userId);
+
+            return tsRestaurantRecommendersDetailsObj;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException("Error while creating reco request " +
+                e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 
     @Override
-    public void submitRestaurantDetailAsk(String userId, String restaurantId,
-        String questionText, String postQuestionOnForum,
-        String recommendersUserIdList, String friendsFacebookIdList)
-        throws TasteSyncException {
-        // TODO Auto-generated method stub
+    public TSRestaurantQuesionNonTsAssignedObj submitRestaurantDetailAsk(
+        String userId, String restaurantId, String questionText,
+        String postQuestionOnForum, String[] recommendersUserIdList,
+        String[] friendsFacebookIdList) throws TasteSyncException {
+        TSRestaurantQuesionNonTsAssignedObj tsRestaurantQuesionNonTsAssignedObj = null;
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+
+            statement = connection.prepareStatement(AskReplyQueries.QUESTION_REPLY_USER_INSERT_SQL);
+            statement.setString(1, userId);
+
+            statement.setString(2, postQuestionOnForum);
+
+            statement.setTimestamp(3,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+
+            String questionId = userId +
+                CommonFunctionsUtil.generateUniqueKey();
+
+            statement.setString(4, questionId);
+            statement.setString(5, questionText);
+            statement.setString(6, restaurantId);
+            statement.executeUpdate();
+            statement.close();
+
+            String userAssignedFriendType = null;
+            String friendTrustedFlag = null;
+            String questionRestaurantId = null;
+
+            for (String recommendersUserId : recommendersUserIdList) {
+                statement = connection.prepareStatement(AskReplyQueries.FRIEND_TRUSTED_FLAG_SELECT_SQL);
+                statement.setString(1, userId);
+                statement.setString(2, recommendersUserId);
+
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    userAssignedFriendType = "user-assigned-friend";
+                    friendTrustedFlag = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "user_friend_tastesync.FRIEND_TRUSTED_FLAG"));
+                } else {
+                    userAssignedFriendType = "user-assigned-non-friend";
+                    friendTrustedFlag = "N";
+                }
+
+                statement.close();
+
+                statement = connection.prepareStatement(AskReplyQueries.QUESTION_DETAILS_RESTAURANT_SELECT_SQL);
+                statement.setString(1, questionId);
+                resultset = statement.executeQuery();
+
+                questionRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant_question_user.restaurant_id"));
+
+                statement.close();
+
+                statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_QUESTION_TS_ASSIGNED_INSERT_SQL);
+                statement.setString(1, "N");
+                statement.setString(2, friendTrustedFlag);
+                statement.setString(3, recommendersUserId);
+                statement.setString(4, userAssignedFriendType);
+                statement.setString(5, recommendersUserId);
+                statement.setString(6, "Y");
+                statement.setString(7, questionId);
+                statement.setString(8, questionRestaurantId);
+                statement.executeUpdate();
+                statement.close();
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+
+            userAssignedFriendType = null;
+            friendTrustedFlag = null;
+
+            String friendUserId = null;
+            String friendTsUserId = null;
+
+            List<String> nonTsAssignedFacebookIdList = new ArrayList<String>();
+
+            for (String friendsFacebookId : friendsFacebookIdList) {
+                statement = connection.prepareStatement(RestaurantQueries.USERS_ID_SELECT_SQL);
+                statement.setString(1, friendsFacebookId);
+
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    friendUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "users.user_id"));
+                    friendTsUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "users.TS_USER_ID"));
+
+                    statement = connection.prepareStatement(AskReplyQueries.FRIEND_TRUSTED_FLAG_SELECT_SQL);
+                    statement.setString(1, userId);
+                    statement.setString(2, friendUserId);
+
+                    resultset = statement.executeQuery();
+
+                    if (resultset.next()) {
+                        friendTrustedFlag = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "user_friend_tastesync.FRIEND_TRUSTED_FLAG"));
+                    } else {
+                        friendTrustedFlag = "N";
+                    }
+
+                    statement.close();
+
+                    statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_QUESTION_TS_ASSIGNED_INSERT_SQL);
+                    statement.setString(1, "N");
+                    statement.setString(2, friendTrustedFlag);
+                    statement.setString(3, friendTsUserId);
+                    statement.setString(4, "user-assigned-friend");
+                    statement.setString(5, friendUserId);
+                    statement.setString(6, "Y");
+                    statement.setString(7, questionId);
+                    statement.setString(8, restaurantId);
+                    statement.executeUpdate();
+                    statement.close();
+                } else {
+                    nonTsAssignedFacebookIdList.add(friendsFacebookId);
+                    statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_QUESTION_NON_TS_ASSIGNED_INSERT_SQL);
+                    statement.setString(1, friendsFacebookId);
+                    statement.setString(2, "N");
+                    statement.setString(3, "N");
+                    statement.setString(4, "user-assigned-friend");
+                    statement.setString(5, "N");
+                    statement.setString(6, questionId);
+                    statement.setString(7, restaurantId);
+                    statement.executeUpdate();
+                    statement.close();
+                }
+            }
+
+            tsRestaurantQuesionNonTsAssignedObj = new TSRestaurantQuesionNonTsAssignedObj();
+            tsRestaurantQuesionNonTsAssignedObj.setQuestionId(questionId);
+            tsRestaurantQuesionNonTsAssignedObj.setFriendsNonTsUserFacebookId(nonTsAssignedFacebookIdList);
+
+            tsDataSource.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException(
+                "Error while creating restaurant tips " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+
+        return tsRestaurantQuesionNonTsAssignedObj;
     }
 }

@@ -396,10 +396,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     statement.setString(5, "N");
                     statement.setString(6, "N");
                     statement.executeUpdate();
-
-                    if (statement != null) {
-                        statement.close();
-                    }
+                    statement.close();
                 }
             }
 

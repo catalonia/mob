@@ -4,18 +4,19 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSCurrentRecommendedRestaurantDetailsObj;
 import com.tastesync.model.objects.TSMenuObj;
+import com.tastesync.model.objects.TSRestaurantDetailsObj;
 import com.tastesync.model.objects.TSRestaurantExtendInfoObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
+import com.tastesync.model.objects.TSRestaurantQuesionNonTsAssignedObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
-import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
 import java.util.List;
 
 
 public interface RestaurantDAO {
-    TSRestaurantCusineTier2Obj showRestaurantDetail(String userId,
+    TSRestaurantDetailsObj showRestaurantDetail(String userId,
         String restaurantId) throws TasteSyncException;
 
     TSRestaurantObj showRestaurantDetail(String restaurantId)
@@ -51,8 +52,8 @@ public interface RestaurantDAO {
     TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(String userId,
         String restaurantId) throws TasteSyncException;
 
-    void submitRestaurantDetailAsk(String userId, String restaurantId,
-        String questionText, String postQuestionOnForum,
-        String recommendersUserIdList, String friendsFacebookIdList)
-        throws TasteSyncException;
+    TSRestaurantQuesionNonTsAssignedObj submitRestaurantDetailAsk(
+        String userId, String restaurantId, String questionText,
+        String postQuestionOnForum, String[] recommendersUserIdList,
+        String[] friendsFacebookIdList) throws TasteSyncException;
 }
