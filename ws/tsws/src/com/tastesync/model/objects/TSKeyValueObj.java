@@ -24,32 +24,26 @@ public class TSKeyValueObj extends JSONObject implements Serializable {
 
     public TSKeyValueObj() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public TSKeyValueObj(JSONObject arg0, String[] arg1) throws JSONException {
 		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
 	}
 
 	public TSKeyValueObj(JSONTokener x) throws JSONException {
 		super(x);
-		// TODO Auto-generated constructor stub
 	}
 
 	public TSKeyValueObj(Map arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
 	}
 
 	public TSKeyValueObj(Object arg0, String[] arg1) {
 		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
 	}
 
 	public TSKeyValueObj(String string) throws JSONException {
 		super(string);
-		// TODO Auto-generated constructor stub
 	}
 
 	@XmlElement
