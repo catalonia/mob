@@ -148,13 +148,13 @@ public interface RestaurantQueries extends TSDBCommonQueries {
     public static String SAVERESTAURANTFAV_HISTORICAL_INSERT_SQL = "" +
         "INSERT INTO historical_user_restaurant_saved " +
         "            (historical_user_restaurant_saved.ID, " +
-        "            (historical_user_restaurant_saved.restaurant_id, " +
+        "             historical_user_restaurant_saved.restaurant_id, " +
         "             historical_user_restaurant_saved.saved_flag, " +
         "             historical_user_restaurant_saved.saved_notes, " +
         "             historical_user_restaurant_saved.updated_datetime, " +
         "             historical_user_restaurant_saved.user_id) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
-        "              '', " + "              ?, " + "              ? )";
+        "              ?, " + "              ?, " + "              ? )";
     public static String RESTAURANT_FAV_DATA_EXISTS_SELECT_SQL = "" +
         "SELECT user_restaurant_fav.user_id " + "FROM   user_restaurant_fav " +
         "WHERE  user_restaurant_fav.user_id = ? " +
@@ -191,7 +191,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "       restaurant_photo.ultimate_source_url, " +
         "       restaurant_photo.photo_source " + "FROM   restaurant_photo " +
         "WHERE  restaurant_photo.restaurant_id = ? ";
-    public static String RECOMMENDER_USER_SELECT_SQL = "" +
+    public static String RECOMMENDER_USER_DAY_SELECT_SQL = "" +
         "SELECT user_restaurant_reco.recommender_user_id, " +
         "       user_restaurant_reco.recommendee_user_id " +
         "       user_restaurant_reco.RESTAURANT_ID " +
@@ -200,6 +200,12 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "       AND user_restaurant_reco.restaurant_id = ? " +
         "       AND user_restaurant_reco.updated_datetime BETWEEN " +
         "           Sysdate() - INTERVAL 90 day AND Sysdate() ";
+    public static String REPLYID_RECOMMENDER_USER_SELECT_SQL = "" +
+        "SELECT user_restaurant_reco.reply_id, " +
+        "       user_restaurant_reco.recommender_user_id " +
+        "FROM   user_restaurant_reco " +
+        "WHERE  user_restaurant_reco.recommendee_user_id = ? " +
+        "       AND user_restaurant_reco.restaurant_id = ? ";
     public static String RESTAURANT_QUESTION_TS_ASSIGNED_INSERT_SQL = "" +
         "INSERT INTO restaurant_question_ts_assigned " +
         "            (restaurant_question_ts_assigned.assigned_prepopulated_yn, " +

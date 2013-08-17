@@ -8,8 +8,8 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "recorequest_user.RECOREQUEST_SENT_DATETIME," +
         "recorequest_user.RECOREQUEST_FREE_TEXT," +
         "recorequest_user.RECOREQUEST_PARAMETER_SELECTION_MERGED," +
-        "recorequest_user.RECOREQUEST_FREE_TEXT" + ")    VALUES    (" + "?," +
-        "?," + "?," + "?," + "?," + "?" + ")";
+        "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES" +
+        ")    VALUES    (" + "?," + "?," + "?," + "?," + "?," + "?" + ")";
 
     //createRecoRequestSearch - sub
     public static final String RECOREQUEST_CUISINE_TIER1_INSERT_SQL = "insert into recorequest_cuisine_tier1 (" +
@@ -219,10 +219,91 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "SELECT recorequest_reply_user.reply_text " +
         "FROM   recorequest_reply_user " +
         "WHERE  recorequest_reply_user.reply_id = ? ";
+    public static String RECOREQUEST_REPLY_USER_RECO_SELECT_SQL = "" +
+        "SELECT recorequest_reply_user.reply_text " +
+        "SELECT recorequest_reply_user.reply_id " +
+        "FROM   recorequest_reply_user " +
+        "WHERE  recorequest_reply_user.RECOREQUEST_ID = ? ";
+    public static String RECOREQUEST_REPLY_USER_RECO_REST_SELECT_SQL = "" +
+        "SELECT y.restaurant_id, " + "       y.recommender_user_id, " +
+        "       x.reply_text " +
+        "FROM   (SELECT recorequest_reply_user.reply_id, " +
+        "               recorequest_reply_user.reply_text " +
+        "        FROM   recorequest_reply_user " +
+        "        WHERE  recorequest_reply_user.recorequest_id = ?) x, " +
+        "       user_restaurant_reco y " + "WHERE  x.reply_id = y.reply_id ";
+    public static String USER_RESTAURANT_INSERT_SQL = "" +
+        "INSERT INTO user_restaurant_reco " +
+        "            (user_restaurant_reco.recommendee_user_id, " +
+        "             user_restaurant_reco.recommender_user_id, " +
+        "             user_restaurant_reco.reply_id, " +
+        "             user_restaurant_reco.restaurant_id, " +
+        "             user_restaurant_reco.updated_datetime) " +
+        "VALUES      ( ?, " + "              ?, " + "              ?, " +
+        "              ?, " + "              ? )";
+    public static String USER_POINTS_UPDATE_SQL = "" + "UPDATE users " +
+        "SET    users.user_points = users.user_points + ? " +
+        "WHERE  users.user_id = ? ";
+    public static String RECOREQUEST_REPLY_USER_INSERT_SQL = "" +
+        "INSERT INTO recorequest_reply_user " +
+        "            (recorequest_reply_user.recorequest_id, " +
+        "             recorequest_reply_user.reply_id, " +
+        "             recorequest_reply_user.reply_like_initiator, " +
+        "             recorequest_reply_user.reply_send_datetime, " +
+        "             recorequest_reply_user.reply_text, " +
+        "             recorequest_reply_user.reply_ts_user_id, " +
+        "             recorequest_reply_user.reply_user_id) " +
+        "VALUES      ( ?, " + "              ?, " + "              ?, " +
+        "              ? ?, " + "              ?, " + "              ? )";
+    public static String RECOREQUEST_REPLY_USER_UPDATE_SQL = "" +
+        "UPDATE recorequest_reply_user " +
+        "SET    recorequest_reply_user.reply_viewed_initiator = 1 " +
+        "WHERE  recorequest_reply_user.reply_id = ? ";
     public static String RECOREQUEST_RESTAURANT_SELECT_SQL = "" +
         "SELECT y.restaurant_id " +
         "FROM   (SELECT recorequest_reply_user.reply_id " +
         "        FROM   recorequest_reply_user " +
         "        WHERE  recorequest_reply_user.recorequest_id = ?) x, " +
         "       restaurant_reply y " + "WHERE  x.reply_id = y.reply_id ";
+    public static String RESTAURANT_REPLY_INSERT_SQL = "" +
+        "INSERT INTO restaurant_reply " +
+        "            (restaurant_reply.created, " +
+        "             restaurant_reply.initiator_went_yn, " +
+        "             restaurant_reply.reply_id, " +
+        "             restaurant_reply.restaurant_id) " + "VALUES      ( ?, " +
+        "              ?, " + "              ?, " + "              ? )";
+    public static String CITY_RESTAURANT_SELECT_SQL = "" +
+        "SELECT restaurant.restaurant_name, " +
+        "       restaurant.price_range, " +
+        "       restaurant.restaurant_city_id, " +
+        "       restaurant.restaurant_lat, " +
+        "       restaurant.restaurant_lon, " +
+        "       restaurant.factual_rating, " + "       cities.city " +
+        "FROM   restaurant, " + "       cities " +
+        "WHERE  restaurant.restaurant_id = ? " +
+        "       AND cities.city_id = restaurant.restaurant_city_id ";
+    public static String CUISINE_DESC_ONE_RESTAURANT_SELECT_SQL = "" +
+        "SELECT b.cuisine_desc " +
+        "FROM   (SELECT restaurant_cuisine.tier2_cuisine_id " +
+        "        FROM   restaurant_cuisine " +
+        "        WHERE  restaurant_cuisine.restaurant_id = ? " +
+        "        LIMIT  1) a, " + "       cuisine_tier2_descriptor b " +
+        "WHERE  a.tier2_cuisine_id = b.cuisine_id ";
+    public static String RECO_LIKE_INSERT_SQL = "" + "INSERT INTO reco_like " +
+        "            (reco_like.id, " +
+        "             reco_like.like_user_id, " +
+        "             reco_like.reply_id, " +
+        "             reco_like.status_y_n, " +
+        "             reco_like.like_datetime) " + "VALUES      ( ?, " +
+        "              ?, " + "              ?, " + "              ?, " +
+        "              ? )";
+    public static String HISTORICAL_RECO_LIKE_INSERT_SQL = "" +
+        "INSERT INTO historical_reco_like " +
+        "            (historical_reco_like.id, " +
+        "             historical_reco_like.like_user_id, " +
+        "             historical_reco_like.reply_id, " +
+        "             historical_reco_like.status, " +
+        "             historical_reco_like.updated) " + "VALUES      ( ?, " +
+        "              ?, " + "              ?, " + "              ?, " +
+        "              ? )";
 }
