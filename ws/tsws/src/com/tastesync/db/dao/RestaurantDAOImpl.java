@@ -515,7 +515,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     @Override
     public TSRestaurantExtendInfoObj showRestaurantDetailMoreInfo(
         String restaurantId) throws TasteSyncException {
-        // TODO Auto-generated method stub
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
@@ -579,7 +578,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 }
             }
 
-            //TODO remove last , characters
+            //remove last , characters
             if (tsRestaurantExtendInfoObj != null) {
                 String addressStr = addressBuffer.toString();
 
@@ -719,9 +718,10 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
             statement.setString(2, restaurantId);
             statement.setString(3, userRestaurantSavedFlag);
-            statement.setTimestamp(4,
+            statement.setString(4, userRestaurantSavedFlag);
+            statement.setTimestamp(5,
                 CommonFunctionsUtil.getCurrentDateTimestamp());
-            statement.setString(5, userId);
+            statement.setString(6, userId);
             statement.executeUpdate();
             statement.close();
             tsDataSource.commit();
@@ -763,13 +763,17 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 statement.setString(2, userId);
                 statement.executeUpdate();
                 statement.close();
-            } else {
+            } else if ("1".equals(userRestaurantFavFlag)) {
                 //TODO first do select count(*). If needed, add data as fav or delete
                 statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_INSERT_SQL);
                 statement.setString(1, restaurantId);
                 statement.setString(2, userId);
                 statement.executeUpdate();
                 statement.close();
+            } else {
+                throw new TasteSyncException(
+                    "Unknown value for userRestaurantFavFlag as " +
+                    userRestaurantFavFlag);
             }
 
             statement = connection.prepareStatement(RestaurantQueries.HISTORICAL_RESTAURANT_FAV_INSERT_SQL);
@@ -813,7 +817,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
     @Override
     public void submitRestaurantDetailTip(String userId, String restaurantId,
-        String tipText) throws TasteSyncException {
+        String tipText, String shareOnFacebook, String shareOnTwitter)
+        throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
@@ -824,11 +829,9 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
 
-            List<String> inputKeyStr = new ArrayList<String>();
-            inputKeyStr.add(userId);
+            String tipId = userId + CommonFunctionsUtil.generateUniqueKey();
 
-            String tipId = CommonFunctionsUtil.generateUniqueKey(inputKeyStr);
-
+            //TODO Add ALGO_STATUS column to restaurant_tips_tastesync
             statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_TIP_INSERT_SQL);
             statement.setString(1, restaurantId);
             statement.setString(2, tipId);
@@ -836,6 +839,47 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             statement.setString(4, userId);
             statement.executeUpdate();
             statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                String facebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "users.user_fb_id"));
+
+                if (statement != null) {
+                    statement.close();
+                }
+
+                if ("1".equals(shareOnFacebook)) {
+                    statement = connection.prepareStatement(AskReplyQueries.HISTORICAL_USER_SHARED_DATA_INSERT_SQL);
+
+                    //datetime userid random number
+                    statement.setString(1, facebookId);
+
+                    List<String> inputKeyStr = new ArrayList<String>();
+                    inputKeyStr.add(userId);
+
+                    statement.setString(2,
+                        CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
+                    statement.setTimestamp(3,
+                        CommonFunctionsUtil.getCurrentDateTimestamp());
+                    statement.setString(4, tipText);
+                    statement.setString(5, "facebook_post");
+                    statement.setString(6, userId);
+
+                    statement.setString(1, userId);
+                    statement.executeUpdate();
+
+                    if (statement != null) {
+                        statement.close();
+                    }
+                }
+
+                //TODO Twitter - ph2
+            }
+
             tsDataSource.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -869,7 +913,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         try {
             connection = tsDataSource.getConnection();
 
-            statement = connection.prepareStatement(RestaurantQueries.RECOMMENDER_USER_SELECT_SQL);
+            statement = connection.prepareStatement(RestaurantQueries.RECOMMENDER_USER_DAY_SELECT_SQL);
             statement.setString(1, userId);
             statement.setString(2, restaurantId);
             resultset = statement.executeQuery();

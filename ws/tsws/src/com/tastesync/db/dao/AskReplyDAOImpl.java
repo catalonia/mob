@@ -2,6 +2,7 @@ package com.tastesync.db.dao;
 
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
+import com.tastesync.db.queries.RestaurantQueries;
 
 import com.tastesync.exception.TasteSyncException;
 
@@ -12,9 +13,12 @@ import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
+import com.tastesync.model.objects.derived.TSRecommendationsObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
 import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
+import com.tastesync.model.objects.derived.TSRestaurantsForYouObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
+import com.tastesync.model.vo.RecommendationsForYouVO;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
@@ -89,9 +93,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             String recoRequestId = userId +
                 CommonFunctionsUtil.generateUniqueKey();
-
-            System.out.println("AskReplyQueries.RECOREQUEST_USER_INSERT_SQL=" +
-                AskReplyQueries.RECOREQUEST_USER_INSERT_SQL);
 
             statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_INSERT_SQL);
 
@@ -666,7 +667,162 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     @Override
     public void submitRecommendationDidYouLikeLikes(String userId,
         String restaurantId, String likeFlag) throws TasteSyncException {
-        // TODO Auto-generated method stub
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+
+            if ("1".equals(likeFlag)) {
+                statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_INSERT_SQL);
+                statement.setString(1, restaurantId);
+                statement.setString(2, userId);
+                statement.executeUpdate();
+                statement.close();
+            } else if ("0".equals(likeFlag)) {
+                statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_DELETE_SQL);
+                statement.setString(1, restaurantId);
+                statement.setString(2, userId);
+                statement.executeUpdate();
+                statement.close();
+            } else {
+                throw new TasteSyncException("Unknown value for likeFlag as " +
+                    likeFlag);
+            }
+
+            statement = connection.prepareStatement(RestaurantQueries.HISTORICAL_RESTAURANT_FAV_INSERT_SQL);
+
+            statement.setString(1, likeFlag);
+
+            List<String> inputKeyStr = new ArrayList<String>();
+            inputKeyStr.add(userId);
+            statement.setString(2,
+                CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
+
+            statement.setString(3, restaurantId);
+
+            statement.setTimestamp(4,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+
+            statement.setString(5, userId);
+
+            statement.executeUpdate();
+            statement.close();
+
+            statement = connection.prepareStatement(RestaurantQueries.REPLYID_RECOMMENDER_USER_SELECT_SQL);
+            statement.setString(1, userId);
+            statement.setString(2, restaurantId);
+            resultset = statement.executeQuery();
+
+            List<String> recommenderUserIdList = new ArrayList<String>();
+            List<String> replyIdList = new ArrayList<String>();
+            String recommenderUserIdValue = null;
+            String replyIdValue = null;
+
+            while (resultset.next()) {
+                recommenderUserIdValue = resultset.getString(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString(
+                                "user_restaurant_reco.RECOMMENDER_USER_ID")));
+                replyIdValue = resultset.getString(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString("user_restaurant_reco.reply_id")));
+
+                if (!recommenderUserIdList.contains(recommenderUserIdValue)) {
+                    recommenderUserIdList.add(recommenderUserIdValue);
+                }
+
+                if (!replyIdList.contains(replyIdValue)) {
+                    replyIdList.add(replyIdValue);
+                }
+            }
+
+            statement.close();
+
+            if ("1".equals(likeFlag)) {
+                for (String recommenderUserId : recommenderUserIdList) {
+                    statement = connection.prepareStatement(AskReplyQueries.USER_POINTS_UPDATE_SQL);
+
+                    statement.setInt(1, 4);
+
+                    statement.setString(2, recommenderUserId);
+
+                    statement.executeUpdate();
+
+                    statement.close();
+                }
+            }
+
+            statement = connection.prepareStatement(RestaurantQueries.HISTORICAL_RESTAURANT_FAV_INSERT_SQL);
+
+            statement.setString(1, likeFlag);
+
+            inputKeyStr = new ArrayList<String>();
+            inputKeyStr.add(userId);
+            statement.setString(2,
+                CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
+
+            statement.setString(3, restaurantId);
+
+            statement.setTimestamp(4,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+
+            statement.setString(5, userId);
+
+            statement.executeUpdate();
+            statement.close();
+
+            for (String replyId : replyIdList) {
+                statement = connection.prepareStatement(AskReplyQueries.RECO_LIKE_INSERT_SQL);
+
+                statement.setString(1,
+                    userId + CommonFunctionsUtil.generateUniqueKey());
+                statement.setString(2, userId);
+                statement.setString(3, replyId);
+                statement.setString(4, likeFlag);
+                statement.setTimestamp(5,
+                    CommonFunctionsUtil.getCurrentDateTimestamp());
+
+                statement.executeUpdate();
+                statement.close();
+
+                statement = connection.prepareStatement(AskReplyQueries.HISTORICAL_RECO_LIKE_INSERT_SQL);
+                inputKeyStr = new ArrayList<String>();
+                inputKeyStr.add(userId);
+
+                statement.setString(1,
+                    userId +
+                    CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
+                statement.setString(2, userId);
+                statement.setString(3, replyId);
+                statement.setString(4, likeFlag);
+                statement.setTimestamp(5,
+                    CommonFunctionsUtil.getCurrentDateTimestamp());
+
+                statement.executeUpdate();
+                statement.close();
+            }
+
+            tsDataSource.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException("Error while creating reco request " +
+                e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 
     @Override
@@ -960,9 +1116,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     recommendeeUserFolloweeFlag = "1";
                 }
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 TSUserProfileBasicObj recommendeeUser = new TSUserProfileBasicObj();
                 recommendeeUser.setName(recommendeeUserName);
@@ -1002,14 +1156,395 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     public void submitRecommendationRequestAnswer(String recorequestId,
         String recommenderUserId, String[] restaurantIdList, String replyText)
         throws TasteSyncException {
-        // TODO Auto-generated method stub
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+
+            statement = connection.prepareStatement(AskReplyQueries.HISTORICAL_USER_SHARED_DATA_INSERT_SQL);
+
+            //datetime userid random number
+            statement.setString(1, recorequestId);
+
+            List<String> inputKeyStr = new ArrayList<String>();
+            inputKeyStr.add(recorequestId);
+
+            String replyId = CommonFunctionsUtil.generateUniqueKey(inputKeyStr);
+            statement.setString(2, replyId);
+            statement.setString(3, null);
+            statement.setTimestamp(4,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+            statement.setString(5, replyText);
+            statement.setString(6, recommenderUserId);
+            statement.setString(7, recommenderUserId);
+
+            statement.executeUpdate();
+
+            statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FRIEND_SELECT_SQL);
+            statement.setString(1, recorequestId);
+            resultset = statement.executeQuery();
+
+            String recommendeeUserUserId = null;
+
+            if (resultset.next()) {
+                recommendeeUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_user.initiator_user_id"));
+            }
+
+            statement.close();
+
+            for (String restaurantId : restaurantIdList) {
+                statement = connection.prepareStatement(AskReplyQueries.RESTAURANT_REPLY_INSERT_SQL);
+
+                statement.setTimestamp(1,
+                    CommonFunctionsUtil.getCurrentDateTimestamp());
+
+                statement.setString(2, null);
+
+                statement.setString(3, replyId);
+                statement.setString(4, restaurantId);
+
+                statement.executeUpdate();
+
+                statement.close();
+
+                statement = connection.prepareStatement(AskReplyQueries.USER_RESTAURANT_INSERT_SQL);
+
+                //datetime userid random number
+                statement.setString(1, recommendeeUserUserId);
+                statement.setString(2, recommenderUserId);
+                statement.setString(3, replyId);
+                statement.setString(4, restaurantId);
+
+                statement.setTimestamp(5,
+                    CommonFunctionsUtil.getCurrentDateTimestamp());
+
+                statement.executeUpdate();
+
+                statement.close();
+            }
+
+            statement = connection.prepareStatement(AskReplyQueries.USER_POINTS_UPDATE_SQL);
+
+            statement.setInt(1, 2);
+
+            statement.setString(2, recommenderUserId);
+
+            statement.executeUpdate();
+
+            statement.close();
+
+            tsDataSource.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException(
+                "Error while creating restaurant tips " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 
     @Override
-    public TSRecommendationsForYouObj showRecommendationsForYou(
-        String recorequestId) throws TasteSyncException {
-        // TODO Auto-generated method stub
-        return null;
+    public TSRecommendationsForYouObj showRecommendationsForYou(String userId,
+        String recoRequestId) throws TasteSyncException {
+        TSRecommendationsForYouObj tsRecommendationsForYouObj = null;
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TEMPLATE_SENTENCES_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            String recorequestText = "";
+
+            //only one result
+            if (resultset.next()) {
+                recorequestText = resultset.getString(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString(
+                                "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES")));
+            }
+
+            statement.close();
+
+            List<String> replyIdList = new ArrayList<String>();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_RECO_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                replyIdList.add(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("recorequest_reply_user.reply_id")));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_RECO_REST_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            String restaurantIdValue = null;
+            String recommenderUserId = null;
+            String replyText = null;
+            List<RecommendationsForYouVO> recommendationsForYouVOList = new ArrayList<RecommendationsForYouVO>();
+
+            while (resultset.next()) {
+                restaurantIdValue = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant_id"));
+
+                recommenderUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recommender_user_id"));
+
+                replyText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "reply_text"));
+
+                RecommendationsForYouVO recommendationsForYouVO = new RecommendationsForYouVO(restaurantIdValue,
+                        recommenderUserId, replyText);
+
+                recommendationsForYouVOList.add(recommendationsForYouVO);
+            }
+
+            statement.close();
+
+            List<String> restaurantIdList = new ArrayList<String>();
+
+            for (RecommendationsForYouVO recommendationsForYouVO : recommendationsForYouVOList) {
+                if (!restaurantIdList.contains(
+                            recommendationsForYouVO.getRestaurantId())) {
+                    restaurantIdList.add(recommendationsForYouVO.getRestaurantId());
+                }
+            }
+
+            List<String> recommenderUserIdList = null;
+            List<String> replyTextList = null;
+
+            List<TSRestaurantsForYouObj> restaurantsForYouObjList = new ArrayList<TSRestaurantsForYouObj>();
+
+            //check for duplicates
+            for (String restaurantId : restaurantIdList) {
+                recommenderUserIdList = new ArrayList<String>();
+                replyTextList = new ArrayList<String>();
+
+                for (RecommendationsForYouVO recommendationsForYouVO : recommendationsForYouVOList) {
+                    if (restaurantId.equals(
+                                recommendationsForYouVO.getRestaurantId())) {
+                        recommenderUserIdList.add(recommendationsForYouVO.getRecommenderUserId());
+                        replyTextList.add(recommendationsForYouVO.getRecommenderUserId());
+                    }
+                }
+
+                List<TSRecommendationsObj> recommendationsForYouList = new ArrayList<TSRecommendationsObj>();
+                recommendationsForYouList = getRecommendationsForRestaurantFromUsersList(userId,
+                        connection, recommenderUserIdList, replyTextList);
+
+                statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
+                statement.setString(1, restaurantId);
+                resultset = statement.executeQuery();
+
+                String restaurantName = null;
+                String price = null;
+
+                String restaurantCity = null;
+                String restaurantLat = null;
+                String restaurantLong = null;
+                String restaurantDealFlag = null;
+                String restaurantRating = null;
+
+                while (resultset.next()) {
+                    restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant.restaurant_name"));
+                    price = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant.price_range"));
+
+                    restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant.restaurant_name"));
+
+                    restaurantCity = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "cities.city"));
+
+                    restaurantLat = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant.restaurant_lat"));
+                    restaurantLong = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant.restaurant_lon"));
+
+                    restaurantDealFlag = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant.restaurant_name"));
+                    restaurantRating = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant.factual_rating"));
+                }
+
+                statement.close();
+
+                String cuisineTier2Name = null;
+                statement = connection.prepareStatement(AskReplyQueries.CUISINE_DESC_ONE_RESTAURANT_SELECT_SQL);
+                statement.setString(1, restaurantId);
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    cuisineTier2Name = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "cuisine_desc"));
+                }
+
+                TSRestaurantsForYouObj tsRestaurantsForYouObj = new TSRestaurantsForYouObj();
+                tsRestaurantsForYouObj.setRestaurantName(restaurantName);
+                tsRestaurantsForYouObj.setPrice(price);
+                tsRestaurantsForYouObj.setRestaurantName(restaurantName);
+                tsRestaurantsForYouObj.setRestaurantCity(restaurantCity);
+                tsRestaurantsForYouObj.setRestaurantLat(restaurantLat);
+                tsRestaurantsForYouObj.setRestaurantLong(restaurantLong);
+                tsRestaurantsForYouObj.setRestaurantDealFlag(restaurantDealFlag);
+                tsRestaurantsForYouObj.setRestaurantRating(restaurantRating);
+                tsRestaurantsForYouObj.setRecommendationsForYouList(recommendationsForYouList);
+                tsRestaurantsForYouObj.setCuisineTier2Name(cuisineTier2Name);
+                restaurantsForYouObjList.add(tsRestaurantsForYouObj);
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+
+            tsRecommendationsForYouObj = new TSRecommendationsForYouObj();
+            tsRecommendationsForYouObj.setRecorequestText(recorequestText);
+            tsRecommendationsForYouObj.setRestaurantsForYouObjList(restaurantsForYouObjList);
+
+            // update TODO
+            tsDataSource.begin();
+
+            for (String replyId : replyIdList) {
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_UPDATE_SQL);
+                statement.setString(1, replyId);
+                statement.executeUpdate();
+                statement.close();
+            }
+
+            tsDataSource.commit();
+
+            return tsRecommendationsForYouObj;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException(
+                "Error while creating restaurant tips " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+    }
+
+    private List<TSRecommendationsObj> getRecommendationsForRestaurantFromUsersList(
+        String userId, Connection connection,
+        List<String> recommenderUserIdList, List<String> replyTextList)
+        throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        String recommenderUserFolloweeFlag = null;
+
+        String recommenderUserIdFacebookId = null;
+        String recommenderUserName = null;
+        String recommenderUserPhoto = null;
+        int index = 0;
+        List<TSRecommendationsObj> recommendationsForYouList = new ArrayList<TSRecommendationsObj>();
+
+        try {
+            //TODO Duplicates
+            for (String recommenderUserId : recommenderUserIdList) {
+                TSRecommendationsObj tsRecommendationsObj = new TSRecommendationsObj();
+
+                st = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FOLLOWEEFLAG_SELECT_SQL);
+                st.setString(1, recommenderUserId);
+                st.setString(2, userId);
+
+                rs = st.executeQuery();
+
+                if (rs.next()) {
+                    recommenderUserFolloweeFlag = "1";
+                } else {
+                    recommenderUserFolloweeFlag = "0";
+                }
+
+                st.close();
+
+                st = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+
+                st.setString(1, recommenderUserId);
+                rs = st.executeQuery();
+
+                if (rs.next()) {
+                    recommenderUserIdFacebookId = CommonFunctionsUtil.getModifiedValueString(rs.getString(
+                                "users.user_fb_id"));
+
+                    if (st != null) {
+                        st.close();
+                    }
+
+                    st = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                    st.setString(1, recommenderUserIdFacebookId);
+                    rs = st.executeQuery();
+
+                    if (rs.next()) {
+                        recommenderUserName = CommonFunctionsUtil.getModifiedValueString(rs.getString(
+                                    "facebook_user_data.name"));
+                        recommenderUserPhoto = CommonFunctionsUtil.getModifiedValueString(rs.getString(
+                                    "facebook_user_data.picture"));
+                    }
+
+                    st.close();
+                }
+
+                TSUserProfileBasicObj recommendeeUser = new TSUserProfileBasicObj();
+                recommendeeUser.setName(recommenderUserName);
+                recommendeeUser.setPhoto(recommenderUserPhoto);
+                recommendeeUser.setUserId(recommenderUserId);
+
+                tsRecommendationsObj.setRecommendeeUser(recommendeeUser);
+                tsRecommendationsObj.setRecommenderUserFolloweeFlag(recommenderUserFolloweeFlag);
+                tsRecommendationsObj.setReplyText(replyTextList.get(index));
+                ++index;
+                recommendationsForYouList.add(tsRecommendationsObj);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (st != null) {
+                st.close();
+            }
+        }
+
+        return recommendationsForYouList;
     }
 
     @Override
@@ -1182,7 +1717,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     @Override
     public void submitRecommendationFollowupAnswer(String userId,
         String questionId, String replyText) throws TasteSyncException {
-        // TODO Auto-generated method stub
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;

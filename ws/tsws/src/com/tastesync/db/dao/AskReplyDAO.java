@@ -47,8 +47,8 @@ public interface AskReplyDAO {
     TSRecoRequestObj showRecommendationsRequest(String userId,
         String recorequestId) throws TasteSyncException;
 
-    TSRecommendationsForYouObj showRecommendationsForYou(String recorequestId)
-        throws TasteSyncException;
+    TSRecommendationsForYouObj showRecommendationsForYou(String userId,
+        String recorequestId) throws TasteSyncException;
 
     TSSenderUserObj showRecommendationMessage(String messageId,
         String recipientUserId) throws TasteSyncException;
