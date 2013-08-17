@@ -81,8 +81,10 @@ public class RestaurantBOImpl implements RestaurantBO {
 
     @Override
     public void submitRestaurantDetailTip(String userId, String restaurantId,
-        String tipText) throws TasteSyncException {
-        restaurantDAO.submitRestaurantDetailTip(userId, restaurantId, tipText);
+        String tipText, String shareOnFacebook, String shareOnTwitter)
+        throws TasteSyncException {
+        restaurantDAO.submitRestaurantDetailTip(userId, restaurantId, tipText,
+            shareOnFacebook, shareOnTwitter);
     }
 
     @Override

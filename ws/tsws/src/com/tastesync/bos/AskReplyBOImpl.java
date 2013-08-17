@@ -105,9 +105,9 @@ public class AskReplyBOImpl implements AskReplyBO {
     }
 
     @Override
-    public TSRecommendationsForYouObj showRecommendationsForYou(
+    public TSRecommendationsForYouObj showRecommendationsForYou(String userId,
         String recorequestId) throws TasteSyncException {
-        return askReplyDAO.showRecommendationsForYou(recorequestId);
+        return askReplyDAO.showRecommendationsForYou(userId, recorequestId);
     }
 
     @Override

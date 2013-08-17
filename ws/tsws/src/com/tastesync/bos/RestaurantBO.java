@@ -47,7 +47,8 @@ public interface RestaurantBO {
         String userRestaurantFavFlag) throws TasteSyncException;
 
     void submitRestaurantDetailTip(String userId, String restaurantId,
-        String tipText) throws TasteSyncException;
+        String tipText, String shareOnFacebook, String shareOnTwitter)
+        throws TasteSyncException;
 
     TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(String userId,
         String restaurantId) throws TasteSyncException;
