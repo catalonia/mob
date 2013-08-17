@@ -1,6 +1,5 @@
 package com.tastesync.model.objects.derived;
 
-import com.tastesync.model.objects.TSRestaurantObj;
 
 import java.io.Serializable;
 
@@ -14,24 +13,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "recos4u")
 public class TSRecommendationsForYouObj implements Serializable {
     private static final long serialVersionUID = 3105890272734062494L;
-    private List<TSRecoRequestObj> recoRequestList = new ArrayList<TSRecoRequestObj>();
-    private List<TSRestaurantObj> restaurantList = new ArrayList<TSRestaurantObj>();
+    String recorequestText;
+    private List<TSRestaurantsForYouObj> restaurantsForYouObjList = new ArrayList<TSRestaurantsForYouObj>();
 
-    @XmlElement
-    public List<TSRecoRequestObj> getRecoRequestList() {
-        return recoRequestList;
+    public TSRecommendationsForYouObj() {
+        super();
     }
 
     @XmlElement
-    public List<TSRestaurantObj> getRestaurantList() {
-        return restaurantList;
+    public String getRecorequestText() {
+        return recorequestText;
     }
 
-    public void setRecoRequestList(List<TSRecoRequestObj> recoRequestList) {
-        this.recoRequestList = recoRequestList;
+    @XmlElement
+    public List<TSRestaurantsForYouObj> getRestaurantsForYouObjList() {
+        return restaurantsForYouObjList;
     }
 
-    public void setRestaurantList(List<TSRestaurantObj> restaurantList) {
-        this.restaurantList = restaurantList;
+    public void setRecorequestText(String recorequestText) {
+        this.recorequestText = recorequestText;
+    }
+
+    public void setRestaurantsForYouObjList(
+        List<TSRestaurantsForYouObj> restaurantsForYouObjList) {
+        this.restaurantsForYouObjList = restaurantsForYouObjList;
     }
 }
