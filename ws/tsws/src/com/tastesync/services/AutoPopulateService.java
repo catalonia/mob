@@ -41,7 +41,6 @@ public class AutoPopulateService extends BaseService {
     public Response populateLocationSearchTermsValidation(
         @QueryParam("neighbourhood")
     String neighbourhood) {
-    
         //current: front end - sqllite only - neighbourhood+new year city
 
         //server side validations - for input neighbourhood+new year city
@@ -90,6 +89,19 @@ public class AutoPopulateService extends BaseService {
 
     //-- -- -- -- -- -- -- -- -- -- -- -- populateMoodSearchTerms	-- -- -- -- -- -- -- -- -- -- -- -- 
     //-- -- -- -- Need standard solution for "Auto-complete" i.e. is it DB based or JQUERY etc	-- -- -- -- -- -- -- -- 
+    /**
+     *
+     * Order of the results:
+     *  CuisineTier1
+     *  CuisineTier2
+     *  OccasionDescriptor
+     *  PriceDescriptor
+     *  ThemeDescriptor
+     *  TypeofrestDescriptor
+     *  WhoareyouwithDescriptor
+     *
+     * @return list of arrays in the orders as mentioned above in description.
+     */
     @GET
     @Path("/moodsearchterms")
     @org.codehaus.enunciate.jaxrs.TypeHint(JSONArray.class)
@@ -99,7 +111,7 @@ public class AutoPopulateService extends BaseService {
     })
     public Response populateMoodSearchTerms() {
         JSONArray jsonArray = null;
-        
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 

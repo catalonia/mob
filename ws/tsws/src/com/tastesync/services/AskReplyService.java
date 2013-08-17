@@ -378,7 +378,8 @@ public class AskReplyService extends BaseService {
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
         try {
-            tsRecommendationsForYou = askReplyBO.showRecommendationsForYou(recorequestId);
+            tsRecommendationsForYou = askReplyBO.showRecommendationsForYou(userId,
+                    recorequestId);
             responseDone = true;
 
             return Response.status(status).entity(tsRecommendationsForYou)

@@ -15,7 +15,6 @@ import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantQuesionNonTsAssignedObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 import com.tastesync.model.objects.TSSuccessObj;
-import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
@@ -105,7 +104,7 @@ public class RestaurantService extends BaseService {
 
     @GET
     @Path("/details")
-    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantCusineTier2Obj.class)
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantDetailsObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -115,7 +114,6 @@ public class RestaurantService extends BaseService {
     String restaurantId) {
         //    	
         //    	-- -- -- -- -- -- -- -- -- -- -- -- showRestaurantDetail -- -- -- -- -- -- -- -- -- -- -- -- 
-        //    	-- TODO: PHOTOS: LIMIT PHOTO RESULTS TO 3. Show INSTAGRAM PHOTOS first (on top)
         //    	-- TODO: CALCULATE openNowFlag BASED ON HOURS
         //    	-- TODO: Define factual_restaurant_deals table
         TSRestaurantDetailsObj tsRestaurantDetailsObj = null;
@@ -310,13 +308,10 @@ public class RestaurantService extends BaseService {
                     System.out.println(mapper.defaultPrettyPrintingWriter()
                                              .writeValueAsString(tsRestaurantObj));
                 } catch (JsonGenerationException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (JsonMappingException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
@@ -576,12 +571,17 @@ public class RestaurantService extends BaseService {
         @FormParam("userid")
     String userId, @FormParam("restaurantId")
     String restaurantId, @FormParam("tipText")
-    String tipText) {
+    String tipText, @FormParam("shareOnFacebook,")
+    String shareOnFacebook, @FormParam("shareOnTwitter")
+    String shareOnTwitter) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
+        userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+        restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         try {
-            restaurantBO.submitRestaurantDetailTip(userId, restaurantId, tipText);
+            restaurantBO.submitRestaurantDetailTip(userId, restaurantId,
+                tipText, shareOnFacebook, shareOnTwitter);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;

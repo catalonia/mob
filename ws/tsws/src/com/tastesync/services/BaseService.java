@@ -21,7 +21,6 @@ public abstract class BaseService {
     	try {
 			loadProperties();
 		} catch (TasteSyncException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
