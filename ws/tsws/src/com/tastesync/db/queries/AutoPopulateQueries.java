@@ -43,4 +43,8 @@ public interface AutoPopulateQueries extends TSDBCommonQueries {
         "FROM   whoareyouwith_descriptor " +
         "WHERE  whoareyouwith_descriptor.whoareyouwith_valid_current = 1 " +
         "ORDER BY whoareyouwith_descriptor.whoareyouwith_desc ASC";
+    public static final String RESTAURANT_SELECT_SQL = "SELECT * FROM restaurant WHERE restaurant.RESTAURANT_NAME LIKE ?";
+    public static final String RESTAURANT_CITY_KEY_SELECT_SQL = "SELECT * FROM restaurant WHERE restaurant.RESTAURANT_NAME LIKE ? AND restaurant.RESTAURANT_CITY_ID = ?";
+    public static final String RESTAURANT_CITY_SELECT_SQL = "SELECT * FROM restaurant WHERE restaurant.RESTAURANT_CITY_ID = ?";
+    
 }

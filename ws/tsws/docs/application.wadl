@@ -403,14 +403,40 @@
     </wadl:resource>
     <wadl:resource path="/rest/populate/moodsearchterms">
       <wadl:method name="GET">
+        <wadl:doc>
+          <![CDATA[Order of the results:
+CuisineTier1
+CuisineTier2
+OccasionDescriptor
+PriceDescriptor
+ThemeDescriptor
+TypeofrestDescriptor
+WhoareyouwithDescriptor]]>
+        </wadl:doc>
         <wadl:response>
+          <wadl:doc>
+            <![CDATA[list of arrays in the orders as mentioned above in description.]]>
+          </wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
     </wadl:resource>
     <wadl:resource path="/json/populate/moodsearchterms">
       <wadl:method name="GET">
+        <wadl:doc>
+          <![CDATA[Order of the results:
+CuisineTier1
+CuisineTier2
+OccasionDescriptor
+PriceDescriptor
+ThemeDescriptor
+TypeofrestDescriptor
+WhoareyouwithDescriptor]]>
+        </wadl:doc>
         <wadl:response>
+          <wadl:doc>
+            <![CDATA[list of arrays in the orders as mentioned above in description.]]>
+          </wadl:doc>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
@@ -438,6 +464,22 @@
     </wadl:resource>
     <wadl:resource path="/json/populate/price">
       <wadl:method name="GET">
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/populate/restaurantSearchTerms">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/populate/restaurantSearchTerms">
+      <wadl:method name="POST">
+        <wadl:request/>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
@@ -763,6 +805,22 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
+    <wadl:resource path="/rest/user/getCity">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/user/getCity">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
     <wadl:resource path="/rest/user/getHomeProfile">
       <wadl:method name="POST">
         <wadl:request/>
@@ -820,6 +878,22 @@
       </wadl:method>
     </wadl:resource>
     <wadl:resource path="/json/user/inviteFriend">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/user/loginAccount">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/user/loginAccount">
       <wadl:method name="POST">
         <wadl:request/>
         <wadl:response>

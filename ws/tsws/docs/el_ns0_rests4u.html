@@ -11,7 +11,7 @@
        Remove this if you use the .htaccess -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>userprofilerestaurants</title>
+  <title>rests4u</title>
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,7 @@
   <div class="container">
     <header>
       <div id="header" class="column first last span-20">
-        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">userprofilerestaurants</a></div>
+        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">rests4u</a></div>
         <div id="primary" class="column span-18 append-1 prepend-1 first last">
           <ul class="navigation">
             <li id="nav-rest"><a href="rest.html">REST</a></li>
@@ -58,7 +58,7 @@
               </ul>
             </li>
             <li class="current">
-              <a href="el_ns0_userprofilerestaurants.html">userprofilerestaurants element</a>
+              <a href="el_ns0_rests4u.html">rests4u element</a>
               <ul>
                 <li><a href="el_ns0_recommendeeusers.html">recommendeeusers element</a></li>
                 <li><a href="el_ns0_social.html">social element</a></li>
@@ -101,11 +101,11 @@
       </div>
     </header>
     <div id="main" class="column first last span-20">
-      <h1>userprofilerestaurants element</h1>
+      <h1>rests4u element</h1>
       <table>
         <tr>
           <td align="right">Type:</td>
-          <td><a href="ns0_TSUserProfileRestaurantsObj.html">TSUserProfileRestaurantsObj</a></td>
+          <td><a href="ns0_TSRestaurantsForYouObj.html">TSRestaurantsForYouObj</a></td>
         </tr>
         <tr>
           <td align="right">Namespace:</td>
@@ -118,46 +118,60 @@
       </table>
       <h2>Example XML</h2>
       <code class="prettyprint lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;userprofilerestaurants&gt;
-  &lt;restauarntId&gt;...&lt;/restauarntId&gt;
+&lt;rests4u&gt;
+  &lt;recommendationsForYouList&gt;
+    &lt;replyText&gt;...&lt;/replyText&gt;
+    &lt;recommenderUserFolloweeFlag&gt;...&lt;/recommenderUserFolloweeFlag&gt;
+    &lt;recommendeeUser&gt;
+      &lt;userId&gt;...&lt;/userId&gt;
+      &lt;name&gt;...&lt;/name&gt;
+      &lt;photo&gt;...&lt;/photo&gt;
+      &lt;photoDetails&gt;
+        &lt;userId&gt;...&lt;/userId&gt;
+        &lt;name&gt;...&lt;/name&gt;
+        &lt;photo&gt;...&lt;/photo&gt;
+      &lt;/photoDetails&gt;
+    &lt;/recommendeeUser&gt;
+  &lt;/recommendationsForYouList&gt;
+  &lt;recommendationsForYouList&gt;
+    &lt;!--...--&gt;
+  &lt;/recommendationsForYouList&gt;
+  &lt;!--...more &quot;recommendationsForYouList&quot; elements...--&gt;
+  &lt;restaurantId&gt;...&lt;/restaurantId&gt;
   &lt;restaurantName&gt;...&lt;/restaurantName&gt;
   &lt;cuisineTier2Name&gt;...&lt;/cuisineTier2Name&gt;
   &lt;price&gt;...&lt;/price&gt;
-  &lt;restaurantCity&gt;
-    &lt;cityId&gt;...&lt;/cityId&gt;
-    &lt;country&gt;...&lt;/country&gt;
-    &lt;state&gt;...&lt;/state&gt;
-    &lt;city&gt;...&lt;/city&gt;
-  &lt;/restaurantCity&gt;
+  &lt;restaurantCity&gt;...&lt;/restaurantCity&gt;
   &lt;restaurantLat&gt;...&lt;/restaurantLat&gt;
   &lt;restaurantLong&gt;...&lt;/restaurantLong&gt;
   &lt;restaurantDealFlag&gt;...&lt;/restaurantDealFlag&gt;
   &lt;restaurantRating&gt;...&lt;/restaurantRating&gt;
-  &lt;userSavedFlag&gt;...&lt;/userSavedFlag&gt;
-  &lt;userFavFlag&gt;...&lt;/userFavFlag&gt;
-  &lt;userRecommendedFlag&gt;...&lt;/userRecommendedFlag&gt;
-  &lt;userTipFlag&gt;...&lt;/userTipFlag&gt;
-&lt;/userprofilerestaurants&gt;</code>
+&lt;/rests4u&gt;</code>
       <h2>Example JSON</h2>
       <code class="prettyprint lang-js">{
-  &quot;restauarntId&quot; : &quot;...&quot;,
+  &quot;recommendationsForYouList&quot; : [ {
+    &quot;replyText&quot; : &quot;...&quot;,
+    &quot;recommenderUserFolloweeFlag&quot; : &quot;...&quot;,
+    &quot;recommendeeUser&quot; : {
+      &quot;userId&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;photo&quot; : &quot;...&quot;,
+      &quot;photoDetails&quot; : {
+        &quot;userId&quot; : &quot;...&quot;,
+        &quot;name&quot; : &quot;...&quot;,
+        &quot;photo&quot; : &quot;...&quot;
+      }
+    }
+  }, ... ],
+  &quot;restaurantId&quot; : &quot;...&quot;,
   &quot;restaurantName&quot; : &quot;...&quot;,
   &quot;cuisineTier2Name&quot; : &quot;...&quot;,
   &quot;price&quot; : &quot;...&quot;,
-  &quot;restaurantCity&quot; : {
-    &quot;cityId&quot; : &quot;...&quot;,
-    &quot;country&quot; : &quot;...&quot;,
-    &quot;state&quot; : &quot;...&quot;,
-    &quot;city&quot; : &quot;...&quot;
-  },
+  &quot;restaurantCity&quot; : &quot;...&quot;,
   &quot;restaurantLat&quot; : &quot;...&quot;,
   &quot;restaurantLong&quot; : &quot;...&quot;,
   &quot;restaurantDealFlag&quot; : &quot;...&quot;,
-  &quot;restaurantRating&quot; : &quot;...&quot;,
-  &quot;userSavedFlag&quot; : &quot;...&quot;,
-  &quot;userFavFlag&quot; : &quot;...&quot;,
-  &quot;userRecommendedFlag&quot; : &quot;...&quot;,
-  &quot;userTipFlag&quot; : &quot;...&quot;
+  &quot;restaurantRating&quot; : &quot;...&quot;
 }</code>
 
       <div class="clear" />

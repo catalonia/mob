@@ -11,7 +11,7 @@
        Remove this if you use the .htaccess -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>TSSuccessObj</title>
+  <title>TSRecommendationsObj</title>
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,7 @@
   <div class="container">
     <header>
       <div id="header" class="column first last span-20">
-        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">TSSuccessObj</a></div>
+        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">TSRecommendationsObj</a></div>
         <div id="primary" class="column span-18 append-1 prepend-1 first last">
           <ul class="navigation">
             <li id="nav-rest"><a href="rest.html">REST</a></li>
@@ -58,7 +58,7 @@
               </ul>
             </li>
             <li class="current">
-              <a href="ns0_TSSuccessObj.html">TSSuccessObj</a>
+              <a href="ns0_TSRecommendationsObj.html">TSRecommendationsObj</a>
               <ul>
                 <li><a href="ns0_TSRestaurantExtendInfoObj.html">TSRestaurantExtendInfoObj</a></li>
                 <li><a href="ns0_TSUserObj.html">TSUserObj</a></li>
@@ -104,7 +104,7 @@
       </div>
     </header>
     <div id="main" class="column first last span-20">
-      <h1>TSSuccessObj</h1>
+      <h1>TSRecommendationsObj</h1>
       <table>
         <tr>
           <td align="right">Namespace:</td>
@@ -126,7 +126,23 @@
         </tr>
         <tr>
           <td>
-            successMsg (string)
+            replyText (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            recommenderUserFolloweeFlag (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            recommendeeUser (<a href="ns0_TSUserProfileBasicObj.html">TSUserProfileBasicObj</a>)
           </td>
           <td>0/1</td>
           <td>
@@ -142,9 +158,25 @@
           <th>description</th>
         </tr>
         <tr>
-          <td>successMsg</td>
+          <td>replyText</td>
           <td>
-              successMsg (string)
+              replyText (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>recommenderUserFolloweeFlag</td>
+          <td>
+              recommenderUserFolloweeFlag (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>recommendeeUser</td>
+          <td>
+              recommendeeUser (<a href="ns0_TSUserProfileBasicObj.html">TSUserProfileBasicObj</a>)
           </td>
           <td>
           </td>

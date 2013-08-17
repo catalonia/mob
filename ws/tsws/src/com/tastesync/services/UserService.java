@@ -10,6 +10,7 @@ import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
 import com.tastesync.model.objects.TSFriendObj;
+import com.tastesync.model.objects.TSGlobalObj;
 import com.tastesync.model.objects.TSInitObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
@@ -116,6 +117,71 @@ public class UserService extends BaseService {
 		}
 	}
 
+	@POST
+	@Path("/loginAccount")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response loginAccount(@FormParam("userId") String userId) {
+		// TODO expire access token
+		int status = TSResponseStatusCode.SUCCESS.getValue();
+		boolean responseDone = false;
+
+		try {
+			String result = userBo.loginAccount(userId);
+			if(result != null)
+			{
+				TSSuccessObj tsSuccessObj = new TSSuccessObj();
+				tsSuccessObj.setSuccessMsg(result);
+				return Response.status(status).entity(tsSuccessObj).build();
+			}
+			else
+			{
+				status = TSResponseStatusCode.ERROR.getValue();
+				TSErrorObj tsErrorObj = new TSErrorObj();
+				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+				responseDone = false;
+				return Response.status(status).entity(tsErrorObj).build();
+			}
+		} catch (TasteSyncException e) {
+			e.printStackTrace();
+			status = TSResponseStatusCode.ERROR.getValue();
+			TSErrorObj tsErrorObj = new TSErrorObj();
+			tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+			responseDone = false;
+			return Response.status(status).entity(tsErrorObj).build();
+		} finally {
+			if (!responseDone) {
+				status = TSResponseStatusCode.ERROR.getValue();
+				TSErrorObj tsErrorObj = new TSErrorObj();
+				tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+				return Response.status(status).entity(tsErrorObj).build();
+			}
+		}
+	}
+	
+	@POST
+	@Path("/getCity")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getCity(@FormParam("key") String key) {
+		// TODO expire access token
+		int status = TSResponseStatusCode.SUCCESS.getValue();
+		List<TSGlobalObj> result = null;
+		try {
+			result = userBo.getCity(key);
+			System.out.println("Count: " + result.size());
+			return Response.status(status).entity(result).build();
+
+		} catch (TasteSyncException e) {
+			e.printStackTrace();
+			status = TSResponseStatusCode.ERROR.getValue();
+			TSErrorObj tsErrorObj = new TSErrorObj();
+			tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+			return Response.status(status).entity(tsErrorObj).build();
+		} finally {
+		}
+	}
+	
 	@POST
 	@Path("/submitLogout")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
@@ -773,7 +839,7 @@ public class UserService extends BaseService {
 		try {
 			userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
 			List<TSFacebookUserDataObj> tsFacebookUserDataObjList = userBo.showProfileFriends(userId);
-			List<TSFacebookUserDataObj> tsInviteFacebookUserDataObjList = userBo.showInviteFriends(userId);
+			List<String> tsInviteFacebookUserDataObjList = userBo.showInviteFriends(userId);
 			
 			tsfriend = new TSFriendObj();
 			tsfriend.setFriendTasteSync(tsFacebookUserDataObjList);
@@ -1442,12 +1508,6 @@ public class UserService extends BaseService {
 			tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
 			return Response.status(status).entity(tsErrorObj).build();
 		} finally {
-			if (neighbourhoodCityObj == null) {
-				status = TSResponseStatusCode.ERROR.getValue();
-				TSErrorObj tsErrorObj = new TSErrorObj();
-				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-				return Response.status(status).entity(tsErrorObj).build();
-			}
 		}
 	}
 }

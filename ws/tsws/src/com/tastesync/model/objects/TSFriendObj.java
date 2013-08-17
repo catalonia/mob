@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 public class TSFriendObj  implements Serializable{
 	private static final long serialVersionUID = 2102340212375291293L;
 	private List<TSFacebookUserDataObj> friendTasteSync;
-	private List<TSFacebookUserDataObj> inviteFriend;
+	private List<String> inviteFriend;
 	
 	@XmlElement
 	public List<TSFacebookUserDataObj> getFriendTasteSync() {
@@ -20,11 +20,11 @@ public class TSFriendObj  implements Serializable{
 	}
 	
 	@XmlElement
-	public List<TSFacebookUserDataObj> getInviteFriend() {
+	public List<String> getInviteFriend() {
 		return inviteFriend;
 	}
 	
-	public void setInviteFriend(List<TSFacebookUserDataObj> inviteFriend) {
+	public void setInviteFriend(List<String> inviteFriend) {
 		this.inviteFriend = inviteFriend;
 	}
 }

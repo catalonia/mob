@@ -47,7 +47,7 @@ public class CommonFunctionsUtil {
         String ketqua = "";
         String hoa = "QWERTYUIOPASDFGHJKLZXCVBNM";
         String thuong = hoa.toLowerCase();
-        String so = "123456789012345678901234567890";
+        String so = "123456789012345678901234567890123456789012345678901234567890";
         String randomchuoi = "";
 
         if ((loai > 4) || (loai < 0)) {

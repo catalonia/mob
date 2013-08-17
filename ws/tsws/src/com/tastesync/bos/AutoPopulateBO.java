@@ -1,8 +1,13 @@
 package com.tastesync.bos;
 
+import java.util.List;
+
+import javax.ws.rs.FormParam;
+
 import org.codehaus.jettison.json.JSONArray;
 
 import com.tastesync.exception.TasteSyncException;
+import com.tastesync.model.objects.TSRestaurantObj;
 
 
 public interface AutoPopulateBO {
@@ -19,4 +24,6 @@ public interface AutoPopulateBO {
 	JSONArray populateTypeofrestDescriptor() throws TasteSyncException;
 
 	JSONArray populateWhoareyouwithDescriptor() throws TasteSyncException;
+	
+	List<TSRestaurantObj> populateRestaurantSearchTerms(String key, String cityId) throws TasteSyncException;
 }

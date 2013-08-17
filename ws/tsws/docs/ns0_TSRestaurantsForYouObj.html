@@ -11,7 +11,7 @@
        Remove this if you use the .htaccess -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>TSSuccessObj</title>
+  <title>TSRestaurantsForYouObj</title>
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,7 @@
   <div class="container">
     <header>
       <div id="header" class="column first last span-20">
-        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">TSSuccessObj</a></div>
+        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">TSRestaurantsForYouObj</a></div>
         <div id="primary" class="column span-18 append-1 prepend-1 first last">
           <ul class="navigation">
             <li id="nav-rest"><a href="rest.html">REST</a></li>
@@ -58,7 +58,7 @@
               </ul>
             </li>
             <li class="current">
-              <a href="ns0_TSSuccessObj.html">TSSuccessObj</a>
+              <a href="ns0_TSRestaurantsForYouObj.html">TSRestaurantsForYouObj</a>
               <ul>
                 <li><a href="ns0_TSRestaurantExtendInfoObj.html">TSRestaurantExtendInfoObj</a></li>
                 <li><a href="ns0_TSUserObj.html">TSUserObj</a></li>
@@ -104,7 +104,7 @@
       </div>
     </header>
     <div id="main" class="column first last span-20">
-      <h1>TSSuccessObj</h1>
+      <h1>TSRestaurantsForYouObj</h1>
       <table>
         <tr>
           <td align="right">Namespace:</td>
@@ -126,7 +126,79 @@
         </tr>
         <tr>
           <td>
-            successMsg (string)
+            recommendationsForYouList (<a href="ns0_TSRecommendationsObj.html">TSRecommendationsObj</a>)
+          </td>
+          <td>0/unbounded</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            restaurantId (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            restaurantName (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            cuisineTier2Name (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            price (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            restaurantCity (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            restaurantLat (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            restaurantLong (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            restaurantDealFlag (string)
+          </td>
+          <td>0/1</td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            restaurantRating (string)
           </td>
           <td>0/1</td>
           <td>
@@ -142,9 +214,81 @@
           <th>description</th>
         </tr>
         <tr>
-          <td>successMsg</td>
+          <td>recommendationsForYouList</td>
           <td>
-              successMsg (string)
+              array of recommendationsForYouList (<a href="ns0_TSRecommendationsObj.html">TSRecommendationsObj</a>)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>restaurantId</td>
+          <td>
+              restaurantId (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>restaurantName</td>
+          <td>
+              restaurantName (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>cuisineTier2Name</td>
+          <td>
+              cuisineTier2Name (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>price</td>
+          <td>
+              price (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>restaurantCity</td>
+          <td>
+              restaurantCity (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>restaurantLat</td>
+          <td>
+              restaurantLat (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>restaurantLong</td>
+          <td>
+              restaurantLong (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>restaurantDealFlag</td>
+          <td>
+              restaurantDealFlag (string)
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>restaurantRating</td>
+          <td>
+              restaurantRating (string)
           </td>
           <td>
           </td>

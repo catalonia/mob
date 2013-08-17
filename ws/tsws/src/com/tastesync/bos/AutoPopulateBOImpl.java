@@ -1,11 +1,14 @@
 package com.tastesync.bos;
 
 
+import java.util.List;
+
 import org.codehaus.jettison.json.JSONArray;
 
 import com.tastesync.db.dao.AutoPopulateDAO;
 import com.tastesync.db.dao.AutoPopulateDAOImpl;
 import com.tastesync.exception.TasteSyncException;
+import com.tastesync.model.objects.TSRestaurantObj;
 
 public class AutoPopulateBOImpl implements AutoPopulateBO{
 	private AutoPopulateDAO autoPopulateDAO = new AutoPopulateDAOImpl();
@@ -50,5 +53,11 @@ public class AutoPopulateBOImpl implements AutoPopulateBO{
 	public JSONArray populateWhoareyouwithDescriptor() throws TasteSyncException {
 		return autoPopulateDAO.populateWhoareyouwithDescriptor();
 		
+	}
+	
+	@Override
+	public List<TSRestaurantObj> populateRestaurantSearchTerms(String key, String cityId) throws TasteSyncException
+	{
+		return autoPopulateDAO.populateRestaurantSearchTerms(key, cityId);
 	}
 }

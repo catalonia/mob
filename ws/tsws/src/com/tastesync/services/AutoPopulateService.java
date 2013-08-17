@@ -1,11 +1,14 @@
 package com.tastesync.services;
 
+import java.util.List;
+
 import com.tastesync.bos.AutoPopulateBO;
 import com.tastesync.bos.AutoPopulateBOImpl;
 
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSErrorObj;
+import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
@@ -15,7 +18,9 @@ import com.tastesync.util.TSResponseStatusCode;
 import org.codehaus.jettison.json.JSONArray;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -189,6 +194,51 @@ public class AutoPopulateService extends BaseService {
         }
     }
 
+    @POST
+    @Path("/restaurantSearchTerms")
+    @org.codehaus.enunciate.jaxrs.TypeHint(JSONArray.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response populateRestaurantSearchTerms(@FormParam("key") String key, @FormParam("cityid") String cityId) {
+        List<TSRestaurantObj> listRestaurant = null;
+
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        try {
+            
+        	listRestaurant = autoPopulateBO.populateRestaurantSearchTerms(key, cityId);
+            responseDone = true;
+            
+            return Response.status(status).entity(listRestaurant).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status)
+                           .header(TSConstants.EX_CLASS,
+                e.getClass().getCanonicalName()).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+    
     //-- TODO: INCOMPLETE
     //-- http://stackoverflow.com/questions/6507502/autocomplete-for-mobile-web-apps
     //-- http://mobile.smashingmagazine.com/2011/04/27/tap-ahead-design-pattern-mobile-auto-suggest-on-steroids/

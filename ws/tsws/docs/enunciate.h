@@ -7,24 +7,27 @@
 @class ENUNCIATENS0TSPhotoObj;
 @class ENUNCIATENS0TSRestaurantDetailsObj;
 @class ENUNCIATENS0TSRestaurantObj;
-@class ENUNCIATENS0TSRestaurantView;
-@class ENUNCIATENS0TSSocialSettingsObj;
-@class ENUNCIATENS0TSUserObj;
-@class ENUNCIATENS0TSUserProfileObj;
-@class ENUNCIATENS0TSRecoRequestNonAssignedObj;
-@class ENUNCIATENS0TSRecommendationsFollowupObj;
+@class ENUNCIATENS0TSRestaurantQuesionNonTsAssignedObj;
+@class ENUNCIATENS0TSSocialAutoPubSettingsObj;
+@class ENUNCIATENS0TSSuccessObj;
+@class ENUNCIATENS0TSUserProfileBasicObj;
+@class ENUNCIATENS0TSUserProfileRestaurantsObj;
+@class ENUNCIATENS0TSRecoRequestObj;
+@class ENUNCIATENS0TSRecommendationsForYouObj;
 @class ENUNCIATENS0TSRecommendeeUserObj;
 @class ENUNCIATENS0TSRestaurantCusineTier2Obj;
-@class ENUNCIATENS0TSSenderUserObj;
+@class ENUNCIATENS0TSRestaurantsForYouObj;
 @class ENUNCIATENS0JSONObject;
+@class ENUNCIATENS0TSSenderUserObj;
 @class ENUNCIATENS0TSRestaurantRecommendersDetailsObj;
 @class ENUNCIATENS0TSRecommendersDetailsObj;
-@class ENUNCIATENS0TSRecommendationsForYouObj;
-@class ENUNCIATENS0TSRecoRequestObj;
-@class ENUNCIATENS0TSUserProfileRestaurantsObj;
-@class ENUNCIATENS0TSUserProfileBasicObj;
-@class ENUNCIATENS0TSSuccessObj;
-@class ENUNCIATENS0TSSocialAutoPubSettingsObj;
+@class ENUNCIATENS0TSRecommendationsObj;
+@class ENUNCIATENS0TSRecommendationsFollowupObj;
+@class ENUNCIATENS0TSRecoRequestNonAssignedObj;
+@class ENUNCIATENS0TSUserProfileObj;
+@class ENUNCIATENS0TSUserObj;
+@class ENUNCIATENS0TSSocialSettingsObj;
+@class ENUNCIATENS0TSRestaurantView;
 @class ENUNCIATENS0TSRestaurantPhotoObj;
 @class ENUNCIATENS0TSRestaurantExtendInfoObj;
 @class ENUNCIATENS0TSPrivacySettingsObj;
@@ -650,6 +653,8 @@
 @interface ENUNCIATENS0TSRestaurantObj : NSObject <EnunciateXML>
 {
   @private
+    NSString *_moreInfoFlag;
+    NSString *_openNowFlag;
     NSString *_restaurantId;
     NSString *_factualId;
     NSString *_restaurantName;
@@ -663,6 +668,26 @@
     NSString *_sumVoteValue;
     NSString *_tbdOpenTableId;
 }
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) moreInfoFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setMoreInfoFlag: (NSString *) newMoreInfoFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) openNowFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setOpenNowFlag: (NSString *) newOpenNowFlag;
 
 /**
  * (no documentation provided)
@@ -786,64 +811,52 @@
 @end /* interface ENUNCIATENS0TSRestaurantObj */
 
 #endif /* DEF_ENUNCIATENS0TSRestaurantObj_H */
-#ifndef DEF_ENUNCIATENS0TSRestaurantView_H
-#define DEF_ENUNCIATENS0TSRestaurantView_H
+#ifndef DEF_ENUNCIATENS0TSRestaurantQuesionNonTsAssignedObj_H
+#define DEF_ENUNCIATENS0TSRestaurantQuesionNonTsAssignedObj_H
 
 /**
  * (no documentation provided)
  */
-@interface ENUNCIATENS0TSRestaurantView : NSObject <EnunciateXML>
+@interface ENUNCIATENS0TSRestaurantQuesionNonTsAssignedObj : NSObject <EnunciateXML>
 {
   @private
-    NSString *_identifier;
-    ENUNCIATENS0TSRestaurantPhotoObj *_photo;
-    NSString *_name;
+    NSString *_questionId;
+    NSArray *_friendsNonTsUserFacebookId;
 }
 
 /**
  * (no documentation provided)
  */
-- (NSString *) identifier;
+- (NSString *) questionId;
 
 /**
  * (no documentation provided)
  */
-- (void) setIdentifier: (NSString *) newIdentifier;
+- (void) setQuestionId: (NSString *) newQuestionId;
 
 /**
  * (no documentation provided)
  */
-- (ENUNCIATENS0TSRestaurantPhotoObj *) photo;
+- (NSArray *) friendsNonTsUserFacebookId;
 
 /**
  * (no documentation provided)
  */
-- (void) setPhoto: (ENUNCIATENS0TSRestaurantPhotoObj *) newPhoto;
+- (void) setFriendsNonTsUserFacebookId: (NSArray *) newFriendsNonTsUserFacebookId;
+@end /* interface ENUNCIATENS0TSRestaurantQuesionNonTsAssignedObj */
+
+#endif /* DEF_ENUNCIATENS0TSRestaurantQuesionNonTsAssignedObj_H */
+#ifndef DEF_ENUNCIATENS0TSSocialAutoPubSettingsObj_H
+#define DEF_ENUNCIATENS0TSSocialAutoPubSettingsObj_H
 
 /**
  * (no documentation provided)
  */
-- (NSString *) name;
-
-/**
- * (no documentation provided)
- */
-- (void) setName: (NSString *) newName;
-@end /* interface ENUNCIATENS0TSRestaurantView */
-
-#endif /* DEF_ENUNCIATENS0TSRestaurantView_H */
-#ifndef DEF_ENUNCIATENS0TSSocialSettingsObj_H
-#define DEF_ENUNCIATENS0TSSocialSettingsObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSSocialSettingsObj : NSObject <EnunciateXML>
+@interface ENUNCIATENS0TSSocialAutoPubSettingsObj : NSObject <EnunciateXML>
 {
   @private
     NSString *_usncORDER;
     NSString *_usncYN;
-    NSArray *_auto_publishing;
 }
 
 /**
@@ -865,19 +878,976 @@
  * (no documentation provided)
  */
 - (void) setUsncYN: (NSString *) newUsncYN;
+@end /* interface ENUNCIATENS0TSSocialAutoPubSettingsObj */
+
+#endif /* DEF_ENUNCIATENS0TSSocialAutoPubSettingsObj_H */
+#ifndef DEF_ENUNCIATENS0TSSuccessObj_H
+#define DEF_ENUNCIATENS0TSSuccessObj_H
 
 /**
  * (no documentation provided)
  */
-- (NSArray *) auto_publishing;
+@interface ENUNCIATENS0TSSuccessObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_successMsg;
+}
 
 /**
  * (no documentation provided)
  */
-- (void) setAuto_publishing: (NSArray *) newAuto_publishing;
-@end /* interface ENUNCIATENS0TSSocialSettingsObj */
+- (NSString *) successMsg;
 
-#endif /* DEF_ENUNCIATENS0TSSocialSettingsObj_H */
+/**
+ * (no documentation provided)
+ */
+- (void) setSuccessMsg: (NSString *) newSuccessMsg;
+@end /* interface ENUNCIATENS0TSSuccessObj */
+
+#endif /* DEF_ENUNCIATENS0TSSuccessObj_H */
+#ifndef DEF_ENUNCIATENS0TSUserProfileBasicObj_H
+#define DEF_ENUNCIATENS0TSUserProfileBasicObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSUserProfileBasicObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_userId;
+    NSString *_name;
+    NSString *_photo;
+    ENUNCIATENS0TSPhotoObj *_photoDetails;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) userId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserId: (NSString *) newUserId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) name;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setName: (NSString *) newName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) photo;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPhoto: (NSString *) newPhoto;
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSPhotoObj *) photoDetails;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPhotoDetails: (ENUNCIATENS0TSPhotoObj *) newPhotoDetails;
+@end /* interface ENUNCIATENS0TSUserProfileBasicObj */
+
+#endif /* DEF_ENUNCIATENS0TSUserProfileBasicObj_H */
+#ifndef DEF_ENUNCIATENS0TSUserProfileRestaurantsObj_H
+#define DEF_ENUNCIATENS0TSUserProfileRestaurantsObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSUserProfileRestaurantsObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_restauarntId;
+    NSString *_restaurantName;
+    NSString *_cuisineTier2Name;
+    NSString *_price;
+    ENUNCIATENS0TSCityObj *_restaurantCity;
+    NSString *_restaurantLat;
+    NSString *_restaurantLong;
+    NSString *_restaurantDealFlag;
+    NSString *_restaurantRating;
+    NSString *_userSavedFlag;
+    NSString *_userFavFlag;
+    NSString *_userRecommendedFlag;
+    NSString *_userTipFlag;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restauarntId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestauarntId: (NSString *) newRestauarntId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantName;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantName: (NSString *) newRestaurantName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) cuisineTier2Name;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCuisineTier2Name: (NSString *) newCuisineTier2Name;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) price;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPrice: (NSString *) newPrice;
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSCityObj *) restaurantCity;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantCity: (ENUNCIATENS0TSCityObj *) newRestaurantCity;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantLat;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantLat: (NSString *) newRestaurantLat;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantLong;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantLong: (NSString *) newRestaurantLong;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantDealFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantDealFlag: (NSString *) newRestaurantDealFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantRating;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantRating: (NSString *) newRestaurantRating;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) userSavedFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserSavedFlag: (NSString *) newUserSavedFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) userFavFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserFavFlag: (NSString *) newUserFavFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) userRecommendedFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserRecommendedFlag: (NSString *) newUserRecommendedFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) userTipFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserTipFlag: (NSString *) newUserTipFlag;
+@end /* interface ENUNCIATENS0TSUserProfileRestaurantsObj */
+
+#endif /* DEF_ENUNCIATENS0TSUserProfileRestaurantsObj_H */
+#ifndef DEF_ENUNCIATENS0TSRecoRequestObj_H
+#define DEF_ENUNCIATENS0TSRecoRequestObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRecoRequestObj : NSObject <EnunciateXML>
+{
+  @private
+    ENUNCIATENS0TSUserProfileBasicObj *_recommendeeUser;
+    NSString *_recorequestText;
+    NSString *_recommendeeUserFolloweeFlag;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSUserProfileBasicObj *) recommendeeUser;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecommendeeUser: (ENUNCIATENS0TSUserProfileBasicObj *) newRecommendeeUser;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) recorequestText;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecorequestText: (NSString *) newRecorequestText;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) recommendeeUserFolloweeFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecommendeeUserFolloweeFlag: (NSString *) newRecommendeeUserFolloweeFlag;
+@end /* interface ENUNCIATENS0TSRecoRequestObj */
+
+#endif /* DEF_ENUNCIATENS0TSRecoRequestObj_H */
+#ifndef DEF_ENUNCIATENS0TSRecommendationsForYouObj_H
+#define DEF_ENUNCIATENS0TSRecommendationsForYouObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRecommendationsForYouObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_recorequestText;
+    NSArray *_restaurantsForYouObjList;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) recorequestText;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecorequestText: (NSString *) newRecorequestText;
+
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) restaurantsForYouObjList;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantsForYouObjList: (NSArray *) newRestaurantsForYouObjList;
+@end /* interface ENUNCIATENS0TSRecommendationsForYouObj */
+
+#endif /* DEF_ENUNCIATENS0TSRecommendationsForYouObj_H */
+#ifndef DEF_ENUNCIATENS0TSRecommendeeUserObj_H
+#define DEF_ENUNCIATENS0TSRecommendeeUserObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRecommendeeUserObj : NSObject <EnunciateXML>
+{
+  @private
+    ENUNCIATENS0TSUserProfileBasicObj *_recommendeeUser;
+    NSString *_replyId;
+    NSString *_replyText;
+    NSString *_addedPoints;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSUserProfileBasicObj *) recommendeeUser;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecommendeeUser: (ENUNCIATENS0TSUserProfileBasicObj *) newRecommendeeUser;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) replyId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setReplyId: (NSString *) newReplyId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) replyText;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setReplyText: (NSString *) newReplyText;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) addedPoints;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setAddedPoints: (NSString *) newAddedPoints;
+@end /* interface ENUNCIATENS0TSRecommendeeUserObj */
+
+#endif /* DEF_ENUNCIATENS0TSRecommendeeUserObj_H */
+#ifndef DEF_ENUNCIATENS0TSRestaurantCusineTier2Obj_H
+#define DEF_ENUNCIATENS0TSRestaurantCusineTier2Obj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRestaurantCusineTier2Obj : NSObject <EnunciateXML>
+{
+  @private
+    ENUNCIATENS0TSRestaurantDetailsObj *_tsRestaurantDetailsObj;
+    ENUNCIATENS0TSCuisineTier2Obj *_tsCuisineTier2Obj;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSRestaurantDetailsObj *) tsRestaurantDetailsObj;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setTsRestaurantDetailsObj: (ENUNCIATENS0TSRestaurantDetailsObj *) newTsRestaurantDetailsObj;
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSCuisineTier2Obj *) tsCuisineTier2Obj;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setTsCuisineTier2Obj: (ENUNCIATENS0TSCuisineTier2Obj *) newTsCuisineTier2Obj;
+@end /* interface ENUNCIATENS0TSRestaurantCusineTier2Obj */
+
+#endif /* DEF_ENUNCIATENS0TSRestaurantCusineTier2Obj_H */
+#ifndef DEF_ENUNCIATENS0TSRestaurantsForYouObj_H
+#define DEF_ENUNCIATENS0TSRestaurantsForYouObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRestaurantsForYouObj : NSObject <EnunciateXML>
+{
+  @private
+    NSArray *_recommendationsForYouList;
+    NSString *_restaurantId;
+    NSString *_restaurantName;
+    NSString *_cuisineTier2Name;
+    NSString *_price;
+    NSString *_restaurantCity;
+    NSString *_restaurantLat;
+    NSString *_restaurantLong;
+    NSString *_restaurantDealFlag;
+    NSString *_restaurantRating;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) recommendationsForYouList;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecommendationsForYouList: (NSArray *) newRecommendationsForYouList;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantId: (NSString *) newRestaurantId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantName;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantName: (NSString *) newRestaurantName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) cuisineTier2Name;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCuisineTier2Name: (NSString *) newCuisineTier2Name;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) price;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPrice: (NSString *) newPrice;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantCity;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantCity: (NSString *) newRestaurantCity;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantLat;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantLat: (NSString *) newRestaurantLat;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantLong;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantLong: (NSString *) newRestaurantLong;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantDealFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantDealFlag: (NSString *) newRestaurantDealFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantRating;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantRating: (NSString *) newRestaurantRating;
+@end /* interface ENUNCIATENS0TSRestaurantsForYouObj */
+
+#endif /* DEF_ENUNCIATENS0TSRestaurantsForYouObj_H */
+#ifndef DEF_ENUNCIATENS0JSONObject_H
+#define DEF_ENUNCIATENS0JSONObject_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0JSONObject : NSObject
+{
+  @private
+}
+@end /* interface ENUNCIATENS0JSONObject */
+
+#endif /* DEF_ENUNCIATENS0JSONObject_H */
+#ifndef DEF_ENUNCIATENS0TSSenderUserObj_H
+#define DEF_ENUNCIATENS0TSSenderUserObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSSenderUserObj : NSObject <EnunciateXML>
+{
+  @private
+    ENUNCIATENS0TSUserProfileBasicObj *_senderUser;
+    NSString *_senderUserFolloweeFlag;
+    NSString *_message;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSUserProfileBasicObj *) senderUser;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setSenderUser: (ENUNCIATENS0TSUserProfileBasicObj *) newSenderUser;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) senderUserFolloweeFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setSenderUserFolloweeFlag: (NSString *) newSenderUserFolloweeFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) message;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setMessage: (NSString *) newMessage;
+@end /* interface ENUNCIATENS0TSSenderUserObj */
+
+#endif /* DEF_ENUNCIATENS0TSSenderUserObj_H */
+#ifndef DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_H
+#define DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRestaurantRecommendersDetailsObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_userId;
+    NSString *_restaurantId;
+    NSArray *_recommendersDetailsList;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) userId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserId: (NSString *) newUserId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantId: (NSString *) newRestaurantId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) recommendersDetailsList;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecommendersDetailsList: (NSArray *) newRecommendersDetailsList;
+@end /* interface ENUNCIATENS0TSRestaurantRecommendersDetailsObj */
+
+#endif /* DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_H */
+#ifndef DEF_ENUNCIATENS0TSRecommendersDetailsObj_H
+#define DEF_ENUNCIATENS0TSRecommendersDetailsObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRecommendersDetailsObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_userId;
+    NSString *_name;
+    ENUNCIATENS0TSPhotoObj *_photo;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) userId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserId: (NSString *) newUserId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) name;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setName: (NSString *) newName;
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSPhotoObj *) photo;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPhoto: (ENUNCIATENS0TSPhotoObj *) newPhoto;
+@end /* interface ENUNCIATENS0TSRecommendersDetailsObj */
+
+#endif /* DEF_ENUNCIATENS0TSRecommendersDetailsObj_H */
+#ifndef DEF_ENUNCIATENS0TSRecommendationsObj_H
+#define DEF_ENUNCIATENS0TSRecommendationsObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRecommendationsObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_replyText;
+    NSString *_recommenderUserFolloweeFlag;
+    ENUNCIATENS0TSUserProfileBasicObj *_recommendeeUser;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) replyText;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setReplyText: (NSString *) newReplyText;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) recommenderUserFolloweeFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecommenderUserFolloweeFlag: (NSString *) newRecommenderUserFolloweeFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSUserProfileBasicObj *) recommendeeUser;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecommendeeUser: (ENUNCIATENS0TSUserProfileBasicObj *) newRecommendeeUser;
+@end /* interface ENUNCIATENS0TSRecommendationsObj */
+
+#endif /* DEF_ENUNCIATENS0TSRecommendationsObj_H */
+#ifndef DEF_ENUNCIATENS0TSRecommendationsFollowupObj_H
+#define DEF_ENUNCIATENS0TSRecommendationsFollowupObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRecommendationsFollowupObj : NSObject <EnunciateXML>
+{
+  @private
+    ENUNCIATENS0TSUserProfileBasicObj *_questionUse;
+    NSString *_questionText;
+    NSString *_questionUserFolloweeFlag;
+    ENUNCIATENS0TSRestaurantObj *_questionRestaurant;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSUserProfileBasicObj *) questionUse;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setQuestionUse: (ENUNCIATENS0TSUserProfileBasicObj *) newQuestionUse;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) questionText;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setQuestionText: (NSString *) newQuestionText;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) questionUserFolloweeFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setQuestionUserFolloweeFlag: (NSString *) newQuestionUserFolloweeFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSRestaurantObj *) questionRestaurant;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setQuestionRestaurant: (ENUNCIATENS0TSRestaurantObj *) newQuestionRestaurant;
+@end /* interface ENUNCIATENS0TSRecommendationsFollowupObj */
+
+#endif /* DEF_ENUNCIATENS0TSRecommendationsFollowupObj_H */
+#ifndef DEF_ENUNCIATENS0TSRecoRequestNonAssignedObj_H
+#define DEF_ENUNCIATENS0TSRecoRequestNonAssignedObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRecoRequestNonAssignedObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_recoRequestId;
+    NSArray *_nonassignedFacebookIdList;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) recoRequestId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRecoRequestId: (NSString *) newRecoRequestId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) nonassignedFacebookIdList;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setNonassignedFacebookIdList: (NSArray *) newNonassignedFacebookIdList;
+@end /* interface ENUNCIATENS0TSRecoRequestNonAssignedObj */
+
+#endif /* DEF_ENUNCIATENS0TSRecoRequestNonAssignedObj_H */
+#ifndef DEF_ENUNCIATENS0TSUserProfileObj_H
+#define DEF_ENUNCIATENS0TSUserProfileObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSUserProfileObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_name;
+    NSString *_photo;
+    NSString *_facebookCity;
+    NSString *_facebookUrl;
+    NSString *_twitterUrl;
+    NSString *_blogUrl;
+    NSString *_aboutMeText;
+    NSString *_numFollowers;
+    NSString *_numFollowees;
+    NSString *_numFriendsOnTs;
+    NSString *_numPoints;
+    NSArray *_restaurantList;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) name;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setName: (NSString *) newName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) photo;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPhoto: (NSString *) newPhoto;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) facebookCity;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setFacebookCity: (NSString *) newFacebookCity;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) facebookUrl;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setFacebookUrl: (NSString *) newFacebookUrl;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) twitterUrl;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setTwitterUrl: (NSString *) newTwitterUrl;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) blogUrl;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setBlogUrl: (NSString *) newBlogUrl;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) aboutMeText;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setAboutMeText: (NSString *) newAboutMeText;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) numFollowers;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setNumFollowers: (NSString *) newNumFollowers;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) numFollowees;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setNumFollowees: (NSString *) newNumFollowees;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) numFriendsOnTs;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setNumFriendsOnTs: (NSString *) newNumFriendsOnTs;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) numPoints;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setNumPoints: (NSString *) newNumPoints;
+
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) restaurantList;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantList: (NSArray *) newRestaurantList;
+@end /* interface ENUNCIATENS0TSUserProfileObj */
+
+#endif /* DEF_ENUNCIATENS0TSUserProfileObj_H */
 #ifndef DEF_ENUNCIATENS0TSUserObj_H
 #define DEF_ENUNCIATENS0TSUserObj_H
 
@@ -1111,815 +2081,18 @@
 @end /* interface ENUNCIATENS0TSUserObj */
 
 #endif /* DEF_ENUNCIATENS0TSUserObj_H */
-#ifndef DEF_ENUNCIATENS0TSUserProfileObj_H
-#define DEF_ENUNCIATENS0TSUserProfileObj_H
+#ifndef DEF_ENUNCIATENS0TSSocialSettingsObj_H
+#define DEF_ENUNCIATENS0TSSocialSettingsObj_H
 
 /**
  * (no documentation provided)
  */
-@interface ENUNCIATENS0TSUserProfileObj : NSObject <EnunciateXML>
-{
-  @private
-    NSString *_name;
-    NSString *_photo;
-    NSString *_facebookCity;
-    NSString *_facebookUrl;
-    NSString *_twitterUrl;
-    NSString *_blogUrl;
-    NSString *_aboutMeText;
-    NSString *_numFollowers;
-    NSString *_numFollowees;
-    NSString *_numFriendsOnTs;
-    NSString *_numPoints;
-    NSArray *_restaurantList;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) name;
-
-/**
- * (no documentation provided)
- */
-- (void) setName: (NSString *) newName;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) photo;
-
-/**
- * (no documentation provided)
- */
-- (void) setPhoto: (NSString *) newPhoto;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) facebookCity;
-
-/**
- * (no documentation provided)
- */
-- (void) setFacebookCity: (NSString *) newFacebookCity;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) facebookUrl;
-
-/**
- * (no documentation provided)
- */
-- (void) setFacebookUrl: (NSString *) newFacebookUrl;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) twitterUrl;
-
-/**
- * (no documentation provided)
- */
-- (void) setTwitterUrl: (NSString *) newTwitterUrl;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) blogUrl;
-
-/**
- * (no documentation provided)
- */
-- (void) setBlogUrl: (NSString *) newBlogUrl;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) aboutMeText;
-
-/**
- * (no documentation provided)
- */
-- (void) setAboutMeText: (NSString *) newAboutMeText;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) numFollowers;
-
-/**
- * (no documentation provided)
- */
-- (void) setNumFollowers: (NSString *) newNumFollowers;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) numFollowees;
-
-/**
- * (no documentation provided)
- */
-- (void) setNumFollowees: (NSString *) newNumFollowees;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) numFriendsOnTs;
-
-/**
- * (no documentation provided)
- */
-- (void) setNumFriendsOnTs: (NSString *) newNumFriendsOnTs;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) numPoints;
-
-/**
- * (no documentation provided)
- */
-- (void) setNumPoints: (NSString *) newNumPoints;
-
-/**
- * (no documentation provided)
- */
-- (NSArray *) restaurantList;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestaurantList: (NSArray *) newRestaurantList;
-@end /* interface ENUNCIATENS0TSUserProfileObj */
-
-#endif /* DEF_ENUNCIATENS0TSUserProfileObj_H */
-#ifndef DEF_ENUNCIATENS0TSRecoRequestNonAssignedObj_H
-#define DEF_ENUNCIATENS0TSRecoRequestNonAssignedObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSRecoRequestNonAssignedObj : NSObject <EnunciateXML>
-{
-  @private
-    NSString *_recoRequestId;
-    NSArray *_nonassignedFacebookIdList;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) recoRequestId;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecoRequestId: (NSString *) newRecoRequestId;
-
-/**
- * (no documentation provided)
- */
-- (NSArray *) nonassignedFacebookIdList;
-
-/**
- * (no documentation provided)
- */
-- (void) setNonassignedFacebookIdList: (NSArray *) newNonassignedFacebookIdList;
-@end /* interface ENUNCIATENS0TSRecoRequestNonAssignedObj */
-
-#endif /* DEF_ENUNCIATENS0TSRecoRequestNonAssignedObj_H */
-#ifndef DEF_ENUNCIATENS0TSRecommendationsFollowupObj_H
-#define DEF_ENUNCIATENS0TSRecommendationsFollowupObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSRecommendationsFollowupObj : NSObject <EnunciateXML>
-{
-  @private
-    ENUNCIATENS0TSUserProfileBasicObj *_questionUse;
-    NSString *_questionText;
-    NSString *_questionUserFolloweeFlag;
-    ENUNCIATENS0TSRestaurantObj *_questionRestaurant;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSUserProfileBasicObj *) questionUse;
-
-/**
- * (no documentation provided)
- */
-- (void) setQuestionUse: (ENUNCIATENS0TSUserProfileBasicObj *) newQuestionUse;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) questionText;
-
-/**
- * (no documentation provided)
- */
-- (void) setQuestionText: (NSString *) newQuestionText;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) questionUserFolloweeFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setQuestionUserFolloweeFlag: (NSString *) newQuestionUserFolloweeFlag;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSRestaurantObj *) questionRestaurant;
-
-/**
- * (no documentation provided)
- */
-- (void) setQuestionRestaurant: (ENUNCIATENS0TSRestaurantObj *) newQuestionRestaurant;
-@end /* interface ENUNCIATENS0TSRecommendationsFollowupObj */
-
-#endif /* DEF_ENUNCIATENS0TSRecommendationsFollowupObj_H */
-#ifndef DEF_ENUNCIATENS0TSRecommendeeUserObj_H
-#define DEF_ENUNCIATENS0TSRecommendeeUserObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSRecommendeeUserObj : NSObject <EnunciateXML>
-{
-  @private
-    ENUNCIATENS0TSUserProfileBasicObj *_recommendeeUser;
-    NSString *_replyId;
-    NSString *_replyText;
-    NSString *_addedPoints;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSUserProfileBasicObj *) recommendeeUser;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecommendeeUser: (ENUNCIATENS0TSUserProfileBasicObj *) newRecommendeeUser;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) replyId;
-
-/**
- * (no documentation provided)
- */
-- (void) setReplyId: (NSString *) newReplyId;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) replyText;
-
-/**
- * (no documentation provided)
- */
-- (void) setReplyText: (NSString *) newReplyText;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) addedPoints;
-
-/**
- * (no documentation provided)
- */
-- (void) setAddedPoints: (NSString *) newAddedPoints;
-@end /* interface ENUNCIATENS0TSRecommendeeUserObj */
-
-#endif /* DEF_ENUNCIATENS0TSRecommendeeUserObj_H */
-#ifndef DEF_ENUNCIATENS0TSRestaurantCusineTier2Obj_H
-#define DEF_ENUNCIATENS0TSRestaurantCusineTier2Obj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSRestaurantCusineTier2Obj : NSObject <EnunciateXML>
-{
-  @private
-    ENUNCIATENS0TSRestaurantDetailsObj *_tsRestaurantDetailsObj;
-    ENUNCIATENS0TSCuisineTier2Obj *_tsCuisineTier2Obj;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSRestaurantDetailsObj *) tsRestaurantDetailsObj;
-
-/**
- * (no documentation provided)
- */
-- (void) setTsRestaurantDetailsObj: (ENUNCIATENS0TSRestaurantDetailsObj *) newTsRestaurantDetailsObj;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSCuisineTier2Obj *) tsCuisineTier2Obj;
-
-/**
- * (no documentation provided)
- */
-- (void) setTsCuisineTier2Obj: (ENUNCIATENS0TSCuisineTier2Obj *) newTsCuisineTier2Obj;
-@end /* interface ENUNCIATENS0TSRestaurantCusineTier2Obj */
-
-#endif /* DEF_ENUNCIATENS0TSRestaurantCusineTier2Obj_H */
-#ifndef DEF_ENUNCIATENS0TSSenderUserObj_H
-#define DEF_ENUNCIATENS0TSSenderUserObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSSenderUserObj : NSObject <EnunciateXML>
-{
-  @private
-    ENUNCIATENS0TSUserProfileBasicObj *_senderUser;
-    NSString *_senderUserFolloweeFlag;
-    NSString *_message;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSUserProfileBasicObj *) senderUser;
-
-/**
- * (no documentation provided)
- */
-- (void) setSenderUser: (ENUNCIATENS0TSUserProfileBasicObj *) newSenderUser;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) senderUserFolloweeFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setSenderUserFolloweeFlag: (NSString *) newSenderUserFolloweeFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) message;
-
-/**
- * (no documentation provided)
- */
-- (void) setMessage: (NSString *) newMessage;
-@end /* interface ENUNCIATENS0TSSenderUserObj */
-
-#endif /* DEF_ENUNCIATENS0TSSenderUserObj_H */
-#ifndef DEF_ENUNCIATENS0JSONObject_H
-#define DEF_ENUNCIATENS0JSONObject_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0JSONObject : NSObject
-{
-  @private
-}
-@end /* interface ENUNCIATENS0JSONObject */
-
-#endif /* DEF_ENUNCIATENS0JSONObject_H */
-#ifndef DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_H
-#define DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSRestaurantRecommendersDetailsObj : NSObject <EnunciateXML>
-{
-  @private
-    NSString *_userId;
-    NSString *_restaurantId;
-    NSArray *_recommendersDetailsList;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) userId;
-
-/**
- * (no documentation provided)
- */
-- (void) setUserId: (NSString *) newUserId;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) restaurantId;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestaurantId: (NSString *) newRestaurantId;
-
-/**
- * (no documentation provided)
- */
-- (NSArray *) recommendersDetailsList;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecommendersDetailsList: (NSArray *) newRecommendersDetailsList;
-@end /* interface ENUNCIATENS0TSRestaurantRecommendersDetailsObj */
-
-#endif /* DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_H */
-#ifndef DEF_ENUNCIATENS0TSRecommendersDetailsObj_H
-#define DEF_ENUNCIATENS0TSRecommendersDetailsObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSRecommendersDetailsObj : NSObject <EnunciateXML>
-{
-  @private
-    NSString *_userId;
-    NSString *_name;
-    ENUNCIATENS0TSPhotoObj *_photo;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) userId;
-
-/**
- * (no documentation provided)
- */
-- (void) setUserId: (NSString *) newUserId;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) name;
-
-/**
- * (no documentation provided)
- */
-- (void) setName: (NSString *) newName;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSPhotoObj *) photo;
-
-/**
- * (no documentation provided)
- */
-- (void) setPhoto: (ENUNCIATENS0TSPhotoObj *) newPhoto;
-@end /* interface ENUNCIATENS0TSRecommendersDetailsObj */
-
-#endif /* DEF_ENUNCIATENS0TSRecommendersDetailsObj_H */
-#ifndef DEF_ENUNCIATENS0TSRecommendationsForYouObj_H
-#define DEF_ENUNCIATENS0TSRecommendationsForYouObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSRecommendationsForYouObj : NSObject <EnunciateXML>
-{
-  @private
-    NSArray *_recoRequestList;
-    NSArray *_restaurantList;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSArray *) recoRequestList;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecoRequestList: (NSArray *) newRecoRequestList;
-
-/**
- * (no documentation provided)
- */
-- (NSArray *) restaurantList;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestaurantList: (NSArray *) newRestaurantList;
-@end /* interface ENUNCIATENS0TSRecommendationsForYouObj */
-
-#endif /* DEF_ENUNCIATENS0TSRecommendationsForYouObj_H */
-#ifndef DEF_ENUNCIATENS0TSRecoRequestObj_H
-#define DEF_ENUNCIATENS0TSRecoRequestObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSRecoRequestObj : NSObject <EnunciateXML>
-{
-  @private
-    ENUNCIATENS0TSUserProfileBasicObj *_recommendeeUser;
-    NSString *_recorequestText;
-    NSString *_recommendeeUserFolloweeFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSUserProfileBasicObj *) recommendeeUser;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecommendeeUser: (ENUNCIATENS0TSUserProfileBasicObj *) newRecommendeeUser;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) recorequestText;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecorequestText: (NSString *) newRecorequestText;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) recommendeeUserFolloweeFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setRecommendeeUserFolloweeFlag: (NSString *) newRecommendeeUserFolloweeFlag;
-@end /* interface ENUNCIATENS0TSRecoRequestObj */
-
-#endif /* DEF_ENUNCIATENS0TSRecoRequestObj_H */
-#ifndef DEF_ENUNCIATENS0TSUserProfileRestaurantsObj_H
-#define DEF_ENUNCIATENS0TSUserProfileRestaurantsObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSUserProfileRestaurantsObj : NSObject <EnunciateXML>
-{
-  @private
-    NSString *_restauarntId;
-    NSString *_restaurantName;
-    NSString *_cuisineTier2Name;
-    NSString *_price;
-    ENUNCIATENS0TSCityObj *_restaurantCity;
-    NSString *_restaurantLat;
-    NSString *_restaurantLong;
-    NSString *_restaurantDealFlag;
-    NSString *_restaurantRating;
-    NSString *_userSavedFlag;
-    NSString *_userFavFlag;
-    NSString *_userRecommendedFlag;
-    NSString *_userTipFlag;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) restauarntId;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestauarntId: (NSString *) newRestauarntId;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) restaurantName;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestaurantName: (NSString *) newRestaurantName;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) cuisineTier2Name;
-
-/**
- * (no documentation provided)
- */
-- (void) setCuisineTier2Name: (NSString *) newCuisineTier2Name;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) price;
-
-/**
- * (no documentation provided)
- */
-- (void) setPrice: (NSString *) newPrice;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSCityObj *) restaurantCity;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestaurantCity: (ENUNCIATENS0TSCityObj *) newRestaurantCity;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) restaurantLat;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestaurantLat: (NSString *) newRestaurantLat;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) restaurantLong;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestaurantLong: (NSString *) newRestaurantLong;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) restaurantDealFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestaurantDealFlag: (NSString *) newRestaurantDealFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) restaurantRating;
-
-/**
- * (no documentation provided)
- */
-- (void) setRestaurantRating: (NSString *) newRestaurantRating;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) userSavedFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setUserSavedFlag: (NSString *) newUserSavedFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) userFavFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setUserFavFlag: (NSString *) newUserFavFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) userRecommendedFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setUserRecommendedFlag: (NSString *) newUserRecommendedFlag;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) userTipFlag;
-
-/**
- * (no documentation provided)
- */
-- (void) setUserTipFlag: (NSString *) newUserTipFlag;
-@end /* interface ENUNCIATENS0TSUserProfileRestaurantsObj */
-
-#endif /* DEF_ENUNCIATENS0TSUserProfileRestaurantsObj_H */
-#ifndef DEF_ENUNCIATENS0TSUserProfileBasicObj_H
-#define DEF_ENUNCIATENS0TSUserProfileBasicObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSUserProfileBasicObj : NSObject <EnunciateXML>
-{
-  @private
-    NSString *_userId;
-    NSString *_name;
-    NSString *_photo;
-    ENUNCIATENS0TSPhotoObj *_photoDetails;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) userId;
-
-/**
- * (no documentation provided)
- */
-- (void) setUserId: (NSString *) newUserId;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) name;
-
-/**
- * (no documentation provided)
- */
-- (void) setName: (NSString *) newName;
-
-/**
- * (no documentation provided)
- */
-- (NSString *) photo;
-
-/**
- * (no documentation provided)
- */
-- (void) setPhoto: (NSString *) newPhoto;
-
-/**
- * (no documentation provided)
- */
-- (ENUNCIATENS0TSPhotoObj *) photoDetails;
-
-/**
- * (no documentation provided)
- */
-- (void) setPhotoDetails: (ENUNCIATENS0TSPhotoObj *) newPhotoDetails;
-@end /* interface ENUNCIATENS0TSUserProfileBasicObj */
-
-#endif /* DEF_ENUNCIATENS0TSUserProfileBasicObj_H */
-#ifndef DEF_ENUNCIATENS0TSSuccessObj_H
-#define DEF_ENUNCIATENS0TSSuccessObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSSuccessObj : NSObject <EnunciateXML>
-{
-  @private
-    NSString *_successMsg;
-}
-
-/**
- * (no documentation provided)
- */
-- (NSString *) successMsg;
-
-/**
- * (no documentation provided)
- */
-- (void) setSuccessMsg: (NSString *) newSuccessMsg;
-@end /* interface ENUNCIATENS0TSSuccessObj */
-
-#endif /* DEF_ENUNCIATENS0TSSuccessObj_H */
-#ifndef DEF_ENUNCIATENS0TSSocialAutoPubSettingsObj_H
-#define DEF_ENUNCIATENS0TSSocialAutoPubSettingsObj_H
-
-/**
- * (no documentation provided)
- */
-@interface ENUNCIATENS0TSSocialAutoPubSettingsObj : NSObject <EnunciateXML>
+@interface ENUNCIATENS0TSSocialSettingsObj : NSObject <EnunciateXML>
 {
   @private
     NSString *_usncORDER;
     NSString *_usncYN;
+    NSArray *_auto_publishing;
 }
 
 /**
@@ -1941,9 +2114,65 @@
  * (no documentation provided)
  */
 - (void) setUsncYN: (NSString *) newUsncYN;
-@end /* interface ENUNCIATENS0TSSocialAutoPubSettingsObj */
 
-#endif /* DEF_ENUNCIATENS0TSSocialAutoPubSettingsObj_H */
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) auto_publishing;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setAuto_publishing: (NSArray *) newAuto_publishing;
+@end /* interface ENUNCIATENS0TSSocialSettingsObj */
+
+#endif /* DEF_ENUNCIATENS0TSSocialSettingsObj_H */
+#ifndef DEF_ENUNCIATENS0TSRestaurantView_H
+#define DEF_ENUNCIATENS0TSRestaurantView_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRestaurantView : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_identifier;
+    ENUNCIATENS0TSRestaurantPhotoObj *_photo;
+    NSString *_name;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) identifier;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setIdentifier: (NSString *) newIdentifier;
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSRestaurantPhotoObj *) photo;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPhoto: (ENUNCIATENS0TSRestaurantPhotoObj *) newPhoto;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) name;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setName: (NSString *) newName;
+@end /* interface ENUNCIATENS0TSRestaurantView */
+
+#endif /* DEF_ENUNCIATENS0TSRestaurantView_H */
 #ifndef DEF_ENUNCIATENS0TSRestaurantPhotoObj_H
 #define DEF_ENUNCIATENS0TSRestaurantPhotoObj_H
 

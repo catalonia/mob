@@ -5,6 +5,7 @@ import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
+import com.tastesync.model.objects.TSGlobalObj;
 import com.tastesync.model.objects.TSInitObj;
 import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
@@ -17,7 +18,6 @@ import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.model.response.UserResponse;
 
 import java.util.List;
-
 import javax.ws.rs.core.Response;
 
 public interface UserBo {
@@ -27,6 +27,8 @@ public interface UserBo {
 	
 	boolean logout(String userId) throws TasteSyncException;
 
+	String loginAccount(String userId) throws TasteSyncException;
+	
     List<TSUserObj> selectUsers() throws TasteSyncException;
 
     TSUserObj selectUser(String userId) throws TasteSyncException;
@@ -78,7 +80,7 @@ public interface UserBo {
     List<TSFacebookUserDataObj> showProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj> showInviteFriends(String userId)
+    List<String> showInviteFriends(String userId)
             throws TasteSyncException;
 
     
@@ -119,4 +121,6 @@ public interface UserBo {
     String getUserId(String userFBID) throws TasteSyncException;
     
     List<TSCityObj> getCityName(String key) throws TasteSyncException;
+    
+    List<TSGlobalObj> getCity(String key) throws TasteSyncException;
 }

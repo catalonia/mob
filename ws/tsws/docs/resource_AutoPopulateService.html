@@ -76,6 +76,7 @@
         <li><a href="#path__populate_moodsearchterms.html">/populate/moodsearchterms</a></li>
         <li><a href="#path__populate_occasion.html">/populate/occasion</a></li>
         <li><a href="#path__populate_price.html">/populate/price</a></li>
+        <li><a href="#path__populate_restaurantSearchTerms.html">/populate/restaurantSearchTerms</a></li>
         <li><a href="#path__populate_theme.html">/populate/theme</a></li>
         <li><a href="#path__populate_typeofrest.html">/populate/typeofrest</a></li>
         <li><a href="#path__populate_whoareyouwith.html">/populate/whoareyouwith</a></li>
@@ -153,6 +154,16 @@
       <p class="note">Mount Point: <a href="./rest/populate/moodsearchterms">/rest/populate/moodsearchterms</a></p>
       <a name="GET"></a>
       <h2>GET</h2>
+      <p>
+            Order of the results:
+CuisineTier1
+CuisineTier2
+OccasionDescriptor
+PriceDescriptor
+ThemeDescriptor
+TypeofrestDescriptor
+WhoareyouwithDescriptor
+          </p>
       <h3>Response Body</h3>
       <table>
         <tr>
@@ -164,7 +175,7 @@
           <td>application/json<br/></td>
         </tr>
       </table>
-      <p>(no documentation provided)</p>
+      <p>list of arrays in the orders as mentioned above in description.</p>
       <a name="path__populate_occasion.html"></a>
       <h1>/populate/occasion</h1>
       <p class="note">Mount Point: <a href="./rest/populate/occasion">/rest/populate/occasion</a></p>
@@ -187,6 +198,48 @@
       <p class="note">Mount Point: <a href="./rest/populate/price">/rest/populate/price</a></p>
       <a name="GET"></a>
       <h2>GET</h2>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td>(custom)</td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__populate_restaurantSearchTerms.html"></a>
+      <h1>/populate/restaurantSearchTerms</h1>
+      <p class="note">Mount Point: <a href="./rest/populate/restaurantSearchTerms">/rest/populate/restaurantSearchTerms</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>key</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>cityid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
       <h3>Response Body</h3>
       <table>
         <tr>

@@ -214,7 +214,7 @@ public interface UserQueries extends TSDBCommonQueries {
     // USER_FOLLOW
  	public static String USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWEE_USER_ID FROM user_follow_data WHERE FOLLOWER_USER_ID = ?))";
     public static String USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWER_USER_ID FROM user_follow_data WHERE FOLLOWEE_USER_ID = ?))";
- 	public static String FACEBOOK_USER_DATA_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT user_friend_fb.USER_FRIEND_FB FROM user_friend_fb WHERE INVITATION_SENT_YN = '0' AND USER_ID = ?)";
+ 	public static String FACEBOOK_USER_DATA_SELECT_SQL = "SELECT user_friend_fb.USER_FRIEND_FB FROM user_friend_fb WHERE INVITATION_SENT_YN = '0' AND USER_ID = ?";
     public static String USER_FOLLOW_DATA_CHECK_SELECT_SQL = "SELECT * FROM user_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?";
  	public static String USER_FOLLOW_DATA_INSERT_SQL = "INSERT INTO `user_follow_data`"
  			+ "(`ID`, `FOLLOWER_USER_ID`, `FOLLOWEE_USER_ID`)" + " VALUES ("
