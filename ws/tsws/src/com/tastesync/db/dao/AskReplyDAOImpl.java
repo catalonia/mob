@@ -111,19 +111,14 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.executeUpdate();
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             for (String cuisineId : cuisineTier1IdList) {
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER1_INSERT_SQL);
                 statement.setString(1, recoRequestId);
                 statement.setString(2, cuisineId);
                 statement.executeUpdate();
-
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
             }
 
             for (String cuisineId : cuisineTier2IdList) {
@@ -132,9 +127,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.setString(2, cuisineId);
                 statement.executeUpdate();
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
             }
 
             for (String priceId : priceIdList) {
@@ -143,9 +136,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.setString(2, priceId);
                 statement.executeUpdate();
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
             }
 
             for (String themeId : themeIdList) {
@@ -154,9 +145,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.setString(2, themeId);
                 statement.executeUpdate();
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
             }
 
             for (String whoareyouwithId : whoareyouwithIdList) {
@@ -165,9 +154,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.setString(2, whoareyouwithId);
                 statement.executeUpdate();
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
             }
 
             for (String typeOfRestaurantId : typeOfRestaurantIdList) {
@@ -176,37 +163,33 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.setString(2, typeOfRestaurantId);
                 statement.executeUpdate();
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
             }
 
-            for (String occasionId : occasionIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_OCCASION_INSERT_SQL);
-                statement.setString(1, recoRequestId);
-                statement.setString(2, occasionId);
+            if (cityId != null) {
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_LOCATION_INSERT_SQL);
+                statement.setString(1, cityId);
+                statement.setString(2, neighborhoodId);
+                statement.setString(3, recoRequestId);
                 statement.executeUpdate();
+                statement.close();
+            }
 
-                if (statement != null) {
-                    statement.close();
-                }
+            if (statement != null) {
+                statement.close();
             }
 
             statement = connection.prepareStatement(AskReplyQueries.USER_RECO_SUPPPLY_TIER_INSERT_SQL);
             statement.setString(1, userId);
             statement.executeUpdate();
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             statement = connection.prepareStatement(AskReplyQueries.USER_RECO_DEMAND_TIER_INSERT_SQL);
             statement.setString(1, userId);
             statement.executeUpdate();
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             tsDataSource.commit();
 
@@ -292,9 +275,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             //only one result
             if (resultset.next()) {
-                recoRequestTemplateSentences = resultset.getString(CommonFunctionsUtil.getModifiedValueString(
-                            resultset.getString(
-                                "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES")));
+                recoRequestTemplateSentences = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES"));
             }
 
             statement.close();
@@ -1009,17 +991,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
         try {
             connection = tsDataSource.getConnection();
-            tsDataSource.begin();
-            //TODO first do select count(*). If needed, add data as fav or delete
-            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_UPDATE_SQL);
-            statement.setString(1, recorequestId);
-            statement.setString(2, userId);
-            statement.executeUpdate();
-
-            if (statement != null) {
-                statement.close();
-            }
-
             statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_SELECT_SQL);
             statement.setString(1, recorequestId);
             statement.setString(2, userId);
@@ -1031,7 +1002,21 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             if (resultset.next()) {
                 friendOrNot = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "recorequest_ts_assigned.ASSIGNED_USERTYPE"));
+            } else {
+                // invalid data case
+                return null;
             }
+
+            if (statement != null) {
+                statement.close();
+            }
+
+            tsDataSource.begin();
+            //TODO first do select count(*). If needed, add data as fav or delete
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_UPDATE_SQL);
+            statement.setString(1, recorequestId);
+            statement.setString(2, userId);
+            statement.executeUpdate();
 
             if (statement != null) {
                 statement.close();
@@ -1166,7 +1151,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
 
-            statement = connection.prepareStatement(AskReplyQueries.HISTORICAL_USER_SHARED_DATA_INSERT_SQL);
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_INSERT_SQL);
 
             //datetime userid random number
             statement.setString(1, recorequestId);
@@ -1230,6 +1215,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.close();
             }
 
+            //TODO there should be way to add points only once!! - recommenderUserId
             statement = connection.prepareStatement(AskReplyQueries.USER_POINTS_UPDATE_SQL);
 
             statement.setInt(1, 2);
@@ -1282,9 +1268,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             //only one result
             if (resultset.next()) {
-                recorequestText = resultset.getString(CommonFunctionsUtil.getModifiedValueString(
+                recorequestText = CommonFunctionsUtil.getModifiedValueString(
                             resultset.getString(
-                                "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES")));
+                                "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES"));
             }
 
             statement.close();
