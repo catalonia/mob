@@ -51,20 +51,20 @@ public class AskReplyService extends BaseService {
     })
     public Response submitAskForRecommendationSearch(
         @FormParam("userid")
-    String userId, @FormParam("cuisineTier1IdList")
+    String userId, @FormParam("cuisinetier1idlist")
     String cuisineTier1IdList,
-        @FormParam("cuisineTier2IdList")
-    String cuisineTier2IdList, @FormParam("priceIdList")
-    String priceIdList, @FormParam("themeIdList")
+        @FormParam("cuisineiier2idlist")
+    String cuisineTier2IdList, @FormParam("priceidlist")
+    String priceIdList, @FormParam("themeidlist")
     String themeIdList,
-        @FormParam("whoareyouwithIdList")
+        @FormParam("whoareyouwithidlist")
     String whoareyouwithIdList,
-        @FormParam("typeOfRestaurantIdList")
+        @FormParam("typeofrestaurantidList")
     String typeOfRestaurantIdList,
-        @FormParam("occasionIdList")
-    String occasionIdList, @FormParam("neighborhoodId")
-    String neighborhoodId, @FormParam("cityId")
-    String cityId, @FormParam("stateName")
+        @FormParam("occasionidlist")
+    String occasionIdList, @FormParam("neighborhoodid")
+    String neighborhoodId, @FormParam("cityid")
+    String cityId, @FormParam("statename")
     String stateName) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
@@ -742,8 +742,8 @@ public class AskReplyService extends BaseService {
     })
     public Response submitRecommendationDidYouLikeLikes(
         @FormParam("userid")
-    String userId, @FormParam("restaurantId")
-    String restaurantId, @FormParam("likeFlag")
+    String userId, @FormParam("restaurantid")
+    String restaurantId, @FormParam("likeflag")
     String likeFlag) {
         //    	-- TODO: TODOs Left: Push notification
 
@@ -798,7 +798,7 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showListOfRestaurantsSearchResultsBasedOnRecoId(
-        @QueryParam("recoRequestId")
+        @QueryParam("recorequestid")
     String recoRequestId) {
         List<TSRestaurantCusineTier2Obj> tsRestaurantCusineTier2Obj = null;
 
@@ -844,17 +844,17 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showListOfRestaurantsSearchResults(
-        @QueryParam("restaurantId")
-    String restaurantId, @QueryParam("neighborhoodId")
+        @QueryParam("restaurantid")
+    String restaurantId, @QueryParam("neighborhoodid")
     String neighborhoodId, @QueryParam("cityid")
     String cityId, @QueryParam("statename")
     String stateName, @QueryParam("cuisineidlist")
     String cuisineIdList, @QueryParam("priceidlist")
     String priceIdList, @QueryParam("rating")
-    String rating, @QueryParam("savedFlag")
-    String savedFlag, @QueryParam("favFlag")
-    String favFlag, @QueryParam("dealFlag")
-    String dealFlag, @QueryParam("chainFlag")
+    String rating, @QueryParam("savedflag")
+    String savedFlag, @QueryParam("favflag")
+    String favFlag, @QueryParam("dealflag")
+    String dealFlag, @QueryParam("chainflag")
     String chainFlag) {
         List<TSRestaurantCusineTier2Obj> tsRestaurantCusineTier2Obj = null;
 
@@ -917,7 +917,7 @@ public class AskReplyService extends BaseService {
     })
     public Response showRecommendationsListUnactioned(
         @QueryParam("userid")
-    String userId, @QueryParam("paginationId")
+    String userId, @QueryParam("paginationid")
     String paginationId) {
         //TODO type to be defined...
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -967,7 +967,7 @@ public class AskReplyService extends BaseService {
     })
     public Response showRecommendationsListActioned(
         @QueryParam("userid")
-    String userId, @QueryParam("paginationId")
+    String userId, @QueryParam("paginationid")
     String paginationId) {
         //TODO type to be defined...
         int status = TSResponseStatusCode.SUCCESS.getValue();

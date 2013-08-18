@@ -392,9 +392,9 @@ public class RestaurantService extends BaseService {
     })
     public Response submitSaveOrUnsaveRestaurant(
         @FormParam("userid")
-    String userId, @FormParam("restaurantId")
+    String userId, @FormParam("restaurantid")
     String restaurantId,
-        @FormParam("userRestaurantSavedFlag")
+        @FormParam("userrestaurantsavedflag")
     String userRestaurantSavedFlag) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -456,9 +456,9 @@ public class RestaurantService extends BaseService {
     })
     public Response submitAddOrRemoveFromFavs(
         @FormParam("userid")
-    String userId, @FormParam("restaurantId")
+    String userId, @FormParam("restaurantid")
     String restaurantId,
-        @FormParam("userRestaurantFavFlag")
+        @FormParam("userrestaurantfavflag")
     String userRestaurantFavFlag) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -570,10 +570,10 @@ public class RestaurantService extends BaseService {
     })
     public Response submitRestaurantDetailTip(
         @FormParam("userid")
-    String userId, @FormParam("restaurantId")
-    String restaurantId, @FormParam("tipText")
-    String tipText, @FormParam("shareOnFacebook,")
-    String shareOnFacebook, @FormParam("shareOnTwitter")
+    String userId, @FormParam("restaurantid")
+    String restaurantId, @FormParam("tiptext")
+    String tipText, @FormParam("shareonfacebook")
+    String shareOnFacebook, @FormParam("shareontwitter")
     String shareOnTwitter) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -669,13 +669,13 @@ public class RestaurantService extends BaseService {
     public Response submitRestaurantDetailAsk(
         @FormParam("userid")
     String userId, @FormParam("restaurantid")
-    String restaurantId, @FormParam("questionText")
+    String restaurantId, @FormParam("questiontext")
     String questionText,
-        @FormParam("postQuestionOnForum")
+        @FormParam("postquestiononforum")
     String postQuestionOnForum,
-        @FormParam("recommendersUserIdList")
+        @FormParam("recommendersuseridlist")
     String recommendersUserIdList,
-        @FormParam("friendsFacebookIdList")
+        @FormParam("friendsfacebookidlist")
     String friendsFacebookIdList) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
@@ -695,18 +695,6 @@ public class RestaurantService extends BaseService {
         TSRestaurantQuesionNonTsAssignedObj tsRestaurantQuesionNonTsAssignedObj = null;
 
         try {
-        	String[] recommendersUserIdListArray = CommonFunctionsUtil.convertStringListAsArrayList(
-        			recommendersUserIdList);
-        	System.out.println("recommendersUserIdListArray "+recommendersUserIdListArray.toString());
-        	for (String recommendersUserIdListArrayElement : recommendersUserIdListArray) {
-        		System.out.println("recommendersUserIdListArrayElement="+recommendersUserIdListArrayElement);
-        	}
-        	String[] friendsFacebookIdListArray = CommonFunctionsUtil.convertStringListAsArrayList(
-                    friendsFacebookIdList);
-        	System.out.println("friendsFacebookIdListArray "+friendsFacebookIdListArray.toString());
-        	for (String friendsFacebookIdListArrayElement : friendsFacebookIdListArray) {
-        		System.out.println("friendsFacebookIdListArrayElement="+friendsFacebookIdListArrayElement);
-        	}       
             tsRestaurantQuesionNonTsAssignedObj = restaurantBO.submitRestaurantDetailAsk(userId,
                     restaurantId, questionText, postQuestionOnForum,
                     CommonFunctionsUtil.convertStringListAsArrayList(
