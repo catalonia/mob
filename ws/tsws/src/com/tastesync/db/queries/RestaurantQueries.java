@@ -174,7 +174,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "       AND user_restaurant_fav.user_id = ?";
     public static String HISTORICAL_RESTAURANT_FAV_INSERT_SQL = "" +
         "INSERT INTO historical_user_restaurant_fav " +
-        "            (historical_user_restaurant_fav.fav_spot_yn, " +
+        "            (historical_user_restaurant_fav.fav_spot_flag, " +
         "             historical_user_restaurant_fav.id, " +
         "             historical_user_restaurant_fav.restaurant_id, " +
         "             historical_user_restaurant_fav.updated_datetime, " +
@@ -206,6 +206,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "FROM   user_restaurant_reco " +
         "WHERE  user_restaurant_reco.recommendee_user_id = ? " +
         "       AND user_restaurant_reco.restaurant_id = ? ";
+    
     public static String RESTAURANT_QUESTION_TS_ASSIGNED_INSERT_SQL = "" +
         "INSERT INTO restaurant_question_ts_assigned " +
         "            (restaurant_question_ts_assigned.assigned_prepopulated_yn, " +
@@ -217,7 +218,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "             restaurant_question_ts_assigned.question_id, " +
         "             restaurant_question_ts_assigned.restaurant_id) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
-        "              ?, " + "              ?, " + "              'Y', " +
+        "              ?, " + "              ?, " + "              ?, " +
         "              ?, " + "              ?)";
     public static String RESTAURANT_QUESTION_NON_TS_ASSIGNED_INSERT_SQL = "" +
         "INSERT INTO restaurant_question_non_ts_assigned " +
@@ -232,7 +233,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "              ?, " + "              ?, " + "              ?, " +
         "              ? )";
     public static String USER_RESTAURANT_SAVED_DATA_EXIST_SELECT_SQL = "" +
-        "SELECT user_restaurant_saved.user_id = ? " +
+        "SELECT user_restaurant_saved.user_id " +
         "FROM   user_restaurant_saved " +
         "WHERE  user_restaurant_saved.user_id = ? " +
         "       AND user_restaurant_saved.restaurant_id = ? ";

@@ -1,7 +1,6 @@
 package com.tastesync.db.queries;
 
 public interface AskReplyQueries extends TSDBCommonQueries {
-    //createRecoRequestSearch
     public static final String RECOREQUEST_USER_INSERT_SQL = "insert into recorequest_user (" +
         "recorequest_user.RECOREQUEST_ID," +
         "recorequest_user.INITIATOR_USER_ID," +
@@ -10,45 +9,39 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "recorequest_user.RECOREQUEST_PARAMETER_SELECTION_MERGED," +
         "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES" +
         ")    VALUES    (" + "?," + "?," + "?," + "?," + "?," + "?" + ")";
-
-    //createRecoRequestSearch - sub
     public static final String RECOREQUEST_CUISINE_TIER1_INSERT_SQL = "insert into recorequest_cuisine_tier1 (" +
         "recorequest_cuisine_tier1.RECOREQUEST_ID," +
         "recorequest_cuisine_tier1.Cuisine_Tier1_ID" + ")  VALUES (" + "?," +
         "?" + ")";
-
-    //createRecoRequestSearch -sub
     public static final String RECOREQUEST_CUISINE_TIER2_INSERT_SQL = "insert into recorequest_cuisine_tier2 (" +
         "recorequest_cuisine_tier2.RECOREQUEST_ID," +
         "recorequest_cuisine_tier2.Cuisine_Tier2_ID" + ")  VALUES (" + "?," +
         "?" + ")";
-
-    //createRecoRequestSearch - sub
     public static final String RECOREQUEST_PRICE_INSERT_SQL = "insert into recorequest_price (" +
         "recorequest_price.RECOREQUEST_ID," + "recorequest_price.price_ID" +
         ")  VALUES (" + "?," + "?" + ")";
-
-    //createRecoRequestSearch -sub
     public static final String RECOREQUEST_OCCASION_INSERT_SQL = "insert into recorequest_occasion (" +
         "recorequest_occasion.RECOREQUEST_ID," +
         "recorequest_occasion.Occasion_ID" + ")  VALUES (" + "?," + "?" + ")";
-
-    //createRecoRequestSearch -sub
     public static final String RECOREQUEST_WHOAREYOUWITH_INSERT_SQL = "insert into recorequest_whoareyouwith (" +
         "recorequest_whoareyouwith.RECOREQUEST_ID," +
         "recorequest_whoareyouwith.whoareyouwith_ID" + ")  VALUES (" + "?," +
         "?" + ")";
-
-    //createRecoRequestSearch -sub
     public static final String RECOREQUEST_TYPEOFREST_INSERT_SQL = "insert into recorequest_typeofrest (" +
         "recorequest_typeofrest.RECOREQUEST_ID," +
         "recorequest_typeofrest.typeofrest_ID" + ")  VALUES (" + "?," + "?" +
         ")";
-
-    //createRecoRequestSearch -sub
     public static final String RECOREQUEST_THEME_INSERT_SQL = "insert into recorequest_theme (" +
         "recorequest_theme.RECOREQUEST_ID," + "recorequest_theme.theme_ID" +
         ")  VALUES (" + "?," + "?" + ")";
+    public static final String RECOREQUEST_LOCATION_INSERT_SQL = "" +
+        "INSERT INTO recorequest_location " +
+        "            (recorequest_location.city_id, " +
+        "             recorequest_location.neighbourhood_id, " +
+        "             recorequest_location.recorequest_id) " +
+        "VALUES      ( ?, " + "              ?, " + "              ? )" +
+        "ON DUPLICATE KEY UPDATE " +
+        "recorequest_location.RECOREQUEST_ID = recorequest_location.RECOREQUEST_ID";
     public static final String USER_RECO_SUPPPLY_TIER_INSERT_SQL = "" +
         "INSERT INTO user_reco_supply_tier " +
         "            (user_reco_supply_tier.user_id, " +
@@ -220,8 +213,8 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "FROM   recorequest_reply_user " +
         "WHERE  recorequest_reply_user.reply_id = ? ";
     public static String RECOREQUEST_REPLY_USER_RECO_SELECT_SQL = "" +
-        "SELECT recorequest_reply_user.reply_text " +
-        "SELECT recorequest_reply_user.reply_id " +
+        "SELECT recorequest_reply_user.reply_text, " +
+        "       recorequest_reply_user.reply_id " +
         "FROM   recorequest_reply_user " +
         "WHERE  recorequest_reply_user.RECOREQUEST_ID = ? ";
     public static String RECOREQUEST_REPLY_USER_RECO_REST_SELECT_SQL = "" +
@@ -244,6 +237,7 @@ public interface AskReplyQueries extends TSDBCommonQueries {
     public static String USER_POINTS_UPDATE_SQL = "" + "UPDATE users " +
         "SET    users.user_points = users.user_points + ? " +
         "WHERE  users.user_id = ? ";
+    
     public static String RECOREQUEST_REPLY_USER_INSERT_SQL = "" +
         "INSERT INTO recorequest_reply_user " +
         "            (recorequest_reply_user.recorequest_id, " +
@@ -254,7 +248,7 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "             recorequest_reply_user.reply_ts_user_id, " +
         "             recorequest_reply_user.reply_user_id) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
-        "              ? ?, " + "              ?, " + "              ? )";
+        "              ?, ?, " + "              ?, " + "              ? )";
     public static String RECOREQUEST_REPLY_USER_UPDATE_SQL = "" +
         "UPDATE recorequest_reply_user " +
         "SET    recorequest_reply_user.reply_viewed_initiator = 1 " +
