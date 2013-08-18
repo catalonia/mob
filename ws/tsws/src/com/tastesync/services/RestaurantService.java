@@ -210,6 +210,7 @@ public class RestaurantService extends BaseService {
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
+        userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
 
         try {
             tsRestaurantExtendInfoObj = restaurantBO.showRestaurantDetailMoreInfo(restaurantId);
@@ -667,7 +668,7 @@ public class RestaurantService extends BaseService {
     })
     public Response submitRestaurantDetailAsk(
         @FormParam("userid")
-    String userId, @FormParam("questionId")
+    String userId, @FormParam("restaurantid")
     String restaurantId, @FormParam("questionText")
     String questionText,
         @FormParam("postQuestionOnForum")
@@ -694,6 +695,18 @@ public class RestaurantService extends BaseService {
         TSRestaurantQuesionNonTsAssignedObj tsRestaurantQuesionNonTsAssignedObj = null;
 
         try {
+        	String[] recommendersUserIdListArray = CommonFunctionsUtil.convertStringListAsArrayList(
+        			recommendersUserIdList);
+        	System.out.println("recommendersUserIdListArray "+recommendersUserIdListArray.toString());
+        	for (String recommendersUserIdListArrayElement : recommendersUserIdListArray) {
+        		System.out.println("recommendersUserIdListArrayElement="+recommendersUserIdListArrayElement);
+        	}
+        	String[] friendsFacebookIdListArray = CommonFunctionsUtil.convertStringListAsArrayList(
+                    friendsFacebookIdList);
+        	System.out.println("friendsFacebookIdListArray "+friendsFacebookIdListArray.toString());
+        	for (String friendsFacebookIdListArrayElement : friendsFacebookIdListArray) {
+        		System.out.println("friendsFacebookIdListArrayElement="+friendsFacebookIdListArrayElement);
+        	}       
             tsRestaurantQuesionNonTsAssignedObj = restaurantBO.submitRestaurantDetailAsk(userId,
                     restaurantId, questionText, postQuestionOnForum,
                     CommonFunctionsUtil.convertStringListAsArrayList(

@@ -1,7 +1,5 @@
 package com.tastesync.services;
 
-import java.util.List;
-
 import com.tastesync.bos.AutoPopulateBO;
 import com.tastesync.bos.AutoPopulateBOImpl;
 
@@ -16,6 +14,8 @@ import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
 import org.codehaus.jettison.json.JSONArray;
+
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -201,17 +201,19 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateRestaurantSearchTerms(@FormParam("key") String key, @FormParam("cityid") String cityId) {
+    public Response populateRestaurantSearchTerms(@FormParam("key")
+    String key, @FormParam("cityid")
+    String cityId) {
         List<TSRestaurantObj> listRestaurant = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
         try {
-            
-        	listRestaurant = autoPopulateBO.populateRestaurantSearchTerms(key, cityId);
+            listRestaurant = autoPopulateBO.populateRestaurantSearchTerms(key,
+                    cityId);
             responseDone = true;
-            
+
             return Response.status(status).entity(listRestaurant).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
@@ -238,7 +240,7 @@ public class AutoPopulateService extends BaseService {
             }
         }
     }
-    
+
     //-- TODO: INCOMPLETE
     //-- http://stackoverflow.com/questions/6507502/autocomplete-for-mobile-web-apps
     //-- http://mobile.smashingmagazine.com/2011/04/27/tap-ahead-design-pattern-mobile-auto-suggest-on-steroids/

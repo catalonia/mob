@@ -84,6 +84,19 @@ public class AskReplyService extends BaseService {
             cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
             stateName = CommonFunctionsUtil.converStringAsNullIfNeeded(stateName);
 
+            // if cityId is null, error!
+            if (cityId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("cityId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             String recoRequestId = askReplyBO.submitAskForRecommendationSearch(userId,
                     CommonFunctionsUtil.convertStringListAsArrayList(
                         cuisineTier1IdList),
@@ -222,6 +235,16 @@ public class AskReplyService extends BaseService {
         try {
             tsRecoRequestObj = askReplyBO.showRecommendationsRequest(userId,
                     recorequestId);
+
+            if (tsRecoRequestObj == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status).entity(tsErrorObj).build();
+            }
 
             responseDone = true;
 
