@@ -336,7 +336,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 String restaurantLon = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant.RESTAURANT_LON"));
 
-                if ((restaurantLat == null) && (restaurantLon == null)) {
+                if ((restaurantLat != null) && (restaurantLon != null)) {
                     moreInfoFlag = "1";
                 }
             }
@@ -1106,7 +1106,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                     statement.close();
                 } else {
                     nonTsAssignedFacebookIdList.add(friendsFacebookId);
-                    System.out.println("friendsFacebookId="+friendsFacebookId+" questionId="+questionId+" restaurantId="+restaurantId);
                     statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_QUESTION_NON_TS_ASSIGNED_INSERT_SQL);
                     statement.setString(1, friendsFacebookId);
                     statement.setString(2, "N");

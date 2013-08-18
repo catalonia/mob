@@ -139,6 +139,15 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.close();
             }
 
+            for (String occasionId : occasionIdList) {
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_OCCASION_INSERT_SQL);
+                statement.setString(1, recoRequestId);
+                statement.setString(2, occasionId);
+                statement.executeUpdate();
+
+                statement.close();
+            }
+
             for (String themeId : themeIdList) {
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_THEME_INSERT_SQL);
                 statement.setString(1, recoRequestId);
@@ -603,7 +612,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
-                
                 recommendedrestaurantsRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant_id"));
 
@@ -613,7 +621,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
                 if (resultsetInner.next()) {
                     recommendedrestaurantsRestaurantName = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
-                            "restaurant.restaurant_name"));
+                                "restaurant.restaurant_name"));
                 }
 
                 statementInner.close();
@@ -1262,9 +1270,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             //only one result
             if (resultset.next()) {
-                recorequestText = CommonFunctionsUtil.getModifiedValueString(
-                            resultset.getString(
-                                "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES"));
+                recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES"));
             }
 
             statement.close();
