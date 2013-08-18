@@ -73,10 +73,17 @@ public class CommonFunctionsUtil {
     }
 
     public static String[] convertStringListAsArrayList(String inputString) {
-    	if (inputString.isEmpty()) {
-    		inputString = null;
-    	}
-        return (inputString != null) ? inputString.split(",")
+        if (inputString == null) {
+            return TSConstants.EMPTY_STRING_ARRAY;
+        }
+
+        if (inputString.isEmpty()) {
+            return TSConstants.EMPTY_STRING_ARRAY;
+        }
+
+        inputString = inputString.replaceAll("\\s", "");
+
+        return (inputString != null) ? inputString.trim().split(",")
                                      : TSConstants.EMPTY_STRING_ARRAY;
     }
 
