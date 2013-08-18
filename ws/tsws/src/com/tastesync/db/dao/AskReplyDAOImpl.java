@@ -603,7 +603,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
-                //TODO need to test
+                
                 recommendedrestaurantsRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant_id"));
 
@@ -611,9 +611,11 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statementInner.setString(1, recommendedrestaurantsRestaurantId);
                 resultsetInner = statementInner.executeQuery();
 
-                recommendedrestaurantsRestaurantName = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                if (resultsetInner.next()) {
+                    recommendedrestaurantsRestaurantName = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
                             "restaurant.restaurant_name"));
-                resultsetInner.close();
+                }
+
                 statementInner.close();
 
                 TSRestaurantObj tsRestaurantObj = new TSRestaurantObj();
@@ -627,14 +629,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             return tsRestaurantObjList;
         } catch (SQLException e) {
             e.printStackTrace();
-
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            }
 
             throw new TasteSyncException("Error while creating reco request " +
                 e.getMessage());
