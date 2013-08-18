@@ -73,6 +73,9 @@ public class CommonFunctionsUtil {
     }
 
     public static String[] convertStringListAsArrayList(String inputString) {
+    	if (inputString.isEmpty()) {
+    		inputString = null;
+    	}
         return (inputString != null) ? inputString.split(",")
                                      : TSConstants.EMPTY_STRING_ARRAY;
     }
