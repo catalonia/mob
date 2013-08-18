@@ -193,7 +193,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "WHERE  restaurant_photo.restaurant_id = ? ";
     public static String RECOMMENDER_USER_DAY_SELECT_SQL = "" +
         "SELECT user_restaurant_reco.recommender_user_id, " +
-        "       user_restaurant_reco.recommendee_user_id " +
+        "       user_restaurant_reco.recommendee_user_id, " +
         "       user_restaurant_reco.RESTAURANT_ID " +
         "FROM   user_restaurant_reco " +
         "WHERE  user_restaurant_reco.recommendee_user_id = ? " +
