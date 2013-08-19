@@ -438,7 +438,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             statement = connection.prepareStatement(RestaurantQueries.USER_RESTAURANT_TIPS_EXIST_SELECT_SQL);
             statement.setString(1, userId);
             statement.setString(2, restaurantId);
-            
+
             resultset = statement.executeQuery();
 
             String userRestaurantTipFlag = "0";
@@ -530,6 +530,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             String[] addressList = new String[6];
 
             tsRestaurantExtendInfoObj = new TSRestaurantExtendInfoObj();
+
             //only one result
             if (resultset.next()) {
                 mapResultsetRowToTSRestaurantExtendInfoVO(tsRestaurantExtendInfoObj,
@@ -541,9 +542,11 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 addressList[5] = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant_extended_info.postcode"));
             } else {
-            	//log the restaurant id. log ipaddress!!
-            	logger.warn("showRestaurantDetailMoreInfo - restaurantId="+restaurantId);
-            	return null;
+                //log the restaurant id. log ipaddress!!
+                logger.warn("showRestaurantDetailMoreInfo - restaurantId=" +
+                    restaurantId);
+
+                return null;
             }
 
             statement.close();
@@ -560,7 +563,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 addressList[4] = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "cities.country"));
             }
-            
+
             statement.close();
 
             StringBuffer addressBuffer = new StringBuffer();
@@ -582,8 +585,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
                 tsRestaurantExtendInfoObj.setAddress(addressStr);
             }
-            return tsRestaurantExtendInfoObj;
 
+            return tsRestaurantExtendInfoObj;
         } catch (SQLException e1) {
             e1.printStackTrace();
             throw new TasteSyncException(e1.getMessage());
@@ -591,7 +594,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, resultset);
         }
-
     }
 
     @Override
@@ -914,32 +916,46 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
             List<String> recommenderUserIdList = new ArrayList<String>();
 
+            String recommenderUserIdValue = null;
+
             while (resultset.next()) {
-                recommenderUserIdList.add(resultset.getString(
-                        CommonFunctionsUtil.getModifiedValueString(
-                            resultset.getString(
-                                "user_restaurant_reco.RECOMMENDER_USER_ID"))));
+                recommenderUserIdValue = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "user_restaurant_reco.RECOMMENDER_USER_ID"));
+
+                if (!recommenderUserIdList.contains(recommenderUserIdValue)) {
+                    recommenderUserIdList.add(recommenderUserIdValue);
+                }
             }
 
             statement.close();
 
             String recommenderUserName = null;
             String recommenderUserPhoto = null;
+            String recommenderFacebookId = null;
             List<TSUserProfileBasicObj> recommendersDetailsList = new ArrayList<TSUserProfileBasicObj>();
 
             for (String recommenderUserId : recommenderUserIdList) {
                 recommenderUserName = null;
                 recommenderUserPhoto = null;
 
-                statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+
                 statement.setString(1, recommenderUserId);
                 resultset = statement.executeQuery();
 
                 if (resultset.next()) {
-                    recommenderUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "facebook_user_data.name"));
-                    recommenderUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "facebook_user_data.picture"));
+                    recommenderFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "users.user_fb_id"));
+                    statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                    statement.setString(1, recommenderFacebookId);
+                    resultset = statement.executeQuery();
+
+                    if (resultset.next()) {
+                        recommenderUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "facebook_user_data.name"));
+                        recommenderUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "facebook_user_data.picture"));
+                    }
                 }
 
                 TSUserProfileBasicObj recommendeeUser = new TSUserProfileBasicObj();
@@ -1036,9 +1052,10 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 resultset = statement.executeQuery();
 
                 if (resultset.next()) {
-                questionRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                            "restaurant_question_user.restaurant_id"));
+                    questionRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant_question_user.restaurant_id"));
                 }
+
                 statement.close();
 
                 statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_QUESTION_TS_ASSIGNED_INSERT_SQL);
@@ -1050,6 +1067,9 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 statement.setString(6, "Y");
                 statement.setString(7, questionId);
                 statement.setString(8, questionRestaurantId);
+                statement.setTimestamp(9,
+                    CommonFunctionsUtil.getCurrentDateTimestamp());
+
                 statement.executeUpdate();
                 statement.close();
             }
@@ -1102,6 +1122,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                     statement.setString(6, "Y");
                     statement.setString(7, questionId);
                     statement.setString(8, restaurantId);
+                    statement.setTimestamp(9,
+                        CommonFunctionsUtil.getCurrentDateTimestamp());
                     statement.executeUpdate();
                     statement.close();
                 } else {
@@ -1114,6 +1136,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                     statement.setString(5, "N");
                     statement.setString(6, questionId);
                     statement.setString(7, restaurantId);
+                    statement.setTimestamp(8,
+                        CommonFunctionsUtil.getCurrentDateTimestamp());
                     statement.executeUpdate();
                     statement.close();
                 }

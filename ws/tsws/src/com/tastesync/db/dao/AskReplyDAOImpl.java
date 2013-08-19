@@ -708,11 +708,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             String replyIdValue = null;
 
             while (resultset.next()) {
-                recommenderUserIdValue = resultset.getString(CommonFunctionsUtil.getModifiedValueString(
-                            resultset.getString(
-                                "user_restaurant_reco.RECOMMENDER_USER_ID")));
-                replyIdValue = resultset.getString(CommonFunctionsUtil.getModifiedValueString(
-                            resultset.getString("user_restaurant_reco.reply_id")));
+                recommenderUserIdValue = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "user_restaurant_reco.RECOMMENDER_USER_ID"));
+                replyIdValue = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "user_restaurant_reco.reply_id"));
 
                 if (!recommenderUserIdList.contains(recommenderUserIdValue)) {
                     recommenderUserIdList.add(recommenderUserIdValue);
@@ -913,9 +912,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 senderUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "users.user_fb_id"));
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
                 statement.setString(1, senderUserFacebookId);
@@ -928,9 +925,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                                 "facebook_user_data.picture"));
                 }
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(AskReplyQueries.USER_FOLLOW_DATA_SELECT);
 
@@ -941,6 +936,12 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 if (resultset.next()) {
                     senderUserFolloweeFlag = "1";
                 }
+
+                statement.close();
+            }
+
+            if (statement != null) {
+                statement.close();
             }
 
             statement = connection.prepareStatement(AskReplyQueries.USER_MESSAGE_UPDATE_SQL);
@@ -1031,29 +1032,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             String recorequestText = null;
             String recommendeeUserFolloweeFlag = "0"; // default
 
-            statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
-            statement.setString(1, userId);
-            resultset = statement.executeQuery();
-
             if (resultset.next()) {
-                recommendeeUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                            "users.user_fb_id"));
-
-                if (statement != null) {
-                    statement.close();
-                }
-
-                statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
-                statement.setString(1, recommendeeUserFacebookId);
-                resultset = statement.executeQuery();
-
-                if (resultset.next()) {
-                    recommendeeUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "facebook_user_data.name"));
-                    recommendeeUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "facebook_user_data.picture"));
-                }
-
                 //-- this means userId is friend of recommendeeUserId and we should use the free text field
                 if ("user-assigned-friend".equals(friendOrNot) ||
                         "system-assigned-friend".equals(friendOrNot)) {
@@ -1091,6 +1070,26 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
                 if (statement != null) {
                     statement.close();
+                }
+
+                statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+                statement.setString(1, recommendeeUserUserId);
+                resultset = statement.executeQuery();
+
+                recommendeeUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "users.user_fb_id"));
+
+                statement.close();
+
+                statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                statement.setString(1, recommendeeUserFacebookId);
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    recommendeeUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "facebook_user_data.name"));
+                    recommendeeUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "facebook_user_data.picture"));
                 }
 
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FOLLOWEEFLAG_SELECT_SQL);
@@ -1217,16 +1216,41 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.close();
             }
 
-            //TODO there should be way to add points only once!! - recommenderUserId
-            statement = connection.prepareStatement(AskReplyQueries.USER_POINTS_UPDATE_SQL);
+            if (statement != null) {
+                statement.close();
+            }
 
-            statement.setInt(1, 2);
+            statement = connection.prepareStatement(AskReplyQueries.COUNT_REPLIES_RECOREQUEST_REPLY_USER_SELECT_SQL);
+
+            statement.setString(1, recorequestId);
 
             statement.setString(2, recommenderUserId);
 
-            statement.executeUpdate();
+            resultset = statement.executeQuery();
 
-            statement.close();
+            int rowCount = 0;
+
+            if (resultset.next()) {
+                rowCount = resultset.getInt(1);
+                statement.close();
+
+                if (rowCount == 1) {
+                    //There should be way to add points only once!! - recommenderUserId
+                    statement = connection.prepareStatement(AskReplyQueries.USER_POINTS_UPDATE_SQL);
+
+                    statement.setInt(1, 2);
+
+                    statement.setString(2, recommenderUserId);
+
+                    statement.executeUpdate();
+
+                    statement.close();
+                }
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
 
             tsDataSource.commit();
         } catch (SQLException e) {
@@ -1339,7 +1363,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     if (restaurantId.equals(
                                 recommendationsForYouVO.getRestaurantId())) {
                         recommenderUserIdList.add(recommendationsForYouVO.getRecommenderUserId());
-                        replyTextList.add(recommendationsForYouVO.getRecommenderUserId());
+                        replyTextList.add(recommendationsForYouVO.getReplyText());
                     }
                 }
 
@@ -1377,8 +1401,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     restaurantLong = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                                 "restaurant.restaurant_lon"));
 
-                    restaurantDealFlag = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "restaurant.restaurant_name"));
+                    restaurantDealFlag = null;
                     restaurantRating = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                                 "restaurant.factual_rating"));
                 }
@@ -1396,6 +1419,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 }
 
                 TSRestaurantsForYouObj tsRestaurantsForYouObj = new TSRestaurantsForYouObj();
+                tsRestaurantsForYouObj.setRestaurantId(restaurantId);
                 tsRestaurantsForYouObj.setRestaurantName(restaurantName);
                 tsRestaurantsForYouObj.setPrice(price);
                 tsRestaurantsForYouObj.setRestaurantName(restaurantName);
@@ -1546,8 +1570,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
         try {
             connection = tsDataSource.getConnection();
-            tsDataSource.begin();
-
             statement = connection.prepareStatement(AskReplyQueries.QUESTION_DETAILS_RESTAURANT_SELECT_SQL);
             statement.setString(1, questionId);
             resultset = statement.executeQuery();
@@ -1629,6 +1651,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 if (resultset.next()) {
                     questionUserFolloweeFlag = "1";
                 }
+
+                if (statement != null) {
+                    statement.close();
+                }
             }
 
             if (statement != null) {
@@ -1653,14 +1679,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             return tsRecommendationsFollowupObj;
         } catch (SQLException e) {
             e.printStackTrace();
-
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            }
 
             throw new TasteSyncException(
                 "Error while creating restaurant tips " + e.getMessage());
@@ -1734,13 +1752,11 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.QUESTION_RECIPIENT_SELECT_SQL);
 
             statement.setString(1, questionId);
-            statement.setString(2, userId);
             resultset = statement.executeQuery();
 
             if (resultset.next()) {
-                recipientId = resultset.getString(CommonFunctionsUtil.getModifiedValueString(
-                            resultset.getString(
-                                "restaurant_question_user.initiator_user_id")));
+                recipientId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant_question_user.initiator_user_id"));
             }
 
             statement.close();

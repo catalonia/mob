@@ -24,4 +24,6 @@ public interface AutoPopulateDAO {
     JSONArray populateWhoareyouwithDescriptor() throws TasteSyncException;
     
     List<TSRestaurantObj> populateRestaurantSearchTerms(String key, String cityId) throws TasteSyncException;
+    
+    void populateLocationSearchTerms(String neighbourhood)  throws TasteSyncException;
 }
