@@ -431,7 +431,7 @@ public class AskReplyService extends BaseService {
     }
 
     @POST
-    @Path("/likesunlikes")
+    @Path("/recomsgans")
     @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
