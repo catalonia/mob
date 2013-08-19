@@ -17,7 +17,7 @@ public class CommonFunctionsUtil {
             "yyyyMMddHHmmssSSS");
 
     public static String getModifiedValueString(String inputString) {
-        return ((inputString == null) ? "" : inputString);
+        return ((inputString == null) ? "" : inputString.trim());
 
         //return inputString;
     }
@@ -27,7 +27,7 @@ public class CommonFunctionsUtil {
             return null;
         }
 
-        return inputString;
+        return inputString.trim();
     }
 
     public static String getCurrentDatetimeAppendField() {
