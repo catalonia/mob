@@ -206,7 +206,6 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "FROM   user_restaurant_reco " +
         "WHERE  user_restaurant_reco.recommendee_user_id = ? " +
         "       AND user_restaurant_reco.restaurant_id = ? ";
-    
     public static String RESTAURANT_QUESTION_TS_ASSIGNED_INSERT_SQL = "" +
         "INSERT INTO restaurant_question_ts_assigned " +
         "            (restaurant_question_ts_assigned.assigned_prepopulated_yn, " +
@@ -216,10 +215,11 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "             restaurant_question_ts_assigned.assigned_user_id, " +
         "             restaurant_question_ts_assigned.assigned_user_registerd_yn, " +
         "             restaurant_question_ts_assigned.question_id, " +
-        "             restaurant_question_ts_assigned.restaurant_id) " +
+        "             restaurant_question_ts_assigned.restaurant_id, ) " +
+        "             restaurant_question_ts_assigned.assigned_datetime ) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
         "              ?, " + "              ?, " + "              ?, " +
-        "              ?, " + "              ?)";
+        "              ?, " + "              ?, " + "              ? )";
     public static String RESTAURANT_QUESTION_NON_TS_ASSIGNED_INSERT_SQL = "" +
         "INSERT INTO restaurant_question_non_ts_assigned " +
         "            (restaurant_question_non_ts_assigned.assigned_fb_id, " +
@@ -228,10 +228,11 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "             restaurant_question_non_ts_assigned.assigned_usertype, " +
         "             restaurant_question_non_ts_assigned.assigned_user_registerd_yn, " +
         "             restaurant_question_non_ts_assigned.question_id, " +
-        "             restaurant_question_non_ts_assigned.restaurant_id) " +
+        "             restaurant_question_non_ts_assigned.restaurant_id,) " +
+        "             restaurant_question_non_ts_assigned.assigned_datetime) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
         "              ?, " + "              ?, " + "              ?, " +
-        "              ? )";
+        "              ?, " + "              ?)";
     public static String USER_RESTAURANT_SAVED_DATA_EXIST_SELECT_SQL = "" +
         "SELECT user_restaurant_saved.user_id " +
         "FROM   user_restaurant_saved " +

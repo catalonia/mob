@@ -185,8 +185,8 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "             user_message.recipient_id, " +
         "             user_message.recorequest_id, " +
         "             user_message.sender_id) " + "VALUES      ( ?, " +
-        "              ?, " + "              ?, " + "              '', " +
-        "              ?, " + "              ?, " + "              '', " +
+        "              ?, " + "              ?, " + "              ?, " +
+        "              ?, " + "              ?, " + "              ?, " +
         "              ? )";
     public static String USER_MESSAGE_UPDATE_SQL = "" + "UPDATE user_message " +
         "SET    user_message.message_recipient_viewed = 1 " +
@@ -237,7 +237,10 @@ public interface AskReplyQueries extends TSDBCommonQueries {
     public static String USER_POINTS_UPDATE_SQL = "" + "UPDATE users " +
         "SET    users.user_points = users.user_points + ? " +
         "WHERE  users.user_id = ? ";
-    
+    public static String COUNT_REPLIES_RECOREQUEST_REPLY_USER_SELECT_SQL = "" +
+        "SELECT Count(*) " + "FROM   recorequest_reply_user " +
+        "WHERE  recorequest_reply_user.recorequest_id = ? " +
+        "       AND recorequest_reply_user.reply_user_id = ?";
     public static String RECOREQUEST_REPLY_USER_INSERT_SQL = "" +
         "INSERT INTO recorequest_reply_user " +
         "            (recorequest_reply_user.recorequest_id, " +
@@ -254,7 +257,7 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "SET    recorequest_reply_user.reply_viewed_initiator = 1 " +
         "WHERE  recorequest_reply_user.reply_id = ? ";
     public static String RECOREQUEST_RESTAURANT_SELECT_SQL = "" +
-        "SELECT y.restaurant_id " +
+        "SELECT DISTINCT y.restaurant_id " +
         "FROM   (SELECT recorequest_reply_user.reply_id " +
         "        FROM   recorequest_reply_user " +
         "        WHERE  recorequest_reply_user.recorequest_id = ?) x, " +
