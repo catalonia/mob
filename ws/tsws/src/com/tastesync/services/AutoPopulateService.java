@@ -6,6 +6,7 @@ import com.tastesync.bos.AutoPopulateBOImpl;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSErrorObj;
+import com.tastesync.model.objects.TSLocationSearchCitiesObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
 
@@ -38,6 +39,48 @@ public class AutoPopulateService extends BaseService {
 
     @GET
     @Path("/locationsearchterms")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSLocationSearchCitiesObj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response populateLocationSearchTerms() {
+        List<TSLocationSearchCitiesObj> tsLocationSearchCitiesObjList = null;
+
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        try {
+            tsLocationSearchCitiesObjList = autoPopulateBO.populateLocationSearchTerms();
+            responseDone = true;
+
+            return Response.status(status).entity(tsLocationSearchCitiesObjList)
+                           .build();
+        } catch (TasteSyncException e1) {
+            e1.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
+    @GET
+    @Path("/locationsearchtermsTest")
     @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })

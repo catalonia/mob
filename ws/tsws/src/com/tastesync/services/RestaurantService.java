@@ -690,7 +690,9 @@ public class RestaurantService extends BaseService {
 
             return Response.status(status).entity(tsErrorObj).build();
         }
-
+        userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+        restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
+        
         boolean responseDone = false;
         TSRestaurantQuesionNonTsAssignedObj tsRestaurantQuesionNonTsAssignedObj = null;
 
