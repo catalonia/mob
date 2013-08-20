@@ -707,15 +707,53 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             if ("1".equals(likeFlag)) {
                 for (String recommenderUserId : recommenderUserIdList) {
-                    statement = connection.prepareStatement(AskReplyQueries.USER_POINTS_UPDATE_SQL);
+                    statement = connection.prepareStatement(AskReplyQueries.COUNT_REPLIES_RECOREQUEST_REPLY_USER_SELECT_SQL);
 
-                    statement.setInt(1, 4);
+                    statement.setString(1, recommenderUserId);
 
-                    statement.setString(2, recommenderUserId);
+                    statement.setString(2, userId);
 
-                    statement.executeUpdate();
+                    statement.setString(3, restaurantId);
 
-                    statement.close();
+                    resultset = statement.executeQuery();
+
+                    int rowCount = 0;
+
+                    if (resultset.next()) {
+                        rowCount = resultset.getInt(1);
+                        statement.close();
+
+                        if (rowCount >= 1) {
+                            //There should be way to add points only once!! - recommenderUserId
+                            statement = connection.prepareStatement(AskReplyQueries.USER_POINTS_UPDATE_SQL);
+
+                            statement.setInt(1, 4);
+
+                            statement.setString(2, recommenderUserId);
+
+                            statement.executeUpdate();
+
+                            statement.close();
+
+                            //insert into uer point table
+                            statement = connection.prepareStatement(AskReplyQueries.USER_POINTS_INSERT_SQL);
+
+                            statement.setInt(1, 4);
+
+                            statement.setString(2, userId);
+
+                            statement.setString(3, restaurantId);
+
+                            statement.setTimestamp(4,
+                                CommonFunctionsUtil.getCurrentDateTimestamp());
+
+                            statement.setString(5, recommenderUserId);
+
+                            statement.executeUpdate();
+
+                            statement.close();
+                        }
+                    }
                 }
             }
 
@@ -1063,8 +1101,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.setString(1, recommendeeUserUserId);
             resultset = statement.executeQuery();
 
-            recommendeeUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                        "users.user_fb_id"));
+            if (resultset.next()) {
+                recommendeeUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "users.user_fb_id"));
+            }
 
             statement.close();
 
@@ -1662,7 +1702,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             questionRestaurant.setRestaurantId(questionRestaurantId);
 
             tsRecommendationsFollowupObj = new TSRecommendationsFollowupObj();
-            tsRecommendationsFollowupObj.setQuestionUse(questionUser);
+            tsRecommendationsFollowupObj.setQuestionUser(questionUser);
             tsRecommendationsFollowupObj.setQuestionRestaurant(questionRestaurant);
             tsRecommendationsFollowupObj.setQuestionUserFolloweeFlag(questionUserFolloweeFlag);
             tsRecommendationsFollowupObj.setQuestionText(questionText);

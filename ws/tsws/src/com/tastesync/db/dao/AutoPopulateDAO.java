@@ -1,11 +1,13 @@
 package com.tastesync.db.dao;
 
-import java.util.List;
-
 import com.tastesync.exception.TasteSyncException;
+
+import com.tastesync.model.objects.TSLocationSearchCitiesObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 
 import org.codehaus.jettison.json.JSONArray;
+
+import java.util.List;
 
 
 public interface AutoPopulateDAO {
@@ -22,8 +24,13 @@ public interface AutoPopulateDAO {
     JSONArray populateTypeofrestDescriptor() throws TasteSyncException;
 
     JSONArray populateWhoareyouwithDescriptor() throws TasteSyncException;
-    
-    List<TSRestaurantObj> populateRestaurantSearchTerms(String key, String cityId) throws TasteSyncException;
-    
-    void populateLocationSearchTerms(String neighbourhood)  throws TasteSyncException;
+
+    List<TSRestaurantObj> populateRestaurantSearchTerms(String key,
+        String cityId) throws TasteSyncException;
+
+    void populateLocationSearchTerms(String neighbourhood)
+        throws TasteSyncException;
+
+    List<TSLocationSearchCitiesObj> populateLocationSearchTerms()
+        throws TasteSyncException;
 }

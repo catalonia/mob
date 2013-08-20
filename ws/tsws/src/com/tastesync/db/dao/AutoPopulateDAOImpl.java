@@ -5,6 +5,7 @@ import com.tastesync.db.queries.AutoPopulateQueries;
 
 import com.tastesync.exception.TasteSyncException;
 
+import com.tastesync.model.objects.TSLocationSearchCitiesObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
@@ -20,6 +21,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO {
     private void mapResultsetRowToJSONArrayVO(JSONObject jsonObject,
@@ -510,5 +512,60 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
 
         tsRestaurantObj.setTbdOpenTableId(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.TBD_OPENTABLE_ID")));
+    }
+
+    private void mapResultsetRowToTSLocationSearchCitiesVO(
+        TSLocationSearchCitiesObj tsLocationSearchCitiesObj, ResultSet resultset)
+        throws SQLException {
+        tsLocationSearchCitiesObj.setCityId(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("city_neighbourhood.city_id")));
+
+        tsLocationSearchCitiesObj.setCityName(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("city_neighbourhood.city_name")));
+
+        tsLocationSearchCitiesObj.setNeighborhoodId(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("city_neighbourhood.neighbour_id")));
+
+        tsLocationSearchCitiesObj.setNeighborhoodName(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("city_neighbourhood.neighbourhood_desc")));
+
+        tsLocationSearchCitiesObj.setState(CommonFunctionsUtil.getModifiedValueString(
+                resultset.getString("cities.state")));
+    }
+
+    @Override
+    public List<TSLocationSearchCitiesObj> populateLocationSearchTerms()
+        throws TasteSyncException {
+        List<TSLocationSearchCitiesObj> tsLocationSearchCitiesObjList = new ArrayList<TSLocationSearchCitiesObj>();
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+
+            statement = connection.prepareStatement(AutoPopulateQueries.CITIES_LOCATION_SELECT_SQL);
+            statement.setString(1, "11756");
+            resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                TSLocationSearchCitiesObj tsLocationSearchCitiesObj = new TSLocationSearchCitiesObj();
+                mapResultsetRowToTSLocationSearchCitiesVO(tsLocationSearchCitiesObj,
+                    resultset);
+                tsLocationSearchCitiesObjList.add(tsLocationSearchCitiesObj);
+            }
+
+            statement.close();
+
+            return tsLocationSearchCitiesObjList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 }
