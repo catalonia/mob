@@ -12,14 +12,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "recosfollowup")
 public class TSRecommendationsFollowupObj implements Serializable {
     private static final long serialVersionUID = 4996052609815336144L;
-    private TSUserProfileBasicObj questionUse;
+    private TSUserProfileBasicObj questionUser;
     private String questionText;
     private String questionUserFolloweeFlag;
     private TSRestaurantObj questionRestaurant;
 
     @XmlElement
-    public TSUserProfileBasicObj getQuestionUse() {
-        return questionUse;
+    public TSUserProfileBasicObj getQuestionUser() {
+        return questionUser;
     }
 
     @XmlElement
@@ -37,8 +37,8 @@ public class TSRecommendationsFollowupObj implements Serializable {
         return questionRestaurant;
     }
 
-    public void setQuestionUse(TSUserProfileBasicObj questionUse) {
-        this.questionUse = questionUse;
+    public void setQuestionUser(TSUserProfileBasicObj questionUser) {
+        this.questionUser = questionUser;
     }
 
     public void setQuestionText(String questionText) {
