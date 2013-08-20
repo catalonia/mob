@@ -707,7 +707,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             if ("1".equals(likeFlag)) {
                 for (String recommenderUserId : recommenderUserIdList) {
-                    statement = connection.prepareStatement(AskReplyQueries.COUNT_REPLIES_RECOREQUEST_REPLY_USER_SELECT_SQL);
+                    statement = connection.prepareStatement(AskReplyQueries.COUNT_USER_POINTS_LOG_SELECT_SQL);
 
                     statement.setString(1, recommenderUserId);
 
