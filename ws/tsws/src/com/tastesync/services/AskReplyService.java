@@ -459,7 +459,6 @@ public class AskReplyService extends BaseService {
             previousMessageId = CommonFunctionsUtil.converStringAsNullIfNeeded(previousMessageId);
             newMessageRecipientUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(newMessageRecipientUserId);
             newMessageSenderUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(newMessageSenderUserId);
-            restaurantIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantIdList);
             askReplyBO.submitRecommendationMessageAnswer(newMessageText,
                 previousMessageId, newMessageRecipientUserId,
                 newMessageSenderUserId,
