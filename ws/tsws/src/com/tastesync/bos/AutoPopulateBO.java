@@ -1,29 +1,33 @@
 package com.tastesync.bos;
 
-import java.util.List;
+import com.tastesync.exception.TasteSyncException;
 
-import javax.ws.rs.FormParam;
+import com.tastesync.model.objects.TSLocationSearchCitiesObj;
+import com.tastesync.model.objects.TSRestaurantObj;
 
 import org.codehaus.jettison.json.JSONArray;
 
-import com.tastesync.exception.TasteSyncException;
-import com.tastesync.model.objects.TSRestaurantObj;
+import java.util.List;
 
 
 public interface AutoPopulateBO {
-	JSONArray populateCuisineTier1() throws TasteSyncException;
-	
-	JSONArray populateCuisineTier2() throws TasteSyncException;
+    JSONArray populateCuisineTier1() throws TasteSyncException;
 
-	JSONArray populateOccasionDescriptor() throws TasteSyncException;
+    JSONArray populateCuisineTier2() throws TasteSyncException;
 
-	JSONArray populatePriceDescriptor() throws TasteSyncException;
+    JSONArray populateOccasionDescriptor() throws TasteSyncException;
 
-	JSONArray populateThemeDescriptor() throws TasteSyncException;
+    JSONArray populatePriceDescriptor() throws TasteSyncException;
 
-	JSONArray populateTypeofrestDescriptor() throws TasteSyncException;
+    JSONArray populateThemeDescriptor() throws TasteSyncException;
 
-	JSONArray populateWhoareyouwithDescriptor() throws TasteSyncException;
-	
-	List<TSRestaurantObj> populateRestaurantSearchTerms(String key, String cityId) throws TasteSyncException;
+    JSONArray populateTypeofrestDescriptor() throws TasteSyncException;
+
+    JSONArray populateWhoareyouwithDescriptor() throws TasteSyncException;
+
+    List<TSRestaurantObj> populateRestaurantSearchTerms(String key,
+        String cityId) throws TasteSyncException;
+
+    List<TSLocationSearchCitiesObj> populateLocationSearchTerms()
+        throws TasteSyncException;
 }
