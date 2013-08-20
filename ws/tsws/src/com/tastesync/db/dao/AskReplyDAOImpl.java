@@ -723,7 +723,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                         rowCount = resultset.getInt(1);
                         statement.close();
 
-                        if (rowCount >= 1) {
+                        if (rowCount == 0) {
                             //There should be way to add points only once!! - recommenderUserId
                             statement = connection.prepareStatement(AskReplyQueries.USER_POINTS_UPDATE_SQL);
 
@@ -754,6 +754,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                             statement.close();
                         }
                     }
+                    statement.close();
                 }
             }
 
