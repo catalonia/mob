@@ -237,10 +237,33 @@ public interface AskReplyQueries extends TSDBCommonQueries {
     public static String USER_POINTS_UPDATE_SQL = "" + "UPDATE users " +
         "SET    users.user_points = users.user_points + ? " +
         "WHERE  users.user_id = ? ";
+    
+    public static String USER_POINTS_INSERT_SQL = ""
+    		+ "INSERT INTO user_points_log "
+    		+ "            (user_points_log.points_added, "
+    		+ "             user_points_log.recommendee_user_id, "
+    		+ "             user_points_log.restaurant_id, "
+    		+ "             user_points_log.updated_datetime, "
+    		+ "             user_points_log.user_id) "
+    		+ "VALUES      ( ?, "
+    		+ "              ?, "
+    		+ "              ?, "
+    		+ "              ?, "
+    		+ "              ? )";
+
+    
     public static String COUNT_REPLIES_RECOREQUEST_REPLY_USER_SELECT_SQL = "" +
         "SELECT Count(*) " + "FROM   recorequest_reply_user " +
         "WHERE  recorequest_reply_user.recorequest_id = ? " +
         "       AND recorequest_reply_user.reply_user_id = ?";
+    
+    public static String COUNT_USER_POINTS_LOG_SELECT_SQL = ""
+    		+ "SELECT Count(*) "
+    		+ "FROM   user_points_log "
+    		+ "WHERE  user_points_log.user_id = ? "
+    		+ "       AND user_points_log.recommendee_user_id = ? "
+    		+ "       AND user_points_log.restaurant_id = ? ";
+
     public static String RECOREQUEST_REPLY_USER_INSERT_SQL = "" +
         "INSERT INTO recorequest_reply_user " +
         "            (recorequest_reply_user.recorequest_id, " +

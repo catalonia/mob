@@ -51,6 +51,6 @@ public interface AutoPopulateQueries extends TSDBCommonQueries {
         "       city_neighbourhood.neighbour_id, " +
         "       city_neighbourhood.neighbourhood_desc " +
         "FROM   city_neighbourhood, " + "       cities " +
-        "WHERE  city_neighbourhood.city_id = '11756' " +
+        "WHERE  city_neighbourhood.city_id = ? " +
         "       AND cities.city_id = city_neighbourhood.city_id ";
 }
