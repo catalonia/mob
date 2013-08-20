@@ -678,25 +678,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     likeFlag);
             }
 
-            statement = connection.prepareStatement(RestaurantQueries.HISTORICAL_RESTAURANT_FAV_INSERT_SQL);
-
-            statement.setString(1, likeFlag);
-
-            List<String> inputKeyStr = new ArrayList<String>();
-            inputKeyStr.add(userId);
-            statement.setString(2,
-                CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
-
-            statement.setString(3, restaurantId);
-
-            statement.setTimestamp(4,
-                CommonFunctionsUtil.getCurrentDateTimestamp());
-
-            statement.setString(5, userId);
-
-            statement.executeUpdate();
-            statement.close();
-
             statement = connection.prepareStatement(RestaurantQueries.REPLYID_RECOMMENDER_USER_SELECT_SQL);
             statement.setString(1, userId);
             statement.setString(2, restaurantId);
@@ -742,7 +723,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.setString(1, likeFlag);
 
-            inputKeyStr = new ArrayList<String>();
+            List<String> inputKeyStr = new ArrayList<String>();
             inputKeyStr.add(userId);
             statement.setString(2,
                 CommonFunctionsUtil.generateUniqueKey(inputKeyStr));
@@ -909,8 +890,11 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
                 statement.setString(1, senderUserId);
                 resultset = statement.executeQuery();
-                senderUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                            "users.user_fb_id"));
+
+                if (resultset.next()) {
+                    senderUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "users.user_fb_id"));
+                }
 
                 statement.close();
 
@@ -1032,89 +1016,93 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             String recorequestText = null;
             String recommendeeUserFolloweeFlag = "0"; // default
 
-            if (resultset.next()) {
-                //-- this means userId is friend of recommendeeUserId and we should use the free text field
-                if ("user-assigned-friend".equals(friendOrNot) ||
-                        "system-assigned-friend".equals(friendOrNot)) {
-                    if (statement != null) {
-                        statement.close();
-                    }
-
-                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FRIEND_SELECT_SQL);
-                    statement.setString(1, recorequestId);
-                    resultset = statement.executeQuery();
-
-                    if (resultset.next()) {
-                        recommendeeUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                    "recorequest_user.initiator_user_id"));
-                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                    "recorequest_user.recorequest_free_text"));
-                    }
-                } else if ("user-assigned-other".equals(friendOrNot) ||
-                        "system-assigned-other".equals(friendOrNot)) {
-                    if (statement != null) {
-                        statement.close();
-                    }
-
-                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_OTHER_SELECT_SQL);
-                    statement.setString(1, recorequestId);
-                    resultset = statement.executeQuery();
-
-                    if (resultset.next()) {
-                        recommendeeUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                    "recorequest_user.initiator_user_id"));
-                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                    "recorequest_user.reco_request_template_sentences"));
-                    }
-                }
-
+            //-- this means userId is friend of recommendeeUserId and we should use the free text field
+            if ("user-assigned-friend".equals(friendOrNot) ||
+                    "system-assigned-friend".equals(friendOrNot)) {
                 if (statement != null) {
                     statement.close();
                 }
 
-                statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
-                statement.setString(1, recommendeeUserUserId);
-                resultset = statement.executeQuery();
-
-                recommendeeUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                            "users.user_fb_id"));
-
-                statement.close();
-
-                statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
-                statement.setString(1, recommendeeUserFacebookId);
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FRIEND_SELECT_SQL);
+                statement.setString(1, recorequestId);
                 resultset = statement.executeQuery();
 
                 if (resultset.next()) {
-                    recommendeeUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "facebook_user_data.name"));
-                    recommendeeUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "facebook_user_data.picture"));
-                }
-
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FOLLOWEEFLAG_SELECT_SQL);
-                statement.setString(1, recommendeeUserUserId);
-                statement.setString(2, userId);
-
-                resultset = statement.executeQuery();
-
-                if (resultset.next()) {
-                    recommendeeUserFolloweeFlag = "1";
+                    recommendeeUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "recorequest_user.initiator_user_id"));
+                    recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "recorequest_user.recorequest_free_text"));
                 }
 
                 statement.close();
+            } else if ("user-assigned-other".equals(friendOrNot) ||
+                    "system-assigned-other".equals(friendOrNot)) {
+                if (statement != null) {
+                    statement.close();
+                }
 
-                TSUserProfileBasicObj recommendeeUser = new TSUserProfileBasicObj();
-                recommendeeUser.setName(recommendeeUserName);
-                recommendeeUser.setPhoto(recommendeeUserPhoto);
-                recommendeeUser.setUserId(recommendeeUserUserId);
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_OTHER_SELECT_SQL);
+                statement.setString(1, recorequestId);
+                resultset = statement.executeQuery();
 
-                tsRecoRequestObj = new TSRecoRequestObj();
-                tsRecoRequestObj.setRecommendeeUser(recommendeeUser);
-                tsRecoRequestObj.setRecorequestText(recorequestText);
-                tsRecoRequestObj.setRecommendeeUserFolloweeFlag(recommendeeUserFolloweeFlag);
-                tsRecoRequestObj.setRecommendeeUser(recommendeeUser);
+                if (resultset.next()) {
+                    recommendeeUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "recorequest_user.initiator_user_id"));
+                    recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "recorequest_user.reco_request_template_sentences"));
+                }
+
+                statement.close();
             }
+
+            if (statement != null) {
+                statement.close();
+            }
+
+            statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+            statement.setString(1, recommendeeUserUserId);
+            resultset = statement.executeQuery();
+
+            recommendeeUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                        "users.user_fb_id"));
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+            statement.setString(1, recommendeeUserFacebookId);
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                recommendeeUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "facebook_user_data.name"));
+                recommendeeUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "facebook_user_data.picture"));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FOLLOWEEFLAG_SELECT_SQL);
+            statement.setString(1, recommendeeUserUserId);
+            statement.setString(2, userId);
+
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                recommendeeUserFolloweeFlag = "1";
+            }
+
+            statement.close();
+
+            TSUserProfileBasicObj recommendeeUser = new TSUserProfileBasicObj();
+            recommendeeUser.setName(recommendeeUserName);
+            recommendeeUser.setPhoto(recommendeeUserPhoto);
+            recommendeeUser.setUserId(recommendeeUserUserId);
+
+            tsRecoRequestObj = new TSRecoRequestObj();
+            tsRecoRequestObj.setRecommendeeUser(recommendeeUser);
+            tsRecoRequestObj.setRecorequestText(recorequestText);
+            tsRecoRequestObj.setRecommendeeUserFolloweeFlag(recommendeeUserFolloweeFlag);
+            tsRecoRequestObj.setRecommendeeUser(recommendeeUser);
 
             tsDataSource.commit();
         } catch (SQLException e) {
@@ -1600,8 +1588,11 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     statement.setString(1, questionRestaurantId);
                     resultset = statement.executeQuery();
 
-                    questionRestaurantRestaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "restaurant.restaurant_name"));
+                    if (resultset.next()) {
+                        questionRestaurantRestaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "restaurant.restaurant_name"));
+                    }
+
                     statement.close();
                 }
 
