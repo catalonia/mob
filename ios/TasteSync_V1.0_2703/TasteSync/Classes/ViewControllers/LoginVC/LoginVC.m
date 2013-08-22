@@ -314,7 +314,7 @@
             //NSMutableArray* array= [[CommonHelpers appDelegate] arrDataFBFriends];
             NSMutableArray* dictionnary = [[NSMutableArray alloc] init];
             for (UserObj *userObj in (NSMutableArray*)anObj) {
-                [dictionnary addObject:[CommonHelpers getJSONUserObj:userObj]];
+                [dictionnary addObject:userObj.uid];
             }
             
             [nameElements setObject:dictionnary forKey:@"list_user_profile_fb"];

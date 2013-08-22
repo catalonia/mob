@@ -110,7 +110,7 @@
   <xs:complexType name="TSListFacebookUserDataObj">
     <xs:sequence>
       <xs:element name="user_current_profile" type="TSFacebookUserDataObj" minOccurs="0"/>
-      <xs:element name="list_user_profile" type="TSFacebookUserDataObj" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="list_user_profile" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSListNotificationSettingsObj">

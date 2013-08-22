@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class TSListFacebookUserDataObj implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private TSFacebookUserDataObj user_profile_current;
-	private List<TSFacebookUserDataObj> list_user_profile_fb;
+	private List<String> list_user_profile_fb;
 
 	public TSListFacebookUserDataObj() {
 		
@@ -26,11 +26,11 @@ public class TSListFacebookUserDataObj implements Serializable{
 	}
 	
 	@XmlElement(name = "list_user_profile")
-	public List<TSFacebookUserDataObj> getList_user_profile_fb() {
+	public List<String> getList_user_profile_fb() {
 		return list_user_profile_fb;
 	}
 
-	public void setList_user_profile_fb(List<TSFacebookUserDataObj> list_user_profile_fb) {
+	public void setList_user_profile_fb(List<String> list_user_profile_fb) {
 		this.list_user_profile_fb = list_user_profile_fb;
 	}
 }

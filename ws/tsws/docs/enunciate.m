@@ -2736,12 +2736,12 @@
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"Attempting to read choice {}list_user_profile of type {}TSFacebookUserDataObj.");
+    NSLog(@"Attempting to read choice {}list_user_profile of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
 
-    __child = [ENUNCIATENS0TSFacebookUserDataObj readXMLType: reader];
+    __child = [NSString readXMLType: reader];
 #if DEBUG_ENUNCIATE > 1
-    NSLog(@"successfully read choice {}list_user_profile of type {}TSFacebookUserDataObj.");
+    NSLog(@"successfully read choice {}list_user_profile of type {http://www.w3.org/2001/XMLSchema}string.");
 #endif
 
     if ([self list_user_profile_fb]) {

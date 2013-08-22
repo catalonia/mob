@@ -695,7 +695,7 @@ struct enunciate_ns0_TSListFacebookUserDataObj {
   /**
    * (no documentation provided)
    */
-  struct enunciate_ns0_TSFacebookUserDataObj *list_user_profile_fb;
+  xmlChar *list_user_profile_fb;
 
   /**
    * Size of the list_user_profile_fb array.
@@ -8511,12 +8511,12 @@ static struct enunciate_ns0_TSListFacebookUserDataObj *xmlTextReaderReadNs0TSLis
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}list_user_profile of type {}TSFacebookUserDataObj.\n");
+        printf("Attempting to read choice {}list_user_profile of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
-        _child_accessor = xmlTextReaderReadNs0TSFacebookUserDataObjType(reader);
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}list_user_profile of type {}TSFacebookUserDataObj.\n");
+          printf("Failed to read choice {}list_user_profile of type {http://www.w3.org/2001/XMLSchema}string.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSListFacebookUserDataObjType(_tSListFacebookUserDataObj);
@@ -8524,8 +8524,8 @@ static struct enunciate_ns0_TSListFacebookUserDataObj *xmlTextReaderReadNs0TSLis
           return NULL;
         }
 
-        _tSListFacebookUserDataObj->list_user_profile_fb = realloc(_tSListFacebookUserDataObj->list_user_profile_fb, (_tSListFacebookUserDataObj->_sizeof_list_user_profile_fb + 1) * sizeof(struct enunciate_ns0_TSFacebookUserDataObj));
-        memcpy(&(_tSListFacebookUserDataObj->list_user_profile_fb[_tSListFacebookUserDataObj->_sizeof_list_user_profile_fb++]), _child_accessor, sizeof(struct enunciate_ns0_TSFacebookUserDataObj));
+        _tSListFacebookUserDataObj->list_user_profile_fb = realloc(_tSListFacebookUserDataObj->list_user_profile_fb, (_tSListFacebookUserDataObj->_sizeof_list_user_profile_fb + 1) * sizeof(xmlChar));
+        memcpy(&(_tSListFacebookUserDataObj->list_user_profile_fb[_tSListFacebookUserDataObj->_sizeof_list_user_profile_fb++]), _child_accessor, sizeof(xmlChar));
         free(_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
@@ -8596,12 +8596,12 @@ static int xmlTextWriterWriteNs0TSListFacebookUserDataObjType(xmlTextWriterPtr w
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSFacebookUserDataObj for element {}list_user_profile...\n");
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}list_user_profile...\n");
 #endif
-    status = xmlTextWriterWriteNs0TSFacebookUserDataObjType(writer, &(_tSListFacebookUserDataObj->list_user_profile_fb[i]));
+    status = xmlTextWriterWriteXsStringType(writer, &(_tSListFacebookUserDataObj->list_user_profile_fb[i]));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSFacebookUserDataObj for element {}list_user_profile. status: %i\n", status);
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}list_user_profile. status: %i\n", status);
 #endif
       return status;
     }
@@ -8642,7 +8642,7 @@ static void freeNs0TSListFacebookUserDataObjType(struct enunciate_ns0_TSListFace
 #if DEBUG_ENUNCIATE > 1
       printf("Freeing accessor list_user_profile_fb[%i] of type enunciate_ns0_TSListFacebookUserDataObj...\n", i);
 #endif
-      freeNs0TSFacebookUserDataObjType(&(_tSListFacebookUserDataObj->list_user_profile_fb[i]));
+      freeXsStringType(&(_tSListFacebookUserDataObj->list_user_profile_fb[i]));
     }
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing accessor list_user_profile_fb of type enunciate_ns0_TSListFacebookUserDataObj...\n");

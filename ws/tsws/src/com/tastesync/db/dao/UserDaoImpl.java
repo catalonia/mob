@@ -131,7 +131,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		String dateNowAppend = CommonFunctionsUtil.getCurrentDatetimeAppendField();
 		MySQL mySQL = new MySQL();
 		TSFacebookUserDataObj user_current_profile = null;
-		List<TSFacebookUserDataObj> profiles = new ArrayList<TSFacebookUserDataObj>();
+		List<String> profiles = new ArrayList<String>();
 		List<TSUserObj> list_friends_using_TasteSync = new ArrayList<TSUserObj>();
 		
 		boolean is_disabled = false;
@@ -283,15 +283,15 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 							//Update Facebook's friend infor
 							if(profiles != null && !profiles.isEmpty()) {
 								
-								Iterator<TSFacebookUserDataObj> it = profiles.iterator();
+								Iterator<String> it = profiles.iterator();
 								while(it.hasNext()) {
-									TSFacebookUserDataObj item = null;
-									item = (TSFacebookUserDataObj) it.next();
+									String item = null;
+									item = (String) it.next();
 									
 									//Check user' friends using TasteSync
 									TSUserObj user_fb = null;
 									try {
-										user_fb = mySQL.getUserInformationByFacebookID(item.getId());
+										user_fb = mySQL.getUserInformationByFacebookID(item);
 									} catch(Exception e) {
 										e.printStackTrace();
 									}
@@ -538,18 +538,18 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 							statement.execute();
 						}
 	
-						List<TSFacebookUserDataObj> listFBObj = list_user_profile.getList_user_profile_fb();
+						List<String> listFBObj = list_user_profile.getList_user_profile_fb();
 						
 						if(listFBObj != null && !listFBObj.isEmpty()) {
 	
 							for(int i = 0; i < listFBObj.size(); i++)
 							{
-								TSFacebookUserDataObj obj = listFBObj.get(i);
+								String obj = listFBObj.get(i);
 								connection = tsDataSource.getConnection();
 								statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_DATETIME_FB_UPDATE_SQL);
 								statement.setString(1, dateNow);
 								statement.setString(2, userID); 
-								statement.setString(3, obj.getId());
+								statement.setString(3, obj);
 								int query = statement.executeUpdate();
 								System.out.println("query: "+query);
 								if(query == 0)
@@ -557,7 +557,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 									System.out.println("Insert:" + i);
 									statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_FB_INSERT_SQL);
 									statement.setString(1, userID); 
-									statement.setString(2, obj.getId());
+									statement.setString(2, obj);
 									statement.setString(3, dateNow);
 									statement.setString(4, "0");
 									statement.execute();
