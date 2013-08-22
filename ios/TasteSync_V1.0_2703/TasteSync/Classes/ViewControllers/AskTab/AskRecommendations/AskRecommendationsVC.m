@@ -20,7 +20,10 @@
     UserDefault *userDefault;
     CFacebook *facebook;
     __weak IBOutlet UIScrollView *scrollViewMain;
-
+    
+    NSMutableArray* _arrayData;
+    TSGlobalObj* _location;
+    NSString* _recoRequestId;
 }
 
 @end
@@ -32,6 +35,21 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+    }
+    return self;
+}
+
+-(id)initWithArrayData:(NSMutableArray*)array atLocation:(TSGlobalObj*)location Reco_RequestID:(NSString*)recorequestID
+{
+    self = [super initWithNibName:@"AskRecommendationsVC" bundle:nil];
+    if (self) {
+        _arrayData = array;
+        _location = location;
+        _recoRequestId = recorequestID;
+        NSString* link = [NSString stringWithFormat:@"recofriends?recorequestid=%@",recorequestID];
+        CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:1];
+        request.delegate = self;
+        [request startFormRequest];
     }
     return self;
 }
@@ -612,6 +630,87 @@
     
 }
 
-
+#pragma mark RequestData
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    if (key == 1) {
+        NSDictionary* dic = [response objectFromJSONString];
+        NSString* questionAsk = [dic objectForKey:@"valueNameValue"];
+        NSString* cuisineList1 = @"";
+        NSString* cuisineList2 = @"";
+        NSString* priceList = @"";
+        NSString* themeList = @"";
+        NSString* whoareyouList = @"";
+        NSString* typeofrestaurantList = @"";
+        NSString* occasionList = @"";
+        
+        CRequest* request = [[CRequest alloc]initWithURL:@"recosearch" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
+        
+        for (TSGlobalObj* global in _arrayData) {
+            if (global.type == GlobalDataCuisine_1 ) {
+                if (cuisineList1.length == 0) {
+                    cuisineList1 = global.name;
+                }
+                else
+                    cuisineList1 = [cuisineList1 stringByAppendingFormat:@", %@", global.name];
+            }
+            if (global.type == GlobalDataCuisine_2 ) {
+                if (cuisineList2.length == 0) {
+                    cuisineList2 = global.name;
+                }
+                else
+                    cuisineList2 = [cuisineList2 stringByAppendingFormat:@", %@", global.name];
+            }
+            if (global.type == GlobalDataOccasion ) {
+                if (occasionList.length == 0) {
+                    occasionList = global.name;
+                }
+                else
+                    occasionList = [occasionList stringByAppendingFormat:@", %@", global.name];
+            }
+            if (global.type == GlobalDataPrice ) {
+                if (priceList.length == 0) {
+                    priceList = global.name;
+                }
+                else
+                    priceList = [priceList stringByAppendingFormat:@", %@", global.name];
+            }
+            if (global.type == GlobalDataTheme ) {
+                if (themeList.length == 0) {
+                    themeList = global.name;
+                }
+                else
+                    themeList = [themeList stringByAppendingFormat:@", %@", global.name];
+            }
+            if (global.type == GlobalDataTypeOfRestaurant ) {
+                if (typeofrestaurantList.length == 0) {
+                    typeofrestaurantList = global.name;
+                }
+                else
+                    typeofrestaurantList = [typeofrestaurantList stringByAppendingFormat:@", %@", global.name];
+            }
+            if (global.type == GlobalDataWhoAreUWith ) {
+                if (whoareyouList.length == 0) {
+                    whoareyouList = global.name;
+                }
+                else
+                    whoareyouList = [whoareyouList stringByAppendingFormat:@", %@", global.name];
+            }
+            NSLog(@"%@ - %d - %@", global.name, global.type, global.uid);
+        }
+        NSString* cuisine = @"";
+        if (![cuisineList2 isEqualToString:@""]) {
+            cuisine = [NSString stringWithFormat:@"%@, %@", cuisineList1, cuisineList2];
+        }
+        else
+            cuisine = cuisineList1;
+        questionAsk = [questionAsk stringByReplacingOccurrencesOfString:@"<Cuisine>" withString:cuisine];
+        questionAsk = [questionAsk stringByReplacingOccurrencesOfString:@"<Location>" withString:_location.name];
+        _askSentences = questionAsk;
+        tfAsk.text = _askSentences;
+    }
+}
 
 @end

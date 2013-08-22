@@ -193,7 +193,7 @@
         UITextField* textField = [alert textFieldAtIndex:0];
         textField.frame = CGRectMake(15, 75, 255, 30);
         textField.keyboardType = UIKeyboardTypeDecimalPad;
-        textField.placeholder = @"192.168.0.100";
+        textField.placeholder = @"localhost";
         textField.text = @"192.168.0.100";
         [alert addSubview:textField];
         alert.tag =1;
@@ -321,7 +321,7 @@
             
             NSString* jsonString = [nameElements JSONString];
             
-            CRequest* request = [[CRequest alloc]initWithURL:@"submitLoginFacebook" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationJson];
+            CRequest* request = [[CRequest alloc]initWithURL:@"submitLoginFacebook" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationJson withKey:1];
             request.delegate = self;
             [request setHeader:HeaderTypeJSON];
             [request setJSON:jsonString];
@@ -341,7 +341,7 @@
 - (void)requestData
 {
     
-    CRequest* request = [[CRequest alloc]initWithURL:@"getAllData" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:1];
+    CRequest* request = [[CRequest alloc]initWithURL:@"getAllData" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:2];
     request.delegate = self;
     [request setFormPostValue:@"" forKey:@""];
     [request startFormRequest];
@@ -350,7 +350,7 @@
 
 - (void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
-    if (key == 0) {
+    if (key == 1) {
         NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
         NSDictionary* dic = [response objectFromJSONString];

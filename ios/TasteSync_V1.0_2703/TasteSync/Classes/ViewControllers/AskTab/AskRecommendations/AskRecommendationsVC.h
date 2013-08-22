@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TSGlobalObj.h"
+#import "CRequest.h"
 
-@interface AskRecommendationsVC : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface AskRecommendationsVC : UIViewController<UITableViewDataSource, UITableViewDelegate, RequestDelegate>
 {
     __weak IBOutlet UIView *viewWaiting, *viewMain , *viewNotLogin, *viewLogin, *viewfacebook , *viewFriends;
     __weak IBOutlet UITableView *tbvResult, *tbvFilter;
@@ -32,4 +34,6 @@
 
 - (IBAction)actionConnectWithFacebook:(id)sender;
 - (IBAction)actionSkipAhead:(id)sender;
+
+-(id)initWithArrayData:(NSMutableArray*)array atLocation:(TSGlobalObj*)location Reco_RequestID:(NSString*)recorequestID;
 @end

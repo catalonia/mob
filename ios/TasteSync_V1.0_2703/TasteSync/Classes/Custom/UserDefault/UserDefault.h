@@ -52,8 +52,6 @@ typedef enum _LoginStatus
 @property (nonatomic, strong) NSString *userLogID, *userID;
 @property (nonatomic, strong) NSString *IPAdress;
 
-
-
 + (UserDefault *) userDefault;
 - (void) update;
 + (void) update;

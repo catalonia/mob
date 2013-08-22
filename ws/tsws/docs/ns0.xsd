@@ -6,6 +6,7 @@
   <xs:element name="keyvalue" type="TSKeyValueObj"/>
   <xs:element name="list_user_profile_fb" type="TSListFacebookUserDataObj"/>
   <xs:element name="listNotifications" type="TSListNotificationSettingsObj"/>
+  <xs:element name="locationsearchcities" type="TSLocationSearchCitiesObj"/>
   <xs:element name="menu" type="TSMenuObj"/>
   <xs:element name="notifications" type="TSNotificationSettingsObj"/>
   <xs:element name="photo" type="TSPhotoObj"/>
@@ -116,6 +117,15 @@
     <xs:sequence>
       <xs:element name="userId" type="xs:string" minOccurs="0"/>
       <xs:element name="notification" type="TSNotificationSettingsObj" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSLocationSearchCitiesObj">
+    <xs:sequence>
+      <xs:element name="cityId" type="xs:string" minOccurs="0"/>
+      <xs:element name="cityName" type="xs:string" minOccurs="0"/>
+      <xs:element name="neighborhoodId" type="xs:string" minOccurs="0"/>
+      <xs:element name="neighborhoodName" type="xs:string" minOccurs="0"/>
+      <xs:element name="state" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSMenuObj">
@@ -345,7 +355,7 @@
   </xs:complexType>
   <xs:complexType name="TSRecommendationsFollowupObj">
     <xs:sequence>
-      <xs:element name="questionUse" type="TSUserProfileBasicObj" minOccurs="0"/>
+      <xs:element name="questionUser" type="TSUserProfileBasicObj" minOccurs="0"/>
       <xs:element name="questionText" type="xs:string" minOccurs="0"/>
       <xs:element name="questionUserFolloweeFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="questionRestaurant" type="TSRestaurantObj" minOccurs="0"/>

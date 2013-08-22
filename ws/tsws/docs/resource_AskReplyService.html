@@ -76,6 +76,7 @@
         <li><a href="#path__ask_recofriends.html">/ask/recofriends</a></li>
         <li><a href="#path__ask_recommendedrestaurants.html">/ask/recommendedrestaurants</a></li>
         <li><a href="#path__ask_recomsg.html">/ask/recomsg</a></li>
+        <li><a href="#path__ask_recomsgans.html">/ask/recomsgans</a></li>
         <li><a href="#path__ask_recoreqans.html">/ask/recoreqans</a></li>
         <li><a href="#path__ask_recorequest.html">/ask/recorequest</a></li>
         <li><a href="#path__ask_recos4you.html">/ask/recos4you</a></li>
@@ -101,69 +102,6 @@
           <th>default</th>
         </tr>
         <tr>
-          <td>newmessagetext</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>form</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>previousmessageid</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>form</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>newmessagerecipientuserid</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>form</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>newmessagesenderuserid</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>form</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>restaurantidlist</td>
-          <td>
-            (no documentation provided)
-          </td>
-          <td>form</td>
-          <td></td>
-        </tr>
-      </table>
-      <h3>Response Body</h3>
-      <table>
-        <tr>
-          <td align="right">element:</td>
-          <td><a href="el_ns0_success.html">success</a></td>
-        </tr>
-        <tr>
-          <td align="right">media types:</td>
-          <td>application/json<br/></td>
-        </tr>
-      </table>
-      <p>(no documentation provided)</p>
-      <a name="POST"></a>
-      <h2>POST</h2>
-      <h3>Parameters</h3>
-      <table>
-        <tr>
-          <th>name</th>
-          <th>description</th>
-          <th>type</th>
-          <th>default</th>
-        </tr>
-        <tr>
           <td>userid</td>
           <td>
             (no documentation provided)
@@ -172,7 +110,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>restaurantId</td>
+          <td>restaurantid</td>
           <td>
             (no documentation provided)
           </td>
@@ -180,7 +118,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>likeFlag</td>
+          <td>likeflag</td>
           <td>
             (no documentation provided)
           </td>
@@ -222,7 +160,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>paginationId</td>
+          <td>paginationid</td>
           <td>
             (no documentation provided)
           </td>
@@ -395,6 +333,72 @@
         <tr>
           <td align="right">element:</td>
           <td><a href="el_ns0_senderuser.html">senderuser</a></td>
+        </tr>
+        <tr>
+          <td align="right">media types:</td>
+          <td>application/json<br/></td>
+        </tr>
+      </table>
+      <p>(no documentation provided)</p>
+      <a name="path__ask_recomsgans.html"></a>
+      <h1>/ask/recomsgans</h1>
+      <p class="note">Mount Point: <a href="./rest/ask/recomsgans">/rest/ask/recomsgans</a></p>
+      <a name="POST"></a>
+      <h2>POST</h2>
+      <h3>Parameters</h3>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default</th>
+        </tr>
+        <tr>
+          <td>newmessagetext</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>previousmessageid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>newmessagerecipientuserid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>newmessagesenderuserid</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>restaurantidlist</td>
+          <td>
+            (no documentation provided)
+          </td>
+          <td>form</td>
+          <td></td>
+        </tr>
+      </table>
+      <h3>Response Body</h3>
+      <table>
+        <tr>
+          <td align="right">element:</td>
+          <td><a href="el_ns0_success.html">success</a></td>
         </tr>
         <tr>
           <td align="right">media types:</td>
@@ -608,7 +612,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>cuisineTier1IdList</td>
+          <td>cuisinetier1idlist</td>
           <td>
             (no documentation provided)
           </td>
@@ -616,7 +620,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>cuisineTier2IdList</td>
+          <td>cuisineiier2idlist</td>
           <td>
             (no documentation provided)
           </td>
@@ -624,7 +628,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>priceIdList</td>
+          <td>priceidlist</td>
           <td>
             (no documentation provided)
           </td>
@@ -632,7 +636,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>themeIdList</td>
+          <td>themeidlist</td>
           <td>
             (no documentation provided)
           </td>
@@ -640,7 +644,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>whoareyouwithIdList</td>
+          <td>whoareyouwithidlist</td>
           <td>
             (no documentation provided)
           </td>
@@ -648,7 +652,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>typeOfRestaurantIdList</td>
+          <td>typeofrestaurantidList</td>
           <td>
             (no documentation provided)
           </td>
@@ -656,7 +660,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>occasionIdList</td>
+          <td>occasionidlist</td>
           <td>
             (no documentation provided)
           </td>
@@ -664,7 +668,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>neighborhoodId</td>
+          <td>neighborhoodid</td>
           <td>
             (no documentation provided)
           </td>
@@ -672,7 +676,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>cityId</td>
+          <td>cityid</td>
           <td>
             (no documentation provided)
           </td>
@@ -680,7 +684,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>stateName</td>
+          <td>statename</td>
           <td>
             (no documentation provided)
           </td>
@@ -756,7 +760,7 @@
           <th>default</th>
         </tr>
         <tr>
-          <td>recoRequestId</td>
+          <td>recorequestid</td>
           <td>
             (no documentation provided)
           </td>
@@ -790,7 +794,7 @@
           <th>default</th>
         </tr>
         <tr>
-          <td>restaurantId</td>
+          <td>restaurantid</td>
           <td>
             (no documentation provided)
           </td>
@@ -798,7 +802,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>neighborhoodId</td>
+          <td>neighborhoodid</td>
           <td>
             (no documentation provided)
           </td>
@@ -846,7 +850,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>savedFlag</td>
+          <td>savedflag</td>
           <td>
             (no documentation provided)
           </td>
@@ -854,7 +858,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>favFlag</td>
+          <td>favflag</td>
           <td>
             (no documentation provided)
           </td>
@@ -862,7 +866,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>dealFlag</td>
+          <td>dealflag</td>
           <td>
             (no documentation provided)
           </td>
@@ -870,7 +874,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>chainFlag</td>
+          <td>chainflag</td>
           <td>
             (no documentation provided)
           </td>
@@ -912,7 +916,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>paginationId</td>
+          <td>paginationid</td>
           <td>
             (no documentation provided)
           </td>

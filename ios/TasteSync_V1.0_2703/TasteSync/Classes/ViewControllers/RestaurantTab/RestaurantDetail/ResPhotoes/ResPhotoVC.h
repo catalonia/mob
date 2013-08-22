@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "ResPhotoCell.h"
 #import "RestaurantObj.h"
+#import "CRequest.h"
 
-@interface ResPhotoVC : UIViewController
+@interface ResPhotoVC : UIViewController<RequestDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrData;
 @property (nonatomic, strong) RestaurantObj *restaurantObj;
 
 
--(id)initWithArrayPhoto:(NSMutableArray*)array RestaurantObj:(RestaurantObj*)restaurant;
+-(id)initWithArrayPhoto:(RestaurantObj*)restaurant;
 @end

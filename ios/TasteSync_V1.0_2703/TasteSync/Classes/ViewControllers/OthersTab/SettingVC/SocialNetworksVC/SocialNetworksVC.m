@@ -47,8 +47,6 @@
     
     _imageOn = [UIImage imageNamed:@"on.png"];
     _imgageOff = [UIImage imageNamed:@"off.png"];
-    
-    
     CRequest* request = [[CRequest alloc]initWithURL:@"showSettingsSocial" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
     request.delegate = self;
     [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
@@ -184,8 +182,9 @@
             
             NSMutableDictionary* dicPublishing = [NSMutableDictionary dictionary];
             [dicPublishing setObject:[NSString stringWithFormat:@"%d",(j + 1)] forKey:@"usncORDER"];
-            [dicPublishing setObject:[CommonHelpers getStringValue:[self.listCheckStateOfAllPublishing objectAtIndex:i*3 + j]] forKey:@"usncYN"];
-                
+            if (i != 3) {
+                [dicPublishing setObject:[CommonHelpers getStringValue:[self.listCheckStateOfAllPublishing objectAtIndex:j*3 + i]] forKey:@"usncYN"];
+            }
             [arrayConnection addObject:dicPublishing];
         }
         
@@ -232,7 +231,9 @@
             for (NSDictionary* dic3 in array2) {
                 if (dic3 != NULL) {
                     int index2 = [[dic3 objectForKey:@"usncORDER"] intValue] - 1;
-                    [self.listCheckStateOfAllPublishing replaceObjectAtIndex:(index*3 + index2) withObject:[CommonHelpers getBoolValue:[dic3 objectForKey:@"usncYN"]]];
+                    if (index != 3) {
+                         [self.listCheckStateOfAllPublishing replaceObjectAtIndex:(index2*3 + index) withObject:[CommonHelpers getBoolValue:[dic3 objectForKey:@"usncYN"]]];
+                    }
                 }
                 
             }

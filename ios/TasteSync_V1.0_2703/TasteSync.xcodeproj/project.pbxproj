@@ -574,6 +574,7 @@
 		5EB62ECE16F2B94D0074133F /* TagObj.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB62EC716F2B94D0074133F /* TagObj.xib */; };
 		5EB62ECF16F2B94D0074133F /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB62EC916F2B94D0074133F /* TagView.m */; };
 		5EB62ED016F2B94D0074133F /* TagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB62ECA16F2B94D0074133F /* TagView.xib */; };
+		C30DA9B317BDA5DB00846D01 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C30DA9B217BDA5DB00846D01 /* FacebookSDK.framework */; };
 		C39F9593179F6EC600C91BAA /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F957E179F6EC600C91BAA /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C39F9594179F6EC600C91BAA /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F9581179F6EC600C91BAA /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C39F9595179F6EC600C91BAA /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F9583179F6EC600C91BAA /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -588,7 +589,6 @@
 		C39F95A1179F719700C91BAA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C39F95A0179F719700C91BAA /* libz.dylib */; };
 		C3CA914A17A9EA5A002C2618 /* TSGlobalObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */; };
 		C3D0AF6A17B61F9400D91294 /* TSCityObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0AF6917B61F9400D91294 /* TSCityObj.m */; };
-		C3D18087179F66F7007B71A0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D18086179F66F7007B71A0 /* FacebookSDK.framework */; };
 		C3D180BA179F69AF007B71A0 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B6179F69AF007B71A0 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C3D180BB179F69AF007B71A0 /* CRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B9179F69AF007B71A0 /* CRequest.m */; };
 		C3D8025617B9CC410025E69F /* TSPhotoRestaurantObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D8025517B9CC410025E69F /* TSPhotoRestaurantObj.m */; };
@@ -1275,6 +1275,7 @@
 		5EB62EC816F2B94D0074133F /* TagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagView.h; sourceTree = "<group>"; };
 		5EB62EC916F2B94D0074133F /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagView.m; sourceTree = "<group>"; };
 		5EB62ECA16F2B94D0074133F /* TagView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagView.xib; sourceTree = "<group>"; };
+		C30DA9B217BDA5DB00846D01 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		C39F957D179F6EC600C91BAA /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		C39F957E179F6EC600C91BAA /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		C39F957F179F6EC600C91BAA /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -1304,7 +1305,6 @@
 		C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSGlobalObj.m; sourceTree = "<group>"; };
 		C3D0AF6817B61F9400D91294 /* TSCityObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCityObj.h; sourceTree = "<group>"; };
 		C3D0AF6917B61F9400D91294 /* TSCityObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCityObj.m; sourceTree = "<group>"; };
-		C3D18086179F66F7007B71A0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		C3D180B5179F69AF007B71A0 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../JSONKit.h; sourceTree = "<group>"; };
 		C3D180B6179F69AF007B71A0 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../JSONKit.m; sourceTree = "<group>"; };
 		C3D180B8179F69AF007B71A0 /* CRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRequest.h; sourceTree = "<group>"; };
@@ -1343,7 +1343,7 @@
 				5E7D2C6716D3532900D85642 /* UIKit.framework in Frameworks */,
 				5E7D2C6916D3532900D85642 /* Foundation.framework in Frameworks */,
 				5E7D2C6B16D3532900D85642 /* CoreGraphics.framework in Frameworks */,
-				C3D18087179F66F7007B71A0 /* FacebookSDK.framework in Frameworks */,
+				C30DA9B317BDA5DB00846D01 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2434,10 +2434,10 @@
 		5E7D2C6516D3532900D85642 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C30DA9B217BDA5DB00846D01 /* FacebookSDK.framework */,
 				C39F95A0179F719700C91BAA /* libz.dylib */,
 				C39F959E179F718800C91BAA /* MobileCoreServices.framework */,
 				C39F959C179F717E00C91BAA /* SystemConfiguration.framework */,
-				C3D18086179F66F7007B71A0 /* FacebookSDK.framework */,
 				5E7D2C9516D353CC00D85642 /* CFNetwork.framework */,
 				5E7D2C9616D353CC00D85642 /* Twitter.framework */,
 				5E7D2C9316D353C500D85642 /* MapKit.framework */,

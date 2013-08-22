@@ -900,6 +900,127 @@ static int xmlTextWriterWriteNs0TSListNotificationSettingsObjType(xmlTextWriterP
 static void freeNs0TSListNotificationSettingsObjType(struct enunciate_ns0_TSListNotificationSettingsObj *_tSListNotificationSettingsObj);
 
 #endif /* DEF_enunciate_ns0_TSListNotificationSettingsObj_H */
+#ifndef DEF_enunciate_ns0_TSLocationSearchCitiesObj_H
+#define DEF_enunciate_ns0_TSLocationSearchCitiesObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSLocationSearchCitiesObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *cityId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *cityName;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *neighborhoodId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *neighborhoodName;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *state;
+};
+
+/**
+ * Reads a TSLocationSearchCitiesObj element from XML. The element to be read is "locationsearchcities", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSLocationSearchCitiesObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSLocationSearchCitiesObj *xml_read_enunciate_ns0_TSLocationSearchCitiesObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSLocationSearchCitiesObj to XML under element name "locationsearchcities".
+ *
+ * @param writer The XML writer.
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSLocationSearchCitiesObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj);
+
+/**
+ * Frees a TSLocationSearchCitiesObj.
+ *
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to free.
+ */
+void free_enunciate_ns0_TSLocationSearchCitiesObj(struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj);
+
+/**
+ * Reads a TSLocationSearchCitiesObj element from XML. The element to be read is "locationsearchcities", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSLocationSearchCitiesObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSLocationSearchCitiesObj *xmlTextReaderReadNs0LocationsearchcitiesElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSLocationSearchCitiesObj to XML under element name "locationsearchcities".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0LocationsearchcitiesElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj);
+
+/**
+ * Writes a TSLocationSearchCitiesObj to XML under element name "locationsearchcities".
+ *
+ * @param writer The XML writer.
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0LocationsearchcitiesElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSLocationSearchCitiesObj.
+ *
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj whose children are to be free.
+ */
+static void freeNs0LocationsearchcitiesElement(struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj);
+
+/**
+ * Reads a TSLocationSearchCitiesObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSLocationSearchCitiesObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSLocationSearchCitiesObj *xmlTextReaderReadNs0TSLocationSearchCitiesObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSLocationSearchCitiesObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSLocationSearchCitiesObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj);
+
+/**
+ * Frees the elements of a TSLocationSearchCitiesObj.
+ *
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to free.
+ */
+static void freeNs0TSLocationSearchCitiesObjType(struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj);
+
+#endif /* DEF_enunciate_ns0_TSLocationSearchCitiesObj_H */
 #ifndef DEF_enunciate_ns0_TSMenuObj_H
 #define DEF_enunciate_ns0_TSMenuObj_H
 
@@ -3506,7 +3627,7 @@ struct enunciate_ns0_TSRecommendationsFollowupObj {
   /**
    * (no documentation provided)
    */
-  struct enunciate_ns0_TSUserProfileBasicObj *questionUse;
+  struct enunciate_ns0_TSUserProfileBasicObj *questionUser;
 
   /**
    * (no documentation provided)
@@ -8856,6 +8977,511 @@ static void freeNs0TSListNotificationSettingsObjType(struct enunciate_ns0_TSList
   }
 }
 #endif /* DEF_enunciate_ns0_TSListNotificationSettingsObj_M */
+#ifndef DEF_enunciate_ns0_TSLocationSearchCitiesObj_M
+#define DEF_enunciate_ns0_TSLocationSearchCitiesObj_M
+
+/**
+ * Reads a TSLocationSearchCitiesObj element from XML. The element to be read is "locationsearchcities", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSLocationSearchCitiesObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSLocationSearchCitiesObj *xml_read_enunciate_ns0_TSLocationSearchCitiesObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0LocationsearchcitiesElement(reader);
+}
+
+/**
+ * Writes a TSLocationSearchCitiesObj to XML under element name "locationsearchcities".
+ *
+ * @param writer The XML writer.
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSLocationSearchCitiesObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj) {
+  return xmlTextWriterWriteNs0LocationsearchcitiesElementNS(writer, _tSLocationSearchCitiesObj, 1);
+}
+
+/**
+ * Frees a TSLocationSearchCitiesObj.
+ *
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to free.
+ */
+void free_enunciate_ns0_TSLocationSearchCitiesObj(struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj) {
+  freeNs0TSLocationSearchCitiesObjType(_tSLocationSearchCitiesObj);
+  free(_tSLocationSearchCitiesObj);
+}
+
+/**
+ * Reads a TSLocationSearchCitiesObj element from XML. The element to be read is "locationsearchcities", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSLocationSearchCitiesObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSLocationSearchCitiesObj *xmlTextReaderReadNs0LocationsearchcitiesElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "locationsearchcities", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}locationsearchcities.\n");
+#endif
+    _tSLocationSearchCitiesObj = xmlTextReaderReadNs0TSLocationSearchCitiesObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSLocationSearchCitiesObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}locationsearchcities failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}locationsearchcities failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSLocationSearchCitiesObj;
+}
+
+/**
+ * Writes a TSLocationSearchCitiesObj to XML under element name "locationsearchcities".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0LocationsearchcitiesElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj) {
+  return xmlTextWriterWriteNs0LocationsearchcitiesElementNS(writer, _tSLocationSearchCitiesObj, 0);
+}
+
+/**
+ * Writes a TSLocationSearchCitiesObj to XML under element name "locationsearchcities".
+ *
+ * @param writer The XML writer.
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0LocationsearchcitiesElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "locationsearchcities", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}locationsearchcities. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSLocationSearchCitiesObj for root element {}locationsearchcities...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSLocationSearchCitiesObjType(writer, _tSLocationSearchCitiesObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}locationsearchcities. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}locationsearchcities. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSLocationSearchCitiesObj.
+ *
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj whose children are to be free.
+ */
+static void freeNs0LocationsearchcitiesElement(struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj) {
+  freeNs0TSLocationSearchCitiesObjType(_tSLocationSearchCitiesObj);
+}
+
+/**
+ * Reads a TSLocationSearchCitiesObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSLocationSearchCitiesObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSLocationSearchCitiesObj *xmlTextReaderReadNs0TSLocationSearchCitiesObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj = calloc(1, sizeof(struct enunciate_ns0_TSLocationSearchCitiesObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSLocationSearchCitiesObjType(_tSLocationSearchCitiesObj);
+        free(_tSLocationSearchCitiesObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "cityId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}cityId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}cityId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSLocationSearchCitiesObjType(_tSLocationSearchCitiesObj);
+          free(_tSLocationSearchCitiesObj);
+          return NULL;
+        }
+
+        _tSLocationSearchCitiesObj->cityId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "cityName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}cityName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}cityName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSLocationSearchCitiesObjType(_tSLocationSearchCitiesObj);
+          free(_tSLocationSearchCitiesObj);
+          return NULL;
+        }
+
+        _tSLocationSearchCitiesObj->cityName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "neighborhoodId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}neighborhoodId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}neighborhoodId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSLocationSearchCitiesObjType(_tSLocationSearchCitiesObj);
+          free(_tSLocationSearchCitiesObj);
+          return NULL;
+        }
+
+        _tSLocationSearchCitiesObj->neighborhoodId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "neighborhoodName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}neighborhoodName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}neighborhoodName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSLocationSearchCitiesObjType(_tSLocationSearchCitiesObj);
+          free(_tSLocationSearchCitiesObj);
+          return NULL;
+        }
+
+        _tSLocationSearchCitiesObj->neighborhoodName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "state", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}state of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}state of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSLocationSearchCitiesObjType(_tSLocationSearchCitiesObj);
+          free(_tSLocationSearchCitiesObj);
+          return NULL;
+        }
+
+        _tSLocationSearchCitiesObj->state = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSLocationSearchCitiesObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSLocationSearchCitiesObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSLocationSearchCitiesObj;
+}
+
+/**
+ * Writes a TSLocationSearchCitiesObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSLocationSearchCitiesObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSLocationSearchCitiesObj->cityId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cityId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}cityId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}cityId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSLocationSearchCitiesObj->cityId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}cityId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}cityId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSLocationSearchCitiesObj->cityName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cityName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}cityName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}cityName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSLocationSearchCitiesObj->cityName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}cityName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}cityName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSLocationSearchCitiesObj->neighborhoodId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "neighborhoodId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}neighborhoodId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}neighborhoodId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSLocationSearchCitiesObj->neighborhoodId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}neighborhoodId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}neighborhoodId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSLocationSearchCitiesObj->neighborhoodName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "neighborhoodName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}neighborhoodName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}neighborhoodName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSLocationSearchCitiesObj->neighborhoodName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}neighborhoodName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}neighborhoodName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSLocationSearchCitiesObj->state != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "state", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}state. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}state...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSLocationSearchCitiesObj->state));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}state. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}state. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSLocationSearchCitiesObj.
+ *
+ * @param _tSLocationSearchCitiesObj The TSLocationSearchCitiesObj to free.
+ */
+static void freeNs0TSLocationSearchCitiesObjType(struct enunciate_ns0_TSLocationSearchCitiesObj *_tSLocationSearchCitiesObj) {
+  int i;
+  if (_tSLocationSearchCitiesObj->cityId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor cityId of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    freeXsStringType(_tSLocationSearchCitiesObj->cityId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor cityId of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    free(_tSLocationSearchCitiesObj->cityId);
+  }
+  if (_tSLocationSearchCitiesObj->cityName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor cityName of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    freeXsStringType(_tSLocationSearchCitiesObj->cityName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor cityName of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    free(_tSLocationSearchCitiesObj->cityName);
+  }
+  if (_tSLocationSearchCitiesObj->neighborhoodId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor neighborhoodId of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    freeXsStringType(_tSLocationSearchCitiesObj->neighborhoodId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor neighborhoodId of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    free(_tSLocationSearchCitiesObj->neighborhoodId);
+  }
+  if (_tSLocationSearchCitiesObj->neighborhoodName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor neighborhoodName of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    freeXsStringType(_tSLocationSearchCitiesObj->neighborhoodName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor neighborhoodName of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    free(_tSLocationSearchCitiesObj->neighborhoodName);
+  }
+  if (_tSLocationSearchCitiesObj->state != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor state of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    freeXsStringType(_tSLocationSearchCitiesObj->state);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor state of type enunciate_ns0_TSLocationSearchCitiesObj...\n");
+#endif
+    free(_tSLocationSearchCitiesObj->state);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSLocationSearchCitiesObj_M */
 #ifndef DEF_enunciate_ns0_TSMenuObj_M
 #define DEF_enunciate_ns0_TSMenuObj_M
 
@@ -21926,16 +22552,16 @@ static struct enunciate_ns0_TSRecommendationsFollowupObj *xmlTextReaderReadNs0TS
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "questionUse", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlStrcmp(BAD_CAST "questionUser", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}questionUse of type {}TSUserProfileBasicObj.\n");
+        printf("Attempting to read choice {}questionUser of type {}TSUserProfileBasicObj.\n");
 #endif
         _child_accessor = xmlTextReaderReadNs0TSUserProfileBasicObjType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}questionUse of type {}TSUserProfileBasicObj.\n");
+          printf("Failed to read choice {}questionUser of type {}TSUserProfileBasicObj.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSRecommendationsFollowupObjType(_tSRecommendationsFollowupObj);
@@ -21943,7 +22569,7 @@ static struct enunciate_ns0_TSRecommendationsFollowupObj *xmlTextReaderReadNs0TS
           return NULL;
         }
 
-        _tSRecommendationsFollowupObj->questionUse = ((struct enunciate_ns0_TSUserProfileBasicObj*)_child_accessor);
+        _tSRecommendationsFollowupObj->questionUser = ((struct enunciate_ns0_TSUserProfileBasicObj*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
@@ -22036,22 +22662,22 @@ static struct enunciate_ns0_TSRecommendationsFollowupObj *xmlTextReaderReadNs0TS
 static int xmlTextWriterWriteNs0TSRecommendationsFollowupObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRecommendationsFollowupObj *_tSRecommendationsFollowupObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
-  if (_tSRecommendationsFollowupObj->questionUse != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "questionUse", NULL);
+  if (_tSRecommendationsFollowupObj->questionUser != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "questionUser", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}questionUse. status: %i\n", status);
+      printf("Failed to write start element {}questionUser. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {}TSUserProfileBasicObj for element {}questionUse...\n");
+    printf("writing type {}TSUserProfileBasicObj for element {}questionUser...\n");
 #endif
-    status = xmlTextWriterWriteNs0TSUserProfileBasicObjType(writer, (_tSRecommendationsFollowupObj->questionUse));
+    status = xmlTextWriterWriteNs0TSUserProfileBasicObjType(writer, (_tSRecommendationsFollowupObj->questionUser));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {}TSUserProfileBasicObj for element {}questionUse. status: %i\n", status);
+      printf("Failed to write type {}TSUserProfileBasicObj for element {}questionUser. status: %i\n", status);
 #endif
       return status;
     }
@@ -22060,7 +22686,7 @@ static int xmlTextWriterWriteNs0TSRecommendationsFollowupObjType(xmlTextWriterPt
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}questionUse. status: %i\n", status);
+      printf("Failed to write end element {}questionUser. status: %i\n", status);
 #endif
       return status;
     }
@@ -22167,15 +22793,15 @@ static int xmlTextWriterWriteNs0TSRecommendationsFollowupObjType(xmlTextWriterPt
  */
 static void freeNs0TSRecommendationsFollowupObjType(struct enunciate_ns0_TSRecommendationsFollowupObj *_tSRecommendationsFollowupObj) {
   int i;
-  if (_tSRecommendationsFollowupObj->questionUse != NULL) {
+  if (_tSRecommendationsFollowupObj->questionUser != NULL) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor questionUse of type enunciate_ns0_TSRecommendationsFollowupObj...\n");
+    printf("Freeing type of accessor questionUser of type enunciate_ns0_TSRecommendationsFollowupObj...\n");
 #endif
-    freeNs0TSUserProfileBasicObjType(_tSRecommendationsFollowupObj->questionUse);
+    freeNs0TSUserProfileBasicObjType(_tSRecommendationsFollowupObj->questionUser);
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor questionUse of type enunciate_ns0_TSRecommendationsFollowupObj...\n");
+    printf("Freeing accessor questionUser of type enunciate_ns0_TSRecommendationsFollowupObj...\n");
 #endif
-    free(_tSRecommendationsFollowupObj->questionUse);
+    free(_tSRecommendationsFollowupObj->questionUser);
   }
   if (_tSRecommendationsFollowupObj->questionText != NULL) {
 #if DEBUG_ENUNCIATE > 1

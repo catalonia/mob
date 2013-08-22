@@ -45,7 +45,6 @@
         [activity1 startAnimating];
         photoRestaurant = image1;
         _location = 1;
-        [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
     }
     if (image2.image != nil) {
         iv2.image = image2.image;
@@ -59,7 +58,6 @@
         [activity2 startAnimating];
         photoRestaurant = image2;
         _location = 2;
-        [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
     }
     
     if (image3.image != nil) {
@@ -74,7 +72,6 @@
         [activity3 startAnimating];
         photoRestaurant = image2;
         _location = 2;
-        [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
     }
 }
 
@@ -103,36 +100,6 @@
         default:
             break;
     }
-}
-
--(void)loadImage
-{
-    int location = _location;
-    TSPhotoRestaurantObj* photo = photoRestaurant;
-    while (YES) {
-        if (photo.image != nil) {
-            if (location == 1) {
-                iv1.image = photo.image;
-                bt1.enabled = YES;
-                [activity1 stopAnimating];
-                [activity1 removeFromSuperview];
-            }
-            if (location == 2) {
-                iv2.image = photo.image;
-                bt2.enabled = YES;
-                [activity2 stopAnimating];
-                [activity2 removeFromSuperview];
-            }
-            if (location == 3) {
-                iv3.image = photo.image;
-                bt3.enabled = YES;
-                [activity3 stopAnimating];
-                [activity3 removeFromSuperview];
-            }
-            break;
-        }
-    }
-
 }
 
 @end

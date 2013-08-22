@@ -2733,6 +2733,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         		String string = listCityID.get(i);
         		TSCityObj city = mySQL.getCityInforByCityID(string);
         		TSGlobalObj globalObj = listName.get(i);
+        		globalObj.setCity(city);
         		globalObj.setName(globalObj.getName() +", " + city.getState());
         		System.out.println(globalObj.getName() +", " + city.getState());
         		listCityObj.add(globalObj);

@@ -12,5 +12,6 @@
 @synthesize
 uid          = _uid,
 name      = _name,
-type        = _type;
+type        = _type,
+cityObj    = _cityObj;
 @end

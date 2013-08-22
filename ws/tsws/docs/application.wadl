@@ -12,20 +12,6 @@
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
       </wadl:method>
-      <wadl:method name="POST">
-        <wadl:request/>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/json/ask/likesunlikes">
-      <wadl:method name="POST">
-        <wadl:request/>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
     </wadl:resource>
     <wadl:resource path="/json/ask/likesunlikes">
       <wadl:method name="POST">
@@ -39,7 +25,7 @@
       <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="userid" style="query"/>
-          <wadl:param name="paginationId" style="query"/>
+          <wadl:param name="paginationid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -50,7 +36,7 @@
       <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="userid" style="query"/>
-          <wadl:param name="paginationId" style="query"/>
+          <wadl:param name="paginationid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -130,6 +116,22 @@
           <wadl:param name="messageid" style="query"/>
           <wadl:param name="recipientuserid" style="query"/>
         </wadl:request>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/ask/recomsgans">
+      <wadl:method name="POST">
+        <wadl:request/>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/ask/recomsgans">
+      <wadl:method name="POST">
+        <wadl:request/>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
         </wadl:response>
@@ -258,7 +260,7 @@
     <wadl:resource path="/rest/ask/recosidrestaurantsearchresults">
       <wadl:method name="GET">
         <wadl:request>
-          <wadl:param name="recoRequestId" style="query"/>
+          <wadl:param name="recorequestid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -268,7 +270,7 @@
     <wadl:resource path="/json/ask/recosidrestaurantsearchresults">
       <wadl:method name="GET">
         <wadl:request>
-          <wadl:param name="recoRequestId" style="query"/>
+          <wadl:param name="recorequestid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -278,17 +280,17 @@
     <wadl:resource path="/rest/ask/recosrestaurantsearchresults">
       <wadl:method name="GET">
         <wadl:request>
-          <wadl:param name="restaurantId" style="query"/>
-          <wadl:param name="neighborhoodId" style="query"/>
+          <wadl:param name="restaurantid" style="query"/>
+          <wadl:param name="neighborhoodid" style="query"/>
           <wadl:param name="cityid" style="query"/>
           <wadl:param name="statename" style="query"/>
           <wadl:param name="cuisineidlist" style="query"/>
           <wadl:param name="priceidlist" style="query"/>
           <wadl:param name="rating" style="query"/>
-          <wadl:param name="savedFlag" style="query"/>
-          <wadl:param name="favFlag" style="query"/>
-          <wadl:param name="dealFlag" style="query"/>
-          <wadl:param name="chainFlag" style="query"/>
+          <wadl:param name="savedflag" style="query"/>
+          <wadl:param name="favflag" style="query"/>
+          <wadl:param name="dealflag" style="query"/>
+          <wadl:param name="chainflag" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -298,17 +300,17 @@
     <wadl:resource path="/json/ask/recosrestaurantsearchresults">
       <wadl:method name="GET">
         <wadl:request>
-          <wadl:param name="restaurantId" style="query"/>
-          <wadl:param name="neighborhoodId" style="query"/>
+          <wadl:param name="restaurantid" style="query"/>
+          <wadl:param name="neighborhoodid" style="query"/>
           <wadl:param name="cityid" style="query"/>
           <wadl:param name="statename" style="query"/>
           <wadl:param name="cuisineidlist" style="query"/>
           <wadl:param name="priceidlist" style="query"/>
           <wadl:param name="rating" style="query"/>
-          <wadl:param name="savedFlag" style="query"/>
-          <wadl:param name="favFlag" style="query"/>
-          <wadl:param name="dealFlag" style="query"/>
-          <wadl:param name="chainFlag" style="query"/>
+          <wadl:param name="savedflag" style="query"/>
+          <wadl:param name="favflag" style="query"/>
+          <wadl:param name="dealflag" style="query"/>
+          <wadl:param name="chainflag" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -319,7 +321,7 @@
       <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="userid" style="query"/>
-          <wadl:param name="paginationId" style="query"/>
+          <wadl:param name="paginationid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -330,7 +332,7 @@
       <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="userid" style="query"/>
-          <wadl:param name="paginationId" style="query"/>
+          <wadl:param name="paginationid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -383,6 +385,20 @@
     </wadl:resource>
     <wadl:resource path="/rest/populate/locationsearchterms">
       <wadl:method name="GET">
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/populate/locationsearchterms">
+      <wadl:method name="GET">
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/populate/locationsearchtermsTest">
+      <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="neighbourhood" style="query"/>
         </wadl:request>
@@ -391,7 +407,7 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
-    <wadl:resource path="/json/populate/locationsearchterms">
+    <wadl:resource path="/json/populate/locationsearchtermsTest">
       <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="neighbourhood" style="query"/>

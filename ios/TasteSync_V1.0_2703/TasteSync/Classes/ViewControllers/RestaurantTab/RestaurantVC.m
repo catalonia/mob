@@ -509,7 +509,10 @@ typedef enum _TFSelect
     }
     else
     {
-        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantID:@"002b38d0-e4b5-012e-6305-003048c87378"];
+        RestaurantObj* restaurantObj = [[RestaurantObj alloc]init];
+        restaurantObj.uid = @"002b38d0-e4b5-012e-6305-003048c87378";
+        restaurantObj.name = @"Alpha Fusion";
+        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantObj:restaurantObj];
         vc.selectedIndex = 2;
         [self.navigationController pushViewController:vc animated:YES];
     }

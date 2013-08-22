@@ -128,7 +128,6 @@ askSubmited=_askSubmited;
 {
     LoginVC *loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC" bundle:nil];
     UINavigationController *rootCtr = [[UINavigationController alloc] initWithRootViewController:loginVC];
-    
     self.window.rootViewController = rootCtr;
 }
 
@@ -151,18 +150,16 @@ askSubmited=_askSubmited;
 }
 
 
-- (void)sessionStateChanged:(FBSession *)session
-                      state:(FBSessionState)state
-                      error:(NSError *)error
+- (void)sessionStateChanged:(FBSession *)session  state:(FBSessionState)state error:(NSError *)error
 {
     
-    debug(@"sessionStateChanged");
+    NSLog(@"sessionStateChanged");
     
     
     switch (state) {
         case FBSessionStateOpen: {
             
-            debug(@"FBSessionStateOpen");
+            NSLog(@"FBSessionStateOpen");
             
 //            [self.delegate cFacebookDidFinish:nil withTag:CFacebookTagActionLogin];
             [self.delegate cFacebook:nil didFinish:nil tagAction:CFacebookTagActionLogin];
@@ -172,21 +169,21 @@ askSubmited=_askSubmited;
         }
             break;
         case FBSessionStateClosed:
-            debug(@"FBSessionStateClosed");
+            NSLog(@"FBSessionStateClosed");
             
             break;
         case FBSessionStateClosedLoginFailed:
             
             [FBSession.activeSession closeAndClearTokenInformation];
             
-            debug(@"FBSessionStateClosedLoginFailed");
+            NSLog(@"FBSessionStateClosedLoginFailed");
             
             [self showLogin];
             
             break;
         default:
             
-            debug(@"default");
+            NSLog(@"default");
             
             break;
     }

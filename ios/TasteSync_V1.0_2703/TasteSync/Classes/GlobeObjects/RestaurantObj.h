@@ -12,23 +12,21 @@
 @interface RestaurantObj : NSObject
 
 @property (nonatomic, strong) NSString* uid;
-
 @property (nonatomic, strong) NSString *name,*nation;
-
 @property (nonatomic, assign) float longtitude,lattitude;
-
 @property (nonatomic, assign) int rates;
-
 @property (nonatomic, assign) BOOL isSelected; 
-
 @property (nonatomic, assign) BOOL isDeal;
 
+@property(nonatomic, strong) NSString* deal;
+@property (nonatomic, assign) BOOL isOpenNow;
+@property (nonatomic, assign) BOOL isMoreInfo;
+@property (nonatomic, assign) BOOL isMenuFlag;
+@property (nonatomic, assign) BOOL isTipFlag;
+
 @property (nonatomic, assign) BOOL isSaved;
-
 @property (nonatomic, assign) BOOL isFavs;
-
 @property (nonatomic, assign) BOOL isCheckin;
-
 @property (nonatomic, assign) BOOL isLike;
 @property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, assign) int allowSize;

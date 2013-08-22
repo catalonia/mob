@@ -10,6 +10,7 @@ public class TSGlobalObj implements Serializable{
 	
 	private String id;
 	private String name;
+	private TSCityObj city;
 	
 	@XmlElement
 	public String getId() {
@@ -27,5 +28,14 @@ public class TSGlobalObj implements Serializable{
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@XmlElement
+	public TSCityObj getCity() {
+		return city;
+	}
+
+	public void setCity(TSCityObj city) {
+		this.city = city;
 	}
 }

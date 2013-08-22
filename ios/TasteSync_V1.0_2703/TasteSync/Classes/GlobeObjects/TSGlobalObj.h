@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TSCityObj.h"
 
 typedef enum GlobalDataType {
     GlobalDataCuisine_1 =  0,
@@ -23,5 +24,6 @@ typedef enum GlobalDataType {
 @interface TSGlobalObj : NSObject
 @property (nonatomic, strong) NSString* uid;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) TSCityObj *cityObj;
 @property (nonatomic, assign) GlobalDataType type;
 @end

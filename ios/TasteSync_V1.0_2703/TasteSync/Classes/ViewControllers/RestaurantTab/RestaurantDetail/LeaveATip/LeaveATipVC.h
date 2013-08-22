@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "RestaurantObj.h"
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface LeaveATipVC : UIViewController<UITextViewDelegate>
+@interface LeaveATipVC : UIViewController<UITextViewDelegate, RequestDelegate>
 {
     __weak IBOutlet UILabel *lbRestaurantName, *lbRestaurantDetail, *lbTvTip;
     __weak IBOutlet UITextView *tvTip;
@@ -26,5 +28,7 @@
 - (IBAction)actionLeaveATip:(id)sender;
 - (IBAction)actionNewsfeed:(id)sender;
 - (IBAction)actionBack:(id)sender;
+
+-(id)initWithRestaurantObj:(RestaurantObj*)restaurantObj;
 
 @end

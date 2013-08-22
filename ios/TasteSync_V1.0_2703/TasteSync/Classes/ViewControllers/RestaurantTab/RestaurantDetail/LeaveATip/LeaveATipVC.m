@@ -27,6 +27,15 @@
     return self;
 }
 
+-(id)initWithRestaurantObj:(RestaurantObj*)restaurantObj
+{
+    self = [super initWithNibName:@"LeaveATipVC" bundle:nil];
+    if (self) {
+        self.restaurantObj = restaurantObj;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -133,6 +142,14 @@
     }
     else
     {
+        
+        CRequest* request = [[CRequest alloc]initWithURL:@"savetips" RQType:RequestTypePost RQData:RequestDataRestaurant RQCategory:ApplicationForm];
+        request.delegate = self;
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
+        [request setFormPostValue:_restaurantObj.uid forKey:@"restaurantId"];
+        [request setFormPostValue:tvTip.text forKey:@"tipText"];
+        [request startFormRequest];
+        
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_leavetip_on.png"] forButton:btLeaveATip];
 
     }
@@ -222,5 +239,13 @@
                          
                      }];
 
+}
+
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    if (data != nil) {
+        tvTip.text = @"";
+        [CommonHelpers showInfoAlertWithTitle:@"TasteSync" message:@"Success!" delegate:nil tag:0];
+    }
 }
 @end

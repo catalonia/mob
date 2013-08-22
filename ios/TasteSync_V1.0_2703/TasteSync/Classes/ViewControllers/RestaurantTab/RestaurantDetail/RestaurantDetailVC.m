@@ -27,6 +27,8 @@
     __weak IBOutlet UIView *view1,*view2,*view3,*view4;
     __weak IBOutlet UILabel *lbName,*lbDetail,*lbsortMSg,*lbLongMsg;    
     __weak IBOutlet UIButton *btSave,*btUserQuestion,*btMore, *btMenu, *btMoreInfo,*btReviews,*btReserve,*btAddToMyFavorites , *btBack, *btRestaurant;
+    
+    __weak IBOutlet UILabel* lbOpenNow, *lbDeal;
     BOOL isSaved, restaurantChains, isAddToMyFaves;
     RateCustom *rateCustom;    
     ResShareView *shareView ;    
@@ -82,12 +84,11 @@
     return self;
 }
 
-- (id)initWithRestaurantID:(NSString *)uid
+- (id)initWithRestaurantObj:(RestaurantObj *)restaurantObj
 {
     self = [super initWithNibName:@"RestaurantDetailVC" bundle:nil];
     if (self) {
-        self.restaurantObj = [[RestaurantObj alloc]init];
-        self.restaurantObj.uid = uid;
+        self.restaurantObj = restaurantObj;
         _arrayPhoto = [[NSMutableArray alloc]init];
     }
     return self;
@@ -96,17 +97,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view from its nib.
     [CommonHelpers setBackgroudImageForViewRestaurant:self.view];
-    NSString* link = [NSString stringWithFormat:@"restaurantdetails?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
+    NSString* link = [NSString stringWithFormat:@"details?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
     CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:1];
     request.delegate = self;
     [request startFormRequest];
     
-    NSString* photo_link = [NSString stringWithFormat:@"photos?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
-    CRequest* photo_request = [[CRequest alloc]initWithURL:photo_link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:2];
-    photo_request.delegate = self;
-    [photo_request startFormRequest];
     
 }
 
@@ -115,14 +114,6 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
-    if (_restaurantObj.isSaved) {
-        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_saved_on.png"] forButton:btSave];
-
-    }else
-    {
-        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_saved.png"] forButton:btSave];
-
-    }
     if (self.selectedIndex != 2) {
         btBack.hidden = NO;
         btRestaurant.hidden = YES;
@@ -176,17 +167,18 @@
         }
         else
         {
-            if (!_restaurantObj.isSaved) {
-                
-                [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_saved_on.png"] forButton:btSave];
-                _restaurantObj.isSaved = YES;
-                
-                
-            }
+            NSString* saveFlag = @"";
+            if (!_restaurantObj.isSaved)
+                saveFlag = @"1";
             else
-            {
-                [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_saved.png"] forButton:btSave];
-                _restaurantObj.isSaved = NO;            }
+                saveFlag = @"0";
+            CRequest* request = [[CRequest alloc]initWithURL:@"save" RQType:RequestTypePost RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:3];
+            request.delegate = self;
+            [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
+            [request setFormPostValue:_restaurantObj.uid forKey:@"restaurantid"];
+            [request setFormPostValue:saveFlag forKey:@"userrestaurantsavedflag"];
+            [request startFormRequest];
+           
 
         }
 
@@ -208,10 +200,9 @@
 
 - (IBAction)actionMenu:(id)sender
 {
-    debug(@"actionMenu");
-    ResMenuVC *vc = [[ResMenuVC alloc] initWithRestaurantObj:_restaurantObj];
-    [self.navigationController pushViewController:vc animated:YES];
-
+        debug(@"actionMenu");
+        ResMenuVC *vc = [[ResMenuVC alloc] initWithRestaurantObj:_restaurantObj];
+        [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)actionMoreInfo:(id)sender
@@ -248,15 +239,19 @@
 - (IBAction)actionAddToMyFavorites:(id)sender
 {
     if ([UserDefault userDefault].loginStatus != NotLogin) {
-        if (!_restaurantObj.isFavs) {
-            _restaurantObj.isFavs = TRUE;
-            [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_addedtomyfaves.png"] forButton:btAddToMyFavorites];
-        }
+        
+        NSString* saveFavFlag = @"";
+        if (!_restaurantObj.isFavs)
+            saveFavFlag = @"1";
         else
-        {
-            _restaurantObj.isFavs = FALSE;
-            [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_addtomyfaves.png"] forButton:btAddToMyFavorites];
-        }
+            saveFavFlag = @"0";
+        CRequest* request = [[CRequest alloc]initWithURL:@"savefavs" RQType:RequestTypePost RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:4];
+        request.delegate = self;
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
+        [request setFormPostValue:_restaurantObj.uid forKey:@"restaurantid"];
+        [request setFormPostValue:saveFavFlag forKey:@"userrestaurantfavflag"];
+        [request startFormRequest];
+        
     }
     else
     {
@@ -268,15 +263,14 @@
 
 - (IBAction)actionLeaveATip:(id)sender
 {
-    LeaveATipVC *vc = [[LeaveATipVC alloc] initWithNibName:@"LeaveATipVC" bundle:nil];
-    vc.restaurantObj = _restaurantObj;
+    LeaveATipVC *vc = [[LeaveATipVC alloc] initWithRestaurantObj:_restaurantObj];
     [self.navigationController pushViewController:vc animated:YES];
     
 }
 
 - (IBAction)actionMorePhoto:(id)sender
 {
-    ResPhotoVC* restPhoto = [[ResPhotoVC alloc]initWithArrayPhoto:_arrayPhoto RestaurantObj:_restaurantObj];
+    ResPhotoVC* restPhoto = [[ResPhotoVC alloc]initWithArrayPhoto:_restaurantObj];
     [self.navigationController pushViewController:restPhoto animated:YES];
 }
 
@@ -285,6 +279,37 @@
 - (void) configView
 {
     [scrollViewMain setContentSize:CGSizeMake(320, 580)];
+    if (_restaurantObj.isSaved) {
+        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_saved_on.png"] forButton:btSave];
+        
+    }else
+    {
+        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_saved.png"] forButton:btSave];
+        
+    }
+    
+    if (_restaurantObj.isOpenNow) 
+        lbOpenNow.text = @"Open Now";
+    else
+        lbOpenNow.text = @"";
+    
+    if (_restaurantObj.isFavs) {
+        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_addedtomyfaves.png"] forButton:btAddToMyFavorites];
+    }
+    else
+    {
+        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_addtomyfaves.png"] forButton:btAddToMyFavorites];
+    }
+    
+    lbDeal.text = self.restaurantObj.deal;
+    
+    if (!self.restaurantObj.isMenuFlag) {
+        btMenu.hidden = YES;
+    }
+    
+    if (!self.restaurantObj.isMoreInfo) {
+        btMoreInfo.hidden = YES;
+    }
     
     resRecommendObj = [[ResRecommendObj alloc] init];
     resRecommendObj.title = @"Victor recommends for ";
@@ -403,22 +428,22 @@
     NSLog(@"%@",response);
     if (key == 1) {
         NSDictionary* dicResponse = [response objectFromJSONString];
-        self.restaurantObj.name                     = [dicResponse objectForKey:@"restaurantName"];
-        self.restaurantObj.factualId                =  [dicResponse objectForKey:@"factualId"];
-        self.restaurantObj.factualRating        =  [dicResponse objectForKey:@"factualId"];
-        self.restaurantObj.priceRange           =  [dicResponse objectForKey:@"priceRange"];
-        self.restaurantObj.cityObj.uid            =  [dicResponse objectForKey:@"restaurantCityId"];
-        self.restaurantObj.restaurantHours   =  [dicResponse objectForKey:@"restaurantHours"];
-        self.restaurantObj.lattitude                 =  [[dicResponse objectForKey:@"restaurantLat"] floatValue];
-        self.restaurantObj.longtitude              =  [[dicResponse objectForKey:@"restaurantLon"] floatValue];
-        self.restaurantObj.sumVoteCount      =  [dicResponse objectForKey:@"sumVoteCount"];
-        self.restaurantObj.sumVoteValue       =  [dicResponse objectForKey:@"sumVoteValue"];
-        self.restaurantObj.tbdOpenTableId    =  [dicResponse objectForKey:@"tbdOpenTableId"];
+        self.restaurantObj.isOpenNow                =  [[dicResponse objectForKey:@"openNowFlag"] isEqualToString:@"1"]?YES:NO;
+        self.restaurantObj.deal                            =  [dicResponse objectForKey:@"dealHeadline"];
+        if ([self.restaurantObj.deal isEqualToString:@""]) 
+            self.restaurantObj.isDeal = NO;
+        else
+            self.restaurantObj.isDeal = YES;
+        
+        self.restaurantObj.isMoreInfo                  =  [[dicResponse objectForKey:@"moreInfoFlag"]  isEqualToString:@"1"]?YES:NO;
+        self.restaurantObj.isMenuFlag                =  [[dicResponse objectForKey:@"menuFlag"] isEqualToString:@"1"]?YES:NO;
+        self.restaurantObj.isSaved                      =  [[dicResponse objectForKey:@"userRestaurantSavedFlag"] isEqualToString:@"1"]?YES:NO;
+        self.restaurantObj.isFavs                         =  [[dicResponse objectForKey:@"userRestaurantFavFlag"]  isEqualToString:@"1"]?YES:NO;
+        self.restaurantObj.isTipFlag                     =  [[dicResponse objectForKey:@"userRestaurantTipFlag"]  isEqualToString:@"1"]?YES:NO;
         [self configView];
-    }
-    if (key == 2) {
-        NSArray* dicResponse = [response objectFromJSONString];
-        for (NSDictionary* dic in dicResponse) {
+        
+        NSArray* dicPhoto = [dicResponse objectForKey:@"photoList"];
+        for (NSDictionary* dic in dicPhoto) {
             TSPhotoRestaurantObj* obj = [[TSPhotoRestaurantObj alloc]init];
             obj.uid                              = [dic objectForKey:@"restaurantId"];
             obj.photoId                       = [dic objectForKey:@"photoId"];
@@ -431,7 +456,33 @@
             obj.photoSource               =  [dic objectForKey:@"photoSource"];
             [_arrayPhoto addObject:obj];
         }
+        
         [self setupHorizontalScrollView];
+    }
+    if (key == 3) {
+        if (!_restaurantObj.isSaved) {
+            
+            [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_saved_on.png"] forButton:btSave];
+            _restaurantObj.isSaved = YES;
+            
+            
+        }
+        else
+        {
+            [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_saved.png"] forButton:btSave];
+            _restaurantObj.isSaved = NO;
+        }
+    }
+    if (key == 4) {
+        if (!_restaurantObj.isFavs) {
+            _restaurantObj.isFavs = TRUE;
+            [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_addedtomyfaves.png"] forButton:btAddToMyFavorites];
+        }
+        else
+        {
+            _restaurantObj.isFavs = FALSE;
+            [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_addtomyfaves.png"] forButton:btAddToMyFavorites];
+        }
     }
 }
 

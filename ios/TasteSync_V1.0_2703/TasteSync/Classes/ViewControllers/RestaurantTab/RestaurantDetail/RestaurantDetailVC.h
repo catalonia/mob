@@ -17,5 +17,5 @@
 @property (nonatomic, strong) RestaurantObj *restaurantObj;
 @property (nonatomic, assign) int selectedIndex;
 
-- (id)initWithRestaurantID:(NSString *)uid;
+- (id)initWithRestaurantObj:(RestaurantObj *)restaurantObj;
 @end

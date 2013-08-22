@@ -202,17 +202,17 @@
 {
     UIButton* button = (UIButton*)sender;
     if (button.tag == 1) {
-        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantID:_restaurantObj1.uid];
+        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantObj:_restaurantObj1];
         vc.selectedIndex = 2;
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (button.tag == 2) {
-        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantID:_restaurantObj2.uid];
+        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantObj:_restaurantObj2];
         vc.selectedIndex = 2;
         [self.navigationController pushViewController:vc animated:YES];
     }
     if (button.tag == 3) {
-        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantID:_restaurantObj3.uid];
+        RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantObj:_restaurantObj3];
         vc.selectedIndex = 2;
         [self.navigationController pushViewController:vc animated:YES];
     }

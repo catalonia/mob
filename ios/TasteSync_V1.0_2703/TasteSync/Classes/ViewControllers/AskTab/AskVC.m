@@ -11,6 +11,7 @@
 #import "AskRecommendationsVC.h"
 #import "TagView.h"
 #import "TSGlobalObj.h"
+#import "TSCityObj.h"
 
 @interface AskVC ()<TagObjDelegate,TagViewDelegate>
 {
@@ -20,8 +21,9 @@
     TagView *tagView;
     NSMutableArray *arrDataAsk;
     UITextField *cTextField;
-    NSString *region;
+    TSGlobalObj *region;
     NSString* cityLocal;
+    NSString* _storeLocation;
 }
 
 @end
@@ -205,8 +207,8 @@
 {
     self.arrData = [[NSMutableArray alloc] init ];
     self.arrData = [[CommonHelpers appDelegate] arrDropdown];    
-    self.arrDataRegion = [[NSMutableArray alloc] initWithObjects:@"Chinatown, New York, NY",@"Chappaqua, NY",@"Njius, Chjas, CA",@"New York, NY", nil];   
-    
+    self.arrDataRegion = [[NSMutableArray alloc] init];   
+    _storeLocation = @"";
     self.arrDataFilter = [[NSMutableArray alloc] init];
     
     
@@ -334,12 +336,96 @@
     }
     else
     {
+        NSString* cuisineList1 = @"";
+        NSString* cuisineList2 = @"";
+        NSString* priceList = @"";
+        NSString* themeList = @"";
+        NSString* whoareyouList = @"";
+        NSString* typeofrestaurantList = @"";
+        NSString* occasionList = @"";
+        
+        CRequest* request = [[CRequest alloc]initWithURL:@"recosearch" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
+        
         for (TSGlobalObj* global in arrDataAsk) {
+            if (global.type == GlobalDataCuisine_1 ) {
+                if (cuisineList1.length == 0) {
+                    cuisineList1 = global.uid;
+                }
+                else
+                    cuisineList1 = [cuisineList1 stringByAppendingFormat:@",%@", global.uid];
+            }
+            if (global.type == GlobalDataCuisine_2 ) {
+                if (cuisineList2.length == 0) {
+                    cuisineList2 = global.uid;
+                }
+                else
+                    cuisineList2 = [cuisineList2 stringByAppendingFormat:@",%@", global.uid];
+            }
+            if (global.type == GlobalDataOccasion ) {
+                if (occasionList.length == 0) {
+                    occasionList = global.uid;
+                }
+                else
+                    occasionList = [occasionList stringByAppendingFormat:@",%@", global.uid];
+            }
+            if (global.type == GlobalDataPrice ) {
+                if (priceList.length == 0) {
+                    priceList = global.uid;
+                }
+                else
+                    priceList = [priceList stringByAppendingFormat:@",%@", global.uid];
+            }
+            if (global.type == GlobalDataTheme ) {
+                if (themeList.length == 0) {
+                    themeList = global.uid;
+                }
+                else
+                    themeList = [themeList stringByAppendingFormat:@",%@", global.uid];
+            }
+            if (global.type == GlobalDataTypeOfRestaurant ) {
+                if (typeofrestaurantList.length == 0) {
+                    typeofrestaurantList = global.uid;
+                }
+                else
+                    typeofrestaurantList = [typeofrestaurantList stringByAppendingFormat:@",%@", global.uid];
+            }
+            if (global.type == GlobalDataWhoAreUWith ) {
+                if (whoareyouList.length == 0) {
+                    whoareyouList = global.uid;
+                }
+                else
+                    whoareyouList = [whoareyouList stringByAppendingFormat:@",%@", global.uid];
+            }
             NSLog(@"%@ - %d - %@", global.name, global.type, global.uid);
         }
+        [request setFormPostValue:cuisineList1              forKey:@"cuisinetier1idlist"];
+        [request setFormPostValue:cuisineList2              forKey:@"cuisineiier2idlist"];
+        [request setFormPostValue:priceList                    forKey:@"priceidlist"];
+        [request setFormPostValue:themeList                  forKey:@"themeidlist"];
+        [request setFormPostValue:whoareyouList          forKey:@"whoareyouwithidlist"];
+        [request setFormPostValue:typeofrestaurantList forKey:@"typeofrestaurantidList"];
+        [request setFormPostValue:occasionList             forKey:@"occasionidlist"];
         
-        //AskRecommendationsVC *vc = [[AskRecommendationsVC alloc] initWithNibName:@"AskRecommendationsVC" bundle:nil];
-       // [self.navigationController pushViewController:vc animated:YES];
+        [request setFormPostValue:@"neighborhoodid" forKey:@"neighborhoodid"];
+        [request setFormPostValue:@"typeofrestaurantidList" forKey:@"cityid"];
+        [request setFormPostValue:@"occasionidlist" forKey:@"statename"];
+        
+        if (region.cityObj == nil) {
+            [request setFormPostValue:@"" forKey:@"neighborhoodid"];
+            [request setFormPostValue:region.uid forKey:@"cityid"];
+            [request setFormPostValue:[self parseStateFromCityObj:region.name] forKey:@"statename"];
+        }
+        else
+        {
+            [request setFormPostValue:region.uid forKey:@"neighborhoodid"];
+            [request setFormPostValue:region.cityObj.uid forKey:@"cityid"];
+            [request setFormPostValue:region.cityObj.stateName forKey:@"statename"];
+        }
+        request.delegate = self;
+        [request startFormRequest];
+        NSLog(@"%@ - %d - %@", region.uid, region.type, region.name);
+    
     }
 
 }
@@ -496,7 +582,7 @@
         
         TSGlobalObj *globalObj = [_arrDataFilter objectAtIndex:indexPath.row];
         tfRegion.text = globalObj.name;
-        region = globalObj.name;
+        region = globalObj;
         tbvFilter.hidden = YES;
         [_arrDataFilter removeAllObjects];
 
@@ -608,20 +694,26 @@
     }
     
     if (chooseRegion) {
-        
-        for (NSString *strObj in _arrDataRegion) {
+        if (txt.length == 3 && ![[txt uppercaseString] isEqualToString:_storeLocation]) {
+            NSLog(@"request");
+            
+            CRequest* request = [[CRequest alloc]initWithURL:@"getCity" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:1];
+            request.delegate = self;
+            [request setFormPostValue:[txt uppercaseString] forKey:@"key"];
+            [request startFormRequest];
+            
+            _storeLocation = [txt uppercaseString];
+        }
+        for (TSGlobalObj *global in _arrDataRegion) {
            
-            NSString  *ustrObj =  [strObj uppercaseString];
+            NSString  *ustrObj =  [global.name uppercaseString];
             NSString *utxt =   [txt uppercaseString];
             
             int diff = strncmp([ustrObj UTF8String], [utxt UTF8String], utxt.length);
                        
             
             if (/*p!=NULL*/ diff == 0) {
-                TSGlobalObj* globalObj = [[TSGlobalObj alloc]init];
-                globalObj.name = strObj;
-                globalObj.type = GlobalDataCuisine_2;
-                [self.arrDataFilter addObject:globalObj];
+                [self.arrDataFilter addObject:global];
             }
             
         }
@@ -703,7 +795,7 @@
         tfRegion.text = nil;
     }else
     {
-        tfRegion.text = region;
+        tfRegion.text = region.name;
 
     }
     
@@ -810,7 +902,37 @@
 
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
-    
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    if (key == 1) {
+            NSArray* array = [response objectFromJSONString];
+        for (NSDictionary* dic in array) {
+            TSGlobalObj* global = [[TSGlobalObj alloc]init];
+            global.uid = [dic objectForKey:@"id"];
+            global.name = [dic objectForKey:@"name"];
+            global.type = GlobalDataCity;
+            NSDictionary* name = [dic objectForKey:@"city"];
+            TSCityObj* cityObj = nil;
+            if (name != (id)[NSNull null]) {
+                cityObj.uid = [name objectForKey:@"cityId"];
+                cityObj.country = [name objectForKey:@"country"];
+                cityObj.stateName = [name objectForKey:@"state"];
+                cityObj.cityName = [name objectForKey:@"city"];
+            }
+
+            [_arrDataRegion addObject:global];
+            [_arrDataFilter addObject:global];
+        }
+    }
+    if (key == 2) {
+        NSDictionary* dic = [response objectFromJSONString];
+        AskRecommendationsVC *vc = [[AskRecommendationsVC alloc] initWithArrayData:arrDataAsk atLocation:region Reco_RequestID:[dic objectForKey:@"valueNameValue"]];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
+-(NSString*)parseStateFromCityObj:(NSString*)name
+{
+    NSArray* data= [name componentsSeparatedByString:@", "];
+    return [data objectAtIndex:1];
+}
 @end

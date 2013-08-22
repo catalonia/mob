@@ -14,6 +14,7 @@
 
 @interface FacebookFriendsVC ()
 {
+    NSMutableArray* _friendArray;
 }
 @end
 
@@ -40,7 +41,7 @@
     [super viewWillAppear:animated];
     
     [CommonHelpers setBackgroudImageForView:self.view];
-    
+    _friendArray = [[NSMutableArray alloc]initWithArray:[CommonHelpers appDelegate].arrDataFBFriends];
     CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFriends" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
     request.delegate = self;
     [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
@@ -416,9 +417,16 @@
     NSMutableArray* arrayInviteFriendReload = [[NSMutableArray alloc]init];
     i = 0;
     
-    for (NSDictionary* dic in arrayInviteFriend) {
-        UserObj *obj = [CommonHelpers getUserObj:dic];
-        [self.arrData2 addObject:obj];
+    for (NSString* dic in arrayInviteFriend) {
+        
+        for (UserObj* userObj in _friendArray) {
+            NSString* tmpStr = [NSString stringWithFormat:@"%@",userObj.uid];
+            if ([tmpStr isEqualToString:dic]) {
+                [self.arrData2 addObject:userObj];
+                NSLog(@"%@", dic);
+            }
+        }
+        
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         i++;
         [arrayInviteFriendReload addObject:indexPath];

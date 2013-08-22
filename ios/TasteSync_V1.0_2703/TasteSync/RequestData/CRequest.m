@@ -12,6 +12,7 @@
 #define LINK_REQUEST @":8080/tsws/services/"
 #define USER_REQUEST @"user/"
 #define RESTAURANT_REQUEST @"restaurant/"
+#define ASK_REQUEST @"ask/"
 
 @interface CRequest()
 {
@@ -31,8 +32,10 @@
         _url = [_url stringByAppendingString:LINK_REQUEST];
         if (data == RequestDataUser)
             _url = [_url stringByAppendingString:USER_REQUEST];
-        if (data == RequestDataRestaurant) 
+        if (data == RequestDataRestaurant)
             _url = [_url stringByAppendingString:RESTAURANT_REQUEST];
+        if (data == RequestDataAsk)
+            _url = [_url stringByAppendingString:ASK_REQUEST];
         _url = [_url stringByAppendingString:url];
         
         NSLog(@"url: %@", _url);
@@ -82,6 +85,8 @@
             _url = [_url stringByAppendingString:USER_REQUEST];
         if (data == RequestDataRestaurant)
             _url = [_url stringByAppendingString:RESTAURANT_REQUEST];
+        if (data == RequestDataAsk)
+            _url = [_url stringByAppendingString:ASK_REQUEST];
         _url = [_url stringByAppendingString:url];
         
         NSLog(@"url: %@", _url);

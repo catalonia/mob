@@ -16,7 +16,9 @@
 {
     __weak IBOutlet UILabel *lbResName;
     __weak IBOutlet UILabel *lbResDetail;
-    
+    __weak IBOutlet UITableView *_tableView;
+    int _index;
+    NSString* _urlImage;
 }
 - (IBAction)actionBack:(id)sender;
 - (IBAction)actionShare:(id)sender;
@@ -39,20 +41,18 @@ restaurantObj=_restaurantObj;
     return self;
 }
 
--(id)initWithArrayPhoto:(NSMutableArray*)array RestaurantObj:(RestaurantObj*)restaurant
+-(id)initWithArrayPhoto:(RestaurantObj*)restaurant
 {
     self = [super initWithNibName:@"ResPhotoVC" bundle:nil];
     if (self) {
         self.restaurantObj = restaurant;
-        self.arrData = array;
-        NSLog(@"count1: %d", [array count]);
+        self.arrData = [[NSMutableArray alloc] init];
         NSLog(@"count2: %d", [self.arrData count]);
-//        self.arrData = [[NSMutableArray alloc]init];
-//        for (TSPhotoRestaurantObj* photo in array) {
-//            if (photo.image != nil) {
-//                [self.arrData addObject:photo];
-//            }
-//        }
+        
+        NSString* photo_link = [NSString stringWithFormat:@"photos?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
+        CRequest* photo_request = [[CRequest alloc]initWithURL:photo_link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:2];
+        photo_request.delegate = self;
+        [photo_request startFormRequest];
     }
     return self;
 }
@@ -166,5 +166,39 @@ restaurantObj=_restaurantObj;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSArray* dicPhoto = [response objectFromJSONString];
+    for (NSDictionary* dic in dicPhoto) {
+        TSPhotoRestaurantObj* obj = [[TSPhotoRestaurantObj alloc]init];
+        obj.uid                              = [dic objectForKey:@"restaurantId"];
+        obj.photoId                       = [dic objectForKey:@"photoId"];
+        obj.prefix                          = [dic objectForKey:@"prefix"];
+        obj.suffix                           = [dic objectForKey:@"suffix"];
+        obj.width                           = [[dic objectForKey:@"width"] intValue];
+        obj.height                          = [[dic objectForKey:@"height"] intValue];
+        obj.ultimateSourceName = [dic objectForKey:@"ultimateSourceName"];
+        obj.ultimateSourceUrl      = [dic objectForKey:@"ultimateSourceUrl"];
+        obj.photoSource              = [dic objectForKey:@"photoSource"];
+        [self.arrData addObject:obj];
+    }
+    int i = 0;
+    for (TSPhotoRestaurantObj* photo in self.arrData) {
+        _index = i;
+        _urlImage = [NSString stringWithFormat:@"%@%dx%d%@", photo.prefix, photo.width, photo.height, photo.suffix];
+        [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
+        i++;
+    }
+}
+-(void)loadImage
+{
+    int tag = _index;
+    UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_urlImage]]];
+    TSPhotoRestaurantObj* obj = [self.arrData objectAtIndex:tag];
+    obj.image = image;
+    NSIndexPath* index = [NSIndexPath indexPathForRow:tag/3 inSection:0];
+    NSArray* array = [[NSArray alloc]initWithObjects:index, nil];
+    [_tableView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationFade];
+}
 @end

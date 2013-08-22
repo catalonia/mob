@@ -34,5 +34,11 @@ restaurantHours = _restaurantHours,
 sumVoteCount = _sumVoteCount,
 sumVoteValue = _sumVoteValue,
 tbdOpenTableId = _tbdOpenTableId,
-cityObj = _cityObj;
+cityObj = _cityObj,
+
+deal = _deal,
+ isOpenNow = _isOpenNow,
+isMoreInfo = _isMoreInfo,
+isMenuFlag = _isMenuFlag,
+isTipFlag = _isTipFlag;
 @end

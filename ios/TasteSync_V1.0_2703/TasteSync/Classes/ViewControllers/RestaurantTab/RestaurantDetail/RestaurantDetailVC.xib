@@ -641,7 +641,6 @@
 												<string key="NSFrame">{{177, 8}, {123, 31}}</string>
 												<reference key="NSSuperview" ref="603200182"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -941,6 +940,22 @@
 						<reference key="destination" ref="376035376"/>
 					</object>
 					<int key="connectionID">113</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">lbOpenNow</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="34907795"/>
+					</object>
+					<int key="connectionID">116</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">lbDeal</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="152078768"/>
+					</object>
+					<int key="connectionID">117</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -1375,7 +1390,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">115</int>
+			<int key="maxID">117</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1457,9 +1472,11 @@
 						<string key="btReviews">UIButton</string>
 						<string key="btSave">UIButton</string>
 						<string key="btUserQuestion">UIButton</string>
+						<string key="lbDeal">UILabel</string>
 						<string key="lbDetail">UILabel</string>
 						<string key="lbLongMsg">UILabel</string>
 						<string key="lbName">UILabel</string>
+						<string key="lbOpenNow">UILabel</string>
 						<string key="lbsortMSg">UILabel</string>
 						<string key="scrollViewMain">UIScrollView</string>
 						<string key="scrollViewPhotos">UIScrollView</string>
@@ -1509,6 +1526,10 @@
 							<string key="name">btUserQuestion</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="lbDeal">
+							<string key="name">lbDeal</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="lbDetail">
 							<string key="name">lbDetail</string>
 							<string key="candidateClassName">UILabel</string>
@@ -1519,6 +1540,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="lbName">
 							<string key="name">lbName</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lbOpenNow">
+							<string key="name">lbOpenNow</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="lbsortMSg">
