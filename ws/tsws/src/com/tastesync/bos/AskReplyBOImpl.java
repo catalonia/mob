@@ -5,6 +5,8 @@ import com.tastesync.db.dao.AskReplyDAOImpl;
 
 import com.tastesync.exception.TasteSyncException;
 
+import com.tastesync.model.objects.TSRecoNotificationBaseObj;
+import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
@@ -73,7 +75,7 @@ public class AskReplyBOImpl implements AskReplyBO {
     }
 
     @Override
-    public List<TSRestaurantObj> showRecommendationDidYouLike(
+    public List<TSRestaurantBasicObj> showRecommendationDidYouLike(
         String recorequestId) throws TasteSyncException {
         return askReplyDAO.showRecommendationDidYouLike(recorequestId);
     }
@@ -133,15 +135,9 @@ public class AskReplyBOImpl implements AskReplyBO {
     }
 
     @Override
-    public void showRecommendationsListActioned(String userId,
-        String paginationId) throws TasteSyncException {
-        askReplyDAO.showRecommendationsListActioned(userId, paginationId);
-    }
-
-    @Override
-    public void showRecommendationsListUnactioned(String userId,
-        String paginationId) throws TasteSyncException {
-        askReplyDAO.showRecommendationsListUnactioned(userId, paginationId);
+    public List<TSRecoNotificationBaseObj> showRecommendationsList(
+        String userId, String paginationId) throws TasteSyncException {
+        return askReplyDAO.showRecommendationsList(userId, paginationId);
     }
 
     @Override
