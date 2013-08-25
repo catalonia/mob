@@ -7,6 +7,15 @@ import com.tastesync.db.queries.RestaurantQueries;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
+import com.tastesync.model.objects.TSNotifDidYouLikeObj;
+import com.tastesync.model.objects.TSNotifFollowupQuestionObj;
+import com.tastesync.model.objects.TSNotifMessageForYouObj;
+import com.tastesync.model.objects.TSNotifRecoLikeObj;
+import com.tastesync.model.objects.TSNotifRecoReplyObj;
+import com.tastesync.model.objects.TSNotifRecorequestAnswerObj;
+import com.tastesync.model.objects.TSNotifRecorequestNeededObj;
+import com.tastesync.model.objects.TSRecoNotificationBaseObj;
+import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSUserProfileBasicObj;
 import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
@@ -18,6 +27,7 @@ import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
 import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 import com.tastesync.model.objects.derived.TSRestaurantsForYouObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
+import com.tastesync.model.vo.NotifRecoReplyVO;
 import com.tastesync.model.vo.RecommendationsForYouVO;
 
 import com.tastesync.util.CommonFunctionsUtil;
@@ -589,9 +599,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public List<TSRestaurantObj> showRecommendationDidYouLike(
+    public List<TSRestaurantBasicObj> showRecommendationDidYouLike(
         String recorequestId) throws TasteSyncException {
-        List<TSRestaurantObj> tsRestaurantObjList = new ArrayList<TSRestaurantObj>();
+        List<TSRestaurantBasicObj> tsRestaurantObjList = new ArrayList<TSRestaurantBasicObj>();
 
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
@@ -626,10 +636,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
                 statementInner.close();
 
-                TSRestaurantObj tsRestaurantObj = new TSRestaurantObj();
-                tsRestaurantObj.setRestaurantId(recommendedrestaurantsRestaurantId);
-                tsRestaurantObj.setRestaurantName(recommendedrestaurantsRestaurantName);
-                tsRestaurantObjList.add(tsRestaurantObj);
+                TSRestaurantBasicObj tsRestaurantBasicObj = new TSRestaurantBasicObj();
+                tsRestaurantBasicObj.setRestaurantId(recommendedrestaurantsRestaurantId);
+                tsRestaurantBasicObj.setRestaurantName(recommendedrestaurantsRestaurantName);
+                tsRestaurantObjList.add(tsRestaurantBasicObj);
             }
 
             statement.close();
@@ -754,6 +764,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                             statement.close();
                         }
                     }
+
                     statement.close();
                 }
             }
@@ -1447,6 +1458,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                                 "cuisine_desc"));
                 }
 
+                statement.close();
+
                 TSRestaurantsForYouObj tsRestaurantsForYouObj = new TSRestaurantsForYouObj();
                 tsRestaurantsForYouObj.setRestaurantId(restaurantId);
                 tsRestaurantsForYouObj.setRestaurantName(restaurantName);
@@ -1737,18 +1750,961 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         return null;
     }
 
-    @Override
-    public void showRecommendationsListActioned(String userId,
-        String paginationId) throws TasteSyncException {
-        // TODO Auto-generated method stub
-        //TODO return type to be defined!!
+    private void processTSNotifRecorequestNeededObjElement(
+        Connection connection,
+        List<TSRecoNotificationBaseObj> recoNotificationBaseList,
+        String userId,
+        List<TSNotifRecorequestNeededObj> tsNotifRecorequestNeededObjList)
+        throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            for (TSNotifRecorequestNeededObj tsNotifRecorequestNeededObjElement : tsNotifRecorequestNeededObjList) {
+                statement = connection.prepareStatement(AskReplyQueries.COUNT_REPLIES_RECOREQUEST_REPLY_USER_SELECT_SQL);
+                tsNotifRecorequestNeededObjElement.setRecorequestassignedActioned(
+                    "0");
+                statement.setString(1,
+                    tsNotifRecorequestNeededObjElement.getRecorequestId());
+
+                statement.setString(2, userId);
+
+                resultset = statement.executeQuery();
+
+                int rowCount = 0;
+
+                if (resultset.next()) {
+                    rowCount = resultset.getInt(1);
+
+                    if (rowCount > 0) {
+                        tsNotifRecorequestNeededObjElement.setRecorequestassignedActioned(
+                            "1");
+                    }
+                }
+
+                statement.close();
+
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_SELECT_SQL);
+                statement.setString(1,
+                    tsNotifRecorequestNeededObjElement.getRecorequestId());
+                statement.setString(2, userId);
+                resultset = statement.executeQuery();
+
+                String friendOrNot = null;
+
+                //only one result
+                if (resultset.next()) {
+                    friendOrNot = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "recorequest_ts_assigned.ASSIGNED_USERTYPE"));
+                }
+
+                if (statement != null) {
+                    statement.close();
+                }
+
+                String recommendeeUserFacebookId = null;
+                String recommendeeUserName = null;
+                String recommendeeUserPhoto = null;
+                String recommendeeUserUserId = null;
+                String recorequestText = null;
+
+                //-- this means userId is friend of recommendeeUserId and we should use the free text field
+                if ("user-assigned-friend".equals(friendOrNot) ||
+                        "system-assigned-friend".equals(friendOrNot)) {
+                    if (statement != null) {
+                        statement.close();
+                    }
+
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FRIEND_SELECT_SQL);
+                    statement.setString(1,
+                        tsNotifRecorequestNeededObjElement.getRecorequestId());
+                    resultset = statement.executeQuery();
+
+                    if (resultset.next()) {
+                        recommendeeUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.initiator_user_id"));
+                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.recorequest_free_text"));
+                    }
+
+                    statement.close();
+                } else if ("user-assigned-other".equals(friendOrNot) ||
+                        "system-assigned-other".equals(friendOrNot)) {
+                    if (statement != null) {
+                        statement.close();
+                    }
+
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_OTHER_SELECT_SQL);
+                    statement.setString(1,
+                        tsNotifRecorequestNeededObjElement.getRecorequestId());
+                    resultset = statement.executeQuery();
+
+                    if (resultset.next()) {
+                        recommendeeUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.initiator_user_id"));
+                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.reco_request_template_sentences"));
+                    }
+
+                    statement.close();
+                }
+
+                if (statement != null) {
+                    statement.close();
+                }
+
+                statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+                statement.setString(1, recommendeeUserUserId);
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    recommendeeUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "users.user_fb_id"));
+                }
+
+                statement.close();
+
+                statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                statement.setString(1, recommendeeUserFacebookId);
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    recommendeeUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "facebook_user_data.name"));
+                    recommendeeUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "facebook_user_data.picture"));
+                }
+
+                statement.close();
+
+                TSUserProfileBasicObj recommendeeUser = new TSUserProfileBasicObj();
+                recommendeeUser.setName(recommendeeUserName);
+                recommendeeUser.setPhoto(recommendeeUserPhoto);
+                recommendeeUser.setUserId(recommendeeUserUserId);
+                tsNotifRecorequestNeededObjElement.setRecommendeeUser(recommendeeUser);
+                tsNotifRecorequestNeededObjElement.setRecorequestText(recorequestText);
+
+                recoNotificationBaseList.add(tsNotifRecorequestNeededObjElement);
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (resultset != null) {
+                resultset.close();
+            }
+        }
+    }
+
+    private void processTSNotifRecorequestAnswerObj(Connection connection,
+        List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
+        throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            List<String> recorequestIdList = new ArrayList<String>();
+
+            while (resultset.next()) {
+                recorequestIdList.add(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("recorequest_user.recorequest_id")));
+            }
+
+            statement.close();
+
+            TSNotifRecorequestAnswerObj tsNotifRecorequestAnswerObj = null;
+
+            for (String recorequestIdElement : recorequestIdList) {
+                tsNotifRecorequestAnswerObj = new TSNotifRecorequestAnswerObj();
+                tsNotifRecorequestAnswerObj.setRecorequestId(recorequestIdElement);
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_LATEST_INFO_SELECT_SQL);
+                statement.setString(1, recorequestIdElement);
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    TSNotifRecoReplyObj tsNotifRecoReplyObj = new TSNotifRecoReplyObj();
+                    tsNotifRecoReplyObj.setReplyId(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString(
+                                "recorequest_reply_user.reply_id")));
+
+                    String repliedSendDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "recorequest_reply_user.reply_send_datetime"));
+                    //TODO formatting!!
+                    tsNotifRecoReplyObj.setRepliedDatetime(repliedSendDatetime);
+
+                    tsNotifRecoReplyObj.setViewed(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString(
+                                "recorequest_reply_user.reply_viewed_initiator")));
+
+                    tsNotifRecorequestAnswerObj.setDatetimeBase(resultset.getTimestamp(
+                            "recorequest_reply_user.reply_send_datetime"));
+                    tsNotifRecorequestAnswerObj.setIdBase(recorequestIdElement);
+
+                    List<TSNotifRecoReplyObj> recoReplyList = new ArrayList<TSNotifRecoReplyObj>();
+                    recoReplyList.add(tsNotifRecoReplyObj);
+                    tsNotifRecorequestAnswerObj.setRecoReply(recoReplyList);
+
+                    List<String> allReplyIdFOrRequestIdList = new ArrayList<String>();
+
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
+                    statement.setString(1, recorequestIdElement);
+                    resultset = statement.executeQuery();
+
+                    while (resultset.next()) {
+                        allReplyIdFOrRequestIdList.add(CommonFunctionsUtil.getModifiedValueString(
+                                resultset.getString(
+                                    "recorequest_reply_user.reply_id")));
+                    }
+
+                    statement.close();
+
+                    NotifRecoReplyVO notifRecoReplyVO = null;
+                    List<NotifRecoReplyVO> notifRecoReplyVOList = new ArrayList<NotifRecoReplyVO>();
+
+                    for (String replyIdElement : allReplyIdFOrRequestIdList) {
+                        notifRecoReplyVO = new NotifRecoReplyVO();
+
+                        statement = connection.prepareStatement(AskReplyQueries.COUNT_RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
+                        notifRecoReplyVO.setReplyActioned("0");
+                        statement.setString(1, recorequestIdElement);
+                        statement.setString(2, recorequestIdElement);
+                        statement.setString(3, replyIdElement);
+                        statement.setString(4, userId);
+                        resultset = statement.executeQuery();
+
+                        int rowCount = 0;
+
+                        if (resultset.next()) {
+                            rowCount = resultset.getInt(1);
+
+                            if (rowCount > 0) {
+                                notifRecoReplyVO.setReplyActioned("1");
+                            }
+                        }
+
+                        statement.close();
+                        notifRecoReplyVOList.add(notifRecoReplyVO);
+                    }
+
+                    tsNotifRecorequestAnswerObj.setRecoActioned("1");
+
+                    for (NotifRecoReplyVO notifRecoReplyVOElement : notifRecoReplyVOList) {
+                        if ("0".equals(
+                                    notifRecoReplyVOElement.getReplyActioned())) {
+                            tsNotifRecorequestAnswerObj.setRecoActioned("0");
+                        }
+
+                        break;
+                    }
+
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TEMPLATE_SENTENCES_SELECT_SQL);
+                    statement.setString(1,
+                        tsNotifRecorequestAnswerObj.getRecorequestId());
+                    resultset = statement.executeQuery();
+
+                    String recorequestText = "";
+
+                    //only one result
+                    if (resultset.next()) {
+                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES"));
+                    }
+
+                    statement.close();
+
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_RECO_REST_SELECT_SQL);
+                    statement.setString(1,
+                        tsNotifRecorequestAnswerObj.getRecorequestId());
+                    resultset = statement.executeQuery();
+
+                    String restaurantIdValue = null;
+                    String recommenderUserId = null;
+                    String replyText = null;
+                    List<RecommendationsForYouVO> recommendationsForYouVOList = new ArrayList<RecommendationsForYouVO>();
+
+                    while (resultset.next()) {
+                        restaurantIdValue = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "restaurant_id"));
+
+                        recommenderUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recommender_user_id"));
+
+                        replyText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "reply_text"));
+
+                        RecommendationsForYouVO recommendationsForYouVO = new RecommendationsForYouVO(restaurantIdValue,
+                                recommenderUserId, replyText);
+
+                        recommendationsForYouVOList.add(recommendationsForYouVO);
+                    }
+
+                    statement.close();
+
+                    List<String> restaurantIdList = new ArrayList<String>();
+
+                    for (RecommendationsForYouVO recommendationsForYouVO : recommendationsForYouVOList) {
+                        if (!restaurantIdList.contains(
+                                    recommendationsForYouVO.getRestaurantId())) {
+                            restaurantIdList.add(recommendationsForYouVO.getRestaurantId());
+                        }
+                    }
+
+                    List<String> recommenderUserIdList = null;
+                    List<String> replyTextList = null;
+
+                    List<TSRestaurantsForYouObj> restaurantsForYouObjList = new ArrayList<TSRestaurantsForYouObj>();
+
+                    //check for duplicates
+                    for (String restaurantId : restaurantIdList) {
+                        recommenderUserIdList = new ArrayList<String>();
+                        replyTextList = new ArrayList<String>();
+
+                        for (RecommendationsForYouVO recommendationsForYouVO : recommendationsForYouVOList) {
+                            if (restaurantId.equals(
+                                        recommendationsForYouVO.getRestaurantId())) {
+                                recommenderUserIdList.add(recommendationsForYouVO.getRecommenderUserId());
+                                replyTextList.add(recommendationsForYouVO.getReplyText());
+                            }
+                        }
+
+                        List<TSRecommendationsObj> recommendationsForYouList = new ArrayList<TSRecommendationsObj>();
+                        recommendationsForYouList = getRecommendationsForRestaurantFromUsersList(userId,
+                                connection, recommenderUserIdList, replyTextList);
+
+                        statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
+                        statement.setString(1, restaurantId);
+                        resultset = statement.executeQuery();
+
+                        String restaurantName = null;
+
+                        while (resultset.next()) {
+                            restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                        "restaurant.restaurant_name"));
+                        }
+
+                        statement.close();
+
+                        TSRestaurantsForYouObj tsRestaurantsForYouObj = new TSRestaurantsForYouObj();
+                        tsRestaurantsForYouObj.setRestaurantId(restaurantId);
+                        tsRestaurantsForYouObj.setRestaurantName(restaurantName);
+                        tsRestaurantsForYouObj.setRecommendationsForYouList(recommendationsForYouList);
+
+                        restaurantsForYouObjList.add(tsRestaurantsForYouObj);
+                    }
+
+                    if (statement != null) {
+                        statement.close();
+                    }
+
+                    TSRecommendationsForYouObj tsRecommendationsForYouObj = new TSRecommendationsForYouObj();
+                    tsRecommendationsForYouObj.setRecorequestText(recorequestText);
+                    tsRecommendationsForYouObj.setRestaurantsForYouObjList(restaurantsForYouObjList);
+
+                    tsNotifRecorequestAnswerObj.setRecommendationsForYou(tsRecommendationsForYouObj);
+                    recoNotificationBaseList.add(tsNotifRecorequestAnswerObj);
+                }
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (resultset != null) {
+                resultset.close();
+            }
+        }
+    }
+
+    private void processTSNotifFollowupQuestionObj(Connection connection,
+        List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
+        throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        PreparedStatement statementInner = null;
+        ResultSet resultsetInner = null;
+
+        try {
+            statement = connection.prepareStatement(AskReplyQueries.RESTAURANT_QUESTION_TS_ASSIGNED_NOTIF_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            String questionId = null;
+
+            while (resultset.next()) {
+                TSNotifFollowupQuestionObj tsNotifFollowupQuestionObj = new TSNotifFollowupQuestionObj();
+
+                questionId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant_question_ts_assigned.question_id"));
+                tsNotifFollowupQuestionObj.setQuestionId(questionId);
+
+                tsNotifFollowupQuestionObj.setIdBase(questionId);
+
+                String assignedDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant_question_ts_assigned.assigned_datetime"));
+
+                //Date formatting
+                tsNotifFollowupQuestionObj.setAssignedDatetime(assignedDatetime);
+
+                tsNotifFollowupQuestionObj.setDatetimeBase(resultset.getTimestamp(
+                        "restaurant_question_ts_assigned.assigned_datetime"));
+
+                tsNotifFollowupQuestionObj.setViewed(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "restaurant_question_ts_assigned.question_assigned_viewed")));
+
+                statementInner = connection.prepareStatement(AskReplyQueries.COUNT_QUESTION_REPLY_USER_SELECT_SQL);
+                tsNotifFollowupQuestionObj.setActioned("0");
+                statementInner.setString(1, questionId);
+                statementInner.setString(2, userId);
+
+                resultsetInner = statementInner.executeQuery();
+
+                int rowCount = 0;
+
+                if (resultsetInner.next()) {
+                    rowCount = resultsetInner.getInt(1);
+
+                    if (rowCount > 0) {
+                        tsNotifFollowupQuestionObj.setActioned("1");
+                    }
+                }
+
+                statementInner.close();
+
+                statementInner = connection.prepareStatement(AskReplyQueries.QUESTION_DETAILS_RESTAURANT_SELECT_SQL);
+                statementInner.setString(1, questionId);
+                resultsetInner = statementInner.executeQuery();
+
+                String questionUserId = null;
+                String questionText = null;
+                String questionUserFacebookId = null;
+                String questionUserName = null;
+                String questionUserPhoto = null;
+
+                if (resultsetInner.next()) {
+                    questionUserId = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                "restaurant_question_user.initiator_user_id"));
+                    questionText = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                "restaurant_question_user.question_text"));
+                    statementInner.close();
+
+                    statementInner = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+
+                    statementInner.setString(1, questionUserId);
+                    resultsetInner = statementInner.executeQuery();
+
+                    if (resultsetInner.next()) {
+                        questionUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                    "users.user_fb_id"));
+
+                        statementInner.close();
+
+                        statementInner = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                        statementInner.setString(1, questionUserFacebookId);
+                        resultsetInner = statementInner.executeQuery();
+
+                        if (resultsetInner.next()) {
+                            questionUserName = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                        "facebook_user_data.name"));
+                            questionUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                        "facebook_user_data.picture"));
+                        }
+
+                        statementInner.close();
+                    }
+
+                    if (statementInner != null) {
+                        statementInner.close();
+                    }
+                }
+
+                if (statementInner != null) {
+                    statementInner.close();
+                }
+
+                TSUserProfileBasicObj questionUser = new TSUserProfileBasicObj();
+                questionUser.setName(questionUserName);
+                questionUser.setPhoto(questionUserPhoto);
+                questionUser.setUserId(questionUserId);
+
+                tsNotifFollowupQuestionObj.setQuestionUser(questionUser);
+                tsNotifFollowupQuestionObj.setQuestionText(questionText);
+
+                recoNotificationBaseList.add(tsNotifFollowupQuestionObj);
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (resultset != null) {
+                resultset.close();
+            }
+
+            if (statementInner != null) {
+                statementInner.close();
+            }
+
+            if (resultsetInner != null) {
+                resultsetInner.close();
+            }
+        }
+    }
+
+    private void processTSNotifMessageForYouObj(Connection connection,
+        List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
+        throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        PreparedStatement statementInner = null;
+        ResultSet resultsetInner = null;
+
+        try {
+            statement = connection.prepareStatement(AskReplyQueries.USER_MESSAGE_RECIPIENT_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            String messageId = null;
+
+            while (resultset.next()) {
+                TSNotifMessageForYouObj tsNotifMessageForYouObj = new TSNotifMessageForYouObj();
+
+                messageId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "user_message.message_id"));
+                tsNotifMessageForYouObj.setMessageId(messageId);
+
+                tsNotifMessageForYouObj.setIdBase(messageId);
+
+                String messageCreatedTime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "user_message.created"));
+
+                //Date formatting
+                tsNotifMessageForYouObj.setMessageCreatedTime(messageCreatedTime);
+
+                tsNotifMessageForYouObj.setDatetimeBase(resultset.getTimestamp(
+                        "user_message.created"));
+
+                tsNotifMessageForYouObj.setViewed(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "user_message.message_recipient_viewed")));
+
+                statementInner = connection.prepareStatement(AskReplyQueries.COUNT_USER_MESSAGE_SELECT_SQL);
+                tsNotifMessageForYouObj.setActioned("0");
+                statementInner.setString(1, messageId);
+                statementInner.setString(2, userId);
+
+                resultsetInner = statementInner.executeQuery();
+
+                int rowCount = 0;
+
+                if (resultsetInner.next()) {
+                    rowCount = resultsetInner.getInt(1);
+
+                    if (rowCount > 0) {
+                        tsNotifMessageForYouObj.setActioned("1");
+                    }
+                }
+
+                statementInner.close();
+
+                statementInner = connection.prepareStatement(AskReplyQueries.USER_MESSAGE_SELECT_SQL);
+                statementInner.setString(1, userId);
+                statementInner.setString(2, messageId);
+
+                resultsetInner = statementInner.executeQuery();
+
+                String senderUserId = null;
+                String message = null;
+                String senderUserFacebookId = null;
+                String senderUserName = null;
+                String senderUserPhoto = null;
+
+                if (resultsetInner.next()) {
+                    senderUserId = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                "user_message.sender_id"));
+                    message = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                "user_message.content"));
+                    statementInner.close();
+
+                    statementInner = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+
+                    statementInner.setString(1, senderUserId);
+                    resultsetInner = statementInner.executeQuery();
+
+                    if (resultsetInner.next()) {
+                        senderUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "users.user_fb_id"));
+                    }
+
+                    resultsetInner.close();
+
+                    statementInner = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                    statementInner.setString(1, senderUserFacebookId);
+                    resultsetInner = statementInner.executeQuery();
+
+                    if (resultsetInner.next()) {
+                        senderUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "facebook_user_data.name"));
+                        senderUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "facebook_user_data.picture"));
+                    }
+
+                    statementInner.close();
+                }
+
+                if (statementInner != null) {
+                    statementInner.close();
+                }
+
+                TSUserProfileBasicObj senderUser = new TSUserProfileBasicObj();
+                senderUser.setName(senderUserName);
+                senderUser.setPhoto(senderUserPhoto);
+                senderUser.setUserId(senderUserId);
+
+                tsNotifMessageForYouObj.setSenderUser(senderUser);
+                tsNotifMessageForYouObj.setMessage(message);
+
+                recoNotificationBaseList.add(tsNotifMessageForYouObj);
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (resultset != null) {
+                resultset.close();
+            }
+
+            if (statementInner != null) {
+                statementInner.close();
+            }
+
+            if (resultsetInner != null) {
+                resultsetInner.close();
+            }
+        }
+    }
+
+    private void processTSNotifRecoLikeObj(Connection connection,
+        List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
+        throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        PreparedStatement statementInner = null;
+        ResultSet resultsetInner = null;
+
+        try {
+            statement = connection.prepareStatement(AskReplyQueries.RECO_LIKE_NOTIF_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            String likeId = null;
+            String recommendeeUserId = null;
+
+            while (resultset.next()) {
+                TSNotifRecoLikeObj tsNotifRecoLikeObj = new TSNotifRecoLikeObj();
+
+                likeId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "reco_like.id"));
+                tsNotifRecoLikeObj.setLikeId(likeId);
+                tsNotifRecoLikeObj.setIdBase(likeId);
+
+                String likeDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "reco_like.like_datetime"));
+
+                //Date formatting
+                tsNotifRecoLikeObj.setLikeDatetime(likeDatetime);
+
+                tsNotifRecoLikeObj.setDatetimeBase(resultset.getTimestamp(
+                        "reco_like.like_datetime"));
+
+                tsNotifRecoLikeObj.setViewed(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("reco_like.like_recommender_viewed")));
+
+                recommendeeUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "reco_like.like_user_id"));
+
+                String recommendeeFacebookId = null;
+                String recommendeeUserName = null;
+                String recommendeeUserPhoto = null;
+
+                statementInner = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+
+                statementInner.setString(1, recommendeeUserId);
+                resultsetInner = statementInner.executeQuery();
+
+                if (resultsetInner.next()) {
+                    recommendeeFacebookId = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                "users.user_fb_id"));
+
+                    if (statementInner != null) {
+                        statementInner.close();
+                    }
+
+                    statementInner = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                    statementInner.setString(1, recommendeeFacebookId);
+                    resultsetInner = statementInner.executeQuery();
+
+                    if (resultsetInner.next()) {
+                        recommendeeUserName = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                    "facebook_user_data.name"));
+                        recommendeeUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
+                                    "facebook_user_data.picture"));
+                    }
+
+                    statementInner.close();
+                }
+
+                TSUserProfileBasicObj recommendeeUser = new TSUserProfileBasicObj();
+                recommendeeUser.setName(recommendeeUserName);
+                recommendeeUser.setPhoto(recommendeeUserPhoto);
+                recommendeeUser.setUserId(recommendeeUserId);
+
+                tsNotifRecoLikeObj.setRecommendeeUser(recommendeeUser);
+
+                recoNotificationBaseList.add(tsNotifRecoLikeObj);
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (resultset != null) {
+                resultset.close();
+            }
+
+            if (statementInner != null) {
+                statementInner.close();
+            }
+
+            if (resultsetInner != null) {
+                resultsetInner.close();
+            }
+        }
+    }
+
+    private void processTSNotifDidYouLikeObj(Connection connection,
+        List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
+        throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        PreparedStatement statementInner = null;
+        ResultSet resultsetInner = null;
+
+        PreparedStatement statementInner1 = null;
+        ResultSet resultsetInner1 = null;
+
+        try {
+            statement = connection.prepareStatement(AskReplyQueries.RECOREPLY_DIDIYOULIKE_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            String recorequestId = null;
+
+            while (resultset.next()) {
+                TSNotifDidYouLikeObj tsNotifDidYouLikeObj = new TSNotifDidYouLikeObj();
+
+                recorequestId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recoreply_didyoulike_notif.recorequest_id"));
+                tsNotifDidYouLikeObj.setRecorequestId(recorequestId);
+                tsNotifDidYouLikeObj.setIdBase(recorequestId);
+
+                String datetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recoreply_didyoulike_notif.notif_datetime"));
+
+                //Date formatting
+                tsNotifDidYouLikeObj.setDatetime(datetime);
+
+                tsNotifDidYouLikeObj.setDatetimeBase(resultset.getTimestamp(
+                        "recoreply_didyoulike_notif.notif_datetime"));
+
+                tsNotifDidYouLikeObj.setViewed(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recoreply_didyoulike_notif.notif_viewed")));
+
+                List<TSRestaurantBasicObj> tsRestaurantBasicObjList = new ArrayList<TSRestaurantBasicObj>();
+                String recommendedrestaurantsRestaurantId = null;
+                String recommendedrestaurantsRestaurantName = null;
+
+                statementInner = connection.prepareStatement(AskReplyQueries.RECOREQUEST_RESTAURANT_SELECT_SQL);
+                statementInner.setString(1, recorequestId);
+                resultsetInner = statementInner.executeQuery();
+
+                while (resultsetInner.next()) {
+                    recommendedrestaurantsRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant_id"));
+
+                    statementInner1 = connection.prepareStatement(AskReplyQueries.RESTAURANT_NAME_SELECT_SQL);
+                    statementInner1.setString(1,
+                        recommendedrestaurantsRestaurantId);
+                    resultsetInner1 = statementInner1.executeQuery();
+
+                    if (resultsetInner1.next()) {
+                        recommendedrestaurantsRestaurantName = CommonFunctionsUtil.getModifiedValueString(resultsetInner1.getString(
+                                    "restaurant.restaurant_name"));
+                    }
+
+                    statementInner1.close();
+
+                    TSRestaurantBasicObj tsRestaurantBasicObj = new TSRestaurantBasicObj();
+                    tsRestaurantBasicObj.setRestaurantId(recommendedrestaurantsRestaurantId);
+                    tsRestaurantBasicObj.setRestaurantName(recommendedrestaurantsRestaurantName);
+                    tsRestaurantBasicObjList.add(tsRestaurantBasicObj);
+                }
+
+                statementInner.close();
+
+                tsNotifDidYouLikeObj.setRestaurantbasic(tsRestaurantBasicObjList);
+
+                recoNotificationBaseList.add(tsNotifDidYouLikeObj);
+            }
+
+            if (statement != null) {
+                statement.close();
+            }
+
+            //TODO 
+            //Data entry and Push notifications
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (resultset != null) {
+                resultset.close();
+            }
+
+            if (statementInner != null) {
+                statementInner.close();
+            }
+
+            if (resultsetInner != null) {
+                resultsetInner.close();
+            }
+
+            if (statementInner1 != null) {
+                statementInner1.close();
+            }
+
+            if (resultsetInner1 != null) {
+                resultsetInner1.close();
+            }
+        }
     }
 
     @Override
-    public void showRecommendationsListUnactioned(String userId,
-        String paginationId) throws TasteSyncException {
-        // TODO Auto-generated method stub
-        //TODO return type to be defined!!
+    public List<TSRecoNotificationBaseObj> showRecommendationsList(
+        String userId, String paginationId) throws TasteSyncException {
+        //Indexing for ORDER BY/Select parameters like user id etc!!
+        List<TSRecoNotificationBaseObj> recoNotificationBaseList = new ArrayList<TSRecoNotificationBaseObj>();
+
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_ALL_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            TSNotifRecorequestNeededObj tsNotifRecorequestNeededObj = null;
+            List<TSNotifRecorequestNeededObj> tsNotifRecorequestNeededObjList = new ArrayList<TSNotifRecorequestNeededObj>();
+
+            while (resultset.next()) {
+                tsNotifRecorequestNeededObj = new TSNotifRecorequestNeededObj();
+                tsNotifRecorequestNeededObj.setDatetimeBase(resultset.getTimestamp(
+                        "recorequest_ts_assigned.assigned_datetime"));
+
+                String assignedDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_ts_assigned.assigned_datetime"));
+                //TODO formatting!!
+                tsNotifRecorequestNeededObj.setAssignedDatetime(assignedDatetime);
+
+                tsNotifRecorequestNeededObj.setIdBase(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_ts_assigned.recorequest_id")));
+
+                tsNotifRecorequestNeededObj.setRecorequestId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_ts_assigned.recorequest_id")));
+
+                tsNotifRecorequestNeededObj.setRecorequestassignedViewed(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_ts_assigned.recorequest_assigned_viewed")));
+                tsNotifRecorequestNeededObjList.add(tsNotifRecorequestNeededObj);
+            }
+
+            statement.close();
+
+            processTSNotifRecorequestNeededObjElement(connection,
+                recoNotificationBaseList, userId,
+                tsNotifRecorequestNeededObjList);
+
+            processTSNotifRecorequestAnswerObj(connection,
+                recoNotificationBaseList, userId);
+
+            processTSNotifFollowupQuestionObj(connection,
+                recoNotificationBaseList, userId);
+
+            processTSNotifMessageForYouObj(connection,
+                recoNotificationBaseList, userId);
+
+            processTSNotifRecoLikeObj(connection, recoNotificationBaseList,
+                userId);
+
+            processTSNotifDidYouLikeObj(connection, recoNotificationBaseList,
+                userId);
+
+            //TODO sort by date!!!
+            tsNotifRecorequestNeededObjList = null;
+
+            return recoNotificationBaseList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException("Error while creating reco request " +
+                e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 
     @Override

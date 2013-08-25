@@ -3,6 +3,8 @@ package com.tastesync.db.dao;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
+import com.tastesync.model.objects.TSRecoNotificationBaseObj;
+import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
@@ -71,15 +73,12 @@ public interface AskReplyDAO {
     void submitRecommendationFollowupAnswer(String userId, String questionId,
         String replyText) throws TasteSyncException;
 
-    List<TSRestaurantObj> showRecommendationDidYouLike(String recorequestId)
+    List<TSRestaurantBasicObj> showRecommendationDidYouLike(String recorequestId)
         throws TasteSyncException;
 
     void submitRecommendationDidYouLikeLikes(String userId,
         String restaurantId, String likeFlag) throws TasteSyncException;
 
-    void showRecommendationsListActioned(String userId, String paginationId)
-        throws TasteSyncException;
-
-    void showRecommendationsListUnactioned(String userId, String paginationId)
-        throws TasteSyncException;
+    List<TSRecoNotificationBaseObj> showRecommendationsList(String userId,
+        String paginationId) throws TasteSyncException;
 }
