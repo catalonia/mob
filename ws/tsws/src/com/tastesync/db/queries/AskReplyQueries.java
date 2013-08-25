@@ -115,6 +115,13 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "       recorequest_user.reco_request_template_sentences " +
         "FROM   recorequest_user " +
         "WHERE  recorequest_user.recorequest_id = ? ";
+    
+    public static final String RECOREQUEST_USER_SELECT_SQL = "" 
+    		+ "SELECT recorequest_user.recorequest_id "
+    		+ "FROM   recorequest_user "
+    		+ "WHERE  recorequest_user.initiator_user_id = ? ";
+
+    
     public static final String RECOREQUEST_USER_FOLLOWEEFLAG_SELECT_SQL = "" +
         "SELECT user_follow_data.id " + "FROM   user_follow_data " +
         "WHERE  user_follow_data.followee_user_id = ? " +
@@ -139,6 +146,14 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "FROM   recorequest_ts_assigned " +
         "WHERE  recorequest_ts_assigned.recorequest_id = ? " +
         "       AND recorequest_ts_assigned.assigned_user_id = ? ";
+    
+    public static final String RECOREQUEST_TS_ASSIGNED_ALL_SELECT_SQL = ""
+    		+ "SELECT recorequest_ts_assigned.recorequest_id, "
+    		+ "       recorequest_ts_assigned.assigned_datetime, "
+    		+ "       recorequest_ts_assigned.recorequest_assigned_viewed "
+    		+ "FROM   recorequest_ts_assigned "
+    		+ "WHERE  recorequest_ts_assigned.assigned_user_id = ? ";
+
     public static String QUESTION_DETAILS_RESTAURANT_SELECT_SQL = "" +
         "SELECT restaurant_question_user.initiator_user_id, " +
         "       restaurant_question_user.restaurant_id, " +
@@ -212,6 +227,32 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "SELECT recorequest_reply_user.reply_text " +
         "FROM   recorequest_reply_user " +
         "WHERE  recorequest_reply_user.reply_id = ? ";
+    
+    public static String RECOREQUEST_REPLY_USER_LATEST_INFO_SELECT_SQL = "" +
+    		  "SELECT recorequest_reply_user.reply_id, "
+    		+ "       recorequest_reply_user.reply_send_datetime, "
+    		+ "       recorequest_reply_user.reply_viewed_initiator "
+    		+ "FROM   recorequest_reply_user "
+    		+ "WHERE  recorequest_reply_user.recorequest_id = ? "
+    		+ "ORDER  BY recorequest_reply_user.reply_send_datetime DESC "
+    		+ "LIMIT  1 ";
+
+    public static String RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL = "" +
+    		  "SELECT recorequest_reply_user.reply_id "
+    		+ "FROM   recorequest_reply_user "
+    		+ "WHERE  recorequest_reply_user.recorequest_id = ? ";
+
+    public static String COUNT_RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL= "" +
+    		  "SELECT Count(*) "
+    		+ "FROM   recorequest_reply_user, "
+    		+ "       user_message "
+    		+ "WHERE  user_message.recorequest_id = ? "
+    		+ "       AND recorequest_reply_user.recorequest_id = ? "
+    		+ "       AND recorequest_reply_user.reply_id = ? "
+    		+ "       AND user_message.sender_id = ? "
+    		+ "       AND user_message.recipient_id = recorequest_reply_user.reply_user_id ";
+
+    
     public static String RECOREQUEST_REPLY_USER_RECO_SELECT_SQL = "" +
         "SELECT recorequest_reply_user.reply_text, " +
         "       recorequest_reply_user.reply_id " +
@@ -326,4 +367,55 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "             historical_reco_like.updated) " + "VALUES      ( ?, " +
         "              ?, " + "              ?, " + "              ?, " +
         "              ? )";
+    
+    public static String RESTAURANT_QUESTION_TS_ASSIGNED_NOTIF_SELECT_SQL = ""
+    		+ "SELECT restaurant_question_ts_assigned.question_id, "
+    		+ "       restaurant_question_ts_assigned.assigned_datetime, "
+    		+ "       restaurant_question_ts_assigned.question_assigned_viewed "
+    		+ "FROM   restaurant_question_ts_assigned "
+    		+ "WHERE  restaurant_question_ts_assigned.assigned_user_id = ? -- userId "
+    		+ "";
+    
+    public static String COUNT_QUESTION_REPLY_USER_SELECT_SQL = ""
+    		+ "SELECT count(*) "
+    		+ "FROM   question_reply_user "
+    		+ "WHERE  question_reply_user.question_id = ? "
+    		+ "       AND question_reply_user.reply_user_id = ? ";
+
+    public static String USER_MESSAGE_RECIPIENT_SELECT_SQL = ""
+    		+ "SELECT user_message.message_id, "
+    		+ "       user_message.created, "
+    		+ "       user_message.message_recipient_viewed "
+    		+ "FROM   user_message "
+    		+ "WHERE  user_message.recipient_id = ? ";
+
+    public static String COUNT_USER_MESSAGE_SELECT_SQL = ""
+    		+ "SELECT Count(*) "
+    		+ "FROM   user_message "
+    		+ "WHERE  user_message.previous_message_id = ? "
+    		+ "       AND  user_message.sender_id = ? ";
+
+    public static String RECO_LIKE_NOTIF_SELECT_SQL = ""
+    		+ "SELECT reco_like.id, "
+    		+ "       reco_like.like_datetime, "
+    		+ "       reco_like.like_recommender_viewed, "
+    		+ "       reco_like.reco_like.like_user_id "
+    		+ "FROM   recorequest_reply_user, "
+    		+ "       reco_like "
+    		+ "WHERE  recorequest_reply_user.reply_user_id = ? "
+    		+ "       AND reco_like.reply_id = recorequest_reply_user.reply_id "
+    		+ "       AND reco_like.status_y_n = 1"
+    		+ "";
+public String RECOREPLY_DIDIYOULIKE_SELECT_SQL = ""
+		+ "SELECT recoreply_didyoulike_notif.recorequest_id, "
+		+ "       recoreply_didyoulike_notif.notif_datetime, "
+		+ "       recoreply_didyoulike_notif.notif_viewed "
+		+ "FROM   recoreply_didyoulike_notif, "
+		+ "       recorequest_user, "
+		+ "       recorequest_reply_user "
+		+ "WHERE  recorequest_user.initiator_user_id = ? "
+		+ "       AND recorequest_user.recorequest_id = "
+		+ "           recoreply_didyoulike_notif.recorequest_id = "
+		+ "               recorequest_reply_user.recorequest_id ";
+
 }

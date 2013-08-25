@@ -159,6 +159,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "SELECT user_restaurant_fav.user_id " + "FROM   user_restaurant_fav " +
         "WHERE  user_restaurant_fav.user_id = ? " +
         "       AND user_restaurant_fav.restaurant_id = ? ";
+    //TODO
     public static String RESTAURANT_FAV_SELECT_SQL = "" +
         "SELECT count(*) from user_restaurant_fav " +
         "WHERE user_restaurant_fav.restaurant_id = ? " +
