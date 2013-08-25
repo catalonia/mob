@@ -7,6 +7,8 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSKeyValueObj;
+import com.tastesync.model.objects.TSRecoNotificationBaseObj;
+import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
@@ -21,6 +23,7 @@ import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -689,7 +692,7 @@ public class AskReplyService extends BaseService {
 
     @GET
     @Path("/recommendedrestaurants")
-    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantObj.class)
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantBasicObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -697,7 +700,7 @@ public class AskReplyService extends BaseService {
     public Response showRecommendationDidYouLike(
         @QueryParam("recorequestid")
     String recorequestId) {
-        List<TSRestaurantObj> tsRestaurantObjList = null;
+        List<TSRestaurantBasicObj> tsRestaurantObjList = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
@@ -908,19 +911,18 @@ public class AskReplyService extends BaseService {
     }
 
     @GET
-    @Path("/recounactioned")
-    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
+    @Path("/recolist")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRecoNotificationBaseObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRecommendationsListUnactioned(
+    public Response showRecommendationsList(
         @QueryParam("userid")
     String userId, @QueryParam("paginationid")
     String paginationId) {
-        //TODO type to be defined...
         int status = TSResponseStatusCode.SUCCESS.getValue();
-
+        List<TSRecoNotificationBaseObj> recoNotificationBase = new ArrayList<TSRecoNotificationBaseObj>();
         boolean responseDone = false;
 
         // BO - DO- DBQuery
@@ -928,62 +930,12 @@ public class AskReplyService extends BaseService {
             //parameters check
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
             paginationId = CommonFunctionsUtil.converStringAsNullIfNeeded(paginationId);
-            askReplyBO.showRecommendationsListUnactioned(userId, paginationId);
+            recoNotificationBase = askReplyBO.showRecommendationsList(userId,
+                    paginationId);
 
-            TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
 
-            return Response.status(status).entity(tsSuccessObj).build();
-        } catch (TasteSyncException e) {
-            e.printStackTrace();
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = true;
-
-            return Response.status(status).entity(tsErrorObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (!responseDone) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
-            }
-        }
-    }
-
-    @GET
-    @Path("/recoactioned")
-    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    })
-    @Produces({MediaType.APPLICATION_JSON
-    })
-    public Response showRecommendationsListActioned(
-        @QueryParam("userid")
-    String userId, @QueryParam("paginationid")
-    String paginationId) {
-        //TODO type to be defined...
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-
-        boolean responseDone = false;
-
-        // BO - DO- DBQuery
-        try {
-            //parameters check
-            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            paginationId = CommonFunctionsUtil.converStringAsNullIfNeeded(paginationId);
-            askReplyBO.showRecommendationsListActioned(userId, paginationId);
-
-            TSSuccessObj tsSuccessObj = new TSSuccessObj();
-            responseDone = true;
-
-            return Response.status(status).entity(tsSuccessObj).build();
+            return Response.status(status).entity(recoNotificationBase).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
