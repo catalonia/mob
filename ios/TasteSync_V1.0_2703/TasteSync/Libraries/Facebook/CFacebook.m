@@ -127,7 +127,6 @@ done=_done;
                               }];
         
         debug(@"return main thread");
-        
     }
     
     
@@ -318,7 +317,12 @@ done=_done;
         
 #endif
     }
+
+- (void)sendMessageToFBID:(NSString*)uid   Message:(NSString*)message
+{
     
+}
+
 #pragma mark - CFacebookDelegate
     
     

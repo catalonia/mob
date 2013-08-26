@@ -506,7 +506,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				        Connection connection = null;
 				        PreparedStatement statement = null;
 				        tsDataSource.begin();
-				        
+						
 						if(list_friends_using_TasteSync != null && !list_friends_using_TasteSync.isEmpty()) {
 	
 							for(int i = 0; i < list_friends_using_TasteSync.size(); i++)
@@ -539,35 +539,27 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						}
 	
 						List<String> listFBObj = list_user_profile.getList_user_profile_fb();
+						//
+						connection = tsDataSource.getConnection();
+						statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_DELETE_SQL);
+						statement.setString(1, userID);
+						statement.execute();
 						
 						if(listFBObj != null && !listFBObj.isEmpty()) {
 	
 							for(int i = 0; i < listFBObj.size(); i++)
 							{
 								String obj = listFBObj.get(i);
-								connection = tsDataSource.getConnection();
-								statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_DATETIME_FB_UPDATE_SQL);
-								statement.setString(1, dateNow);
-								statement.setString(2, userID); 
-								statement.setString(3, obj);
-								int query = statement.executeUpdate();
-								System.out.println("query: "+query);
-								if(query == 0)
-								{
-									System.out.println("Insert:" + i);
-									statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_FB_INSERT_SQL);
-									statement.setString(1, userID); 
-									statement.setString(2, obj);
-									statement.setString(3, dateNow);
-									statement.setString(4, "0");
-									statement.execute();
-								}
-							}
+								
+								System.out.println("Insert:" + i);
+								statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_FB_INSERT_SQL);
+								statement.setString(1, userID); 
+								statement.setString(2, obj);
+								statement.setString(3, dateNow);
+								statement.setString(4, "0");
+								statement.execute();
 							
-							statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_DATETIME_DELETE_SQL);
-							statement.setString(1, userID);
-							statement.setString(2, dateNow);
-							statement.execute();
+							}
 						}
 						//tsDataSource.commit();
 						tsDataSource.close();
@@ -2245,7 +2237,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 									.getString("RESTAURANT_ID")));
 				}
 			}
-			for (int i = from; i < to && i < restaurantListId.size(); i++) {
+			for (int i = 0; i < restaurantListId.size(); i++) {
 				connection = tsDataSource.getConnection();
 				statement = connection
 						.prepareStatement(UserQueries.RESTAURANT_SELECT_SQL);

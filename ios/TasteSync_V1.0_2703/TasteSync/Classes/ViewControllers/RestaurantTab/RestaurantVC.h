@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "RateCustom.h"
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface RestaurantVC : UIViewController<UITableViewDataSource, UITableViewDelegate,RateCustomDelegate, UIScrollViewDelegate>
+@interface RestaurantVC : UIViewController<UITableViewDataSource, UITableViewDelegate,RateCustomDelegate, UIScrollViewDelegate, RequestDelegate>
 {
     __weak IBOutlet UITableView *tbvResult, *tbvFilter;
     __weak IBOutlet UITextField *tfRestaurant, *tfRegion;

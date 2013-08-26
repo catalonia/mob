@@ -83,7 +83,7 @@ delegate=_delegate;
         controller.body = @"Check out this restaurant I found on TasteSync: \n Nanking \n 463 Broadway, New York, NY \n Get the TasteSync app at www.tastesync.com to...";
         self.hidden = YES;
 
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentModalViewController:controller animated:NO];
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:controller animated:NO completion:nil];
 
         
     }else
@@ -100,7 +100,7 @@ delegate=_delegate;
         NSString *body = @"Check out this restaurant I found on TasteSync: \n Nanking \n 463 Broadway, New York, NY \n Get the TasteSync app at www.tastesync.com to...";
         [mailer setMessageBody:body isHTML:NO];
         self.hidden = YES;
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentModalViewController:mailer animated:NO];
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:mailer animated:NO completion:nil];
         
         
         
@@ -114,7 +114,7 @@ delegate=_delegate;
 - (IBAction)actionShareViaFacebook:(id)sender
 {
 
-    ResShareFB *shareFbView = [[ResShareFB alloc] initWithFrame:CGRectZero];
+//    ResShareFB *shareFbView = [[ResShareFB alloc] initWithFrame:CGRectZero];
     
     
 }
@@ -185,7 +185,7 @@ delegate=_delegate;
     _twtcontroller = [[TWTweetComposeViewController alloc] init];
     _twtcontroller.completionHandler = ^(TWTweetComposeViewControllerResult result){
         
-        [viewCtr dismissModalViewControllerAnimated:YES];
+        [viewCtr dismissViewControllerAnimated:YES completion:nil];
         
         switch (result) {
             case TWTweetComposeViewControllerResultCancelled:
@@ -204,7 +204,7 @@ delegate=_delegate;
     [_twtcontroller setInitialText:txtMsg];
     [_twtcontroller addImage:image];
     [_twtcontroller addURL:[NSURL URLWithString:link]];
-    [viewCtr presentModalViewController:_twtcontroller animated:YES];
+    [viewCtr presentViewController:_twtcontroller animated:YES completion:nil];
     
 }
 
@@ -230,7 +230,7 @@ delegate=_delegate;
     
     [[[[UIApplication sharedApplication] keyWindow] rootViewController] dismissViewControllerAnimated:YES completion:^{
     }];
-    [mailer dismissModalViewControllerAnimated:YES];
+    [mailer dismissViewControllerAnimated:YES completion:nil];
     self.hidden = NO;
 
 }
@@ -256,7 +256,7 @@ delegate=_delegate;
 //    [[[[UIApplication sharedApplication] keyWindow] rootViewController] dismissViewControllerAnimated:YES completion:^{
 //        self.hidden = NO;
 //    }];
-    [controller dismissModalViewControllerAnimated:YES];
+    [controller dismissViewControllerAnimated:YES completion:nil];
     self.hidden = NO;
     
 }

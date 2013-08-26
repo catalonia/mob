@@ -24,6 +24,7 @@
     BOOL check1,check2;
     UserObj *userRecommended;
     NSString *askString;
+    NSMutableArray* _arrayUserTasteSync;
 }
 
 - (IBAction)actionBack:(id)sender;
@@ -56,28 +57,16 @@ restaurantObj=_restaurantObj;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [CommonHelpers setBackgroudImageForViewRestaurant:self.view];
+    _arrayUserTasteSync = [[NSMutableArray alloc]init];
+    
+    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFriends" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:1];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request startFormRequest];
+    
     if (!self.arrDataFriends) {
         self.arrDataFriends = [[NSMutableArray alloc] init];
-        if ([CommonHelpers appDelegate].arrDataFBFriends.count >0) {
-            self.arrDataFriends = [CommonHelpers appDelegate].arrDataFBFriends;
-        }
-        else
-        {
-            for (int i=1; i<5; i++) {
-                UserObj *obj = [[UserObj alloc] init];
-                {
-                    obj.uid = [NSString stringWithFormat:@"%d",i];
-                    obj.avatar = [UIImage imageNamed:@"avatar.png"];
-                    obj.firstname = @"Penny";
-                    obj.lastname = @"NGO";
-                    obj.isSelected = YES;
-                    
-                    
-                    [self.arrDataFriends addObject:obj];
-                }
-            }
-            
-        }
+        self.arrDataFriends = [CommonHelpers appDelegate].arrDataFBFriends;
     }
     
     self.arrDataFilter = [[NSMutableArray alloc] init];
@@ -145,7 +134,38 @@ restaurantObj=_restaurantObj;
 }
 - (IBAction)actionSendMessage:(id)sender
 {
-    
+    NSLog(@"Count: %d", [_arrayUserTasteSync count]);
+    for (UserObj* obj in _arrData) {
+        if (obj.uid != nil) {
+            if ([self checkID:obj.uid]) {
+                CRequest* request = [[CRequest alloc]initWithURL:@"sendMessageToUser" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:2];
+                request.delegate = self;
+                [request setFormPostValue:[UserDefault userDefault].userID forKey:@"senderID"];
+                [request setFormPostValue:@"ID" forKey:@"recipientID"];
+                [request setFormPostValue:tfQuestion.text forKey:@"content"];
+                [request startFormRequest];
+                NSLog(@"Send message: %@", obj.uid);
+            }
+            else
+            {
+                CFacebook* facebook = [[CFacebook alloc]init];
+                [facebook sendMessageToFBID:obj.uid Message:tfQuestion.text];
+                NSLog(@"Send message facebook: %@", obj.uid);
+            }
+        }
+    }
+}
+
+- (BOOL) checkID:(NSString*)uid
+{
+    for (UserObj* obj in _arrayUserTasteSync) {
+        NSString* str1 = [NSString stringWithFormat:@"%@", obj.uid];
+        NSString* str2 = [NSString stringWithFormat:@"%@", uid];
+        if ([str1 isEqualToString:str2]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (IBAction)actionAvatar:(id)sender
@@ -489,6 +509,23 @@ restaurantObj=_restaurantObj;
             
         default:
             break;
+    }
+}
+
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    if (key == 1) {
+        NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"Response: %@",response);
+        NSDictionary* dic = [response objectFromJSONString];
+        NSArray* arrayFriend = [dic objectForKey:@"friendTasteSync"];
+        for (NSDictionary* dic in arrayFriend) {
+            UserObj *obj = [CommonHelpers getUserObj:dic];
+            [_arrayUserTasteSync addObject:obj];
+        }
+    }
+    if (key == 2) {
+        
     }
 }
 

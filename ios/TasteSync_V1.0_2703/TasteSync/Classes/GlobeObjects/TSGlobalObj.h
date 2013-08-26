@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TSCityObj.h"
+#import "RestaurantObj.h"
 
 typedef enum GlobalDataType {
     GlobalDataCuisine_1 =  0,
@@ -17,7 +18,8 @@ typedef enum GlobalDataType {
     GlobalDataTheme  =   4,
     GlobalDataTypeOfRestaurant  =   5,
     GlobalDataWhoAreUWith  =   6,
-    GlobalDataCity = 7
+    GlobalDataCity = 7,
+    GlobalDataRestaurant = 8
     
 } GlobalDataType;
 
@@ -25,5 +27,6 @@ typedef enum GlobalDataType {
 @property (nonatomic, strong) NSString* uid;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) TSCityObj *cityObj;
+@property (nonatomic, strong) RestaurantObj*restaurantObj;
 @property (nonatomic, assign) GlobalDataType type;
 @end

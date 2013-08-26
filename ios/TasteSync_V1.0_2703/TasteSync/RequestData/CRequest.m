@@ -13,6 +13,7 @@
 #define USER_REQUEST @"user/"
 #define RESTAURANT_REQUEST @"restaurant/"
 #define ASK_REQUEST @"ask/"
+#define POPULATE_REQUEST @"populate/"
 
 @interface CRequest()
 {
@@ -36,6 +37,8 @@
             _url = [_url stringByAppendingString:RESTAURANT_REQUEST];
         if (data == RequestDataAsk)
             _url = [_url stringByAppendingString:ASK_REQUEST];
+        if (data == RequestPopulate)
+            _url = [_url stringByAppendingString:POPULATE_REQUEST];
         _url = [_url stringByAppendingString:url];
         
         NSLog(@"url: %@", _url);
@@ -87,6 +90,8 @@
             _url = [_url stringByAppendingString:RESTAURANT_REQUEST];
         if (data == RequestDataAsk)
             _url = [_url stringByAppendingString:ASK_REQUEST];
+        if (data == RequestPopulate)
+            _url = [_url stringByAppendingString:POPULATE_REQUEST];
         _url = [_url stringByAppendingString:url];
         
         NSLog(@"url: %@", _url);

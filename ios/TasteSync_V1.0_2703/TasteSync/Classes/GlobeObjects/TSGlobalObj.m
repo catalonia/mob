@@ -13,5 +13,6 @@
 uid          = _uid,
 name      = _name,
 type        = _type,
-cityObj    = _cityObj;
+cityObj    = _cityObj,
+restaurantObj = _restaurantObj;
 @end

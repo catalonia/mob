@@ -306,7 +306,6 @@
         {
             userDefault.loginStatus = LoginViaFacebook;
             
-            
             NSMutableDictionary *nameElements = [NSMutableDictionary dictionary];
             
             [nameElements setObject:[CommonHelpers getJSONUserObj:userDefault.user] forKey:@"user_profile_current"];

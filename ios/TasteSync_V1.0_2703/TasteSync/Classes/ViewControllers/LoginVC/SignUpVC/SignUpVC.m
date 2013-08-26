@@ -170,7 +170,7 @@
         [imagePicker setDelegate:self];
         imagePicker.allowsEditing = YES ;
         
-        [self presentModalViewController:imagePicker animated:YES];
+        [self presentViewController:imagePicker animated:YES completion:nil];
     }
 }
 
@@ -183,7 +183,7 @@
         [imagePicker setDelegate:self];
         imagePicker.allowsEditing = YES ;
         
-        [self presentModalViewController:imagePicker animated:YES];
+        [self presentViewController:imagePicker animated:YES completion:nil];
     }
 }
 
@@ -307,7 +307,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     
-    [self dismissModalViewControllerAnimated:YES];    
+    [self dismissViewControllerAnimated:YES completion:nil];
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     
     if (image!=nil) {        
@@ -322,7 +322,7 @@
 {
     
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 @end

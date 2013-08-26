@@ -212,7 +212,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIndentifier2];
         }
         
-        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.text = @"Load previous Notification";
         cell.textLabel.textColor = [UIColor whiteColor];
         [cell.textLabel setFont:[UIFont boldSystemFontOfSize:13]];
@@ -340,7 +340,7 @@
     refreshLabel.backgroundColor = [UIColor clearColor];
     refreshLabel.textColor = [UIColor whiteColor];
     refreshLabel.font = [UIFont boldSystemFontOfSize:12.0];
-    refreshLabel.textAlignment = UITextAlignmentCenter;
+    refreshLabel.textAlignment = NSTextAlignmentCenter;
     
     refreshArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_refresh.png"]];
     refreshArrow.frame = CGRectMake(floorf((REFRESH_HEADER_HEIGHT - 27) / 2),

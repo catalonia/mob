@@ -48,4 +48,5 @@ enum {
 
 - (void) login:(id<CFacebookDelegate>) aDelegate tagAction:(int) aTag;
 
+- (void)sendMessageToFBID:(NSString*)uid   Message:(NSString*)message;
 @end

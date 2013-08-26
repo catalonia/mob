@@ -128,7 +128,7 @@
     txtEmail.borderStyle = UITextBorderStyleRoundedRect;
     txtEmail.textColor = [UIColor darkTextColor];
     txtEmail.font = [UIFont systemFontOfSize:14.0];
-    txtEmail.textAlignment = UITextAlignmentLeft;
+    txtEmail.textAlignment = NSTextAlignmentLeft;
     txtEmail.placeholder = @"Email";
     [myAlertView addSubview:txtEmail];
     

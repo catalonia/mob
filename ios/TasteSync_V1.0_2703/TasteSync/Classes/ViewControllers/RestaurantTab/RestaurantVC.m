@@ -16,9 +16,13 @@
 {
     int TFSelected;
     BOOL filterExtendsShown;
-    NSString *restaurant, *region;
+    TSGlobalObj *restaurant, *region;
     NSMutableArray *arrDataStickFilter;
-
+    
+    NSString* _restaurantGerenal;
+    NSString* _regionGerenal;
+    TSCityObj* _cityObj;
+    BOOL _isHaveCityObj;
 }
 
 typedef enum _TFSelect
@@ -46,6 +50,10 @@ typedef enum _TFSelect
     [CommonHelpers setBackgroudImageForView:self.view];
     [self.navigationController setNavigationBarHidden:YES];
     // Do any additional setup after loading the view from its nib.
+    _regionGerenal = @"";
+    _restaurantGerenal = @"";
+    _cityObj = [[TSCityObj alloc]init];
+    _isHaveCityObj = NO;
     [self initUI];
     [self initData];
 }
@@ -140,38 +148,10 @@ typedef enum _TFSelect
 
     if (_arrDataRestaurant == nil) {
         self.arrDataRestaurant= [[NSMutableArray alloc] init];
-        for (int i= 0; i<10; i++) {
-            RestaurantObj *obj = [[RestaurantObj alloc] init];
-
-            if (i%2 ==0) {
-                obj.name = [NSString stringWithFormat:@"Nanking %d",i];
-                obj.isCheckin = NO;
-                obj.isDeal = YES;
-
-            }
-            else
-            {
-                obj.name = [NSString stringWithFormat:@"Momofoku %d",i];
-                obj.isCheckin = YES;
-                obj.isDeal = NO;
-            }
-            
-            if (i==3) {
-                obj.isSaved = YES;
-            }
-            
-            obj.rates = i%6;
-            
-            [self.arrDataRestaurant addObject:obj];
-
-            [self.arrData addObject:obj];
-
-        }
-        
     }
     
     if (_arrDataRegion == nil) {
-        self.arrDataRegion = [[NSMutableArray alloc] initWithObjects:@"Chinatown, New York, NY", @"Chappe, NY", @"Njine, CA", nil];
+        self.arrDataRegion = [[NSMutableArray alloc] init];
         
     }
     
@@ -351,7 +331,6 @@ typedef enum _TFSelect
     restaurantChains = NO;
     [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_show.png"] forButton:btShow];
     [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_hide_red.png"] forButton:btHide];
-    
 }
 
 - (IBAction)actionSegmentControl:(id)sender
@@ -394,10 +373,7 @@ typedef enum _TFSelect
             }
         }
     }
-    
     segCtr.selectedSegmentIndex = -1;
-    
-    
 }
 
 
@@ -448,7 +424,8 @@ typedef enum _TFSelect
             cell =(RestaurantCell *) [[[NSBundle mainBundle ] loadNibNamed:@"RestaurantCell" owner:self options:nil] objectAtIndex:0];
         }
         
-        [cell initForView:[_arrData objectAtIndex:indexPath.row]];
+        TSGlobalObj* obj = [_arrData objectAtIndex:indexPath.row];
+        [cell initForView:obj.restaurantObj];
 //        cell.delegate =self;
         return cell;
     }
@@ -461,18 +438,10 @@ typedef enum _TFSelect
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIndentifier];
         }
         
-        if (TFSelected == TFRestaurant) {
-            RestaurantObj *obj = [_arrDataFilter objectAtIndex:indexPath.row];
-            
-            cell.textLabel.text = obj.name;
-        }
-        else
-        {
-            cell.textLabel.text = [_arrDataFilter objectAtIndex:indexPath.row];
-
-        }
+        TSGlobalObj *obj = [_arrDataFilter objectAtIndex:indexPath.row];
+        cell.textLabel.text = obj.name;
        
-        cell.textLabel.textAlignment = UITextAlignmentLeft;
+        cell.textLabel.textAlignment = NSTextAlignmentLeft;
         cell.textLabel.textColor = [UIColor whiteColor];
         [cell.textLabel setFont:[UIFont boldSystemFontOfSize:13]];
         
@@ -486,17 +455,21 @@ typedef enum _TFSelect
 {
     if (tableView==tbvFilter) {
         if (TFSelected == TFRestaurant) {
-            RestaurantObj *obj = [_arrDataFilter objectAtIndex:indexPath.row];
+            TSGlobalObj *obj = [_arrDataFilter objectAtIndex:indexPath.row];
             [self.arrData removeAllObjects];
             [self.arrData addObject:obj];
             tfRestaurant.text = obj.name;
-            restaurant = obj.name;
+            restaurant = obj;
             [tbvResult reloadData];
         }
         else if (TFSelected == TFRegion)
         {
-            tfRegion.text = [_arrDataFilter objectAtIndex:indexPath.row];
-            region = tfRegion.text;
+            TSGlobalObj* gloabal =  [_arrDataFilter objectAtIndex:indexPath.row];
+            tfRegion.text = gloabal.name;
+            region = gloabal;
+            _isHaveCityObj = YES;
+            _cityObj = gloabal.cityObj;
+            _restaurantGerenal = @"";
         }
         else
         {
@@ -509,9 +482,11 @@ typedef enum _TFSelect
     }
     else
     {
-        RestaurantObj* restaurantObj = [[RestaurantObj alloc]init];
-        restaurantObj.uid = @"002b38d0-e4b5-012e-6305-003048c87378";
-        restaurantObj.name = @"Alpha Fusion";
+        TSGlobalObj* obj = [_arrData objectAtIndex:indexPath.row];
+        
+        RestaurantObj* restaurantObj = obj.restaurantObj;
+        restaurantObj.uid = restaurantObj.uid;
+        restaurantObj.name = restaurantObj.name;
         RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantObj:restaurantObj];
         vc.selectedIndex = 2;
         [self.navigationController pushViewController:vc animated:YES];
@@ -535,7 +510,7 @@ typedef enum _TFSelect
         TFSelected = TFRegion;
         lbTypeRegions.hidden = YES;
         region = nil;
-
+        _isHaveCityObj = NO;
     }
     
     
@@ -585,40 +560,77 @@ typedef enum _TFSelect
     }
     
     if (TFSelected == TFRestaurant) {
-        NSString *str = [NSString stringWithFormat:@"name MATCHES[cd] '%@.*'", [CommonHelpers trim:txt]];
-      
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:str];
-        
-        NSArray *array = [self.arrDataRestaurant filteredArrayUsingPredicate:predicate];
-        if(array)
-        {
-            self.arrDataFilter = [NSMutableArray arrayWithArray:array];
+        if (![txt isEqualToString:_restaurantGerenal] && txt.length == 3) {
+            NSLog(@"Start request restaurant");
+            _restaurantGerenal = txt;
+            
+            CRequest* request = [[CRequest alloc]initWithURL:@"restaurantSearchTerms" RQType:RequestTypePost RQData:RequestPopulate RQCategory:ApplicationForm withKey:1];
+            request.delegate = self;
+            [request setFormPostValue:txt forKey:@"key"];
+            if (_isHaveCityObj) 
+                [request setFormPostValue:_cityObj.uid forKey:@"cityid"];
+            else
+                [request setFormPostValue:@"" forKey:@"cityid"];
+            [request startFormRequest];
         }
+        if (txt.length >= 3) {
+            [self.arrDataFilter removeAllObjects];
+            for (TSGlobalObj *strObj in self.arrDataRestaurant) {
+                NSString  *ustrObj =  [strObj.name uppercaseString];
+                NSString *utxt =   [txt uppercaseString];
+                
+                int diff = strncmp([ustrObj UTF8String], [utxt UTF8String], utxt.length);
+                
+                debug(@"ustrObj -  utxt  -> %@ - %@ ",ustrObj,utxt);
+                
+                if (/*p!=NULL*/ diff == 0) {
+                    debug(@"added");
+                    [self.arrDataFilter addObject:strObj];
+                }
+            }
+            [tbvFilter setFrame:CGRectMake(20, tbvFilter.frame.origin.y, tbvFilter.frame.size.width, tbvFilter.frame.size.height)];
+        }
+       
         
-
-        
-         [tbvFilter setFrame:CGRectMake(20, tbvFilter.frame.origin.y, tbvFilter.frame.size.width, tbvFilter.frame.size.height)];
-
+//        NSString *str = [NSString stringWithFormat:@"name MATCHES[cd] '%@.*'", [CommonHelpers trim:txt]];
+//        NSPredicate *predicate = [NSPredicate predicateWithFormat:str];
+//        
+//        NSArray *array = [self.arrDataRestaurant filteredArrayUsingPredicate:predicate];
+//        if(array)
+//        {
+//            self.arrDataFilter = [NSMutableArray arrayWithArray:array];
+//        }
     }
     else if(TFSelected == TFRegion)
     {
-        for (NSString *strObj in _arrDataRegion) {
-            NSString  *ustrObj =  [strObj uppercaseString];
-            NSString *utxt =   [txt uppercaseString];
-            
-            int diff = strncmp([ustrObj UTF8String], [utxt UTF8String], utxt.length);
-            
-            debug(@"ustrObj -  utxt  -> %@ - %@ ",ustrObj,utxt);
-            
-            if (/*p!=NULL*/ diff == 0) {
-                debug(@"added");
-                [self.arrDataFilter addObject:strObj];
-            }
-            
+        if (![txt isEqualToString:_regionGerenal] && txt.length == 3) {
+            NSLog(@"Start request region");
+            _regionGerenal = txt;
+            CRequest* request = [[CRequest alloc]initWithURL:@"getUserCity" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:2];
+            request.delegate = self;
+            [request setFormPostValue:txt forKey:@"key"];
+            [request startFormRequest];
         }
         
-        [tbvFilter setFrame:CGRectMake(160, tbvFilter.frame.origin.y, tbvFilter.frame.size.width, tbvFilter.frame.size.height)];
+        if (txt.length >= 3) {
+            [self.arrDataFilter removeAllObjects];
+            for (TSGlobalObj *strObj in _arrDataRegion) {
+                NSString  *ustrObj =  [strObj.name uppercaseString];
+                NSString *utxt =   [txt uppercaseString];
+                
+                int diff = strncmp([ustrObj UTF8String], [utxt UTF8String], utxt.length);
+                
+                debug(@"ustrObj -  utxt  -> %@ - %@ ",ustrObj,utxt);
+                
+                if (/*p!=NULL*/ diff == 0) {
+                    debug(@"added");
+                    [self.arrDataFilter addObject:strObj];
+                }
+            }
+            [tbvFilter setFrame:CGRectMake(160, tbvFilter.frame.origin.y, tbvFilter.frame.size.width, tbvFilter.frame.size.height)];
+        }
+        
     }
     else
     {
@@ -634,9 +646,7 @@ typedef enum _TFSelect
         }
         else{
             frame.size.height = (_arrDataFilter.count) *44;
-            
         }
-
         tbvFilter.hidden = NO;
         [tbvFilter reloadData];
     }
@@ -656,14 +666,13 @@ typedef enum _TFSelect
 {
     [tfRegion resignFirstResponder];
     [tfRestaurant resignFirstResponder];
-    tfRegion.text = region;
+    tfRegion.text = region.name;
     if (restaurant ==nil) {
         lbTypingRestaurant.hidden = NO;
         tfRestaurant.text = nil;
     }else
     {
-        tfRestaurant.text = restaurant;
-
+        tfRestaurant.text = restaurant.name;
     }
     
     if (region == nil) {
@@ -673,7 +682,7 @@ typedef enum _TFSelect
     }
     else
     {
-        tfRegion.text = region;
+        tfRegion.text = region.name;
     }
 }
 
@@ -691,7 +700,6 @@ typedef enum _TFSelect
         debug(@"tbvResult ->scrollViewWillBeginDragging");
             
     }
-
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -706,6 +714,61 @@ typedef enum _TFSelect
         debug(@"tbvResult ->scrollViewDidEndDragging");
     }
 
+}
+
+#pragma mark response Data
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    if (key == 1) {
+        [_arrDataRestaurant removeAllObjects];
+        NSArray* array = [response objectFromJSONString];
+        for (NSDictionary* dic in array) {
+            TSGlobalObj* global = [[TSGlobalObj alloc]init];
+            global.type = GlobalDataRestaurant;
+            global.uid = [dic objectForKey:@"restaurantId"];
+            global.name = [dic objectForKey:@"restaurantName"];
+            
+            RestaurantObj* restaurantObj = [[RestaurantObj alloc]init];
+            
+            restaurantObj.uid =  [dic objectForKey:@"restaurantId"];
+            restaurantObj.factualId = [dic objectForKey:@"factualId"];
+            restaurantObj.name = [dic objectForKey:@"restaurantName"];
+            restaurantObj.isOpenNow                =  [[dic objectForKey:@"openNowFlag"] isEqualToString:@"1"]?YES:NO;
+            restaurantObj.deal                            =  [dic objectForKey:@"dealHeadline"];
+            if ([restaurantObj.deal isEqualToString:@""])
+                restaurantObj.isDeal = NO;
+            else
+                restaurantObj.isDeal = YES;
+            
+            restaurantObj.isMoreInfo                  =  [[dic objectForKey:@"moreInfoFlag"]  isEqualToString:@"1"]?YES:NO;
+            restaurantObj.isMenuFlag                =  [[dic objectForKey:@"menuFlag"] isEqualToString:@"1"]?YES:NO;
+            restaurantObj.isSaved                      =  [[dic objectForKey:@"userRestaurantSavedFlag"] isEqualToString:@"1"]?YES:NO;
+            restaurantObj.isFavs                         =  [[dic objectForKey:@"userRestaurantFavFlag"]  isEqualToString:@"1"]?YES:NO;
+            restaurantObj.isTipFlag                     =  [[dic objectForKey:@"userRestaurantTipFlag"]  isEqualToString:@"1"]?YES:NO;
+            global.restaurantObj = restaurantObj;
+            [_arrDataRestaurant addObject:global];
+        }
+    }
+    if (key == 2) {
+        [_arrDataRegion removeAllObjects];
+        NSArray* array = [response objectFromJSONString];
+        for (NSDictionary* dic in array) {
+            TSGlobalObj* global = [[TSGlobalObj alloc]init];
+            global.type = GlobalDataCity;
+            global.uid = [dic objectForKey:@"cityId"];
+            global.name = [dic objectForKey:@"city"];
+            
+            TSCityObj* cityObj = [[TSCityObj alloc]init];
+            
+            cityObj.uid              = [dic objectForKey:@"cityId"];
+            cityObj.cityName   = [dic objectForKey:@"city"];
+            cityObj.stateName = [dic objectForKey:@"state"];
+            cityObj.country       = [dic objectForKey:@"country"];
+            global.cityObj = cityObj;
+            [_arrDataRegion addObject:global];
+        }
+    }
 }
 
 
