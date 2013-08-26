@@ -216,7 +216,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "             restaurant_question_ts_assigned.assigned_user_id, " +
         "             restaurant_question_ts_assigned.assigned_user_registerd_yn, " +
         "             restaurant_question_ts_assigned.question_id, " +
-        "             restaurant_question_ts_assigned.restaurant_id, ) " +
+        "             restaurant_question_ts_assigned.restaurant_id,  " +
         "             restaurant_question_ts_assigned.assigned_datetime ) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
         "              ?, " + "              ?, " + "              ?, " +
