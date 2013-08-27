@@ -11,7 +11,7 @@
 @implementation RestaurantObj
 @synthesize 
 uid = _uid,
-
+type = _type,
 name = _name,
 nation = _nation,
 
@@ -24,8 +24,10 @@ isSaved = _isSaved,
 isFavs = _isFavs,
 isCheckin = _isCheckin,
 isLike = _isLike,
+isReco = _isReco,
 imageUrl = _imageUrl,
 allowSize = _allowSize,
+price = _price,
 
 factualId = _factualId,
 factualRating = _factualRating,

@@ -602,6 +602,7 @@
 										<string key="NSFrame">{{65, 310}, {190, 28}}</string>
 										<reference key="NSSuperview" ref="191373211"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -1078,10 +1079,10 @@
 						<int key="objectID">17</int>
 						<reference key="object" ref="1032090759"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="546610892"/>
 							<reference ref="856638477"/>
 							<reference ref="914393068"/>
 							<reference ref="902032446"/>
+							<reference ref="546610892"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">View4</string>
@@ -1249,7 +1250,6 @@
 						<string key="actionBack:">id</string>
 						<string key="actionCheck1:">id</string>
 						<string key="actionCheck2:">id</string>
-						<string key="actionHideKeyPad:">id</string>
 						<string key="actionSendMessage:">id</string>
 						<string key="actionShare:">id</string>
 					</dictionary>
@@ -1268,10 +1268,6 @@
 						</object>
 						<object class="IBActionInfo" key="actionCheck2:">
 							<string key="name">actionCheck2:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="actionHideKeyPad:">
-							<string key="name">actionHideKeyPad:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="actionSendMessage:">

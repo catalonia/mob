@@ -16,4 +16,6 @@
 @property (nonatomic, strong) NSMutableArray *arrData, *arrDataFilter, *arrDataFriends;
 @property (nonatomic, strong) RestaurantObj *restaurantObj;
 
+-(id)initWithRestaurantObj:(RestaurantObj*)obj;
+
 @end

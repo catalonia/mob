@@ -21,28 +21,6 @@
         </wadl:response>
       </wadl:method>
     </wadl:resource>
-    <wadl:resource path="/rest/ask/recoactioned">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userid" style="query"/>
-          <wadl:param name="paginationid" style="query"/>
-        </wadl:request>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/json/ask/recoactioned">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userid" style="query"/>
-          <wadl:param name="paginationid" style="query"/>
-        </wadl:request>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
     <wadl:resource path="/rest/ask/recofollowupanswer">
       <wadl:method name="POST">
         <wadl:request/>
@@ -73,6 +51,28 @@
       <wadl:method name="GET">
         <wadl:request>
           <wadl:param name="recorequestid" style="query"/>
+        </wadl:request>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/rest/ask/recolist">
+      <wadl:method name="GET">
+        <wadl:request>
+          <wadl:param name="userid" style="query"/>
+          <wadl:param name="paginationid" style="query"/>
+        </wadl:request>
+        <wadl:response>
+          <wadl:representation mediaType="application/json"/>
+        </wadl:response>
+      </wadl:method>
+    </wadl:resource>
+    <wadl:resource path="/json/ask/recolist">
+      <wadl:method name="GET">
+        <wadl:request>
+          <wadl:param name="userid" style="query"/>
+          <wadl:param name="paginationid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>
@@ -311,28 +311,6 @@
           <wadl:param name="favflag" style="query"/>
           <wadl:param name="dealflag" style="query"/>
           <wadl:param name="chainflag" style="query"/>
-        </wadl:request>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/rest/ask/recounactioned">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userid" style="query"/>
-          <wadl:param name="paginationid" style="query"/>
-        </wadl:request>
-        <wadl:response>
-          <wadl:representation mediaType="application/json"/>
-        </wadl:response>
-      </wadl:method>
-    </wadl:resource>
-    <wadl:resource path="/json/ask/recounactioned">
-      <wadl:method name="GET">
-        <wadl:request>
-          <wadl:param name="userid" style="query"/>
-          <wadl:param name="paginationid" style="query"/>
         </wadl:request>
         <wadl:response>
           <wadl:representation mediaType="application/json"/>

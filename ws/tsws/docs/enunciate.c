@@ -1132,6 +1132,948 @@ static int xmlTextWriterWriteNs0TSMenuObjType(xmlTextWriterPtr writer, struct en
 static void freeNs0TSMenuObjType(struct enunciate_ns0_TSMenuObj *_tSMenuObj);
 
 #endif /* DEF_enunciate_ns0_TSMenuObj_H */
+#ifndef DEF_enunciate_ns0_TSNotifDidYouLikeObj_H
+#define DEF_enunciate_ns0_TSNotifDidYouLikeObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSNotifDidYouLikeObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recoNotificationType;
+
+  /**
+   * (no documentation provided)
+   */
+  struct tm *datetimeBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *idBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recorequestId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *datetime;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *viewed;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSRestaurantBasicObj *restaurantbasic;
+
+  /**
+   * Size of the restaurantbasic array.
+   */
+  int _sizeof_restaurantbasic;
+};
+
+/**
+ * Reads a TSNotifDidYouLikeObj element from XML. The element to be read is "notifdidyoulike", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifDidYouLikeObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifDidYouLikeObj *xml_read_enunciate_ns0_TSNotifDidYouLikeObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifDidYouLikeObj to XML under element name "notifdidyoulike".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSNotifDidYouLikeObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj);
+
+/**
+ * Frees a TSNotifDidYouLikeObj.
+ *
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to free.
+ */
+void free_enunciate_ns0_TSNotifDidYouLikeObj(struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj);
+
+/**
+ * Reads a TSNotifDidYouLikeObj element from XML. The element to be read is "notifdidyoulike", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifDidYouLikeObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifDidYouLikeObj *xmlTextReaderReadNs0NotifdidyoulikeElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifDidYouLikeObj to XML under element name "notifdidyoulike".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifdidyoulikeElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj);
+
+/**
+ * Writes a TSNotifDidYouLikeObj to XML under element name "notifdidyoulike".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifdidyoulikeElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSNotifDidYouLikeObj.
+ *
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj whose children are to be free.
+ */
+static void freeNs0NotifdidyoulikeElement(struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj);
+
+/**
+ * Reads a TSNotifDidYouLikeObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifDidYouLikeObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifDidYouLikeObj *xmlTextReaderReadNs0TSNotifDidYouLikeObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifDidYouLikeObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSNotifDidYouLikeObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj);
+
+/**
+ * Frees the elements of a TSNotifDidYouLikeObj.
+ *
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to free.
+ */
+static void freeNs0TSNotifDidYouLikeObjType(struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj);
+
+#endif /* DEF_enunciate_ns0_TSNotifDidYouLikeObj_H */
+#ifndef DEF_enunciate_ns0_TSNotifFollowupQuestionObj_H
+#define DEF_enunciate_ns0_TSNotifFollowupQuestionObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSNotifFollowupQuestionObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recoNotificationType;
+
+  /**
+   * (no documentation provided)
+   */
+  struct tm *datetimeBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *idBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *questionId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *assignedDatetime;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *viewed;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *actioned;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSUserProfileBasicObj *questionUser;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *questionText;
+};
+
+/**
+ * Reads a TSNotifFollowupQuestionObj element from XML. The element to be read is "notiffollowupquestion", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifFollowupQuestionObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifFollowupQuestionObj *xml_read_enunciate_ns0_TSNotifFollowupQuestionObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifFollowupQuestionObj to XML under element name "notiffollowupquestion".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSNotifFollowupQuestionObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj);
+
+/**
+ * Frees a TSNotifFollowupQuestionObj.
+ *
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to free.
+ */
+void free_enunciate_ns0_TSNotifFollowupQuestionObj(struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj);
+
+/**
+ * Reads a TSNotifFollowupQuestionObj element from XML. The element to be read is "notiffollowupquestion", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifFollowupQuestionObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifFollowupQuestionObj *xmlTextReaderReadNs0NotiffollowupquestionElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifFollowupQuestionObj to XML under element name "notiffollowupquestion".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotiffollowupquestionElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj);
+
+/**
+ * Writes a TSNotifFollowupQuestionObj to XML under element name "notiffollowupquestion".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotiffollowupquestionElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSNotifFollowupQuestionObj.
+ *
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj whose children are to be free.
+ */
+static void freeNs0NotiffollowupquestionElement(struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj);
+
+/**
+ * Reads a TSNotifFollowupQuestionObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifFollowupQuestionObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifFollowupQuestionObj *xmlTextReaderReadNs0TSNotifFollowupQuestionObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifFollowupQuestionObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSNotifFollowupQuestionObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj);
+
+/**
+ * Frees the elements of a TSNotifFollowupQuestionObj.
+ *
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to free.
+ */
+static void freeNs0TSNotifFollowupQuestionObjType(struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj);
+
+#endif /* DEF_enunciate_ns0_TSNotifFollowupQuestionObj_H */
+#ifndef DEF_enunciate_ns0_TSNotifMessageForYouObj_H
+#define DEF_enunciate_ns0_TSNotifMessageForYouObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSNotifMessageForYouObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recoNotificationType;
+
+  /**
+   * (no documentation provided)
+   */
+  struct tm *datetimeBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *idBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *messageId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *messageCreatedTime;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *viewed;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *actioned;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSUserProfileBasicObj *senderUser;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *message;
+};
+
+/**
+ * Reads a TSNotifMessageForYouObj element from XML. The element to be read is "notifmessageforyou", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifMessageForYouObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifMessageForYouObj *xml_read_enunciate_ns0_TSNotifMessageForYouObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifMessageForYouObj to XML under element name "notifmessageforyou".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSNotifMessageForYouObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj);
+
+/**
+ * Frees a TSNotifMessageForYouObj.
+ *
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to free.
+ */
+void free_enunciate_ns0_TSNotifMessageForYouObj(struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj);
+
+/**
+ * Reads a TSNotifMessageForYouObj element from XML. The element to be read is "notifmessageforyou", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifMessageForYouObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifMessageForYouObj *xmlTextReaderReadNs0NotifmessageforyouElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifMessageForYouObj to XML under element name "notifmessageforyou".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifmessageforyouElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj);
+
+/**
+ * Writes a TSNotifMessageForYouObj to XML under element name "notifmessageforyou".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifmessageforyouElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSNotifMessageForYouObj.
+ *
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj whose children are to be free.
+ */
+static void freeNs0NotifmessageforyouElement(struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj);
+
+/**
+ * Reads a TSNotifMessageForYouObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifMessageForYouObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifMessageForYouObj *xmlTextReaderReadNs0TSNotifMessageForYouObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifMessageForYouObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSNotifMessageForYouObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj);
+
+/**
+ * Frees the elements of a TSNotifMessageForYouObj.
+ *
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to free.
+ */
+static void freeNs0TSNotifMessageForYouObjType(struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj);
+
+#endif /* DEF_enunciate_ns0_TSNotifMessageForYouObj_H */
+#ifndef DEF_enunciate_ns0_TSNotifRecoLikeObj_H
+#define DEF_enunciate_ns0_TSNotifRecoLikeObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSNotifRecoLikeObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recoNotificationType;
+
+  /**
+   * (no documentation provided)
+   */
+  struct tm *datetimeBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *idBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *likeId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *likeDatetime;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *viewed;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSUserProfileBasicObj *recommendeeUser;
+};
+
+/**
+ * Reads a TSNotifRecoLikeObj element from XML. The element to be read is "notifrecolike", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoLikeObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecoLikeObj *xml_read_enunciate_ns0_TSNotifRecoLikeObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecoLikeObj to XML under element name "notifrecolike".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSNotifRecoLikeObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj);
+
+/**
+ * Frees a TSNotifRecoLikeObj.
+ *
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to free.
+ */
+void free_enunciate_ns0_TSNotifRecoLikeObj(struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj);
+
+/**
+ * Reads a TSNotifRecoLikeObj element from XML. The element to be read is "notifrecolike", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoLikeObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecoLikeObj *xmlTextReaderReadNs0NotifrecolikeElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecoLikeObj to XML under element name "notifrecolike".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifrecolikeElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj);
+
+/**
+ * Writes a TSNotifRecoLikeObj to XML under element name "notifrecolike".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifrecolikeElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSNotifRecoLikeObj.
+ *
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj whose children are to be free.
+ */
+static void freeNs0NotifrecolikeElement(struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj);
+
+/**
+ * Reads a TSNotifRecoLikeObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoLikeObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifRecoLikeObj *xmlTextReaderReadNs0TSNotifRecoLikeObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecoLikeObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSNotifRecoLikeObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj);
+
+/**
+ * Frees the elements of a TSNotifRecoLikeObj.
+ *
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to free.
+ */
+static void freeNs0TSNotifRecoLikeObjType(struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj);
+
+#endif /* DEF_enunciate_ns0_TSNotifRecoLikeObj_H */
+#ifndef DEF_enunciate_ns0_TSNotifRecoReplyObj_H
+#define DEF_enunciate_ns0_TSNotifRecoReplyObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSNotifRecoReplyObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *replyId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *repliedDatetime;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *viewed;
+};
+
+/**
+ * Reads a TSNotifRecoReplyObj element from XML. The element to be read is "notifrecoreply", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoReplyObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecoReplyObj *xml_read_enunciate_ns0_TSNotifRecoReplyObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecoReplyObj to XML under element name "notifrecoreply".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSNotifRecoReplyObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj);
+
+/**
+ * Frees a TSNotifRecoReplyObj.
+ *
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to free.
+ */
+void free_enunciate_ns0_TSNotifRecoReplyObj(struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj);
+
+/**
+ * Reads a TSNotifRecoReplyObj element from XML. The element to be read is "notifrecoreply", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoReplyObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecoReplyObj *xmlTextReaderReadNs0NotifrecoreplyElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecoReplyObj to XML under element name "notifrecoreply".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifrecoreplyElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj);
+
+/**
+ * Writes a TSNotifRecoReplyObj to XML under element name "notifrecoreply".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifrecoreplyElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSNotifRecoReplyObj.
+ *
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj whose children are to be free.
+ */
+static void freeNs0NotifrecoreplyElement(struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj);
+
+/**
+ * Reads a TSNotifRecoReplyObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoReplyObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifRecoReplyObj *xmlTextReaderReadNs0TSNotifRecoReplyObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecoReplyObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSNotifRecoReplyObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj);
+
+/**
+ * Frees the elements of a TSNotifRecoReplyObj.
+ *
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to free.
+ */
+static void freeNs0TSNotifRecoReplyObjType(struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj);
+
+#endif /* DEF_enunciate_ns0_TSNotifRecoReplyObj_H */
+#ifndef DEF_enunciate_ns0_TSNotifRecorequestAnswerObj_H
+#define DEF_enunciate_ns0_TSNotifRecorequestAnswerObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSNotifRecorequestAnswerObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recoNotificationType;
+
+  /**
+   * (no documentation provided)
+   */
+  struct tm *datetimeBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *idBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recorequestId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *minViewedIndicator;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recoActioned;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSNotifRecoReplyObj *recoReply;
+
+  /**
+   * Size of the recoReply array.
+   */
+  int _sizeof_recoReply;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSRecommendationsForYouObj *recommendationsForYou;
+};
+
+/**
+ * Reads a TSNotifRecorequestAnswerObj element from XML. The element to be read is "notifrecorequestanswer", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestAnswerObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecorequestAnswerObj *xml_read_enunciate_ns0_TSNotifRecorequestAnswerObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecorequestAnswerObj to XML under element name "notifrecorequestanswer".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSNotifRecorequestAnswerObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj);
+
+/**
+ * Frees a TSNotifRecorequestAnswerObj.
+ *
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to free.
+ */
+void free_enunciate_ns0_TSNotifRecorequestAnswerObj(struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj);
+
+/**
+ * Reads a TSNotifRecorequestAnswerObj element from XML. The element to be read is "notifrecorequestanswer", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestAnswerObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecorequestAnswerObj *xmlTextReaderReadNs0NotifrecorequestanswerElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecorequestAnswerObj to XML under element name "notifrecorequestanswer".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifrecorequestanswerElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj);
+
+/**
+ * Writes a TSNotifRecorequestAnswerObj to XML under element name "notifrecorequestanswer".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifrecorequestanswerElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSNotifRecorequestAnswerObj.
+ *
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj whose children are to be free.
+ */
+static void freeNs0NotifrecorequestanswerElement(struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj);
+
+/**
+ * Reads a TSNotifRecorequestAnswerObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestAnswerObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifRecorequestAnswerObj *xmlTextReaderReadNs0TSNotifRecorequestAnswerObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecorequestAnswerObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSNotifRecorequestAnswerObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj);
+
+/**
+ * Frees the elements of a TSNotifRecorequestAnswerObj.
+ *
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to free.
+ */
+static void freeNs0TSNotifRecorequestAnswerObjType(struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj);
+
+#endif /* DEF_enunciate_ns0_TSNotifRecorequestAnswerObj_H */
+#ifndef DEF_enunciate_ns0_TSNotifRecorequestNeededObj_H
+#define DEF_enunciate_ns0_TSNotifRecorequestNeededObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSNotifRecorequestNeededObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recoNotificationType;
+
+  /**
+   * (no documentation provided)
+   */
+  struct tm *datetimeBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *idBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recorequestId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *assignedDatetime;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recorequestassignedViewed;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recorequestassignedActioned;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSUserProfileBasicObj *recommendeeUser;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recorequestText;
+};
+
+/**
+ * Reads a TSNotifRecorequestNeededObj element from XML. The element to be read is "notifrecorequestneeded", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestNeededObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecorequestNeededObj *xml_read_enunciate_ns0_TSNotifRecorequestNeededObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecorequestNeededObj to XML under element name "notifrecorequestneeded".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSNotifRecorequestNeededObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj);
+
+/**
+ * Frees a TSNotifRecorequestNeededObj.
+ *
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to free.
+ */
+void free_enunciate_ns0_TSNotifRecorequestNeededObj(struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj);
+
+/**
+ * Reads a TSNotifRecorequestNeededObj element from XML. The element to be read is "notifrecorequestneeded", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestNeededObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecorequestNeededObj *xmlTextReaderReadNs0NotifrecorequestneededElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecorequestNeededObj to XML under element name "notifrecorequestneeded".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifrecorequestneededElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj);
+
+/**
+ * Writes a TSNotifRecorequestNeededObj to XML under element name "notifrecorequestneeded".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0NotifrecorequestneededElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSNotifRecorequestNeededObj.
+ *
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj whose children are to be free.
+ */
+static void freeNs0NotifrecorequestneededElement(struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj);
+
+/**
+ * Reads a TSNotifRecorequestNeededObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestNeededObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifRecorequestNeededObj *xmlTextReaderReadNs0TSNotifRecorequestNeededObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSNotifRecorequestNeededObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSNotifRecorequestNeededObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj);
+
+/**
+ * Frees the elements of a TSNotifRecorequestNeededObj.
+ *
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to free.
+ */
+static void freeNs0TSNotifRecorequestNeededObjType(struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj);
+
+#endif /* DEF_enunciate_ns0_TSNotifRecorequestNeededObj_H */
 #ifndef DEF_enunciate_ns0_TSNotificationSettingsObj_H
 #define DEF_enunciate_ns0_TSNotificationSettingsObj_H
 
@@ -1460,6 +2402,162 @@ static int xmlTextWriterWriteNs0TSPrivacySettingsObjType(xmlTextWriterPtr writer
 static void freeNs0TSPrivacySettingsObjType(struct enunciate_ns0_TSPrivacySettingsObj *_tSPrivacySettingsObj);
 
 #endif /* DEF_enunciate_ns0_TSPrivacySettingsObj_H */
+#ifndef DEF_enunciate_ns0_TSRecoNotificationBaseObj_H
+#define DEF_enunciate_ns0_TSRecoNotificationBaseObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSRecoNotificationBaseObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recoNotificationType;
+
+  /**
+   * (no documentation provided)
+   */
+  struct tm *datetimeBase;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *idBase;
+};
+
+/**
+ * Reads a TSRecoNotificationBaseObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRecoNotificationBaseObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRecoNotificationBaseObj *xmlTextReaderReadNs0TSRecoNotificationBaseObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRecoNotificationBaseObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRecoNotificationBaseObj The TSRecoNotificationBaseObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSRecoNotificationBaseObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRecoNotificationBaseObj *_tSRecoNotificationBaseObj);
+
+/**
+ * Frees the elements of a TSRecoNotificationBaseObj.
+ *
+ * @param _tSRecoNotificationBaseObj The TSRecoNotificationBaseObj to free.
+ */
+static void freeNs0TSRecoNotificationBaseObjType(struct enunciate_ns0_TSRecoNotificationBaseObj *_tSRecoNotificationBaseObj);
+
+#endif /* DEF_enunciate_ns0_TSRecoNotificationBaseObj_H */
+#ifndef DEF_enunciate_ns0_TSRestaurantBasicObj_H
+#define DEF_enunciate_ns0_TSRestaurantBasicObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSRestaurantBasicObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantName;
+};
+
+/**
+ * Reads a TSRestaurantBasicObj element from XML. The element to be read is "restaurantbasic", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBasicObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantBasicObj *xml_read_enunciate_ns0_TSRestaurantBasicObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantBasicObj to XML under element name "restaurantbasic".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSRestaurantBasicObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj);
+
+/**
+ * Frees a TSRestaurantBasicObj.
+ *
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantBasicObj(struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj);
+
+/**
+ * Reads a TSRestaurantBasicObj element from XML. The element to be read is "restaurantbasic", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBasicObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantBasicObj *xmlTextReaderReadNs0RestaurantbasicElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantBasicObj to XML under element name "restaurantbasic".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0RestaurantbasicElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj);
+
+/**
+ * Writes a TSRestaurantBasicObj to XML under element name "restaurantbasic".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0RestaurantbasicElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSRestaurantBasicObj.
+ *
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj whose children are to be free.
+ */
+static void freeNs0RestaurantbasicElement(struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj);
+
+/**
+ * Reads a TSRestaurantBasicObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBasicObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantBasicObj *xmlTextReaderReadNs0TSRestaurantBasicObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantBasicObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSRestaurantBasicObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj);
+
+/**
+ * Frees the elements of a TSRestaurantBasicObj.
+ *
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to free.
+ */
+static void freeNs0TSRestaurantBasicObjType(struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj);
+
+#endif /* DEF_enunciate_ns0_TSRestaurantBasicObj_H */
 #ifndef DEF_enunciate_ns0_TSRestaurantDetailsObj_H
 #define DEF_enunciate_ns0_TSRestaurantDetailsObj_H
 
@@ -9865,6 +10963,4586 @@ static void freeNs0TSMenuObjType(struct enunciate_ns0_TSMenuObj *_tSMenuObj) {
   }
 }
 #endif /* DEF_enunciate_ns0_TSMenuObj_M */
+#ifndef DEF_enunciate_ns0_TSNotifDidYouLikeObj_M
+#define DEF_enunciate_ns0_TSNotifDidYouLikeObj_M
+
+/**
+ * Reads a TSNotifDidYouLikeObj element from XML. The element to be read is "notifdidyoulike", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifDidYouLikeObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifDidYouLikeObj *xml_read_enunciate_ns0_TSNotifDidYouLikeObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0NotifdidyoulikeElement(reader);
+}
+
+/**
+ * Writes a TSNotifDidYouLikeObj to XML under element name "notifdidyoulike".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSNotifDidYouLikeObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj) {
+  return xmlTextWriterWriteNs0NotifdidyoulikeElementNS(writer, _tSNotifDidYouLikeObj, 1);
+}
+
+/**
+ * Frees a TSNotifDidYouLikeObj.
+ *
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to free.
+ */
+void free_enunciate_ns0_TSNotifDidYouLikeObj(struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj) {
+  freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+  free(_tSNotifDidYouLikeObj);
+}
+
+/**
+ * Reads a TSNotifDidYouLikeObj element from XML. The element to be read is "notifdidyoulike", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifDidYouLikeObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifDidYouLikeObj *xmlTextReaderReadNs0NotifdidyoulikeElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "notifdidyoulike", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}notifdidyoulike.\n");
+#endif
+    _tSNotifDidYouLikeObj = xmlTextReaderReadNs0TSNotifDidYouLikeObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSNotifDidYouLikeObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}notifdidyoulike failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}notifdidyoulike failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSNotifDidYouLikeObj;
+}
+
+/**
+ * Writes a TSNotifDidYouLikeObj to XML under element name "notifdidyoulike".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifdidyoulikeElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj) {
+  return xmlTextWriterWriteNs0NotifdidyoulikeElementNS(writer, _tSNotifDidYouLikeObj, 0);
+}
+
+/**
+ * Writes a TSNotifDidYouLikeObj to XML under element name "notifdidyoulike".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifdidyoulikeElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "notifdidyoulike", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}notifdidyoulike. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSNotifDidYouLikeObj for root element {}notifdidyoulike...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSNotifDidYouLikeObjType(writer, _tSNotifDidYouLikeObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}notifdidyoulike. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}notifdidyoulike. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSNotifDidYouLikeObj.
+ *
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj whose children are to be free.
+ */
+static void freeNs0NotifdidyoulikeElement(struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj) {
+  freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+}
+
+/**
+ * Reads a TSNotifDidYouLikeObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSNotifDidYouLikeObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifDidYouLikeObj *xmlTextReaderReadNs0TSNotifDidYouLikeObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj = calloc(1, sizeof(struct enunciate_ns0_TSNotifDidYouLikeObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+        free(_tSNotifDidYouLikeObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+          free(_tSNotifDidYouLikeObj);
+          return NULL;
+        }
+
+        _tSNotifDidYouLikeObj->recoNotificationType = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "datetimeBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsDateTimeType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+          free(_tSNotifDidYouLikeObj);
+          return NULL;
+        }
+
+        _tSNotifDidYouLikeObj->datetimeBase = ((struct tm*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "idBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+          free(_tSNotifDidYouLikeObj);
+          return NULL;
+        }
+
+        _tSNotifDidYouLikeObj->idBase = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recorequestId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recorequestId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recorequestId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+          free(_tSNotifDidYouLikeObj);
+          return NULL;
+        }
+
+        _tSNotifDidYouLikeObj->recorequestId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "datetime", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}datetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}datetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+          free(_tSNotifDidYouLikeObj);
+          return NULL;
+        }
+
+        _tSNotifDidYouLikeObj->datetime = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "viewed", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+          free(_tSNotifDidYouLikeObj);
+          return NULL;
+        }
+
+        _tSNotifDidYouLikeObj->viewed = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantbasic", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantbasic of type {}TSRestaurantBasicObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSRestaurantBasicObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantbasic of type {}TSRestaurantBasicObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+          free(_tSNotifDidYouLikeObj);
+          return NULL;
+        }
+
+        _tSNotifDidYouLikeObj->restaurantbasic = realloc(_tSNotifDidYouLikeObj->restaurantbasic, (_tSNotifDidYouLikeObj->_sizeof_restaurantbasic + 1) * sizeof(struct enunciate_ns0_TSRestaurantBasicObj));
+        memcpy(&(_tSNotifDidYouLikeObj->restaurantbasic[_tSNotifDidYouLikeObj->_sizeof_restaurantbasic++]), _child_accessor, sizeof(struct enunciate_ns0_TSRestaurantBasicObj));
+        free(_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSNotifDidYouLikeObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSNotifDidYouLikeObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSNotifDidYouLikeObj;
+}
+
+/**
+ * Writes a TSNotifDidYouLikeObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSNotifDidYouLikeObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSNotifDidYouLikeObj->recoNotificationType != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifDidYouLikeObj->recoNotificationType));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifDidYouLikeObj->datetimeBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "datetimeBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase...\n");
+#endif
+    status = xmlTextWriterWriteXsDateTimeType(writer, (_tSNotifDidYouLikeObj->datetimeBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifDidYouLikeObj->idBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "idBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}idBase...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifDidYouLikeObj->idBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifDidYouLikeObj->recorequestId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recorequestId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recorequestId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifDidYouLikeObj->recorequestId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recorequestId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifDidYouLikeObj->datetime != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "datetime", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}datetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}datetime...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifDidYouLikeObj->datetime));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}datetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}datetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifDidYouLikeObj->viewed != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "viewed", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}viewed...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifDidYouLikeObj->viewed));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  for (i = 0; i < _tSNotifDidYouLikeObj->_sizeof_restaurantbasic; i++) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantbasic", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantbasic. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSRestaurantBasicObj for element {}restaurantbasic...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSRestaurantBasicObjType(writer, &(_tSNotifDidYouLikeObj->restaurantbasic[i]));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSRestaurantBasicObj for element {}restaurantbasic. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantbasic. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSNotifDidYouLikeObj.
+ *
+ * @param _tSNotifDidYouLikeObj The TSNotifDidYouLikeObj to free.
+ */
+static void freeNs0TSNotifDidYouLikeObjType(struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj) {
+  int i;
+  if (_tSNotifDidYouLikeObj->recoNotificationType != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifDidYouLikeObj->recoNotificationType);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recoNotificationType of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    free(_tSNotifDidYouLikeObj->recoNotificationType);
+  }
+  if (_tSNotifDidYouLikeObj->datetimeBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor datetimeBase of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    freeXsDateTimeType(_tSNotifDidYouLikeObj->datetimeBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor datetimeBase of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    free(_tSNotifDidYouLikeObj->datetimeBase);
+  }
+  if (_tSNotifDidYouLikeObj->idBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor idBase of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifDidYouLikeObj->idBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor idBase of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    free(_tSNotifDidYouLikeObj->idBase);
+  }
+  if (_tSNotifDidYouLikeObj->recorequestId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recorequestId of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifDidYouLikeObj->recorequestId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recorequestId of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    free(_tSNotifDidYouLikeObj->recorequestId);
+  }
+  if (_tSNotifDidYouLikeObj->datetime != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor datetime of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifDidYouLikeObj->datetime);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor datetime of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    free(_tSNotifDidYouLikeObj->datetime);
+  }
+  if (_tSNotifDidYouLikeObj->viewed != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor viewed of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifDidYouLikeObj->viewed);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor viewed of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    free(_tSNotifDidYouLikeObj->viewed);
+  }
+  if (_tSNotifDidYouLikeObj->restaurantbasic != NULL) {
+    for (i = 0; i < _tSNotifDidYouLikeObj->_sizeof_restaurantbasic; i++) {
+#if DEBUG_ENUNCIATE > 1
+      printf("Freeing accessor restaurantbasic[%i] of type enunciate_ns0_TSNotifDidYouLikeObj...\n", i);
+#endif
+      freeNs0TSRestaurantBasicObjType(&(_tSNotifDidYouLikeObj->restaurantbasic[i]));
+    }
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantbasic of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    free(_tSNotifDidYouLikeObj->restaurantbasic);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSNotifDidYouLikeObj_M */
+#ifndef DEF_enunciate_ns0_TSNotifFollowupQuestionObj_M
+#define DEF_enunciate_ns0_TSNotifFollowupQuestionObj_M
+
+/**
+ * Reads a TSNotifFollowupQuestionObj element from XML. The element to be read is "notiffollowupquestion", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifFollowupQuestionObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifFollowupQuestionObj *xml_read_enunciate_ns0_TSNotifFollowupQuestionObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0NotiffollowupquestionElement(reader);
+}
+
+/**
+ * Writes a TSNotifFollowupQuestionObj to XML under element name "notiffollowupquestion".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSNotifFollowupQuestionObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj) {
+  return xmlTextWriterWriteNs0NotiffollowupquestionElementNS(writer, _tSNotifFollowupQuestionObj, 1);
+}
+
+/**
+ * Frees a TSNotifFollowupQuestionObj.
+ *
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to free.
+ */
+void free_enunciate_ns0_TSNotifFollowupQuestionObj(struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj) {
+  freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+  free(_tSNotifFollowupQuestionObj);
+}
+
+/**
+ * Reads a TSNotifFollowupQuestionObj element from XML. The element to be read is "notiffollowupquestion", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifFollowupQuestionObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifFollowupQuestionObj *xmlTextReaderReadNs0NotiffollowupquestionElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "notiffollowupquestion", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}notiffollowupquestion.\n");
+#endif
+    _tSNotifFollowupQuestionObj = xmlTextReaderReadNs0TSNotifFollowupQuestionObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSNotifFollowupQuestionObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}notiffollowupquestion failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}notiffollowupquestion failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSNotifFollowupQuestionObj;
+}
+
+/**
+ * Writes a TSNotifFollowupQuestionObj to XML under element name "notiffollowupquestion".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotiffollowupquestionElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj) {
+  return xmlTextWriterWriteNs0NotiffollowupquestionElementNS(writer, _tSNotifFollowupQuestionObj, 0);
+}
+
+/**
+ * Writes a TSNotifFollowupQuestionObj to XML under element name "notiffollowupquestion".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotiffollowupquestionElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "notiffollowupquestion", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}notiffollowupquestion. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSNotifFollowupQuestionObj for root element {}notiffollowupquestion...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSNotifFollowupQuestionObjType(writer, _tSNotifFollowupQuestionObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}notiffollowupquestion. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}notiffollowupquestion. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSNotifFollowupQuestionObj.
+ *
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj whose children are to be free.
+ */
+static void freeNs0NotiffollowupquestionElement(struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj) {
+  freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+}
+
+/**
+ * Reads a TSNotifFollowupQuestionObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSNotifFollowupQuestionObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifFollowupQuestionObj *xmlTextReaderReadNs0TSNotifFollowupQuestionObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj = calloc(1, sizeof(struct enunciate_ns0_TSNotifFollowupQuestionObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+        free(_tSNotifFollowupQuestionObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->recoNotificationType = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "datetimeBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsDateTimeType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->datetimeBase = ((struct tm*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "idBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->idBase = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "questionId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}questionId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}questionId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->questionId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "assignedDatetime", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}assignedDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}assignedDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->assignedDatetime = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "viewed", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->viewed = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "actioned", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}actioned of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}actioned of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->actioned = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "questionUser", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}questionUser of type {}TSUserProfileBasicObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSUserProfileBasicObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}questionUser of type {}TSUserProfileBasicObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->questionUser = ((struct enunciate_ns0_TSUserProfileBasicObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "questionText", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}questionText of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}questionText of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->questionText = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSNotifFollowupQuestionObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSNotifFollowupQuestionObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSNotifFollowupQuestionObj;
+}
+
+/**
+ * Writes a TSNotifFollowupQuestionObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSNotifFollowupQuestionObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSNotifFollowupQuestionObj->recoNotificationType != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifFollowupQuestionObj->recoNotificationType));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifFollowupQuestionObj->datetimeBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "datetimeBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase...\n");
+#endif
+    status = xmlTextWriterWriteXsDateTimeType(writer, (_tSNotifFollowupQuestionObj->datetimeBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifFollowupQuestionObj->idBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "idBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}idBase...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifFollowupQuestionObj->idBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifFollowupQuestionObj->questionId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "questionId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}questionId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}questionId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifFollowupQuestionObj->questionId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}questionId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}questionId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifFollowupQuestionObj->assignedDatetime != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "assignedDatetime", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}assignedDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}assignedDatetime...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifFollowupQuestionObj->assignedDatetime));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}assignedDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}assignedDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifFollowupQuestionObj->viewed != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "viewed", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}viewed...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifFollowupQuestionObj->viewed));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifFollowupQuestionObj->actioned != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "actioned", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}actioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}actioned...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifFollowupQuestionObj->actioned));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}actioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}actioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifFollowupQuestionObj->questionUser != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "questionUser", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}questionUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSUserProfileBasicObj for element {}questionUser...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSUserProfileBasicObjType(writer, (_tSNotifFollowupQuestionObj->questionUser));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSUserProfileBasicObj for element {}questionUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}questionUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifFollowupQuestionObj->questionText != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "questionText", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}questionText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}questionText...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifFollowupQuestionObj->questionText));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}questionText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}questionText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSNotifFollowupQuestionObj.
+ *
+ * @param _tSNotifFollowupQuestionObj The TSNotifFollowupQuestionObj to free.
+ */
+static void freeNs0TSNotifFollowupQuestionObjType(struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj) {
+  int i;
+  if (_tSNotifFollowupQuestionObj->recoNotificationType != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeXsStringType(_tSNotifFollowupQuestionObj->recoNotificationType);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recoNotificationType of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->recoNotificationType);
+  }
+  if (_tSNotifFollowupQuestionObj->datetimeBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor datetimeBase of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeXsDateTimeType(_tSNotifFollowupQuestionObj->datetimeBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor datetimeBase of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->datetimeBase);
+  }
+  if (_tSNotifFollowupQuestionObj->idBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor idBase of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeXsStringType(_tSNotifFollowupQuestionObj->idBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor idBase of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->idBase);
+  }
+  if (_tSNotifFollowupQuestionObj->questionId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor questionId of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeXsStringType(_tSNotifFollowupQuestionObj->questionId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor questionId of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->questionId);
+  }
+  if (_tSNotifFollowupQuestionObj->assignedDatetime != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor assignedDatetime of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeXsStringType(_tSNotifFollowupQuestionObj->assignedDatetime);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor assignedDatetime of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->assignedDatetime);
+  }
+  if (_tSNotifFollowupQuestionObj->viewed != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor viewed of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeXsStringType(_tSNotifFollowupQuestionObj->viewed);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor viewed of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->viewed);
+  }
+  if (_tSNotifFollowupQuestionObj->actioned != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor actioned of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeXsStringType(_tSNotifFollowupQuestionObj->actioned);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor actioned of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->actioned);
+  }
+  if (_tSNotifFollowupQuestionObj->questionUser != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor questionUser of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeNs0TSUserProfileBasicObjType(_tSNotifFollowupQuestionObj->questionUser);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor questionUser of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->questionUser);
+  }
+  if (_tSNotifFollowupQuestionObj->questionText != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor questionText of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeXsStringType(_tSNotifFollowupQuestionObj->questionText);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor questionText of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->questionText);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSNotifFollowupQuestionObj_M */
+#ifndef DEF_enunciate_ns0_TSNotifMessageForYouObj_M
+#define DEF_enunciate_ns0_TSNotifMessageForYouObj_M
+
+/**
+ * Reads a TSNotifMessageForYouObj element from XML. The element to be read is "notifmessageforyou", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifMessageForYouObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifMessageForYouObj *xml_read_enunciate_ns0_TSNotifMessageForYouObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0NotifmessageforyouElement(reader);
+}
+
+/**
+ * Writes a TSNotifMessageForYouObj to XML under element name "notifmessageforyou".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSNotifMessageForYouObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj) {
+  return xmlTextWriterWriteNs0NotifmessageforyouElementNS(writer, _tSNotifMessageForYouObj, 1);
+}
+
+/**
+ * Frees a TSNotifMessageForYouObj.
+ *
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to free.
+ */
+void free_enunciate_ns0_TSNotifMessageForYouObj(struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj) {
+  freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+  free(_tSNotifMessageForYouObj);
+}
+
+/**
+ * Reads a TSNotifMessageForYouObj element from XML. The element to be read is "notifmessageforyou", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifMessageForYouObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifMessageForYouObj *xmlTextReaderReadNs0NotifmessageforyouElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "notifmessageforyou", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}notifmessageforyou.\n");
+#endif
+    _tSNotifMessageForYouObj = xmlTextReaderReadNs0TSNotifMessageForYouObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSNotifMessageForYouObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}notifmessageforyou failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}notifmessageforyou failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSNotifMessageForYouObj;
+}
+
+/**
+ * Writes a TSNotifMessageForYouObj to XML under element name "notifmessageforyou".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifmessageforyouElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj) {
+  return xmlTextWriterWriteNs0NotifmessageforyouElementNS(writer, _tSNotifMessageForYouObj, 0);
+}
+
+/**
+ * Writes a TSNotifMessageForYouObj to XML under element name "notifmessageforyou".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifmessageforyouElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "notifmessageforyou", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}notifmessageforyou. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSNotifMessageForYouObj for root element {}notifmessageforyou...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSNotifMessageForYouObjType(writer, _tSNotifMessageForYouObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}notifmessageforyou. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}notifmessageforyou. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSNotifMessageForYouObj.
+ *
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj whose children are to be free.
+ */
+static void freeNs0NotifmessageforyouElement(struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj) {
+  freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+}
+
+/**
+ * Reads a TSNotifMessageForYouObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSNotifMessageForYouObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifMessageForYouObj *xmlTextReaderReadNs0TSNotifMessageForYouObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj = calloc(1, sizeof(struct enunciate_ns0_TSNotifMessageForYouObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+        free(_tSNotifMessageForYouObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->recoNotificationType = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "datetimeBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsDateTimeType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->datetimeBase = ((struct tm*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "idBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->idBase = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "messageId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}messageId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}messageId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->messageId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "messageCreatedTime", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}messageCreatedTime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}messageCreatedTime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->messageCreatedTime = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "viewed", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->viewed = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "actioned", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}actioned of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}actioned of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->actioned = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "senderUser", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}senderUser of type {}TSUserProfileBasicObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSUserProfileBasicObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}senderUser of type {}TSUserProfileBasicObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->senderUser = ((struct enunciate_ns0_TSUserProfileBasicObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "message", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}message of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}message of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->message = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSNotifMessageForYouObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSNotifMessageForYouObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSNotifMessageForYouObj;
+}
+
+/**
+ * Writes a TSNotifMessageForYouObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSNotifMessageForYouObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSNotifMessageForYouObj->recoNotificationType != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifMessageForYouObj->recoNotificationType));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifMessageForYouObj->datetimeBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "datetimeBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase...\n");
+#endif
+    status = xmlTextWriterWriteXsDateTimeType(writer, (_tSNotifMessageForYouObj->datetimeBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifMessageForYouObj->idBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "idBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}idBase...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifMessageForYouObj->idBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifMessageForYouObj->messageId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "messageId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}messageId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}messageId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifMessageForYouObj->messageId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}messageId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}messageId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifMessageForYouObj->messageCreatedTime != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "messageCreatedTime", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}messageCreatedTime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}messageCreatedTime...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifMessageForYouObj->messageCreatedTime));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}messageCreatedTime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}messageCreatedTime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifMessageForYouObj->viewed != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "viewed", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}viewed...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifMessageForYouObj->viewed));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifMessageForYouObj->actioned != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "actioned", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}actioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}actioned...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifMessageForYouObj->actioned));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}actioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}actioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifMessageForYouObj->senderUser != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "senderUser", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}senderUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSUserProfileBasicObj for element {}senderUser...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSUserProfileBasicObjType(writer, (_tSNotifMessageForYouObj->senderUser));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSUserProfileBasicObj for element {}senderUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}senderUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifMessageForYouObj->message != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "message", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}message. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}message...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifMessageForYouObj->message));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}message. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}message. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSNotifMessageForYouObj.
+ *
+ * @param _tSNotifMessageForYouObj The TSNotifMessageForYouObj to free.
+ */
+static void freeNs0TSNotifMessageForYouObjType(struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj) {
+  int i;
+  if (_tSNotifMessageForYouObj->recoNotificationType != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeXsStringType(_tSNotifMessageForYouObj->recoNotificationType);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recoNotificationType of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->recoNotificationType);
+  }
+  if (_tSNotifMessageForYouObj->datetimeBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor datetimeBase of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeXsDateTimeType(_tSNotifMessageForYouObj->datetimeBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor datetimeBase of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->datetimeBase);
+  }
+  if (_tSNotifMessageForYouObj->idBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor idBase of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeXsStringType(_tSNotifMessageForYouObj->idBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor idBase of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->idBase);
+  }
+  if (_tSNotifMessageForYouObj->messageId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor messageId of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeXsStringType(_tSNotifMessageForYouObj->messageId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor messageId of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->messageId);
+  }
+  if (_tSNotifMessageForYouObj->messageCreatedTime != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor messageCreatedTime of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeXsStringType(_tSNotifMessageForYouObj->messageCreatedTime);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor messageCreatedTime of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->messageCreatedTime);
+  }
+  if (_tSNotifMessageForYouObj->viewed != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor viewed of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeXsStringType(_tSNotifMessageForYouObj->viewed);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor viewed of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->viewed);
+  }
+  if (_tSNotifMessageForYouObj->actioned != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor actioned of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeXsStringType(_tSNotifMessageForYouObj->actioned);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor actioned of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->actioned);
+  }
+  if (_tSNotifMessageForYouObj->senderUser != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor senderUser of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeNs0TSUserProfileBasicObjType(_tSNotifMessageForYouObj->senderUser);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor senderUser of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->senderUser);
+  }
+  if (_tSNotifMessageForYouObj->message != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor message of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeXsStringType(_tSNotifMessageForYouObj->message);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor message of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->message);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSNotifMessageForYouObj_M */
+#ifndef DEF_enunciate_ns0_TSNotifRecoLikeObj_M
+#define DEF_enunciate_ns0_TSNotifRecoLikeObj_M
+
+/**
+ * Reads a TSNotifRecoLikeObj element from XML. The element to be read is "notifrecolike", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoLikeObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecoLikeObj *xml_read_enunciate_ns0_TSNotifRecoLikeObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0NotifrecolikeElement(reader);
+}
+
+/**
+ * Writes a TSNotifRecoLikeObj to XML under element name "notifrecolike".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSNotifRecoLikeObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj) {
+  return xmlTextWriterWriteNs0NotifrecolikeElementNS(writer, _tSNotifRecoLikeObj, 1);
+}
+
+/**
+ * Frees a TSNotifRecoLikeObj.
+ *
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to free.
+ */
+void free_enunciate_ns0_TSNotifRecoLikeObj(struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj) {
+  freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+  free(_tSNotifRecoLikeObj);
+}
+
+/**
+ * Reads a TSNotifRecoLikeObj element from XML. The element to be read is "notifrecolike", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoLikeObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecoLikeObj *xmlTextReaderReadNs0NotifrecolikeElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "notifrecolike", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}notifrecolike.\n");
+#endif
+    _tSNotifRecoLikeObj = xmlTextReaderReadNs0TSNotifRecoLikeObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSNotifRecoLikeObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}notifrecolike failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}notifrecolike failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSNotifRecoLikeObj;
+}
+
+/**
+ * Writes a TSNotifRecoLikeObj to XML under element name "notifrecolike".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifrecolikeElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj) {
+  return xmlTextWriterWriteNs0NotifrecolikeElementNS(writer, _tSNotifRecoLikeObj, 0);
+}
+
+/**
+ * Writes a TSNotifRecoLikeObj to XML under element name "notifrecolike".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifrecolikeElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "notifrecolike", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}notifrecolike. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSNotifRecoLikeObj for root element {}notifrecolike...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSNotifRecoLikeObjType(writer, _tSNotifRecoLikeObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}notifrecolike. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}notifrecolike. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSNotifRecoLikeObj.
+ *
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj whose children are to be free.
+ */
+static void freeNs0NotifrecolikeElement(struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj) {
+  freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+}
+
+/**
+ * Reads a TSNotifRecoLikeObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSNotifRecoLikeObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifRecoLikeObj *xmlTextReaderReadNs0TSNotifRecoLikeObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj = calloc(1, sizeof(struct enunciate_ns0_TSNotifRecoLikeObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+        free(_tSNotifRecoLikeObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+          free(_tSNotifRecoLikeObj);
+          return NULL;
+        }
+
+        _tSNotifRecoLikeObj->recoNotificationType = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "datetimeBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsDateTimeType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+          free(_tSNotifRecoLikeObj);
+          return NULL;
+        }
+
+        _tSNotifRecoLikeObj->datetimeBase = ((struct tm*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "idBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+          free(_tSNotifRecoLikeObj);
+          return NULL;
+        }
+
+        _tSNotifRecoLikeObj->idBase = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "likeId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}likeId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}likeId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+          free(_tSNotifRecoLikeObj);
+          return NULL;
+        }
+
+        _tSNotifRecoLikeObj->likeId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "likeDatetime", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}likeDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}likeDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+          free(_tSNotifRecoLikeObj);
+          return NULL;
+        }
+
+        _tSNotifRecoLikeObj->likeDatetime = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "viewed", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+          free(_tSNotifRecoLikeObj);
+          return NULL;
+        }
+
+        _tSNotifRecoLikeObj->viewed = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recommendeeUser", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recommendeeUser of type {}TSUserProfileBasicObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSUserProfileBasicObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recommendeeUser of type {}TSUserProfileBasicObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+          free(_tSNotifRecoLikeObj);
+          return NULL;
+        }
+
+        _tSNotifRecoLikeObj->recommendeeUser = ((struct enunciate_ns0_TSUserProfileBasicObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSNotifRecoLikeObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSNotifRecoLikeObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSNotifRecoLikeObj;
+}
+
+/**
+ * Writes a TSNotifRecoLikeObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSNotifRecoLikeObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSNotifRecoLikeObj->recoNotificationType != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecoLikeObj->recoNotificationType));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecoLikeObj->datetimeBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "datetimeBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase...\n");
+#endif
+    status = xmlTextWriterWriteXsDateTimeType(writer, (_tSNotifRecoLikeObj->datetimeBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecoLikeObj->idBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "idBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}idBase...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecoLikeObj->idBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecoLikeObj->likeId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "likeId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}likeId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}likeId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecoLikeObj->likeId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}likeId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}likeId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecoLikeObj->likeDatetime != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "likeDatetime", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}likeDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}likeDatetime...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecoLikeObj->likeDatetime));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}likeDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}likeDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecoLikeObj->viewed != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "viewed", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}viewed...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecoLikeObj->viewed));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecoLikeObj->recommendeeUser != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recommendeeUser", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recommendeeUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSUserProfileBasicObj for element {}recommendeeUser...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSUserProfileBasicObjType(writer, (_tSNotifRecoLikeObj->recommendeeUser));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSUserProfileBasicObj for element {}recommendeeUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recommendeeUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSNotifRecoLikeObj.
+ *
+ * @param _tSNotifRecoLikeObj The TSNotifRecoLikeObj to free.
+ */
+static void freeNs0TSNotifRecoLikeObjType(struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj) {
+  int i;
+  if (_tSNotifRecoLikeObj->recoNotificationType != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecoLikeObj->recoNotificationType);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recoNotificationType of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    free(_tSNotifRecoLikeObj->recoNotificationType);
+  }
+  if (_tSNotifRecoLikeObj->datetimeBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor datetimeBase of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    freeXsDateTimeType(_tSNotifRecoLikeObj->datetimeBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor datetimeBase of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    free(_tSNotifRecoLikeObj->datetimeBase);
+  }
+  if (_tSNotifRecoLikeObj->idBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor idBase of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecoLikeObj->idBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor idBase of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    free(_tSNotifRecoLikeObj->idBase);
+  }
+  if (_tSNotifRecoLikeObj->likeId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor likeId of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecoLikeObj->likeId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor likeId of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    free(_tSNotifRecoLikeObj->likeId);
+  }
+  if (_tSNotifRecoLikeObj->likeDatetime != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor likeDatetime of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecoLikeObj->likeDatetime);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor likeDatetime of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    free(_tSNotifRecoLikeObj->likeDatetime);
+  }
+  if (_tSNotifRecoLikeObj->viewed != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor viewed of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecoLikeObj->viewed);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor viewed of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    free(_tSNotifRecoLikeObj->viewed);
+  }
+  if (_tSNotifRecoLikeObj->recommendeeUser != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recommendeeUser of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    freeNs0TSUserProfileBasicObjType(_tSNotifRecoLikeObj->recommendeeUser);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recommendeeUser of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    free(_tSNotifRecoLikeObj->recommendeeUser);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSNotifRecoLikeObj_M */
+#ifndef DEF_enunciate_ns0_TSNotifRecoReplyObj_M
+#define DEF_enunciate_ns0_TSNotifRecoReplyObj_M
+
+/**
+ * Reads a TSNotifRecoReplyObj element from XML. The element to be read is "notifrecoreply", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoReplyObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecoReplyObj *xml_read_enunciate_ns0_TSNotifRecoReplyObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0NotifrecoreplyElement(reader);
+}
+
+/**
+ * Writes a TSNotifRecoReplyObj to XML under element name "notifrecoreply".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSNotifRecoReplyObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj) {
+  return xmlTextWriterWriteNs0NotifrecoreplyElementNS(writer, _tSNotifRecoReplyObj, 1);
+}
+
+/**
+ * Frees a TSNotifRecoReplyObj.
+ *
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to free.
+ */
+void free_enunciate_ns0_TSNotifRecoReplyObj(struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj) {
+  freeNs0TSNotifRecoReplyObjType(_tSNotifRecoReplyObj);
+  free(_tSNotifRecoReplyObj);
+}
+
+/**
+ * Reads a TSNotifRecoReplyObj element from XML. The element to be read is "notifrecoreply", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecoReplyObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecoReplyObj *xmlTextReaderReadNs0NotifrecoreplyElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "notifrecoreply", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}notifrecoreply.\n");
+#endif
+    _tSNotifRecoReplyObj = xmlTextReaderReadNs0TSNotifRecoReplyObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSNotifRecoReplyObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}notifrecoreply failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}notifrecoreply failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSNotifRecoReplyObj;
+}
+
+/**
+ * Writes a TSNotifRecoReplyObj to XML under element name "notifrecoreply".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifrecoreplyElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj) {
+  return xmlTextWriterWriteNs0NotifrecoreplyElementNS(writer, _tSNotifRecoReplyObj, 0);
+}
+
+/**
+ * Writes a TSNotifRecoReplyObj to XML under element name "notifrecoreply".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifrecoreplyElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "notifrecoreply", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}notifrecoreply. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSNotifRecoReplyObj for root element {}notifrecoreply...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSNotifRecoReplyObjType(writer, _tSNotifRecoReplyObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}notifrecoreply. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}notifrecoreply. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSNotifRecoReplyObj.
+ *
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj whose children are to be free.
+ */
+static void freeNs0NotifrecoreplyElement(struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj) {
+  freeNs0TSNotifRecoReplyObjType(_tSNotifRecoReplyObj);
+}
+
+/**
+ * Reads a TSNotifRecoReplyObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSNotifRecoReplyObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifRecoReplyObj *xmlTextReaderReadNs0TSNotifRecoReplyObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj = calloc(1, sizeof(struct enunciate_ns0_TSNotifRecoReplyObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSNotifRecoReplyObjType(_tSNotifRecoReplyObj);
+        free(_tSNotifRecoReplyObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "replyId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}replyId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}replyId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoReplyObjType(_tSNotifRecoReplyObj);
+          free(_tSNotifRecoReplyObj);
+          return NULL;
+        }
+
+        _tSNotifRecoReplyObj->replyId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "repliedDatetime", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}repliedDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}repliedDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoReplyObjType(_tSNotifRecoReplyObj);
+          free(_tSNotifRecoReplyObj);
+          return NULL;
+        }
+
+        _tSNotifRecoReplyObj->repliedDatetime = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "viewed", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}viewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoReplyObjType(_tSNotifRecoReplyObj);
+          free(_tSNotifRecoReplyObj);
+          return NULL;
+        }
+
+        _tSNotifRecoReplyObj->viewed = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSNotifRecoReplyObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSNotifRecoReplyObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSNotifRecoReplyObj;
+}
+
+/**
+ * Writes a TSNotifRecoReplyObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSNotifRecoReplyObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSNotifRecoReplyObj->replyId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "replyId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}replyId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}replyId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecoReplyObj->replyId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}replyId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}replyId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecoReplyObj->repliedDatetime != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "repliedDatetime", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}repliedDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}repliedDatetime...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecoReplyObj->repliedDatetime));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}repliedDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}repliedDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecoReplyObj->viewed != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "viewed", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}viewed...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecoReplyObj->viewed));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}viewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSNotifRecoReplyObj.
+ *
+ * @param _tSNotifRecoReplyObj The TSNotifRecoReplyObj to free.
+ */
+static void freeNs0TSNotifRecoReplyObjType(struct enunciate_ns0_TSNotifRecoReplyObj *_tSNotifRecoReplyObj) {
+  int i;
+  if (_tSNotifRecoReplyObj->replyId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor replyId of type enunciate_ns0_TSNotifRecoReplyObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecoReplyObj->replyId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor replyId of type enunciate_ns0_TSNotifRecoReplyObj...\n");
+#endif
+    free(_tSNotifRecoReplyObj->replyId);
+  }
+  if (_tSNotifRecoReplyObj->repliedDatetime != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor repliedDatetime of type enunciate_ns0_TSNotifRecoReplyObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecoReplyObj->repliedDatetime);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor repliedDatetime of type enunciate_ns0_TSNotifRecoReplyObj...\n");
+#endif
+    free(_tSNotifRecoReplyObj->repliedDatetime);
+  }
+  if (_tSNotifRecoReplyObj->viewed != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor viewed of type enunciate_ns0_TSNotifRecoReplyObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecoReplyObj->viewed);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor viewed of type enunciate_ns0_TSNotifRecoReplyObj...\n");
+#endif
+    free(_tSNotifRecoReplyObj->viewed);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSNotifRecoReplyObj_M */
+#ifndef DEF_enunciate_ns0_TSNotifRecorequestAnswerObj_M
+#define DEF_enunciate_ns0_TSNotifRecorequestAnswerObj_M
+
+/**
+ * Reads a TSNotifRecorequestAnswerObj element from XML. The element to be read is "notifrecorequestanswer", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestAnswerObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecorequestAnswerObj *xml_read_enunciate_ns0_TSNotifRecorequestAnswerObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0NotifrecorequestanswerElement(reader);
+}
+
+/**
+ * Writes a TSNotifRecorequestAnswerObj to XML under element name "notifrecorequestanswer".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSNotifRecorequestAnswerObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj) {
+  return xmlTextWriterWriteNs0NotifrecorequestanswerElementNS(writer, _tSNotifRecorequestAnswerObj, 1);
+}
+
+/**
+ * Frees a TSNotifRecorequestAnswerObj.
+ *
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to free.
+ */
+void free_enunciate_ns0_TSNotifRecorequestAnswerObj(struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj) {
+  freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+  free(_tSNotifRecorequestAnswerObj);
+}
+
+/**
+ * Reads a TSNotifRecorequestAnswerObj element from XML. The element to be read is "notifrecorequestanswer", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestAnswerObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecorequestAnswerObj *xmlTextReaderReadNs0NotifrecorequestanswerElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "notifrecorequestanswer", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}notifrecorequestanswer.\n");
+#endif
+    _tSNotifRecorequestAnswerObj = xmlTextReaderReadNs0TSNotifRecorequestAnswerObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSNotifRecorequestAnswerObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}notifrecorequestanswer failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}notifrecorequestanswer failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSNotifRecorequestAnswerObj;
+}
+
+/**
+ * Writes a TSNotifRecorequestAnswerObj to XML under element name "notifrecorequestanswer".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifrecorequestanswerElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj) {
+  return xmlTextWriterWriteNs0NotifrecorequestanswerElementNS(writer, _tSNotifRecorequestAnswerObj, 0);
+}
+
+/**
+ * Writes a TSNotifRecorequestAnswerObj to XML under element name "notifrecorequestanswer".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifrecorequestanswerElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "notifrecorequestanswer", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}notifrecorequestanswer. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSNotifRecorequestAnswerObj for root element {}notifrecorequestanswer...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSNotifRecorequestAnswerObjType(writer, _tSNotifRecorequestAnswerObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}notifrecorequestanswer. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}notifrecorequestanswer. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSNotifRecorequestAnswerObj.
+ *
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj whose children are to be free.
+ */
+static void freeNs0NotifrecorequestanswerElement(struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj) {
+  freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+}
+
+/**
+ * Reads a TSNotifRecorequestAnswerObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSNotifRecorequestAnswerObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifRecorequestAnswerObj *xmlTextReaderReadNs0TSNotifRecorequestAnswerObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj = calloc(1, sizeof(struct enunciate_ns0_TSNotifRecorequestAnswerObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+        free(_tSNotifRecorequestAnswerObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+          free(_tSNotifRecorequestAnswerObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestAnswerObj->recoNotificationType = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "datetimeBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsDateTimeType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+          free(_tSNotifRecorequestAnswerObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestAnswerObj->datetimeBase = ((struct tm*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "idBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+          free(_tSNotifRecorequestAnswerObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestAnswerObj->idBase = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recorequestId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recorequestId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recorequestId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+          free(_tSNotifRecorequestAnswerObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestAnswerObj->recorequestId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "minViewedIndicator", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}minViewedIndicator of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}minViewedIndicator of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+          free(_tSNotifRecorequestAnswerObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestAnswerObj->minViewedIndicator = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recoActioned", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recoActioned of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recoActioned of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+          free(_tSNotifRecorequestAnswerObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestAnswerObj->recoActioned = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recoReply", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recoReply of type {}TSNotifRecoReplyObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSNotifRecoReplyObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recoReply of type {}TSNotifRecoReplyObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+          free(_tSNotifRecorequestAnswerObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestAnswerObj->recoReply = realloc(_tSNotifRecorequestAnswerObj->recoReply, (_tSNotifRecorequestAnswerObj->_sizeof_recoReply + 1) * sizeof(struct enunciate_ns0_TSNotifRecoReplyObj));
+        memcpy(&(_tSNotifRecorequestAnswerObj->recoReply[_tSNotifRecorequestAnswerObj->_sizeof_recoReply++]), _child_accessor, sizeof(struct enunciate_ns0_TSNotifRecoReplyObj));
+        free(_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recommendationsForYou", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recommendationsForYou of type {}TSRecommendationsForYouObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSRecommendationsForYouObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recommendationsForYou of type {}TSRecommendationsForYouObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+          free(_tSNotifRecorequestAnswerObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestAnswerObj->recommendationsForYou = ((struct enunciate_ns0_TSRecommendationsForYouObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSNotifRecorequestAnswerObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSNotifRecorequestAnswerObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSNotifRecorequestAnswerObj;
+}
+
+/**
+ * Writes a TSNotifRecorequestAnswerObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSNotifRecorequestAnswerObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSNotifRecorequestAnswerObj->recoNotificationType != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestAnswerObj->recoNotificationType));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestAnswerObj->datetimeBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "datetimeBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase...\n");
+#endif
+    status = xmlTextWriterWriteXsDateTimeType(writer, (_tSNotifRecorequestAnswerObj->datetimeBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestAnswerObj->idBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "idBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}idBase...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestAnswerObj->idBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestAnswerObj->recorequestId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recorequestId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recorequestId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestAnswerObj->recorequestId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recorequestId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestAnswerObj->minViewedIndicator != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "minViewedIndicator", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}minViewedIndicator. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}minViewedIndicator...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestAnswerObj->minViewedIndicator));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}minViewedIndicator. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}minViewedIndicator. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestAnswerObj->recoActioned != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoActioned", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recoActioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoActioned...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestAnswerObj->recoActioned));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoActioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recoActioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  for (i = 0; i < _tSNotifRecorequestAnswerObj->_sizeof_recoReply; i++) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoReply", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recoReply. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSNotifRecoReplyObj for element {}recoReply...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSNotifRecoReplyObjType(writer, &(_tSNotifRecorequestAnswerObj->recoReply[i]));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSNotifRecoReplyObj for element {}recoReply. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recoReply. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestAnswerObj->recommendationsForYou != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recommendationsForYou", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recommendationsForYou. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSRecommendationsForYouObj for element {}recommendationsForYou...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSRecommendationsForYouObjType(writer, (_tSNotifRecorequestAnswerObj->recommendationsForYou));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSRecommendationsForYouObj for element {}recommendationsForYou. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recommendationsForYou. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSNotifRecorequestAnswerObj.
+ *
+ * @param _tSNotifRecorequestAnswerObj The TSNotifRecorequestAnswerObj to free.
+ */
+static void freeNs0TSNotifRecorequestAnswerObjType(struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj) {
+  int i;
+  if (_tSNotifRecorequestAnswerObj->recoNotificationType != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestAnswerObj->recoNotificationType);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recoNotificationType of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    free(_tSNotifRecorequestAnswerObj->recoNotificationType);
+  }
+  if (_tSNotifRecorequestAnswerObj->datetimeBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor datetimeBase of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    freeXsDateTimeType(_tSNotifRecorequestAnswerObj->datetimeBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor datetimeBase of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    free(_tSNotifRecorequestAnswerObj->datetimeBase);
+  }
+  if (_tSNotifRecorequestAnswerObj->idBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor idBase of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestAnswerObj->idBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor idBase of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    free(_tSNotifRecorequestAnswerObj->idBase);
+  }
+  if (_tSNotifRecorequestAnswerObj->recorequestId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recorequestId of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestAnswerObj->recorequestId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recorequestId of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    free(_tSNotifRecorequestAnswerObj->recorequestId);
+  }
+  if (_tSNotifRecorequestAnswerObj->minViewedIndicator != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor minViewedIndicator of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestAnswerObj->minViewedIndicator);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor minViewedIndicator of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    free(_tSNotifRecorequestAnswerObj->minViewedIndicator);
+  }
+  if (_tSNotifRecorequestAnswerObj->recoActioned != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recoActioned of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestAnswerObj->recoActioned);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recoActioned of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    free(_tSNotifRecorequestAnswerObj->recoActioned);
+  }
+  if (_tSNotifRecorequestAnswerObj->recoReply != NULL) {
+    for (i = 0; i < _tSNotifRecorequestAnswerObj->_sizeof_recoReply; i++) {
+#if DEBUG_ENUNCIATE > 1
+      printf("Freeing accessor recoReply[%i] of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n", i);
+#endif
+      freeNs0TSNotifRecoReplyObjType(&(_tSNotifRecorequestAnswerObj->recoReply[i]));
+    }
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recoReply of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    free(_tSNotifRecorequestAnswerObj->recoReply);
+  }
+  if (_tSNotifRecorequestAnswerObj->recommendationsForYou != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recommendationsForYou of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    freeNs0TSRecommendationsForYouObjType(_tSNotifRecorequestAnswerObj->recommendationsForYou);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recommendationsForYou of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    free(_tSNotifRecorequestAnswerObj->recommendationsForYou);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSNotifRecorequestAnswerObj_M */
+#ifndef DEF_enunciate_ns0_TSNotifRecorequestNeededObj_M
+#define DEF_enunciate_ns0_TSNotifRecorequestNeededObj_M
+
+/**
+ * Reads a TSNotifRecorequestNeededObj element from XML. The element to be read is "notifrecorequestneeded", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestNeededObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecorequestNeededObj *xml_read_enunciate_ns0_TSNotifRecorequestNeededObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0NotifrecorequestneededElement(reader);
+}
+
+/**
+ * Writes a TSNotifRecorequestNeededObj to XML under element name "notifrecorequestneeded".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSNotifRecorequestNeededObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj) {
+  return xmlTextWriterWriteNs0NotifrecorequestneededElementNS(writer, _tSNotifRecorequestNeededObj, 1);
+}
+
+/**
+ * Frees a TSNotifRecorequestNeededObj.
+ *
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to free.
+ */
+void free_enunciate_ns0_TSNotifRecorequestNeededObj(struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj) {
+  freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+  free(_tSNotifRecorequestNeededObj);
+}
+
+/**
+ * Reads a TSNotifRecorequestNeededObj element from XML. The element to be read is "notifrecorequestneeded", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSNotifRecorequestNeededObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSNotifRecorequestNeededObj *xmlTextReaderReadNs0NotifrecorequestneededElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "notifrecorequestneeded", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}notifrecorequestneeded.\n");
+#endif
+    _tSNotifRecorequestNeededObj = xmlTextReaderReadNs0TSNotifRecorequestNeededObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSNotifRecorequestNeededObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}notifrecorequestneeded failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}notifrecorequestneeded failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSNotifRecorequestNeededObj;
+}
+
+/**
+ * Writes a TSNotifRecorequestNeededObj to XML under element name "notifrecorequestneeded".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifrecorequestneededElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj) {
+  return xmlTextWriterWriteNs0NotifrecorequestneededElementNS(writer, _tSNotifRecorequestNeededObj, 0);
+}
+
+/**
+ * Writes a TSNotifRecorequestNeededObj to XML under element name "notifrecorequestneeded".
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0NotifrecorequestneededElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "notifrecorequestneeded", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}notifrecorequestneeded. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSNotifRecorequestNeededObj for root element {}notifrecorequestneeded...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSNotifRecorequestNeededObjType(writer, _tSNotifRecorequestNeededObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}notifrecorequestneeded. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}notifrecorequestneeded. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSNotifRecorequestNeededObj.
+ *
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj whose children are to be free.
+ */
+static void freeNs0NotifrecorequestneededElement(struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj) {
+  freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+}
+
+/**
+ * Reads a TSNotifRecorequestNeededObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSNotifRecorequestNeededObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSNotifRecorequestNeededObj *xmlTextReaderReadNs0TSNotifRecorequestNeededObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj = calloc(1, sizeof(struct enunciate_ns0_TSNotifRecorequestNeededObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+        free(_tSNotifRecorequestNeededObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->recoNotificationType = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "datetimeBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsDateTimeType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->datetimeBase = ((struct tm*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "idBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->idBase = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recorequestId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recorequestId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recorequestId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->recorequestId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "assignedDatetime", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}assignedDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}assignedDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->assignedDatetime = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recorequestassignedViewed", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recorequestassignedViewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recorequestassignedViewed of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->recorequestassignedViewed = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recorequestassignedActioned", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recorequestassignedActioned of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recorequestassignedActioned of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->recorequestassignedActioned = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recommendeeUser", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recommendeeUser of type {}TSUserProfileBasicObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSUserProfileBasicObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recommendeeUser of type {}TSUserProfileBasicObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->recommendeeUser = ((struct enunciate_ns0_TSUserProfileBasicObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recorequestText", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recorequestText of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recorequestText of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->recorequestText = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSNotifRecorequestNeededObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSNotifRecorequestNeededObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSNotifRecorequestNeededObj;
+}
+
+/**
+ * Writes a TSNotifRecorequestNeededObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSNotifRecorequestNeededObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSNotifRecorequestNeededObj->recoNotificationType != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestNeededObj->recoNotificationType));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestNeededObj->datetimeBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "datetimeBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase...\n");
+#endif
+    status = xmlTextWriterWriteXsDateTimeType(writer, (_tSNotifRecorequestNeededObj->datetimeBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestNeededObj->idBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "idBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}idBase...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestNeededObj->idBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestNeededObj->recorequestId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recorequestId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recorequestId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestNeededObj->recorequestId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recorequestId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestNeededObj->assignedDatetime != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "assignedDatetime", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}assignedDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}assignedDatetime...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestNeededObj->assignedDatetime));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}assignedDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}assignedDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestNeededObj->recorequestassignedViewed != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recorequestassignedViewed", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recorequestassignedViewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestassignedViewed...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestNeededObj->recorequestassignedViewed));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestassignedViewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recorequestassignedViewed. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestNeededObj->recorequestassignedActioned != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recorequestassignedActioned", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recorequestassignedActioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestassignedActioned...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestNeededObj->recorequestassignedActioned));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestassignedActioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recorequestassignedActioned. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestNeededObj->recommendeeUser != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recommendeeUser", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recommendeeUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSUserProfileBasicObj for element {}recommendeeUser...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSUserProfileBasicObjType(writer, (_tSNotifRecorequestNeededObj->recommendeeUser));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSUserProfileBasicObj for element {}recommendeeUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recommendeeUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSNotifRecorequestNeededObj->recorequestText != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recorequestText", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recorequestText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestText...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestNeededObj->recorequestText));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recorequestText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSNotifRecorequestNeededObj.
+ *
+ * @param _tSNotifRecorequestNeededObj The TSNotifRecorequestNeededObj to free.
+ */
+static void freeNs0TSNotifRecorequestNeededObjType(struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj) {
+  int i;
+  if (_tSNotifRecorequestNeededObj->recoNotificationType != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestNeededObj->recoNotificationType);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recoNotificationType of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->recoNotificationType);
+  }
+  if (_tSNotifRecorequestNeededObj->datetimeBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor datetimeBase of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeXsDateTimeType(_tSNotifRecorequestNeededObj->datetimeBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor datetimeBase of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->datetimeBase);
+  }
+  if (_tSNotifRecorequestNeededObj->idBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor idBase of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestNeededObj->idBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor idBase of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->idBase);
+  }
+  if (_tSNotifRecorequestNeededObj->recorequestId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recorequestId of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestNeededObj->recorequestId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recorequestId of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->recorequestId);
+  }
+  if (_tSNotifRecorequestNeededObj->assignedDatetime != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor assignedDatetime of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestNeededObj->assignedDatetime);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor assignedDatetime of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->assignedDatetime);
+  }
+  if (_tSNotifRecorequestNeededObj->recorequestassignedViewed != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recorequestassignedViewed of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestNeededObj->recorequestassignedViewed);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recorequestassignedViewed of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->recorequestassignedViewed);
+  }
+  if (_tSNotifRecorequestNeededObj->recorequestassignedActioned != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recorequestassignedActioned of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestNeededObj->recorequestassignedActioned);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recorequestassignedActioned of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->recorequestassignedActioned);
+  }
+  if (_tSNotifRecorequestNeededObj->recommendeeUser != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recommendeeUser of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeNs0TSUserProfileBasicObjType(_tSNotifRecorequestNeededObj->recommendeeUser);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recommendeeUser of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->recommendeeUser);
+  }
+  if (_tSNotifRecorequestNeededObj->recorequestText != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recorequestText of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestNeededObj->recorequestText);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recorequestText of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->recorequestText);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSNotifRecorequestNeededObj_M */
 #ifndef DEF_enunciate_ns0_TSNotificationSettingsObj_M
 #define DEF_enunciate_ns0_TSNotificationSettingsObj_M
 
@@ -10953,6 +16631,580 @@ static void freeNs0TSPrivacySettingsObjType(struct enunciate_ns0_TSPrivacySettin
   }
 }
 #endif /* DEF_enunciate_ns0_TSPrivacySettingsObj_M */
+#ifndef DEF_enunciate_ns0_TSRecoNotificationBaseObj_M
+#define DEF_enunciate_ns0_TSRecoNotificationBaseObj_M
+
+/**
+ * Reads a TSRecoNotificationBaseObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSRecoNotificationBaseObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRecoNotificationBaseObj *xmlTextReaderReadNs0TSRecoNotificationBaseObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSRecoNotificationBaseObj *_tSRecoNotificationBaseObj = calloc(1, sizeof(struct enunciate_ns0_TSRecoNotificationBaseObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSRecoNotificationBaseObjType(_tSRecoNotificationBaseObj);
+        free(_tSRecoNotificationBaseObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recoNotificationType of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRecoNotificationBaseObjType(_tSRecoNotificationBaseObj);
+          free(_tSRecoNotificationBaseObj);
+          return NULL;
+        }
+
+        _tSRecoNotificationBaseObj->recoNotificationType = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "datetimeBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsDateTimeType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}datetimeBase of type {http://www.w3.org/2001/XMLSchema}dateTime.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRecoNotificationBaseObjType(_tSRecoNotificationBaseObj);
+          free(_tSRecoNotificationBaseObj);
+          return NULL;
+        }
+
+        _tSRecoNotificationBaseObj->datetimeBase = ((struct tm*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "idBase", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}idBase of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRecoNotificationBaseObjType(_tSRecoNotificationBaseObj);
+          free(_tSRecoNotificationBaseObj);
+          return NULL;
+        }
+
+        _tSRecoNotificationBaseObj->idBase = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSRecoNotificationBaseObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSRecoNotificationBaseObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSRecoNotificationBaseObj;
+}
+
+/**
+ * Writes a TSRecoNotificationBaseObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRecoNotificationBaseObj The TSRecoNotificationBaseObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSRecoNotificationBaseObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRecoNotificationBaseObj *_tSRecoNotificationBaseObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSRecoNotificationBaseObj->recoNotificationType != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRecoNotificationBaseObj->recoNotificationType));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recoNotificationType. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRecoNotificationBaseObj->datetimeBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "datetimeBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase...\n");
+#endif
+    status = xmlTextWriterWriteXsDateTimeType(writer, (_tSRecoNotificationBaseObj->datetimeBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}dateTime for element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}datetimeBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRecoNotificationBaseObj->idBase != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "idBase", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}idBase...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRecoNotificationBaseObj->idBase));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}idBase. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSRecoNotificationBaseObj.
+ *
+ * @param _tSRecoNotificationBaseObj The TSRecoNotificationBaseObj to free.
+ */
+static void freeNs0TSRecoNotificationBaseObjType(struct enunciate_ns0_TSRecoNotificationBaseObj *_tSRecoNotificationBaseObj) {
+  int i;
+  if (_tSRecoNotificationBaseObj->recoNotificationType != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSRecoNotificationBaseObj...\n");
+#endif
+    freeXsStringType(_tSRecoNotificationBaseObj->recoNotificationType);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recoNotificationType of type enunciate_ns0_TSRecoNotificationBaseObj...\n");
+#endif
+    free(_tSRecoNotificationBaseObj->recoNotificationType);
+  }
+  if (_tSRecoNotificationBaseObj->datetimeBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor datetimeBase of type enunciate_ns0_TSRecoNotificationBaseObj...\n");
+#endif
+    freeXsDateTimeType(_tSRecoNotificationBaseObj->datetimeBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor datetimeBase of type enunciate_ns0_TSRecoNotificationBaseObj...\n");
+#endif
+    free(_tSRecoNotificationBaseObj->datetimeBase);
+  }
+  if (_tSRecoNotificationBaseObj->idBase != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor idBase of type enunciate_ns0_TSRecoNotificationBaseObj...\n");
+#endif
+    freeXsStringType(_tSRecoNotificationBaseObj->idBase);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor idBase of type enunciate_ns0_TSRecoNotificationBaseObj...\n");
+#endif
+    free(_tSRecoNotificationBaseObj->idBase);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSRecoNotificationBaseObj_M */
+#ifndef DEF_enunciate_ns0_TSRestaurantBasicObj_M
+#define DEF_enunciate_ns0_TSRestaurantBasicObj_M
+
+/**
+ * Reads a TSRestaurantBasicObj element from XML. The element to be read is "restaurantbasic", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBasicObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantBasicObj *xml_read_enunciate_ns0_TSRestaurantBasicObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0RestaurantbasicElement(reader);
+}
+
+/**
+ * Writes a TSRestaurantBasicObj to XML under element name "restaurantbasic".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSRestaurantBasicObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj) {
+  return xmlTextWriterWriteNs0RestaurantbasicElementNS(writer, _tSRestaurantBasicObj, 1);
+}
+
+/**
+ * Frees a TSRestaurantBasicObj.
+ *
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantBasicObj(struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj) {
+  freeNs0TSRestaurantBasicObjType(_tSRestaurantBasicObj);
+  free(_tSRestaurantBasicObj);
+}
+
+/**
+ * Reads a TSRestaurantBasicObj element from XML. The element to be read is "restaurantbasic", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBasicObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantBasicObj *xmlTextReaderReadNs0RestaurantbasicElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantbasic", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}restaurantbasic.\n");
+#endif
+    _tSRestaurantBasicObj = xmlTextReaderReadNs0TSRestaurantBasicObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSRestaurantBasicObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}restaurantbasic failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}restaurantbasic failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSRestaurantBasicObj;
+}
+
+/**
+ * Writes a TSRestaurantBasicObj to XML under element name "restaurantbasic".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0RestaurantbasicElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj) {
+  return xmlTextWriterWriteNs0RestaurantbasicElementNS(writer, _tSRestaurantBasicObj, 0);
+}
+
+/**
+ * Writes a TSRestaurantBasicObj to XML under element name "restaurantbasic".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0RestaurantbasicElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantbasic", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}restaurantbasic. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSRestaurantBasicObj for root element {}restaurantbasic...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSRestaurantBasicObjType(writer, _tSRestaurantBasicObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}restaurantbasic. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}restaurantbasic. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSRestaurantBasicObj.
+ *
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj whose children are to be free.
+ */
+static void freeNs0RestaurantbasicElement(struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj) {
+  freeNs0TSRestaurantBasicObjType(_tSRestaurantBasicObj);
+}
+
+/**
+ * Reads a TSRestaurantBasicObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSRestaurantBasicObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantBasicObj *xmlTextReaderReadNs0TSRestaurantBasicObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj = calloc(1, sizeof(struct enunciate_ns0_TSRestaurantBasicObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSRestaurantBasicObjType(_tSRestaurantBasicObj);
+        free(_tSRestaurantBasicObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantBasicObjType(_tSRestaurantBasicObj);
+          free(_tSRestaurantBasicObj);
+          return NULL;
+        }
+
+        _tSRestaurantBasicObj->restaurantId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantBasicObjType(_tSRestaurantBasicObj);
+          free(_tSRestaurantBasicObj);
+          return NULL;
+        }
+
+        _tSRestaurantBasicObj->restaurantName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSRestaurantBasicObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSRestaurantBasicObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSRestaurantBasicObj;
+}
+
+/**
+ * Writes a TSRestaurantBasicObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSRestaurantBasicObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSRestaurantBasicObj->restaurantId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantBasicObj->restaurantId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantBasicObj->restaurantName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantBasicObj->restaurantName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSRestaurantBasicObj.
+ *
+ * @param _tSRestaurantBasicObj The TSRestaurantBasicObj to free.
+ */
+static void freeNs0TSRestaurantBasicObjType(struct enunciate_ns0_TSRestaurantBasicObj *_tSRestaurantBasicObj) {
+  int i;
+  if (_tSRestaurantBasicObj->restaurantId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantId of type enunciate_ns0_TSRestaurantBasicObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantBasicObj->restaurantId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantId of type enunciate_ns0_TSRestaurantBasicObj...\n");
+#endif
+    free(_tSRestaurantBasicObj->restaurantId);
+  }
+  if (_tSRestaurantBasicObj->restaurantName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantName of type enunciate_ns0_TSRestaurantBasicObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantBasicObj->restaurantName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantName of type enunciate_ns0_TSRestaurantBasicObj...\n");
+#endif
+    free(_tSRestaurantBasicObj->restaurantName);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSRestaurantBasicObj_M */
 #ifndef DEF_enunciate_ns0_TSRestaurantDetailsObj_M
 #define DEF_enunciate_ns0_TSRestaurantDetailsObj_M
 

@@ -8,9 +8,17 @@
   <xs:element name="listNotifications" type="TSListNotificationSettingsObj"/>
   <xs:element name="locationsearchcities" type="TSLocationSearchCitiesObj"/>
   <xs:element name="menu" type="TSMenuObj"/>
+  <xs:element name="notifdidyoulike" type="TSNotifDidYouLikeObj"/>
+  <xs:element name="notiffollowupquestion" type="TSNotifFollowupQuestionObj"/>
+  <xs:element name="notifmessageforyou" type="TSNotifMessageForYouObj"/>
+  <xs:element name="notifrecolike" type="TSNotifRecoLikeObj"/>
+  <xs:element name="notifrecoreply" type="TSNotifRecoReplyObj"/>
+  <xs:element name="notifrecorequestanswer" type="TSNotifRecorequestAnswerObj"/>
+  <xs:element name="notifrecorequestneeded" type="TSNotifRecorequestNeededObj"/>
   <xs:element name="notifications" type="TSNotificationSettingsObj"/>
   <xs:element name="photo" type="TSPhotoObj"/>
   <xs:element name="privacy" type="TSPrivacySettingsObj"/>
+  <xs:element name="restaurantbasic" type="TSRestaurantBasicObj"/>
   <xs:element name="restaurantdetails" type="TSRestaurantDetailsObj"/>
   <xs:element name="restaurantextendedinfo" type="TSRestaurantExtendInfoObj"/>
   <xs:element name="restaurant" type="TSRestaurantObj"/>
@@ -135,6 +143,92 @@
       <xs:element name="menuMobileUrl" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="TSNotifDidYouLikeObj">
+    <xs:complexContent>
+      <xs:extension base="TSRecoNotificationBaseObj">
+        <xs:sequence>
+          <xs:element name="recorequestId" type="xs:string" minOccurs="0"/>
+          <xs:element name="datetime" type="xs:string" minOccurs="0"/>
+          <xs:element name="viewed" type="xs:string" minOccurs="0"/>
+          <xs:element name="restaurantbasic" type="TSRestaurantBasicObj" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TSNotifFollowupQuestionObj">
+    <xs:complexContent>
+      <xs:extension base="TSRecoNotificationBaseObj">
+        <xs:sequence>
+          <xs:element name="questionId" type="xs:string" minOccurs="0"/>
+          <xs:element name="assignedDatetime" type="xs:string" minOccurs="0"/>
+          <xs:element name="viewed" type="xs:string" minOccurs="0"/>
+          <xs:element name="actioned" type="xs:string" minOccurs="0"/>
+          <xs:element name="questionUser" type="TSUserProfileBasicObj" minOccurs="0"/>
+          <xs:element name="questionText" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TSNotifMessageForYouObj">
+    <xs:complexContent>
+      <xs:extension base="TSRecoNotificationBaseObj">
+        <xs:sequence>
+          <xs:element name="messageId" type="xs:string" minOccurs="0"/>
+          <xs:element name="messageCreatedTime" type="xs:string" minOccurs="0"/>
+          <xs:element name="viewed" type="xs:string" minOccurs="0"/>
+          <xs:element name="actioned" type="xs:string" minOccurs="0"/>
+          <xs:element name="senderUser" type="TSUserProfileBasicObj" minOccurs="0"/>
+          <xs:element name="message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TSNotifRecoLikeObj">
+    <xs:complexContent>
+      <xs:extension base="TSRecoNotificationBaseObj">
+        <xs:sequence>
+          <xs:element name="likeId" type="xs:string" minOccurs="0"/>
+          <xs:element name="likeDatetime" type="xs:string" minOccurs="0"/>
+          <xs:element name="viewed" type="xs:string" minOccurs="0"/>
+          <xs:element name="recommendeeUser" type="TSUserProfileBasicObj" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TSNotifRecoReplyObj">
+    <xs:sequence>
+      <xs:element name="replyId" type="xs:string" minOccurs="0"/>
+      <xs:element name="repliedDatetime" type="xs:string" minOccurs="0"/>
+      <xs:element name="viewed" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSNotifRecorequestAnswerObj">
+    <xs:complexContent>
+      <xs:extension base="TSRecoNotificationBaseObj">
+        <xs:sequence>
+          <xs:element name="recorequestId" type="xs:string" minOccurs="0"/>
+          <xs:element name="minViewedIndicator" type="xs:string" minOccurs="0"/>
+          <xs:element name="recoActioned" type="xs:string" minOccurs="0"/>
+          <xs:element name="recoReply" type="TSNotifRecoReplyObj" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="recommendationsForYou" type="TSRecommendationsForYouObj" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TSNotifRecorequestNeededObj">
+    <xs:complexContent>
+      <xs:extension base="TSRecoNotificationBaseObj">
+        <xs:sequence>
+          <xs:element name="recorequestId" type="xs:string" minOccurs="0"/>
+          <xs:element name="assignedDatetime" type="xs:string" minOccurs="0"/>
+          <xs:element name="recorequestassignedViewed" type="xs:string" minOccurs="0"/>
+          <xs:element name="recorequestassignedActioned" type="xs:string" minOccurs="0"/>
+          <xs:element name="recommendeeUser" type="TSUserProfileBasicObj" minOccurs="0"/>
+          <xs:element name="recorequestText" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="TSNotificationSettingsObj">
     <xs:sequence>
       <xs:element name="order_id" type="xs:string" minOccurs="0"/>
@@ -153,6 +247,19 @@
     <xs:sequence>
       <xs:element name="privacy_id_order" type="xs:string" minOccurs="0"/>
       <xs:element name="privacy_flag" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRecoNotificationBaseObj">
+    <xs:sequence>
+      <xs:element name="recoNotificationType" type="xs:string" minOccurs="0"/>
+      <xs:element name="datetimeBase" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="idBase" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRestaurantBasicObj">
+    <xs:sequence>
+      <xs:element name="restaurantId" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantName" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSRestaurantDetailsObj">

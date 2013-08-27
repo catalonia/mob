@@ -216,7 +216,7 @@
 
 - (IBAction)actionQuestion:(id)sender
 {
-    ResQuestionVC *vc = [[ResQuestionVC alloc] initWithNibName:@"ResQuestionVC" bundle:nil];
+    ResQuestionVC *vc = [[ResQuestionVC alloc] initWithRestaurantObj:self.restaurantObj];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

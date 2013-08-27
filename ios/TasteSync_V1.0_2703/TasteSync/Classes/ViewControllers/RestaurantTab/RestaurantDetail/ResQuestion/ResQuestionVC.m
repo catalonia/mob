@@ -52,6 +52,15 @@ restaurantObj=_restaurantObj;
     return self;
 }
 
+-(id)initWithRestaurantObj:(RestaurantObj*)obj
+{
+    self = [super initWithNibName:@"ResQuestionVC" bundle:nil];
+    if (self) {
+        self.restaurantObj = obj;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -63,6 +72,11 @@ restaurantObj=_restaurantObj;
     request.delegate = self;
     [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
     [request startFormRequest];
+    
+    NSString* link = [NSString stringWithFormat:@"askdetails?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
+    CRequest* request2 = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:3];
+    request2.delegate = self;
+    [request2 startFormRequest];
     
     if (!self.arrDataFriends) {
         self.arrDataFriends = [[NSMutableArray alloc] init];
@@ -526,6 +540,16 @@ restaurantObj=_restaurantObj;
     }
     if (key == 2) {
         
+    }
+    if (key == 3) {
+        NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"Response: %@",response);
+        NSDictionary* dic = [response objectFromJSONString];
+        NSArray* arrayFriend = [dic objectForKey:@"recommendersDetailsList"];
+        for (NSDictionary* dic2 in arrayFriend) {
+            UserObj *obj = [CommonHelpers getUserObj:dic2];
+            [_arrayUserTasteSync addObject:obj];
+        }
     }
 }
 

@@ -27,6 +27,6 @@ typedef enum GlobalDataType {
 @property (nonatomic, strong) NSString* uid;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) TSCityObj *cityObj;
-@property (nonatomic, strong) RestaurantObj*restaurantObj;
+@property (nonatomic, strong) RestaurantObj* restaurantObj;
 @property (nonatomic, assign) GlobalDataType type;
 @end
