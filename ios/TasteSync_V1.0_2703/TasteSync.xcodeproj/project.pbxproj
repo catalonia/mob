@@ -588,6 +588,8 @@
 		C39F959F179F718800C91BAA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39F959E179F718800C91BAA /* MobileCoreServices.framework */; };
 		C39F95A1179F719700C91BAA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C39F95A0179F719700C91BAA /* libz.dylib */; };
 		C3CA914A17A9EA5A002C2618 /* TSGlobalObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */; };
+		C3CF12CE17CD8A6B00B12503 /* RestaurantQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CF12CD17CD8A6B00B12503 /* RestaurantQuestionCell.m */; };
+		C3CF12D017CD8A7900B12503 /* RestaurantQuestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3CF12CF17CD8A7900B12503 /* RestaurantQuestionCell.xib */; };
 		C3D0AF6A17B61F9400D91294 /* TSCityObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0AF6917B61F9400D91294 /* TSCityObj.m */; };
 		C3D180BA179F69AF007B71A0 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B6179F69AF007B71A0 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C3D180BB179F69AF007B71A0 /* CRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D180B9179F69AF007B71A0 /* CRequest.m */; };
@@ -1303,6 +1305,9 @@
 		C39F95A0179F719700C91BAA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		C3CA914817A9EA5A002C2618 /* TSGlobalObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSGlobalObj.h; sourceTree = "<group>"; };
 		C3CA914917A9EA5A002C2618 /* TSGlobalObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSGlobalObj.m; sourceTree = "<group>"; };
+		C3CF12CC17CD8A6B00B12503 /* RestaurantQuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantQuestionCell.h; sourceTree = "<group>"; };
+		C3CF12CD17CD8A6B00B12503 /* RestaurantQuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantQuestionCell.m; sourceTree = "<group>"; };
+		C3CF12CF17CD8A7900B12503 /* RestaurantQuestionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestaurantQuestionCell.xib; sourceTree = "<group>"; };
 		C3D0AF6817B61F9400D91294 /* TSCityObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCityObj.h; sourceTree = "<group>"; };
 		C3D0AF6917B61F9400D91294 /* TSCityObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCityObj.m; sourceTree = "<group>"; };
 		C3D180B5179F69AF007B71A0 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../JSONKit.h; sourceTree = "<group>"; };
@@ -1956,6 +1961,7 @@
 		5E7775A516D5D69300B0F363 /* ResQuestion */ = {
 			isa = PBXGroup;
 			children = (
+				C3CF12CB17CD8A4800B12503 /* RestaurantAskCell */,
 				5E7775A616D5D69300B0F363 /* ResQuestionVC.h */,
 				5E7775A716D5D69300B0F363 /* ResQuestionVC.m */,
 				5E7775A816D5D69300B0F363 /* ResQuestionVC.xib */,
@@ -3003,6 +3009,16 @@
 			path = ASIHTTPRequest;
 			sourceTree = "<group>";
 		};
+		C3CF12CB17CD8A4800B12503 /* RestaurantAskCell */ = {
+			isa = PBXGroup;
+			children = (
+				C3CF12CC17CD8A6B00B12503 /* RestaurantQuestionCell.h */,
+				C3CF12CD17CD8A6B00B12503 /* RestaurantQuestionCell.m */,
+				C3CF12CF17CD8A7900B12503 /* RestaurantQuestionCell.xib */,
+			);
+			path = RestaurantAskCell;
+			sourceTree = "<group>";
+		};
 		C3D180B7179F69AF007B71A0 /* RequestData */ = {
 			isa = PBXGroup;
 			children = (
@@ -3524,6 +3540,7 @@
 				E05B563E17000897007B938B /* ic_like.png in Resources */,
 				E05B563F17000897007B938B /* ic_like@2x.png in Resources */,
 				C3DA7DE017A34A1100641DE7 /* ContentAboutUsVC.xib in Resources */,
+				C3CF12D017CD8A7900B12503 /* RestaurantQuestionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3650,6 +3667,7 @@
 				C3CA914A17A9EA5A002C2618 /* TSGlobalObj.m in Sources */,
 				C3D0AF6A17B61F9400D91294 /* TSCityObj.m in Sources */,
 				C3D8025617B9CC410025E69F /* TSPhotoRestaurantObj.m in Sources */,
+				C3CF12CE17CD8A6B00B12503 /* RestaurantQuestionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

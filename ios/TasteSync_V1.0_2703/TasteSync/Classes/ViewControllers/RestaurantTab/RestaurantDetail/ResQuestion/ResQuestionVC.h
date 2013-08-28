@@ -10,8 +10,9 @@
 #import "RestaurantObj.h"
 #import "CRequest.h"
 #import "JSONKit.h"
+#import "RestaurantQuestionCell.h"
 
-@interface ResQuestionVC : UIViewController<RequestDelegate>
+@interface ResQuestionVC : UIViewController<RequestDelegate, RestaurantQuestionDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrData, *arrDataFilter, *arrDataFriends;
 @property (nonatomic, strong) RestaurantObj *restaurantObj;

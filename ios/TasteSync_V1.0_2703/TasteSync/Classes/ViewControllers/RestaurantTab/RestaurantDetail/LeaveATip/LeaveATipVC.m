@@ -42,6 +42,10 @@
     [CommonHelpers setBackgroudImageForView:self.view];
     // Do any additional setup after loading the view from its nib.
     [self initUI];
+    NSString* link = [NSString stringWithFormat:@"aptips?userid=%@", [UserDefault userDefault].userID];
+    CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet  RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:1];
+    request.delegate = self;
+    [request startFormRequest];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -143,11 +147,25 @@
     else
     {
         
-        CRequest* request = [[CRequest alloc]initWithURL:@"savetips" RQType:RequestTypePost RQData:RequestDataRestaurant RQCategory:ApplicationForm];
+        NSString* facebookFlag;
+        if (facebookSelected)
+            facebookFlag = @"1";
+        else
+            facebookFlag = @"0";
+        
+        NSString* twitterFlag;
+        if (twitterSelected)
+            twitterFlag = @"1";
+        else
+            twitterFlag = @"0";
+        
+        CRequest* request = [[CRequest alloc]initWithURL:@"savetips" RQType:RequestTypePost RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:2];
         request.delegate = self;
         [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
-        [request setFormPostValue:_restaurantObj.uid forKey:@"restaurantId"];
-        [request setFormPostValue:tvTip.text forKey:@"tipText"];
+        [request setFormPostValue:_restaurantObj.uid forKey:@"restaurantid"];
+        [request setFormPostValue:tvTip.text forKey:@"tiptext"];
+        [request setFormPostValue:facebookFlag forKey:@"shareonfacebook"];
+        [request setFormPostValue:twitterFlag forKey:@"shareontwitter"];
         [request startFormRequest];
         
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_leavetip_on.png"] forButton:btLeaveATip];
@@ -243,9 +261,44 @@
 
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
-    if (data != nil) {
-        tvTip.text = @"";
-        [CommonHelpers showInfoAlertWithTitle:@"TasteSync" message:@"Success!" delegate:nil tag:0];
+    if (key == 1) {
+        NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSArray* array = [response objectFromJSONString];
+        if ([array count] > 0) {
+            for (NSDictionary* dic in array) {
+                NSString* name = [dic objectForKey:@"apSettingType"];
+                NSString* flag = [dic objectForKey:@"autoPublishingSetting"];
+                if ([flag isEqualToString:@"1"]) {
+                    if ([name isEqualToString:@"FACEBOOK"]) {
+                            [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"facebook.png"] forButton:btFacebook];
+                            facebookSelected = YES;
+                        }
+                        else
+                        {
+                            [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"twitter.png"] forButton:btTwitter];
+                            twitterSelected = YES;
+                        }
+                }
+                else
+                {
+                    if ([name isEqualToString:@"FACEBOOK"]) {
+                        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"facebook_off.png"] forButton:btFacebook];
+                        facebookSelected = NO;
+                    }
+                    else
+                    {
+                        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"twitter_off.png"] forButton:btTwitter];
+                        twitterSelected = NO;
+                    }
+                }
+            }
+        }
+    }
+    if (key == 2) {
+        if (data != nil) {
+            tvTip.text = @"";
+            [CommonHelpers showInfoAlertWithTitle:@"TasteSync" message:@"Success!" delegate:nil tag:0];
+        }
     }
 }
 @end

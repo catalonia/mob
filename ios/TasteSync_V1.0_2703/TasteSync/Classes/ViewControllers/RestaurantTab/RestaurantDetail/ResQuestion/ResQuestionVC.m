@@ -14,7 +14,7 @@
 @interface ResQuestionVC ()<UITableViewDataSource,UITableViewDelegate,FriendCellDelegate,UITextFieldDelegate>
 {
     __weak IBOutlet UIView *view1,*view2,*view3,*view4, *viewMain;
-    __weak IBOutlet UITableView *tbvResult,*tbvFilter;
+    __weak IBOutlet UITableView *tbvResult,*tbvFilter, *tbvFriend;
     __weak IBOutlet UITextField *tfQuestion, *cTextField;
     __weak IBOutlet UIButton *btcheck1,*btcheck2;
     __weak IBOutlet UILabel *lbName, *lbHolver;
@@ -22,14 +22,15 @@
     __weak IBOutlet UIScrollView *scrollViewMain;
     
     BOOL check1,check2;
-    UserObj *userRecommended;
+    BOOL isHaveUser;
     NSString *askString;
     NSMutableArray* _arrayUserTasteSync;
+    NSMutableArray* _arrayUserSend;
+    NSMutableArray* _arrayUserChecked;
 }
 
 - (IBAction)actionBack:(id)sender;
 - (IBAction)actionShare:(id)sender;
-- (IBAction)actionCheck1:(id)sender;
 - (IBAction)actionCheck2:(id)sender;
 - (IBAction)actionSendMessage:(id)sender;
 - (IBAction)actionAvatar:(id)sender;
@@ -66,7 +67,10 @@ restaurantObj=_restaurantObj;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [CommonHelpers setBackgroudImageForViewRestaurant:self.view];
+    scrollViewMain.contentSize = CGSizeMake(320, 550);
     _arrayUserTasteSync = [[NSMutableArray alloc]init];
+    _arrayUserSend = [[NSMutableArray alloc]init];
+    _arrayUserChecked = [[NSMutableArray alloc]init];
     
     CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFriends" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:1];
     request.delegate = self;
@@ -88,11 +92,6 @@ restaurantObj=_restaurantObj;
     UserObj *obj = [[UserObj alloc] init];
     
     self.arrData = [[NSMutableArray alloc] initWithObjects:obj, nil];
-    
-    userRecommended = [[UserObj alloc] init];
-    userRecommended.firstname = @"Michiael";
-    userRecommended.lastname = @"Schumacher";
-    userRecommended.avatar = [UIImage imageNamed:@"avatar.png"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,20 +118,6 @@ restaurantObj=_restaurantObj;
 {
     [self hideKeyBoard];
 }
-- (IBAction)actionCheck1:(id)sender
-{
-    if (check1) {
-        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_check.png"] forButton:btcheck1];
-        check1 = FALSE;
-        
-    }
-    else {
-        [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_check_on.png"] forButton:btcheck1];
-        check1 = TRUE;
-
-    }
-    
-}
 - (IBAction)actionCheck2:(id)sender
 {
     if (check2) {
@@ -148,26 +133,78 @@ restaurantObj=_restaurantObj;
 }
 - (IBAction)actionSendMessage:(id)sender
 {
+    NSString* friendsfacebookidlist = @"";
     NSLog(@"Count: %d", [_arrayUserTasteSync count]);
     for (UserObj* obj in _arrData) {
         if (obj.uid != nil) {
             if ([self checkID:obj.uid]) {
-                CRequest* request = [[CRequest alloc]initWithURL:@"sendMessageToUser" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:2];
-                request.delegate = self;
-                [request setFormPostValue:[UserDefault userDefault].userID forKey:@"senderID"];
-                [request setFormPostValue:@"ID" forKey:@"recipientID"];
-                [request setFormPostValue:tfQuestion.text forKey:@"content"];
-                [request startFormRequest];
-                NSLog(@"Send message: %@", obj.uid);
+                
+                NSLog(@"1. Send message facebook: %@", obj.uid);
+                
+//                CRequest* request = [[CRequest alloc]initWithURL:@"sendMessageToUser" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:2];
+//                request.delegate = self;
+//                [request setFormPostValue:[UserDefault userDefault].userID forKey:@"senderID"];
+//                [request setFormPostValue:@"ID" forKey:@"recipientID"];
+//                [request setFormPostValue:tfQuestion.text forKey:@"content"];
+//                [request startFormRequest];
+//                NSLog(@"Send message: %@", obj.uid);
             }
             else
             {
                 CFacebook* facebook = [[CFacebook alloc]init];
                 [facebook sendMessageToFBID:obj.uid Message:tfQuestion.text];
-                NSLog(@"Send message facebook: %@", obj.uid);
+                NSLog(@"2. Send message facebook: %@", obj.uid);
+            }
+            if (friendsfacebookidlist.length == 0)
+            {
+                NSString* str = [NSString stringWithFormat:@"%@", obj.uid];
+                friendsfacebookidlist = str;
+            }
+            else
+            {
+                NSString* str = [NSString stringWithFormat:@"%@", obj.uid];
+                friendsfacebookidlist = [friendsfacebookidlist stringByAppendingFormat:@",%@", str];
             }
         }
     }
+  
+    NSLog(@"friendsfacebookidlist: %@",  friendsfacebookidlist);
+    
+    NSString* recommendersuseridlist = @"";
+    
+    for (UserObj* obj in _arrayUserChecked) {
+        if (recommendersuseridlist.length == 0)
+        {
+            NSString* str = [NSString stringWithFormat:@"%@", obj.uid];
+            recommendersuseridlist = str;
+        }
+        else
+        {
+            NSString* str = [NSString stringWithFormat:@"%@", obj.uid];
+            recommendersuseridlist = [recommendersuseridlist stringByAppendingFormat:@",%@", str];
+        }
+    }
+    
+    NSLog(@"recommendersuseridlist: %@",  recommendersuseridlist);
+    
+    NSString* postFlag = @"";
+    if (check2) 
+        postFlag = @"1";
+    else
+        postFlag = @"0";
+    
+    if (tfQuestion.text.length != 0 && (friendsfacebookidlist.length != 0 || recommendersuseridlist.length != 0)){
+        CRequest* request = [[CRequest alloc]initWithURL:@"askquestion" RQType:RequestTypePost RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:2];
+        request.delegate = self;
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
+        [request setFormPostValue:self.restaurantObj.uid forKey:@"restaurantid"];
+        [request setFormPostValue:tfQuestion.text forKey:@"questiontext"];
+        [request setFormPostValue:postFlag forKey:@"postquestiononforum"];
+        [request setFormPostValue:recommendersuseridlist forKey:@"recommendersuseridlist"];
+        [request setFormPostValue:friendsfacebookidlist forKey:@"friendsfacebookidlist"];
+        [request startFormRequest];
+    }
+    
 }
 
 - (BOOL) checkID:(NSString*)uid
@@ -185,7 +222,7 @@ restaurantObj=_restaurantObj;
 - (IBAction)actionAvatar:(id)sender
 {
     
-    [[[CommonHelpers appDelegate] tabbarBaseVC] actionProfile:userRecommended];
+  //  [[[CommonHelpers appDelegate] tabbarBaseVC] actionProfile:userRecommended];
 }
 
 
@@ -193,12 +230,14 @@ restaurantObj=_restaurantObj;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (tableView == tbvFriend) {
+         return [_arrayUserSend count];
+    }
     if (tableView==tbvResult) {
         if (_arrData) {
             return self.arrData.count;
@@ -215,6 +254,24 @@ restaurantObj=_restaurantObj;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (tableView == tbvFriend) {
+        static NSString *CellIndentifier = @"RestaurantQuestionCell";
+        
+        RestaurantQuestionCell *cell = (RestaurantQuestionCell *)[tableView dequeueReusableCellWithIdentifier:CellIndentifier];
+        
+        if (cell==nil) {
+            NSLog(@"cell is nil");
+            cell =(RestaurantQuestionCell *) [[[NSBundle mainBundle ] loadNibNamed:@"RestaurantQuestionCell" owner:self options:nil] objectAtIndex:0];
+        }
+        
+        UserObj* obj = [_arrayUserSend objectAtIndex:indexPath.row];
+        cell.name.text = obj.name;
+        cell.imageLink = obj.avatarUrl;
+        cell.userObj = obj;
+        cell.delegate = self;
+        return cell;
+        
+    }
     if (tableView==tbvResult) {
         static NSString *CellIndentifier = @"friend_cell";
         
@@ -222,9 +279,7 @@ restaurantObj=_restaurantObj;
         
         if (cell==nil) {
             NSLog(@"cell is nil");
-            cell =(FriendCell *) [[[NSBundle mainBundle ] loadNibNamed:@"FriendCell" owner:self options:nil] objectAtIndex:0];
-            
-            
+            cell =(FriendCell *) [[[NSBundle mainBundle ] loadNibNamed:@"FriendCell" owner:self options:nil] objectAtIndex:0]; 
         }
         
         UserObj *obj = [self.arrData objectAtIndex:indexPath.row];
@@ -457,7 +512,10 @@ restaurantObj=_restaurantObj;
             POINT_Y = 70;
         }
         
-        frame.origin.y = 220 + POINT_Y;
+        if (isHaveUser) 
+            frame.origin.y = 290 + POINT_Y;
+        else
+            frame.origin.y = 150 + POINT_Y;
         
         
 //        [scrollViewMain setContentOffset:CGPointMake(0, POINT_Y)];
@@ -467,7 +525,13 @@ restaurantObj=_restaurantObj;
                               delay:0
                             options: UIViewAnimationCurveEaseIn
                          animations:^{
-                             viewMain.frame=CGRectMake(viewMain.frame.origin.x,-POINT_Y-175,viewMain.frame.size.width, viewMain.frame.size.height);
+                             if (isHaveUser) {
+                                 viewMain.frame=CGRectMake(viewMain.frame.origin.x,-POINT_Y-175,viewMain.frame.size.width, viewMain.frame.size.height);
+                             }
+                             else
+                             {
+                                 viewMain.frame=CGRectMake(viewMain.frame.origin.x,-POINT_Y-110,viewMain.frame.size.width, viewMain.frame.size.height);
+                             }
                          }
                          completion:^(BOOL finished){
                              debug(@"move done");
@@ -539,7 +603,8 @@ restaurantObj=_restaurantObj;
         }
     }
     if (key == 2) {
-        
+        NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"Response: %@",response);
     }
     if (key == 3) {
         NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
@@ -547,9 +612,31 @@ restaurantObj=_restaurantObj;
         NSDictionary* dic = [response objectFromJSONString];
         NSArray* arrayFriend = [dic objectForKey:@"recommendersDetailsList"];
         for (NSDictionary* dic2 in arrayFriend) {
-            UserObj *obj = [CommonHelpers getUserObj:dic2];
-            [_arrayUserTasteSync addObject:obj];
+            UserObj *obj = [[UserObj alloc]init];
+            obj.uid = [dic2 objectForKey:@"userId"];
+            obj.name = [dic2 objectForKey:@"name"];
+            obj.avatarUrl = [dic2 objectForKey:@"photo"];
+            [_arrayUserSend addObject:obj];
         }
+        if ([_arrayUserSend count] == 0) {
+            view2.hidden = YES;
+            view3.hidden = YES;
+            view4.frame = CGRectMake(view4.frame.origin.x, 77, view4.frame.size.width, view4.frame.size.height);
+            isHaveUser = NO;
+        }
+        else
+            isHaveUser =YES;
+    }
+}
+
+-(void)checkStatus:(UserObj *)obj checked:(BOOL)isChecked
+{
+    if (isChecked) {
+        [_arrayUserChecked addObject:obj];
+    }
+    else
+    {
+        [_arrayUserChecked removeObject:obj];
     }
 }
 
