@@ -2347,20 +2347,20 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     resultsetInner = statementInner.executeQuery();
 
                     if (resultsetInner.next()) {
-                        senderUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                        senderUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
                                     "users.user_fb_id"));
                     }
 
-                    resultsetInner.close();
+                    statementInner.close();
 
                     statementInner = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
                     statementInner.setString(1, senderUserFacebookId);
                     resultsetInner = statementInner.executeQuery();
 
                     if (resultsetInner.next()) {
-                        senderUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                        senderUserName = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
                                     "facebook_user_data.name"));
-                        senderUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                        senderUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
                                     "facebook_user_data.picture"));
                     }
 
@@ -2631,7 +2631,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
         try {
             connection = tsDataSource.getConnection();
-
+            tsDataSource.begin();
             statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_ALL_SELECT_SQL);
             statement.setString(1, userId);
             resultset = statement.executeQuery();
