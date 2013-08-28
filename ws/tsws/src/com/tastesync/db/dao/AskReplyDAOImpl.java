@@ -1752,14 +1752,47 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
     private void processTSNotifRecorequestNeededObjElement(
         Connection connection,
-        List<TSRecoNotificationBaseObj> recoNotificationBaseList,
-        String userId,
-        List<TSNotifRecorequestNeededObj> tsNotifRecorequestNeededObjList)
+        List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
         throws SQLException {
         PreparedStatement statement = null;
         ResultSet resultset = null;
 
         try {
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_ALL_SELECT_SQL);
+            statement.setString(1, userId);
+            resultset = statement.executeQuery();
+
+            TSNotifRecorequestNeededObj tsNotifRecorequestNeededObj = null;
+            List<TSNotifRecorequestNeededObj> tsNotifRecorequestNeededObjList = new ArrayList<TSNotifRecorequestNeededObj>();
+
+            while (resultset.next()) {
+                tsNotifRecorequestNeededObj = new TSNotifRecorequestNeededObj();
+                tsNotifRecorequestNeededObj.setDatetimeBase(resultset.getTimestamp(
+                        "recorequest_ts_assigned.assigned_datetime"));
+
+                String assignedDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_ts_assigned.assigned_datetime"));
+                //TODO formatting!!
+                tsNotifRecorequestNeededObj.setAssignedDatetime(assignedDatetime);
+
+                tsNotifRecorequestNeededObj.setIdBase(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_ts_assigned.recorequest_id")));
+
+                tsNotifRecorequestNeededObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_NEEDED);
+
+                tsNotifRecorequestNeededObj.setRecorequestId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_ts_assigned.recorequest_id")));
+
+                tsNotifRecorequestNeededObj.setRecorequestassignedViewed(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_ts_assigned.recorequest_assigned_viewed")));
+                tsNotifRecorequestNeededObjList.add(tsNotifRecorequestNeededObj);
+            }
+
+            statement.close();
+
             for (TSNotifRecorequestNeededObj tsNotifRecorequestNeededObjElement : tsNotifRecorequestNeededObjList) {
                 statement = connection.prepareStatement(AskReplyQueries.COUNT_REPLIES_RECOREQUEST_REPLY_USER_SELECT_SQL);
                 tsNotifRecorequestNeededObjElement.setRecorequestassignedActioned(
@@ -1948,6 +1981,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     tsNotifRecorequestAnswerObj.setDatetimeBase(resultset.getTimestamp(
                             "recorequest_reply_user.reply_send_datetime"));
                     tsNotifRecorequestAnswerObj.setIdBase(recorequestIdElement);
+
+                    tsNotifRecorequestAnswerObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_ANSWER);
 
                     List<TSNotifRecoReplyObj> recoReplyList = new ArrayList<TSNotifRecoReplyObj>();
                     recoReplyList.add(tsNotifRecoReplyObj);
@@ -2149,6 +2184,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
                 tsNotifFollowupQuestionObj.setIdBase(questionId);
 
+                tsNotifFollowupQuestionObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_FOLLOWUP);
+                
                 String assignedDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant_question_ts_assigned.assigned_datetime"));
 
@@ -2290,6 +2327,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
                 tsNotifMessageForYouObj.setIdBase(messageId);
 
+                tsNotifMessageForYouObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_MESSAGE);
+                
                 String messageCreatedTime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "user_message.created"));
 
@@ -2428,7 +2467,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                             "reco_like.id"));
                 tsNotifRecoLikeObj.setLikeId(likeId);
                 tsNotifRecoLikeObj.setIdBase(likeId);
-
+                tsNotifRecoLikeObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_LIKE);
                 String likeDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "reco_like.like_datetime"));
 
@@ -2533,6 +2572,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                             "recoreply_didyoulike_notif.recorequest_id"));
                 tsNotifDidYouLikeObj.setRecorequestId(recorequestId);
                 tsNotifDidYouLikeObj.setIdBase(recorequestId);
+                
+                tsNotifDidYouLikeObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_DID_LIKE);
 
                 String datetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "recoreply_didyoulike_notif.notif_datetime"));
@@ -2632,42 +2673,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_ALL_SELECT_SQL);
-            statement.setString(1, userId);
-            resultset = statement.executeQuery();
-
-            TSNotifRecorequestNeededObj tsNotifRecorequestNeededObj = null;
-            List<TSNotifRecorequestNeededObj> tsNotifRecorequestNeededObjList = new ArrayList<TSNotifRecorequestNeededObj>();
-
-            while (resultset.next()) {
-                tsNotifRecorequestNeededObj = new TSNotifRecorequestNeededObj();
-                tsNotifRecorequestNeededObj.setDatetimeBase(resultset.getTimestamp(
-                        "recorequest_ts_assigned.assigned_datetime"));
-
-                String assignedDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                            "recorequest_ts_assigned.assigned_datetime"));
-                //TODO formatting!!
-                tsNotifRecorequestNeededObj.setAssignedDatetime(assignedDatetime);
-
-                tsNotifRecorequestNeededObj.setIdBase(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString(
-                            "recorequest_ts_assigned.recorequest_id")));
-
-                tsNotifRecorequestNeededObj.setRecorequestId(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString(
-                            "recorequest_ts_assigned.recorequest_id")));
-
-                tsNotifRecorequestNeededObj.setRecorequestassignedViewed(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString(
-                            "recorequest_ts_assigned.recorequest_assigned_viewed")));
-                tsNotifRecorequestNeededObjList.add(tsNotifRecorequestNeededObj);
-            }
-
-            statement.close();
 
             processTSNotifRecorequestNeededObjElement(connection,
-                recoNotificationBaseList, userId,
-                tsNotifRecorequestNeededObjList);
+                recoNotificationBaseList, userId);
 
             processTSNotifRecorequestAnswerObj(connection,
                 recoNotificationBaseList, userId);
@@ -2685,8 +2693,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 userId);
 
             //TODO sort by date!!!
-            tsNotifRecorequestNeededObjList = null;
-
             return recoNotificationBaseList;
         } catch (SQLException e) {
             e.printStackTrace();
