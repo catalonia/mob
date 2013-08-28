@@ -14,5 +14,15 @@ public interface TSConstants {
     public static final String EX_CLASS="EX_CLASS";
     public static final String ERR_CODE="ERR_CODE";
     public static final String EMPTY="EMPTY";
+    public static final String RECONOTIFICATION_TYPE_NEEDED="1";
+
+    public static final String RECONOTIFICATION_TYPE_ANSWER="2";
+
+    public static final String RECONOTIFICATION_TYPE_FOLLOWUP="3";
+
+    public static final String RECONOTIFICATION_TYPE_MESSAGE="4";
+
+    public static final String RECONOTIFICATION_TYPE_LIKE="5";
     
+    public static final String RECONOTIFICATION_TYPE_DID_LIKE="6";
 }
