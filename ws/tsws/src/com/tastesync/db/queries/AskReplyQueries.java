@@ -399,7 +399,7 @@ public interface AskReplyQueries extends TSDBCommonQueries {
     		+ "SELECT reco_like.id, "
     		+ "       reco_like.like_datetime, "
     		+ "       reco_like.like_recommender_viewed, "
-    		+ "       reco_like.reco_like.like_user_id "
+    		+ "       reco_like.like_user_id "
     		+ "FROM   recorequest_reply_user, "
     		+ "       reco_like "
     		+ "WHERE  recorequest_reply_user.reply_user_id = ? "
