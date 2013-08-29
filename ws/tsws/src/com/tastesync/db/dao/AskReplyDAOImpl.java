@@ -42,6 +42,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 
@@ -1752,6 +1754,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
     private void processTSNotifRecorequestNeededObjElement(
         Connection connection,
+        TSRecoNotificationBaseObj tsRecoNotificationBaseObjElement,
         List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
         throws SQLException {
         PreparedStatement statement = null;
@@ -1760,6 +1763,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         try {
             statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_ALL_SELECT_SQL);
             statement.setString(1, userId);
+            statement.setString(2, tsRecoNotificationBaseObjElement.getIdBase());
             resultset = statement.executeQuery();
 
             TSNotifRecorequestNeededObj tsNotifRecorequestNeededObj = null;
@@ -1935,218 +1939,202 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     private void processTSNotifRecorequestAnswerObj(Connection connection,
+        TSRecoNotificationBaseObj tsRecoNotificationBaseObjElement,
         List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
         throws SQLException {
         PreparedStatement statement = null;
         ResultSet resultset = null;
 
         try {
-            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_SELECT_SQL);
-            statement.setString(1, userId);
+            TSNotifRecorequestAnswerObj tsNotifRecorequestAnswerObj = null;
+            String recorequestIdElement = tsRecoNotificationBaseObjElement.getIdBase();
+            tsNotifRecorequestAnswerObj = new TSNotifRecorequestAnswerObj();
+            tsNotifRecorequestAnswerObj.setRecorequestId(recorequestIdElement);
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_LATEST_INFO_SELECT_SQL);
+            statement.setString(1, recorequestIdElement);
             resultset = statement.executeQuery();
 
-            List<String> recorequestIdList = new ArrayList<String>();
+            if (resultset.next()) {
+                TSNotifRecoReplyObj tsNotifRecoReplyObj = new TSNotifRecoReplyObj();
+                tsNotifRecoReplyObj.setReplyId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("recorequest_reply_user.reply_id")));
 
-            while (resultset.next()) {
-                recorequestIdList.add(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("recorequest_user.recorequest_id")));
-            }
+                String repliedSendDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_reply_user.reply_send_datetime"));
+                //TODO formatting!!
+                tsNotifRecoReplyObj.setRepliedDatetime(repliedSendDatetime);
 
-            statement.close();
+                tsNotifRecoReplyObj.setViewed(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_reply_user.reply_viewed_initiator")));
 
-            TSNotifRecorequestAnswerObj tsNotifRecorequestAnswerObj = null;
+                tsNotifRecorequestAnswerObj.setDatetimeBase(resultset.getTimestamp(
+                        "recorequest_reply_user.reply_send_datetime"));
+                tsNotifRecorequestAnswerObj.setIdBase(recorequestIdElement);
 
-            for (String recorequestIdElement : recorequestIdList) {
-                tsNotifRecorequestAnswerObj = new TSNotifRecorequestAnswerObj();
-                tsNotifRecorequestAnswerObj.setRecorequestId(recorequestIdElement);
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_LATEST_INFO_SELECT_SQL);
+                tsNotifRecorequestAnswerObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_ANSWER);
+
+                List<TSNotifRecoReplyObj> recoReplyList = new ArrayList<TSNotifRecoReplyObj>();
+                recoReplyList.add(tsNotifRecoReplyObj);
+                tsNotifRecorequestAnswerObj.setRecoReply(recoReplyList);
+
+                List<String> allReplyIdFOrRequestIdList = new ArrayList<String>();
+
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
                 statement.setString(1, recorequestIdElement);
                 resultset = statement.executeQuery();
 
-                if (resultset.next()) {
-                    TSNotifRecoReplyObj tsNotifRecoReplyObj = new TSNotifRecoReplyObj();
-                    tsNotifRecoReplyObj.setReplyId(CommonFunctionsUtil.getModifiedValueString(
+                while (resultset.next()) {
+                    allReplyIdFOrRequestIdList.add(CommonFunctionsUtil.getModifiedValueString(
                             resultset.getString(
                                 "recorequest_reply_user.reply_id")));
+                }
 
-                    String repliedSendDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "recorequest_reply_user.reply_send_datetime"));
-                    //TODO formatting!!
-                    tsNotifRecoReplyObj.setRepliedDatetime(repliedSendDatetime);
+                statement.close();
 
-                    tsNotifRecoReplyObj.setViewed(CommonFunctionsUtil.getModifiedValueString(
-                            resultset.getString(
-                                "recorequest_reply_user.reply_viewed_initiator")));
+                NotifRecoReplyVO notifRecoReplyVO = null;
+                List<NotifRecoReplyVO> notifRecoReplyVOList = new ArrayList<NotifRecoReplyVO>();
 
-                    tsNotifRecorequestAnswerObj.setDatetimeBase(resultset.getTimestamp(
-                            "recorequest_reply_user.reply_send_datetime"));
-                    tsNotifRecorequestAnswerObj.setIdBase(recorequestIdElement);
+                for (String replyIdElement : allReplyIdFOrRequestIdList) {
+                    notifRecoReplyVO = new NotifRecoReplyVO();
 
-                    tsNotifRecorequestAnswerObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_ANSWER);
-
-                    List<TSNotifRecoReplyObj> recoReplyList = new ArrayList<TSNotifRecoReplyObj>();
-                    recoReplyList.add(tsNotifRecoReplyObj);
-                    tsNotifRecorequestAnswerObj.setRecoReply(recoReplyList);
-
-                    List<String> allReplyIdFOrRequestIdList = new ArrayList<String>();
-
-                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
+                    statement = connection.prepareStatement(AskReplyQueries.COUNT_RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
+                    notifRecoReplyVO.setReplyActioned("0");
                     statement.setString(1, recorequestIdElement);
+                    statement.setString(2, recorequestIdElement);
+                    statement.setString(3, replyIdElement);
+                    statement.setString(4, userId);
                     resultset = statement.executeQuery();
 
-                    while (resultset.next()) {
-                        allReplyIdFOrRequestIdList.add(CommonFunctionsUtil.getModifiedValueString(
-                                resultset.getString(
-                                    "recorequest_reply_user.reply_id")));
-                    }
+                    int rowCount = 0;
 
-                    statement.close();
-
-                    NotifRecoReplyVO notifRecoReplyVO = null;
-                    List<NotifRecoReplyVO> notifRecoReplyVOList = new ArrayList<NotifRecoReplyVO>();
-
-                    for (String replyIdElement : allReplyIdFOrRequestIdList) {
-                        notifRecoReplyVO = new NotifRecoReplyVO();
-
-                        statement = connection.prepareStatement(AskReplyQueries.COUNT_RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
-                        notifRecoReplyVO.setReplyActioned("0");
-                        statement.setString(1, recorequestIdElement);
-                        statement.setString(2, recorequestIdElement);
-                        statement.setString(3, replyIdElement);
-                        statement.setString(4, userId);
-                        resultset = statement.executeQuery();
-
-                        int rowCount = 0;
-
-                        if (resultset.next()) {
-                            rowCount = resultset.getInt(1);
-
-                            if (rowCount > 0) {
-                                notifRecoReplyVO.setReplyActioned("1");
-                            }
-                        }
-
-                        statement.close();
-                        notifRecoReplyVOList.add(notifRecoReplyVO);
-                    }
-
-                    tsNotifRecorequestAnswerObj.setRecoActioned("1");
-
-                    for (NotifRecoReplyVO notifRecoReplyVOElement : notifRecoReplyVOList) {
-                        if ("0".equals(
-                                    notifRecoReplyVOElement.getReplyActioned())) {
-                            tsNotifRecorequestAnswerObj.setRecoActioned("0");
-                        }
-
-                        break;
-                    }
-
-                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TEMPLATE_SENTENCES_SELECT_SQL);
-                    statement.setString(1,
-                        tsNotifRecorequestAnswerObj.getRecorequestId());
-                    resultset = statement.executeQuery();
-
-                    String recorequestText = "";
-
-                    //only one result
                     if (resultset.next()) {
-                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                    "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES"));
+                        rowCount = resultset.getInt(1);
+
+                        if (rowCount > 0) {
+                            notifRecoReplyVO.setReplyActioned("1");
+                        }
                     }
 
                     statement.close();
+                    notifRecoReplyVOList.add(notifRecoReplyVO);
+                }
 
-                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_RECO_REST_SELECT_SQL);
-                    statement.setString(1,
-                        tsNotifRecorequestAnswerObj.getRecorequestId());
-                    resultset = statement.executeQuery();
+                tsNotifRecorequestAnswerObj.setRecoActioned("1");
 
-                    String restaurantIdValue = null;
-                    String recommenderUserId = null;
-                    String replyText = null;
-                    List<RecommendationsForYouVO> recommendationsForYouVOList = new ArrayList<RecommendationsForYouVO>();
-
-                    while (resultset.next()) {
-                        restaurantIdValue = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                    "restaurant_id"));
-
-                        recommenderUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                    "recommender_user_id"));
-
-                        replyText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                    "reply_text"));
-
-                        RecommendationsForYouVO recommendationsForYouVO = new RecommendationsForYouVO(restaurantIdValue,
-                                recommenderUserId, replyText);
-
-                        recommendationsForYouVOList.add(recommendationsForYouVO);
+                for (NotifRecoReplyVO notifRecoReplyVOElement : notifRecoReplyVOList) {
+                    if ("0".equals(notifRecoReplyVOElement.getReplyActioned())) {
+                        tsNotifRecorequestAnswerObj.setRecoActioned("0");
                     }
 
-                    statement.close();
+                    break;
+                }
 
-                    List<String> restaurantIdList = new ArrayList<String>();
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TEMPLATE_SENTENCES_SELECT_SQL);
+                statement.setString(1,
+                    tsNotifRecorequestAnswerObj.getRecorequestId());
+                resultset = statement.executeQuery();
+
+                String recorequestText = "";
+
+                //only one result
+                if (resultset.next()) {
+                    recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES"));
+                }
+
+                statement.close();
+
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_RECO_REST_SELECT_SQL);
+                statement.setString(1,
+                    tsNotifRecorequestAnswerObj.getRecorequestId());
+                resultset = statement.executeQuery();
+
+                String restaurantIdValue = null;
+                String recommenderUserId = null;
+                String replyText = null;
+                List<RecommendationsForYouVO> recommendationsForYouVOList = new ArrayList<RecommendationsForYouVO>();
+
+                while (resultset.next()) {
+                    restaurantIdValue = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "restaurant_id"));
+
+                    recommenderUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "recommender_user_id"));
+
+                    replyText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "reply_text"));
+
+                    RecommendationsForYouVO recommendationsForYouVO = new RecommendationsForYouVO(restaurantIdValue,
+                            recommenderUserId, replyText);
+
+                    recommendationsForYouVOList.add(recommendationsForYouVO);
+                }
+
+                statement.close();
+
+                List<String> restaurantIdList = new ArrayList<String>();
+
+                for (RecommendationsForYouVO recommendationsForYouVO : recommendationsForYouVOList) {
+                    if (!restaurantIdList.contains(
+                                recommendationsForYouVO.getRestaurantId())) {
+                        restaurantIdList.add(recommendationsForYouVO.getRestaurantId());
+                    }
+                }
+
+                List<String> recommenderUserIdList = null;
+                List<String> replyTextList = null;
+
+                List<TSRestaurantsForYouObj> restaurantsForYouObjList = new ArrayList<TSRestaurantsForYouObj>();
+
+                //check for duplicates
+                for (String restaurantId : restaurantIdList) {
+                    recommenderUserIdList = new ArrayList<String>();
+                    replyTextList = new ArrayList<String>();
 
                     for (RecommendationsForYouVO recommendationsForYouVO : recommendationsForYouVOList) {
-                        if (!restaurantIdList.contains(
+                        if (restaurantId.equals(
                                     recommendationsForYouVO.getRestaurantId())) {
-                            restaurantIdList.add(recommendationsForYouVO.getRestaurantId());
+                            recommenderUserIdList.add(recommendationsForYouVO.getRecommenderUserId());
+                            replyTextList.add(recommendationsForYouVO.getReplyText());
                         }
                     }
 
-                    List<String> recommenderUserIdList = null;
-                    List<String> replyTextList = null;
+                    List<TSRecommendationsObj> recommendationsForYouList = new ArrayList<TSRecommendationsObj>();
+                    recommendationsForYouList = getRecommendationsForRestaurantFromUsersList(userId,
+                            connection, recommenderUserIdList, replyTextList);
 
-                    List<TSRestaurantsForYouObj> restaurantsForYouObjList = new ArrayList<TSRestaurantsForYouObj>();
+                    statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
+                    statement.setString(1, restaurantId);
+                    resultset = statement.executeQuery();
 
-                    //check for duplicates
-                    for (String restaurantId : restaurantIdList) {
-                        recommenderUserIdList = new ArrayList<String>();
-                        replyTextList = new ArrayList<String>();
+                    String restaurantName = null;
 
-                        for (RecommendationsForYouVO recommendationsForYouVO : recommendationsForYouVOList) {
-                            if (restaurantId.equals(
-                                        recommendationsForYouVO.getRestaurantId())) {
-                                recommenderUserIdList.add(recommendationsForYouVO.getRecommenderUserId());
-                                replyTextList.add(recommendationsForYouVO.getReplyText());
-                            }
-                        }
-
-                        List<TSRecommendationsObj> recommendationsForYouList = new ArrayList<TSRecommendationsObj>();
-                        recommendationsForYouList = getRecommendationsForRestaurantFromUsersList(userId,
-                                connection, recommenderUserIdList, replyTextList);
-
-                        statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
-                        statement.setString(1, restaurantId);
-                        resultset = statement.executeQuery();
-
-                        String restaurantName = null;
-
-                        while (resultset.next()) {
-                            restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                        "restaurant.restaurant_name"));
-                        }
-
-                        statement.close();
-
-                        TSRestaurantsForYouObj tsRestaurantsForYouObj = new TSRestaurantsForYouObj();
-                        tsRestaurantsForYouObj.setRestaurantId(restaurantId);
-                        tsRestaurantsForYouObj.setRestaurantName(restaurantName);
-                        tsRestaurantsForYouObj.setRecommendationsForYouList(recommendationsForYouList);
-
-                        restaurantsForYouObjList.add(tsRestaurantsForYouObj);
+                    while (resultset.next()) {
+                        restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "restaurant.restaurant_name"));
                     }
 
-                    if (statement != null) {
-                        statement.close();
-                    }
+                    statement.close();
 
-                    TSRecommendationsForYouObj tsRecommendationsForYouObj = new TSRecommendationsForYouObj();
-                    tsRecommendationsForYouObj.setRecorequestText(recorequestText);
-                    tsRecommendationsForYouObj.setRestaurantsForYouObjList(restaurantsForYouObjList);
+                    TSRestaurantsForYouObj tsRestaurantsForYouObj = new TSRestaurantsForYouObj();
+                    tsRestaurantsForYouObj.setRestaurantId(restaurantId);
+                    tsRestaurantsForYouObj.setRestaurantName(restaurantName);
+                    tsRestaurantsForYouObj.setRecommendationsForYouList(recommendationsForYouList);
 
-                    tsNotifRecorequestAnswerObj.setRecommendationsForYou(tsRecommendationsForYouObj);
-                    recoNotificationBaseList.add(tsNotifRecorequestAnswerObj);
+                    restaurantsForYouObjList.add(tsRestaurantsForYouObj);
                 }
+
+                if (statement != null) {
+                    statement.close();
+                }
+
+                TSRecommendationsForYouObj tsRecommendationsForYouObj = new TSRecommendationsForYouObj();
+                tsRecommendationsForYouObj.setRecorequestText(recorequestText);
+                tsRecommendationsForYouObj.setRestaurantsForYouObjList(restaurantsForYouObjList);
+
+                tsNotifRecorequestAnswerObj.setRecommendationsForYou(tsRecommendationsForYouObj);
+                recoNotificationBaseList.add(tsNotifRecorequestAnswerObj);
             }
         } finally {
             if (statement != null) {
@@ -2160,6 +2148,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     private void processTSNotifFollowupQuestionObj(Connection connection,
+        TSRecoNotificationBaseObj tsRecoNotificationBaseObjElement,
         List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
         throws SQLException {
         PreparedStatement statement = null;
@@ -2171,6 +2160,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         try {
             statement = connection.prepareStatement(AskReplyQueries.RESTAURANT_QUESTION_TS_ASSIGNED_NOTIF_SELECT_SQL);
             statement.setString(1, userId);
+            statement.setString(2, tsRecoNotificationBaseObjElement.getIdBase());
             resultset = statement.executeQuery();
 
             String questionId = null;
@@ -2185,7 +2175,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifFollowupQuestionObj.setIdBase(questionId);
 
                 tsNotifFollowupQuestionObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_FOLLOWUP);
-                
+
                 String assignedDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant_question_ts_assigned.assigned_datetime"));
 
@@ -2303,6 +2293,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     private void processTSNotifMessageForYouObj(Connection connection,
+        TSRecoNotificationBaseObj tsRecoNotificationBaseObjElement,
         List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
         throws SQLException {
         PreparedStatement statement = null;
@@ -2314,6 +2305,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         try {
             statement = connection.prepareStatement(AskReplyQueries.USER_MESSAGE_RECIPIENT_SELECT_SQL);
             statement.setString(1, userId);
+            statement.setString(2, tsRecoNotificationBaseObjElement.getIdBase());
             resultset = statement.executeQuery();
 
             String messageId = null;
@@ -2328,7 +2320,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifMessageForYouObj.setIdBase(messageId);
 
                 tsNotifMessageForYouObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_MESSAGE);
-                
+
                 String messageCreatedTime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "user_message.created"));
 
@@ -2444,6 +2436,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     private void processTSNotifRecoLikeObj(Connection connection,
+        TSRecoNotificationBaseObj tsRecoNotificationBaseObjElement,
         List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
         throws SQLException {
         PreparedStatement statement = null;
@@ -2454,7 +2447,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
         try {
             statement = connection.prepareStatement(AskReplyQueries.RECO_LIKE_NOTIF_SELECT_SQL);
-            statement.setString(1, userId);
+            statement.setString(1, tsRecoNotificationBaseObjElement.getIdBase());
             resultset = statement.executeQuery();
 
             String likeId = null;
@@ -2468,6 +2461,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifRecoLikeObj.setLikeId(likeId);
                 tsNotifRecoLikeObj.setIdBase(likeId);
                 tsNotifRecoLikeObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_LIKE);
+
                 String likeDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "reco_like.like_datetime"));
 
@@ -2547,6 +2541,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     private void processTSNotifDidYouLikeObj(Connection connection,
+        TSRecoNotificationBaseObj tsRecoNotificationBaseObjElement,
         List<TSRecoNotificationBaseObj> recoNotificationBaseList, String userId)
         throws SQLException {
         PreparedStatement statement = null;
@@ -2560,7 +2555,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
         try {
             statement = connection.prepareStatement(AskReplyQueries.RECOREPLY_DIDIYOULIKE_SELECT_SQL);
-            statement.setString(1, userId);
+            statement.setString(1, tsRecoNotificationBaseObjElement.getIdBase());
             resultset = statement.executeQuery();
 
             String recorequestId = null;
@@ -2572,7 +2567,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                             "recoreply_didyoulike_notif.recorequest_id"));
                 tsNotifDidYouLikeObj.setRecorequestId(recorequestId);
                 tsNotifDidYouLikeObj.setIdBase(recorequestId);
-                
+
                 tsNotifDidYouLikeObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_DID_LIKE);
 
                 String datetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
@@ -2664,6 +2659,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         //Indexing for ORDER BY/Select parameters like user id etc!!
         List<TSRecoNotificationBaseObj> recoNotificationBaseList = new ArrayList<TSRecoNotificationBaseObj>();
 
+        List<TSRecoNotificationBaseObj> recoNotificationBaseOverallList = new ArrayList<TSRecoNotificationBaseObj>();
+
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
@@ -2674,25 +2671,75 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
 
-            processTSNotifRecorequestNeededObjElement(connection,
-                recoNotificationBaseList, userId);
+            statement = connection.prepareStatement(AskReplyQueries.NOTIFICATIONS_ALL_SELECT_SQL);
+            statement.setString(1, userId);
+            statement.setInt(2, 0); //TODO calculate based on pagination logic!!
+            statement.setInt(1, 10);
 
-            processTSNotifRecorequestAnswerObj(connection,
-                recoNotificationBaseList, userId);
+            resultset = statement.executeQuery();
 
-            processTSNotifFollowupQuestionObj(connection,
-                recoNotificationBaseList, userId);
+            TSRecoNotificationBaseObj tsRecoNotificationBaseObj = null;
 
-            processTSNotifMessageForYouObj(connection,
-                recoNotificationBaseList, userId);
+            while (resultset.next()) {
+                tsRecoNotificationBaseObj = new TSRecoNotificationBaseObj();
+                tsRecoNotificationBaseObj.setDatetimeBase(resultset.getTimestamp(
+                        "notifications_all.datetime"));
 
-            processTSNotifRecoLikeObj(connection, recoNotificationBaseList,
-                userId);
+                tsRecoNotificationBaseObj.setIdBase(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("notifications_all.linked_id")));
 
-            processTSNotifDidYouLikeObj(connection, recoNotificationBaseList,
-                userId);
+                tsRecoNotificationBaseObj.setRecoNotificationType(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "notifications_all.notification_type")));
+                recoNotificationBaseOverallList.add(tsRecoNotificationBaseObj);
+            }
 
-            //TODO sort by date!!!
+            //if no result, then check pagination is and see if it is top or last? 
+            statement.close();
+
+            Collections.sort(recoNotificationBaseOverallList,
+                new Comparator<TSRecoNotificationBaseObj>() {
+                    public int compare(TSRecoNotificationBaseObj o1,
+                        TSRecoNotificationBaseObj o2) {
+                        return o1.getDatetimeBase()
+                                 .compareTo(o2.getDatetimeBase());
+                    }
+                });
+
+            for (TSRecoNotificationBaseObj tsRecoNotificationBaseObjElement : recoNotificationBaseOverallList) {
+                if (TSConstants.RECONOTIFICATION_TYPE_NEEDED.equals(
+                            tsRecoNotificationBaseObjElement.getRecoNotificationType())) {
+                    processTSNotifRecorequestNeededObjElement(connection,
+                        tsRecoNotificationBaseObjElement,
+                        recoNotificationBaseList, userId);
+                } else if (TSConstants.RECONOTIFICATION_TYPE_ANSWER.equals(
+                            tsRecoNotificationBaseObjElement.getRecoNotificationType())) {
+                    processTSNotifRecorequestAnswerObj(connection,
+                        tsRecoNotificationBaseObjElement,
+                        recoNotificationBaseList, userId);
+                } else if (TSConstants.RECONOTIFICATION_TYPE_FOLLOWUP.equals(
+                            tsRecoNotificationBaseObjElement.getRecoNotificationType())) {
+                    processTSNotifFollowupQuestionObj(connection,
+                        tsRecoNotificationBaseObjElement,
+                        recoNotificationBaseList, userId);
+                } else if (TSConstants.RECONOTIFICATION_TYPE_MESSAGE.equals(
+                            tsRecoNotificationBaseObjElement.getRecoNotificationType())) {
+                    processTSNotifMessageForYouObj(connection,
+                        tsRecoNotificationBaseObjElement,
+                        recoNotificationBaseList, userId);
+                } else if (TSConstants.RECONOTIFICATION_TYPE_LIKE.equals(
+                            tsRecoNotificationBaseObjElement.getRecoNotificationType())) {
+                    processTSNotifRecoLikeObj(connection,
+                        tsRecoNotificationBaseObjElement,
+                        recoNotificationBaseList, userId);
+                } else if (TSConstants.RECONOTIFICATION_TYPE_DID_LIKE.equals(
+                            tsRecoNotificationBaseObjElement.getRecoNotificationType())) {
+                    processTSNotifDidYouLikeObj(connection,
+                        tsRecoNotificationBaseObjElement,
+                        recoNotificationBaseList, userId);
+                }
+            }
+
             return recoNotificationBaseList;
         } catch (SQLException e) {
             e.printStackTrace();
