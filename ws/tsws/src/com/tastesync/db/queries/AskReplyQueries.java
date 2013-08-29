@@ -374,6 +374,11 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "       recoreply_didyoulike_notif.notif_viewed " +
         "FROM   recoreply_didyoulike_notif " +
         "WHERE  recoreply_didyoulike_notif.recorequest_id = ? ";
+    public String COUNT_NOTIFICATIONS_ALL_SELECT_SQL = "" +
+        "SELECT notifications_all.notification_type, " +
+        "       notifications_all.linked_id, " +
+        "       notifications_all.datetime " + "FROM   notifications_all " +
+        "WHERE  notifications_all.user_id = ? ";
     public String NOTIFICATIONS_ALL_SELECT_SQL = "" +
         "SELECT notifications_all.notification_type, " +
         "       notifications_all.linked_id, " +
