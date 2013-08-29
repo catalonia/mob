@@ -25,4 +25,7 @@ public interface TSConstants {
     public static final String RECONOTIFICATION_TYPE_LIKE="5";
     
     public static final String RECONOTIFICATION_TYPE_DID_LIKE="6";
+    
+    public static final int PAGINATION_GAP=10;
+    
 }
