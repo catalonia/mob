@@ -42,8 +42,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 
@@ -1792,6 +1790,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifRecorequestNeededObj.setRecorequestassignedViewed(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString(
                             "recorequest_ts_assigned.recorequest_assigned_viewed")));
+
+                tsNotifRecorequestNeededObj.setMaxPaginationId(String.valueOf(
+                        tsRecoNotificationBaseObjElement.getMaxPaginationId()));
+
                 tsNotifRecorequestNeededObjList.add(tsNotifRecorequestNeededObj);
             }
 
@@ -1953,6 +1955,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_LATEST_INFO_SELECT_SQL);
             statement.setString(1, recorequestIdElement);
             resultset = statement.executeQuery();
+            tsNotifRecorequestAnswerObj.setMinViewedIndicator("1");
 
             if (resultset.next()) {
                 TSNotifRecoReplyObj tsNotifRecoReplyObj = new TSNotifRecoReplyObj();
@@ -1967,6 +1970,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifRecoReplyObj.setViewed(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString(
                             "recorequest_reply_user.reply_viewed_initiator")));
+                tsNotifRecorequestAnswerObj.setMinViewedIndicator(tsNotifRecoReplyObj.getViewed());
 
                 tsNotifRecorequestAnswerObj.setDatetimeBase(resultset.getTimestamp(
                         "recorequest_reply_user.reply_send_datetime"));
@@ -1974,10 +1978,13 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
                 tsNotifRecorequestAnswerObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_ANSWER);
 
+                tsNotifRecorequestAnswerObj.setMaxPaginationId(String.valueOf(
+                        tsRecoNotificationBaseObjElement.getMaxPaginationId()));
+
                 List<TSNotifRecoReplyObj> recoReplyList = new ArrayList<TSNotifRecoReplyObj>();
                 recoReplyList.add(tsNotifRecoReplyObj);
-                tsNotifRecorequestAnswerObj.setRecoReply(recoReplyList);
 
+                //tsNotifRecorequestAnswerObj.setRecoReply(recoReplyList);
                 List<String> allReplyIdFOrRequestIdList = new ArrayList<String>();
 
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
@@ -2175,6 +2182,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifFollowupQuestionObj.setIdBase(questionId);
 
                 tsNotifFollowupQuestionObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_FOLLOWUP);
+                tsNotifFollowupQuestionObj.setMaxPaginationId(String.valueOf(
+                        tsRecoNotificationBaseObjElement.getMaxPaginationId()));
 
                 String assignedDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant_question_ts_assigned.assigned_datetime"));
@@ -2320,6 +2329,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifMessageForYouObj.setIdBase(messageId);
 
                 tsNotifMessageForYouObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_MESSAGE);
+                tsNotifMessageForYouObj.setMaxPaginationId(String.valueOf(
+                        tsRecoNotificationBaseObjElement.getMaxPaginationId()));
 
                 String messageCreatedTime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "user_message.created"));
@@ -2461,6 +2472,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifRecoLikeObj.setLikeId(likeId);
                 tsNotifRecoLikeObj.setIdBase(likeId);
                 tsNotifRecoLikeObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_LIKE);
+                tsNotifRecoLikeObj.setMaxPaginationId(String.valueOf(
+                        tsRecoNotificationBaseObjElement.getMaxPaginationId()));
 
                 String likeDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "reco_like.like_datetime"));
@@ -2569,6 +2582,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifDidYouLikeObj.setIdBase(recorequestId);
 
                 tsNotifDidYouLikeObj.setRecoNotificationType(TSConstants.RECONOTIFICATION_TYPE_DID_LIKE);
+                tsNotifDidYouLikeObj.setMaxPaginationId(String.valueOf(
+                        tsRecoNotificationBaseObjElement.getMaxPaginationId()));
 
                 String datetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "recoreply_didyoulike_notif.notif_datetime"));
@@ -2671,10 +2686,34 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
 
+            statement = connection.prepareStatement(AskReplyQueries.COUNT_NOTIFICATIONS_ALL_SELECT_SQL);
+
+            statement.setString(1, userId);
+
+            resultset = statement.executeQuery();
+
+            int rowCount = 0;
+
+            if (resultset.next()) {
+                rowCount = resultset.getInt(1);
+            }
+
+            statement.close();
+
+            int maxPaginationId = (rowCount / TSConstants.PAGINATION_GAP) + 1;
+
             statement = connection.prepareStatement(AskReplyQueries.NOTIFICATIONS_ALL_SELECT_SQL);
             statement.setString(1, userId);
-            statement.setInt(2, 0); //TODO calculate based on pagination logic!!
-            statement.setInt(3, 10);
+
+            int pagintionIndex = 0;
+            pagintionIndex = (Integer.valueOf(paginationId) - 1) * TSConstants.PAGINATION_GAP;
+
+            if (pagintionIndex < 0) {
+                pagintionIndex = 0;
+            }
+
+            statement.setInt(2, pagintionIndex); //TODO calculate based on pagination logic!!
+            statement.setInt(3, TSConstants.PAGINATION_GAP);
 
             resultset = statement.executeQuery();
 
@@ -2691,21 +2730,24 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsRecoNotificationBaseObj.setRecoNotificationType(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString(
                             "notifications_all.notification_type")));
+
+                tsRecoNotificationBaseObj.setMaxPaginationId(String.valueOf(
+                        maxPaginationId));
+
                 recoNotificationBaseOverallList.add(tsRecoNotificationBaseObj);
             }
 
             //if no result, then check pagination is and see if it is top or last? 
             statement.close();
 
-            Collections.sort(recoNotificationBaseOverallList,
-                new Comparator<TSRecoNotificationBaseObj>() {
-                    public int compare(TSRecoNotificationBaseObj o1,
-                        TSRecoNotificationBaseObj o2) {
-                        return o1.getDatetimeBase()
-                                 .compareTo(o2.getDatetimeBase());
-                    }
-                });
-
+            //            Collections.sort(recoNotificationBaseOverallList,
+            //                new Comparator<TSRecoNotificationBaseObj>() {
+            //                    public int compare(TSRecoNotificationBaseObj o1,
+            //                        TSRecoNotificationBaseObj o2) {
+            //                        return o1.getDatetimeBase()
+            //                                 .compareTo(o2.getDatetimeBase());
+            //                    }
+            //                });
             for (TSRecoNotificationBaseObj tsRecoNotificationBaseObjElement : recoNotificationBaseOverallList) {
                 if (TSConstants.RECONOTIFICATION_TYPE_NEEDED.equals(
                             tsRecoNotificationBaseObjElement.getRecoNotificationType())) {
