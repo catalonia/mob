@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+
 
 public class TSRecoNotificationBaseObj implements Serializable {
     private static final long serialVersionUID = 8264952327098167837L;
@@ -21,21 +23,34 @@ public class TSRecoNotificationBaseObj implements Serializable {
 
     /**RECOREQUEST_ID,  REPLY_ID, QUESTION_ID, MESSAGE_ID, ID, RECOREQUEST_ID*/
     private String idBase;
+    private String maxPaginationId;
 
     public TSRecoNotificationBaseObj() {
         super();
     }
 
+    @XmlElement
+    public String getMaxPaginationId() {
+        return maxPaginationId;
+    }
+
+    @XmlElement
     public String getRecoNotificationType() {
         return recoNotificationType;
     }
 
+    @XmlElement
     public Date getDatetimeBase() {
         return datetimeBase;
     }
 
+    @XmlElement
     public String getIdBase() {
         return idBase;
+    }
+
+    public void setMaxPaginationId(String maxPaginationId) {
+        this.maxPaginationId = maxPaginationId;
     }
 
     public void setRecoNotificationType(String recoNotificationType) {
