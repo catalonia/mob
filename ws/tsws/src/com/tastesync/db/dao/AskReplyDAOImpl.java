@@ -2674,7 +2674,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.NOTIFICATIONS_ALL_SELECT_SQL);
             statement.setString(1, userId);
             statement.setInt(2, 0); //TODO calculate based on pagination logic!!
-            statement.setInt(1, 10);
+            statement.setInt(3, 10);
 
             resultset = statement.executeQuery();
 
