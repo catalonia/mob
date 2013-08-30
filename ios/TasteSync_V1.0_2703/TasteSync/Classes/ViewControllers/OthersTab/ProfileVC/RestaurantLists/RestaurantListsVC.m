@@ -231,7 +231,7 @@
 {
     NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"%@",response);
-        [_arrDataRestaurant removeAllObjects];
+        //[_arrDataRestaurant removeAllObjects];
         NSArray* array = [response objectFromJSONString];
         for (NSDictionary* dic in array) {
             NSString* restaurantID = [NSString stringWithFormat:@"%@", [dic objectForKey:@"restauarntId"]];
