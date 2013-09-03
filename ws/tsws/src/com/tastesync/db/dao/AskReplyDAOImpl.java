@@ -2607,7 +2607,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 resultsetInner = statementInner.executeQuery();
 
                 while (resultsetInner.next()) {
-                    recommendedrestaurantsRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                    recommendedrestaurantsRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
                                 "restaurant_id"));
 
                     statementInner1 = connection.prepareStatement(AskReplyQueries.RESTAURANT_NAME_SELECT_SQL);
