@@ -6,6 +6,10 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.tastesync.util.JsonDateSerializer;
+
 
 public class TSRecoNotificationBaseObj implements Serializable {
     private static final long serialVersionUID = 8264952327098167837L;
@@ -40,6 +44,7 @@ public class TSRecoNotificationBaseObj implements Serializable {
     }
 
     @XmlElement
+    @JsonSerialize(using=JsonDateSerializer.class)
     public Date getDatetimeBase() {
         return datetimeBase;
     }
