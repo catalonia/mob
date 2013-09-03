@@ -158,13 +158,42 @@
 }
 - (IBAction)actionRecommendations:(id)sender
 {
+    NSString* facebookID = @"";
+    int i = 0;
+    for (UserObj* obj in _arrData) {
+        if (obj.uid != nil) {
+            NSString* str = [NSString stringWithFormat:@"%@", obj.uid];
+            if (i == 0)
+                facebookID = str;
+            else
+                facebookID = [facebookID stringByAppendingString:[NSString stringWithFormat:@",%@",str]];
+            i++;
+        }
+    }
+    NSLog(@"%@",facebookID);
+    NSString* postOnFacebook = @"";
+    if (postOnFbChecked)
+        postOnFacebook = @"1";
+    else
+        postOnFacebook = @"0";
+    
+    
+    CRequest* request = [[CRequest alloc]initWithURL:@"saverecofriends" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
+    [request setFormPostValue:_recoRequestId forKey:@"recorequestid"];
+     [request setFormPostValue:tfAsk.text forKey:@"recorequestfriendtext"];
+     [request setFormPostValue:facebookID forKey:@"friendsfacebookidlist"];
+    [request setFormPostValue:postOnFacebook forKey:@"postonfacebook"];
+    [request startFormRequest];
+    
     btSkipThis.hidden = YES;
     btNewsfeed.hidden = NO;
     viewMain.hidden = YES;
     viewWaiting.hidden = NO;
     lbWaiting.text = @"Contacting friends for recommendations";
     recommendationsSent = YES;
-    [self performSelector:@selector(actionSkipThis:) withObject:nil afterDelay:1.0];
+   [self performSelector:@selector(actionSkipThis:) withObject:nil afterDelay:1.0];
 
 }
 

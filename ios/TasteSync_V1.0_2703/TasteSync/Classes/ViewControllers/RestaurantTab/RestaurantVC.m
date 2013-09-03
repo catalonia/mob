@@ -720,6 +720,7 @@ typedef enum _TFSelect
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
     NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"response: %@",response);
     if (key == 1) {
         [_arrDataRestaurant removeAllObjects];
         NSArray* array = [response objectFromJSONString];
@@ -757,7 +758,7 @@ typedef enum _TFSelect
             TSGlobalObj* global = [[TSGlobalObj alloc]init];
             global.type = GlobalDataCity;
             global.uid = [dic objectForKey:@"cityId"];
-            global.name = [dic objectForKey:@"city"];
+            global.name = [NSString stringWithFormat:@"%@, %@", [dic objectForKey:@"city"],  [dic objectForKey:@"state"]];
             
             TSCityObj* cityObj = [[TSCityObj alloc]init];
             

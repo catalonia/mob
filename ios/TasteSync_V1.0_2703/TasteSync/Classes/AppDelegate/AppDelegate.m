@@ -85,15 +85,6 @@ askSubmited=_askSubmited;
 {
 }
 
--(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
-    //Removing the brackets from the device token
-    NSString *tokenString = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    [[NSUserDefaults standardUserDefaults] setObject:tokenString forKey:@"device_token"];
-    NSString *tokenStr = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"device_token : %@",tokenStr);
-    
-}
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -282,4 +273,20 @@ askSubmited=_askSubmited;
     
 }
 
+#pragma mark Push Notifycation
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    //Removing the brackets from the device token
+    NSString *tokenString = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    [[NSUserDefaults standardUserDefaults] setObject:tokenString forKey:@"device_token"];
+    NSString *tokenStr = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"device_token : %@",tokenStr);
+    
+}
+
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	NSLog(@"Failed to get token, error: %@", error);
+}
 @end
