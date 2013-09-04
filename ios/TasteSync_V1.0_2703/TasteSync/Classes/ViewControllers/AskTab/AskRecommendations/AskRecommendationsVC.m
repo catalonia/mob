@@ -178,7 +178,7 @@
         postOnFacebook = @"0";
     
     
-    CRequest* request = [[CRequest alloc]initWithURL:@"saverecofriends" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
+    CRequest* request = [[CRequest alloc]initWithURL:@"askquestion" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
     request.delegate = self;
     [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
     [request setFormPostValue:_recoRequestId forKey:@"recorequestid"];
