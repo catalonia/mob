@@ -117,6 +117,7 @@
   </xs:complexType>
   <xs:complexType name="TSListFacebookUserDataObj">
     <xs:sequence>
+      <xs:element name="devicetoken" type="xs:string" minOccurs="0"/>
       <xs:element name="user_current_profile" type="TSFacebookUserDataObj" minOccurs="0"/>
       <xs:element name="list_user_profile" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -251,6 +252,7 @@
   </xs:complexType>
   <xs:complexType name="TSRecoNotificationBaseObj">
     <xs:sequence>
+      <xs:element name="maxPaginationId" type="xs:string" minOccurs="0"/>
       <xs:element name="recoNotificationType" type="xs:string" minOccurs="0"/>
       <xs:element name="datetimeBase" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="idBase" type="xs:string" minOccurs="0"/>

@@ -2,6 +2,7 @@ package com.tastesync.db.dao;
 
 import com.tastesync.common.GlobalVariables;
 import com.tastesync.common.MySQL;
+import com.tastesync.common.PushService;
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.CityQueries;
 import com.tastesync.db.queries.RestaurantQueries;
@@ -189,7 +190,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						userID = user_city_id +"-" + dateNowAppend + "-" + CommonFunctionsUtil.generateRandomString(4, 5);							
 				
 					
-					
 					if(!is_disabled) {
 						
 						//Insert & Update Facebook information
@@ -300,96 +300,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 										list_friends_using_TasteSync.add(user_fb);
 									}
 									
-									//Insert & Update Facebook information
-//									boolean check_fb_friend = false;
-//									try {
-//										check_fb_friend = mySQL.checkFBUserDataExist(item.getId());
-//										
-//										if(!check_fb_friend) {
-//											
-//											System.out.println(UserQueries.FACEBOOK_INSERT_SQL);
-//											//Insert facebook data (Assume user create profile first, then user login app by connecting Facebook so we have to insert Facebook data)
-//											//sql = UserQueries.FACEBOOK_INSERT_SQL;
-//											tsDataSource.begin();
-//											connection = tsDataSource.getConnection();
-//											statement = connection.prepareStatement(UserQueries.FACEBOOK_INSERT_SQL);
-//							            	statement.setString(1, item.getId());
-//							            	statement.setString(2, item.getName());
-//							            	statement.setString(3, item.getFirstName());
-//							            	statement.setString(4, item.getMiddleName());
-//							            	statement.setString(5, item.getLastName());
-//							            	statement.setString(6, item.getGender());
-//							            	statement.setString(7, item.getLocale());
-//							            	statement.setString(8, item.getLink());
-//							            	statement.setString(9, item.getUserName());
-//							            	statement.setString(10, item.getAgeRange());
-//							            	statement.setString(11, item.getBirthday());
-//							            	statement.setString(12, item.getThirdPartyId());
-//							            	statement.setString(13, item.getFriendlists());
-//							            	statement.setString(14, item.getInstalled());
-//							            	statement.setString(15, item.getTimezone());
-//							            	statement.setString(16, dateNow);
-//							            	statement.setString(17, item.getVerified());
-//							            	statement.setString(18, item.getDevices());
-//							            	statement.setString(19, item.getEmail());
-//							            	statement.setString(20, item.getHometown());
-//							            	statement.setString(21, item.getLocation());
-//							            	statement.setString(22, item.getPicture());
-//							            	statement.setString(23, item.getRelationshipStatus());
-//							            	statement.setString(24, item.getCheckins());
-//							            	statement.setString(25, item.getFriends());
-//							            	statement.setString(26, item.getLikes());
-//							            	statement.setString(27, item.getPermissions());
-//							            	statement.setString(28, dateNow);
-//							            	statement.execute();
-//										}
-//										else {
-//											
-//											//Update facebook data
-//											System.out.println(UserQueries.FACEBOOK_UPDATE_SQL);
-//											//sql = UserQueries.FACEBOOK_UPDATE_SQL;
-//											tsDataSource.begin();
-//											connection = tsDataSource.getConnection();
-//											statement = connection.prepareStatement(UserQueries.FACEBOOK_UPDATE_SQL);
-//											statement.setString(1, item.getName());
-//											statement.setString(2, item.getFirstName()); 
-//											statement.setString(3, item.getMiddleName());
-//											statement.setString(4, item.getLastName()); 
-//											statement.setString(5, item.getGender()); 
-//											statement.setString(6, item.getLocale());
-//											statement.setString(7, item.getLink());
-//											statement.setString(8, item.getUserName());
-//											statement.setString(9, item.getAgeRange());
-//											statement.setString(10, item.getBirthday());
-//											statement.setString(11, item.getThirdPartyId());
-//											statement.setString(12, item.getFriendlists());
-//											statement.setString(13, item.getInstalled());
-//											statement.setString(14, item.getTimezone());
-//											statement.setString(15, dateNow);
-//											statement.setString(16, item.getVerified());
-//											statement.setString(17, item.getDevices());
-//											statement.setString(18, item.getEmail());
-//											statement.setString(19, item.getHometown());
-//											statement.setString(20, item.getLocation());
-//											statement.setString(21, item.getPicture());
-//											statement.setString(22, item.getRelationshipStatus());
-//											statement.setString(23, item.getCheckins());
-//											statement.setString(24, item.getFriends());
-//											statement.setString(25, item.getLikes());
-//											statement.setString(26, item.getPermissions());
-//											statement.setString(27, dateNow);
-//											statement.setString(28, item.getId());
-//											statement.executeUpdate();
-//										}
-//									} catch(Exception e) {
-//										e.printStackTrace();
-//										throw new TasteSyncException("login_fb "+e.getMessage());
-//									}
-//									finally
-//									{
-//										tsDataSource.close();
-//										tsDataSource.closeConnection(connection, statement, null);
-//									}
 								}
 							}
 							//tsDataSource.commit();
@@ -575,6 +485,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 							response.setIs_have_account("0");
 						response.setUser(user);
 						//response.setUser_log_id(userLogId);
+					}
+					String deviceToken = list_user_profile.getDevice_token();
+					System.out.println("Device token: "+deviceToken);
+					if (!deviceToken.equals("")) {
+						mySQL.addDeviceToken(userID, deviceToken);
 					}
 				}
 			} catch(Exception e) {
@@ -1852,6 +1767,21 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	    	statement.setString(4, content);
 	    	statement.setString(5, dayTime);
 	    	statement.execute();
+	    	
+	    	PushService push = new PushService();
+	    	connection = tsDataSource.getConnection();
+	    	statement = connection.prepareStatement(UserQueries.USER_DEVICE_SELECT_SQL);
+	    	statement.setString(1, recipient_ID);
+	    	ResultSet resultset = statement.executeQuery();
+	    	System.out.println("here");
+	    	while(resultset.next())
+        	{
+	    		push.pushMessage(CommonFunctionsUtil.getModifiedValueString(
+	                    resultset.getString("user_device.device_token")), content);
+	    		System.out.println(CommonFunctionsUtil.getModifiedValueString(
+	                    resultset.getString("user_device.device_token")));
+        	}
+	    	
 			//tsDataSource.commit();
 	    }catch(Exception e)
 	    {

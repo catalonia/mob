@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "list_user_profile_fb")
 public class TSListFacebookUserDataObj implements Serializable{
 	private static final long serialVersionUID = 1L;
+	private String device_token;
 	private TSFacebookUserDataObj user_profile_current;
 	private List<String> list_user_profile_fb;
 
@@ -16,6 +17,15 @@ public class TSListFacebookUserDataObj implements Serializable{
 		
 	}
 
+	@XmlElement(name = "devicetoken")
+	public String getDevice_token() {
+		return device_token;
+	}
+
+	public void setDevice_token(String device_token) {
+		this.device_token = device_token;
+	}
+	
 	@XmlElement(name = "user_current_profile")
 	public TSFacebookUserDataObj getUser_profile_current() {
 		return user_profile_current;

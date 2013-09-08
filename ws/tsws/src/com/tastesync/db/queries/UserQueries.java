@@ -335,4 +335,9 @@ public interface UserQueries extends TSDBCommonQueries {
  			+ "WHERE USER_ID=? AND USER_FRIEND_FB=?";
  	public static String USER_FRIEND_FB_CHECK_SELECT_SQL = "SELECT * "
  			+ "FROM `user_friend_fb` " + "WHERE USER_ID=? AND USER_FRIEND_FB=?";
+ 	
+ 	//USER_DEVICE
+ 	public static String USER_DEVICE_INSERT_SQL = "INSERT INTO `user_device`(`USER_ID`, `device_token`, `updated_datetime`, `expiration_datetime`)"
+ 			+ "VALUES (?,?,?,?)";
+ 	public static String USER_DEVICE_SELECT_SQL = "SELECT * FROM `user_device` " + "WHERE USER_ID=?";
 }

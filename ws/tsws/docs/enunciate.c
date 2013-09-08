@@ -690,6 +690,11 @@ struct enunciate_ns0_TSListFacebookUserDataObj {
   /**
    * (no documentation provided)
    */
+  xmlChar *device_token;
+
+  /**
+   * (no documentation provided)
+   */
   struct enunciate_ns0_TSFacebookUserDataObj *user_profile_current;
 
   /**
@@ -1144,6 +1149,11 @@ struct enunciate_ns0_TSNotifDidYouLikeObj {
   /**
    * (no documentation provided)
    */
+  xmlChar *maxPaginationId;
+
+  /**
+   * (no documentation provided)
+   */
   xmlChar *recoNotificationType;
 
   /**
@@ -1276,6 +1286,11 @@ static void freeNs0TSNotifDidYouLikeObjType(struct enunciate_ns0_TSNotifDidYouLi
  */
 struct enunciate_ns0_TSNotifFollowupQuestionObj {
 
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *maxPaginationId;
 
   /**
    * (no documentation provided)
@@ -1421,6 +1436,11 @@ struct enunciate_ns0_TSNotifMessageForYouObj {
   /**
    * (no documentation provided)
    */
+  xmlChar *maxPaginationId;
+
+  /**
+   * (no documentation provided)
+   */
   xmlChar *recoNotificationType;
 
   /**
@@ -1558,6 +1578,11 @@ static void freeNs0TSNotifMessageForYouObjType(struct enunciate_ns0_TSNotifMessa
  */
 struct enunciate_ns0_TSNotifRecoLikeObj {
 
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *maxPaginationId;
 
   /**
    * (no documentation provided)
@@ -1804,6 +1829,11 @@ struct enunciate_ns0_TSNotifRecorequestAnswerObj {
   /**
    * (no documentation provided)
    */
+  xmlChar *maxPaginationId;
+
+  /**
+   * (no documentation provided)
+   */
   xmlChar *recoNotificationType;
 
   /**
@@ -1941,6 +1971,11 @@ static void freeNs0TSNotifRecorequestAnswerObjType(struct enunciate_ns0_TSNotifR
  */
 struct enunciate_ns0_TSNotifRecorequestNeededObj {
 
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *maxPaginationId;
 
   /**
    * (no documentation provided)
@@ -2410,6 +2445,11 @@ static void freeNs0TSPrivacySettingsObjType(struct enunciate_ns0_TSPrivacySettin
  */
 struct enunciate_ns0_TSRecoNotificationBaseObj {
 
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *maxPaginationId;
 
   /**
    * (no documentation provided)
@@ -9584,6 +9624,27 @@ static struct enunciate_ns0_TSListFacebookUserDataObj *xmlTextReaderReadNs0TSLis
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "devicetoken", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}devicetoken of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}devicetoken of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSListFacebookUserDataObjType(_tSListFacebookUserDataObj);
+          free(_tSListFacebookUserDataObj);
+          return NULL;
+        }
+
+        _tSListFacebookUserDataObj->device_token = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "user_current_profile", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -9654,6 +9715,36 @@ static struct enunciate_ns0_TSListFacebookUserDataObj *xmlTextReaderReadNs0TSLis
 static int xmlTextWriterWriteNs0TSListFacebookUserDataObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSListFacebookUserDataObj->device_token != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "devicetoken", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}devicetoken. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}devicetoken...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSListFacebookUserDataObj->device_token));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}devicetoken. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}devicetoken. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSListFacebookUserDataObj->user_profile_current != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "user_current_profile", NULL);
     if (status < 0) {
@@ -9725,6 +9816,16 @@ static int xmlTextWriterWriteNs0TSListFacebookUserDataObjType(xmlTextWriterPtr w
  */
 static void freeNs0TSListFacebookUserDataObjType(struct enunciate_ns0_TSListFacebookUserDataObj *_tSListFacebookUserDataObj) {
   int i;
+  if (_tSListFacebookUserDataObj->device_token != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor device_token of type enunciate_ns0_TSListFacebookUserDataObj...\n");
+#endif
+    freeXsStringType(_tSListFacebookUserDataObj->device_token);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor device_token of type enunciate_ns0_TSListFacebookUserDataObj...\n");
+#endif
+    free(_tSListFacebookUserDataObj->device_token);
+  }
   if (_tSListFacebookUserDataObj->user_profile_current != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor user_profile_current of type enunciate_ns0_TSListFacebookUserDataObj...\n");
@@ -11124,6 +11225,27 @@ static struct enunciate_ns0_TSNotifDidYouLikeObj *xmlTextReaderReadNs0TSNotifDid
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifDidYouLikeObjType(_tSNotifDidYouLikeObj);
+          free(_tSNotifDidYouLikeObj);
+          return NULL;
+        }
+
+        _tSNotifDidYouLikeObj->maxPaginationId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -11299,6 +11421,36 @@ static struct enunciate_ns0_TSNotifDidYouLikeObj *xmlTextReaderReadNs0TSNotifDid
 static int xmlTextWriterWriteNs0TSNotifDidYouLikeObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSNotifDidYouLikeObj->maxPaginationId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifDidYouLikeObj->maxPaginationId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSNotifDidYouLikeObj->recoNotificationType != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
     if (status < 0) {
@@ -11520,6 +11672,16 @@ static int xmlTextWriterWriteNs0TSNotifDidYouLikeObjType(xmlTextWriterPtr writer
  */
 static void freeNs0TSNotifDidYouLikeObjType(struct enunciate_ns0_TSNotifDidYouLikeObj *_tSNotifDidYouLikeObj) {
   int i;
+  if (_tSNotifDidYouLikeObj->maxPaginationId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor maxPaginationId of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifDidYouLikeObj->maxPaginationId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor maxPaginationId of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
+#endif
+    free(_tSNotifDidYouLikeObj->maxPaginationId);
+  }
   if (_tSNotifDidYouLikeObj->recoNotificationType != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifDidYouLikeObj...\n");
@@ -11755,6 +11917,27 @@ static struct enunciate_ns0_TSNotifFollowupQuestionObj *xmlTextReaderReadNs0TSNo
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifFollowupQuestionObjType(_tSNotifFollowupQuestionObj);
+          free(_tSNotifFollowupQuestionObj);
+          return NULL;
+        }
+
+        _tSNotifFollowupQuestionObj->maxPaginationId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -11970,6 +12153,36 @@ static struct enunciate_ns0_TSNotifFollowupQuestionObj *xmlTextReaderReadNs0TSNo
 static int xmlTextWriterWriteNs0TSNotifFollowupQuestionObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSNotifFollowupQuestionObj->maxPaginationId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifFollowupQuestionObj->maxPaginationId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSNotifFollowupQuestionObj->recoNotificationType != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
     if (status < 0) {
@@ -12251,6 +12464,16 @@ static int xmlTextWriterWriteNs0TSNotifFollowupQuestionObjType(xmlTextWriterPtr 
  */
 static void freeNs0TSNotifFollowupQuestionObjType(struct enunciate_ns0_TSNotifFollowupQuestionObj *_tSNotifFollowupQuestionObj) {
   int i;
+  if (_tSNotifFollowupQuestionObj->maxPaginationId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor maxPaginationId of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    freeXsStringType(_tSNotifFollowupQuestionObj->maxPaginationId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor maxPaginationId of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
+#endif
+    free(_tSNotifFollowupQuestionObj->maxPaginationId);
+  }
   if (_tSNotifFollowupQuestionObj->recoNotificationType != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifFollowupQuestionObj...\n");
@@ -12504,6 +12727,27 @@ static struct enunciate_ns0_TSNotifMessageForYouObj *xmlTextReaderReadNs0TSNotif
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifMessageForYouObjType(_tSNotifMessageForYouObj);
+          free(_tSNotifMessageForYouObj);
+          return NULL;
+        }
+
+        _tSNotifMessageForYouObj->maxPaginationId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -12719,6 +12963,36 @@ static struct enunciate_ns0_TSNotifMessageForYouObj *xmlTextReaderReadNs0TSNotif
 static int xmlTextWriterWriteNs0TSNotifMessageForYouObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSNotifMessageForYouObj->maxPaginationId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifMessageForYouObj->maxPaginationId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSNotifMessageForYouObj->recoNotificationType != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
     if (status < 0) {
@@ -13000,6 +13274,16 @@ static int xmlTextWriterWriteNs0TSNotifMessageForYouObjType(xmlTextWriterPtr wri
  */
 static void freeNs0TSNotifMessageForYouObjType(struct enunciate_ns0_TSNotifMessageForYouObj *_tSNotifMessageForYouObj) {
   int i;
+  if (_tSNotifMessageForYouObj->maxPaginationId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor maxPaginationId of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    freeXsStringType(_tSNotifMessageForYouObj->maxPaginationId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor maxPaginationId of type enunciate_ns0_TSNotifMessageForYouObj...\n");
+#endif
+    free(_tSNotifMessageForYouObj->maxPaginationId);
+  }
   if (_tSNotifMessageForYouObj->recoNotificationType != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifMessageForYouObj...\n");
@@ -13253,6 +13537,27 @@ static struct enunciate_ns0_TSNotifRecoLikeObj *xmlTextReaderReadNs0TSNotifRecoL
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecoLikeObjType(_tSNotifRecoLikeObj);
+          free(_tSNotifRecoLikeObj);
+          return NULL;
+        }
+
+        _tSNotifRecoLikeObj->maxPaginationId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -13426,6 +13731,36 @@ static struct enunciate_ns0_TSNotifRecoLikeObj *xmlTextReaderReadNs0TSNotifRecoL
 static int xmlTextWriterWriteNs0TSNotifRecoLikeObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSNotifRecoLikeObj->maxPaginationId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecoLikeObj->maxPaginationId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSNotifRecoLikeObj->recoNotificationType != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
     if (status < 0) {
@@ -13647,6 +13982,16 @@ static int xmlTextWriterWriteNs0TSNotifRecoLikeObjType(xmlTextWriterPtr writer, 
  */
 static void freeNs0TSNotifRecoLikeObjType(struct enunciate_ns0_TSNotifRecoLikeObj *_tSNotifRecoLikeObj) {
   int i;
+  if (_tSNotifRecoLikeObj->maxPaginationId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor maxPaginationId of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecoLikeObj->maxPaginationId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor maxPaginationId of type enunciate_ns0_TSNotifRecoLikeObj...\n");
+#endif
+    free(_tSNotifRecoLikeObj->maxPaginationId);
+  }
   if (_tSNotifRecoLikeObj->recoNotificationType != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifRecoLikeObj...\n");
@@ -14263,6 +14608,27 @@ static struct enunciate_ns0_TSNotifRecorequestAnswerObj *xmlTextReaderReadNs0TSN
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestAnswerObjType(_tSNotifRecorequestAnswerObj);
+          free(_tSNotifRecorequestAnswerObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestAnswerObj->maxPaginationId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -14459,6 +14825,36 @@ static struct enunciate_ns0_TSNotifRecorequestAnswerObj *xmlTextReaderReadNs0TSN
 static int xmlTextWriterWriteNs0TSNotifRecorequestAnswerObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSNotifRecorequestAnswerObj->maxPaginationId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestAnswerObj->maxPaginationId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSNotifRecorequestAnswerObj->recoNotificationType != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
     if (status < 0) {
@@ -14710,6 +15106,16 @@ static int xmlTextWriterWriteNs0TSNotifRecorequestAnswerObjType(xmlTextWriterPtr
  */
 static void freeNs0TSNotifRecorequestAnswerObjType(struct enunciate_ns0_TSNotifRecorequestAnswerObj *_tSNotifRecorequestAnswerObj) {
   int i;
+  if (_tSNotifRecorequestAnswerObj->maxPaginationId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor maxPaginationId of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestAnswerObj->maxPaginationId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor maxPaginationId of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
+#endif
+    free(_tSNotifRecorequestAnswerObj->maxPaginationId);
+  }
   if (_tSNotifRecorequestAnswerObj->recoNotificationType != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifRecorequestAnswerObj...\n");
@@ -14955,6 +15361,27 @@ static struct enunciate_ns0_TSNotifRecorequestNeededObj *xmlTextReaderReadNs0TSN
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSNotifRecorequestNeededObjType(_tSNotifRecorequestNeededObj);
+          free(_tSNotifRecorequestNeededObj);
+          return NULL;
+        }
+
+        _tSNotifRecorequestNeededObj->maxPaginationId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -15170,6 +15597,36 @@ static struct enunciate_ns0_TSNotifRecorequestNeededObj *xmlTextReaderReadNs0TSN
 static int xmlTextWriterWriteNs0TSNotifRecorequestNeededObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSNotifRecorequestNeededObj->maxPaginationId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSNotifRecorequestNeededObj->maxPaginationId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSNotifRecorequestNeededObj->recoNotificationType != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
     if (status < 0) {
@@ -15451,6 +15908,16 @@ static int xmlTextWriterWriteNs0TSNotifRecorequestNeededObjType(xmlTextWriterPtr
  */
 static void freeNs0TSNotifRecorequestNeededObjType(struct enunciate_ns0_TSNotifRecorequestNeededObj *_tSNotifRecorequestNeededObj) {
   int i;
+  if (_tSNotifRecorequestNeededObj->maxPaginationId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor maxPaginationId of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    freeXsStringType(_tSNotifRecorequestNeededObj->maxPaginationId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor maxPaginationId of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
+#endif
+    free(_tSNotifRecorequestNeededObj->maxPaginationId);
+  }
   if (_tSNotifRecorequestNeededObj->recoNotificationType != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSNotifRecorequestNeededObj...\n");
@@ -16661,6 +17128,27 @@ static struct enunciate_ns0_TSRecoNotificationBaseObj *xmlTextReaderReadNs0TSRec
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRecoNotificationBaseObjType(_tSRecoNotificationBaseObj);
+          free(_tSRecoNotificationBaseObj);
+          return NULL;
+        }
+
+        _tSRecoNotificationBaseObj->maxPaginationId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -16750,6 +17238,36 @@ static struct enunciate_ns0_TSRecoNotificationBaseObj *xmlTextReaderReadNs0TSRec
 static int xmlTextWriterWriteNs0TSRecoNotificationBaseObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRecoNotificationBaseObj *_tSRecoNotificationBaseObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSRecoNotificationBaseObj->maxPaginationId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRecoNotificationBaseObj->maxPaginationId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSRecoNotificationBaseObj->recoNotificationType != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
     if (status < 0) {
@@ -16851,6 +17369,16 @@ static int xmlTextWriterWriteNs0TSRecoNotificationBaseObjType(xmlTextWriterPtr w
  */
 static void freeNs0TSRecoNotificationBaseObjType(struct enunciate_ns0_TSRecoNotificationBaseObj *_tSRecoNotificationBaseObj) {
   int i;
+  if (_tSRecoNotificationBaseObj->maxPaginationId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor maxPaginationId of type enunciate_ns0_TSRecoNotificationBaseObj...\n");
+#endif
+    freeXsStringType(_tSRecoNotificationBaseObj->maxPaginationId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor maxPaginationId of type enunciate_ns0_TSRecoNotificationBaseObj...\n");
+#endif
+    free(_tSRecoNotificationBaseObj->maxPaginationId);
+  }
   if (_tSRecoNotificationBaseObj->recoNotificationType != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor recoNotificationType of type enunciate_ns0_TSRecoNotificationBaseObj...\n");

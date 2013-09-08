@@ -435,9 +435,20 @@
 @interface ENUNCIATENS0TSListFacebookUserDataObj : NSObject <EnunciateXML>
 {
   @private
+    NSString *_device_token;
     ENUNCIATENS0TSFacebookUserDataObj *_user_profile_current;
     NSArray *_list_user_profile_fb;
 }
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) device_token;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setDevice_token: (NSString *) newDevice_token;
 
 /**
  * (no documentation provided)
@@ -735,10 +746,21 @@
 @interface ENUNCIATENS0TSRecoNotificationBaseObj : NSObject
 {
   @private
+    NSString *_maxPaginationId;
     NSString *_recoNotificationType;
     NSDate *_datetimeBase;
     NSString *_idBase;
 }
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) maxPaginationId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setMaxPaginationId: (NSString *) newMaxPaginationId;
 
 /**
  * (no documentation provided)

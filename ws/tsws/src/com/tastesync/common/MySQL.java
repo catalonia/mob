@@ -81,6 +81,45 @@ public class MySQL {
 		
 		return city;
 	}
+	public TSCityObj addDeviceToken(String userID, String devicetoken) {
+		TSCityObj city = null;
+		TSDataSource tsDataSource = TSDataSource.getInstance();
+	    Connection connection = null;
+		PreparedStatement statement = null;
+	    ResultSet resultset = null;
+	    boolean check = true;
+	    String dateNowAppend = CommonFunctionsUtil.getCurrentDatetimeAppendField();
+		try {
+			connection = tsDataSource.getConnection();
+        	tsDataSource.begin();
+        	System.out.println("UserQueries.USER_DEVICE_SELECT_SQL" + UserQueries.USER_DEVICE_SELECT_SQL);
+        	statement = connection.prepareStatement(UserQueries.USER_DEVICE_SELECT_SQL);
+        	statement.setString(1, userID);
+        	resultset = statement.executeQuery();
+        	if(resultset.next())
+        	{
+        		check = false;
+        	}
+        	if(check)
+        	{
+        		connection = tsDataSource.getConnection();
+            	System.out.println("UserQueries.USER_DEVICE_INSERT_SQL" + UserQueries.USER_DEVICE_INSERT_SQL);
+            	statement = connection.prepareStatement(UserQueries.USER_DEVICE_INSERT_SQL);
+            	statement.setString(1, userID);
+            	statement.setString(2, devicetoken);
+            	statement.setString(3, dateNowAppend);
+            	statement.setString(4, dateNowAppend);
+            	statement.execute();
+        	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			tsDataSource.close();
+			tsDataSource.closeConnection(connection, statement, resultset);
+		}
+		
+		return city;
+	}
 	public TSCityObj getCityInforByCityID(String cityID) {
 		TSCityObj city = null;
 		TSDataSource tsDataSource = TSDataSource.getInstance();

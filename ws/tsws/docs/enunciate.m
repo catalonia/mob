@@ -2428,6 +2428,24 @@
 /**
  * (no documentation provided)
  */
+- (NSString *) device_token
+{
+  return _device_token;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setDevice_token: (NSString *) newDevice_token
+{
+  [newDevice_token retain];
+  [_device_token release];
+  _device_token = newDevice_token;
+}
+
+/**
+ * (no documentation provided)
+ */
 - (ENUNCIATENS0TSFacebookUserDataObj *) user_profile_current
 {
   return _user_profile_current;
@@ -2463,6 +2481,7 @@
 
 - (void) dealloc
 {
+  [self setDevice_token: nil];
   [self setUser_profile_current: nil];
   [self setList_user_profile_fb: nil];
   [super dealloc];
@@ -2716,6 +2735,22 @@
     return YES;
   }
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "devicetoken", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}devicetoken of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}devicetoken of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setDevice_token: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
     && xmlStrcmp(BAD_CAST "user_current_profile", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -2797,6 +2832,27 @@
 
   [super writeJAXBChildElements: writer];
 
+  if ([self device_token]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "devicetoken", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}devicetoken."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}devicetoken...");
+#endif
+    [[self device_token] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}devicetoken...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}devicetoken."];
+    }
+  }
   if ([self user_profile_current]) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "user_current_profile", NULL);
     if (status < 0) {
@@ -5668,6 +5724,24 @@
 /**
  * (no documentation provided)
  */
+- (NSString *) maxPaginationId
+{
+  return _maxPaginationId;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setMaxPaginationId: (NSString *) newMaxPaginationId
+{
+  [newMaxPaginationId retain];
+  [_maxPaginationId release];
+  _maxPaginationId = newMaxPaginationId;
+}
+
+/**
+ * (no documentation provided)
+ */
 - (NSString *) recoNotificationType
 {
   return _recoNotificationType;
@@ -5721,6 +5795,7 @@
 
 - (void) dealloc
 {
+  [self setMaxPaginationId: nil];
   [self setRecoNotificationType: nil];
   [self setDatetimeBase: nil];
   [self setIdBase: nil];
@@ -5816,6 +5891,22 @@
     return YES;
   }
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setMaxPaginationId: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
     && xmlStrcmp(BAD_CAST "recoNotificationType", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -5907,6 +5998,27 @@
 
   [super writeJAXBChildElements: writer];
 
+  if ([self maxPaginationId]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}maxPaginationId."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}maxPaginationId...");
+#endif
+    [[self maxPaginationId] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}maxPaginationId...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}maxPaginationId."];
+    }
+  }
   if ([self recoNotificationType]) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recoNotificationType", NULL);
     if (status < 0) {
