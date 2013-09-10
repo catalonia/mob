@@ -1768,7 +1768,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	    	statement.setString(5, dayTime);
 	    	statement.execute();
 	    	
-	    	PushService push = new PushService();
+	    	//PushService push = new PushService();
 	    	connection = tsDataSource.getConnection();
 	    	statement = connection.prepareStatement(UserQueries.USER_DEVICE_SELECT_SQL);
 	    	statement.setString(1, recipient_ID);
@@ -1776,8 +1776,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	    	System.out.println("here");
 	    	while(resultset.next())
         	{
-	    		push.pushMessage(CommonFunctionsUtil.getModifiedValueString(
-	                    resultset.getString("user_device.device_token")), content);
+	    		//push.pushMessage(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_device.device_token")), content);
 	    		System.out.println(CommonFunctionsUtil.getModifiedValueString(
 	                    resultset.getString("user_device.device_token")));
         	}

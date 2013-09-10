@@ -42,36 +42,36 @@
 - (void) initForView:(NotificationObj *)obj
 {
     ivAvatar.image = obj.user.avatar;
-    NSString *firstCh = [obj.user.lastname substringToIndex:1];
+    //NSString *firstCh = [obj.user.lastname substringToIndex:1];
     if (obj.type == TYPE_1) {
-        lbName.text = [NSString stringWithFormat:@"%@ %@. %@",obj.user.firstname,firstCh,NO_TITLE_1];
+        lbName.text = [NSString stringWithFormat:@"%@. %@",obj.user.name,NO_TITLE_1];
     }
     else if(obj.type == TYPE_2)
     {
         NSString *res_name = @"Nanking";
-        lbName.text = [NSString stringWithFormat:@"%@ %@. %@",obj.user.firstname,firstCh,NO_TITLE_2(res_name)];
+        lbName.text = [NSString stringWithFormat:@"%@. %@",obj.user.name,NO_TITLE_2(res_name)];
     }
     else if(obj.type == TYPE_3)
     {
-        lbName.text = [NSString stringWithFormat:@"%@ %@. %@",obj.user.firstname,firstCh,NO_TITLE_3];
+        lbName.text = [NSString stringWithFormat:@"%@. %@",obj.user.name,NO_TITLE_3];
     }
     else if(obj.type == TYPE_4)
     {
-        lbName.text = [NSString stringWithFormat:@"%@ %@. %@",obj.user.firstname,firstCh,NO_TITLE_4];
+        lbName.text = [NSString stringWithFormat:@"%@. %@",obj.user.name,NO_TITLE_4];
     }
     else if(obj.type == TYPE_5)
     {
-        lbName.text = [NSString stringWithFormat:@"%@ %@. %@",obj.user.firstname,firstCh,NO_TITLE_5];
+        lbName.text = [NSString stringWithFormat:@"%@. %@",obj.user.name,NO_TITLE_5];
     }
     else if(obj.type == TYPE_6)
     {
-        lbName.text = [NSString stringWithFormat:@"%@ %@. %@",obj.user.firstname,firstCh,NO_TITLE_6];
+        lbName.text = [NSString stringWithFormat:@"%@. %@",obj.user.name,NO_TITLE_6];
     }
     else if(obj.type == TYPE_7)
     {
         NSString *res_name = @"Nanking";
 
-        lbName.text = [NSString stringWithFormat:@"%@ %@. %@",obj.user.firstname,firstCh,NO_TITLE_7(res_name)];
+        lbName.text = [NSString stringWithFormat:@"%@. %@",obj.user.name,NO_TITLE_7(res_name)];
 
     }
 

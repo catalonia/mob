@@ -28,7 +28,6 @@ askSubmited=_askSubmited;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ( [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] == nil ) {
-        
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
     }
     
@@ -36,7 +35,6 @@ askSubmited=_askSubmited;
     
 //    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound)];
    
-    [self getNotifications];
     [self initData];
     [self showLogin];
 //    [self showAskTab];
@@ -107,12 +105,12 @@ askSubmited=_askSubmited;
 
 - (void) getNotifications
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
        
         debug(@"AppDelegate -> getNotifications in background thread");
         self.globalNotification = [[GlobalNotification alloc] initWithALlType];
-        
-    });
+        [self.globalNotification requestData];
+   // });
 }
 
 - (void) showLogin
@@ -281,6 +279,11 @@ askSubmited=_askSubmited;
     [[NSUserDefaults standardUserDefaults] setObject:tokenString forKey:@"device_token"];
     NSString *tokenStr = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSLog(@"device_token : %@",tokenStr);
+    if (tokenStr != nil) {
+        [UserDefault userDefault].deviceToken = tokenStr;
+        [UserDefault update];
+    }
+
     
 }
 

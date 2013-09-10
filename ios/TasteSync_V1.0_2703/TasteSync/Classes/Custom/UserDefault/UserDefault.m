@@ -58,6 +58,7 @@ loginStatus, userLogID, IPAdress;
         self.userLogID = [aDecoder decodeObjectForKey:UserLogID];
         self.userID = [aDecoder decodeObjectForKey:UserID];
         self.IPAdress = [aDecoder decodeObjectForKey:IPADRESS];
+        self.deviceToken = [aDecoder decodeObjectForKey:DEVICE_TOKEN];
     }
     return self;
     
@@ -86,6 +87,7 @@ loginStatus, userLogID, IPAdress;
     [aCoder encodeObject:self.userID forKey:UserID];
 
     [aCoder encodeObject:self.IPAdress forKey:IPADRESS];
+    [aCoder encodeObject:self.deviceToken forKey:DEVICE_TOKEN];
 //    [aCoder encodeInteger:self.zapiAccountId forKey:@"zapiAccountId"];
 //    [aCoder encodeObject:self.dictCart forKey:@"dictCart"];
 }

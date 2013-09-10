@@ -107,13 +107,13 @@ arrDataFilter=_arrDataFilter;
     
     if (_notificationObj) {
         ivAvatar.image = _notificationObj.user.avatar;        
-        NSString *firstCh = [_notificationObj.user.lastname substringToIndex:1];
+        //NSString *firstCh = [_notificationObj.user.lastname substringToIndex:1];
         if (_notificationObj.type == TYPE_1) {
-            lbName.text = [NSString stringWithFormat:@"%@ %@. %@",_notificationObj.user.firstname,firstCh,NO_TITLE_1];
+            lbName.text = [NSString stringWithFormat:@"%@. %@",_notificationObj.user.name,NO_TITLE_1];
         }
         else
         {
-            lbName.text = [NSString stringWithFormat:@"%@ %@. needs a",_notificationObj.user.firstname,firstCh];  
+            lbName.text = [NSString stringWithFormat:@"%@. needs a",_notificationObj.user.name];
         }
         if (_notificationObj.user.status == UserStatusFollower) {
             btFollow.hidden = NO;
@@ -135,7 +135,7 @@ arrDataFilter=_arrDataFilter;
         }
         
         
-        lbReplyto.text = [NSString stringWithFormat:@"Reply to %@ %@",_notificationObj.user.firstname,_notificationObj.user.lastname];
+        lbReplyto.text = [NSString stringWithFormat:@"Reply to %@",_notificationObj.user.name];
     }
 
     

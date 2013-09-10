@@ -159,6 +159,7 @@
         
         CRequest* request = [[CRequest alloc]initWithURL:@"sendMessageToUser" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
         request.delegate = self;
+         [request setFormPostValue:[UserDefault userDefault].deviceToken forKey:@"devicetoken"];
         [request setFormPostValue:[UserDefault userDefault].userID forKey:@"senderID"];
         [request setFormPostValue:self.userID forKey:@"recipientID"];
         [request setFormPostValue:tvSendMsg.text forKey:@"content"];

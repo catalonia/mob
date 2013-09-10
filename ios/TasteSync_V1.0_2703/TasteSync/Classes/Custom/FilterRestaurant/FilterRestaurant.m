@@ -8,6 +8,7 @@
 
 #import "FilterRestaurant.h"
 #import "CommonHelpers.h"
+#import "TSGlobalObj.h"
 
 @interface FilterRestaurant()
 {
@@ -106,12 +107,20 @@
     
     
     for (int i= 0; i< [[[CommonHelpers appDelegate] arrCuisine] count]; i++) {
-        [segCtrCuisine setTitle:[[[CommonHelpers appDelegate ] arrCuisine ] objectAtIndex:i] forSegmentAtIndex:i];
+        TSGlobalObj* globalObj = [[[CommonHelpers appDelegate ] arrCuisine ] objectAtIndex:i];
+        if (i < 5)
+            [segCtrCuisine setTitle:globalObj.name forSegmentAtIndex:i];
+        else
+            [segCtrCuisine insertSegmentWithTitle:globalObj.name atIndex:i animated:NO];
         
         
     }
     for (int i= 0; i< [[[CommonHelpers appDelegate] arrPrice] count]; i++) {
-        [segCtrPrice setTitle:[[[CommonHelpers appDelegate ] arrPrice ] objectAtIndex:i] forSegmentAtIndex:i];
+        TSGlobalObj* globalObj = [[[CommonHelpers appDelegate ] arrPrice ] objectAtIndex:i];
+        if (i < 5)
+            [segCtrPrice setTitle:globalObj.name forSegmentAtIndex:i];
+        else
+            [segCtrPrice insertSegmentWithTitle:globalObj.name atIndex:i animated:NO];
         
         
     }

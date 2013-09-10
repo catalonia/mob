@@ -105,7 +105,7 @@ arrDataFilter=_arrDataFilter;;
         ivAvatar.image = _notificationObj.user.avatar;
         NSString *firstCh = [_notificationObj.user.lastname substringToIndex:1];
         if (_notificationObj.type== TYPE_3) {
-             lbName.text = [NSString stringWithFormat:@"%@ %@. %@",_notificationObj.user.firstname,firstCh,NO_TITLE_3];
+             lbName.text = [NSString stringWithFormat:@"%@. %@",_notificationObj.user.name,NO_TITLE_3];
         }
         else
         {
@@ -114,12 +114,12 @@ arrDataFilter=_arrDataFilter;;
        
         tvLongMsg.text = _notificationObj.description;
         lbNotifications.text = [NSString stringWithFormat:@"NOTIFICATION %d of %d",_indexOfNotification,_totalNotification];
-         lbReplyto.text = [NSString stringWithFormat:@"Reply to %@ %@",_notificationObj.user.firstname,_notificationObj.user.lastname];
+         lbReplyto.text = [NSString stringWithFormat:@"Reply to %@",_notificationObj.user.name];
     }
     
     if (!_arrDataRestaurant) {
         self.arrDataRestaurant = [[NSMutableArray alloc] init ];
-        for (int i=0; i<10; i++) {
+        for (int i=0; i < 10; i++) {
             RestaurantObj *obj = [[RestaurantObj alloc] init];
             obj.name= [NSString stringWithFormat:@"Restaurant %d",i];
 

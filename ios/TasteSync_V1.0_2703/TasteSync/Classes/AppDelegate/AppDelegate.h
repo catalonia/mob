@@ -42,4 +42,5 @@
 
 - (void) showLoginDialog;
 
+- (void) getNotifications;
 @end

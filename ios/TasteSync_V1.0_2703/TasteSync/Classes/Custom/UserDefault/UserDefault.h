@@ -28,6 +28,7 @@
 #define UserLogID @"User_LOG_ID"
 #define UserID @"User_ID"
 #define IPADRESS @"IPAdress"
+#define DEVICE_TOKEN @"DeviceToken"
 
 @interface UserDefault : NSObject<NSCoding>
 {
@@ -51,6 +52,7 @@ typedef enum _LoginStatus
 @property (nonatomic, strong) UserObj *user;
 @property (nonatomic, strong) NSString *userLogID, *userID;
 @property (nonatomic, strong) NSString *IPAdress;
+@property (nonatomic, strong) NSString *deviceToken;
 
 + (UserDefault *) userDefault;
 - (void) update;

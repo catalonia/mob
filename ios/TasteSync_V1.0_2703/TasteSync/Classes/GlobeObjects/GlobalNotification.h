@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "NotificationObj.h"
+#import "CRequest.h"
 
-@interface GlobalNotification : NSObject
+@interface GlobalNotification : NSObject<RequestDelegate>
 
 @property (nonatomic, assign) int total,unread,read, index;
 @property (nonatomic, strong) NSMutableArray *arrData,*arrDataUnread,*arrDataRead;
@@ -24,4 +25,5 @@
 
 - (void) addObject:(NotificationObj *) obj;
 
+-(void)requestData;
 @end

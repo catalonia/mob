@@ -308,6 +308,13 @@
             
             NSMutableDictionary *nameElements = [NSMutableDictionary dictionary];
             
+            if ([UserDefault userDefault].deviceToken != nil) {
+                [nameElements setObject:[UserDefault userDefault].deviceToken forKey:@"device_token"];
+            }
+            else
+            {
+                [nameElements setObject:@"" forKey:@"device_token"];
+            }
             [nameElements setObject:[CommonHelpers getJSONUserObj:userDefault.user] forKey:@"user_profile_current"];
             
             //NSMutableArray* array= [[CommonHelpers appDelegate] arrDataFBFriends];
@@ -345,6 +352,8 @@
     [request setFormPostValue:@"" forKey:@""];
     [request startFormRequest];
     
+    AppDelegate* deleate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [deleate getNotifications];
 }
 
 - (void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData

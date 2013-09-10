@@ -25,16 +25,27 @@
 #define NO_TITLE_6     @"Did you like any of these recommendations?"
 #define NO_TITLE_7(res_name)     [NSString stringWithFormat:@"There is a deal available on %@",res_name]
 
+typedef enum
+{
+     NotificationRecorequestNeeded = 1,
+     NotificationRecommendationsForYou = 2,
+     NotificationFollowUpQuestion = 3,
+     NotificationMessageForYou = 4,
+     NotificationSomeoneLiked = 5,
+     NotificationDidYouLike = 6,
+     NotificationDeal = 7
+}NotificationType;
+
 @interface NotificationObj : NSObject
 
 @property (nonatomic, assign) BOOL read;
 
-@property (nonatomic, assign) int type ; 
+@property (nonatomic, assign) NotificationType type ;
 
 @property (nonatomic, strong) UserObj *user;
 
 @property (nonatomic, strong) NSString *description;
 
-@property (nonatomic, assign) int restaurantId;
+@property (nonatomic, assign) NSString* linkId;
 
 @end

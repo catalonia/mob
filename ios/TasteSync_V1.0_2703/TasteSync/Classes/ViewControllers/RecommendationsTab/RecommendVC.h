@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CRequest.h"
 
-@interface RecommendVC : UIViewController
+@interface RecommendVC : UIViewController<RequestDelegate>
 {
     UIView *refreshHeaderView;
     UILabel *refreshLabel;

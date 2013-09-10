@@ -9,5 +9,10 @@
 #import "NotificationObj.h"
 
 @implementation NotificationObj
-
+@synthesize
+read = _read,
+type = _type,
+user = _user,
+description = _description,
+linkId = _linkId;
 @end
