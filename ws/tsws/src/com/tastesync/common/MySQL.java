@@ -158,7 +158,7 @@ public class MySQL {
         try{
         	connection = tsDataSource.getConnection();
         	tsDataSource.begin();
-        	System.out.println("UserQueries.USER_CHECK_EMAIL_SELECT_SQL=" + UserQueries.USER_CHECK_EMAIL_STATUS_SELECT_SQL);
+        	//System.out.println("UserQueries.USER_CHECK_EMAIL_SELECT_SQL=" + UserQueries.USER_CHECK_EMAIL_STATUS_SELECT_SQL);
         	statement = connection.prepareStatement(UserQueries.USER_CHECK_EMAIL_STATUS_SELECT_SQL);
         	statement.setString(1, email);
         	statement.setString(2, String.valueOf("e"));

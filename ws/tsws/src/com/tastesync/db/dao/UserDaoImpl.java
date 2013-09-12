@@ -456,19 +456,35 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						statement.execute();
 						
 						if(listFBObj != null && !listFBObj.isEmpty()) {
-	
-							for(int i = 0; i < listFBObj.size(); i++)
+							int countFB = 0;
+							while(countFB < listFBObj.size())
 							{
-								String obj = listFBObj.get(i);
-								
-								System.out.println("Insert:" + i);
-								statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_FB_INSERT_SQL);
-								statement.setString(1, userID); 
-								statement.setString(2, obj);
-								statement.setString(3, dateNow);
-								statement.setString(4, "0");
+								List<String> list = new ArrayList<String>();
+								//INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN) VALUES (?, ?, ?, ?)";
+								String insertStr = "INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN) VALUES ";
+								for(int i = 0; countFB < listFBObj.size() && i < 500; i++, countFB++)
+								{
+									String obj = listFBObj.get(countFB);
+									String str = "";
+									if(i == 0)
+										str = str + "(" + "?" + "," + "?" + "," + "?" + "," + "?" + ")";
+									else
+										str = str + ", (" + "?" + "," + "?" + "," + "?" + "," + "?" + ")";
+									list.add(userID);
+									list.add(obj);
+									list.add(dateNow);
+									list.add("0");
+									insertStr = insertStr + str;
+								}
+								System.out.println("Insert1:" + insertStr);
+								connection = tsDataSource.getConnection();
+								System.out.println("Insert2:" + countFB);
+								statement = connection.prepareStatement(insertStr);
+								for(int i = 1; i <= list.size(); i++)
+								{
+									statement.setString(i, list.get(i-1));
+								}
 								statement.execute();
-							
 							}
 						}
 						//tsDataSource.commit();
