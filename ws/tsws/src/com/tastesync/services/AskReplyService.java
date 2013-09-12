@@ -9,7 +9,6 @@ import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSKeyValueObj;
 import com.tastesync.model.objects.TSRecoNotificationBaseObj;
 import com.tastesync.model.objects.TSRestaurantBasicObj;
-import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
@@ -603,7 +602,8 @@ public class AskReplyService extends BaseService {
         @FormParam("userid")
     String userId, @FormParam("questiondid")
     String questionId, @FormParam("replytext")
-    String replyText) {
+    String replyText, @FormParam("restaurantidlist")
+    String restaurantIdList) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         boolean responseDone = false;
@@ -613,9 +613,12 @@ public class AskReplyService extends BaseService {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
             questionId = CommonFunctionsUtil.converStringAsNullIfNeeded(questionId);
             replyText = CommonFunctionsUtil.converStringAsNullIfNeeded(replyText);
+            restaurantIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantIdList);
 
             askReplyBO.submitRecommendationFollowupAnswer(userId, questionId,
-                replyText);
+                replyText,
+                CommonFunctionsUtil.convertStringListAsArrayList(
+                    restaurantIdList));
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;

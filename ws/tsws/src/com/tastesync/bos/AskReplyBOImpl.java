@@ -7,7 +7,6 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSRecoNotificationBaseObj;
 import com.tastesync.model.objects.TSRestaurantBasicObj;
-import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
@@ -142,8 +141,9 @@ public class AskReplyBOImpl implements AskReplyBO {
 
     @Override
     public void submitRecommendationFollowupAnswer(String userId,
-        String questionId, String replyText) throws TasteSyncException {
+        String questionId, String replyText, String[] restaurantIdList)
+        throws TasteSyncException {
         askReplyDAO.submitRecommendationFollowupAnswer(userId, questionId,
-            replyText);
+            replyText, restaurantIdList);
     }
 }

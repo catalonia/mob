@@ -2804,7 +2804,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
     @Override
     public void submitRecommendationFollowupAnswer(String userId,
-        String questionId, String replyText) throws TasteSyncException {
+        String questionId, String replyText, String[] restaurantIdList)
+        throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
@@ -2860,6 +2861,15 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.executeUpdate();
             statement.close();
+
+            for (String restaurantId : restaurantIdList) {
+                statement = connection.prepareStatement(AskReplyQueries.MESSAGE_RESTAURANT_INSERT_SQL);
+                statement.setString(1, messageId);
+                statement.setString(2, restaurantId);
+                statement.executeUpdate();
+                statement.close();
+            }
+
             tsDataSource.commit();
         } catch (SQLException e) {
             e.printStackTrace();

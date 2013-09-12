@@ -4,7 +4,6 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSRecoNotificationBaseObj;
 import com.tastesync.model.objects.TSRestaurantBasicObj;
-import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
 import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
@@ -72,10 +71,10 @@ public interface AskReplyBO {
         String questionId) throws TasteSyncException;
 
     void submitRecommendationFollowupAnswer(String userId, String questionId,
-        String replyText) throws TasteSyncException;
+        String replyText, String[] restaurantIdList) throws TasteSyncException;
 
-    List<TSRestaurantBasicObj> showRecommendationDidYouLike(String recorequestId)
-        throws TasteSyncException;
+    List<TSRestaurantBasicObj> showRecommendationDidYouLike(
+        String recorequestId) throws TasteSyncException;
 
     void submitRecommendationDidYouLikeLikes(String userId,
         String restaurantId, String likeFlag) throws TasteSyncException;
