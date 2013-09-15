@@ -246,7 +246,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         try {
             ClassLoader loader = this.getClass().getClassLoader();
             //loader.getResourceAsStream("Resources/SomeConfig.xml");
-            ifile = loader.getResourceAsStream("/Resources/config.properties");
+            ifile = loader.getResourceAsStream("Resources/config.properties");
 
             //load a properties file
             prop.load(ifile);
@@ -1737,8 +1737,219 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResultsBasedOnRecoId(
         String userId, String recoRequestId, String paginationId)
         throws TasteSyncException {
+        //get different parameters based on recorequest id
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_LOCATION_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            String userIdFrmDb = null;
+            String recoRequestLocationCityId = null;
+            String recoRequestLocationNeighborhoodId = null;
+
+            //only one result
+            if (resultset.next()) {
+                userIdFrmDb = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_user.initiator_user_id"));
+                recoRequestLocationCityId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_location.city_id"));
+
+                recoRequestLocationNeighborhoodId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_location.neighbourhood_id"));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER1_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            ArrayList<String> cuisineTier1IdList = new ArrayList<String>();
+
+            while (resultset.next()) {
+                cuisineTier1IdList.add(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_cuisine_tier1.cuisine_tier1_id")));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER2_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            ArrayList<String> cuisineTier2IdList = new ArrayList<String>();
+
+            while (resultset.next()) {
+                cuisineTier2IdList.add(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_cuisine_tier2.cuisine_tier2_id")));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_PRICE_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            ArrayList<String> priceIdList = new ArrayList<String>();
+
+            while (resultset.next()) {
+                priceIdList.add(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("recorequest_price.price_id")));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_THEME_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            ArrayList<String> themeIdList = new ArrayList<String>();
+
+            while (resultset.next()) {
+                themeIdList.add(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("recorequest_theme.theme_id")));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_WHOAREYOUWITH_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            ArrayList<String> whoareyouwithIdList = new ArrayList<String>();
+
+            while (resultset.next()) {
+                whoareyouwithIdList.add(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_whoareyouwith.whoareyouwith_id")));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TYPEOFREST_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            ArrayList<String> typeOfRestaurantIdList = new ArrayList<String>();
+
+            while (resultset.next()) {
+                typeOfRestaurantIdList.add(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "recorequest_typeofrest.typeofrest_id")));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_OCCASION_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            ArrayList<String> occasionIdList = new ArrayList<String>();
+
+            while (resultset.next()) {
+                occasionIdList.add(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("recorequest_occasion.occasion_id")));
+            }
+
+            statement.close();
+
+            String[] cuisineTier1IdArray = cuisineTier1IdList.isEmpty() ? null
+                                                                        : cuisineTier1IdList.toArray(new String[cuisineTier1IdList.size()]);
+
+            String[] priceIdArray = priceIdList.isEmpty() ? null
+                                                          : priceIdList.toArray(new String[priceIdList.size()]);
+
+            String[] cuisineTier2IdArray = cuisineTier2IdList.isEmpty() ? null
+                                                                        : cuisineTier2IdList.toArray(new String[cuisineTier2IdList.size()]);
+
+            String[] themeIdArray = themeIdList.isEmpty() ? null
+                                                          : themeIdList.toArray(new String[themeIdList.size()]);
+
+            String[] whoareyouwithIdArray = whoareyouwithIdList.isEmpty()
+                ? null
+                : whoareyouwithIdList.toArray(new String[whoareyouwithIdList.size()]);
+
+            String[] typeOfRestaurantIdArray = typeOfRestaurantIdList.isEmpty()
+                ? null
+                : typeOfRestaurantIdList.toArray(new String[typeOfRestaurantIdList.size()]);
+
+            String[] occasionIdArray = occasionIdList.isEmpty() ? null
+                                                                : occasionIdList.toArray(new String[occasionIdList.size()]);
+
+            List<String> restaurantIdList = identifyRestaurantsSearchResults(userIdFrmDb,
+                    recoRequestLocationNeighborhoodId,
+                    recoRequestLocationCityId, cuisineTier1IdArray,
+                    priceIdArray, paginationId, cuisineTier2IdArray,
+                    themeIdArray, whoareyouwithIdArray,
+                    typeOfRestaurantIdArray, occasionIdArray);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(
+                "Error while getRecorequestTsAssignedFlaggedUserList= " +
+                e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+
         // TODO Auto-generated method stub
         return null;
+    }
+
+    private List<String> identifyRestaurantsSearchResults(String userIdFrmDb,
+        String recoRequestLocationNeighborhoodId,
+        String recoRequestLocationCityId, String[] cuisineTier1IdArray,
+        String[] priceIdArray, String paginationId,
+        String[] cuisineTier2IdArray, String[] themeIdArray,
+        String[] whoareyouwithIdArray, String[] typeOfRestaurantIdArray,
+        String[] occasionIdArray) throws TasteSyncException {
+        return identifyRestaurantsSearchResults(userIdFrmDb, null,
+            recoRequestLocationNeighborhoodId, recoRequestLocationCityId, null,
+            cuisineTier1IdArray, priceIdArray, null, null, null, null, null,
+            paginationId, cuisineTier2IdArray, themeIdArray,
+            whoareyouwithIdArray, typeOfRestaurantIdArray, occasionIdArray);
+    }
+
+    private List<String> identifyRestaurantsSearchResults(String userId,
+        String restaurantId, String neighborhoodId, String cityId,
+        String stateName, String[] cuisineIdtier1List, String[] priceIdList,
+        String rating, String savedFlag, String favFlag, String dealFlag,
+        String chainFlag, String paginationId, String[] cuisineTier2IdArray,
+        String[] themeIdArray, String[] whoareyouwithIdArray,
+        String[] typeOfRestaurantIdArray, String[] occasionIdArray)
+        throws TasteSyncException {
+        List<String> restaurantIdList = new ArrayList<String>();
+
+        if (restaurantId != null) {
+            restaurantIdList.add(restaurantId);
+
+            return restaurantIdList;
+        }
+
+        // get the corresponding results
+
+        //TODO call to algo!!
+        return null;
+    }
+
+    private List<String> identifyRestaurantsSearchResults(String userId,
+        String restaurantId, String neighborhoodId, String cityId,
+        String stateName, String[] cuisineTier1IdList, String[] priceIdList,
+        String rating, String savedFlag, String favFlag, String dealFlag,
+        String chainFlag, String paginationId) throws TasteSyncException {
+        return identifyRestaurantsSearchResults(userId, restaurantId,
+            neighborhoodId, cityId, stateName, cuisineTier1IdList, priceIdList,
+            rating, savedFlag, favFlag, dealFlag, chainFlag, paginationId,
+            null, null, null, null, null);
     }
 
     @Override
@@ -1748,9 +1959,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         String[] priceIdList, String rating, String savedFlag, String favFlag,
         String dealFlag, String chainFlag, String paginationId)
         throws TasteSyncException {
-        if (restaurantId != null) {
-            // get the corresponding results
-        }
+        List<String> restaurantIdList = identifyRestaurantsSearchResults(userId,
+                restaurantId, neighborhoodId, cityId, stateName,
+                cuisineTier1IdList, priceIdList, rating, savedFlag, favFlag,
+                dealFlag, chainFlag, paginationId);
 
         // TODO Auto-generated method stub
         return null;
