@@ -24,8 +24,8 @@ import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendationsObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
-import com.tastesync.model.objects.derived.TSRestaurantCusineTier2Obj;
 import com.tastesync.model.objects.derived.TSRestaurantsForYouObj;
+import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 import com.tastesync.model.vo.NotifRecoReplyVO;
 import com.tastesync.model.vo.RecommendationsForYouVO;
@@ -1734,7 +1734,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResultsBasedOnRecoId(
+    public List<TSRestaurantsTileSearchObj> showListOfRestaurantsSearchResultsBasedOnRecoId(
         String userId, String recoRequestId, String paginationId)
         throws TasteSyncException {
         //get different parameters based on recorequest id
@@ -1891,6 +1891,17 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     priceIdArray, paginationId, cuisineTier2IdArray,
                     themeIdArray, whoareyouwithIdArray,
                     typeOfRestaurantIdArray, occasionIdArray);
+            TSRestaurantsTileSearchObj tsRestaurantsTileSearchObj = null;
+
+            List<TSRestaurantsTileSearchObj> tsRestaurantsTileSearchObjList = new ArrayList<TSRestaurantsTileSearchObj>();
+
+            for (String restaurantId : restaurantIdList) {
+                tsRestaurantsTileSearchObj = new TSRestaurantsTileSearchObj();
+                tsRestaurantsTileSearchObj = getRestaurantTileSearchReslt(restaurantId);
+                tsRestaurantsTileSearchObjList.add(tsRestaurantsTileSearchObj);
+            }
+
+            return tsRestaurantsTileSearchObjList;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(
@@ -1900,9 +1911,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, resultset);
         }
-
-        // TODO Auto-generated method stub
-        return null;
     }
 
     private List<String> identifyRestaurantsSearchResults(String userIdFrmDb,
@@ -1953,7 +1961,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResults(
+    public List<TSRestaurantsTileSearchObj> showListOfRestaurantsSearchResults(
         String userId, String restaurantId, String neighborhoodId,
         String cityId, String stateName, String[] cuisineTier1IdList,
         String[] priceIdList, String rating, String savedFlag, String favFlag,
@@ -1964,8 +1972,101 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 cuisineTier1IdList, priceIdList, rating, savedFlag, favFlag,
                 dealFlag, chainFlag, paginationId);
 
-        // TODO Auto-generated method stub
-        return null;
+        TSRestaurantsTileSearchObj tsRestaurantsTileSearchObj = null;
+
+        List<TSRestaurantsTileSearchObj> tsRestaurantsTileSearchObjList = new ArrayList<TSRestaurantsTileSearchObj>();
+
+        for (String restaurantIdElement : restaurantIdList) {
+            tsRestaurantsTileSearchObj = new TSRestaurantsTileSearchObj();
+            tsRestaurantsTileSearchObj = getRestaurantTileSearchReslt(restaurantIdElement);
+            tsRestaurantsTileSearchObjList.add(tsRestaurantsTileSearchObj);
+        }
+
+        return tsRestaurantsTileSearchObjList;
+    }
+
+    private TSRestaurantsTileSearchObj getRestaurantTileSearchReslt(
+        String restaurantId) throws TasteSyncException {
+        //get different parameters based on recorequest id
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            String restaurantName = null;
+            String price = null;
+
+            String restaurantCity = null;
+            String restaurantLat = null;
+            String restaurantLong = null;
+            String restaurantDealFlag = null;
+            String restaurantRating = null;
+
+            while (resultset.next()) {
+                restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.restaurant_name"));
+                price = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.price_range"));
+
+                restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.restaurant_name"));
+
+                restaurantCity = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "cities.city"));
+
+                restaurantLat = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.restaurant_lat"));
+                restaurantLong = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.restaurant_lon"));
+
+                restaurantDealFlag = null;
+                restaurantRating = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.factual_rating"));
+            }
+
+            statement.close();
+
+            String cuisineTier2Name = null;
+            statement = connection.prepareStatement(AskReplyQueries.CUISINE_DESC_ONE_RESTAURANT_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                cuisineTier2Name = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "cuisine_desc"));
+            }
+
+            statement.close();
+
+            TSRestaurantsTileSearchObj tsRestaurantsTileSearchObj = new TSRestaurantsTileSearchObj();
+
+            tsRestaurantsTileSearchObj.setRestaurantId(restaurantId);
+            tsRestaurantsTileSearchObj.setRestaurantName(restaurantName);
+            tsRestaurantsTileSearchObj.setPrice(price);
+            tsRestaurantsTileSearchObj.setRestaurantName(restaurantName);
+            tsRestaurantsTileSearchObj.setRestaurantCity(restaurantCity);
+            tsRestaurantsTileSearchObj.setRestaurantLat(restaurantLat);
+            tsRestaurantsTileSearchObj.setRestaurantLong(restaurantLong);
+            tsRestaurantsTileSearchObj.setRestaurantDealFlag(restaurantDealFlag);
+            tsRestaurantsTileSearchObj.setRestaurantRating(restaurantRating);
+            tsRestaurantsTileSearchObj.setCuisineTier2Name(cuisineTier2Name);
+
+            return tsRestaurantsTileSearchObj;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            throw new TasteSyncException(
+                "Error while creating restaurant tips " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 
     private void processTSNotifRecorequestNeededObjElement(
