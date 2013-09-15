@@ -28,13 +28,15 @@ public interface AskReplyDAO {
         throws TasteSyncException;
 
     List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResultsBasedOnRecoId(
-        String recoRequestId) throws TasteSyncException;
+        String userId, String recoRequestId, String paginationId)
+        throws TasteSyncException;
 
     List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResults(
-        String restaurantId, String neighborhoodId, String cityId,
-        String stateName, String[] cuisineIdList, String[] priceIdList,
-        String rating, String savedFlag, String favFlag, String dealFlag,
-        String chainFlag) throws TasteSyncException;
+        String userId, String restaurantId, String neighborhoodId,
+        String cityId, String stateName, String[] cuisineTier1IdList,
+        String[] priceIdList, String rating, String savedFlag, String favFlag,
+        String dealFlag, String chainFlag, String paginationId)
+        throws TasteSyncException;
 
     //TODO createRecoRequestTemplateText
     TSRecoRequestNonAssignedObj submitAskForRecommendationFriends(

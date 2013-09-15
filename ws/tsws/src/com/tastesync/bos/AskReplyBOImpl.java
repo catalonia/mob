@@ -118,19 +118,23 @@ public class AskReplyBOImpl implements AskReplyBO {
     }
 
     public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResultsBasedOnRecoId(
-        String recoRequestId) throws TasteSyncException {
-        return askReplyDAO.showListOfRestaurantsSearchResultsBasedOnRecoId(recoRequestId);
+        String userId, String recoRequestId, String paginationId)
+        throws TasteSyncException {
+        return askReplyDAO.showListOfRestaurantsSearchResultsBasedOnRecoId(userId,
+            recoRequestId, paginationId);
     }
 
     @Override
     public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResults(
-        String restaurantId, String neighborhoodId, String cityId,
-        String stateName, String[] cuisineIdList, String[] priceIdList,
-        String rating, String savedFlag, String favFlag, String dealFlag,
-        String chainFlag) throws TasteSyncException {
-        return askReplyDAO.showListOfRestaurantsSearchResults(restaurantId,
-            neighborhoodId, cityId, stateName, cuisineIdList, priceIdList,
-            rating, savedFlag, favFlag, dealFlag, chainFlag);
+        String userId, String restaurantId, String neighborhoodId,
+        String cityId, String stateName, String[] cuisineTier1IdList,
+        String[] priceIdList, String rating, String savedFlag, String favFlag,
+        String dealFlag, String chainFlag, String paginationId)
+        throws TasteSyncException {
+        return askReplyDAO.showListOfRestaurantsSearchResults(userId,
+            restaurantId, neighborhoodId, cityId, stateName,
+            cuisineTier1IdList, priceIdList, rating, savedFlag, favFlag,
+            dealFlag, chainFlag, paginationId);
     }
 
     @Override

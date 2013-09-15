@@ -385,4 +385,37 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "       notifications_all.datetime " + "FROM   notifications_all " +
         "WHERE  notifications_all.user_id = ? " +
         "ORDER  BY notifications_all.datetime DESC " + "LIMIT  ?, ? ";
+    public String RECOREQUEST_USER_LOCATION_SELECT_SQL = "" +
+        "SELECT recorequest_user.initiator_user_id, " +
+        "       recorequest_location.city_id, " +
+        "       recorequest_location.neighbourhood_id " +
+        "FROM   recorequest_user, " + "       recorequest_location " +
+        "WHERE  recorequest_user.recorequest_id = ? " +
+        "       AND recorequest_user.recorequest_id = recorequest_location.recorequest_id ";
+    public String RECOREQUEST_CUISINE_TIER1_SELECT_SQL = "" +
+        "SELECT recorequest_cuisine_tier1.cuisine_tier1_id " +
+        "FROM   recorequest_cuisine_tier1 " +
+        "WHERE  recorequest_cuisine_tier1.recorequest_id = ? ";
+    public String RECOREQUEST_CUISINE_TIER2_SELECT_SQL = "" +
+        "SELECT recorequest_cuisine_tier2.cuisine_tier2_id " +
+        "FROM   recorequest_cuisine_tier2 " +
+        "WHERE  recorequest_cuisine_tier2.recorequest_id = ? ";
+    public String RECOREQUEST_PRICE_SELECT_SQL = "" +
+        "SELECT recorequest_price.price_id" + "FROM   recorequest_price " +
+        "WHERE  recorequest_price.recorequest_id = ?" + "";
+    public String RECOREQUEST_THEME_SELECT_SQL = "" +
+        "SELECT recorequest_theme.theme_id " + "FROM   recorequest_theme " +
+        "WHERE  recorequest_theme.recorequest_id = ? ";
+    public String RECOREQUEST_WHOAREYOUWITH_SELECT_SQL = "" +
+        "SELECT recorequest_whoareyouwith.whoareyouwith_id " +
+        "FROM   recorequest_whoareyouwith " +
+        "WHERE  recorequest_whoareyouwith.recorequest_id = ? ";
+    public String RECOREQUEST_TYPEOFREST_SELECT_SQL = "" +
+        "SELECT recorequest_typeofrest.typeofrest_id " +
+        "FROM   recorequest_typeofrest " +
+        "WHERE  recorequest_typeofrest.recorequest_id = ? ";
+    public String RECOREQUEST_OCCASION_SELECT_SQL = "" +
+        "SELECT recorequest_occasion.occasion_id " +
+        "FROM   recorequest_occasion " +
+        "WHERE  recorequest_occasion.recorequest_id = ? ";
 }

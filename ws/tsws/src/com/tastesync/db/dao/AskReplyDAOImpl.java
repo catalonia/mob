@@ -1735,17 +1735,23 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
     @Override
     public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResultsBasedOnRecoId(
-        String recoRequestId) throws TasteSyncException {
+        String userId, String recoRequestId, String paginationId)
+        throws TasteSyncException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public List<TSRestaurantCusineTier2Obj> showListOfRestaurantsSearchResults(
-        String restaurantId, String neighborhoodId, String cityId,
-        String stateName, String[] cuisineIdList, String[] priceIdList,
-        String rating, String savedFlag, String favFlag, String dealFlag,
-        String chainFlag) throws TasteSyncException {
+        String userId, String restaurantId, String neighborhoodId,
+        String cityId, String stateName, String[] cuisineTier1IdList,
+        String[] priceIdList, String rating, String savedFlag, String favFlag,
+        String dealFlag, String chainFlag, String paginationId)
+        throws TasteSyncException {
+        if (restaurantId != null) {
+            // get the corresponding results
+        }
+
         // TODO Auto-generated method stub
         return null;
     }

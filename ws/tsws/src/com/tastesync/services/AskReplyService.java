@@ -803,17 +803,23 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showListOfRestaurantsSearchResultsBasedOnRecoId(
-        @QueryParam("recorequestid")
-    String recoRequestId) {
+        @QueryParam("userid")
+    String userId, @QueryParam("recorequestid")
+    String recoRequestId, @QueryParam("paginationid")
+    String paginationId) {
         List<TSRestaurantCusineTier2Obj> tsRestaurantCusineTier2Obj = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
+
+        userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         recoRequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recoRequestId);
+        paginationId = CommonFunctionsUtil.converStringAsNullIfNeeded(paginationId);
 
         boolean responseDone = false;
 
         try {
-            tsRestaurantCusineTier2Obj = askReplyBO.showListOfRestaurantsSearchResultsBasedOnRecoId(recoRequestId);
+            tsRestaurantCusineTier2Obj = askReplyBO.showListOfRestaurantsSearchResultsBasedOnRecoId(userId,
+                    recoRequestId, paginationId);
             responseDone = true;
 
             return Response.status(status).entity(tsRestaurantCusineTier2Obj)
@@ -849,43 +855,48 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showListOfRestaurantsSearchResults(
-        @QueryParam("restaurantid")
+        @QueryParam("userid")
+    String userId, @QueryParam("restaurantid")
     String restaurantId, @QueryParam("neighborhoodid")
     String neighborhoodId, @QueryParam("cityid")
     String cityId, @QueryParam("statename")
-    String stateName, @QueryParam("cuisineidlist")
-    String cuisineIdList, @QueryParam("priceidlist")
+    String stateName,
+        @QueryParam("cuisineidtier1idlist")
+    String cuisineTier1IdList, @QueryParam("priceidlist")
     String priceIdList, @QueryParam("rating")
     String rating, @QueryParam("savedflag")
     String savedFlag, @QueryParam("favflag")
     String favFlag, @QueryParam("dealflag")
     String dealFlag, @QueryParam("chainflag")
-    String chainFlag) {
+    String chainFlag, @QueryParam("paginationid")
+    String paginationId) {
         List<TSRestaurantCusineTier2Obj> tsRestaurantCusineTier2Obj = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
+        userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
         neighborhoodId = CommonFunctionsUtil.converStringAsNullIfNeeded(neighborhoodId);
         cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
         stateName = CommonFunctionsUtil.converStringAsNullIfNeeded(stateName);
-        cuisineIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(cuisineIdList);
+        cuisineTier1IdList = CommonFunctionsUtil.converStringAsNullIfNeeded(cuisineTier1IdList);
         priceIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(priceIdList);
         rating = CommonFunctionsUtil.converStringAsNullIfNeeded(rating);
         savedFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(savedFlag);
         favFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(favFlag);
         dealFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(dealFlag);
         chainFlag = CommonFunctionsUtil.converStringAsNullIfNeeded(chainFlag);
+        paginationId = CommonFunctionsUtil.converStringAsNullIfNeeded(paginationId);
 
         boolean responseDone = false;
 
         try {
-            tsRestaurantCusineTier2Obj = askReplyBO.showListOfRestaurantsSearchResults(restaurantId,
-                    neighborhoodId, cityId, stateName,
+            tsRestaurantCusineTier2Obj = askReplyBO.showListOfRestaurantsSearchResults(userId,
+                    restaurantId, neighborhoodId, cityId, stateName,
                     CommonFunctionsUtil.convertStringListAsArrayList(
-                        cuisineIdList),
+                        cuisineTier1IdList),
                     CommonFunctionsUtil.convertStringListAsArrayList(
                         priceIdList), rating, savedFlag, favFlag, dealFlag,
-                    chainFlag);
+                    chainFlag, paginationId);
             responseDone = true;
 
             return Response.status(status).entity(tsRestaurantCusineTier2Obj)
