@@ -326,7 +326,6 @@
 										<string key="NSFrame">{{0, 77}, {320, 105}}</string>
 										<reference key="NSSuperview" ref="191373211"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<reference key="IBUIBackgroundColor" ref="125916538"/>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -1111,6 +1110,7 @@
 						<string key="actionAvatar:">id</string>
 						<string key="actionBack:">id</string>
 						<string key="actionCheck2:">id</string>
+						<string key="actionHideKeyPad:">id</string>
 						<string key="actionSendMessage:">id</string>
 						<string key="actionShare:">id</string>
 					</dictionary>
@@ -1125,6 +1125,10 @@
 						</object>
 						<object class="IBActionInfo" key="actionCheck2:">
 							<string key="name">actionCheck2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="actionHideKeyPad:">
+							<string key="name">actionHideKeyPad:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="actionSendMessage:">

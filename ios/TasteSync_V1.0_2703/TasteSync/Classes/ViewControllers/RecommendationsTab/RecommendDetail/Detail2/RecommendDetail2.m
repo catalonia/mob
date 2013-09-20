@@ -23,8 +23,7 @@
     __weak IBOutlet UIImageView *ivAvatar;
     __weak IBOutlet UILabel *lbNotifications,*lbPoint,*lbName,*lbSortMsg,*lbReplyto;
     __weak IBOutlet UITextView *tvLongMsg;
-//    __weak IBOutlet UITextField *tfSearch;
-    __weak IBOutlet UITextView *tvMsg;
+    UITextView *tvMsg;
     
     __weak IBOutlet UITableView *tbvFilter,*tbvResult;
     __weak IBOutlet UIButton *btFollow;
@@ -33,10 +32,8 @@
     NotificationObj *currentNotif;
     FilterRestaurant *filterView;
     UserDefault *userDefault;
-    
-
-
-    
+    TextView* textView;
+    NSString* requestText;
 }
 
 
@@ -76,6 +73,14 @@ arrDataFilter=_arrDataFilter;;
 {
     [super viewDidLoad];
     
+    textView = [[TextView alloc]initWithFrame:CGRectMake(10, 15, 200, 41)];
+    textView.textView.font = [UIFont fontWithName:@"Helvetica" size:17.0];
+    [textView.textView setBackgroundColor:[UIColor clearColor]];
+    tvMsg = textView.textView;
+    textView.delegate = self;
+    [view4 addSubview:textView];
+    
+    requestText = @"";
     [CommonHelpers setBackgroudImageForView:self.view];
      UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard)];
     
@@ -103,13 +108,13 @@ arrDataFilter=_arrDataFilter;;
 
     if (_notificationObj) {
         ivAvatar.image = _notificationObj.user.avatar;
-        NSString *firstCh = [_notificationObj.user.lastname substringToIndex:1];
+        //NSString *firstCh = [_notificationObj.user.lastname substringToIndex:1];
         if (_notificationObj.type== TYPE_3) {
-             lbName.text = [NSString stringWithFormat:@"%@. %@",_notificationObj.user.name,NO_TITLE_3];
+             lbName.text = [NSString stringWithFormat:@"%@. %@",_notificationObj.user.name, NO_TITLE_3];
         }
         else
         {
-            lbName.text = [NSString stringWithFormat:@"%@ %@. %@",_notificationObj.user.firstname,firstCh,NO_TITLE_4];
+            lbName.text = [NSString stringWithFormat:@"%@. %@",_notificationObj.user.name, NO_TITLE_4];
         }
        
         tvLongMsg.text = _notificationObj.description;
@@ -117,23 +122,13 @@ arrDataFilter=_arrDataFilter;;
          lbReplyto.text = [NSString stringWithFormat:@"Reply to %@",_notificationObj.user.name];
     }
     
-    if (!_arrDataRestaurant) {
         self.arrDataRestaurant = [[NSMutableArray alloc] init ];
-        for (int i=0; i < 10; i++) {
-            RestaurantObj *obj = [[RestaurantObj alloc] init];
-            obj.name= [NSString stringWithFormat:@"Restaurant %d",i];
-
-            [self.arrDataRestaurant addObject:obj];
-        }
-    }
     
     
     if (!_arrData) {
         self.arrData = [[NSMutableArray alloc] init ];
-        
-        RestaurantObj *obj = [[RestaurantObj alloc] init];     
-       
-        [self.arrData addObject:obj];
+       //RestaurantObj *obj = [[RestaurantObj alloc] init];
+       //[self.arrData addObject:obj];
     }
     
     if (!_arrDataFilter) {
@@ -151,73 +146,6 @@ arrDataFilter=_arrDataFilter;;
 
 # pragma mark - Others
 
-- (void) gotoDetailNotification:(NotificationObj *) obj atIndex:(int) index;
-{
-    debug(@"gotoDetailNotification");
-    
-    if (obj == nil) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        return ;
-    }
-    
-    glNotif.index = index;
-    index++;
-    
-    currentNotif = obj;
-    
-    if (obj.type==TYPE_1) {
-        RecommendDetail1 *vc = [[RecommendDetail1 alloc] initWithNibName:@"RecommendDetail1" bundle:nil];
-        vc.notificationObj = obj;
-        vc.indexOfNotification=index;
-        vc.totalNotification= glNotif.unread;
-        [self.navigationController pushViewController:vc animated:YES];
-        
-    }
-    else if (obj.type == TYPE_2)
-    {
-        debug(@"type 2");
-        RestaurantRecommendations2 *vc = [[RestaurantRecommendations2 alloc] initWithNibName:@"RestaurantRecommendations2" bundle:nil];
-        vc.notificationObj = obj;
-        vc.indexOfNotification=index;
-        vc.totalNotification= glNotif.unread;
-        [self.navigationController pushViewController:vc animated:YES];
-
-    }
-    else if (obj.type== TYPE_3||obj.type==TYPE_4)
-    {
-        RecommendDetail2 *vc = [[RecommendDetail2 alloc] initWithNibName:@"RecommendDetail2" bundle:nil];
-        vc.notificationObj = obj;
-        vc.indexOfNotification=index;
-        vc.totalNotification= glNotif.unread;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if (obj.type==TYPE_5)
-    {
-        RecommendDetail3 *vc = [[RecommendDetail3 alloc] initWithNibName:@"RecommendDetail3" bundle:nil];
-        vc.notificationObj = obj;
-        vc.indexOfNotification=index;
-        vc.totalNotification= glNotif.unread;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if (obj.type==TYPE_6)
-    {
-        RecommendDetail4 *vc = [[RecommendDetail4 alloc] initWithNibName:@"RecommendDetail4" bundle:nil];
-        vc.notificationObj = obj;
-        vc.indexOfNotification=index;
-        vc.totalNotification= glNotif.unread;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if(obj.type == TYPE_7)
-    {
-
-        debug(@"type 7");
-        NSString *msg = [NSString stringWithFormat:@"Are you sure to see this detail restaurant?"];
-        [CommonHelpers showConfirmAlertWithTitle:APP_NAME message:msg delegate:self tag:1];
-    }
-    else
-    {
-        
-    }
-}
 
 # pragma mark - IBAction define
 
@@ -253,9 +181,63 @@ arrDataFilter=_arrDataFilter;;
 - (IBAction)actionSend:(id)sender
 {
     [self hideKeyBoard];
+    
+    NSString* listRestaurant = @"";
+    for (RestaurantObj* obj in self.arrData) {
+        if (obj.uid.length != 0) {
+            if (listRestaurant.length == 0) {
+                listRestaurant = [listRestaurant stringByAppendingString:obj.uid];
+            }
+            else
+            {
+                listRestaurant = [listRestaurant stringByAppendingString:@","];
+                listRestaurant = [listRestaurant stringByAppendingString:obj.uid];
+            }
+        }
+        
+    }
+    
     if (_arrData.count>0) {
         _notificationObj.read = TRUE;
-        [self gotoDetailNotification:[glNotif gotoNextNotification] atIndex:glNotif.index];
+        if ([tvMsg.text isEqualToString:@""]) {
+            [CommonHelpers showConfirmAlertWithTitle:@"TasteSync" message:@"Please enter your message!" delegate:nil tag:0];
+        }
+        else
+        {
+            if (self.notificationObj.type == NotificationMessageForYou) {
+                CRequest* request = [[CRequest alloc]initWithURL:@"recomsgans" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
+                request.delegate = self;
+                [request setFormPostValue:tvMsg.text                                      forKey:@"newmessagetext"];
+                [request setFormPostValue:self.notificationObj.linkId              forKey:@"previousmessageid"];
+                [request setFormPostValue:self.notificationObj.user.uid          forKey:@"newmessagerecipientuserid"];
+                [request setFormPostValue:[UserDefault userDefault].userID forKey:@"newmessagesenderuserid"];
+                [request setFormPostValue:listRestaurant                                 forKey:@"restaurantidlist"];
+                
+                NSLog(@"newmessagetext: %@", tvMsg.text);
+                NSLog(@"previousmessageid: %@", self.notificationObj.linkId);
+                NSLog(@"newmessagerecipientuserid: %@", self.notificationObj.user.uid);
+                NSLog(@"newmessagesenderuserid: %@", [UserDefault userDefault].userID);
+                NSLog(@"restaurantidlist: %@", listRestaurant);
+                
+                //[request startFormRequest];
+            }
+            if (self.notificationObj.type == NotificationFollowUpQuestion) {
+                CRequest* request = [[CRequest alloc]initWithURL:@"recofollowupanswer" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
+                request.delegate = self;
+                [request setFormPostValue:[UserDefault userDefault].userID          forKey:@"userid"];
+                [request setFormPostValue:self.notificationObj.linkId                        forKey:@"questiondid"];
+                [request setFormPostValue:tvMsg.text                                                forKey:@"replytext"];
+                [request setFormPostValue:listRestaurant                                          forKey:@"restaurantidlist"];
+                
+                NSLog(@"userid: %@", [UserDefault userDefault].userID );
+                NSLog(@"questiondid: %@", self.notificationObj.linkId);
+                NSLog(@"replytext: %@", tvMsg.text);
+                NSLog(@"restaurantidlist: %@", listRestaurant);
+                
+                //[request startFormRequest];
+            }
+        }
+        
     }
    else
    {
@@ -366,8 +348,9 @@ arrDataFilter=_arrDataFilter;;
         
         RestaurantObj *obj = [_arrDataFilter objectAtIndex:indexPath.row];
         
-        [self.arrData replaceObjectAtIndex:(_arrData.count-1) withObject:obj];
-        [tbvResult reloadData];
+        //[self.arrData replaceObjectAtIndex:(_arrData.count-1) withObject:obj];
+        //[tbvResult reloadData];
+        [textView addRestaurant:obj];
         tbvFilter.hidden= YES;
         [self.arrDataFilter removeAllObjects];
 //        [self hideKeyBoard];
@@ -431,13 +414,6 @@ arrDataFilter=_arrDataFilter;;
     
 }
 
-#pragma mark - UITextViewDelegate
-
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    [scrollViewMain setContentOffset:CGPointMake(0, 300) animated:YES];
-}
-
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -454,7 +430,7 @@ arrDataFilter=_arrDataFilter;;
         }
         else
         {
-            [self gotoDetailNotification:[glNotif gotoNextNotification] atIndex:glNotif.index];
+           // [self gotoDetailNotification:[glNotif gotoNextNotification] atIndex:glNotif.index];
         }
         
     }
@@ -488,26 +464,38 @@ arrDataFilter=_arrDataFilter;;
         
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:str];
-    
-    NSArray *array = [self.arrDataRestaurant filteredArrayUsingPredicate:predicate];
-    if(array)
-    {
-        self.arrDataFilter = [NSMutableArray arrayWithArray:array];
-    }
-    
-    for (RestaurantObj *obj in _arrData) {
-        if ([_arrDataFilter containsObject:obj]) {
-            [self.arrDataFilter removeObject:obj];
+    if (txt.length == 3) {
+        if (![txt isEqualToString:requestText]) {
+            CRequest* request = [[CRequest alloc]initWithURL:@"restaurantSearchTerms" RQType:RequestTypePost RQData:RequestPopulate RQCategory:ApplicationForm withKey:1];
+            request.delegate = self;
+            [request setFormPostValue:txt forKey:@"key"];
+            [request setFormPostValue:@"" forKey:@"cityid"];
+            [request startFormRequest];
+            
+            requestText = txt;
         }
     }
-    
-    if (self.arrDataFilter.count>0) {
-             
-      
-        tbvFilter.hidden = NO;
-        [tbvFilter reloadData];
+    if (txt.length >= 3) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:str];
+        
+        NSArray *array = [self.arrDataRestaurant filteredArrayUsingPredicate:predicate];
+        if(array)
+        {
+            self.arrDataFilter = [NSMutableArray arrayWithArray:array];
+        }
+        
+        for (RestaurantObj *obj in _arrData) {
+            if ([_arrDataFilter containsObject:obj]) {
+                [self.arrDataFilter removeObject:obj];
+            }
+        }
+        
+        if (self.arrDataFilter.count>0) {
+            tbvFilter.hidden = NO;
+            [tbvFilter reloadData];
+        }
     }
+   
     
     
 }
@@ -620,6 +608,67 @@ arrDataFilter=_arrDataFilter;;
     
 }
 
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"response: %@",response);
+    if (key == 1) {
+        [_arrDataRestaurant removeAllObjects];
+        NSArray* array = [response objectFromJSONString];
+        for (NSDictionary* dic in array) {
+            
+            RestaurantObj* restaurantObj = [[RestaurantObj alloc]init];
+            
+            restaurantObj.uid                              =  [dic objectForKey:@"restaurantId"];
+            restaurantObj.factualId                     = [dic objectForKey:@"factualId"];
+            restaurantObj.name                          = [dic objectForKey:@"restaurantName"];
+            restaurantObj.isOpenNow                =  [[dic objectForKey:@"openNowFlag"] isEqualToString:@"1"]?YES:NO;
+            restaurantObj.deal                            =  [dic objectForKey:@"dealHeadline"];
+            if ([restaurantObj.deal isEqualToString:@""])
+                restaurantObj.isDeal = NO;
+            else
+                restaurantObj.isDeal = YES;
+            
+            restaurantObj.isMoreInfo                  =  [[dic objectForKey:@"moreInfoFlag"]  isEqualToString:@"1"]?YES:NO;
+            restaurantObj.isMenuFlag                =  [[dic objectForKey:@"menuFlag"] isEqualToString:@"1"]?YES:NO;
+            restaurantObj.isSaved                      =  [[dic objectForKey:@"userRestaurantSavedFlag"] isEqualToString:@"1"]?YES:NO;
+            restaurantObj.isFavs                         =  [[dic objectForKey:@"userRestaurantFavFlag"]  isEqualToString:@"1"]?YES:NO;
+            restaurantObj.isTipFlag                     =  [[dic objectForKey:@"userRestaurantTipFlag"]  isEqualToString:@"1"]?YES:NO;
+            [_arrDataRestaurant addObject:restaurantObj];
+        }
+    }
+    if (key == 2) {
+        NSDictionary* dic = [response objectFromJSONString];
+        NSString* str = [dic objectForKey:@"successMsg"];
+        if (str != nil) {
+            //[self gotoDetailNotification:[glNotif gotoNextNotification] atIndex:glNotif.index];
+            [self.navigationController popViewControllerAnimated:NO];
+            [self.delegate gotoNextNotify:[glNotif gotoNextNotification] index:glNotif.index];
+        }
+    }
+}
 
-
+#pragma mark TextviewDelegate
+-(void)addNewObject:(HighlightText *)object
+{
+    [_arrData addObject:object.userObj];
+}
+-(void)removeObject:(HighlightText *)object
+{
+    [_arrData removeObject:object.userObj];
+}
+-(void)enterCharacter:(NSString *)text
+{
+    NSLog(@"Line: %f", textView.textView.contentSize.height);
+    [scrollViewMain setContentOffset:CGPointMake(0, 190) animated:YES];
+}
+-(void)enterSearchObject:(NSString *)text
+{
+    NSLog(@"%@",text);
+    [self searchLocal:text];
+}
+-(void)beginEditting
+{
+     [scrollViewMain setContentOffset:CGPointMake(0, 190) animated:YES];
+}
 @end

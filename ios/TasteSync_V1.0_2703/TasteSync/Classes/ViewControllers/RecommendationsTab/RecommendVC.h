@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "CRequest.h"
+#import "GlobalNotification.h"
+#import "RecommendDetail1.h"
+#import "RecommendDetail2.h"
+#import "RecommendDetail3.h"
+#import "RecommendDetail4.h"
+#import "RestaurantDetailVC.h"
 
-@interface RecommendVC : UIViewController<RequestDelegate>
+@interface RecommendVC : UIViewController<RequestDelegate,NotificationDelegate, RecommentDetail2Protocol>
 {
     UIView *refreshHeaderView;
     UILabel *refreshLabel;

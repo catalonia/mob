@@ -12,6 +12,7 @@
 @interface GlobalNotification ()
 {
     int indexLoad;
+    int nextLoad;
 }
 
 @end
@@ -44,8 +45,10 @@
     [request2 startFormRequest];
 }
 
--(void)reloadUpData:(int)index
+-(void)reloadUpData
 {
+     [self.arrDataRead removeAllObjects];
+    nextLoad = 0;
     NSString* link = [NSString stringWithFormat:@"recolist?userid=%@&paginationid=1",[UserDefault userDefault].userID];
     CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
     request.delegate = self;
@@ -53,17 +56,34 @@
 }
 -(void)reloadDownData:(int)index
 {
-    NSString* link = [NSString stringWithFormat:@"recolist?userid=%@&paginationid=%d",[UserDefault userDefault].userID, index];
-    CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:3];
-    request.delegate = self;
-    [request startFormRequest];
+    if (index %10 == 0) {
+        [self.arrDataUnread removeAllObjects];
+        nextLoad = 0;
+        NSString* link = [NSString stringWithFormat:@"recolist?userid=%@&paginationid=%d",[UserDefault userDefault].userID, index/10 + 1];
+        CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:3];
+        request.delegate = self;
+        [request startFormRequest];
+    }
+    else
+    {
+        [self.arrDataUnread removeAllObjects];
+        nextLoad = 0;
+        NSString* link = [NSString stringWithFormat:@"recolist?userid=%@&paginationid=%d",[UserDefault userDefault].userID, index/10];
+        CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:3];
+        request.delegate = self;
+        [request startFormRequest];
+        
+        NSString* link2 = [NSString stringWithFormat:@"recolist?userid=%@&paginationid=%d",[UserDefault userDefault].userID, index/10 + 1];
+        CRequest* request2= [[CRequest alloc]initWithURL:link2 RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:3];
+        request2.delegate = self;
+        [request2 startFormRequest];
+    }
+    
 }
 - (void) addObject:(NotificationObj *) obj
 {
     [self.arrData addObject:obj];
     for (int i= 0; i< _arrData.count; i++) {
-        
-                
         
         NotificationObj *notifObj = [_arrData objectAtIndex:i];
         
@@ -103,11 +123,7 @@
                     break;
                 }
             }
-            
-            
             [arrTmpRead insertObject:obj atIndex:i];
-
-            
         }
         else{
             [arrTmpUnRead addObject:obj];
@@ -130,11 +146,18 @@
 
 - (NotificationObj *) gotoNextNotification
 {
-    self.index ++;
-    if (self.index<self.unread) {
+    if (self.index < [self.arrData count]) {
         self.isSend = TRUE;
-        return [self.arrData objectAtIndex:self.index];
-    
+        NotificationObj* obj = [self.arrData objectAtIndex:self.index];
+        for(int i = self.index + 1; i < [self.arrData count]; i++)
+        {
+            NotificationObj* objCompare = [self.arrData objectAtIndex:i];
+            if ([obj.user.uid isEqualToString:objCompare.user.uid]) {
+                self.index = i;
+                return [self.arrData objectAtIndex:i];
+            }
+        }
+        return nil;
     }
     else
     {
@@ -187,7 +210,6 @@
         }
     }
     if (key == 2) {
-        [self.arrDataRead removeAllObjects];
         NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"%@",response);
         NSArray* array = [response objectFromJSONString];
@@ -224,16 +246,23 @@
             [NSThread detachNewThreadSelector:@selector(loadImageData) toTarget:self withObject:nil];
             i++;
         }
-        
-        NotificationObj* objData = [self.arrData objectAtIndex:0];
-        i = 0;
-        for (NotificationObj*obj in self.arrDataRead) {
-            if (![obj.linkId isEqualToString:objData.linkId]) {
-                [self.arrData insertObject:obj atIndex:i];
-                i++;
+        if (self.arrData.count > 0) {
+            NotificationObj* objData = [self.arrData objectAtIndex:0];
+            NSString* str2 = [NSString stringWithFormat:@"%@",objData.linkId];
+            i = 0;
+            for (NotificationObj*obj in self.arrDataRead) {
+                NSString* str1 = [NSString stringWithFormat:@"%@",obj.linkId];
+                if (![str1 isEqualToString:str2]) {
+                    [self.arrData insertObject:obj atIndex:i];
+                    i++;
+                    self.total++;
+                    self.unread++;
+                }
+                else
+                    break;
             }
+            [self.delegate getDataSuccess];
         }
-        
     }
     if (key == 3) {
         NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
@@ -242,7 +271,6 @@
         self.total = [array count];
         self.unread = [array count];
         //self.read = 0;
-        int i = 0;
         for (NSDictionary* dic in array) {
             NotificationObj *obj = [[NotificationObj alloc] init];
             obj.type = [[dic objectForKey:@"recoNotificationType"] intValue];
@@ -265,13 +293,19 @@
                 user.uid = [dicObj objectForKey:@"userId"];
             }
             obj.user = user;
-            
-            indexLoad = i;
-            [self.arrData addObject:obj];
-            [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
-            i++;
+            if (nextLoad <= 10) {
+                if ([self checkNotify:obj]) {
+                    [self.arrDataUnread addObject:obj];
+                }
+                //[NSThread detachNewThreadSelector:@selector(loadImageData) toTarget:self withObject:nil];
+                nextLoad++;
+            }
         }
-        
+        if (nextLoad == 0) {
+            self.read = 1;
+        }
+        else
+            self.read = 0;
     }
     
     if (key == 4) {
@@ -313,6 +347,7 @@
         }
         else
             self.read = 0;
+        NSLog(@"Read-: %d", self.read);
     }
 }
 
@@ -327,7 +362,7 @@
 
 -(void)loadImageData
 {
-    int n = indexLoad;
+    int n = nextLoad;
     NotificationObj* notiObj = [self.arrDataRead objectAtIndex:n];
     UserObj* obj = notiObj.user;
     obj.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:obj.avatarUrl]]];
@@ -341,4 +376,15 @@
     obj.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:obj.avatarUrl]]];
     
 }
+
+-(BOOL)checkNotify:(NotificationObj*)notifyObj
+{
+    for (NotificationObj* notify in self.arrData) {
+        if ([notify.linkId isEqualToString:notifyObj.linkId]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 @end

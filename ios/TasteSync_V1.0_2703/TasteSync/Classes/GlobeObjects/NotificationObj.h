@@ -46,6 +46,6 @@ typedef enum
 
 @property (nonatomic, strong) NSString *description;
 
-@property (nonatomic, assign) NSString* linkId;
+@property (nonatomic, strong) NSString* linkId;
 
 @end

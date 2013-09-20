@@ -1829,7 +1829,6 @@
 						<string key="actionNewsfeed:">id</string>
 						<string key="actionOthersTab:">id</string>
 						<string key="actionSaved:">id</string>
-						<string key="actionSegmentControl:">id</string>
 						<string key="actionShow:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -1867,10 +1866,6 @@
 						</object>
 						<object class="IBActionInfo" key="actionSaved:">
 							<string key="name">actionSaved:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="actionSegmentControl:">
-							<string key="name">actionSegmentControl:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="actionShow:">

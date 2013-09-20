@@ -10,11 +10,7 @@
 #import "RecommendVC.h"
 #import "CommonHelpers.h"
 #import "NotificationCell.h"
-#import "RecommendDetail1.h"
-#import "RecommendDetail2.h"
-#import "RecommendDetail3.h"
-#import "RecommendDetail4.h"
-#import "RestaurantDetailVC.h"
+
 #import "AlertCustom.h"
 #import "RestaurantRecommendations2.h"
 
@@ -63,12 +59,12 @@
     // Do any additional setup after loading the view from its nib.
 
     glNotif = [[CommonHelpers appDelegate] globalNotification];
+    glNotif.delegate = self;
     
     if (glNotif.total>0) {
         debug(@"total notifs -> %d", glNotif.total);
         self.arrData = glNotif.arrData;
     }
-    
     page = 1;
   
 }
@@ -97,9 +93,6 @@
             [self gotoDetailNotification:[_arrData objectAtIndex:0] atIndex:0 ];
         }
     }
-    
-    
-   
 }
 
 - (void)didReceiveMemoryWarning
@@ -111,7 +104,7 @@
 - (void) reloadData
 {
     glNotif.isSend = FALSE;
-    [glNotif reOrder];
+    //[glNotif reOrder];
     self.arrData = glNotif.arrData;
     lbNotifications.text = [NSString stringWithFormat:@"%d NOTIFICATIONS",glNotif.unread];
     [tbvUnread reloadData];
@@ -157,30 +150,33 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    aNumberOfRow = glNotif.total;
+    debug(@"Read-: -> %d",glNotif.read);
     if (aIsLoadPreviousNotif || (glNotif.read == 0)) {
         if (_arrData) {
             debug(@"numberOfRowsInSection show total -> %d",glNotif.total);
-            if (glNotif.total< page*PAGE_NUMBER) {
-                aNumberOfRow = glNotif.total;
-                return glNotif.total;
-            }
-            aNumberOfRow = page*PAGE_NUMBER;
-            return page*PAGE_NUMBER  ;
+//            if (glNotif.total< page*PAGE_NUMBER) {
+                
+//                return glNotif.total;
+//            }
+//            aNumberOfRow = page*PAGE_NUMBER;
+//            return page*PAGE_NUMBER  ;
+            return _arrData.count;
             
         }
     }
     
     if (_arrData) {
         debug(@"numberOfRowsInSection -> %d",glNotif.unread);
-        if (glNotif.unread< page*PAGE_NUMBER) {
-            aNumberOfRow = glNotif.unread;
-
-            return glNotif.unread +1 ;
-        }
-        aNumberOfRow = page*PAGE_NUMBER;
-
-        return page*PAGE_NUMBER +1 ;
-        
+//        if (glNotif.unread< page*PAGE_NUMBER) {
+//            aNumberOfRow = glNotif.unread;
+//
+//            return glNotif.unread +1 ;
+//        }
+//        aNumberOfRow = page*PAGE_NUMBER;
+//
+//        return page*PAGE_NUMBER +1 ;
+        return _arrData.count + 1;
     }
     return 0;
 }
@@ -189,7 +185,8 @@
 {
     static NSString *CellIndentifier = @"notification_cell";
     
-    if (indexPath.row < aNumberOfRow) {
+//    if (indexPath.row < aNumberOfRow) {
+    if (indexPath.row < _arrData.count) {
         NotificationCell *cell = (NotificationCell *)[tableView dequeueReusableCellWithIdentifier:CellIndentifier];
         
         if (cell==nil) {
@@ -225,6 +222,7 @@
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"%d, %d", indexPath.row, aNumberOfRow);
     if (indexPath.row < aNumberOfRow) {
         NotificationObj *obj = [_arrData objectAtIndex:indexPath.row];
         [self gotoDetailNotification:obj atIndex:indexPath.row];
@@ -251,9 +249,14 @@
     }
 }
 
-- (void) loadMoreData
+- (void)loadMoreData
 {
+    NSMutableArray* array = glNotif.arrDataUnread;
+    for (int  i = 0; i < array.count; i++) {
+        [self.arrData addObject:[array objectAtIndex:i]];
+    }
     page ++;
+    [glNotif reloadDownData: [self.arrData count]];
     [tbvUnread reloadData];
 }
 
@@ -263,10 +266,8 @@
 {
     debug(@"gotoDetailNotification");
     glNotif.index = index;
-    index++;
-    
+   // index++;
     currentNotif = obj;
-    
     if (obj.type==TYPE_1) {
         RecommendDetail1 *vc = [[RecommendDetail1 alloc] initWithNibName:@"RecommendDetail1" bundle:nil];
         vc.notificationObj = obj;
@@ -278,22 +279,19 @@
     else if (obj.type == TYPE_2)
     {
         debug(@"type 2");        
-             
         RestaurantRecommendations2 *vc = [[RestaurantRecommendations2 alloc] initWithNibName:@"RestaurantRecommendations2" bundle:nil];
         vc.notificationObj = obj;
         vc.indexOfNotification = index;
         vc.totalNotification = glNotif.unread;
         obj.read = true;
         [self.navigationController pushViewController:vc animated:YES];
-        
-
-        
     }
-    else if (obj.type== TYPE_3||obj.type==TYPE_4)
+    else if (obj.type== TYPE_3 || obj.type==TYPE_4)
     {
         RecommendDetail2 *vc = [[RecommendDetail2 alloc] initWithNibName:@"RecommendDetail2" bundle:nil];
+        vc.delegate = self;
         vc.notificationObj = obj;
-        vc.indexOfNotification=index;
+        vc.indexOfNotification = index;
         vc.totalNotification= glNotif.unread;
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -417,20 +415,6 @@
 
 - (void)stopLoading {
     
-//    NotificationObj *newObj = [[NotificationObj alloc] init];
-//    newObj.type = TYPE_1;
-//    User *user = [[User alloc] init];
-//    user.uid = 10;
-//    user.firstname = @"Victor";
-//    user.lastname = @"NGO";
-//    user.avatar = [UIImage imageNamed:@"avatar.png"];
-//    newObj.user = user;
-//    newObj.description = @"Person wrote: this message is test for prototype with function reload.";
-//
-//    [glNotif addObject:newObj];
-//    
-//    [self reloadData];
-    
     isLoading = NO;
     
     // Hide the header
@@ -455,13 +439,15 @@
     // Don't forget to call stopLoading at the end.
 //    [self reloadData];
     
-  
-    
-    
-    
-   [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0];
+    [glNotif reloadUpData];
+   [self performSelector:@selector(stopLoading) withObject:nil afterDelay:6.0];
 }
 
+-(void)getDataSuccess
+{
+    [tbvUnread reloadData];
+    [self stopLoading];
+}
 
 #pragma mark - UIAlertViewDelegate
 
@@ -494,5 +480,78 @@
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData{
     
 }
+
+-(void)gotoNextNotify:(NotificationObj *)obj index:(int)index
+{
+    [self gotoDetailNotification:obj atIndex:index];
+}
+
+//- (void) gotoDetailNotificationNext:(NotificationObj *) obj atIndex:(int) index;
+//{
+//    debug(@"gotoDetailNotification");
+//    
+//    if (obj == nil) {
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//        return ;
+//    }
+//    
+//    glNotif.index = index;
+//    
+//    currentNotif = obj;
+//    
+//    if (obj.type==TYPE_1) {
+//        RecommendDetail1 *vc = [[RecommendDetail1 alloc] initWithNibName:@"RecommendDetail1" bundle:nil];
+//        vc.notificationObj = obj;
+//        vc.indexOfNotification=index;
+//        vc.totalNotification= glNotif.unread;
+//        [self.navigationController pushViewController:vc animated:YES];
+//        
+//    }
+//    else if (obj.type == TYPE_2)
+//    {
+//        debug(@"type 2");
+//        RestaurantRecommendations2 *vc = [[RestaurantRecommendations2 alloc] initWithNibName:@"RestaurantRecommendations2" bundle:nil];
+//        vc.notificationObj = obj;
+//        vc.indexOfNotification=index;
+//        vc.totalNotification= glNotif.unread;
+//        [self.navigationController pushViewController:vc animated:YES];
+//        
+//    }
+//    else if (obj.type== TYPE_3||obj.type==TYPE_4)
+//    {
+//        RecommendDetail2 *vc = [[RecommendDetail2 alloc] initWithNibName:@"RecommendDetail2" bundle:nil];
+//        vc.delegate = self;
+//        vc.notificationObj = obj;
+//        vc.indexOfNotification=index;
+//        vc.totalNotification= glNotif.unread;
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+//    else if (obj.type==TYPE_5)
+//    {
+//        RecommendDetail3 *vc = [[RecommendDetail3 alloc] initWithNibName:@"RecommendDetail3" bundle:nil];
+//        vc.notificationObj = obj;
+//        vc.indexOfNotification=index;
+//        vc.totalNotification= glNotif.unread;
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }else if (obj.type==TYPE_6)
+//    {
+//        RecommendDetail4 *vc = [[RecommendDetail4 alloc] initWithNibName:@"RecommendDetail4" bundle:nil];
+//        vc.notificationObj = obj;
+//        vc.indexOfNotification=index;
+//        vc.totalNotification= glNotif.unread;
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+//    else if(obj.type == TYPE_7)
+//    {
+//        
+//        debug(@"type 7");
+//        NSString *msg = [NSString stringWithFormat:@"Are you sure to see this detail restaurant?"];
+//        [CommonHelpers showConfirmAlertWithTitle:APP_NAME message:msg delegate:self tag:1];
+//    }
+//    else
+//    {
+//        
+//    }
+//}
 
 @end

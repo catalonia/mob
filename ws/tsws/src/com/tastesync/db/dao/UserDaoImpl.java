@@ -487,6 +487,18 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 								statement.execute();
 							}
 						}
+						
+						
+//						List<String> listFriendDB = new ArrayList<String>();
+//						connection = tsDataSource.getConnection();
+//						statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_SECLECT_SQL);
+//						statement.setString(1, userID);
+//						ResultSet resulset = statement.executeQuery();
+//						if(resulset.next())
+//			        	{
+//							listFriendDB.add(CommonFunctionsUtil.getModifiedValueString(resulset.getString("facebook_user_data.INSTALLED")));
+//			        	}
+						
 						//tsDataSource.commit();
 						tsDataSource.close();
 						tsDataSource.closeConnection(connection, statement, null);

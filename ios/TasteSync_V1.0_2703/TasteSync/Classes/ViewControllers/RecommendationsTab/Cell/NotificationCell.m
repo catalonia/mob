@@ -13,6 +13,8 @@
     __weak IBOutlet UIImageView *ivAvatar;
     __weak IBOutlet UILabel *lbName,*lbLongMsg;
     __weak IBOutlet UIButton *btShowProfile;
+    
+    NotificationObj* objNotify;
 }
 
 @end
@@ -41,7 +43,10 @@
 
 - (void) initForView:(NotificationObj *)obj
 {
-    ivAvatar.image = obj.user.avatar;
+    objNotify = obj;
+    if (obj.user.avatar != nil) {
+        ivAvatar.image = obj.user.avatar;
+    }
     //NSString *firstCh = [obj.user.lastname substringToIndex:1];
     if (obj.type == TYPE_1) {
         lbName.text = [NSString stringWithFormat:@"%@. %@",obj.user.name,NO_TITLE_1];
@@ -79,6 +84,11 @@
     btShowProfile.tag = self.tag;
 }
 
-
+-(void)loadImage
+{
+    UserObj* obj = objNotify.user;
+    obj.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:obj.avatarUrl]]];
+    ivAvatar.image = obj.avatar;
+}
 
 @end

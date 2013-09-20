@@ -575,6 +575,8 @@
 		5EB62ECF16F2B94D0074133F /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB62EC916F2B94D0074133F /* TagView.m */; };
 		5EB62ED016F2B94D0074133F /* TagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB62ECA16F2B94D0074133F /* TagView.xib */; };
 		C30DA9B317BDA5DB00846D01 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C30DA9B217BDA5DB00846D01 /* FacebookSDK.framework */; };
+		C399B33717E95C8700F83014 /* HighlightText.m in Sources */ = {isa = PBXBuildFile; fileRef = C399B33617E95C8700F83014 /* HighlightText.m */; };
+		C39A699E17EAFFFA00C8CF5D /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C39A699D17EAFFFA00C8CF5D /* TextView.m */; };
 		C39F9593179F6EC600C91BAA /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F957E179F6EC600C91BAA /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C39F9594179F6EC600C91BAA /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F9581179F6EC600C91BAA /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C39F9595179F6EC600C91BAA /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F9583179F6EC600C91BAA /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1278,6 +1280,10 @@
 		5EB62EC916F2B94D0074133F /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagView.m; sourceTree = "<group>"; };
 		5EB62ECA16F2B94D0074133F /* TagView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagView.xib; sourceTree = "<group>"; };
 		C30DA9B217BDA5DB00846D01 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		C399B33517E95C8700F83014 /* HighlightText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightText.h; sourceTree = "<group>"; };
+		C399B33617E95C8700F83014 /* HighlightText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightText.m; sourceTree = "<group>"; };
+		C39A699C17EAFFFA00C8CF5D /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
+		C39A699D17EAFFFA00C8CF5D /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
 		C39F957D179F6EC600C91BAA /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		C39F957E179F6EC600C91BAA /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		C39F957F179F6EC600C91BAA /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -2613,6 +2619,7 @@
 		5E8D3D0416D35AF700FF5EEC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C399B33017E95C6300F83014 /* TextView */,
 				C3D180B5179F69AF007B71A0 /* JSONKit.h */,
 				C3D180B6179F69AF007B71A0 /* JSONKit.m */,
 				C3D180B7179F69AF007B71A0 /* RequestData */,
@@ -2978,6 +2985,25 @@
 				5EB62EC716F2B94D0074133F /* TagObj.xib */,
 			);
 			path = Tag;
+			sourceTree = "<group>";
+		};
+		C399B33017E95C6300F83014 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				C39A699C17EAFFFA00C8CF5D /* TextView.h */,
+				C39A699D17EAFFFA00C8CF5D /* TextView.m */,
+				C399B33417E95C8700F83014 /* Object */,
+			);
+			path = TextView;
+			sourceTree = "<group>";
+		};
+		C399B33417E95C8700F83014 /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				C399B33517E95C8700F83014 /* HighlightText.h */,
+				C399B33617E95C8700F83014 /* HighlightText.m */,
+			);
+			path = Object;
 			sourceTree = "<group>";
 		};
 		C39F957C179F6EC600C91BAA /* ASIHTTPRequest */ = {
@@ -3668,6 +3694,8 @@
 				C3D0AF6A17B61F9400D91294 /* TSCityObj.m in Sources */,
 				C3D8025617B9CC410025E69F /* TSPhotoRestaurantObj.m in Sources */,
 				C3CF12CE17CD8A6B00B12503 /* RestaurantQuestionCell.m in Sources */,
+				C399B33717E95C8700F83014 /* HighlightText.m in Sources */,
+				C39A699E17EAFFFA00C8CF5D /* TextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
