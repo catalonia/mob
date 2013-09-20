@@ -1,5 +1,7 @@
 package com.tastesync.db.dao;
 
+import com.tastesync.algo.user.restaurant.RestaurantsSearchResultsOnlineCalc;
+
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
 import com.tastesync.db.queries.RestaurantQueries;
@@ -1913,6 +1915,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         }
     }
 
+    // for restaurant search based on reco request id related parameters 
     private List<String> identifyRestaurantsSearchResults(String userIdFrmDb,
         String recoRequestLocationNeighborhoodId,
         String recoRequestLocationCityId, String[] cuisineTier1IdArray,
@@ -1927,9 +1930,21 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             whoareyouwithIdArray, typeOfRestaurantIdArray, occasionIdArray);
     }
 
+    // for restaurant search based on city id related parameters 
     private List<String> identifyRestaurantsSearchResults(String userId,
         String restaurantId, String neighborhoodId, String cityId,
-        String stateName, String[] cuisineIdtier1List, String[] priceIdList,
+        String stateName, String[] cuisineTier1IdList, String[] priceIdList,
+        String rating, String savedFlag, String favFlag, String dealFlag,
+        String chainFlag, String paginationId) throws TasteSyncException {
+        return identifyRestaurantsSearchResults(userId, restaurantId,
+            neighborhoodId, cityId, stateName, cuisineTier1IdList, priceIdList,
+            rating, savedFlag, favFlag, dealFlag, chainFlag, paginationId,
+            null, null, null, null, null);
+    }
+
+    private List<String> identifyRestaurantsSearchResults(String userId,
+        String restaurantId, String neighborhoodId, String cityId,
+        String stateName, String[] cuisineTier1IdArray, String[] priceIdList,
         String rating, String savedFlag, String favFlag, String dealFlag,
         String chainFlag, String paginationId, String[] cuisineTier2IdArray,
         String[] themeIdArray, String[] whoareyouwithIdArray,
@@ -1946,18 +1961,19 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         // get the corresponding results
 
         //TODO call to algo!!
-        return null;
-    }
+        RestaurantsSearchResultsOnlineCalc restaurantsSearchResultsOnlineCalc = new RestaurantsSearchResultsOnlineCalc();
 
-    private List<String> identifyRestaurantsSearchResults(String userId,
-        String restaurantId, String neighborhoodId, String cityId,
-        String stateName, String[] cuisineTier1IdList, String[] priceIdList,
-        String rating, String savedFlag, String favFlag, String dealFlag,
-        String chainFlag, String paginationId) throws TasteSyncException {
-        return identifyRestaurantsSearchResults(userId, restaurantId,
-            neighborhoodId, cityId, stateName, cuisineTier1IdList, priceIdList,
-            rating, savedFlag, favFlag, dealFlag, chainFlag, paginationId,
-            null, null, null, null, null);
+        try {
+            return restaurantsSearchResultsOnlineCalc.showListOfRestaurantsSearchResults(userId,
+                restaurantId, neighborhoodId, cityId, stateName,
+                cuisineTier1IdArray, priceIdList, rating, savedFlag, favFlag,
+                dealFlag, chainFlag, paginationId, cuisineTier2IdArray,
+                themeIdArray, whoareyouwithIdArray, typeOfRestaurantIdArray,
+                occasionIdArray);
+        } catch (com.tastesync.algo.exception.TasteSyncException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(e.getMessage());
+        }
     }
 
     @Override
@@ -1995,6 +2011,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         ResultSet resultset = null;
 
         try {
+            connection = tsDataSource.getConnection();
+
             statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
             statement.setString(1, restaurantId);
             resultset = statement.executeQuery();
