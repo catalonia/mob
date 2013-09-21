@@ -10,7 +10,7 @@ import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
-import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
+import com.tastesync.model.objects.derived.TSRestaurantsTileSearchExtendedInfoObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 
 import java.util.List;
@@ -27,11 +27,11 @@ public interface AskReplyDAO {
     String showAskForRecommendationFriends(String recoRequestId)
         throws TasteSyncException;
 
-    List<TSRestaurantsTileSearchObj> showListOfRestaurantsSearchResultsBasedOnRecoId(
+    TSRestaurantsTileSearchExtendedInfoObj showListOfRestaurantsSearchResultsBasedOnRecoId(
         String userId, String recoRequestId, String paginationId)
         throws TasteSyncException;
 
-    List<TSRestaurantsTileSearchObj> showListOfRestaurantsSearchResults(
+    TSRestaurantsTileSearchExtendedInfoObj showListOfRestaurantsSearchResults(
         String userId, String restaurantId, String neighborhoodId,
         String cityId, String stateName, String[] cuisineTier1IdList,
         String[] priceIdList, String rating, String savedFlag, String favFlag,

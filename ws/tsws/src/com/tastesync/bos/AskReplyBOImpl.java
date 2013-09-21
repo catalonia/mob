@@ -12,7 +12,7 @@ import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
-import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
+import com.tastesync.model.objects.derived.TSRestaurantsTileSearchExtendedInfoObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 
 import java.util.List;
@@ -117,7 +117,7 @@ public class AskReplyBOImpl implements AskReplyBO {
         return askReplyDAO.showRecommendationsFollowup(userId, questionId);
     }
 
-    public List<TSRestaurantsTileSearchObj> showListOfRestaurantsSearchResultsBasedOnRecoId(
+    public TSRestaurantsTileSearchExtendedInfoObj showListOfRestaurantsSearchResultsBasedOnRecoId(
         String userId, String recoRequestId, String paginationId)
         throws TasteSyncException {
         return askReplyDAO.showListOfRestaurantsSearchResultsBasedOnRecoId(userId,
@@ -125,7 +125,7 @@ public class AskReplyBOImpl implements AskReplyBO {
     }
 
     @Override
-    public List<TSRestaurantsTileSearchObj> showListOfRestaurantsSearchResults(
+    public TSRestaurantsTileSearchExtendedInfoObj showListOfRestaurantsSearchResults(
         String userId, String restaurantId, String neighborhoodId,
         String cityId, String stateName, String[] cuisineTier1IdList,
         String[] priceIdList, String rating, String savedFlag, String favFlag,

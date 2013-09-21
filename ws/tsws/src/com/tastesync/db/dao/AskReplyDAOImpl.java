@@ -1,5 +1,6 @@
 package com.tastesync.db.dao;
 
+import com.tastesync.algo.model.vo.RestaurantsSearchResultsVO;
 import com.tastesync.algo.user.restaurant.RestaurantsSearchResultsOnlineCalc;
 
 import com.tastesync.db.pool.TSDataSource;
@@ -27,6 +28,7 @@ import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendationsObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
 import com.tastesync.model.objects.derived.TSRestaurantsForYouObj;
+import com.tastesync.model.objects.derived.TSRestaurantsTileSearchExtendedInfoObj;
 import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 import com.tastesync.model.vo.NotifRecoReplyVO;
@@ -1736,7 +1738,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public List<TSRestaurantsTileSearchObj> showListOfRestaurantsSearchResultsBasedOnRecoId(
+    public TSRestaurantsTileSearchExtendedInfoObj showListOfRestaurantsSearchResultsBasedOnRecoId(
         String userId, String recoRequestId, String paginationId)
         throws TasteSyncException {
         //get different parameters based on recorequest id
@@ -1887,12 +1889,13 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             String[] occasionIdArray = occasionIdList.isEmpty() ? null
                                                                 : occasionIdList.toArray(new String[occasionIdList.size()]);
 
-            List<String> restaurantIdList = identifyRestaurantsSearchResults(userIdFrmDb,
+            RestaurantsSearchResultsVO restaurantsSearchResultsVO = identifyRestaurantsSearchResults(userIdFrmDb,
                     recoRequestLocationNeighborhoodId,
                     recoRequestLocationCityId, cuisineTier1IdArray,
                     priceIdArray, paginationId, cuisineTier2IdArray,
                     themeIdArray, whoareyouwithIdArray,
                     typeOfRestaurantIdArray, occasionIdArray);
+            List<String> restaurantIdList = restaurantsSearchResultsVO.getRestaurantIdList();
             TSRestaurantsTileSearchObj tsRestaurantsTileSearchObj = null;
 
             List<TSRestaurantsTileSearchObj> tsRestaurantsTileSearchObjList = new ArrayList<TSRestaurantsTileSearchObj>();
@@ -1903,7 +1906,12 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsRestaurantsTileSearchObjList.add(tsRestaurantsTileSearchObj);
             }
 
-            return tsRestaurantsTileSearchObjList;
+            TSRestaurantsTileSearchExtendedInfoObj tsRestaurantsTileSearchExtendedInfoObj =
+                new TSRestaurantsTileSearchExtendedInfoObj();
+            tsRestaurantsTileSearchExtendedInfoObj.setTsRestaurantsTileSearchObjList(tsRestaurantsTileSearchObjList);
+            tsRestaurantsTileSearchExtendedInfoObj.setMaxPaginationId(restaurantsSearchResultsVO.getMaxPaginationId());
+
+            return tsRestaurantsTileSearchExtendedInfoObj;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(
@@ -1916,8 +1924,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     // for restaurant search based on reco request id related parameters 
-    private List<String> identifyRestaurantsSearchResults(String userIdFrmDb,
-        String recoRequestLocationNeighborhoodId,
+    private RestaurantsSearchResultsVO identifyRestaurantsSearchResults(
+        String userIdFrmDb, String recoRequestLocationNeighborhoodId,
         String recoRequestLocationCityId, String[] cuisineTier1IdArray,
         String[] priceIdArray, String paginationId,
         String[] cuisineTier2IdArray, String[] themeIdArray,
@@ -1931,31 +1939,33 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     // for restaurant search based on city id related parameters 
-    private List<String> identifyRestaurantsSearchResults(String userId,
-        String restaurantId, String neighborhoodId, String cityId,
-        String stateName, String[] cuisineTier1IdList, String[] priceIdList,
-        String rating, String savedFlag, String favFlag, String dealFlag,
-        String chainFlag, String paginationId) throws TasteSyncException {
+    private RestaurantsSearchResultsVO identifyRestaurantsSearchResults(
+        String userId, String restaurantId, String neighborhoodId,
+        String cityId, String stateName, String[] cuisineTier1IdList,
+        String[] priceIdList, String rating, String savedFlag, String favFlag,
+        String dealFlag, String chainFlag, String paginationId)
+        throws TasteSyncException {
         return identifyRestaurantsSearchResults(userId, restaurantId,
             neighborhoodId, cityId, stateName, cuisineTier1IdList, priceIdList,
             rating, savedFlag, favFlag, dealFlag, chainFlag, paginationId,
             null, null, null, null, null);
     }
 
-    private List<String> identifyRestaurantsSearchResults(String userId,
-        String restaurantId, String neighborhoodId, String cityId,
-        String stateName, String[] cuisineTier1IdArray, String[] priceIdList,
-        String rating, String savedFlag, String favFlag, String dealFlag,
-        String chainFlag, String paginationId, String[] cuisineTier2IdArray,
-        String[] themeIdArray, String[] whoareyouwithIdArray,
-        String[] typeOfRestaurantIdArray, String[] occasionIdArray)
-        throws TasteSyncException {
+    private RestaurantsSearchResultsVO identifyRestaurantsSearchResults(
+        String userId, String restaurantId, String neighborhoodId,
+        String cityId, String stateName, String[] cuisineTier1IdArray,
+        String[] priceIdList, String rating, String savedFlag, String favFlag,
+        String dealFlag, String chainFlag, String paginationId,
+        String[] cuisineTier2IdArray, String[] themeIdArray,
+        String[] whoareyouwithIdArray, String[] typeOfRestaurantIdArray,
+        String[] occasionIdArray) throws TasteSyncException {
         List<String> restaurantIdList = new ArrayList<String>();
 
         if (restaurantId != null) {
             restaurantIdList.add(restaurantId);
 
-            return restaurantIdList;
+            return new RestaurantsSearchResultsVO(String.valueOf(1),
+                restaurantIdList);
         }
 
         // get the corresponding results
@@ -1977,16 +1987,17 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     @Override
-    public List<TSRestaurantsTileSearchObj> showListOfRestaurantsSearchResults(
+    public TSRestaurantsTileSearchExtendedInfoObj showListOfRestaurantsSearchResults(
         String userId, String restaurantId, String neighborhoodId,
         String cityId, String stateName, String[] cuisineTier1IdList,
         String[] priceIdList, String rating, String savedFlag, String favFlag,
         String dealFlag, String chainFlag, String paginationId)
         throws TasteSyncException {
-        List<String> restaurantIdList = identifyRestaurantsSearchResults(userId,
+        RestaurantsSearchResultsVO restaurantsSearchResultsVO = identifyRestaurantsSearchResults(userId,
                 restaurantId, neighborhoodId, cityId, stateName,
                 cuisineTier1IdList, priceIdList, rating, savedFlag, favFlag,
                 dealFlag, chainFlag, paginationId);
+        List<String> restaurantIdList = restaurantsSearchResultsVO.getRestaurantIdList();
 
         TSRestaurantsTileSearchObj tsRestaurantsTileSearchObj = null;
 
@@ -1998,7 +2009,12 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             tsRestaurantsTileSearchObjList.add(tsRestaurantsTileSearchObj);
         }
 
-        return tsRestaurantsTileSearchObjList;
+        TSRestaurantsTileSearchExtendedInfoObj tsRestaurantsTileSearchExtendedInfoObj =
+            new TSRestaurantsTileSearchExtendedInfoObj();
+        tsRestaurantsTileSearchExtendedInfoObj.setTsRestaurantsTileSearchObjList(tsRestaurantsTileSearchObjList);
+        tsRestaurantsTileSearchExtendedInfoObj.setMaxPaginationId(restaurantsSearchResultsVO.getMaxPaginationId());
+
+        return tsRestaurantsTileSearchExtendedInfoObj;
     }
 
     private TSRestaurantsTileSearchObj getRestaurantTileSearchReslt(

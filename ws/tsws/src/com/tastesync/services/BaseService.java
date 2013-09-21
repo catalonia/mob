@@ -30,7 +30,7 @@ public abstract class BaseService {
         try {
             //ClassLoader loader = getClass().getClassLoader();
             //ifile = loader.getResourceAsStream("/Resources/config.properties");
-        	ifile = new FileInputStream("/Resources/config.properties");
+        	ifile = new FileInputStream("/Users/webonline/localroot/softwares/apps/tomcat/apache-tomcat/webapps/tsws/WEB-INF/classes/Resources/config.properties");
             //load a properties file
         	tsConfigProp.load(ifile);
 

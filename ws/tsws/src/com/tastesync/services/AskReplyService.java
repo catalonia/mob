@@ -15,7 +15,7 @@ import com.tastesync.model.objects.derived.TSRecoRequestObj;
 import com.tastesync.model.objects.derived.TSRecommendationsFollowupObj;
 import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
-import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
+import com.tastesync.model.objects.derived.TSRestaurantsTileSearchExtendedInfoObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
@@ -797,7 +797,7 @@ public class AskReplyService extends BaseService {
 
     @GET
     @Path("/recosidrestaurantsearchresults")
-    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantsTileSearchObj.class)
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantsTileSearchExtendedInfoObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -807,7 +807,8 @@ public class AskReplyService extends BaseService {
     String userId, @QueryParam("recorequestid")
     String recoRequestId, @QueryParam("paginationid")
     String paginationId) {
-        List<TSRestaurantsTileSearchObj> tsRestaurantsTileSearchObj = null;
+        TSRestaurantsTileSearchExtendedInfoObj tsRestaurantsTileSearchExtendedInfoObj =
+            null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
@@ -818,11 +819,12 @@ public class AskReplyService extends BaseService {
         boolean responseDone = false;
 
         try {
-            tsRestaurantsTileSearchObj = askReplyBO.showListOfRestaurantsSearchResultsBasedOnRecoId(userId,
+            tsRestaurantsTileSearchExtendedInfoObj = askReplyBO.showListOfRestaurantsSearchResultsBasedOnRecoId(userId,
                     recoRequestId, paginationId);
             responseDone = true;
 
-            return Response.status(status).entity(tsRestaurantsTileSearchObj)
+            return Response.status(status)
+                           .entity(tsRestaurantsTileSearchExtendedInfoObj)
                            .build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
@@ -849,7 +851,7 @@ public class AskReplyService extends BaseService {
 
     @GET
     @Path("/recosrestaurantsearchresults")
-    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantsTileSearchObj.class)
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantsTileSearchExtendedInfoObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -870,7 +872,8 @@ public class AskReplyService extends BaseService {
     String dealFlag, @QueryParam("chainflag")
     String chainFlag, @QueryParam("paginationid")
     String paginationId) {
-        List<TSRestaurantsTileSearchObj> tsRestaurantsTileSearchObj = null;
+        TSRestaurantsTileSearchExtendedInfoObj tsRestaurantsTileSearchExtendedInfoObj =
+            null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
@@ -890,7 +893,7 @@ public class AskReplyService extends BaseService {
         boolean responseDone = false;
 
         try {
-            tsRestaurantsTileSearchObj = askReplyBO.showListOfRestaurantsSearchResults(userId,
+            tsRestaurantsTileSearchExtendedInfoObj = askReplyBO.showListOfRestaurantsSearchResults(userId,
                     restaurantId, neighborhoodId, cityId, stateName,
                     CommonFunctionsUtil.convertStringListAsArrayList(
                         cuisineTier1IdList),
@@ -899,7 +902,8 @@ public class AskReplyService extends BaseService {
                     chainFlag, paginationId);
             responseDone = true;
 
-            return Response.status(status).entity(tsRestaurantsTileSearchObj)
+            return Response.status(status)
+                           .entity(tsRestaurantsTileSearchExtendedInfoObj)
                            .build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
