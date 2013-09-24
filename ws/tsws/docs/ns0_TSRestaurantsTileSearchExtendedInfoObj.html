@@ -11,7 +11,7 @@
        Remove this if you use the .htaccess -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>TSNotifRecoReplyObj</title>
+  <title>TSRestaurantsTileSearchExtendedInfoObj</title>
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,7 @@
   <div class="container">
     <header>
       <div id="header" class="column first last span-20">
-        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">TSNotifRecoReplyObj</a></div>
+        <div id="site-name" class="column span-18 append-1 prepend-1 first last"><a href="index.html">TSRestaurantsTileSearchExtendedInfoObj</a></div>
         <div id="primary" class="column span-18 append-1 prepend-1 first last">
           <ul class="navigation">
             <li id="nav-rest"><a href="rest.html">REST</a></li>
@@ -58,7 +58,7 @@
               </ul>
             </li>
             <li class="current">
-              <a href="ns0_TSNotifRecoReplyObj.html">TSNotifRecoReplyObj</a>
+              <a href="ns0_TSRestaurantsTileSearchExtendedInfoObj.html">TSRestaurantsTileSearchExtendedInfoObj</a>
               <ul>
                 <li><a href="ns0_TSNotifRecorequestAnswerObj.html">TSNotifRecorequestAnswerObj</a></li>
                 <li><a href="ns0_TSRecoNotificationBaseObj.html">TSRecoNotificationBaseObj</a></li>
@@ -116,7 +116,7 @@
       </div>
     </header>
     <div id="main" class="column first last span-20">
-      <h1>TSNotifRecoReplyObj</h1>
+      <h1>TSRestaurantsTileSearchExtendedInfoObj</h1>
       <table>
         <tr>
           <td align="right">Namespace:</td>
@@ -138,7 +138,7 @@
         </tr>
         <tr>
           <td>
-            replyId (string)
+            maxPaginationId (string)
           </td>
           <td>0/1</td>
           <td>
@@ -146,17 +146,9 @@
         </tr>
         <tr>
           <td>
-            repliedDatetime (string)
+            restaurantsSearchListTileObj (<a href="ns0_TSRestaurantsTileSearchObj.html">TSRestaurantsTileSearchObj</a>)
           </td>
-          <td>0/1</td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            viewed (string)
-          </td>
-          <td>0/1</td>
+          <td>0/unbounded</td>
           <td>
           </td>
         </tr>
@@ -170,25 +162,17 @@
           <th>description</th>
         </tr>
         <tr>
-          <td>replyId</td>
+          <td>maxPaginationId</td>
           <td>
-              replyId (string)
+              maxPaginationId (string)
           </td>
           <td>
           </td>
         </tr>
         <tr>
-          <td>repliedDatetime</td>
+          <td>restaurantsSearchListTileObj</td>
           <td>
-              repliedDatetime (string)
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>viewed</td>
-          <td>
-              viewed (string)
+              array of restaurantsSearchListTileObj (<a href="ns0_TSRestaurantsTileSearchObj.html">TSRestaurantsTileSearchObj</a>)
           </td>
           <td>
           </td>

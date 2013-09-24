@@ -386,21 +386,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				            	statement.setString(1, String.valueOf("y"));
 				            	statement.setString(2, user.getUserId());
 				            	statement.executeUpdate();
-								
-//				            	id = dateNowAppend + "-" + user.getUserId() + "-" + CommonFunctionsUtil.generateRandomString(4, 5);
-//								userLogId = id;
-//				            	System.out.println(UserQueries.USER_LOGIN_INSERT_SQL);
-//								//Update login time (users_log table)
-//				            	connection = tsDataSource.getConnection();
-//				            	statement = connection.prepareStatement(UserQueries.USER_LOGIN_INSERT_SQL);
-//				            	statement.setString(1, user.getUserId());
-//				            	statement.setString(2, dateNow);
-//				            	statement.setString(3, dateNow);
-//				            	statement.setString(4, userLogId);
-//				            	statement.executeUpdate();
 
 							}
-							//tsDataSource.commit();
 						} catch (Exception e) {
 							e.printStackTrace();
 							throw new TasteSyncException("login_fb "+e.getMessage());
@@ -449,57 +436,101 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 						}
 	
 						List<String> listFBObj = list_user_profile.getList_user_profile_fb();
-						//
+						List<String> listDatabaseFBObj = new ArrayList<String>();
+						List<String> listDatabaseDeletedObj = new ArrayList<String>();
+						
 						connection = tsDataSource.getConnection();
-						statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_DELETE_SQL);
+						statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_SECLECT_SQL);
 						statement.setString(1, userID);
-						statement.execute();
+						statement.setString(2, "");
+						ResultSet resultSet = statement.executeQuery();
+						System.out.println("Here");
+						while(resultSet.next())
+			        	{
+							listDatabaseFBObj.add(CommonFunctionsUtil.getModifiedValueString(resultSet.getString("user_friend_fb.USER_FRIEND_FB")));
+			        	}
+						
+						connection = tsDataSource.getConnection();
+						statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_DELETED_SECLECT_SQL);
+						statement.setString(1, userID);
+						statement.setString(2, "DELETED");
+						ResultSet resultSet2 = statement.executeQuery();
+						System.out.println("Here");
+						while(resultSet2.next())
+			        	{
+							listDatabaseDeletedObj.add(CommonFunctionsUtil.getModifiedValueString(resultSet2.getString("user_friend_fb.USER_FRIEND_FB")));
+			        	}
 						
 						if(listFBObj != null && !listFBObj.isEmpty()) {
-							int countFB = 0;
-							while(countFB < listFBObj.size())
-							{
-								List<String> list = new ArrayList<String>();
-								//INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN) VALUES (?, ?, ?, ?)";
-								String insertStr = "INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN) VALUES ";
-								for(int i = 0; countFB < listFBObj.size() && i < 500; i++, countFB++)
+							
+							for (int i = 0; i < listFBObj.size(); i++) {
+								String fbID = listFBObj.get(i);
+								int j = 0;
+								for (; j < listDatabaseFBObj.size(); j++) {
+									String dbFBID = listDatabaseFBObj.get(j);
+									if(fbID.equals(dbFBID))
+										break;
+								}
+								
+								if(j == listDatabaseFBObj.size())
 								{
-									String obj = listFBObj.get(countFB);
-									String str = "";
-									if(i == 0)
-										str = str + "(" + "?" + "," + "?" + "," + "?" + "," + "?" + ")";
+									int k = 0;
+									for(; k < listDatabaseDeletedObj.size();k++)
+									{
+										String str = listDatabaseDeletedObj.get(k);
+										if(fbID.equals(str))
+										{
+											break;
+										}
+									}
+									if(k == listDatabaseDeletedObj.size())
+									{
+										connection = tsDataSource.getConnection();
+										System.out.println("UserQueries.USER_FRIEND_SIGNUP_FB_INSERT_SQL:"+ UserQueries.USER_FRIEND_SIGNUP_FB_INSERT_SQL);
+										statement = connection.prepareStatement(UserQueries.USER_FRIEND_SIGNUP_FB_INSERT_SQL);
+										statement.setString(1, userID);
+										statement.setString(2, fbID);
+										statement.setString(3, dateNowAppend);
+										statement.setString(4, "0");
+										statement.setString(5, "");
+										statement.execute();
+									}
 									else
-										str = str + ", (" + "?" + "," + "?" + "," + "?" + "," + "?" + ")";
-									list.add(userID);
-									list.add(obj);
-									list.add(dateNow);
-									list.add("0");
-									insertStr = insertStr + str;
+									{
+										connection = tsDataSource.getConnection();
+										System.out.println("UserQueries.USER_FRIEND_FB_STATUS_UPDATE_SQL:"+ UserQueries.USER_FRIEND_FB_STATUS_UPDATE_SQL);
+										statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_STATUS_UPDATE_SQL);
+										statement.setString(1, "");
+										statement.setString(2, userID);
+										statement.setString(3, fbID);
+										statement.execute();
+									}
 								}
-								System.out.println("Insert1:" + insertStr);
-								connection = tsDataSource.getConnection();
-								System.out.println("Insert2:" + countFB);
-								statement = connection.prepareStatement(insertStr);
-								for(int i = 1; i <= list.size(); i++)
+							}
+							
+							for (int i = 0; i < listDatabaseFBObj.size(); i++) {
+								String fbID = listDatabaseFBObj.get(i);
+								int j = 0;
+								for (; j < listFBObj.size(); j++) {
+									String dbFBID = listFBObj.get(j);
+									if(fbID.equals(dbFBID))
+										break;
+								}
+								
+								if(j == listFBObj.size())
 								{
-									statement.setString(i, list.get(i-1));
+									connection = tsDataSource.getConnection();
+									System.out.println("UserQueries.USER_FRIEND_FB_STATUS_UPDATE_SQL:"+ UserQueries.USER_FRIEND_FB_STATUS_UPDATE_SQL);
+									statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_STATUS_UPDATE_SQL);
+									statement.setString(1, "DELETED");
+									statement.setString(2, userID);
+									statement.setString(3, fbID);
+									statement.execute();
 								}
-								statement.execute();
 							}
 						}
 						
-						
-//						List<String> listFriendDB = new ArrayList<String>();
-//						connection = tsDataSource.getConnection();
-//						statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_SECLECT_SQL);
-//						statement.setString(1, userID);
-//						ResultSet resulset = statement.executeQuery();
-//						if(resulset.next())
-//			        	{
-//							listFriendDB.add(CommonFunctionsUtil.getModifiedValueString(resulset.getString("facebook_user_data.INSTALLED")));
-//			        	}
-						
-						//tsDataSource.commit();
+			
 						tsDataSource.close();
 						tsDataSource.closeConnection(connection, statement, null);
 					}

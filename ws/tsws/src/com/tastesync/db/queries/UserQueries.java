@@ -243,11 +243,12 @@ public interface UserQueries extends TSDBCommonQueries {
 	
  	//USER_FRIEND_FB
  	public static String USER_FRIEND_SIGNUP_FB_UPDATE_SQL = "UPDATE user_friend_fb SET INVITATION_SENT_YN = ? WHERE USER_ID = ? AND USER_FRIEND_FB = ?";
- 	public static String USER_FRIEND_SIGNUP_DATETIME_FB_UPDATE_SQL = "UPDATE user_friend_fb SET FB_UPDATE_DATETIME = ? WHERE USER_ID = ? AND USER_FRIEND_FB = ?";
+ 	public static String USER_FRIEND_FB_STATUS_UPDATE_SQL = "UPDATE user_friend_fb SET USER_FRIEND_FB_STATUS = ? WHERE USER_ID = ? AND USER_FRIEND_FB = ?";
  	public static String USER_FRIEND_FB_DELETE_SQL = "DELETE FROM user_friend_fb WHERE USER_ID = ?";
- 	public static String USER_FRIEND_FB_SECLECT_SQL = "SELECT * FROM user_friend_fb WHERE USER_ID = ?";
+ 	public static String USER_FRIEND_FB_SECLECT_SQL = "SELECT * FROM user_friend_fb WHERE USER_ID = ? AND USER_FRIEND_FB_STATUS = ?";
+ 	public static String USER_FRIEND_FB_DELETED_SECLECT_SQL = "SELECT * FROM user_friend_fb WHERE USER_ID = ? AND USER_FRIEND_FB_STATUS = ?";
  	public static String USER_FRIEND_FB_DATETIME_DELETE_SQL = "DELETE FROM user_friend_fb WHERE USER_ID = ? AND FB_UPDATE_DATETIME != ?";
- 	public static String USER_FRIEND_SIGNUP_FB_INSERT_SQL = "INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN) VALUES (?, ?, ?, ?)";
+ 	public static String USER_FRIEND_SIGNUP_FB_INSERT_SQL = "INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN, USER_FRIEND_FB_STATUS) VALUES (?, ?, ?, ?, ?)";
 	
  	//USER_RESTAURANT_FAV
  	public static String USER_RESTAURANT_FAV_INSERT_SQL = "INSERT INTO user_restaurant_fav(USER_ID, RESTAURANT_ID) VALUES (?, ?)";

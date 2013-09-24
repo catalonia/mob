@@ -42,6 +42,8 @@
   <xs:element name="restaurantcuisinetier2" type="TSRestaurantCusineTier2Obj"/>
   <xs:element name="restaurantrecommenders" type="TSRestaurantRecommendersDetailsObj"/>
   <xs:element name="rests4u" type="TSRestaurantsForYouObj"/>
+  <xs:element name="reststilesearchextendedinfo" type="TSRestaurantsTileSearchExtendedInfoObj"/>
+  <xs:element name="reststilesearch" type="TSRestaurantsTileSearchObj"/>
   <xs:element name="senderuser" type="TSSenderUserObj"/>
   <xs:complexType name="TSCityObj">
     <xs:sequence>
@@ -514,6 +516,25 @@
   <xs:complexType name="TSRestaurantsForYouObj">
     <xs:sequence>
       <xs:element name="recommendationsForYouList" type="TSRecommendationsObj" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="restaurantId" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantName" type="xs:string" minOccurs="0"/>
+      <xs:element name="cuisineTier2Name" type="xs:string" minOccurs="0"/>
+      <xs:element name="price" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantCity" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantLat" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantLong" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantDealFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantRating" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRestaurantsTileSearchExtendedInfoObj">
+    <xs:sequence>
+      <xs:element name="maxPaginationId" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantsSearchListTileObj" type="TSRestaurantsTileSearchObj" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRestaurantsTileSearchObj">
+    <xs:sequence>
       <xs:element name="restaurantId" type="xs:string" minOccurs="0"/>
       <xs:element name="restaurantName" type="xs:string" minOccurs="0"/>
       <xs:element name="cuisineTier2Name" type="xs:string" minOccurs="0"/>

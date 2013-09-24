@@ -5691,6 +5691,258 @@ static int xmlTextWriterWriteNs0TSRestaurantsForYouObjType(xmlTextWriterPtr writ
 static void freeNs0TSRestaurantsForYouObjType(struct enunciate_ns0_TSRestaurantsForYouObj *_tSRestaurantsForYouObj);
 
 #endif /* DEF_enunciate_ns0_TSRestaurantsForYouObj_H */
+#ifndef DEF_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj_H
+#define DEF_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *maxPaginationId;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSRestaurantsTileSearchObj *restaurantsSearchListTileObj;
+
+  /**
+   * Size of the restaurantsSearchListTileObj array.
+   */
+  int _sizeof_restaurantsSearchListTileObj;
+};
+
+/**
+ * Reads a TSRestaurantsTileSearchExtendedInfoObj element from XML. The element to be read is "reststilesearchextendedinfo", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchExtendedInfoObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *xml_read_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantsTileSearchExtendedInfoObj to XML under element name "reststilesearchextendedinfo".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj);
+
+/**
+ * Frees a TSRestaurantsTileSearchExtendedInfoObj.
+ *
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj(struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj);
+
+/**
+ * Reads a TSRestaurantsTileSearchExtendedInfoObj element from XML. The element to be read is "reststilesearchextendedinfo", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchExtendedInfoObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *xmlTextReaderReadNs0ReststilesearchextendedinfoElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantsTileSearchExtendedInfoObj to XML under element name "reststilesearchextendedinfo".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0ReststilesearchextendedinfoElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj);
+
+/**
+ * Writes a TSRestaurantsTileSearchExtendedInfoObj to XML under element name "reststilesearchextendedinfo".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0ReststilesearchextendedinfoElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSRestaurantsTileSearchExtendedInfoObj.
+ *
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj whose children are to be free.
+ */
+static void freeNs0ReststilesearchextendedinfoElement(struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj);
+
+/**
+ * Reads a TSRestaurantsTileSearchExtendedInfoObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchExtendedInfoObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *xmlTextReaderReadNs0TSRestaurantsTileSearchExtendedInfoObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantsTileSearchExtendedInfoObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSRestaurantsTileSearchExtendedInfoObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj);
+
+/**
+ * Frees the elements of a TSRestaurantsTileSearchExtendedInfoObj.
+ *
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to free.
+ */
+static void freeNs0TSRestaurantsTileSearchExtendedInfoObjType(struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj);
+
+#endif /* DEF_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj_H */
+#ifndef DEF_enunciate_ns0_TSRestaurantsTileSearchObj_H
+#define DEF_enunciate_ns0_TSRestaurantsTileSearchObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantId;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantName;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *cuisineTier2Name;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *price;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantCity;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantLat;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantLong;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantDealFlag;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *restaurantRating;
+};
+
+/**
+ * Reads a TSRestaurantsTileSearchObj element from XML. The element to be read is "reststilesearch", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchObj *xml_read_enunciate_ns0_TSRestaurantsTileSearchObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantsTileSearchObj to XML under element name "reststilesearch".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSRestaurantsTileSearchObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj);
+
+/**
+ * Frees a TSRestaurantsTileSearchObj.
+ *
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantsTileSearchObj(struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj);
+
+/**
+ * Reads a TSRestaurantsTileSearchObj element from XML. The element to be read is "reststilesearch", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchObj *xmlTextReaderReadNs0ReststilesearchElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantsTileSearchObj to XML under element name "reststilesearch".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0ReststilesearchElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj);
+
+/**
+ * Writes a TSRestaurantsTileSearchObj to XML under element name "reststilesearch".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0ReststilesearchElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSRestaurantsTileSearchObj.
+ *
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj whose children are to be free.
+ */
+static void freeNs0ReststilesearchElement(struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj);
+
+/**
+ * Reads a TSRestaurantsTileSearchObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantsTileSearchObj *xmlTextReaderReadNs0TSRestaurantsTileSearchObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantsTileSearchObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSRestaurantsTileSearchObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj);
+
+/**
+ * Frees the elements of a TSRestaurantsTileSearchObj.
+ *
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to free.
+ */
+static void freeNs0TSRestaurantsTileSearchObjType(struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj);
+
+#endif /* DEF_enunciate_ns0_TSRestaurantsTileSearchObj_H */
 #ifndef DEF_enunciate_ns0_TSSenderUserObj_H
 #define DEF_enunciate_ns0_TSSenderUserObj_H
 
@@ -32674,6 +32926,1081 @@ static void freeNs0TSRestaurantsForYouObjType(struct enunciate_ns0_TSRestaurants
   }
 }
 #endif /* DEF_enunciate_ns0_TSRestaurantsForYouObj_M */
+#ifndef DEF_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj_M
+#define DEF_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj_M
+
+/**
+ * Reads a TSRestaurantsTileSearchExtendedInfoObj element from XML. The element to be read is "reststilesearchextendedinfo", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchExtendedInfoObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *xml_read_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0ReststilesearchextendedinfoElement(reader);
+}
+
+/**
+ * Writes a TSRestaurantsTileSearchExtendedInfoObj to XML under element name "reststilesearchextendedinfo".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj) {
+  return xmlTextWriterWriteNs0ReststilesearchextendedinfoElementNS(writer, _tSRestaurantsTileSearchExtendedInfoObj, 1);
+}
+
+/**
+ * Frees a TSRestaurantsTileSearchExtendedInfoObj.
+ *
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj(struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj) {
+  freeNs0TSRestaurantsTileSearchExtendedInfoObjType(_tSRestaurantsTileSearchExtendedInfoObj);
+  free(_tSRestaurantsTileSearchExtendedInfoObj);
+}
+
+/**
+ * Reads a TSRestaurantsTileSearchExtendedInfoObj element from XML. The element to be read is "reststilesearchextendedinfo", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchExtendedInfoObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *xmlTextReaderReadNs0ReststilesearchextendedinfoElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "reststilesearchextendedinfo", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}reststilesearchextendedinfo.\n");
+#endif
+    _tSRestaurantsTileSearchExtendedInfoObj = xmlTextReaderReadNs0TSRestaurantsTileSearchExtendedInfoObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSRestaurantsTileSearchExtendedInfoObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}reststilesearchextendedinfo failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}reststilesearchextendedinfo failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSRestaurantsTileSearchExtendedInfoObj;
+}
+
+/**
+ * Writes a TSRestaurantsTileSearchExtendedInfoObj to XML under element name "reststilesearchextendedinfo".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0ReststilesearchextendedinfoElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj) {
+  return xmlTextWriterWriteNs0ReststilesearchextendedinfoElementNS(writer, _tSRestaurantsTileSearchExtendedInfoObj, 0);
+}
+
+/**
+ * Writes a TSRestaurantsTileSearchExtendedInfoObj to XML under element name "reststilesearchextendedinfo".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0ReststilesearchextendedinfoElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "reststilesearchextendedinfo", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}reststilesearchextendedinfo. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSRestaurantsTileSearchExtendedInfoObj for root element {}reststilesearchextendedinfo...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSRestaurantsTileSearchExtendedInfoObjType(writer, _tSRestaurantsTileSearchExtendedInfoObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}reststilesearchextendedinfo. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}reststilesearchextendedinfo. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSRestaurantsTileSearchExtendedInfoObj.
+ *
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj whose children are to be free.
+ */
+static void freeNs0ReststilesearchextendedinfoElement(struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj) {
+  freeNs0TSRestaurantsTileSearchExtendedInfoObjType(_tSRestaurantsTileSearchExtendedInfoObj);
+}
+
+/**
+ * Reads a TSRestaurantsTileSearchExtendedInfoObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSRestaurantsTileSearchExtendedInfoObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *xmlTextReaderReadNs0TSRestaurantsTileSearchExtendedInfoObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj = calloc(1, sizeof(struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSRestaurantsTileSearchExtendedInfoObjType(_tSRestaurantsTileSearchExtendedInfoObj);
+        free(_tSRestaurantsTileSearchExtendedInfoObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchExtendedInfoObjType(_tSRestaurantsTileSearchExtendedInfoObj);
+          free(_tSRestaurantsTileSearchExtendedInfoObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchExtendedInfoObj->maxPaginationId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantsSearchListTileObj", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantsSearchListTileObj of type {}TSRestaurantsTileSearchObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSRestaurantsTileSearchObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantsSearchListTileObj of type {}TSRestaurantsTileSearchObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchExtendedInfoObjType(_tSRestaurantsTileSearchExtendedInfoObj);
+          free(_tSRestaurantsTileSearchExtendedInfoObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchExtendedInfoObj->restaurantsSearchListTileObj = realloc(_tSRestaurantsTileSearchExtendedInfoObj->restaurantsSearchListTileObj, (_tSRestaurantsTileSearchExtendedInfoObj->_sizeof_restaurantsSearchListTileObj + 1) * sizeof(struct enunciate_ns0_TSRestaurantsTileSearchObj));
+        memcpy(&(_tSRestaurantsTileSearchExtendedInfoObj->restaurantsSearchListTileObj[_tSRestaurantsTileSearchExtendedInfoObj->_sizeof_restaurantsSearchListTileObj++]), _child_accessor, sizeof(struct enunciate_ns0_TSRestaurantsTileSearchObj));
+        free(_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSRestaurantsTileSearchExtendedInfoObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSRestaurantsTileSearchExtendedInfoObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSRestaurantsTileSearchExtendedInfoObj;
+}
+
+/**
+ * Writes a TSRestaurantsTileSearchExtendedInfoObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSRestaurantsTileSearchExtendedInfoObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSRestaurantsTileSearchExtendedInfoObj->maxPaginationId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchExtendedInfoObj->maxPaginationId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}maxPaginationId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  for (i = 0; i < _tSRestaurantsTileSearchExtendedInfoObj->_sizeof_restaurantsSearchListTileObj; i++) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantsSearchListTileObj", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantsSearchListTileObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSRestaurantsTileSearchObj for element {}restaurantsSearchListTileObj...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSRestaurantsTileSearchObjType(writer, &(_tSRestaurantsTileSearchExtendedInfoObj->restaurantsSearchListTileObj[i]));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSRestaurantsTileSearchObj for element {}restaurantsSearchListTileObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantsSearchListTileObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSRestaurantsTileSearchExtendedInfoObj.
+ *
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to free.
+ */
+static void freeNs0TSRestaurantsTileSearchExtendedInfoObjType(struct enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj) {
+  int i;
+  if (_tSRestaurantsTileSearchExtendedInfoObj->maxPaginationId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor maxPaginationId of type enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchExtendedInfoObj->maxPaginationId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor maxPaginationId of type enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchExtendedInfoObj->maxPaginationId);
+  }
+  if (_tSRestaurantsTileSearchExtendedInfoObj->restaurantsSearchListTileObj != NULL) {
+    for (i = 0; i < _tSRestaurantsTileSearchExtendedInfoObj->_sizeof_restaurantsSearchListTileObj; i++) {
+#if DEBUG_ENUNCIATE > 1
+      printf("Freeing accessor restaurantsSearchListTileObj[%i] of type enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj...\n", i);
+#endif
+      freeNs0TSRestaurantsTileSearchObjType(&(_tSRestaurantsTileSearchExtendedInfoObj->restaurantsSearchListTileObj[i]));
+    }
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantsSearchListTileObj of type enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchExtendedInfoObj->restaurantsSearchListTileObj);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSRestaurantsTileSearchExtendedInfoObj_M */
+#ifndef DEF_enunciate_ns0_TSRestaurantsTileSearchObj_M
+#define DEF_enunciate_ns0_TSRestaurantsTileSearchObj_M
+
+/**
+ * Reads a TSRestaurantsTileSearchObj element from XML. The element to be read is "reststilesearch", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchObj *xml_read_enunciate_ns0_TSRestaurantsTileSearchObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0ReststilesearchElement(reader);
+}
+
+/**
+ * Writes a TSRestaurantsTileSearchObj to XML under element name "reststilesearch".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSRestaurantsTileSearchObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj) {
+  return xmlTextWriterWriteNs0ReststilesearchElementNS(writer, _tSRestaurantsTileSearchObj, 1);
+}
+
+/**
+ * Frees a TSRestaurantsTileSearchObj.
+ *
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantsTileSearchObj(struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj) {
+  freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+  free(_tSRestaurantsTileSearchObj);
+}
+
+/**
+ * Reads a TSRestaurantsTileSearchObj element from XML. The element to be read is "reststilesearch", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantsTileSearchObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantsTileSearchObj *xmlTextReaderReadNs0ReststilesearchElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "reststilesearch", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}reststilesearch.\n");
+#endif
+    _tSRestaurantsTileSearchObj = xmlTextReaderReadNs0TSRestaurantsTileSearchObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSRestaurantsTileSearchObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}reststilesearch failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}reststilesearch failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSRestaurantsTileSearchObj;
+}
+
+/**
+ * Writes a TSRestaurantsTileSearchObj to XML under element name "reststilesearch".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0ReststilesearchElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj) {
+  return xmlTextWriterWriteNs0ReststilesearchElementNS(writer, _tSRestaurantsTileSearchObj, 0);
+}
+
+/**
+ * Writes a TSRestaurantsTileSearchObj to XML under element name "reststilesearch".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0ReststilesearchElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "reststilesearch", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}reststilesearch. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSRestaurantsTileSearchObj for root element {}reststilesearch...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSRestaurantsTileSearchObjType(writer, _tSRestaurantsTileSearchObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}reststilesearch. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}reststilesearch. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSRestaurantsTileSearchObj.
+ *
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj whose children are to be free.
+ */
+static void freeNs0ReststilesearchElement(struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj) {
+  freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+}
+
+/**
+ * Reads a TSRestaurantsTileSearchObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSRestaurantsTileSearchObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantsTileSearchObj *xmlTextReaderReadNs0TSRestaurantsTileSearchObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj = calloc(1, sizeof(struct enunciate_ns0_TSRestaurantsTileSearchObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+        free(_tSRestaurantsTileSearchObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+          free(_tSRestaurantsTileSearchObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchObj->restaurantId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantName", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantName of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+          free(_tSRestaurantsTileSearchObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchObj->restaurantName = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "cuisineTier2Name", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}cuisineTier2Name of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}cuisineTier2Name of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+          free(_tSRestaurantsTileSearchObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchObj->cuisineTier2Name = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "price", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}price of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}price of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+          free(_tSRestaurantsTileSearchObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchObj->price = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantCity", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantCity of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantCity of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+          free(_tSRestaurantsTileSearchObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchObj->restaurantCity = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantLat", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantLat of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantLat of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+          free(_tSRestaurantsTileSearchObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchObj->restaurantLat = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantLong", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantLong of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantLong of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+          free(_tSRestaurantsTileSearchObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchObj->restaurantLong = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantDealFlag", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantDealFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantDealFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+          free(_tSRestaurantsTileSearchObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchObj->restaurantDealFlag = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantRating", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantRating of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantRating of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantsTileSearchObj);
+          free(_tSRestaurantsTileSearchObj);
+          return NULL;
+        }
+
+        _tSRestaurantsTileSearchObj->restaurantRating = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSRestaurantsTileSearchObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSRestaurantsTileSearchObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSRestaurantsTileSearchObj;
+}
+
+/**
+ * Writes a TSRestaurantsTileSearchObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSRestaurantsTileSearchObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSRestaurantsTileSearchObj->restaurantId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchObj->restaurantId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantName != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantName", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantName...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchObj->restaurantName));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantName. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantsTileSearchObj->cuisineTier2Name != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cuisineTier2Name", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}cuisineTier2Name. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}cuisineTier2Name...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchObj->cuisineTier2Name));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}cuisineTier2Name. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}cuisineTier2Name. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantsTileSearchObj->price != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "price", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}price. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}price...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchObj->price));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}price. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}price. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantCity != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantCity", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantCity. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantCity...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchObj->restaurantCity));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantCity. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantCity. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantLat != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantLat", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantLat. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantLat...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchObj->restaurantLat));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantLat. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantLat. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantLong != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantLong", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantLong. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantLong...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchObj->restaurantLong));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantLong. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantLong. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantDealFlag != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantDealFlag", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantDealFlag. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantDealFlag...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchObj->restaurantDealFlag));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantDealFlag. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantDealFlag. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantRating != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantRating", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantRating. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantRating...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantsTileSearchObj->restaurantRating));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}restaurantRating. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantRating. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSRestaurantsTileSearchObj.
+ *
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to free.
+ */
+static void freeNs0TSRestaurantsTileSearchObjType(struct enunciate_ns0_TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj) {
+  int i;
+  if (_tSRestaurantsTileSearchObj->restaurantId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantId of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchObj->restaurantId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantId of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchObj->restaurantId);
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantName != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantName of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchObj->restaurantName);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantName of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchObj->restaurantName);
+  }
+  if (_tSRestaurantsTileSearchObj->cuisineTier2Name != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor cuisineTier2Name of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchObj->cuisineTier2Name);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor cuisineTier2Name of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchObj->cuisineTier2Name);
+  }
+  if (_tSRestaurantsTileSearchObj->price != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor price of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchObj->price);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor price of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchObj->price);
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantCity != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantCity of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchObj->restaurantCity);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantCity of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchObj->restaurantCity);
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantLat != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantLat of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchObj->restaurantLat);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantLat of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchObj->restaurantLat);
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantLong != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantLong of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchObj->restaurantLong);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantLong of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchObj->restaurantLong);
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantDealFlag != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantDealFlag of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchObj->restaurantDealFlag);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantDealFlag of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchObj->restaurantDealFlag);
+  }
+  if (_tSRestaurantsTileSearchObj->restaurantRating != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantRating of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantsTileSearchObj->restaurantRating);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantRating of type enunciate_ns0_TSRestaurantsTileSearchObj...\n");
+#endif
+    free(_tSRestaurantsTileSearchObj->restaurantRating);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSRestaurantsTileSearchObj_M */
 #ifndef DEF_enunciate_ns0_TSSenderUserObj_M
 #define DEF_enunciate_ns0_TSSenderUserObj_M
 
