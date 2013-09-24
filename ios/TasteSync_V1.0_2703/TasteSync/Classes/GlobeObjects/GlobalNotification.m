@@ -198,6 +198,13 @@
                 user.avatarUrl = [dicObj objectForKey:@"photo"];
                 user.uid = [dicObj objectForKey:@"userId"];
             }
+            if (obj.type == NotificationRecorequestNeeded) {
+                obj.description = [dic objectForKey:@"recorequestText"];
+                NSDictionary* dicObj = [dic objectForKey:@"recommendeeUser"];
+                user.name = [dicObj objectForKey:@"name"];
+                user.avatarUrl = [dicObj objectForKey:@"photo"];
+                user.uid = [dicObj objectForKey:@"userId"];
+            }
             obj.user = user;
             
             indexLoad = i;
@@ -235,6 +242,13 @@
             if (obj.type == NotificationFollowUpQuestion) {
                 obj.description = [dic objectForKey:@"questionText"];
                 NSDictionary* dicObj = [dic objectForKey:@"questionUser"];
+                user.name = [dicObj objectForKey:@"name"];
+                user.avatarUrl = [dicObj objectForKey:@"photo"];
+                user.uid = [dicObj objectForKey:@"userId"];
+            }
+            if (obj.type == NotificationRecorequestNeeded) {
+                obj.description = [dic objectForKey:@"recorequestText"];
+                NSDictionary* dicObj = [dic objectForKey:@"recommendeeUser"];
                 user.name = [dicObj objectForKey:@"name"];
                 user.avatarUrl = [dicObj objectForKey:@"photo"];
                 user.uid = [dicObj objectForKey:@"userId"];
@@ -292,6 +306,13 @@
                 user.avatarUrl = [dicObj objectForKey:@"photo"];
                 user.uid = [dicObj objectForKey:@"userId"];
             }
+            if (obj.type == NotificationRecorequestNeeded) {
+                obj.description = [dic objectForKey:@"recorequestText"];
+                NSDictionary* dicObj = [dic objectForKey:@"recommendeeUser"];
+                user.name = [dicObj objectForKey:@"name"];
+                user.avatarUrl = [dicObj objectForKey:@"photo"];
+                user.uid = [dicObj objectForKey:@"userId"];
+            }
             obj.user = user;
             if (nextLoad <= 10) {
                 if ([self checkNotify:obj]) {
@@ -331,6 +352,13 @@
             if (obj.type == NotificationFollowUpQuestion) {
                 obj.description = [dic objectForKey:@"questionText"];
                 NSDictionary* dicObj = [dic objectForKey:@"questionUser"];
+                user.name = [dicObj objectForKey:@"name"];
+                user.avatarUrl = [dicObj objectForKey:@"photo"];
+                user.uid = [dicObj objectForKey:@"userId"];
+            }
+            if (obj.type == NotificationRecorequestNeeded) {
+                obj.description = [dic objectForKey:@"recorequestText"];
+                NSDictionary* dicObj = [dic objectForKey:@"recommendeeUser"];
                 user.name = [dicObj objectForKey:@"name"];
                 user.avatarUrl = [dicObj objectForKey:@"photo"];
                 user.uid = [dicObj objectForKey:@"userId"];

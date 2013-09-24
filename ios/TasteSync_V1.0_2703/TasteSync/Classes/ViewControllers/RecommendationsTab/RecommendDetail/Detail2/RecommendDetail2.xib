@@ -257,7 +257,6 @@
 										<string key="NSFrame">{{0, 20}, {320, 112}}</string>
 										<reference key="NSSuperview" ref="566453188"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -1106,6 +1105,7 @@
 						<string key="actionFollow:">id</string>
 						<string key="actionHidekeyboard:">id</string>
 						<string key="actionNewsfeedTab:">id</string>
+						<string key="actionSearch:">id</string>
 						<string key="actionSend:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -1127,6 +1127,10 @@
 						</object>
 						<object class="IBActionInfo" key="actionNewsfeedTab:">
 							<string key="name">actionNewsfeedTab:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="actionSearch:">
+							<string key="name">actionSearch:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="actionSend:">

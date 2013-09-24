@@ -52,6 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden = YES;
     [CommonHelpers setBackgroudImageForView:self.view];
     [self addPullToRefreshHeader];
     
@@ -66,13 +67,15 @@
         self.arrData = glNotif.arrData;
     }
     page = 1;
-  
+    if(_arrData.count == 1)
+    {
+        [self gotoDetailNotification:[_arrData objectAtIndex:0] atIndex:0 ];
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
 
     userDefault = [UserDefault userDefault];
     tbvUnread.separatorStyle = UITableViewCellSelectionStyleNone ;
@@ -86,11 +89,6 @@
     {
         if (_arrData.count>1) {
             lbNotifications.text = [NSString stringWithFormat:@"%d NOTIFICATIONS",glNotif.unread];
-        }
-        
-        else if(_arrData.count == 1)
-        {
-            [self gotoDetailNotification:[_arrData objectAtIndex:0] atIndex:0 ];
         }
     }
 }
@@ -269,7 +267,8 @@
    // index++;
     currentNotif = obj;
     if (obj.type==TYPE_1) {
-        RecommendDetail1 *vc = [[RecommendDetail1 alloc] initWithNibName:@"RecommendDetail1" bundle:nil];
+        RecommendDetail2 *vc = [[RecommendDetail2 alloc] initWithNibName:@"RecommendDetail2" bundle:nil];
+        vc.delegate = self;
         vc.notificationObj = obj;
         vc.indexOfNotification=index;
         vc.totalNotification= glNotif.unread;
@@ -485,73 +484,5 @@
 {
     [self gotoDetailNotification:obj atIndex:index];
 }
-
-//- (void) gotoDetailNotificationNext:(NotificationObj *) obj atIndex:(int) index;
-//{
-//    debug(@"gotoDetailNotification");
-//    
-//    if (obj == nil) {
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-//        return ;
-//    }
-//    
-//    glNotif.index = index;
-//    
-//    currentNotif = obj;
-//    
-//    if (obj.type==TYPE_1) {
-//        RecommendDetail1 *vc = [[RecommendDetail1 alloc] initWithNibName:@"RecommendDetail1" bundle:nil];
-//        vc.notificationObj = obj;
-//        vc.indexOfNotification=index;
-//        vc.totalNotification= glNotif.unread;
-//        [self.navigationController pushViewController:vc animated:YES];
-//        
-//    }
-//    else if (obj.type == TYPE_2)
-//    {
-//        debug(@"type 2");
-//        RestaurantRecommendations2 *vc = [[RestaurantRecommendations2 alloc] initWithNibName:@"RestaurantRecommendations2" bundle:nil];
-//        vc.notificationObj = obj;
-//        vc.indexOfNotification=index;
-//        vc.totalNotification= glNotif.unread;
-//        [self.navigationController pushViewController:vc animated:YES];
-//        
-//    }
-//    else if (obj.type== TYPE_3||obj.type==TYPE_4)
-//    {
-//        RecommendDetail2 *vc = [[RecommendDetail2 alloc] initWithNibName:@"RecommendDetail2" bundle:nil];
-//        vc.delegate = self;
-//        vc.notificationObj = obj;
-//        vc.indexOfNotification=index;
-//        vc.totalNotification= glNotif.unread;
-//        [self.navigationController pushViewController:vc animated:YES];
-//    }
-//    else if (obj.type==TYPE_5)
-//    {
-//        RecommendDetail3 *vc = [[RecommendDetail3 alloc] initWithNibName:@"RecommendDetail3" bundle:nil];
-//        vc.notificationObj = obj;
-//        vc.indexOfNotification=index;
-//        vc.totalNotification= glNotif.unread;
-//        [self.navigationController pushViewController:vc animated:YES];
-//    }else if (obj.type==TYPE_6)
-//    {
-//        RecommendDetail4 *vc = [[RecommendDetail4 alloc] initWithNibName:@"RecommendDetail4" bundle:nil];
-//        vc.notificationObj = obj;
-//        vc.indexOfNotification=index;
-//        vc.totalNotification= glNotif.unread;
-//        [self.navigationController pushViewController:vc animated:YES];
-//    }
-//    else if(obj.type == TYPE_7)
-//    {
-//        
-//        debug(@"type 7");
-//        NSString *msg = [NSString stringWithFormat:@"Are you sure to see this detail restaurant?"];
-//        [CommonHelpers showConfirmAlertWithTitle:APP_NAME message:msg delegate:self tag:1];
-//    }
-//    else
-//    {
-//        
-//    }
-//}
 
 @end

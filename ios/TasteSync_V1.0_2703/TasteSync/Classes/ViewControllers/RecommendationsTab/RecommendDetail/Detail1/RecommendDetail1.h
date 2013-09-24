@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "NotificationObj.h"
+#import "TextView.h"
 
-@interface RecommendDetail1 : UIViewController
+@interface RecommendDetail1 : UIViewController<TextviewDelegate>
 
 @property (nonatomic, strong) NotificationObj *notificationObj;
 @property (nonatomic, assign) int indexOfNotification,totalNotification;

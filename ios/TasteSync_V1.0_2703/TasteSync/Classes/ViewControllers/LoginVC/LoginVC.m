@@ -352,15 +352,14 @@
     [request setFormPostValue:@"" forKey:@""];
     [request startFormRequest];
     
-    AppDelegate* deleate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    [deleate getNotifications];
+    
 }
 
 - (void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
     if (key == 1) {
         NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
+        NSLog(@"%@",response);
         NSDictionary* dic = [response objectFromJSONString];
         NSString* userLogID = [dic objectForKey:@"user_log_id"];
         [UserDefault userDefault].userLogID = userLogID;
@@ -380,6 +379,9 @@
             ConfigProfileVC *vc = [[ConfigProfileVC alloc] initWithNibName:@"ConfigProfileVC" bundle:nil];
             [self.navigationController pushViewController:vc animated:YES];
         }
+        
+        AppDelegate* deleate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        [deleate getNotifications];
     }
     else
     {

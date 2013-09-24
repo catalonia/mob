@@ -219,7 +219,7 @@ arrDataFilter=_arrDataFilter;;
                 NSLog(@"newmessagesenderuserid: %@", [UserDefault userDefault].userID);
                 NSLog(@"restaurantidlist: %@", listRestaurant);
                 
-                //[request startFormRequest];
+                [request startFormRequest];
             }
             if (self.notificationObj.type == NotificationFollowUpQuestion) {
                 CRequest* request = [[CRequest alloc]initWithURL:@"recofollowupanswer" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
@@ -234,7 +234,22 @@ arrDataFilter=_arrDataFilter;;
                 NSLog(@"replytext: %@", tvMsg.text);
                 NSLog(@"restaurantidlist: %@", listRestaurant);
                 
-                //[request startFormRequest];
+                [request startFormRequest];
+            }
+            if (self.notificationObj.type == NotificationRecorequestNeeded) {
+                CRequest* request = [[CRequest alloc]initWithURL:@"recoreqans" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
+                request.delegate = self;
+                [request setFormPostValue:[UserDefault userDefault].userID          forKey:@"recommenderuserid"];
+                [request setFormPostValue:self.notificationObj.linkId                        forKey:@"recorequestid"];
+                [request setFormPostValue:tvMsg.text                                                forKey:@"replytext"];
+                [request setFormPostValue:listRestaurant                                          forKey:@"restaurantidlist"];
+                
+                NSLog(@"recommenderuserid: %@", [UserDefault userDefault].userID );
+                NSLog(@"recorequestid: %@", self.notificationObj.linkId);
+                NSLog(@"replytext: %@", tvMsg.text);
+                NSLog(@"restaurantidlist: %@", listRestaurant);
+                
+                [request startFormRequest];
             }
         }
         

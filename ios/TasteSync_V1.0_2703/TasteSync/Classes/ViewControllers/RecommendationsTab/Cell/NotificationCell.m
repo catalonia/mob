@@ -13,6 +13,7 @@
     __weak IBOutlet UIImageView *ivAvatar;
     __weak IBOutlet UILabel *lbName,*lbLongMsg;
     __weak IBOutlet UIButton *btShowProfile;
+    __weak IBOutlet UIActivityIndicatorView *activity;
     
     NotificationObj* objNotify;
 }
@@ -46,6 +47,12 @@
     objNotify = obj;
     if (obj.user.avatar != nil) {
         ivAvatar.image = obj.user.avatar;
+        [activity removeFromSuperview];
+    }
+    else
+    {
+        [activity startAnimating];
+        [NSThread detachNewThreadSelector:@selector(loadImage) toTarget:self withObject:nil];
     }
     //NSString *firstCh = [obj.user.lastname substringToIndex:1];
     if (obj.type == TYPE_1) {
@@ -88,7 +95,10 @@
 {
     UserObj* obj = objNotify.user;
     obj.avatar = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:obj.avatarUrl]]];
+    [activity stopAnimating];
+    [activity removeFromSuperview];
     ivAvatar.image = obj.avatar;
+    objNotify.user.avatar = obj.avatar;
 }
 
 @end
