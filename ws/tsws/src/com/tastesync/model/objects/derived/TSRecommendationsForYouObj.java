@@ -14,9 +14,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "recos4u")
 public class TSRecommendationsForYouObj implements Serializable {
     private static final long serialVersionUID = 3105890272734062494L;
-    String recorequestText;
-    private List<TSRestaurantsForYouObj> restaurantsForYouObjList = new ArrayList<TSRestaurantsForYouObj>();
+    private String recorequestText;
     private TSUserProfileBasicObj latestRecommendeeUser;
+    private List<TSRestaurantsForYouObj> restaurantsForYouObjList = new ArrayList<TSRestaurantsForYouObj>();
+    
 
     public TSRecommendationsForYouObj() {
         super();
