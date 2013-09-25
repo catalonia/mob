@@ -46,6 +46,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -69,6 +70,35 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             tsDataSource.begin();
 
             StringBuffer mergedTextBuffer = new StringBuffer();
+
+            //sort lists
+            if (cuisineTier1IdList != null) {
+                Arrays.sort(cuisineTier1IdList);
+            }
+
+            if (cuisineTier2IdList != null) {
+                Arrays.sort(cuisineTier2IdList);
+            }
+
+            if (priceIdList != null) {
+                Arrays.sort(priceIdList);
+            }
+
+            if (themeIdList != null) {
+                Arrays.sort(themeIdList);
+            }
+
+            if (whoareyouwithIdList != null) {
+                Arrays.sort(whoareyouwithIdList);
+            }
+
+            if (typeOfRestaurantIdList != null) {
+                Arrays.sort(typeOfRestaurantIdList);
+            }
+
+            if (occasionIdList != null) {
+                Arrays.sort(occasionIdList);
+            }
 
             for (String cuisineId : cuisineTier1IdList) {
                 mergedTextBuffer.append("cuisine tier1 s:");
@@ -105,6 +135,15 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 mergedTextBuffer.append(occasionId).append("");
             }
 
+            if (cityId != null) {
+            	mergedTextBuffer.append("cityId s:");
+            	mergedTextBuffer.append(cityId).append("");
+            	if (neighborhoodId != null) {
+                	mergedTextBuffer.append("neighborhoodId s:");
+                	mergedTextBuffer.append(neighborhoodId).append("");
+            	}
+            }
+            
             String recoRequestId = userId +
                 CommonFunctionsUtil.generateUniqueKey();
 
