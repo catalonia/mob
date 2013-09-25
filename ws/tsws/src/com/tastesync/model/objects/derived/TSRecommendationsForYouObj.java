@@ -1,5 +1,6 @@
 package com.tastesync.model.objects.derived;
 
+import com.tastesync.model.objects.TSUserProfileBasicObj;
 
 import java.io.Serializable;
 
@@ -15,9 +16,19 @@ public class TSRecommendationsForYouObj implements Serializable {
     private static final long serialVersionUID = 3105890272734062494L;
     String recorequestText;
     private List<TSRestaurantsForYouObj> restaurantsForYouObjList = new ArrayList<TSRestaurantsForYouObj>();
+    private TSUserProfileBasicObj latestRecommendeeUser;
 
     public TSRecommendationsForYouObj() {
         super();
+    }
+
+    public TSUserProfileBasicObj getLatestRecommendeeUser() {
+        return latestRecommendeeUser;
+    }
+
+    public void setLatestRecommendeeUser(
+        TSUserProfileBasicObj latestRecommendeeUser) {
+        this.latestRecommendeeUser = latestRecommendeeUser;
     }
 
     @XmlElement

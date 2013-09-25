@@ -136,14 +136,15 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             }
 
             if (cityId != null) {
-            	mergedTextBuffer.append("cityId s:");
-            	mergedTextBuffer.append(cityId).append("");
-            	if (neighborhoodId != null) {
-                	mergedTextBuffer.append("neighborhoodId s:");
-                	mergedTextBuffer.append(neighborhoodId).append("");
-            	}
+                mergedTextBuffer.append("cityId s:");
+                mergedTextBuffer.append(cityId).append("");
+
+                if (neighborhoodId != null) {
+                    mergedTextBuffer.append("neighborhoodId s:");
+                    mergedTextBuffer.append(neighborhoodId).append("");
+                }
             }
-            
+
             String recoRequestId = userId +
                 CommonFunctionsUtil.generateUniqueKey();
 
@@ -2485,6 +2486,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 List<String> replyTextList = null;
 
                 List<TSRestaurantsForYouObj> restaurantsForYouObjList = new ArrayList<TSRestaurantsForYouObj>();
+                TSUserProfileBasicObj latestRecommendeeUser = null;
 
                 //check for duplicates
                 for (String restaurantId : restaurantIdList) {
@@ -2521,6 +2523,12 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     tsRestaurantsForYouObj.setRestaurantName(restaurantName);
                     tsRestaurantsForYouObj.setRecommendationsForYouList(recommendationsForYouList);
 
+                    if ((recommendationsForYouList != null) &&
+                            !recommendationsForYouList.isEmpty()) {
+                        latestRecommendeeUser = recommendationsForYouList.get(recommendationsForYouList.size() -
+                                1).getRecommendeeUser();
+                    }
+
                     restaurantsForYouObjList.add(tsRestaurantsForYouObj);
                 }
 
@@ -2531,6 +2539,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 TSRecommendationsForYouObj tsRecommendationsForYouObj = new TSRecommendationsForYouObj();
                 tsRecommendationsForYouObj.setRecorequestText(recorequestText);
                 tsRecommendationsForYouObj.setRestaurantsForYouObjList(restaurantsForYouObjList);
+                tsRecommendationsForYouObj.setLatestRecommendeeUser(latestRecommendeeUser);
 
                 tsNotifRecorequestAnswerObj.setRecommendationsForYou(tsRecommendationsForYouObj);
                 recoNotificationBaseList.add(tsNotifRecorequestAnswerObj);

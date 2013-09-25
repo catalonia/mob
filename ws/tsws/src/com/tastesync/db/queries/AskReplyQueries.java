@@ -250,7 +250,8 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "               recorequest_reply_user.reply_text " +
         "        FROM   recorequest_reply_user " +
         "        WHERE  recorequest_reply_user.recorequest_id = ?) x, " +
-        "       user_restaurant_reco y " + "WHERE  x.reply_id = y.reply_id ";
+        "       user_restaurant_reco y " + "WHERE  x.reply_id = y.reply_id " +
+        "       order by y.UPDATED_DATETIME ASC";
     public static String USER_RESTAURANT_INSERT_SQL = "" +
         "INSERT INTO user_restaurant_reco " +
         "            (user_restaurant_reco.recommendee_user_id, " +
