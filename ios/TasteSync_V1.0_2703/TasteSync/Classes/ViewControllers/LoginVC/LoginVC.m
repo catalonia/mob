@@ -346,13 +346,18 @@
 
 - (void)requestData
 {
-    
     CRequest* request = [[CRequest alloc]initWithURL:@"getAllData" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:2];
     request.delegate = self;
     [request setFormPostValue:@"" forKey:@""];
     [request startFormRequest];
-    
-    
+}
+
+-(void)submitLogin
+{
+    CRequest* request = [[CRequest alloc]initWithURL:@"loginAccount" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:3];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request startFormRequest];
 }
 
 - (void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
@@ -380,10 +385,12 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
         
+        [self submitLogin];
+        
         AppDelegate* deleate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         [deleate getNotifications];
     }
-    else
+    if (key == 2)
     {
         NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         
@@ -470,7 +477,15 @@
         NSLog(@"arrWhoAreUWith: %d"          , [[CommonHelpers appDelegate].arrWhoAreUWith count]           );
         NSLog(@"arrDropdown: %d"                 , [[CommonHelpers appDelegate].arrDropdown count]                 );
     }
-    
+    if (key == 3)
+    {
+        NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",response);
+        NSDictionary* dic = [response objectFromJSONString];
+        NSString* userLogID = [dic objectForKey:@"successMsg"];
+        [UserDefault userDefault].userLogID = userLogID;
+        [UserDefault update];
+    }
     
     
 }

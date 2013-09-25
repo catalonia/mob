@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "NotificationObj.h"
+#import "CRequest.h"
+#import "JSONKit.h"
 
-@interface RestaurantRecommendations2 : UIViewController
+@interface RestaurantRecommendations2 : UIViewController<RequestDelegate>
 {
     __weak IBOutlet UITableView *tbv;
 }

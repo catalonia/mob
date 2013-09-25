@@ -362,30 +362,11 @@ arrDataFilter=_arrDataFilter;;
     if (tableView==tbvFilter) {
         
         RestaurantObj *obj = [_arrDataFilter objectAtIndex:indexPath.row];
-        
-        //[self.arrData replaceObjectAtIndex:(_arrData.count-1) withObject:obj];
-        //[tbvResult reloadData];
         [textView addRestaurant:obj];
         tbvFilter.hidden= YES;
         [self.arrDataFilter removeAllObjects];
-//        [self hideKeyBoard];
     }
 }
-/*
-
-- (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (tableView == tbvResult) {
-        if (indexPath.row < _arrData.count -1) {
-            [self.arrData removeObjectAtIndex:indexPath.row];
-            [tbvResult reloadData];
-        }
-    }
-    
-}
-
-*/
-
 
 #pragma mark - UITextFieldDelegate
 

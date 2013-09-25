@@ -577,6 +577,7 @@
 		C30DA9B317BDA5DB00846D01 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C30DA9B217BDA5DB00846D01 /* FacebookSDK.framework */; };
 		C399B33717E95C8700F83014 /* HighlightText.m in Sources */ = {isa = PBXBuildFile; fileRef = C399B33617E95C8700F83014 /* HighlightText.m */; };
 		C39A699E17EAFFFA00C8CF5D /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C39A699D17EAFFFA00C8CF5D /* TextView.m */; };
+		C39D802D17F2D45C00B71F81 /* ReplyRecomendationObj.m in Sources */ = {isa = PBXBuildFile; fileRef = C39D802C17F2D45C00B71F81 /* ReplyRecomendationObj.m */; };
 		C39F9593179F6EC600C91BAA /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F957E179F6EC600C91BAA /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C39F9594179F6EC600C91BAA /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F9581179F6EC600C91BAA /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C39F9595179F6EC600C91BAA /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C39F9583179F6EC600C91BAA /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1284,6 +1285,8 @@
 		C399B33617E95C8700F83014 /* HighlightText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightText.m; sourceTree = "<group>"; };
 		C39A699C17EAFFFA00C8CF5D /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
 		C39A699D17EAFFFA00C8CF5D /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
+		C39D802B17F2D45C00B71F81 /* ReplyRecomendationObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplyRecomendationObj.h; sourceTree = "<group>"; };
+		C39D802C17F2D45C00B71F81 /* ReplyRecomendationObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplyRecomendationObj.m; sourceTree = "<group>"; };
 		C39F957D179F6EC600C91BAA /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		C39F957E179F6EC600C91BAA /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		C39F957F179F6EC600C91BAA /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -2698,6 +2701,8 @@
 				C3D0AF6917B61F9400D91294 /* TSCityObj.m */,
 				C3D8025417B9CC410025E69F /* TSPhotoRestaurantObj.h */,
 				C3D8025517B9CC410025E69F /* TSPhotoRestaurantObj.m */,
+				C39D802B17F2D45C00B71F81 /* ReplyRecomendationObj.h */,
+				C39D802C17F2D45C00B71F81 /* ReplyRecomendationObj.m */,
 			);
 			path = GlobeObjects;
 			sourceTree = "<group>";
@@ -3696,6 +3701,7 @@
 				C3CF12CE17CD8A6B00B12503 /* RestaurantQuestionCell.m in Sources */,
 				C399B33717E95C8700F83014 /* HighlightText.m in Sources */,
 				C39A699E17EAFFFA00C8CF5D /* TextView.m in Sources */,
+				C39D802D17F2D45C00B71F81 /* ReplyRecomendationObj.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

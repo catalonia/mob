@@ -18,7 +18,7 @@
 #define TYPE_7  7
 
 #define NO_TITLE_1     @"needs a recommendation"
-#define NO_TITLE_2(res_name)     [NSString stringWithFormat:@"recommended %@ for you",res_name]
+#define NO_TITLE_2(res_name)     [NSString stringWithFormat:@"%@ recommendation for you",res_name]
 #define NO_TITLE_3     @"has a follow-up question"
 #define NO_TITLE_4     @"sent you a message"
 #define NO_TITLE_5     @"liked your recommendation"

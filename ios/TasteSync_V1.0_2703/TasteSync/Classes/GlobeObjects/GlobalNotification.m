@@ -205,6 +205,13 @@
                 user.avatarUrl = [dicObj objectForKey:@"photo"];
                 user.uid = [dicObj objectForKey:@"userId"];
             }
+            
+            if (obj.type == NotificationRecommendationsForYou) {
+                NSDictionary* dicObj = [dic objectForKey:@"recommendationsForYou"];
+                obj.description = [dicObj objectForKey:@"recorequestText"];
+                user = nil;
+            }
+            
             obj.user = user;
             
             indexLoad = i;

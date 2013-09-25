@@ -60,8 +60,11 @@
     }
     else if(obj.type == TYPE_2)
     {
-        NSString *res_name = @"Nanking";
-        lbName.text = [NSString stringWithFormat:@"%@. %@",obj.user.name,NO_TITLE_2(res_name)];
+        NSString *res_name = @"Restaurant";
+        lbName.text = [NSString stringWithFormat:@"%@",NO_TITLE_2(res_name)];
+        [activity removeFromSuperview];
+        [ivAvatar removeFromSuperview];
+        lbName.frame = CGRectMake(30, lbName.frame.origin.y, 247, lbName.frame.size.height);
     }
     else if(obj.type == TYPE_3)
     {
