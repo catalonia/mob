@@ -31,7 +31,8 @@
     UserDefault *userDefault;
     GlobalNotification *glNotif ;
     NotificationObj *currentNotif;
-    
+    TextView* textView;
+    UITextView* tvMsg;
 
 }
 
@@ -76,6 +77,13 @@ arrDataFilter=_arrDataFilter;
     [super viewDidLoad];
     [CommonHelpers setBackgroudImageForView:self.view];
     // Do any additional setup after loading the view from its nib.
+    
+    textView = [[TextView alloc]initWithFrame:CGRectMake(10, 15, 200, 41)];
+    textView.textView.font = [UIFont fontWithName:@"Helvetica" size:17.0];
+    [textView.textView setBackgroundColor:[UIColor clearColor]];
+    tvMsg = textView.textView;
+    textView.delegate = self;
+    [view3 addSubview:textView];
     
     glNotif = [[CommonHelpers appDelegate] globalNotification];
     
@@ -695,6 +703,28 @@ arrDataFilter=_arrDataFilter;
     
 }
 
-
+#pragma mark TextviewDelegate
+-(void)addNewObject:(HighlightText *)object
+{
+    [_arrData addObject:object.userObj];
+}
+-(void)removeObject:(HighlightText *)object
+{
+    [_arrData removeObject:object.userObj];
+}
+-(void)enterCharacter:(NSString *)text
+{
+    NSLog(@"Line: %f", textView.textView.contentSize.height);
+    [scrollViewMain setContentOffset:CGPointMake(0, 190) animated:YES];
+}
+-(void)enterSearchObject:(NSString *)text
+{
+    NSLog(@"%@",text);
+    [self searchLocal:text];
+}
+-(void)beginEditting
+{
+    [scrollViewMain setContentOffset:CGPointMake(0, 190) animated:YES];
+}
 
 @end

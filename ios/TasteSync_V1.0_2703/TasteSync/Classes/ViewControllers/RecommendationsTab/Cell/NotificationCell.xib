@@ -12,6 +12,7 @@
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
+			<string>IBUIActivityIndicatorView</string>
 			<string>IBUIButton</string>
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
@@ -180,6 +181,18 @@
 									<string key="NSResourceName">arrow_right.png</string>
 								</object>
 							</object>
+							<object class="IBUIActivityIndicatorView" id="592576110">
+								<reference key="NSNextResponder" ref="564240481"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{29, 9}, {37, 37}}</string>
+								<reference key="NSSuperview" ref="564240481"/>
+								<reference key="NSWindow"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<bool key="IBUIHidesWhenStopped">NO</bool>
+								<int key="IBUIStyle">0</int>
+							</object>
 						</array>
 						<string key="NSFrameSize">{320, 109}</string>
 						<reference key="NSSuperview" ref="21055839"/>
@@ -245,6 +258,14 @@
 					<int key="connectionID">26</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">activity</string>
+						<reference key="source" ref="21055839"/>
+						<reference key="destination" ref="592576110"/>
+					</object>
+					<int key="connectionID">30</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">actionShowProfile:</string>
 						<reference key="source" ref="848830351"/>
@@ -283,6 +304,7 @@
 							<reference ref="848830351"/>
 							<reference ref="998680888"/>
 							<reference ref="213105746"/>
+							<reference ref="592576110"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -317,6 +339,11 @@
 						<reference key="object" ref="213105746"/>
 						<reference key="parent" ref="21055839"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">29</int>
+						<reference key="object" ref="592576110"/>
+						<reference key="parent" ref="21055839"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -327,6 +354,7 @@
 				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.CustomClassName">NotificationCell</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -337,7 +365,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">28</int>
+			<int key="maxID">30</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -345,12 +373,17 @@
 					<string key="className">NotificationCell</string>
 					<string key="superclassName">UITableViewCell</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="activity">UIActivityIndicatorView</string>
 						<string key="btShowProfile">UIButton</string>
 						<string key="ivAvatar">UIImageView</string>
 						<string key="lbLongMsg">UILabel</string>
 						<string key="lbName">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="activity">
+							<string key="name">activity</string>
+							<string key="candidateClassName">UIActivityIndicatorView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="btShowProfile">
 							<string key="name">btShowProfile</string>
 							<string key="candidateClassName">UIButton</string>

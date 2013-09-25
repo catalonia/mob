@@ -241,6 +241,7 @@
         if (( location < obj.endLocation && location > obj.beginLocation ) || ((location + lenght) < obj.endLocation && (location + lenght) > obj.beginLocation) || ( (location + lenght) >= obj.endLocation && location <= obj.beginLocation ) ) {
             [self.delegate removeObject:obj];
             [_arrayItem removeObject:obj];
+            break;
         }
         if (location < obj.beginLocation) {
             obj.beginLocation -= lenght;

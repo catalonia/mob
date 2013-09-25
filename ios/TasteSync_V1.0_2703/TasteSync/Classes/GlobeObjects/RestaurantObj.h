@@ -44,9 +44,10 @@ typedef enum
 
 @property(nonatomic,strong)  NSString* factualId, *factualRating, *priceRange, *restaurantHours, *sumVoteCount, *sumVoteValue, *tbdOpenTableId;
 
-//@property(nonatomic,strong) TSGlobalObj* cuisineTier2;
+@property(nonatomic,strong) NSString* cuisineTier2;
 @property (nonatomic, strong) NSString* price;
 
 @property(nonatomic,strong) TSCityObj* cityObj;
+@property(nonatomic,strong) NSMutableArray* recommendArray;
 
 @end

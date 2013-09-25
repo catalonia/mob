@@ -13462,6 +13462,818 @@
 @end /* implementation ENUNCIATENS0TSRestaurantsForYouObj (JAXB) */
 
 #endif /* DEF_ENUNCIATENS0TSRestaurantsForYouObj_M */
+#ifndef DEF_ENUNCIATENS0TSRestaurantsTileSearchObj_M
+#define DEF_ENUNCIATENS0TSRestaurantsTileSearchObj_M
+
+/**
+ * (no documentation provided)
+ */
+@implementation ENUNCIATENS0TSRestaurantsTileSearchObj
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantId
+{
+  return _restaurantId;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantId: (NSString *) newRestaurantId
+{
+  [newRestaurantId retain];
+  [_restaurantId release];
+  _restaurantId = newRestaurantId;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantName
+{
+  return _restaurantName;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantName: (NSString *) newRestaurantName
+{
+  [newRestaurantName retain];
+  [_restaurantName release];
+  _restaurantName = newRestaurantName;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) cuisineTier2Name
+{
+  return _cuisineTier2Name;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCuisineTier2Name: (NSString *) newCuisineTier2Name
+{
+  [newCuisineTier2Name retain];
+  [_cuisineTier2Name release];
+  _cuisineTier2Name = newCuisineTier2Name;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) price
+{
+  return _price;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPrice: (NSString *) newPrice
+{
+  [newPrice retain];
+  [_price release];
+  _price = newPrice;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantCity
+{
+  return _restaurantCity;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantCity: (NSString *) newRestaurantCity
+{
+  [newRestaurantCity retain];
+  [_restaurantCity release];
+  _restaurantCity = newRestaurantCity;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantLat
+{
+  return _restaurantLat;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantLat: (NSString *) newRestaurantLat
+{
+  [newRestaurantLat retain];
+  [_restaurantLat release];
+  _restaurantLat = newRestaurantLat;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantLong
+{
+  return _restaurantLong;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantLong: (NSString *) newRestaurantLong
+{
+  [newRestaurantLong retain];
+  [_restaurantLong release];
+  _restaurantLong = newRestaurantLong;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantDealFlag
+{
+  return _restaurantDealFlag;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantDealFlag: (NSString *) newRestaurantDealFlag
+{
+  [newRestaurantDealFlag retain];
+  [_restaurantDealFlag release];
+  _restaurantDealFlag = newRestaurantDealFlag;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantRating
+{
+  return _restaurantRating;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantRating: (NSString *) newRestaurantRating
+{
+  [newRestaurantRating retain];
+  [_restaurantRating release];
+  _restaurantRating = newRestaurantRating;
+}
+
+- (void) dealloc
+{
+  [self setRestaurantId: nil];
+  [self setRestaurantName: nil];
+  [self setCuisineTier2Name: nil];
+  [self setPrice: nil];
+  [self setRestaurantCity: nil];
+  [self setRestaurantLat: nil];
+  [self setRestaurantLong: nil];
+  [self setRestaurantDealFlag: nil];
+  [self setRestaurantRating: nil];
+  [super dealloc];
+}
+
+//documentation inherited.
++ (id<EnunciateXML>) readFromXML: (NSData *) xml
+{
+  ENUNCIATENS0TSRestaurantsTileSearchObj *_eNUNCIATENS0TSRestaurantsTileSearchObj;
+  xmlTextReaderPtr reader = xmlReaderForMemory([xml bytes], [xml length], NULL, NULL, 0);
+  if (reader == NULL) {
+    [NSException raise: @"XMLReadError"
+                 format: @"Error instantiating an XML reader."];
+    return nil;
+  }
+
+  _eNUNCIATENS0TSRestaurantsTileSearchObj = (ENUNCIATENS0TSRestaurantsTileSearchObj *) [ENUNCIATENS0TSRestaurantsTileSearchObj readXMLElement: reader];
+  xmlFreeTextReader(reader); //free the reader
+  return _eNUNCIATENS0TSRestaurantsTileSearchObj;
+}
+
+//documentation inherited.
+- (NSData *) writeToXML
+{
+  xmlBufferPtr buf;
+  xmlTextWriterPtr writer;
+  int rc;
+  NSData *data;
+
+  buf = xmlBufferCreate();
+  if (buf == NULL) {
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error creating an XML buffer."];
+    return nil;
+  }
+
+  writer = xmlNewTextWriterMemory(buf, 0);
+  if (writer == NULL) {
+    xmlBufferFree(buf);
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error creating an XML writer."];
+    return nil;
+  }
+
+  rc = xmlTextWriterStartDocument(writer, NULL, "utf-8", NULL);
+  if (rc < 0) {
+    xmlFreeTextWriter(writer);
+    xmlBufferFree(buf);
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error writing XML start document."];
+    return nil;
+  }
+
+  NS_DURING
+  {
+    [self writeXMLElement: writer];
+  }
+  NS_HANDLER
+  {
+    xmlFreeTextWriter(writer);
+    xmlBufferFree(buf);
+    [localException raise];
+  }
+  NS_ENDHANDLER
+
+  rc = xmlTextWriterEndDocument(writer);
+  if (rc < 0) {
+    xmlFreeTextWriter(writer);
+    xmlBufferFree(buf);
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error writing XML end document."];
+    return nil;
+  }
+
+  xmlFreeTextWriter(writer);
+  data = [NSData dataWithBytes: buf->content length: buf->use];
+  xmlBufferFree(buf);
+  return data;
+}
+@end /* implementation ENUNCIATENS0TSRestaurantsTileSearchObj */
+
+/**
+ * Internal, private interface for JAXB reading and writing.
+ */
+@interface ENUNCIATENS0TSRestaurantsTileSearchObj (JAXB) <JAXBReading, JAXBWriting, JAXBType, JAXBElement>
+
+@end /*interface ENUNCIATENS0TSRestaurantsTileSearchObj (JAXB)*/
+
+/**
+ * Internal, private implementation for JAXB reading and writing.
+ */
+@implementation ENUNCIATENS0TSRestaurantsTileSearchObj (JAXB)
+
+/**
+ * Read an instance of ENUNCIATENS0TSRestaurantsTileSearchObj from an XML reader.
+ *
+ * @param reader The reader.
+ * @return An instance of ENUNCIATENS0TSRestaurantsTileSearchObj defined by the XML reader.
+ */
++ (id<JAXBType>) readXMLType: (xmlTextReaderPtr) reader
+{
+  ENUNCIATENS0TSRestaurantsTileSearchObj *_eNUNCIATENS0TSRestaurantsTileSearchObj = [[ENUNCIATENS0TSRestaurantsTileSearchObj alloc] init];
+  NS_DURING
+  {
+    [_eNUNCIATENS0TSRestaurantsTileSearchObj initWithReader: reader];
+  }
+  NS_HANDLER
+  {
+    _eNUNCIATENS0TSRestaurantsTileSearchObj = nil;
+    [localException raise];
+  }
+  NS_ENDHANDLER
+
+  [_eNUNCIATENS0TSRestaurantsTileSearchObj autorelease];
+  return _eNUNCIATENS0TSRestaurantsTileSearchObj;
+}
+
+/**
+ * Initialize this instance of ENUNCIATENS0TSRestaurantsTileSearchObj according to
+ * the XML being read from the reader.
+ *
+ * @param reader The reader.
+ */
+- (id) initWithReader: (xmlTextReaderPtr) reader
+{
+  return [super initWithReader: reader];
+}
+
+/**
+ * Write the XML for this instance of ENUNCIATENS0TSRestaurantsTileSearchObj to the writer.
+ * Note that since we're only writing the XML type,
+ * No start/end element will be written.
+ *
+ * @param reader The reader.
+ */
+- (void) writeXMLType: (xmlTextWriterPtr) writer
+{
+  [super writeXMLType:writer];
+}
+
+/**
+ * Reads a ENUNCIATENS0TSRestaurantsTileSearchObj from an XML reader. The element to be read is
+ * "reststilesearch".
+ *
+ * @param reader The XML reader.
+ * @return The ENUNCIATENS0TSRestaurantsTileSearchObj.
+ */
++ (id<JAXBElement>) readXMLElement: (xmlTextReaderPtr) reader {
+  int status;
+  ENUNCIATENS0TSRestaurantsTileSearchObj *_tSRestaurantsTileSearchObj = nil;
+
+  if (xmlTextReaderNodeType(reader) != XML_READER_TYPE_ELEMENT) {
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+    if (status < 1) {
+      [NSException raise: @"XMLReadError"
+                   format: @"Error advancing the reader to start element reststilesearch."];
+    }
+  }
+
+  if (xmlStrcmp(BAD_CAST "reststilesearch", xmlTextReaderConstLocalName(reader)) == 0
+      && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read root element {}reststilesearch.");
+#endif
+    _tSRestaurantsTileSearchObj = (ENUNCIATENS0TSRestaurantsTileSearchObj *)[ENUNCIATENS0TSRestaurantsTileSearchObj readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Successfully read root element {}reststilesearch.");
+#endif
+  }
+  else {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      [NSException raise: @"XMLReadError"
+                   format: @"Unable to read ENUNCIATENS0TSRestaurantsTileSearchObj. Expected element reststilesearch. Current element: {}%s", xmlTextReaderConstLocalName(reader)];
+    }
+    else {
+      [NSException raise: @"XMLReadError"
+                   format: @"Unable to read ENUNCIATENS0TSRestaurantsTileSearchObj. Expected element reststilesearch. Current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader)];
+    }
+  }
+
+  return _tSRestaurantsTileSearchObj;
+}
+
+/**
+ * Writes this ENUNCIATENS0TSRestaurantsTileSearchObj to XML under element name "reststilesearch".
+ * The namespace declarations for the element will be written.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchObj The TSRestaurantsTileSearchObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+- (void) writeXMLElement: (xmlTextWriterPtr) writer
+{
+  [self writeXMLElement: writer writeNamespaces: YES];
+}
+
+/**
+ * Writes this ENUNCIATENS0TSRestaurantsTileSearchObj to an XML writer.
+ *
+ * @param writer The writer.
+ * @param writeNs Whether to write the namespaces for this element to the xml writer.
+ */
+- (void) writeXMLElement: (xmlTextWriterPtr) writer writeNamespaces: (BOOL) writeNs
+{
+  int rc = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "reststilesearch", NULL);
+  if (rc < 0) {
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error writing start element {}reststilesearch. XML writer status: %i\n", rc];
+  }
+
+#if DEBUG_ENUNCIATE > 1
+  NSLog(@"writing type {}TSRestaurantsTileSearchObj for root element {}reststilesearch...");
+#endif
+  [self writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+  NSLog(@"successfully wrote type {}TSRestaurantsTileSearchObj for root element {}reststilesearch...");
+#endif
+  rc = xmlTextWriterEndElement(writer);
+  if (rc < 0) {
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error writing end element {}reststilesearch. XML writer status: %i\n", rc];
+  }
+}
+
+//documentation inherited.
+- (BOOL) readJAXBAttribute: (xmlTextReaderPtr) reader
+{
+  void *_child_accessor;
+
+  if ([super readJAXBAttribute: reader]) {
+    return YES;
+  }
+
+  return NO;
+}
+
+//documentation inherited.
+- (BOOL) readJAXBValue: (xmlTextReaderPtr) reader
+{
+  return [super readJAXBValue: reader];
+}
+
+//documentation inherited.
+- (BOOL) readJAXBChildElement: (xmlTextReaderPtr) reader
+{
+  id __child;
+  void *_child_accessor;
+  int status, depth;
+
+  if ([super readJAXBChildElement: reader]) {
+    return YES;
+  }
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantId", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}restaurantId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}restaurantId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setRestaurantId: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantName", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}restaurantName of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}restaurantName of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setRestaurantName: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "cuisineTier2Name", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}cuisineTier2Name of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}cuisineTier2Name of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setCuisineTier2Name: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "price", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}price of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}price of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setPrice: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantCity", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}restaurantCity of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}restaurantCity of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setRestaurantCity: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantLat", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}restaurantLat of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}restaurantLat of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setRestaurantLat: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantLong", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}restaurantLong of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}restaurantLong of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setRestaurantLong: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantDealFlag", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}restaurantDealFlag of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}restaurantDealFlag of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setRestaurantDealFlag: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantRating", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}restaurantRating of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}restaurantRating of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setRestaurantRating: __child];
+    return YES;
+  } //end "if choice"
+
+
+  return NO;
+}
+
+//documentation inherited.
+- (int) readUnknownJAXBChildElement: (xmlTextReaderPtr) reader
+{
+  return [super readUnknownJAXBChildElement: reader];
+}
+
+//documentation inherited.
+- (void) readUnknownJAXBAttribute: (xmlTextReaderPtr) reader
+{
+  [super readUnknownJAXBAttribute: reader];
+}
+
+//documentation inherited.
+- (void) writeJAXBAttributes: (xmlTextWriterPtr) writer
+{
+  int status;
+
+  [super writeJAXBAttributes: writer];
+
+}
+
+//documentation inherited.
+- (void) writeJAXBValue: (xmlTextWriterPtr) writer
+{
+  [super writeJAXBValue: writer];
+}
+
+/**
+ * Method for writing the child elements.
+ *
+ * @param writer The writer.
+ */
+- (void) writeJAXBChildElements: (xmlTextWriterPtr) writer
+{
+  int status;
+  id __item;
+  NSEnumerator *__enumerator;
+
+  [super writeJAXBChildElements: writer];
+
+  if ([self restaurantId]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantId", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}restaurantId."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}restaurantId...");
+#endif
+    [[self restaurantId] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}restaurantId...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}restaurantId."];
+    }
+  }
+  if ([self restaurantName]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantName", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}restaurantName."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}restaurantName...");
+#endif
+    [[self restaurantName] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}restaurantName...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}restaurantName."];
+    }
+  }
+  if ([self cuisineTier2Name]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cuisineTier2Name", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}cuisineTier2Name."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}cuisineTier2Name...");
+#endif
+    [[self cuisineTier2Name] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}cuisineTier2Name...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}cuisineTier2Name."];
+    }
+  }
+  if ([self price]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "price", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}price."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}price...");
+#endif
+    [[self price] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}price...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}price."];
+    }
+  }
+  if ([self restaurantCity]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantCity", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}restaurantCity."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}restaurantCity...");
+#endif
+    [[self restaurantCity] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}restaurantCity...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}restaurantCity."];
+    }
+  }
+  if ([self restaurantLat]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantLat", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}restaurantLat."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}restaurantLat...");
+#endif
+    [[self restaurantLat] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}restaurantLat...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}restaurantLat."];
+    }
+  }
+  if ([self restaurantLong]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantLong", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}restaurantLong."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}restaurantLong...");
+#endif
+    [[self restaurantLong] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}restaurantLong...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}restaurantLong."];
+    }
+  }
+  if ([self restaurantDealFlag]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantDealFlag", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}restaurantDealFlag."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}restaurantDealFlag...");
+#endif
+    [[self restaurantDealFlag] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}restaurantDealFlag...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}restaurantDealFlag."];
+    }
+  }
+  if ([self restaurantRating]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantRating", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}restaurantRating."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}restaurantRating...");
+#endif
+    [[self restaurantRating] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}restaurantRating...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}restaurantRating."];
+    }
+  }
+}
+@end /* implementation ENUNCIATENS0TSRestaurantsTileSearchObj (JAXB) */
+
+#endif /* DEF_ENUNCIATENS0TSRestaurantsTileSearchObj_M */
 #ifndef DEF_ENUNCIATENS0JSONObject_M
 #define DEF_ENUNCIATENS0JSONObject_M
 
@@ -14087,6 +14899,436 @@
 @end /* implementation ENUNCIATENS0TSSenderUserObj (JAXB) */
 
 #endif /* DEF_ENUNCIATENS0TSSenderUserObj_M */
+#ifndef DEF_ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj_M
+#define DEF_ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj_M
+
+/**
+ * (no documentation provided)
+ */
+@implementation ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) maxPaginationId
+{
+  return _maxPaginationId;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setMaxPaginationId: (NSString *) newMaxPaginationId
+{
+  [newMaxPaginationId retain];
+  [_maxPaginationId release];
+  _maxPaginationId = newMaxPaginationId;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) restaurantsSearchListTileObj
+{
+  return _restaurantsSearchListTileObj;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantsSearchListTileObj: (NSArray *) newRestaurantsSearchListTileObj
+{
+  [newRestaurantsSearchListTileObj retain];
+  [_restaurantsSearchListTileObj release];
+  _restaurantsSearchListTileObj = newRestaurantsSearchListTileObj;
+}
+
+- (void) dealloc
+{
+  [self setMaxPaginationId: nil];
+  [self setRestaurantsSearchListTileObj: nil];
+  [super dealloc];
+}
+
+//documentation inherited.
++ (id<EnunciateXML>) readFromXML: (NSData *) xml
+{
+  ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj *_eNUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj;
+  xmlTextReaderPtr reader = xmlReaderForMemory([xml bytes], [xml length], NULL, NULL, 0);
+  if (reader == NULL) {
+    [NSException raise: @"XMLReadError"
+                 format: @"Error instantiating an XML reader."];
+    return nil;
+  }
+
+  _eNUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj = (ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj *) [ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj readXMLElement: reader];
+  xmlFreeTextReader(reader); //free the reader
+  return _eNUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj;
+}
+
+//documentation inherited.
+- (NSData *) writeToXML
+{
+  xmlBufferPtr buf;
+  xmlTextWriterPtr writer;
+  int rc;
+  NSData *data;
+
+  buf = xmlBufferCreate();
+  if (buf == NULL) {
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error creating an XML buffer."];
+    return nil;
+  }
+
+  writer = xmlNewTextWriterMemory(buf, 0);
+  if (writer == NULL) {
+    xmlBufferFree(buf);
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error creating an XML writer."];
+    return nil;
+  }
+
+  rc = xmlTextWriterStartDocument(writer, NULL, "utf-8", NULL);
+  if (rc < 0) {
+    xmlFreeTextWriter(writer);
+    xmlBufferFree(buf);
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error writing XML start document."];
+    return nil;
+  }
+
+  NS_DURING
+  {
+    [self writeXMLElement: writer];
+  }
+  NS_HANDLER
+  {
+    xmlFreeTextWriter(writer);
+    xmlBufferFree(buf);
+    [localException raise];
+  }
+  NS_ENDHANDLER
+
+  rc = xmlTextWriterEndDocument(writer);
+  if (rc < 0) {
+    xmlFreeTextWriter(writer);
+    xmlBufferFree(buf);
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error writing XML end document."];
+    return nil;
+  }
+
+  xmlFreeTextWriter(writer);
+  data = [NSData dataWithBytes: buf->content length: buf->use];
+  xmlBufferFree(buf);
+  return data;
+}
+@end /* implementation ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj */
+
+/**
+ * Internal, private interface for JAXB reading and writing.
+ */
+@interface ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj (JAXB) <JAXBReading, JAXBWriting, JAXBType, JAXBElement>
+
+@end /*interface ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj (JAXB)*/
+
+/**
+ * Internal, private implementation for JAXB reading and writing.
+ */
+@implementation ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj (JAXB)
+
+/**
+ * Read an instance of ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj from an XML reader.
+ *
+ * @param reader The reader.
+ * @return An instance of ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj defined by the XML reader.
+ */
++ (id<JAXBType>) readXMLType: (xmlTextReaderPtr) reader
+{
+  ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj *_eNUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj = [[ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj alloc] init];
+  NS_DURING
+  {
+    [_eNUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj initWithReader: reader];
+  }
+  NS_HANDLER
+  {
+    _eNUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj = nil;
+    [localException raise];
+  }
+  NS_ENDHANDLER
+
+  [_eNUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj autorelease];
+  return _eNUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj;
+}
+
+/**
+ * Initialize this instance of ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj according to
+ * the XML being read from the reader.
+ *
+ * @param reader The reader.
+ */
+- (id) initWithReader: (xmlTextReaderPtr) reader
+{
+  return [super initWithReader: reader];
+}
+
+/**
+ * Write the XML for this instance of ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj to the writer.
+ * Note that since we're only writing the XML type,
+ * No start/end element will be written.
+ *
+ * @param reader The reader.
+ */
+- (void) writeXMLType: (xmlTextWriterPtr) writer
+{
+  [super writeXMLType:writer];
+}
+
+/**
+ * Reads a ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj from an XML reader. The element to be read is
+ * "reststilesearchextendedinfo".
+ *
+ * @param reader The XML reader.
+ * @return The ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj.
+ */
++ (id<JAXBElement>) readXMLElement: (xmlTextReaderPtr) reader {
+  int status;
+  ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj *_tSRestaurantsTileSearchExtendedInfoObj = nil;
+
+  if (xmlTextReaderNodeType(reader) != XML_READER_TYPE_ELEMENT) {
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+    if (status < 1) {
+      [NSException raise: @"XMLReadError"
+                   format: @"Error advancing the reader to start element reststilesearchextendedinfo."];
+    }
+  }
+
+  if (xmlStrcmp(BAD_CAST "reststilesearchextendedinfo", xmlTextReaderConstLocalName(reader)) == 0
+      && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read root element {}reststilesearchextendedinfo.");
+#endif
+    _tSRestaurantsTileSearchExtendedInfoObj = (ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj *)[ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Successfully read root element {}reststilesearchextendedinfo.");
+#endif
+  }
+  else {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      [NSException raise: @"XMLReadError"
+                   format: @"Unable to read ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj. Expected element reststilesearchextendedinfo. Current element: {}%s", xmlTextReaderConstLocalName(reader)];
+    }
+    else {
+      [NSException raise: @"XMLReadError"
+                   format: @"Unable to read ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj. Expected element reststilesearchextendedinfo. Current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader)];
+    }
+  }
+
+  return _tSRestaurantsTileSearchExtendedInfoObj;
+}
+
+/**
+ * Writes this ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj to XML under element name "reststilesearchextendedinfo".
+ * The namespace declarations for the element will be written.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantsTileSearchExtendedInfoObj The TSRestaurantsTileSearchExtendedInfoObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+- (void) writeXMLElement: (xmlTextWriterPtr) writer
+{
+  [self writeXMLElement: writer writeNamespaces: YES];
+}
+
+/**
+ * Writes this ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj to an XML writer.
+ *
+ * @param writer The writer.
+ * @param writeNs Whether to write the namespaces for this element to the xml writer.
+ */
+- (void) writeXMLElement: (xmlTextWriterPtr) writer writeNamespaces: (BOOL) writeNs
+{
+  int rc = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "reststilesearchextendedinfo", NULL);
+  if (rc < 0) {
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error writing start element {}reststilesearchextendedinfo. XML writer status: %i\n", rc];
+  }
+
+#if DEBUG_ENUNCIATE > 1
+  NSLog(@"writing type {}TSRestaurantsTileSearchExtendedInfoObj for root element {}reststilesearchextendedinfo...");
+#endif
+  [self writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+  NSLog(@"successfully wrote type {}TSRestaurantsTileSearchExtendedInfoObj for root element {}reststilesearchextendedinfo...");
+#endif
+  rc = xmlTextWriterEndElement(writer);
+  if (rc < 0) {
+    [NSException raise: @"XMLWriteError"
+                 format: @"Error writing end element {}reststilesearchextendedinfo. XML writer status: %i\n", rc];
+  }
+}
+
+//documentation inherited.
+- (BOOL) readJAXBAttribute: (xmlTextReaderPtr) reader
+{
+  void *_child_accessor;
+
+  if ([super readJAXBAttribute: reader]) {
+    return YES;
+  }
+
+  return NO;
+}
+
+//documentation inherited.
+- (BOOL) readJAXBValue: (xmlTextReaderPtr) reader
+{
+  return [super readJAXBValue: reader];
+}
+
+//documentation inherited.
+- (BOOL) readJAXBChildElement: (xmlTextReaderPtr) reader
+{
+  id __child;
+  void *_child_accessor;
+  int status, depth;
+
+  if ([super readJAXBChildElement: reader]) {
+    return YES;
+  }
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "maxPaginationId", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}maxPaginationId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setMaxPaginationId: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restaurantsSearchListTileObj", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}restaurantsSearchListTileObj of type {}TSRestaurantsTileSearchObj.");
+#endif
+
+    __child = [ENUNCIATENS0TSRestaurantsTileSearchObj readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}restaurantsSearchListTileObj of type {}TSRestaurantsTileSearchObj.");
+#endif
+
+    if ([self restaurantsSearchListTileObj]) {
+      [self setRestaurantsSearchListTileObj: [[self restaurantsSearchListTileObj] arrayByAddingObject: __child]];
+    }
+    else {
+      [self setRestaurantsSearchListTileObj: [NSArray arrayWithObject: __child]];
+    }
+    return YES;
+  } //end "if choice"
+
+
+  return NO;
+}
+
+//documentation inherited.
+- (int) readUnknownJAXBChildElement: (xmlTextReaderPtr) reader
+{
+  return [super readUnknownJAXBChildElement: reader];
+}
+
+//documentation inherited.
+- (void) readUnknownJAXBAttribute: (xmlTextReaderPtr) reader
+{
+  [super readUnknownJAXBAttribute: reader];
+}
+
+//documentation inherited.
+- (void) writeJAXBAttributes: (xmlTextWriterPtr) writer
+{
+  int status;
+
+  [super writeJAXBAttributes: writer];
+
+}
+
+//documentation inherited.
+- (void) writeJAXBValue: (xmlTextWriterPtr) writer
+{
+  [super writeJAXBValue: writer];
+}
+
+/**
+ * Method for writing the child elements.
+ *
+ * @param writer The writer.
+ */
+- (void) writeJAXBChildElements: (xmlTextWriterPtr) writer
+{
+  int status;
+  id __item;
+  NSEnumerator *__enumerator;
+
+  [super writeJAXBChildElements: writer];
+
+  if ([self maxPaginationId]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "maxPaginationId", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}maxPaginationId."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}maxPaginationId...");
+#endif
+    [[self maxPaginationId] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}maxPaginationId...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}maxPaginationId."];
+    }
+  }
+  if ([self restaurantsSearchListTileObj]) {
+    __enumerator = [[self restaurantsSearchListTileObj] objectEnumerator];
+
+    while ( (__item = [__enumerator nextObject]) ) {
+      status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantsSearchListTileObj", NULL);
+      if (status < 0) {
+        [NSException raise: @"XMLWriteError"
+                     format: @"Error writing start child element {}restaurantsSearchListTileObj."];
+      }
+
+#if DEBUG_ENUNCIATE > 1
+      NSLog(@"writing element {}restaurantsSearchListTileObj...");
+#endif
+      [__item writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+      NSLog(@"successfully wrote element {}restaurantsSearchListTileObj...");
+#endif
+
+      status = xmlTextWriterEndElement(writer);
+      if (status < 0) {
+        [NSException raise: @"XMLWriteError"
+                     format: @"Error writing end child element {}restaurantsSearchListTileObj."];
+      }
+    } //end item iterator.
+  }
+}
+@end /* implementation ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj (JAXB) */
+
+#endif /* DEF_ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj_M */
 #ifndef DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_M
 #define DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_M
 

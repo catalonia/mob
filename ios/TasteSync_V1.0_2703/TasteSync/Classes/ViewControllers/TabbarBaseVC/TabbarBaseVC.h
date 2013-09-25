@@ -33,7 +33,7 @@ typedef enum
 - (void)hideTabBar;
 - (void)showTabBar;
 - (void) actionRecommendationsShowMore;
-
+- (void)gotoProfile:(UserObj*)obj;
 - (void) actionBackToSelectedIndex:(int) aSelectedIndex;
 
 @end

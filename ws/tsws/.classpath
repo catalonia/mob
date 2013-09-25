@@ -92,5 +92,7 @@
 	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/libExtras/tomcat-dbcp.jar"/>
 	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/libExtras/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/lib/JavaPNS_2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/lib/tsdbconnection.jar"/>
+	<classpathentry kind="lib" path="C:/Users/TIENTUN/Documents/GitHub/mob/ws/tsws/lib/tsalgo.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

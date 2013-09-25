@@ -130,12 +130,15 @@ public class UserService extends BaseService {
 			String result = userBo.loginAccount(userId);
 			if(result != null)
 			{
+				System.out.println("1");
+				responseDone = true;
 				TSSuccessObj tsSuccessObj = new TSSuccessObj();
 				tsSuccessObj.setSuccessMsg(result);
 				return Response.status(status).entity(tsSuccessObj).build();
 			}
 			else
 			{
+				System.out.println("2");
 				status = TSResponseStatusCode.ERROR.getValue();
 				TSErrorObj tsErrorObj = new TSErrorObj();
 				tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
@@ -144,6 +147,7 @@ public class UserService extends BaseService {
 			}
 		} catch (TasteSyncException e) {
 			e.printStackTrace();
+			System.out.println("3");
 			status = TSResponseStatusCode.ERROR.getValue();
 			TSErrorObj tsErrorObj = new TSErrorObj();
 			tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
@@ -151,6 +155,7 @@ public class UserService extends BaseService {
 			return Response.status(status).entity(tsErrorObj).build();
 		} finally {
 			if (!responseDone) {
+				System.out.println("4");
 				status = TSResponseStatusCode.ERROR.getValue();
 				TSErrorObj tsErrorObj = new TSErrorObj();
 				tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);

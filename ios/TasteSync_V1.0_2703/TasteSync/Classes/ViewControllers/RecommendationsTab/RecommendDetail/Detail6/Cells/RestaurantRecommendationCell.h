@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Recommend2Obj.h"
+#import "RestaurantObj.h"
 
 @interface RestaurantRecommendationCell : UITableViewCell
 {
@@ -23,9 +23,9 @@
 - (IBAction)actionMore:(id)sender;
 - (IBAction)actionAvatar:(id)sender;
 - (IBAction)actionSelect:(id)sender;
-- (void) initCellTest1;
-- (void) initCellTest2;
-- (void) initCellTest3;
+- (void) initCellTest1:(RestaurantObj*)restaurantObj;
+- (void) initCellTest2:(RestaurantObj*)restaurantObj;
+- (void) initCellTest3:(RestaurantObj*)restaurantObj;
 
 
 @end

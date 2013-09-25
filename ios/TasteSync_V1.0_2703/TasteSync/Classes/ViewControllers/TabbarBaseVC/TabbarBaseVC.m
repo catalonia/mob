@@ -239,21 +239,16 @@
     request.userData = user;
     [request setFormPostValue:user.uid forKey:@"userFBID"];
     [request startFormRequest];
-    
-
-
 }
 
-/*
-- (void) actionDeal:(RestaurantObj *) aRestaurantObj
+-(void)gotoProfile:(UserObj*)obj
 {
-    ResDealVC *vc = [[ResDealVC alloc] initWithNibName:@"ResDealVC" bundle:nil];
-    vc.restaurantObj = aRestaurantObj;
+    ProfileVC *vc = [[ProfileVC alloc] initWithNibName:@"ProfileVC" bundle:nil];
+    vc.user = obj;
+    vc.userID = obj.uid;
     [(UINavigationController *) self.selectedViewController pushViewController:vc animated:YES];
-
-    
 }
-*/
+
 - (void) actionSelectRestaurant:(RestaurantObj *) aRestaurantObj selectedIndex:(int)aSelectedIndex;
 {
     RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithNibName:@"RestaurantDetailVC" bundle:nil];

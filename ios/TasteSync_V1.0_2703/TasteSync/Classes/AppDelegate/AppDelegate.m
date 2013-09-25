@@ -139,6 +139,7 @@ askSubmited=_askSubmited;
 }
 
 
+
 - (void)sessionStateChanged:(FBSession *)session  state:(FBSessionState)state error:(NSError *)error
 {
     

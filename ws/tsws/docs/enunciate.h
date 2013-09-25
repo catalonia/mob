@@ -22,8 +22,10 @@
 @class ENUNCIATENS0TSRecommendeeUserObj;
 @class ENUNCIATENS0TSRestaurantCusineTier2Obj;
 @class ENUNCIATENS0TSRestaurantsForYouObj;
+@class ENUNCIATENS0TSRestaurantsTileSearchObj;
 @class ENUNCIATENS0JSONObject;
 @class ENUNCIATENS0TSSenderUserObj;
+@class ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj;
 @class ENUNCIATENS0TSRestaurantRecommendersDetailsObj;
 @class ENUNCIATENS0TSRecommendersDetailsObj;
 @class ENUNCIATENS0TSRecommendationsObj;
@@ -1665,6 +1667,118 @@
 @end /* interface ENUNCIATENS0TSRestaurantsForYouObj */
 
 #endif /* DEF_ENUNCIATENS0TSRestaurantsForYouObj_H */
+#ifndef DEF_ENUNCIATENS0TSRestaurantsTileSearchObj_H
+#define DEF_ENUNCIATENS0TSRestaurantsTileSearchObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRestaurantsTileSearchObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_restaurantId;
+    NSString *_restaurantName;
+    NSString *_cuisineTier2Name;
+    NSString *_price;
+    NSString *_restaurantCity;
+    NSString *_restaurantLat;
+    NSString *_restaurantLong;
+    NSString *_restaurantDealFlag;
+    NSString *_restaurantRating;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantId: (NSString *) newRestaurantId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantName;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantName: (NSString *) newRestaurantName;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) cuisineTier2Name;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCuisineTier2Name: (NSString *) newCuisineTier2Name;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) price;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPrice: (NSString *) newPrice;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantCity;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantCity: (NSString *) newRestaurantCity;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantLat;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantLat: (NSString *) newRestaurantLat;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantLong;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantLong: (NSString *) newRestaurantLong;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantDealFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantDealFlag: (NSString *) newRestaurantDealFlag;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) restaurantRating;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantRating: (NSString *) newRestaurantRating;
+@end /* interface ENUNCIATENS0TSRestaurantsTileSearchObj */
+
+#endif /* DEF_ENUNCIATENS0TSRestaurantsTileSearchObj_H */
 #ifndef DEF_ENUNCIATENS0JSONObject_H
 #define DEF_ENUNCIATENS0JSONObject_H
 
@@ -1724,6 +1838,41 @@
 @end /* interface ENUNCIATENS0TSSenderUserObj */
 
 #endif /* DEF_ENUNCIATENS0TSSenderUserObj_H */
+#ifndef DEF_ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj_H
+#define DEF_ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj_H
+
+/**
+ * (no documentation provided)
+ */
+@interface ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj : NSObject <EnunciateXML>
+{
+  @private
+    NSString *_maxPaginationId;
+    NSArray *_restaurantsSearchListTileObj;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) maxPaginationId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setMaxPaginationId: (NSString *) newMaxPaginationId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) restaurantsSearchListTileObj;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setRestaurantsSearchListTileObj: (NSArray *) newRestaurantsSearchListTileObj;
+@end /* interface ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj */
+
+#endif /* DEF_ENUNCIATENS0TSRestaurantsTileSearchExtendedInfoObj_H */
 #ifndef DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_H
 #define DEF_ENUNCIATENS0TSRestaurantRecommendersDetailsObj_H
 

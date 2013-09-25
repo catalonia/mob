@@ -208,6 +208,7 @@
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
     NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",response);
     
     NSDictionary* dic = [response objectFromJSONString];
     NSString* successMessage = [dic objectForKey:@"successMsg"];
