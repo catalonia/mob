@@ -644,6 +644,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     		tsDataSource.close();
         	tsDataSource.closeConnection(connection, statement, null);
     	}
+    	System.out.println(id);
     	return id;
 	}
     
