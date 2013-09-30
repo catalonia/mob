@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.CityQueries;
 import com.tastesync.db.queries.UserQueries;
 import com.tastesync.model.objects.TSCityObj;
@@ -17,35 +16,35 @@ import com.tastesync.util.CommonFunctionsUtil;
 public class MySQL {
 
 	//Check email exist in the system
-	public boolean checkEmailExist(String email) {
+	public boolean checkEmailExist(Connection connection, String email) throws SQLException {
 		boolean check = false;
 		TSUserObj user = null;
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
         try{
-        	connection = tsDataSource.getConnection();
-        	tsDataSource.begin();
-        	System.out.println("UserQueries.USER_CHECK_EMAIL_SELECT_SQL=" + UserQueries.USER_CHECK_EMAIL_SELECT_SQL);
         	statement = connection.prepareStatement(UserQueries.USER_CHECK_EMAIL_SELECT_SQL);
         	statement.setString(1, email);
         	resultset = statement.executeQuery();
-        	System.out.println("1");
         	if(resultset.next())
         	{
         		user = new TSUserObj();
         		MySQL.mapResultsetRowToTSUserVO(user, resultset);
         	}
-        	System.out.println("2");
-		} catch (Exception e) {
+        	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			throw e;
+	    }
+        finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		
 		if(user != null) 
 			check = true;
 
@@ -53,16 +52,11 @@ public class MySQL {
 	}
 	
 	//Get city information (by city id)
-	public TSCityObj getCityInforByStateAndCityName(String state, String city_name) {
+	public TSCityObj getCityInforByStateAndCityName(Connection connection, String state, String city_name) throws SQLException {
 		TSCityObj city = null;
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 		try {
-			connection = tsDataSource.getConnection();
-        	tsDataSource.begin();
-        	System.out.println("CityQueries.CITY_STATE_SELECT_SQL" + CityQueries.CITY_STATE_SELECT_SQL);
         	statement = connection.prepareStatement(CityQueries.CITY_STATE_SELECT_SQL);
         	statement.setString(1, state);
         	statement.setString(2, city_name);
@@ -72,27 +66,30 @@ public class MySQL {
         		city = new TSCityObj();
         		MySQL.mapResultsetRowToTSCityVO(city, resultset);
         	}
-		} catch (Exception e) {
+        	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			throw e;
+		}
+		finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return city;
 	}
-	public TSCityObj addDeviceToken(String userID, String devicetoken) {
+	public TSCityObj addDeviceToken(Connection connection, String userID, String devicetoken) throws SQLException {
 		TSCityObj city = null;
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    boolean check = true;
 	    String dateNowAppend = CommonFunctionsUtil.getCurrentDatetimeAppendField();
 		try {
-			connection = tsDataSource.getConnection();
-        	tsDataSource.begin();
-        	System.out.println("UserQueries.USER_DEVICE_SELECT_SQL" + UserQueries.USER_DEVICE_SELECT_SQL);
         	statement = connection.prepareStatement(UserQueries.USER_DEVICE_SELECT_SQL);
         	statement.setString(1, userID);
         	resultset = statement.executeQuery();
@@ -100,36 +97,37 @@ public class MySQL {
         	{
         		check = false;
         	}
+        	statement.close();
         	if(check)
         	{
-        		connection = tsDataSource.getConnection();
-            	System.out.println("UserQueries.USER_DEVICE_INSERT_SQL" + UserQueries.USER_DEVICE_INSERT_SQL);
             	statement = connection.prepareStatement(UserQueries.USER_DEVICE_INSERT_SQL);
             	statement.setString(1, userID);
             	statement.setString(2, devicetoken);
             	statement.setString(3, dateNowAppend);
             	statement.setString(4, dateNowAppend);
             	statement.execute();
+            	statement.close();
         	}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			throw e;
 		}
-		
+		finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		return city;
 	}
-	public TSCityObj getCityInforByCityID(String cityID) {
+	public TSCityObj getCityInforByCityID(Connection connection, String cityID) throws SQLException {
 		TSCityObj city = null;
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 		try {
-			connection = tsDataSource.getConnection();
-        	tsDataSource.begin();
-        	System.out.println("CityQueries.CITY_SELECT_SQL" + CityQueries.CITY_SELECT_SQL);
         	statement = connection.prepareStatement(CityQueries.CITY_SELECT_SQL);
         	statement.setString(1, cityID);
         	resultset = statement.executeQuery();
@@ -138,27 +136,29 @@ public class MySQL {
         		city = new TSCityObj();
         		MySQL.mapResultsetRowToTSCityVO(city, resultset);
         	}
-		} catch (Exception e) {
+        	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			throw e;
 		}
-		
+		finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		return city;
 	}
-	public TSUserObj getUserInformationByEmail(String email) {
+	public TSUserObj getUserInformationByEmail(Connection connection, String email) throws SQLException {
 		
 		TSUserObj user = null;
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
         try{
-        	connection = tsDataSource.getConnection();
-        	tsDataSource.begin();
-        	//System.out.println("UserQueries.USER_CHECK_EMAIL_SELECT_SQL=" + UserQueries.USER_CHECK_EMAIL_STATUS_SELECT_SQL);
         	statement = connection.prepareStatement(UserQueries.USER_CHECK_EMAIL_STATUS_SELECT_SQL);
         	statement.setString(1, email);
         	statement.setString(2, String.valueOf("e"));
@@ -168,26 +168,30 @@ public class MySQL {
         		user = new TSUserObj();
         		MySQL.mapResultsetRowToTSUserVO(user, resultset);
         	}
-		} catch (Exception e) {
+        	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			throw e;
+		}
+        finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return user;
 	}
 	
-	public String getUserIDFromUserLogID(String userLogID)
+	//not used!!
+	public String getUserIDFromUserLogID(Connection connection, String userLogID) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
         try{
-        	connection = tsDataSource.getConnection();
-        	tsDataSource.begin();
-        	System.out.println("UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL=" + UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL);
         	statement = connection.prepareStatement(UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL);
         	statement.setString(1, userLogID);
         	resultset = statement.executeQuery();
@@ -195,26 +199,30 @@ public class MySQL {
         	{
         		return CommonFunctionsUtil.getModifiedValueString(resultset.getString("users_log.USER_ID"));
         	}
-		} catch (Exception e) {
+        	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			throw e;
+		}
+        finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return null;
 	}
 	
-	public String getAutoUserLogByUserId(String UserId) {
+	public String getAutoUserLogByUserId(Connection connection, String UserId) throws SQLException {
 		
 		String userId = "";
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
         try{
-        	connection = tsDataSource.getConnection();
-        	tsDataSource.begin();
         	statement = connection.prepareStatement(UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL);
         	statement.setString(1, UserId);
         	resultset = statement.executeQuery();
@@ -222,25 +230,28 @@ public class MySQL {
         	{
         		userId = CommonFunctionsUtil.getModifiedValueString(resultset.getString("users_log.USER_ID"));
         	}
-		} catch (Exception e) {
+        	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			throw e;
+		}
+        finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return userId;
 	}
-	public boolean checkFBUserDataExist(String user_fb_id) {
+	public boolean checkFBUserDataExist(Connection connection, String user_fb_id) throws SQLException {
 		boolean check = false;
 		TSFacebookUserDataObj fb_user_data = null;
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 		try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	System.out.println("UserQueries.USER_CHECK_EMAIL_SELECT_SQL=" + UserQueries.FACEBOOK_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.FACEBOOK_SELECT_SQL);
 	    	statement.setString(1, user_fb_id);
 	    	resultset = statement.executeQuery();
@@ -249,27 +260,30 @@ public class MySQL {
 	    		fb_user_data = new TSFacebookUserDataObj();
 	    		MySQL.mapResultsetRowToTSFacebookVO(fb_user_data, resultset);
 	    	}
-		} catch (Exception e) {
+	    	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		
 		if(fb_user_data != null) check = true;
 	
 		return check;
 	}
-	public TSUserObj getUserInformationByFacebookID(String user_fb_id) {
+	public TSUserObj getUserInformationByFacebookID(Connection connection, String user_fb_id) throws SQLException {
 		TSUserObj user = null;
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	System.out.println("UserQueries.USER_FBID_SELECT_SQL=" + UserQueries.USER_FBID_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.USER_FBID_SELECT_SQL);
 	    	statement.setString(1, user_fb_id);
 	    	statement.setString(2, String.valueOf("e"));
@@ -279,26 +293,29 @@ public class MySQL {
 	    		user = new TSUserObj();
 	    		MySQL.mapResultsetRowToTSUserVO(user, resultset);
 	    	}
-		} catch (Exception e) {
+	    	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			throw e;
+		}
+	    finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return user;
 	}
 	//Get user information (by user_id)
-	public TSUserObj getUserInformation(String user_id) {
+	public TSUserObj getUserInformation(Connection connection, String user_id) throws SQLException {
 		TSUserObj user = null;
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	System.out.println("UserQueries.USER_STATUS_SELECT_SQL=" + UserQueries.USER_STATUS_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.USER_STATUS_SELECT_SQL);
 	    	statement.setString(1, user_id);
 	    	statement.setString(2, String.valueOf("e"));
@@ -308,25 +325,28 @@ public class MySQL {
 	    		user = new TSUserObj();
 	    		MySQL.mapResultsetRowToTSUserVO(user, resultset);
 	    	}
-		} catch (Exception e) {
+	    	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			throw e;
+		}
+	    finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return user;
 	}
-	public TSFacebookUserDataObj getFacebookUserInformation(String User_FB_ID) {
+	public TSFacebookUserDataObj getFacebookUserInformation(Connection connection, String User_FB_ID) throws SQLException {
 		TSFacebookUserDataObj user = null;
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	System.out.println("UserQueries.FACEBOOK_SELECT_SQL=" + UserQueries.FACEBOOK_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.FACEBOOK_SELECT_SQL);
 	    	statement.setString(1, User_FB_ID);
 	    	resultset = statement.executeQuery();
@@ -335,81 +355,86 @@ public class MySQL {
 	    		user = new TSFacebookUserDataObj();
 	    		MySQL.mapResultsetRowToTSFacebookVO(user, resultset);
 	    	}
-		} catch (Exception e) {
+	    	statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return user;
 	}
-	public int getIDUserSocialNetworkConnection(int usncOrder)
+	public int getIDUserSocialNetworkConnection(Connection connection, int usncOrder) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	System.out.println(UserQueries.USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL);
 	    	statement.setInt(1, usncOrder);
 	    	resultset = statement.executeQuery();
+	    	int ret = 0;
     	if(resultset.next())
     	{
-    		int ret = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_ID")));
-    		tsDataSource.close();
-    		tsDataSource.closeConnection(connection, statement, resultset);
-    		return ret;
+    		ret = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_social_network_connection.USNC_ID")));
     	}
-	} catch (Exception e) {
+    	statement.close();
+    	return ret;
+	} catch (SQLException e) {
 		e.printStackTrace();
+		throw e;
 	}finally{
-		tsDataSource.close();
-		tsDataSource.closeConnection(connection, statement, resultset);
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-		return 0;
 	}
-	public int getIDAutoPublishing(int apOrder)
+	public int getIDAutoPublishing(Connection connection, int apOrder) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
 	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_SELECT_SQL);
 	    	statement.setInt(1, apOrder);
 	    	resultset = statement.executeQuery();
+	    	int retValue = 0;
     	if(resultset.next())
     	{
-    		int retValue = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("auto_publishing.AP_ID")));
-    		tsDataSource.close();
-    		tsDataSource.closeConnection(connection, statement, resultset);
-    		return retValue;
+    		retValue = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("auto_publishing.AP_ID")));
+    		
     	}
-	} catch (Exception e) {
+    	statement.close();
+    	return retValue;
+	} catch (SQLException e) {
 		e.printStackTrace();
-	}finally{
-		tsDataSource.close();
-		tsDataSource.closeConnection(connection, statement, resultset);
+		throw e;
+	} finally{
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-		return 0;
 	}
-	public boolean checkUserUSNC(String userId)
+	public boolean checkUserUSNC(Connection connection, String userId) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
 	    	statement = connection.prepareStatement(UserQueries.USER_USNC_SELECT_SQL);
 	    	statement.setString(1, userId);
 	    	resultset = statement.executeQuery();
@@ -418,30 +443,32 @@ public class MySQL {
 	    	{
 	    		i++;
 	    	}
+	    	statement.close();
 	    	System.out.println("Number row:"+i);
 	    	if(i != 0)
 	    		return true;
 	    	else
 	    		return false;
     		
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		return false;
 	}
-	public boolean checkUserUSNC_AP(String userId)
+	public boolean checkUserUSNC_AP(Connection connection, String userId) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
 	    	statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_USERID_SELECT_SQL);
 	    	statement.setString(1, userId);
 	    	resultset = statement.executeQuery();
@@ -451,32 +478,32 @@ public class MySQL {
 	    		i++;
 	    		
 	    	}
-	    	tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+	    	statement.close();
 	    	System.out.println("Number row:"+i);
 	    	if(i != 0)
 	    		return true;
 	    	else
 	    		return false;
     		
-	} catch (Exception e) {
+	} catch (SQLException e) {
 		e.printStackTrace();
+		throw e;
 	}finally{
-		tsDataSource.close();
-		tsDataSource.closeConnection(connection, statement, resultset);
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-		return false;
 	}
-	public boolean checkNotificationDescriptor(String userId)
+	public boolean checkNotificationDescriptor(Connection connection, String userId) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
 	    	statement = connection.prepareStatement(UserQueries.USER_NOTIFICATION_SETTINGS_ID_SELECT_SQL);
 	    	statement.setString(1, userId);
 	    	resultset = statement.executeQuery();
@@ -485,61 +512,61 @@ public class MySQL {
 	    	{
 	    		i++;
 	    	}
-	    	tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+	    	statement.close();
 	    	System.out.println("Number row:"+i);
 	    	if(i != 0)
 	    		return true;
 	    	else
 	    		return false;
     		
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		return false;
 	}
-	public int getIDNotificationDescriptor(int nsId_Order)
+	public int getIDNotificationDescriptor(Connection connection, int nsId_Order) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	System.out.println(UserQueries.NOTIFICATION_DESCRIPTOR_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.NOTIFICATION_DESCRIPTOR_SELECT_SQL);
 	    	statement.setInt(1, nsId_Order);
 	    	resultset = statement.executeQuery();
+	    	int value = 0;
     	if(resultset.next())
     	{
-    		int value = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("notification_descriptor.NSID")));
-    		tsDataSource.close();
-    		tsDataSource.closeConnection(connection, statement, resultset);
-    		return value;
+    		value = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("notification_descriptor.NSID")));
     	}
-	} catch (Exception e) {
+    	statement.close();
+		return value;
+	} catch (SQLException e) {
 		e.printStackTrace();
-	}finally{
-		tsDataSource.close();
-		tsDataSource.closeConnection(connection, statement, resultset);
+		throw e;
+		}finally{
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-		return 0;
 	}
-	public boolean checkPrivacyDescriptor(String userId)
+	public boolean checkPrivacyDescriptor(Connection connection, String userId) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
 	    	statement = connection.prepareStatement(UserQueries.USER_PRIVACY_SETTINGS_ID_SELECT_SQL);
 	    	statement.setString(1, userId);
 	    	resultset = statement.executeQuery();
@@ -548,118 +575,120 @@ public class MySQL {
 	    	{
 	    		i++;
 	    	}
-	    	System.out.println("Number row:"+i);
-	    	tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+	    	statement.close();
 	    	if(i != 0)
 	    		return true;
 	    	else
 	    		return false;
     		
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}finally{
-			tsDataSource.close();
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		return false;
 	}
-	public int getIDPrivacySettings(int privacyIdOrder)
+	public int getIDPrivacySettings(Connection connection, int privacyIdOrder) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	System.out.println(UserQueries.PRIVACY_DESCRIPTOR_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.PRIVACY_DESCRIPTOR_SELECT_SQL);
 	    	statement.setInt(1, privacyIdOrder);
 	    	resultset = statement.executeQuery();
+	    	int value  = 0;
     	if(resultset.next())
     	{
-    		System.out.println(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID")));
-    		int value = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID")));
-    		tsDataSource.close();
-    		tsDataSource.closeConnection(connection, statement, resultset);
-    		return value;
+    	    value = Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("privacy_descriptor.PRIVACY_ID")));
     	}
-	} catch (Exception e) {
+    	statement.close();
+		return value;
+	} catch (SQLException e) {
 		e.printStackTrace();
+		throw e;
 	}finally{
-		tsDataSource.close();
-		tsDataSource.closeConnection(connection, statement, resultset);
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-		return 0;
 	}
 
-	public int getIDContactSettings(int contact_order)
+	public int getIDContactSettings(Connection connection, int contact_order) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	System.out.println(UserQueries.CONTACT_SETTINGS_DESCRIPTOR_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.CONTACT_SETTINGS_DESCRIPTOR_SELECT_SQL);
 	    	statement.setInt(1, contact_order);
 	    	resultset = statement.executeQuery();
+	    	int contactId = 0;
     	if(resultset.next())
     	{
-    		System.out.println(CommonFunctionsUtil.getModifiedValueString(resultset.getString("contact_settings_descriptor.CONTACT_ID")));
-    		return Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("contact_settings_descriptor.CONTACT_ID")));
+    		contactId =  Integer.parseInt(CommonFunctionsUtil.getModifiedValueString(resultset.getString("contact_settings_descriptor.CONTACT_ID")));
     	}
-	} catch (Exception e) {
+    	statement.close();
+    	return contactId;
+	} catch (SQLException e) {
 		e.printStackTrace();
-	}finally{
-		tsDataSource.close();
+		throw e;
+		}finally{
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-		return 0;
 	}
-	public String getDescAbout(int ID_ORDER)
+	public String getDescAbout(Connection connection, int ID_ORDER) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
-	    	System.out.println(UserQueries.ABOUT_TASTESYNC_ELEMENT_DESCRIPTOR_SELECT_SQL);
 	    	statement = connection.prepareStatement(UserQueries.ABOUT_TASTESYNC_ELEMENT_DESCRIPTOR_SELECT_SQL);
 	    	statement.setInt(1, ID_ORDER);
 	    	resultset = statement.executeQuery();
+	    	String value = null;
     	if(resultset.next())
     	{
-    		String value = CommonFunctionsUtil.getModifiedValueString(resultset.getString("about_tastesync_element_descriptor.DESCRIPTION"));
-    		tsDataSource.close();
-    		tsDataSource.closeConnection(connection, statement, resultset);
-    		return value;
+    		 value = CommonFunctionsUtil.getModifiedValueString(resultset.getString("about_tastesync_element_descriptor.DESCRIPTION"));
     	}
-	} catch (Exception e) {
+    	statement.close();
+		return value;
+	} catch (SQLException e) {
 		e.printStackTrace();
+		throw e;
 	}finally{
-		tsDataSource.close();
-		tsDataSource.closeConnection(connection, statement, resultset);
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-		return null;
 	}
 	
-	public boolean checkUserFriendTasteSync(String userId, String destUserId)
+	public boolean checkUserFriendTasteSync(Connection connection, String userId, String destUserId) throws SQLException
 	{
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-	    Connection connection = null;
 		PreparedStatement statement = null;
 	    ResultSet resultset = null;
 	    
 	    try{
-	    	connection = tsDataSource.getConnection();
-	    	tsDataSource.begin();
 	    	statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_CHECK_SELECT_SQL);
 	    	statement.setString(1, userId);
 	    	statement.setString(2, destUserId);
@@ -669,21 +698,25 @@ public class MySQL {
 	    	{
 	    		i++;
 	    	}
-	    	System.out.println("Number row:" + i);
-	    	tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+	    	statement.close();
+	    	
 	    	if(i != 0)
 	    		return true;
 	    	else
 	    		return false;
     		
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}finally{
-			tsDataSource.close();
-			tsDataSource.closeConnection(connection, statement, resultset);
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		return false;
 	}
 	
 	public static void mapResultsetRowToTSUserVO(TSUserObj tsUserObj,
@@ -836,8 +869,8 @@ public class MySQL {
             tsRestaurantObj.setTbdOpenTableId(CommonFunctionsUtil.getModifiedValueString(
                     resultset.getString("restaurant.TBD_OPENTABLE_ID")));
         }
-    public static TSUserProfileRestaurantsObj getTSUserProfileRestaurantsObjFromRS(
-			ResultSet resultset) throws SQLException, Exception {
+    public static TSUserProfileRestaurantsObj getTSUserProfileRestaurantsObjFromRS(Connection connection, 
+			ResultSet resultset) throws SQLException {
 		TSUserProfileRestaurantsObj restaurant = new TSUserProfileRestaurantsObj();
 		restaurant.setRestauarntId(CommonFunctionsUtil
 				.getModifiedValueString(resultset.getString("RESTAURANT_ID")));
@@ -854,15 +887,10 @@ public class MySQL {
 				.getModifiedValueString(resultset.getString("RESTAURANT_LAT")));
 		restaurant.setRestaurantLong(CommonFunctionsUtil
 				.getModifiedValueString(resultset.getString("RESTAURANT_LON")));
-		TSDataSource tsDataSource = TSDataSource.getInstance();
-		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 
 		try {
-			connection = tsDataSource.getConnection();
-			tsDataSource.begin();
-			System.out.println(UserQueries.CITIES_SELECT_SQL);
 			statement = connection
 					.prepareStatement(UserQueries.CITIES_SELECT_SQL);
 			statement.setString(1, CommonFunctionsUtil
@@ -874,26 +902,20 @@ public class MySQL {
 				mapResultsetRowToTSCityVO(city, rs);
 			}
 			restaurant.setRestaurantCity(city);
-		} catch (Exception e) {
-			throw e;
+			statement.close();
 
-		}
-		try {
-			connection = tsDataSource.getConnection();
-			tsDataSource.begin();
-			System.out.println(UserQueries.RESTAURANT_CUISINE_SELECT_SQL);
 			statement = connection
 					.prepareStatement(UserQueries.RESTAURANT_CUISINE_SELECT_SQL);
 			statement.setString(1, CommonFunctionsUtil
 					.getModifiedValueString(resultset
 							.getString("RESTAURANT_ID")));
 			rs = statement.executeQuery();
+			
 			if (rs.next()) {
 				String cuisine_id = rs.getString("tier2_cuisine_id");
-				connection = tsDataSource.getConnection();
-				tsDataSource.begin();
-				System.out
-						.println(UserQueries.CUISINE_TIER2_DESCRIPTOR_SELECT_SQL);
+				if (statement != null) {
+					statement.close();
+				}
 				statement = connection
 						.prepareStatement(UserQueries.CUISINE_TIER2_DESCRIPTOR_SELECT_SQL);
 				statement.setString(1, cuisine_id);
@@ -902,12 +924,26 @@ public class MySQL {
 					restaurant
 							.setCuisineTier2Name(rs.getString("CUISINE_DESC"));
 				}
+				statement.close();
 			}
-		} catch (Exception e) {
+			if (statement != null) {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 			throw e;
 
 		}
-
+		finally{
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		return restaurant;
 	}
 }

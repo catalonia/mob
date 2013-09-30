@@ -217,8 +217,8 @@ public interface UserQueries extends TSDBCommonQueries {
  	public static String FACEBOOK_USER_DATA_SELECT_SQL = "SELECT user_friend_fb.USER_FRIEND_FB FROM user_friend_fb WHERE INVITATION_SENT_YN = '0' AND USER_ID = ?";
     public static String USER_FOLLOW_DATA_CHECK_SELECT_SQL = "SELECT * FROM user_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?";
  	public static String USER_FOLLOW_DATA_INSERT_SQL = "INSERT INTO `user_follow_data`"
- 			+ "(`ID`, `FOLLOWER_USER_ID`, `FOLLOWEE_USER_ID`)" + " VALUES ("
- 			+ "?" + ",?" + ",?)";
+ 			+ "(`ID`, `FOLLOWER_USER_ID`, `FOLLOWEE_USER_ID`,`ALGO1_IND`)" + " VALUES ("
+ 			+ "?" + ",?" + ",?"+",?)";
  	public static String USER_FOLLOW_DATA_DELETE_SQL = "DELETE FROM user_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?";
 	public static String USER_FOLLOW_DATA_COUNT_FOLLOWING_SELECT_SQL = "SELECT COUNT(*) AS 'count' FROM user_follow_data WHERE FOLLOWER_USER_ID = ?";
  	public static String USER_FOLLOW_DATA_COUNT_FOLLOWER_SELECT_SQL = "SELECT COUNT(*) AS 'count' FROM user_follow_data WHERE FOLLOWEE_USER_ID = ?";
@@ -251,7 +251,7 @@ public interface UserQueries extends TSDBCommonQueries {
  	public static String USER_FRIEND_SIGNUP_FB_INSERT_SQL = "INSERT INTO user_friend_fb(USER_ID, USER_FRIEND_FB, FB_UPDATE_DATETIME, INVITATION_SENT_YN, USER_FRIEND_FB_STATUS) VALUES (?, ?, ?, ?, ?)";
 	
  	//USER_RESTAURANT_FAV
- 	public static String USER_RESTAURANT_FAV_INSERT_SQL = "INSERT INTO user_restaurant_fav(USER_ID, RESTAURANT_ID) VALUES (?, ?)";
+ 	public static String USER_RESTAURANT_FAV_INSERT_SQL = "INSERT INTO user_restaurant_fav(USER_ID, RESTAURANT_ID, ALGO1_IND, ALGO2_IND) VALUES (?, ?, ?, ?)";
 	
  // USER_HOME_PROFILE
  	public static String USERS_FACEBOOK_USER_DATA_CITIES_SELECT_SQL = "SELECT"
