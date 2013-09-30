@@ -8,7 +8,8 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "recorequest_user.RECOREQUEST_FREE_TEXT," +
         "recorequest_user.RECOREQUEST_PARAMETER_SELECTION_MERGED," +
         "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES" +
-        ")    VALUES    (" + "?," + "?," + "?," + "?," + "?," + "?" + ")";
+        "recorequest_user.ALGO1_IND" +
+        ")    VALUES    (" + "?," + "?," + "?," + "?," + "?," + "?, "+ "?" + ")";
     public static final String RECOREQUEST_CUISINE_TIER1_INSERT_SQL = "insert into recorequest_cuisine_tier1 (" +
         "recorequest_cuisine_tier1.RECOREQUEST_ID," +
         "recorequest_cuisine_tier1.Cuisine_Tier1_ID" + ")  VALUES (" + "?," +
@@ -80,9 +81,10 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "             recorequest_ts_assigned.assigned_usertype, " +
         "             recorequest_ts_assigned.assigned_user_id, " +
         "             recorequest_ts_assigned.assigned_user_registered_yn, " +
-        "             recorequest_ts_assigned.recorequest_id) " +
+        "             recorequest_ts_assigned.recorequest_id, " +
+        "             recorequest_ts_assigned.algo1_ind) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
-        "              ?, " + "              ?, " + "              ? )";
+        "              ?, " + "              ?, " + "              ?, "+"              ? )";
     public static final String FB_ID_FRM_USER_ID_SELECT_SQL = "" +
         "SELECT users.user_fb_id " + "FROM   users " +
         "WHERE  users.user_id = ? ";
@@ -290,9 +292,11 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "             recorequest_reply_user.reply_send_datetime, " +
         "             recorequest_reply_user.reply_text, " +
         "             recorequest_reply_user.reply_ts_user_id, " +
-        "             recorequest_reply_user.reply_user_id) " +
+        "             recorequest_reply_user.reply_user_id, " +
+        "             recorequest_reply_user.algo1_ind, " +
+        "             recorequest_reply_user.algo2_ind) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
-        "              ?, ?, " + "              ?, " + "              ? )";
+        "              ?, ?, " + "              ?,?,?, " + "              ? )";
     public static String RECOREQUEST_REPLY_USER_UPDATE_SQL = "" +
         "UPDATE recorequest_reply_user " +
         "SET    recorequest_reply_user.reply_viewed_initiator = 1 " +

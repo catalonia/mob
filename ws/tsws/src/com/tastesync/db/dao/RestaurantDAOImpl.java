@@ -764,6 +764,8 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_INSERT_SQL);
                 statement.setString(1, restaurantId);
                 statement.setString(2, userId);
+                statement.setInt(3, 3);
+                statement.setInt(4, 1);
                 statement.executeUpdate();
                 statement.close();
             } else {

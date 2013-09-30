@@ -1,5 +1,7 @@
 package com.tastesync.db.dao;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import com.tastesync.algo.model.vo.RestaurantsSearchResultsVO;
 import com.tastesync.algo.user.restaurant.RestaurantsSearchResultsOnlineCalc;
 
@@ -162,6 +164,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.setString(4, TSConstants.EMPTY_STRING);
             statement.setString(5, mergedTextBuffer.toString());
             statement.setString(6, templateString);
+            statement.setInt(7, 2);
 
             statement.executeUpdate();
 
@@ -257,6 +260,20 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             tsDataSource.commit();
 
             return recoRequestId;
+        } catch (MySQLIntegrityConstraintViolationException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException("Error while submitAskForRecommendationSearch " +
+                e.getMessage());
+            
         } catch (SQLException e) {
             e.printStackTrace();
 
@@ -268,7 +285,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 }
             }
 
-            throw new TasteSyncException("Error while creating reco request " +
+            throw new TasteSyncException("Error while submitAskForRecommendationSearch " +
                 e.getMessage());
         } finally {
             tsDataSource.close();
@@ -290,7 +307,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         try {
             ClassLoader loader = this.getClass().getClassLoader();
             //loader.getResourceAsStream("Resources/SomeConfig.xml");
-            ifile = loader.getResourceAsStream("Resources/config.properties");
+            ifile = this.getClass().getClassLoader().getResourceAsStream("Resources/config.properties");
+
 
             //load a properties file
             prop.load(ifile);
@@ -427,6 +445,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     statement.setString(4, friendId);
                     statement.setString(5, "Y");
                     statement.setString(6, recoRequestId);
+                    statement.setInt(7, 1);
                     statement.executeUpdate();
 
                     if (statement != null) {
@@ -719,6 +738,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_INSERT_SQL);
                 statement.setString(1, restaurantId);
                 statement.setString(2, userId);
+                statement.setInt(3, 3);
+                statement.setInt(4, 1);
                 statement.executeUpdate();
                 statement.close();
             } else if ("0".equals(likeFlag)) {
@@ -924,6 +945,19 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             }
 
             tsDataSource.commit();
+        } catch (MySQLIntegrityConstraintViolationException e) {
+            e.printStackTrace();
+
+            if (tsDataSource != null) {
+                try {
+                    tsDataSource.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            throw new TasteSyncException("Error while creating reco request " +
+                e.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
 
@@ -1252,6 +1286,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.setString(5, replyText);
             statement.setString(6, recommenderUserId);
             statement.setString(7, recommenderUserId);
+            statement.setInt(8, 4);
+            statement.setInt(9, 1);
 
             statement.executeUpdate();
 
@@ -3085,8 +3121,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
         try {
             connection = tsDataSource.getConnection();
-            tsDataSource.begin();
-
             statement = connection.prepareStatement(AskReplyQueries.COUNT_NOTIFICATIONS_ALL_SELECT_SQL);
 
             statement.setString(1, userId);
@@ -3186,15 +3220,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             return recoNotificationBaseList;
         } catch (SQLException e) {
             e.printStackTrace();
-
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            }
-
             throw new TasteSyncException("Error while creating reco request " +
                 e.getMessage());
         } finally {
