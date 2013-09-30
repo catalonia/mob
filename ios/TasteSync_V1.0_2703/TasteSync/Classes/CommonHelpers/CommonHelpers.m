@@ -253,4 +253,56 @@ void debug(NSString *format, ...)
     return [NSString stringWithCString:array encoding:NSASCIIStringEncoding];
     
 }
++(NSString*)getInformationRestaurant:(RestaurantObj*)obj
+{
+    NSString* retString = @"";
+    NSLog(@"'City Name%@", obj.cityObj.cityName);
+    if (![obj.cuisineTier2 isKindOfClass:[NSNull class]]  && ![obj.cuisineTier2 isEqualToString:@""]) {
+        retString = obj.cuisineTier2;
+        if (![obj.cityObj.cityName isKindOfClass:[NSNull class]] && ![obj.cityObj.cityName isEqualToString:@""]) {
+            retString = [retString stringByAppendingFormat:@", %@", obj.cityObj.cityName];
+        }
+    }
+    else
+    {
+        if (![obj.cityObj.cityName isKindOfClass:[NSNull class]]  && ![obj.cityObj.cityName isEqualToString:@""])
+            retString = obj.cityObj.cityName;
+    }
+    NSString* priceValue= @"";
+    int price = [obj.price integerValue];
+    switch (price) {
+        case 1:
+            priceValue = @"$";
+            break;
+        case 2:
+            priceValue = @"$$";
+            break;
+        case 3:
+            priceValue = @"$$$";
+            break;
+        case 4:
+            priceValue = @"$$$$";
+            break;
+        case 5:
+            priceValue = @"$$$$$";
+            break;
+    }
+    if (price > 0) {
+        retString = [retString stringByAppendingFormat:@", %@", priceValue];
+    }
+    
+    if ([CLLocationManager locationServicesEnabled]) {
+        CLLocation *loc1 = [[CLLocation alloc]initWithLatitude:obj.lattitude longitude:obj.longtitude];
+        CLLocation *loc2 = [[CLLocation alloc]init];
+        CLLocationDistance dist = [loc1 distanceFromLocation:loc2];
+        float distanceMiles = (dist / 1609.344);  
+        retString = [retString stringByAppendingFormat:@", %f mi",distanceMiles];
+    }
+    
+    if ([retString isEqualToString:@""]) {
+        
+    }
+    
+    return retString;
+}
 @end

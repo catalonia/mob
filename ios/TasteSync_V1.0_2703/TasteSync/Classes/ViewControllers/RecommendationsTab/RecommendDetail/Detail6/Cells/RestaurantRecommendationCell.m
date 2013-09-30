@@ -32,6 +32,7 @@
     
     ReplyRecomendationObj* obj = [restaurantObj.recommendArray objectAtIndex:0];
     lbRestaurantName.text = restaurantObj.name;
+    lbDetail.text = [CommonHelpers getInformationRestaurant:restaurantObj];
     if (obj.userObj.avatar != nil)
     {
         iv1.image = obj.userObj.avatar;
@@ -54,6 +55,7 @@
      _restaurantObj = restaurantObj;
     
     lbRestaurantName.text = restaurantObj.name;
+    lbDetail.text = [CommonHelpers getInformationRestaurant:restaurantObj];
     ReplyRecomendationObj* obj1 = [restaurantObj.recommendArray objectAtIndex:0];
     if (obj1.userObj.avatar != nil)
     {
@@ -90,7 +92,7 @@
     [NSThread detachNewThreadSelector:@selector(loadAvatar3) toTarget:self withObject:nil];
      _restaurantObj = restaurantObj;
     lbRestaurantName.text = restaurantObj.name;
-    
+    lbDetail.text = [CommonHelpers getInformationRestaurant:restaurantObj];
     ReplyRecomendationObj* obj1 = [restaurantObj.recommendArray objectAtIndex:0];
     if (obj1.userObj.avatar != nil)
     {

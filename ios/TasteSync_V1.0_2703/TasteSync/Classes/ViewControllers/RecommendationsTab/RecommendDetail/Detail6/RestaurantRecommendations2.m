@@ -159,6 +159,7 @@
         obj.name = [dic objectForKey:@"restaurantName"];
         obj.cuisineTier2 = [dic objectForKey:@"cuisineTier2Name"];
         obj.price = [dic objectForKey:@"price"];
+        obj.cityObj = [[TSCityObj alloc]init];
         obj.cityObj.cityName = [dic objectForKey:@"restaurantCity"];
         obj.lattitude = [[dic objectForKey:@"restaurantLat"] floatValue];
         obj.longtitude = [[dic objectForKey:@"restaurantLong"] floatValue];

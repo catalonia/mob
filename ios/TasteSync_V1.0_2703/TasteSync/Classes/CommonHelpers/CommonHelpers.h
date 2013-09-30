@@ -57,4 +57,6 @@ void debug(NSString *format, ...);
 + (NSString*)getStringValue:(NSNumber*)value;
 
 + (NSString*)getSymbolLocation:(NSString*)location;
+
++(NSString*)getInformationRestaurant:(RestaurantObj*)obj;
 @end

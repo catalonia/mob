@@ -209,7 +209,10 @@
             if (obj.type == NotificationRecommendationsForYou) {
                 NSDictionary* dicObj = [dic objectForKey:@"recommendationsForYou"];
                 obj.description = [dicObj objectForKey:@"recorequestText"];
-                user = nil;
+                NSDictionary* lastestUser = [dicObj objectForKey:@"latestRecommendeeUser"];
+                user.name = [lastestUser objectForKey:@"name"];
+                user.avatarUrl = [lastestUser objectForKey:@"photo"];
+                user.uid = [lastestUser objectForKey:@"userId"];
             }
             
             obj.user = user;
@@ -259,6 +262,14 @@
                 user.name = [dicObj objectForKey:@"name"];
                 user.avatarUrl = [dicObj objectForKey:@"photo"];
                 user.uid = [dicObj objectForKey:@"userId"];
+            }
+            if (obj.type == NotificationRecommendationsForYou) {
+                NSDictionary* dicObj = [dic objectForKey:@"recommendationsForYou"];
+                obj.description = [dicObj objectForKey:@"recorequestText"];
+                NSDictionary* lastestUser = [dicObj objectForKey:@"latestRecommendeeUser"];
+                user.name = [lastestUser objectForKey:@"name"];
+                user.avatarUrl = [lastestUser objectForKey:@"photo"];
+                user.uid = [lastestUser objectForKey:@"userId"];
             }
             obj.user = user;
             
@@ -320,6 +331,14 @@
                 user.avatarUrl = [dicObj objectForKey:@"photo"];
                 user.uid = [dicObj objectForKey:@"userId"];
             }
+            if (obj.type == NotificationRecommendationsForYou) {
+                NSDictionary* dicObj = [dic objectForKey:@"recommendationsForYou"];
+                obj.description = [dicObj objectForKey:@"recorequestText"];
+                NSDictionary* lastestUser = [dicObj objectForKey:@"latestRecommendeeUser"];
+                user.name = [lastestUser objectForKey:@"name"];
+                user.avatarUrl = [lastestUser objectForKey:@"photo"];
+                user.uid = [lastestUser objectForKey:@"userId"];
+            }
             obj.user = user;
             if (nextLoad <= 10) {
                 if ([self checkNotify:obj]) {
@@ -369,6 +388,14 @@
                 user.name = [dicObj objectForKey:@"name"];
                 user.avatarUrl = [dicObj objectForKey:@"photo"];
                 user.uid = [dicObj objectForKey:@"userId"];
+            }
+            if (obj.type == NotificationRecommendationsForYou) {
+                NSDictionary* dicObj = [dic objectForKey:@"recommendationsForYou"];
+                obj.description = [dicObj objectForKey:@"recorequestText"];
+                NSDictionary* lastestUser = [dicObj objectForKey:@"latestRecommendeeUser"];
+                user.name = [lastestUser objectForKey:@"name"];
+                user.avatarUrl = [lastestUser objectForKey:@"photo"];
+                user.uid = [lastestUser objectForKey:@"userId"];
             }
             obj.user = user;
             
