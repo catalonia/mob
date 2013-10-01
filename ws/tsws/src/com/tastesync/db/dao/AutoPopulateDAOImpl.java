@@ -69,9 +69,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             return jsonArray;
         } catch (SQLException e) {
@@ -113,9 +111,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             return jsonArray;
         } catch (SQLException e) {
@@ -157,9 +153,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             return jsonArray;
         } catch (SQLException e) {
@@ -201,9 +195,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             return jsonArray;
         } catch (SQLException e) {
@@ -245,9 +237,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             return jsonArray;
         } catch (SQLException e) {
@@ -289,9 +279,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             return jsonArray;
         } catch (SQLException e) {
@@ -334,9 +322,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 jsonArray.put(jsonObject);
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             return jsonArray;
         } catch (SQLException e) {
@@ -354,19 +340,16 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
     @Override
     public List<TSRestaurantObj> populateRestaurantSearchTerms(String key,
         String cityId) throws TasteSyncException {
-    	List<TSRestaurantObj> listRest = new ArrayList<TSRestaurantObj>();
-    	TSDataSource tsDataSource = TSDataSource.getInstance();
+        List<TSRestaurantObj> listRest = new ArrayList<TSRestaurantObj>();
+        TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
-        
-        if (cityId.equals("")) {
-            
 
-            try {
-                connection = tsDataSource.getConnection();
-                tsDataSource.begin();
+        try {
+            connection = tsDataSource.getConnection();
 
+            if (cityId.equals("")) {
                 statement = connection.prepareStatement(AutoPopulateQueries.RESTAURANT_SELECT_SQL);
                 statement.setString(1, key + "%");
                 resultset = statement.executeQuery();
@@ -377,23 +360,8 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                     listRest.add(restaurantObj);
                 }
 
-                if (statement != null) {
-                    statement.close();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new TasteSyncException(e.getMessage());
-            } finally {
-                tsDataSource.close();
-                tsDataSource.closeConnection(connection, statement, resultset);
-            }
-        } else if (key.equals("")) {
-
-            try {
-                connection = tsDataSource.getConnection();
-                tsDataSource.begin();
-
+                statement.close();
+            } else if (key.equals("")) {
                 System.out.println(
                     "AutoPopulateQueries.RESTAURANT_CITY_SELECT_SQL=" +
                     AutoPopulateQueries.RESTAURANT_CITY_SELECT_SQL);
@@ -407,23 +375,8 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                     listRest.add(restaurantObj);
                 }
 
-                if (statement != null) {
-                    statement.close();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new TasteSyncException(e.getMessage());
-            } finally {
-                tsDataSource.close();
-                tsDataSource.closeConnection(connection, statement, resultset);
-            }
-        } else {
-
-            try {
-                connection = tsDataSource.getConnection();
-                tsDataSource.begin();
-
+                statement.close();
+            } else {
                 System.out.println(
                     "AutoPopulateQueries.RESTAURANT_CITY__KEY_SELECT_SQL=" +
                     AutoPopulateQueries.RESTAURANT_CITY_KEY_SELECT_SQL);
@@ -437,71 +390,68 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                     mapResultsetRowToTSRestaurantVO(restaurantObj, resultset);
                     listRest.add(restaurantObj);
                 }
-                if (statement != null) {
-                    statement.close();
+
+                statement.close();
+            }
+
+            for (TSRestaurantObj tsRestaurantObj : listRest) {
+                List<TSCuisineTier2Obj> cuisineObj = new ArrayList<TSCuisineTier2Obj>();
+                System.out.println(
+                    "AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL=" +
+                    AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL);
+                statement = connection.prepareStatement(AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL);
+                statement.setString(1, tsRestaurantObj.getRestaurantId());
+                resultset = statement.executeQuery();
+
+                while (resultset.next()) {
+                    TSCuisineTier2Obj obj = new TSCuisineTier2Obj();
+                    obj.setCuisineId(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString(
+                                "cuisine_tier2_descriptor.CUISINE_ID")));
+                    obj.setCuisineDesc(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString(
+                                "cuisine_tier2_descriptor.CUISINE_DESC")));
+                    obj.setCuisineValidCurrent(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString(
+                                "cuisine_tier2_descriptor.CUISINE_VALID_CURRENT")));
+                    cuisineObj.add(obj);
                 }
 
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new TasteSyncException(e.getMessage());
-            } finally {
-                tsDataSource.close();
-                tsDataSource.closeConnection(connection, statement, resultset);
+                statement.close();
+                tsRestaurantObj.setCuisineTier2Obj(cuisineObj);
             }
-        }
-        
-        
-        try {
-        	tsDataSource = TSDataSource.getInstance();
-            connection = tsDataSource.getConnection();
-        	for (TSRestaurantObj tsRestaurantObj : listRest) {
-        		List<TSCuisineTier2Obj> cuisineObj = new ArrayList<TSCuisineTier2Obj>();
-            	System.out.println("AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL=" +
-                        AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL);
-            	statement = connection.prepareStatement(AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL);
-            	statement.setString(1, tsRestaurantObj.getRestaurantId());
-            	resultset = statement.executeQuery();
-            	while (resultset.next()) {
-            		TSCuisineTier2Obj obj = new TSCuisineTier2Obj();
-            		obj.setCuisineId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier2_descriptor.CUISINE_ID")));
-            		obj.setCuisineDesc(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier2_descriptor.CUISINE_DESC")));
-            		obj.setCuisineValidCurrent(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier2_descriptor.CUISINE_VALID_CURRENT")));
-            		cuisineObj.add(obj);
-            	}
-            	tsRestaurantObj.setCuisineTier2Obj(cuisineObj);
-        	}
-        	
-        	connection = tsDataSource.getConnection();
-        	for (TSRestaurantObj tsRestaurantObj : listRest) {
-        		TSCityObj cityObj = new TSCityObj();
-            	System.out.println("AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL=" +
-                        AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL);
-            	statement = connection.prepareStatement(AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL);
-            	statement.setString(1, tsRestaurantObj.getRestaurantId());
-            	resultset = statement.executeQuery();
-            	while (resultset.next()) {
-            		cityObj.setCity(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.city")));
-            		cityObj.setCityId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.city_id")));
-            		cityObj.setState(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.state")));
-            		cityObj.setCountry(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.country")));
-                	
-            	}
-            	tsRestaurantObj.setCityObj(cityObj);
-        	}
-        	
-        	
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        finally {
+
+            for (TSRestaurantObj tsRestaurantObj : listRest) {
+                TSCityObj cityObj = new TSCityObj();
+                System.out.println(
+                    "AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL=" +
+                    AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL);
+                statement = connection.prepareStatement(AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL);
+                statement.setString(1, tsRestaurantObj.getRestaurantId());
+                resultset = statement.executeQuery();
+
+                while (resultset.next()) {
+                    cityObj.setCity(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString("cities.city")));
+                    cityObj.setCityId(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString("cities.city_id")));
+                    cityObj.setState(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString("cities.state")));
+                    cityObj.setCountry(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString("cities.country")));
+                }
+
+                statement.close();
+                tsRestaurantObj.setCityObj(cityObj);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(e.getMessage());
+        } finally {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, resultset);
         }
-        
-        
-        
+
         return listRest;
     }
 
