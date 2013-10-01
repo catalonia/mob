@@ -7112,6 +7112,24 @@
   _tbdOpenTableId = newTbdOpenTableId;
 }
 
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) cuisineTier2Obj
+{
+  return _cuisineTier2Obj;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCuisineTier2Obj: (NSArray *) newCuisineTier2Obj
+{
+  [newCuisineTier2Obj retain];
+  [_cuisineTier2Obj release];
+  _cuisineTier2Obj = newCuisineTier2Obj;
+}
+
 - (void) dealloc
 {
   [self setMoreInfoFlag: nil];
@@ -7128,6 +7146,7 @@
   [self setSumVoteCount: nil];
   [self setSumVoteValue: nil];
   [self setTbdOpenTableId: nil];
+  [self setCuisineTier2Obj: nil];
   [super dealloc];
 }
 
@@ -7602,6 +7621,28 @@
     return YES;
   } //end "if choice"
 
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "cuisineTier2Obj", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}cuisineTier2Obj of type {}TSCuisineTier2Obj.");
+#endif
+
+    __child = [ENUNCIATENS0TSCuisineTier2Obj readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}cuisineTier2Obj of type {}TSCuisineTier2Obj.");
+#endif
+
+    if ([self cuisineTier2Obj]) {
+      [self setCuisineTier2Obj: [[self cuisineTier2Obj] arrayByAddingObject: __child]];
+    }
+    else {
+      [self setCuisineTier2Obj: [NSArray arrayWithObject: __child]];
+    }
+    return YES;
+  } //end "if choice"
+
 
   return NO;
 }
@@ -7939,6 +7980,31 @@
       [NSException raise: @"XMLWriteError"
                    format: @"Error writing end child element {}tbdOpenTableId."];
     }
+  }
+  if ([self cuisineTier2Obj]) {
+    __enumerator = [[self cuisineTier2Obj] objectEnumerator];
+
+    while ( (__item = [__enumerator nextObject]) ) {
+      status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cuisineTier2Obj", NULL);
+      if (status < 0) {
+        [NSException raise: @"XMLWriteError"
+                     format: @"Error writing start child element {}cuisineTier2Obj."];
+      }
+
+#if DEBUG_ENUNCIATE > 1
+      NSLog(@"writing element {}cuisineTier2Obj...");
+#endif
+      [__item writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+      NSLog(@"successfully wrote element {}cuisineTier2Obj...");
+#endif
+
+      status = xmlTextWriterEndElement(writer);
+      if (status < 0) {
+        [NSException raise: @"XMLWriteError"
+                     format: @"Error writing end child element {}cuisineTier2Obj."];
+      }
+    } //end item iterator.
   }
 }
 @end /* implementation ENUNCIATENS0TSRestaurantObj (JAXB) */
@@ -11213,6 +11279,24 @@
 /**
  * (no documentation provided)
  */
+- (ENUNCIATENS0TSUserProfileBasicObj *) latestRecommendeeUser
+{
+  return _latestRecommendeeUser;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setLatestRecommendeeUser: (ENUNCIATENS0TSUserProfileBasicObj *) newLatestRecommendeeUser
+{
+  [newLatestRecommendeeUser retain];
+  [_latestRecommendeeUser release];
+  _latestRecommendeeUser = newLatestRecommendeeUser;
+}
+
+/**
+ * (no documentation provided)
+ */
 - (NSString *) recorequestText
 {
   return _recorequestText;
@@ -11248,6 +11332,7 @@
 
 - (void) dealloc
 {
+  [self setLatestRecommendeeUser: nil];
   [self setRecorequestText: nil];
   [self setRestaurantsForYouObjList: nil];
   [super dealloc];
@@ -11501,6 +11586,22 @@
     return YES;
   }
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "latestRecommendeeUser", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}latestRecommendeeUser of type {}TSUserProfileBasicObj.");
+#endif
+    __child = [ENUNCIATENS0TSUserProfileBasicObj readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}latestRecommendeeUser of type {}TSUserProfileBasicObj.");
+#endif
+
+    [self setLatestRecommendeeUser: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
     && xmlStrcmp(BAD_CAST "recorequestText", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -11582,6 +11683,27 @@
 
   [super writeJAXBChildElements: writer];
 
+  if ([self latestRecommendeeUser]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "latestRecommendeeUser", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}latestRecommendeeUser."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}latestRecommendeeUser...");
+#endif
+    [[self latestRecommendeeUser] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}latestRecommendeeUser...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}latestRecommendeeUser."];
+    }
+  }
   if ([self recorequestText]) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recorequestText", NULL);
     if (status < 0) {

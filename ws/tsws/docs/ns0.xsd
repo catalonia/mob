@@ -340,6 +340,7 @@
       <xs:element name="sumVoteCount" type="xs:string" minOccurs="0"/>
       <xs:element name="sumVoteValue" type="xs:string" minOccurs="0"/>
       <xs:element name="tbdOpenTableId" type="xs:string" minOccurs="0"/>
+      <xs:element name="cuisineTier2Obj" type="TSCuisineTier2Obj" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSRestaurantPhotoObj">
@@ -474,6 +475,7 @@
   </xs:complexType>
   <xs:complexType name="TSRecommendationsForYouObj">
     <xs:sequence>
+      <xs:element name="latestRecommendeeUser" type="TSUserProfileBasicObj" minOccurs="0"/>
       <xs:element name="recorequestText" type="xs:string" minOccurs="0"/>
       <xs:element name="restaurantsForYouObjList" type="TSRestaurantsForYouObj" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>

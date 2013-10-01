@@ -920,6 +920,7 @@
     NSString *_sumVoteCount;
     NSString *_sumVoteValue;
     NSString *_tbdOpenTableId;
+    NSArray *_cuisineTier2Obj;
 }
 
 /**
@@ -1061,6 +1062,16 @@
  * (no documentation provided)
  */
 - (void) setTbdOpenTableId: (NSString *) newTbdOpenTableId;
+
+/**
+ * (no documentation provided)
+ */
+- (NSArray *) cuisineTier2Obj;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCuisineTier2Obj: (NSArray *) newCuisineTier2Obj;
 @end /* interface ENUNCIATENS0TSRestaurantObj */
 
 #endif /* DEF_ENUNCIATENS0TSRestaurantObj_H */
@@ -1426,9 +1437,20 @@
 @interface ENUNCIATENS0TSRecommendationsForYouObj : NSObject <EnunciateXML>
 {
   @private
+    ENUNCIATENS0TSUserProfileBasicObj *_latestRecommendeeUser;
     NSString *_recorequestText;
     NSArray *_restaurantsForYouObjList;
 }
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSUserProfileBasicObj *) latestRecommendeeUser;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setLatestRecommendeeUser: (ENUNCIATENS0TSUserProfileBasicObj *) newLatestRecommendeeUser;
 
 /**
  * (no documentation provided)

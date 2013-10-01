@@ -130,6 +130,16 @@
       <h2>Example XML</h2>
       <code class="prettyprint lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;recos4u&gt;
+  &lt;latestRecommendeeUser&gt;
+    &lt;userId&gt;...&lt;/userId&gt;
+    &lt;name&gt;...&lt;/name&gt;
+    &lt;photo&gt;...&lt;/photo&gt;
+    &lt;photoDetails&gt;
+      &lt;userId&gt;...&lt;/userId&gt;
+      &lt;name&gt;...&lt;/name&gt;
+      &lt;photo&gt;...&lt;/photo&gt;
+    &lt;/photoDetails&gt;
+  &lt;/latestRecommendeeUser&gt;
   &lt;recorequestText&gt;...&lt;/recorequestText&gt;
   &lt;restaurantsForYouObjList&gt;
     &lt;recommendationsForYouList&gt;
@@ -167,6 +177,16 @@
 &lt;/recos4u&gt;</code>
       <h2>Example JSON</h2>
       <code class="prettyprint lang-js">{
+  &quot;latestRecommendeeUser&quot; : {
+    &quot;userId&quot; : &quot;...&quot;,
+    &quot;name&quot; : &quot;...&quot;,
+    &quot;photo&quot; : &quot;...&quot;,
+    &quot;photoDetails&quot; : {
+      &quot;userId&quot; : &quot;...&quot;,
+      &quot;name&quot; : &quot;...&quot;,
+      &quot;photo&quot; : &quot;...&quot;
+    }
+  },
   &quot;recorequestText&quot; : &quot;...&quot;,
   &quot;restaurantsForYouObjList&quot; : [ {
     &quot;recommendationsForYouList&quot; : [ {

@@ -5,6 +5,7 @@ import com.tastesync.db.queries.AutoPopulateQueries;
 
 import com.tastesync.exception.TasteSyncException;
 
+import com.tastesync.model.objects.TSCuisineTier2Obj;
 import com.tastesync.model.objects.TSLocationSearchCitiesObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 
@@ -352,19 +353,21 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
     @Override
     public List<TSRestaurantObj> populateRestaurantSearchTerms(String key,
         String cityId) throws TasteSyncException {
+    	List<TSRestaurantObj> listRest = new ArrayList<TSRestaurantObj>();
+    	TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+        
         if (cityId.equals("")) {
-            List<TSRestaurantObj> listRest = new ArrayList<TSRestaurantObj>();
-            TSDataSource tsDataSource = TSDataSource.getInstance();
-            Connection connection = null;
-            PreparedStatement statement = null;
-            ResultSet resultset = null;
+            
 
             try {
                 connection = tsDataSource.getConnection();
                 tsDataSource.begin();
 
                 statement = connection.prepareStatement(AutoPopulateQueries.RESTAURANT_SELECT_SQL);
-                statement.setString(1, "%" + key + "%");
+                statement.setString(1, key + "%");
                 resultset = statement.executeQuery();
 
                 while (resultset.next()) {
@@ -377,7 +380,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                     statement.close();
                 }
 
-                return listRest;
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new TasteSyncException(e.getMessage());
@@ -386,11 +388,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 tsDataSource.closeConnection(connection, statement, resultset);
             }
         } else if (key.equals("")) {
-            List<TSRestaurantObj> listRest = new ArrayList<TSRestaurantObj>();
-            TSDataSource tsDataSource = TSDataSource.getInstance();
-            Connection connection = null;
-            PreparedStatement statement = null;
-            ResultSet resultset = null;
 
             try {
                 connection = tsDataSource.getConnection();
@@ -413,7 +410,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                     statement.close();
                 }
 
-                return listRest;
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new TasteSyncException(e.getMessage());
@@ -422,11 +418,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 tsDataSource.closeConnection(connection, statement, resultset);
             }
         } else {
-            List<TSRestaurantObj> listRest = new ArrayList<TSRestaurantObj>();
-            TSDataSource tsDataSource = TSDataSource.getInstance();
-            Connection connection = null;
-            PreparedStatement statement = null;
-            ResultSet resultset = null;
 
             try {
                 connection = tsDataSource.getConnection();
@@ -436,7 +427,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                     "AutoPopulateQueries.RESTAURANT_CITY__KEY_SELECT_SQL=" +
                     AutoPopulateQueries.RESTAURANT_CITY_KEY_SELECT_SQL);
                 statement = connection.prepareStatement(AutoPopulateQueries.RESTAURANT_CITY_KEY_SELECT_SQL);
-                statement.setString(1, "%" + key + "%");
+                statement.setString(1, key + "%");
                 statement.setString(2, cityId);
                 resultset = statement.executeQuery();
 
@@ -445,12 +436,11 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                     mapResultsetRowToTSRestaurantVO(restaurantObj, resultset);
                     listRest.add(restaurantObj);
                 }
-
                 if (statement != null) {
                     statement.close();
                 }
 
-                return listRest;
+                
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new TasteSyncException(e.getMessage());
@@ -459,6 +449,35 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 tsDataSource.closeConnection(connection, statement, resultset);
             }
         }
+        
+        
+        try {
+        	tsDataSource = TSDataSource.getInstance();
+            connection = tsDataSource.getConnection();
+        	for (TSRestaurantObj tsRestaurantObj : listRest) {
+        		List<TSCuisineTier2Obj> cuisineObj = new ArrayList<TSCuisineTier2Obj>();
+            	System.out.println("AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL=" +
+                        AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL);
+            	statement = connection.prepareStatement(AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL);
+            	statement.setString(1, tsRestaurantObj.getRestaurantId());
+            	resultset = statement.executeQuery();
+            	while (resultset.next()) {
+            		TSCuisineTier2Obj obj = new TSCuisineTier2Obj();
+            		obj.setCuisineId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier2_descriptor.CUISINE_ID")));
+            		obj.setCuisineDesc(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier2_descriptor.CUISINE_DESC")));
+            		obj.setCuisineValidCurrent(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cuisine_tier2_descriptor.CUISINE_VALID_CURRENT")));
+            		cuisineObj.add(obj);
+            	}
+            	tsRestaurantObj.setCuisineTier2Obj(cuisineObj);
+        	}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+        
+        return listRest;
     }
 
     private void mapResultsetRowToTSRestaurantVO(

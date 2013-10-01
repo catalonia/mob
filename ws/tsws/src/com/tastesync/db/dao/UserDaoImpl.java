@@ -2725,7 +2725,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             System.out.println("CityQueries.CITY_KEY_CITY_SELECT_SQL=" +
                 CityQueries.CITY_KEY_CITY_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_KEY_CITY_SELECT_SQL);
-            statement.setString(1, "%" + key + "%");
+            statement.setString(1, key + "%");
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -2772,7 +2772,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             System.out.println("CityQueries.CITY_KEY_STATE_SELECT_SQL=" +
                 CityQueries.CITY_KEY_STATE_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_KEY_STATE_SELECT_SQL);
-            statement.setString(1, "%" + key + "%");
+            statement.setString(1, key + "%");
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -2795,7 +2795,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             System.out.println("CityQueries.CITY_KEY_CITY_SELECT_SQL=" +
                 CityQueries.CITY_KEY_CITY_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_KEY_CITY_SELECT_SQL);
-            statement.setString(1, "%" + key + "%");
+            statement.setString(1, key + "%");
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -2819,7 +2819,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 "CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL=" +
                 CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL);
-            statement.setString(1, "%" + key + "%");
+            statement.setString(1, key + "%");
             resultset = statement.executeQuery();
 
             while (resultset.next()) {

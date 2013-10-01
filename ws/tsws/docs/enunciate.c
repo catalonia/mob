@@ -3123,6 +3123,16 @@ struct enunciate_ns0_TSRestaurantObj {
    * (no documentation provided)
    */
   xmlChar *tbdOpenTableId;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSCuisineTier2Obj *cuisineTier2Obj;
+
+  /**
+   * Size of the cuisineTier2Obj array.
+   */
+  int _sizeof_cuisineTier2Obj;
 };
 
 /**
@@ -4877,6 +4887,11 @@ static void freeNs0TSRecommendationsFollowupObjType(struct enunciate_ns0_TSRecom
  */
 struct enunciate_ns0_TSRecommendationsForYouObj {
 
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSUserProfileBasicObj *latestRecommendeeUser;
 
   /**
    * (no documentation provided)
@@ -21893,6 +21908,29 @@ static struct enunciate_ns0_TSRestaurantObj *xmlTextReaderReadNs0TSRestaurantObj
         _tSRestaurantObj->tbdOpenTableId = ((xmlChar*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "cuisineTier2Obj", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}cuisineTier2Obj of type {}TSCuisineTier2Obj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSCuisineTier2ObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}cuisineTier2Obj of type {}TSCuisineTier2Obj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantObjType(_tSRestaurantObj);
+          free(_tSRestaurantObj);
+          return NULL;
+        }
+
+        _tSRestaurantObj->cuisineTier2Obj = realloc(_tSRestaurantObj->cuisineTier2Obj, (_tSRestaurantObj->_sizeof_cuisineTier2Obj + 1) * sizeof(struct enunciate_ns0_TSCuisineTier2Obj));
+        memcpy(&(_tSRestaurantObj->cuisineTier2Obj[_tSRestaurantObj->_sizeof_cuisineTier2Obj++]), _child_accessor, sizeof(struct enunciate_ns0_TSCuisineTier2Obj));
+        free(_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
       else {
 #if DEBUG_ENUNCIATE > 1
         if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
@@ -22340,6 +22378,36 @@ static int xmlTextWriterWriteNs0TSRestaurantObjType(xmlTextWriterPtr writer, str
     }
     totalBytes += status;
   }
+  for (i = 0; i < _tSRestaurantObj->_sizeof_cuisineTier2Obj; i++) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cuisineTier2Obj", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}cuisineTier2Obj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSCuisineTier2Obj for element {}cuisineTier2Obj...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSCuisineTier2ObjType(writer, &(_tSRestaurantObj->cuisineTier2Obj[i]));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSCuisineTier2Obj for element {}cuisineTier2Obj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}cuisineTier2Obj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
 
   return totalBytes;
 }
@@ -22490,6 +22558,18 @@ static void freeNs0TSRestaurantObjType(struct enunciate_ns0_TSRestaurantObj *_tS
     printf("Freeing accessor tbdOpenTableId of type enunciate_ns0_TSRestaurantObj...\n");
 #endif
     free(_tSRestaurantObj->tbdOpenTableId);
+  }
+  if (_tSRestaurantObj->cuisineTier2Obj != NULL) {
+    for (i = 0; i < _tSRestaurantObj->_sizeof_cuisineTier2Obj; i++) {
+#if DEBUG_ENUNCIATE > 1
+      printf("Freeing accessor cuisineTier2Obj[%i] of type enunciate_ns0_TSRestaurantObj...\n", i);
+#endif
+      freeNs0TSCuisineTier2ObjType(&(_tSRestaurantObj->cuisineTier2Obj[i]));
+    }
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor cuisineTier2Obj of type enunciate_ns0_TSRestaurantObj...\n");
+#endif
+    free(_tSRestaurantObj->cuisineTier2Obj);
   }
 }
 #endif /* DEF_enunciate_ns0_TSRestaurantObj_M */
@@ -30028,6 +30108,27 @@ static struct enunciate_ns0_TSRecommendationsForYouObj *xmlTextReaderReadNs0TSRe
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "latestRecommendeeUser", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}latestRecommendeeUser of type {}TSUserProfileBasicObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSUserProfileBasicObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}latestRecommendeeUser of type {}TSUserProfileBasicObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRecommendationsForYouObjType(_tSRecommendationsForYouObj);
+          free(_tSRecommendationsForYouObj);
+          return NULL;
+        }
+
+        _tSRecommendationsForYouObj->latestRecommendeeUser = ((struct enunciate_ns0_TSUserProfileBasicObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "recorequestText", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -30098,6 +30199,36 @@ static struct enunciate_ns0_TSRecommendationsForYouObj *xmlTextReaderReadNs0TSRe
 static int xmlTextWriterWriteNs0TSRecommendationsForYouObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRecommendationsForYouObj *_tSRecommendationsForYouObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSRecommendationsForYouObj->latestRecommendeeUser != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "latestRecommendeeUser", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}latestRecommendeeUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSUserProfileBasicObj for element {}latestRecommendeeUser...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSUserProfileBasicObjType(writer, (_tSRecommendationsForYouObj->latestRecommendeeUser));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSUserProfileBasicObj for element {}latestRecommendeeUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}latestRecommendeeUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSRecommendationsForYouObj->recorequestText != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recorequestText", NULL);
     if (status < 0) {
@@ -30169,6 +30300,16 @@ static int xmlTextWriterWriteNs0TSRecommendationsForYouObjType(xmlTextWriterPtr 
  */
 static void freeNs0TSRecommendationsForYouObjType(struct enunciate_ns0_TSRecommendationsForYouObj *_tSRecommendationsForYouObj) {
   int i;
+  if (_tSRecommendationsForYouObj->latestRecommendeeUser != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor latestRecommendeeUser of type enunciate_ns0_TSRecommendationsForYouObj...\n");
+#endif
+    freeNs0TSUserProfileBasicObjType(_tSRecommendationsForYouObj->latestRecommendeeUser);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor latestRecommendeeUser of type enunciate_ns0_TSRecommendationsForYouObj...\n");
+#endif
+    free(_tSRecommendationsForYouObj->latestRecommendeeUser);
+  }
   if (_tSRecommendationsForYouObj->recorequestText != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor recorequestText of type enunciate_ns0_TSRecommendationsForYouObj...\n");

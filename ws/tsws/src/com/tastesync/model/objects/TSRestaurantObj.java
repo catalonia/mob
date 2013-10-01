@@ -1,6 +1,7 @@
 package com.tastesync.model.objects;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,7 +24,9 @@ public class TSRestaurantObj implements Serializable {
     private String tbdOpenTableId;
     private String moreInfoFlag;
     private String openNowFlag;
-
+    private List<TSCuisineTier2Obj> cuisineTier2Obj;
+    
+    
     public TSRestaurantObj() {
         super();
     }
@@ -106,6 +109,12 @@ public class TSRestaurantObj implements Serializable {
         return tbdOpenTableId;
     }
 
+    @XmlElement
+	public List<TSCuisineTier2Obj> getCuisineTier2Obj() {
+		return cuisineTier2Obj;
+	}
+
+    
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
     }
@@ -165,4 +174,8 @@ public class TSRestaurantObj implements Serializable {
         ", sumVoteValue=" + sumVoteValue + ", tbdOpenTableId=" +
         tbdOpenTableId + "]";
     }
+
+	public void setCuisineTier2Obj(List<TSCuisineTier2Obj> cuisineTier2Obj) {
+		this.cuisineTier2Obj = cuisineTier2Obj;
+	}
 }
