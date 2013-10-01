@@ -46,6 +46,7 @@ public interface AutoPopulateQueries extends TSDBCommonQueries {
     public static final String RESTAURANT_CITY_KEY_SELECT_SQL = "SELECT * FROM restaurant WHERE restaurant.RESTAURANT_NAME LIKE ? AND restaurant.RESTAURANT_CITY_ID = ?";
     public static final String RESTAURANT_CITY_SELECT_SQL = "SELECT * FROM restaurant WHERE restaurant.RESTAURANT_CITY_ID = ?";
     public static final String CUISINE_TIE2_RESTAURANT_SELECT_SQL = "SELECT * FROM cuisine_tier2_descriptor WHERE CUISINE_ID IN(SELECT tier2_cuisine_id FROM restaurant_cuisine WHERE RESTAURANT_ID = ?)";
+    public static final String CITIES_RESTAURANT_SELECT_SQL = "SELECT * FROM cities WHERE city_id IN(SELECT RESTAURANT_CITY_ID FROM restaurant WHERE RESTAURANT_ID = ?)";
     public static final String CITIES_LOCATION_SELECT_SQL = "" +
         "SELECT cities.state, " + "       city_neighbourhood.city_id, " +
         "       city_neighbourhood.city_name, " +

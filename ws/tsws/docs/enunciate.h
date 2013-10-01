@@ -921,6 +921,7 @@
     NSString *_sumVoteValue;
     NSString *_tbdOpenTableId;
     NSArray *_cuisineTier2Obj;
+    ENUNCIATENS0TSCityObj *_cityObj;
 }
 
 /**
@@ -1072,6 +1073,16 @@
  * (no documentation provided)
  */
 - (void) setCuisineTier2Obj: (NSArray *) newCuisineTier2Obj;
+
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSCityObj *) cityObj;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCityObj: (ENUNCIATENS0TSCityObj *) newCityObj;
 @end /* interface ENUNCIATENS0TSRestaurantObj */
 
 #endif /* DEF_ENUNCIATENS0TSRestaurantObj_H */

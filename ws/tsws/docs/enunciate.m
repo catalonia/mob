@@ -7130,6 +7130,24 @@
   _cuisineTier2Obj = newCuisineTier2Obj;
 }
 
+/**
+ * (no documentation provided)
+ */
+- (ENUNCIATENS0TSCityObj *) cityObj
+{
+  return _cityObj;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCityObj: (ENUNCIATENS0TSCityObj *) newCityObj
+{
+  [newCityObj retain];
+  [_cityObj release];
+  _cityObj = newCityObj;
+}
+
 - (void) dealloc
 {
   [self setMoreInfoFlag: nil];
@@ -7147,6 +7165,7 @@
   [self setSumVoteValue: nil];
   [self setTbdOpenTableId: nil];
   [self setCuisineTier2Obj: nil];
+  [self setCityObj: nil];
   [super dealloc];
 }
 
@@ -7643,6 +7662,22 @@
     return YES;
   } //end "if choice"
 
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "cityObj", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}cityObj of type {}TSCityObj.");
+#endif
+    __child = [ENUNCIATENS0TSCityObj readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}cityObj of type {}TSCityObj.");
+#endif
+
+    [self setCityObj: __child];
+    return YES;
+  } //end "if choice"
+
 
   return NO;
 }
@@ -8005,6 +8040,27 @@
                      format: @"Error writing end child element {}cuisineTier2Obj."];
       }
     } //end item iterator.
+  }
+  if ([self cityObj]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cityObj", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}cityObj."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}cityObj...");
+#endif
+    [[self cityObj] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}cityObj...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}cityObj."];
+    }
   }
 }
 @end /* implementation ENUNCIATENS0TSRestaurantObj (JAXB) */

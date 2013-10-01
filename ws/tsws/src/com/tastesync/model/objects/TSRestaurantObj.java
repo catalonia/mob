@@ -25,7 +25,7 @@ public class TSRestaurantObj implements Serializable {
     private String moreInfoFlag;
     private String openNowFlag;
     private List<TSCuisineTier2Obj> cuisineTier2Obj;
-    
+    private TSCityObj cityObj;
     
     public TSRestaurantObj() {
         super();
@@ -114,6 +114,10 @@ public class TSRestaurantObj implements Serializable {
 		return cuisineTier2Obj;
 	}
 
+    @XmlElement
+    public TSCityObj getCityObj() {
+		return cityObj;
+	}
     
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
@@ -177,5 +181,9 @@ public class TSRestaurantObj implements Serializable {
 
 	public void setCuisineTier2Obj(List<TSCuisineTier2Obj> cuisineTier2Obj) {
 		this.cuisineTier2Obj = cuisineTier2Obj;
+	}
+
+	public void setCityObj(TSCityObj cityObj) {
+		this.cityObj = cityObj;
 	}
 }

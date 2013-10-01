@@ -5,6 +5,7 @@ import com.tastesync.db.queries.AutoPopulateQueries;
 
 import com.tastesync.exception.TasteSyncException;
 
+import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSCuisineTier2Obj;
 import com.tastesync.model.objects.TSLocationSearchCitiesObj;
 import com.tastesync.model.objects.TSRestaurantObj;
@@ -470,10 +471,34 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
             	}
             	tsRestaurantObj.setCuisineTier2Obj(cuisineObj);
         	}
+        	
+        	connection = tsDataSource.getConnection();
+        	for (TSRestaurantObj tsRestaurantObj : listRest) {
+        		TSCityObj cityObj = new TSCityObj();
+            	System.out.println("AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL=" +
+                        AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL);
+            	statement = connection.prepareStatement(AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL);
+            	statement.setString(1, tsRestaurantObj.getRestaurantId());
+            	resultset = statement.executeQuery();
+            	while (resultset.next()) {
+            		cityObj.setCity(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.city")));
+            		cityObj.setCityId(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.city_id")));
+            		cityObj.setState(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.state")));
+            		cityObj.setCountry(CommonFunctionsUtil.getModifiedValueString(resultset.getString("cities.country")));
+                	
+            	}
+            	tsRestaurantObj.setCityObj(cityObj);
+        	}
+        	
+        	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
         
         
         
