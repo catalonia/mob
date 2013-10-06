@@ -568,9 +568,9 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
             StringBuffer addressBuffer = new StringBuffer();
 
-            for (int i = 0; i < addressList.length; ++i) {
-                if ((addressList[i] != null) && !addressList[i].isEmpty()) {
-                    addressBuffer.append(addressList[i]).append(", ");
+            for (String anAddressList : addressList) {
+                if ((anAddressList != null) && !anAddressList.isEmpty()) {
+                    addressBuffer.append(anAddressList).append(", ");
                 }
             }
 

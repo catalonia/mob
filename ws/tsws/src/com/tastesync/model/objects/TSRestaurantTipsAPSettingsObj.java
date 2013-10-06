@@ -40,6 +40,6 @@ public class TSRestaurantTipsAPSettingsObj implements Serializable {
         this.apSettingType = apSettingType;
     }
     public enum APSETTINGTYPE {FACEBOOK,
-        TWITTER;
+        TWITTER
     }
 }
