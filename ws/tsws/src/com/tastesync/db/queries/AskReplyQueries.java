@@ -7,7 +7,7 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "recorequest_user.RECOREQUEST_SENT_DATETIME," +
         "recorequest_user.RECOREQUEST_FREE_TEXT," +
         "recorequest_user.RECOREQUEST_PARAMETER_SELECTION_MERGED," +
-        "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES" +
+        "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES," +
         "recorequest_user.ALGO1_IND" +
         ")    VALUES    (" + "?," + "?," + "?," + "?," + "?," + "?, "+ "?" + ")";
     public static final String RECOREQUEST_CUISINE_TIER1_INSERT_SQL = "insert into recorequest_cuisine_tier1 (" +
