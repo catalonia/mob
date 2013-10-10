@@ -464,6 +464,18 @@ public class AskReplyService extends BaseService {
             previousMessageId = CommonFunctionsUtil.converStringAsNullIfNeeded(previousMessageId);
             newMessageRecipientUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(newMessageRecipientUserId);
             newMessageSenderUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(newMessageSenderUserId);
+            if (newMessageRecipientUserId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("recipientyId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+            
             askReplyBO.submitRecommendationMessageAnswer(newMessageText,
                 previousMessageId, newMessageRecipientUserId,
                 newMessageSenderUserId,
