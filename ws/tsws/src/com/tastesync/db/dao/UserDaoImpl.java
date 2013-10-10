@@ -2515,6 +2515,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
         try {
             connection = tsDataSource.getConnection();
+            System.out.println("connection="+connection);
             statement = connection.prepareStatement(UserQueries.CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL);
             resultset = statement.executeQuery();
 
@@ -2551,7 +2552,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             data.setCuisine2(cuisine2);
-
+            statement.close();
+            
             statement = connection.prepareStatement(UserQueries.OCCASION_DESCRIPTOR_SELECT_SQL);
             resultset = statement.executeQuery();
 
