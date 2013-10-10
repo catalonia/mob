@@ -404,8 +404,7 @@ public class UserService extends BaseService {
 			tsSuccessObj.setSuccessMsg("Settings Success!");
 			responseDone = userBo
 					.updateSettingsNotifications(notificationSetting);
-			;
-			if (responseDone)
+            if (responseDone)
 				return Response.status(status).entity(tsSuccessObj).build();
 			else {
 				TSErrorObj tsErrorObj = new TSErrorObj();
@@ -1321,9 +1320,8 @@ public class UserService extends BaseService {
 		// BO - DO- DBQuery
 		try {
 			key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
-			;
 
-			response = userBo.showRestaurantSuggestion(key, userId);
+            response = userBo.showRestaurantSuggestion(key, userId);
 
 			if (response != null) {
 				return Response.status(status).entity(response).build();

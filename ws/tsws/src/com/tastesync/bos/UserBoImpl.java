@@ -62,7 +62,7 @@ public class UserBoImpl implements UserBo {
 
     @Override
     public void insertUsers(TSUserObj tsUserObj) {
-        // TODO Auto-generated method stub
+        
     }
 
     @Override

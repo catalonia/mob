@@ -122,6 +122,9 @@ public class AskReplyService extends BaseService {
             tsKeyValueObj.setValueNameValue(recoRequestId);
             responseDone = true;
 
+            //TODO invoke via script!!
+            // userRecoAssigned.processAssignRecorequestToUsers(recoRequestId, recorequestIteration);
+            
             return Response.status(status).entity(tsKeyValueObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();

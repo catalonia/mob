@@ -19,7 +19,6 @@ public class TSNotifMessageForYouObj extends TSRecoNotificationBaseObj
     public TSNotifMessageForYouObj() {
         super();
 
-        // TODO Auto-generated constructor stub
     }
 
     @XmlElement

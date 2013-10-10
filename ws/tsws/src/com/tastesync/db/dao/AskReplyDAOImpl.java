@@ -169,81 +169,79 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.executeUpdate();
 
             statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER1_INSERT_SQL);
 
             for (String cuisineId : cuisineTier1IdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER1_INSERT_SQL);
                 statement.setString(1, recoRequestId);
                 statement.setString(2, cuisineId);
                 statement.executeUpdate();
-                statement.close();
             }
+
+            statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER2_INSERT_SQL);
 
             for (String cuisineId : cuisineTier2IdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER2_INSERT_SQL);
                 statement.setString(1, recoRequestId);
                 statement.setString(2, cuisineId);
                 statement.executeUpdate();
-
-                statement.close();
             }
 
+            statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_PRICE_INSERT_SQL);
+
             for (String priceId : priceIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_PRICE_INSERT_SQL);
                 statement.setString(1, recoRequestId);
                 statement.setString(2, priceId);
                 statement.executeUpdate();
-
-                statement.close();
             }
 
+            statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_OCCASION_INSERT_SQL);
+
             for (String occasionId : occasionIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_OCCASION_INSERT_SQL);
                 statement.setString(1, recoRequestId);
                 statement.setString(2, occasionId);
                 statement.executeUpdate();
-
-                statement.close();
             }
 
+            statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_THEME_INSERT_SQL);
+
             for (String themeId : themeIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_THEME_INSERT_SQL);
                 statement.setString(1, recoRequestId);
                 statement.setString(2, themeId);
                 statement.executeUpdate();
-
-                statement.close();
             }
 
+            statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_WHOAREYOUWITH_INSERT_SQL);
+
             for (String whoareyouwithId : whoareyouwithIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_WHOAREYOUWITH_INSERT_SQL);
                 statement.setString(1, recoRequestId);
                 statement.setString(2, whoareyouwithId);
                 statement.executeUpdate();
-
-                statement.close();
             }
 
+            statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TYPEOFREST_INSERT_SQL);
+
             for (String typeOfRestaurantId : typeOfRestaurantIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TYPEOFREST_INSERT_SQL);
                 statement.setString(1, recoRequestId);
                 statement.setString(2, typeOfRestaurantId);
                 statement.executeUpdate();
-
-                statement.close();
             }
 
+            statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_LOCATION_INSERT_SQL);
+
             if (cityId != null) {
-                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_LOCATION_INSERT_SQL);
                 statement.setString(1, cityId);
                 statement.setString(2, neighborhoodId);
                 statement.setString(3, recoRequestId);
                 statement.executeUpdate();
-                statement.close();
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             statement = connection.prepareStatement(AskReplyQueries.USER_RECO_SUPPPLY_TIER_INSERT_SQL);
             statement.setString(1, userId);
@@ -271,9 +269,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 }
             }
 
-            throw new TasteSyncException("Error while submitAskForRecommendationSearch " +
+            throw new TasteSyncException(
+                "Error while submitAskForRecommendationSearch " +
                 e.getMessage());
-            
         } catch (SQLException e) {
             e.printStackTrace();
 
@@ -285,7 +283,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 }
             }
 
-            throw new TasteSyncException("Error while submitAskForRecommendationSearch " +
+            throw new TasteSyncException(
+                "Error while submitAskForRecommendationSearch " +
                 e.getMessage());
         } finally {
             tsDataSource.close();
@@ -307,8 +306,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         try {
             ClassLoader loader = this.getClass().getClassLoader();
             //loader.getResourceAsStream("Resources/SomeConfig.xml");
-            ifile = this.getClass().getClassLoader().getResourceAsStream("Resources/config.properties");
-
+            ifile = this.getClass().getClassLoader()
+                        .getResourceAsStream("Resources/config.properties");
+            System.out.println("load ... Resources/config.properties");
 
             //load a properties file
             prop.load(ifile);
@@ -683,12 +683,12 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_RESTAURANT_SELECT_SQL);
             statement.setString(1, recorequestId);
             resultset = statement.executeQuery();
+            statementInner = connection.prepareStatement(AskReplyQueries.RESTAURANT_NAME_SELECT_SQL);
 
             while (resultset.next()) {
                 recommendedrestaurantsRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant_id"));
 
-                statementInner = connection.prepareStatement(AskReplyQueries.RESTAURANT_NAME_SELECT_SQL);
                 statementInner.setString(1, recommendedrestaurantsRestaurantId);
                 resultsetInner = statementInner.executeQuery();
 
@@ -697,14 +697,13 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                                 "restaurant.restaurant_name"));
                 }
 
-                statementInner.close();
-
                 TSRestaurantBasicObj tsRestaurantBasicObj = new TSRestaurantBasicObj();
                 tsRestaurantBasicObj.setRestaurantId(recommendedrestaurantsRestaurantId);
                 tsRestaurantBasicObj.setRestaurantName(recommendedrestaurantsRestaurantName);
                 tsRestaurantObjList.add(tsRestaurantBasicObj);
             }
 
+            statementInner.close();
             statement.close();
 
             return tsRestaurantObjList;
@@ -852,10 +851,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.executeUpdate();
             statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.RECO_LIKE_INSERT_SQL);
 
             for (String replyId : replyIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RECO_LIKE_INSERT_SQL);
-
                 statement.setString(1,
                     userId + CommonFunctionsUtil.generateUniqueKey());
                 statement.setString(2, userId);
@@ -865,9 +863,12 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     CommonFunctionsUtil.getCurrentDateTimestamp());
 
                 statement.executeUpdate();
-                statement.close();
+            }
 
-                statement = connection.prepareStatement(AskReplyQueries.HISTORICAL_RECO_LIKE_INSERT_SQL);
+            statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.HISTORICAL_RECO_LIKE_INSERT_SQL);
+
+            for (String replyId : replyIdList) {
                 inputKeyStr = new ArrayList<String>();
                 inputKeyStr.add(userId);
 
@@ -881,8 +882,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     CommonFunctionsUtil.getCurrentDateTimestamp());
 
                 statement.executeUpdate();
-                statement.close();
             }
+
+            statement.close();
 
             tsDataSource.commit();
         } catch (SQLException e) {
@@ -935,14 +937,15 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.executeUpdate();
             statement.close();
+            statement = connection.prepareStatement(AskReplyQueries.MESSAGE_RESTAURANT_INSERT_SQL);
 
             for (String restaurantId : restaurantIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.MESSAGE_RESTAURANT_INSERT_SQL);
                 statement.setString(1, messageId);
                 statement.setString(2, restaurantId);
                 statement.executeUpdate();
-                statement.close();
             }
+
+            statement.close();
 
             tsDataSource.commit();
         } catch (MySQLIntegrityConstraintViolationException e) {
@@ -1256,6 +1259,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         return tsRecoRequestObj;
     }
 
+    //also see submitRecommendationRequestAnswer in algo (shpould be aligned!!!)
     @Override
     public void submitRecommendationRequestAnswer(String recorequestId,
         String recommenderUserId, String[] restaurantIdList, String replyText)
@@ -1305,9 +1309,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.close();
 
-            for (String restaurantId : restaurantIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.RESTAURANT_REPLY_INSERT_SQL);
+            statement = connection.prepareStatement(AskReplyQueries.RESTAURANT_REPLY_INSERT_SQL);
 
+            for (String restaurantId : restaurantIdList) {
                 statement.setTimestamp(1,
                     CommonFunctionsUtil.getCurrentDateTimestamp());
 
@@ -1317,11 +1321,13 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.setString(4, restaurantId);
 
                 statement.executeUpdate();
+            }
 
-                statement.close();
+            statement.close();
 
-                statement = connection.prepareStatement(AskReplyQueries.USER_RESTAURANT_INSERT_SQL);
+            statement = connection.prepareStatement(AskReplyQueries.USER_RESTAURANT_INSERT_SQL);
 
+            for (String restaurantId : restaurantIdList) {
                 //datetime userid random number
                 statement.setString(1, recommendeeUserUserId);
                 statement.setString(2, recommenderUserId);
@@ -1332,13 +1338,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     CommonFunctionsUtil.getCurrentDateTimestamp());
 
                 statement.executeUpdate();
-
-                statement.close();
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             statement = connection.prepareStatement(AskReplyQueries.COUNT_REPLIES_RECOREQUEST_REPLY_USER_SELECT_SQL);
 
@@ -2431,10 +2433,11 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 NotifRecoReplyVO notifRecoReplyVO = null;
                 List<NotifRecoReplyVO> notifRecoReplyVOList = new ArrayList<NotifRecoReplyVO>();
 
+                statement = connection.prepareStatement(AskReplyQueries.COUNT_RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
+
                 for (String replyIdElement : allReplyIdFOrRequestIdList) {
                     notifRecoReplyVO = new NotifRecoReplyVO();
 
-                    statement = connection.prepareStatement(AskReplyQueries.COUNT_RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
                     notifRecoReplyVO.setReplyActioned("0");
                     statement.setString(1, recorequestIdElement);
                     statement.setString(2, recorequestIdElement);
@@ -2452,18 +2455,17 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                         }
                     }
 
-                    statement.close();
                     notifRecoReplyVOList.add(notifRecoReplyVO);
                 }
+                statement.close();
 
                 tsNotifRecorequestAnswerObj.setRecoActioned("1");
 
                 for (NotifRecoReplyVO notifRecoReplyVOElement : notifRecoReplyVOList) {
                     if ("0".equals(notifRecoReplyVOElement.getReplyActioned())) {
                         tsNotifRecorequestAnswerObj.setRecoActioned("0");
+                        break;
                     }
-
-                    break;
                 }
 
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TEMPLATE_SENTENCES_SELECT_SQL);
@@ -3287,14 +3289,13 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.executeUpdate();
             statement.close();
-
+            statement = connection.prepareStatement(AskReplyQueries.MESSAGE_RESTAURANT_INSERT_SQL);
             for (String restaurantId : restaurantIdList) {
-                statement = connection.prepareStatement(AskReplyQueries.MESSAGE_RESTAURANT_INSERT_SQL);
                 statement.setString(1, messageId);
                 statement.setString(2, restaurantId);
                 statement.executeUpdate();
-                statement.close();
             }
+            statement.close();
 
             tsDataSource.commit();
         } catch (SQLException e) {
