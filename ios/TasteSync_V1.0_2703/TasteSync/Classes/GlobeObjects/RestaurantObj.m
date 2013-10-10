@@ -38,6 +38,7 @@ sumVoteValue = _sumVoteValue,
 tbdOpenTableId = _tbdOpenTableId,
 cityObj = _cityObj,
 cuisineTier2 = _cuisineTier2,
+cuisineTier2Array = _cuisineTier2Array,
 
 deal = _deal,
  isOpenNow = _isOpenNow,

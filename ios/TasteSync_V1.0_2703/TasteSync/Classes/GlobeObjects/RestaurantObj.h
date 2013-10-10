@@ -23,7 +23,7 @@ typedef enum
 @property (nonatomic, strong) NSString* uid;
 @property (nonatomic, strong) NSString *name,*nation;
 @property (nonatomic, assign) float longtitude,lattitude;
-@property (nonatomic, assign) int rates;
+@property (nonatomic, assign) float rates;
 @property (nonatomic, assign) BOOL isSelected; 
 @property (nonatomic, assign) BOOL isDeal;
 @property (nonatomic, assign) RestaurantType type;
@@ -45,6 +45,7 @@ typedef enum
 @property(nonatomic,strong)  NSString* factualId, *factualRating, *priceRange, *restaurantHours, *sumVoteCount, *sumVoteValue, *tbdOpenTableId;
 
 @property(nonatomic,strong) NSString* cuisineTier2;
+@property(nonatomic,strong) NSMutableArray* cuisineTier2Array;
 @property (nonatomic, strong) NSString* price;
 
 @property(nonatomic,strong) TSCityObj* cityObj;

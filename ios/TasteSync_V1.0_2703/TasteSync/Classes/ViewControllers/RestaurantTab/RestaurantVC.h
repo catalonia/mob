@@ -24,7 +24,7 @@
     __weak IBOutlet UISegmentedControl *segCtrCuisine, *segCtrPrice;
     
     NSMutableArray *arrCuisine, *arrPrice;
-    int rating;
+    int _rating;
     BOOL saved, favs , deals, restaurantChains;
     
     RateCustom *rateCustom;
@@ -37,6 +37,7 @@
 @property (nonatomic, strong) NSMutableArray *arrData, *arrDataFilter , *arrDataRestaurant , *arrDataRegion;
 
 @property (nonatomic, assign) BOOL notHomeScreen;
+@property (nonatomic, assign) int rating;
 
 - (IBAction)actionOthersTab:(id)sender;
 - (IBAction)actionNewsfeed:(id)sender;

@@ -903,6 +903,7 @@
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
     NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",response);
     if (key == 1) {
             NSArray* array = [response objectFromJSONString];
         for (NSDictionary* dic in array) {

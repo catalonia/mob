@@ -178,7 +178,7 @@
         postOnFacebook = @"0";
     
     
-    CRequest* request = [[CRequest alloc]initWithURL:@"askquestion" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
+    CRequest* request = [[CRequest alloc]initWithURL:@"saverecofriends" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
     request.delegate = self;
     [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
     [request setFormPostValue:_recoRequestId forKey:@"recorequestid"];
@@ -663,6 +663,7 @@
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
     NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",response);
     if (key == 1) {
         NSDictionary* dic = [response objectFromJSONString];
         NSString* questionAsk = [dic objectForKey:@"valueNameValue"];

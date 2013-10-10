@@ -194,7 +194,7 @@
         textField.frame = CGRectMake(15, 75, 255, 30);
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.placeholder = @"localhost";
-        textField.text = @"192.168.0.100";
+        textField.text = @"localhost";
         [alert addSubview:textField];
         alert.tag =1;
         [alert show];

@@ -11,6 +11,7 @@
 #import "RestaurantCell.h"
 #import "RestaurantDetailVC.h"
 #import "TSGlobalObj.h"
+#import "TSCuisineObj.h"
 
 @interface RestaurantVC ()
 {
@@ -18,6 +19,8 @@
     BOOL filterExtendsShown;
     TSGlobalObj *restaurant, *region;
     NSMutableArray *arrDataStickFilter;
+    NSMutableArray *arrRestaurantSave;
+    NSMutableArray *arrRestaurantFav;
     
     NSString* _restaurantGerenal;
     NSString* _regionGerenal;
@@ -34,6 +37,9 @@ typedef enum _TFSelect
 @end
 
 @implementation RestaurantVC
+
+@synthesize rating = _rating;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -84,22 +90,14 @@ typedef enum _TFSelect
     
     viewFilterExtends.hidden = YES;
     
+    arrCuisine = [[NSMutableArray alloc]init];
     
-    [scrollViewCuisine setContentSize:CGSizeMake(2100, 30)];
-    [scrollViewPrice setContentSize:CGSizeMake(500, 30)];
     rateCustom = [[RateCustom alloc] initWithFrame:CGRectMake(20, 220, 150, 30)];
     [viewFilterExtends addSubview:rateCustom];
     rateCustom.delegate = self;
     rateCustom.allowedRate = YES;
     
-    
-    for (int i= 0; i< [[[CommonHelpers appDelegate] arrCuisine] count]; i++){
-        TSGlobalObj* cuisine = [[[CommonHelpers appDelegate ] arrCuisine] objectAtIndex:i];
-        if (i < 5)
-            [segCtrCuisine setTitle:cuisine.name forSegmentAtIndex:i];
-        else
-            [segCtrCuisine insertSegmentWithTitle:cuisine.name atIndex:i animated:NO];
-    }
+
     for (int i= 0; i< [[[CommonHelpers appDelegate] arrPrice] count]; i++) {
         
         TSGlobalObj* price = [[[CommonHelpers appDelegate ] arrPrice ] objectAtIndex:i];
@@ -112,6 +110,7 @@ typedef enum _TFSelect
     }
     
     
+    [segCtrCuisine removeAllSegments];
     [segCtrCuisine addTarget:self action:@selector(actionSegmentControl:) forControlEvents:UIControlEventValueChanged];
     [segCtrPrice addTarget:self action:@selector(actionSegmentControl:) forControlEvents:UIControlEventValueChanged];
     
@@ -125,7 +124,7 @@ typedef enum _TFSelect
     
     segCtrCuisine.selectedSegmentIndex = -1;
     segCtrPrice.selectedSegmentIndex = -1;
-    [self resizeSegmentsToFitTitles:segCtrCuisine];
+
     [self resizeSegmentsToFitTitles:segCtrPrice];
     if ([CommonHelpers isiOS6]) {
         NSDictionary *underlinerAtt =@{NSUnderlineStyleAttributeName : @1};
@@ -137,6 +136,18 @@ typedef enum _TFSelect
    
     
     [self refreshView];
+}
+
+-(void)reloadSegmentCuisine
+{
+    [segCtrCuisine removeAllSegments];
+    
+    for (int i = 0; i< [arrCuisine count]; i++){
+        TSGlobalObj* cuisine = [arrCuisine objectAtIndex:i];
+        [segCtrCuisine insertSegmentWithTitle:cuisine.name atIndex:i animated:NO];
+    }
+    [self resizeSegmentsToFitTitles:segCtrCuisine];
+    
 }
 
 - (void) initData
@@ -162,7 +173,8 @@ typedef enum _TFSelect
     }
     
     
-    
+    arrRestaurantSave = [[NSMutableArray alloc]init];
+    arrRestaurantFav  = [[NSMutableArray alloc]init];
     arrCuisine = [[NSMutableArray alloc] init ];
     arrPrice = [[NSMutableArray alloc] init];
     filterDict = [[NSMutableDictionary alloc] init];
@@ -264,20 +276,33 @@ typedef enum _TFSelect
     
     // now resize the segments to accomodate text size plus
     // give them each an equal part of the leftover space
-    for (NSUInteger i=0; i < nSegments; i++) {
+    CGFloat total = 0;
+    for (NSUInteger i = 0; i < nSegments; i++) {
         // size for label width plus an equal share of the space
         CGFloat textWidth = [[segCtrl titleForSegmentAtIndex:i] sizeWithFont:theFont].width;
         // roundf??  the control leaves 1 pixel gap between segments if width
         // is not an integer value, the roundf fixes this
         CGFloat segWidth = roundf(textWidth + (spaceWidth / nSegments));
+        total += segWidth;
         [segCtrl setWidth:segWidth forSegmentAtIndex:i];
     }
+    if (segCtrl == segCtrCuisine)
+        [scrollViewCuisine setContentSize:CGSizeMake(total + 20, 30)];
+    else
+        [scrollViewPrice setContentSize:CGSizeMake(total + 5, 30)];
 }
 
 #pragma mark - IBAction Define
 
 - (IBAction)actionSaved:(id)sender
 {
+    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:3];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request setFormPostValue:@"3" forKey:@"type"];
+    [request setFormPostValue:@"0" forKey:@"from"];
+    [request setFormPostValue:@"0" forKey:@"to"];
+    [request startFormRequest];
     if (saved) {
         saved = NO;
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_saved73_off.png"] forButton:btSaved];
@@ -288,9 +313,17 @@ typedef enum _TFSelect
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_saved73_on.png"] forButton:btSaved];
         
     }
+    [self reloadInputData];
 }
 - (IBAction)actionFavs:(id)sender
 {
+    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:4];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request setFormPostValue:@"1" forKey:@"type"];
+    [request setFormPostValue:@"0" forKey:@"from"];
+    [request setFormPostValue:@"0" forKey:@"to"];
+    [request startFormRequest];
     if (favs) {
         favs = NO;
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_favs_small.png"] forButton:btFavs];
@@ -302,6 +335,7 @@ typedef enum _TFSelect
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_favs_small_on.png"] forButton:btFavs];
         
     }
+    [self reloadInputData];
 }
 - (IBAction)actionDeals:(id)sender
 {
@@ -339,22 +373,25 @@ typedef enum _TFSelect
     debug(@"segCtr selectedIndex -> %d", segCtr.selectedSegmentIndex);
     
     
-    NSString *strObj;
+    TSGlobalObj *strObj;
+    
+
     
     if (segCtr == segCtrCuisine) {
-        strObj = [[[CommonHelpers appDelegate] arrCuisine] objectAtIndex:segCtr.selectedSegmentIndex];
-    }
-    else      if (segCtr == segCtrPrice) {
-        strObj =[[[CommonHelpers appDelegate] arrOccasion] objectAtIndex:segCtr.selectedSegmentIndex];
+        strObj = [arrCuisine objectAtIndex:segCtr.selectedSegmentIndex];
     }
     else
-    {
+        if (segCtr == segCtrPrice) {
+        strObj =[[[CommonHelpers appDelegate] arrPrice] objectAtIndex:segCtr.selectedSegmentIndex];
+        }
+        else
+        {
         
-    }
-    
+        }
+
     if ([arrDataStickFilter containsObject:strObj]) {
         [arrDataStickFilter removeObject:strObj];
-        for (int i= 0; i< [[sender subviews] count]; i++) {
+        for (int i = 0; i< [[sender subviews] count]; i++) {
             if ([[[sender subviews] objectAtIndex:i] isSelected]) {
                 [[[sender subviews] objectAtIndex:i] setTintColor:SEGNMENT_COLOR];
                 
@@ -374,6 +411,10 @@ typedef enum _TFSelect
         }
     }
     segCtr.selectedSegmentIndex = -1;
+    
+    [self reloadInputData];
+    
+    
 }
 
 
@@ -383,7 +424,9 @@ typedef enum _TFSelect
 
 - (void) didRateWithValue:(int)count
 {
-    rating = count;
+    self.rating = count;
+    [self reloadInputData];
+    
 }
 
 
@@ -392,7 +435,6 @@ typedef enum _TFSelect
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
     return 1;
 }
 
@@ -524,6 +566,7 @@ typedef enum _TFSelect
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{
 
     [self hideKeyBoard];
+    tbvFilter.hidden= YES;
     return YES;
 }
 
@@ -576,6 +619,7 @@ typedef enum _TFSelect
         }
         if (txt.length >= 3) {
             [self.arrDataFilter removeAllObjects];
+            [self.arrData removeAllObjects];
             for (TSGlobalObj *strObj in self.arrDataRestaurant) {
                 NSString  *ustrObj =  [strObj.name uppercaseString];
                 NSString *utxt =   [txt uppercaseString];
@@ -587,8 +631,10 @@ typedef enum _TFSelect
                 if (/*p!=NULL*/ diff == 0) {
                     debug(@"added");
                     [self.arrDataFilter addObject:strObj];
+                    [self.arrData addObject:strObj];
                 }
             }
+            NSLog(@"arrData Count:%d",self.arrData.count);
             [tbvFilter setFrame:CGRectMake(20, tbvFilter.frame.origin.y, tbvFilter.frame.size.width, tbvFilter.frame.size.height)];
         }
        
@@ -640,7 +686,7 @@ typedef enum _TFSelect
     
     if (self.arrDataFilter.count>0) {
         CGRect frame = tbvFilter.frame;
-        if (self.arrDataFilter.count>5) {
+        if (self.arrDataFilter.count > 5) {
             frame.size.height = 5*44;
             
         }
@@ -649,6 +695,7 @@ typedef enum _TFSelect
         }
         tbvFilter.hidden = NO;
         [tbvFilter reloadData];
+        [tbvResult reloadData];
     }
     
     
@@ -721,7 +768,9 @@ typedef enum _TFSelect
 {
     NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"response: %@",response);
+    
     if (key == 1) {
+        [arrCuisine removeAllObjects];
         [_arrDataRestaurant removeAllObjects];
         NSArray* array = [response objectFromJSONString];
         for (NSDictionary* dic in array) {
@@ -737,6 +786,10 @@ typedef enum _TFSelect
             restaurantObj.name = [dic objectForKey:@"restaurantName"];
             restaurantObj.isOpenNow                =  [[dic objectForKey:@"openNowFlag"] isEqualToString:@"1"]?YES:NO;
             restaurantObj.deal                            =  [dic objectForKey:@"dealHeadline"];
+            restaurantObj.rates                           = [[dic objectForKey:@"factualRating"] floatValue];
+            restaurantObj.price                           = [dic objectForKey:@"priceRange"];
+            restaurantObj.lattitude                           = [[dic objectForKey:@"restaurantLat"] floatValue];
+            restaurantObj.longtitude                           = [[dic objectForKey:@"restaurantLon"] floatValue];
             if ([restaurantObj.deal isEqualToString:@""])
                 restaurantObj.isDeal = NO;
             else
@@ -747,9 +800,48 @@ typedef enum _TFSelect
             restaurantObj.isSaved                      =  [[dic objectForKey:@"userRestaurantSavedFlag"] isEqualToString:@"1"]?YES:NO;
             restaurantObj.isFavs                         =  [[dic objectForKey:@"userRestaurantFavFlag"]  isEqualToString:@"1"]?YES:NO;
             restaurantObj.isTipFlag                     =  [[dic objectForKey:@"userRestaurantTipFlag"]  isEqualToString:@"1"]?YES:NO;
+            
+            restaurantObj.cuisineTier2Array = [[NSMutableArray alloc]init];
+            NSMutableArray* arrayCuisine = [dic objectForKey:@"cuisineTier2Obj"];
+            for (NSDictionary* dicCuisine in arrayCuisine) {
+                int valid = [[dicCuisine objectForKey:@"cuisineValidCurrent"] integerValue];
+                if (valid == 1) {
+                    TSGlobalObj* global = [[TSGlobalObj alloc]init];
+                    global.uid = [dicCuisine objectForKey:@"cuisineId"];
+                    global.name = [dicCuisine objectForKey:@"cuisineDesc"];
+                    global.type = GlobalDataCuisine_2;
+                    
+                    
+                    int i = 0;
+                    for (TSGlobalObj* obj in arrCuisine) {
+                        if (![obj.name isEqualToString:global.name]) {
+                            i++;
+                        }
+                        else
+                        {
+                            [restaurantObj.cuisineTier2Array addObject:obj];
+                        }
+                    }
+                    if (i == [arrCuisine count]) {
+                        [arrCuisine addObject:global];
+                        [restaurantObj.cuisineTier2Array addObject:global];
+                    }
+                    
+                }
+            }
+            
+            if (restaurantObj.cuisineTier2Array.count > 0) {
+                TSGlobalObj* cuisineObj = [restaurantObj.cuisineTier2Array objectAtIndex:0];
+                restaurantObj.cuisineTier2 = cuisineObj.name;
+            }
+            else
+                restaurantObj.cuisineTier2 = @"";
+            
             global.restaurantObj = restaurantObj;
             [_arrDataRestaurant addObject:global];
         }
+        [self reloadSegmentCuisine];
+        [tbvResult reloadData];
     }
     if (key == 2) {
         [_arrDataRegion removeAllObjects];
@@ -763,14 +855,122 @@ typedef enum _TFSelect
             TSCityObj* cityObj = [[TSCityObj alloc]init];
             
             cityObj.uid              = [dic objectForKey:@"cityId"];
-            cityObj.cityName   = [dic objectForKey:@"city"];
-            cityObj.stateName = [dic objectForKey:@"state"];
-            cityObj.country       = [dic objectForKey:@"country"];
+            cityObj.cityName         = [dic objectForKey:@"city"];
+            cityObj.stateName        = [dic objectForKey:@"state"];
+            cityObj.country          = [dic objectForKey:@"country"];
             global.cityObj = cityObj;
             [_arrDataRegion addObject:global];
         }
     }
+    if (key == 3) {
+        NSMutableArray* arrayData = [response objectFromJSONString];
+        for (NSDictionary* dic in arrayData) {
+            RestaurantObj* obj = [[RestaurantObj alloc]init];
+            obj.uid = [dic objectForKey:@"restauarntId"];
+            obj.name = [dic objectForKey:@"restaurantName"];
+            [arrRestaurantSave addObject:obj];
+        }
+        
+    }
+    if (key == 4) {
+        NSMutableArray* arrayData = [response objectFromJSONString];
+        for (NSDictionary* dic in arrayData) {
+            RestaurantObj* obj = [[RestaurantObj alloc]init];
+            obj.uid = [dic objectForKey:@"restauarntId"];
+            obj.name = [dic objectForKey:@"restaurantName"];
+            [arrRestaurantFav addObject:obj];
+        }
+        
+    }
 }
 
+-(void)reloadInputData
+{
+    int totalCuisine = 0, totalPrice = 0;
+    for (TSGlobalObj* obj in arrDataStickFilter) {
+        if (obj.type == GlobalDataCuisine_2) {
+            totalCuisine++;
+        }
+        if (obj.type == GlobalDataPrice) {
+            totalPrice++;
+        }
+    }
+    
+    [self.arrData removeAllObjects];
+    for (TSGlobalObj* obj in _arrDataRestaurant) {
+        int i = 0;
+        for (TSGlobalObj* global in arrDataStickFilter) {
+            if (global.type == GlobalDataCuisine_2) {
+                NSLog(@"%d",obj.restaurantObj.cuisineTier2Array.count);
+                if (![obj.restaurantObj.cuisineTier2Array containsObject:global]) {
+                    break;
+                }
+                else
+                    i++;
+            }
+        }
+        if (i == totalCuisine) {
+            if (totalPrice == 0) {
+                [self.arrData addObject:obj];
+            }
+            else
+            {
+                for (TSGlobalObj* global in arrDataStickFilter) {
+                    if (global.type == GlobalDataPrice) {
+                        if ([obj.restaurantObj.price intValue] == [global.uid intValue]) {
+                            [self.arrData addObject:obj];
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    if (_rating != 0) {
+        NSMutableArray* arrayTmp = [[NSMutableArray alloc]initWithArray:_arrData];
+        [_arrData removeAllObjects];
+        for (TSGlobalObj* obj in arrayTmp) {
+            if (obj.restaurantObj.rates == (float)_rating) {
+                [_arrData addObject:obj];
+            }
+        }
+        NSLog(@"Number restaurant: %d", [_arrData count]);
+    }
+    
+    if (saved) {
+        NSMutableArray* arrayTmp = [[NSMutableArray alloc]initWithArray:_arrData];
+        [_arrData removeAllObjects];
+        for (TSGlobalObj* obj in arrayTmp) {
+            if ([self isExist:arrRestaurantSave RestaurantID:obj.restaurantObj.uid]) {
+                [_arrData addObject:obj];
+            }
+        }
+        
+    }
+    
+    if (favs) {
+        NSMutableArray* arrayTmp = [[NSMutableArray alloc]initWithArray:_arrData];
+        [_arrData removeAllObjects];
+        for (TSGlobalObj* obj in arrayTmp) {
+            if ([self isExist:arrRestaurantFav RestaurantID:obj.restaurantObj.uid]) {
+                [_arrData addObject:obj];
+            }
+        }
+        
+    }
+    
+    [tbvResult reloadData];
+}
+
+-(BOOL)isExist:(NSMutableArray*)array RestaurantID:(NSString*)uid
+{
+    for (RestaurantObj* obj in array) {
+        if ([obj.uid isEqualToString:uid]) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
 @end

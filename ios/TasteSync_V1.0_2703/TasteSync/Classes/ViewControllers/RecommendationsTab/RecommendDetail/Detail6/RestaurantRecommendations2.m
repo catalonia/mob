@@ -164,7 +164,7 @@
         obj.lattitude = [[dic objectForKey:@"restaurantLat"] floatValue];
         obj.longtitude = [[dic objectForKey:@"restaurantLong"] floatValue];
         obj.deal = [dic objectForKey:@"restaurantDealFlag"];
-        obj.rates = [dic objectForKey:@"restaurantRating"];
+        obj.rates = [[dic objectForKey:@"restaurantRating"] floatValue];
         obj.recommendArray = [[NSMutableArray alloc]init];
         
         NSArray* arrayReply = [dic objectForKey:@"recommendationsForYouList"];

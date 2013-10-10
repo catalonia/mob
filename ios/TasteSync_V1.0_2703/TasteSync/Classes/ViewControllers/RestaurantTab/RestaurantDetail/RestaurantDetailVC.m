@@ -99,6 +99,8 @@
     [super viewDidLoad];
     
     
+    lbDetail.text = [CommonHelpers getInformationRestaurant:self.restaurantObj];
+    
     // Do any additional setup after loading the view from its nib.
     [CommonHelpers setBackgroudImageForViewRestaurant:self.view];
     NSString* link = [NSString stringWithFormat:@"details?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
@@ -321,7 +323,6 @@
     resRecommendObj.user = user;
 //    [self setupHorizontalScrollView];
     if (_restaurantObj) {
-        lbDetail.text = @"Chinese, $$, New York, 3.1mi";
         lbName.text = self.restaurantObj.name;
     }
 }

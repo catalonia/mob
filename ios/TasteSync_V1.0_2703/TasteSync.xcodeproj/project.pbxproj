@@ -605,6 +605,7 @@
 		E05B563D17000897007B938B /* ic_like_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E05B563917000897007B938B /* ic_like_on@2x.png */; };
 		E05B563E17000897007B938B /* ic_like.png in Resources */ = {isa = PBXBuildFile; fileRef = E05B563A17000897007B938B /* ic_like.png */; };
 		E05B563F17000897007B938B /* ic_like@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E05B563B17000897007B938B /* ic_like@2x.png */; };
+		E68B84101805BF180033CC18 /* TSCuisineObj.m in Sources */ = {isa = PBXBuildFile; fileRef = E68B840F1805BF180033CC18 /* TSCuisineObj.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1334,6 +1335,8 @@
 		E05B563917000897007B938B /* ic_like_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_like_on@2x.png"; sourceTree = "<group>"; };
 		E05B563A17000897007B938B /* ic_like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_like.png; sourceTree = "<group>"; };
 		E05B563B17000897007B938B /* ic_like@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_like@2x.png"; sourceTree = "<group>"; };
+		E68B840E1805BF180033CC18 /* TSCuisineObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCuisineObj.h; sourceTree = "<group>"; };
+		E68B840F1805BF180033CC18 /* TSCuisineObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCuisineObj.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2703,6 +2706,8 @@
 				C3D8025517B9CC410025E69F /* TSPhotoRestaurantObj.m */,
 				C39D802B17F2D45C00B71F81 /* ReplyRecomendationObj.h */,
 				C39D802C17F2D45C00B71F81 /* ReplyRecomendationObj.m */,
+				E68B840E1805BF180033CC18 /* TSCuisineObj.h */,
+				E68B840F1805BF180033CC18 /* TSCuisineObj.m */,
 			);
 			path = GlobeObjects;
 			sourceTree = "<group>";
@@ -3086,8 +3091,13 @@
 		5E7D2C5916D3532900D85642 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Mobioneer;
+				TargetAttributes = {
+					5E7D2C6116D3532900D85642 = {
+						DevelopmentTeam = TB37H7AC36;
+					};
+				};
 			};
 			buildConfigurationList = 5E7D2C5C16D3532900D85642 /* Build configuration list for PBXProject "TasteSync" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -3637,6 +3647,7 @@
 				5E77762F16D5F49700B0F363 /* FeedObj.m in Sources */,
 				5E77765416D5F8D200B0F363 /* NotificationCell.m in Sources */,
 				5E77765916D5F8D200B0F363 /* RecommendDetail1.m in Sources */,
+				E68B84101805BF180033CC18 /* TSCuisineObj.m in Sources */,
 				5E77765B16D5F8D200B0F363 /* RecommendDetail2.m in Sources */,
 				5E77765D16D5F8D200B0F363 /* RecommendDetail3.m in Sources */,
 				5E77765F16D5F8D200B0F363 /* Detail4Cell.m in Sources */,
@@ -3747,8 +3758,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "7E6C5AA1-2009-4B18-8C22-E7870D5C0B60";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7E6C5AA1-2009-4B18-8C22-E7870D5C0B60";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3775,8 +3786,8 @@
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "7E6C5AA1-2009-4B18-8C22-E7870D5C0B60";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7E6C5AA1-2009-4B18-8C22-E7870D5C0B60";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3785,13 +3796,9 @@
 		5E7D2C8116D3532A00D85642 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv7,
-					armv6,
-				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Phan Phu (X53F2TT9AQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Phan Phu (X53F2TT9AQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Phan Phu (X53F2TT9AQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)\"/TasteSync/Libraries/",
 					"\"$(SRCROOT)\"",
@@ -3803,8 +3810,8 @@
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=*]" = "7E6C5AA1-2009-4B18-8C22-E7870D5C0B60";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7E6C5AA1-2009-4B18-8C22-E7870D5C0B60";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3812,12 +3819,8 @@
 		5E7D2C8216D3532A00D85642 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv7,
-					armv6,
-				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Phan Phu (X53F2TT9AQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Phan Phu (X53F2TT9AQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)\"/TasteSync/Libraries/",
 					"\"$(SRCROOT)\"",
@@ -3828,8 +3831,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "7E6C5AA1-2009-4B18-8C22-E7870D5C0B60";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7E6C5AA1-2009-4B18-8C22-E7870D5C0B60";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

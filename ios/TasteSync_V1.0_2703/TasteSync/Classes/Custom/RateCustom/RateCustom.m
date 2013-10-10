@@ -97,7 +97,7 @@
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:IC_HALF] forButton:btnPos_5];
 
     }
-    else
+    else if(rate != 0)
     {
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:IC_ON] forButton:btnPos_1];
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:IC_ON] forButton:btnPos_2];

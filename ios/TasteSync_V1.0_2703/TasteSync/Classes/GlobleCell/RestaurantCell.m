@@ -56,7 +56,7 @@
     lbName.text = obj.name;
 //    add after
     
-    lbDetail.text = @"Chinese, $$, New york, 3.1mi";
+    lbDetail.text = [CommonHelpers getInformationRestaurant:obj];
 }
 
 //- (IBAction)actionDeal:(id)sender
