@@ -13,6 +13,7 @@ import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantQuesionNonTsAssignedObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
+import com.tastesync.model.objects.derived.TSRestaurantBuzzObj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
 import java.util.List;
@@ -107,5 +108,11 @@ public class RestaurantBOImpl implements RestaurantBO {
     public TSRestaurantRecommendersDetailsObj showRestaurantDetailAsk(
         String userId, String restaurantId) throws TasteSyncException {
         return restaurantDAO.showRestaurantDetailAsk(userId, restaurantId);
+    }
+
+    @Override
+    public List<TSRestaurantBuzzObj> showRestaurantBuzz(String userId,
+        String restaurantId) throws TasteSyncException {
+        return restaurantDAO.showRestaurantBuzz(userId, restaurantId);
     }
 }

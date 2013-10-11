@@ -15,6 +15,7 @@ import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantQuesionNonTsAssignedObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 import com.tastesync.model.objects.TSSuccessObj;
+import com.tastesync.model.objects.derived.TSRestaurantBuzzObj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
 import com.tastesync.util.CommonFunctionsUtil;
@@ -690,9 +691,10 @@ public class RestaurantService extends BaseService {
 
             return Response.status(status).entity(tsErrorObj).build();
         }
+
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
-        
+
         boolean responseDone = false;
         TSRestaurantQuesionNonTsAssignedObj tsRestaurantQuesionNonTsAssignedObj = null;
 
@@ -708,6 +710,54 @@ public class RestaurantService extends BaseService {
 
             return Response.status(status)
                            .entity(tsRestaurantQuesionNonTsAssignedObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = false;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+
+    @POST
+    @Path("/buzz")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response showRestaurantBuzz(@FormParam("userid")
+    String userId, @FormParam("restaurantid")
+    String restaurantId) {
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+
+        userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+        restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
+
+        boolean responseDone = false;
+        List<TSRestaurantBuzzObj> tsRestaurantBuzzObjList = null;
+
+        try {
+            tsRestaurantBuzzObjList = restaurantBO.showRestaurantBuzz(userId,
+                    restaurantId);
+
+            responseDone = true;
+
+            return Response.status(status).entity(tsRestaurantBuzzObjList)
+                           .build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();

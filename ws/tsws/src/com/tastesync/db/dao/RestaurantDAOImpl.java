@@ -15,7 +15,9 @@ import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantQuesionNonTsAssignedObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
 import com.tastesync.model.objects.TSUserProfileBasicObj;
+import com.tastesync.model.objects.derived.TSRestaurantBuzzObj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
+import com.tastesync.model.vo.RestaurantBuzzVO;
 
 import com.tastesync.util.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
@@ -648,7 +650,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
         try {
             connection = tsDataSource.getConnection();
-            tsDataSource.begin();
             statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_DETAIL_TIP_APSETTINGS_SELECT_SQL);
             statement.setString(1, userId);
 
@@ -1169,5 +1170,200 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         }
 
         return tsRestaurantQuesionNonTsAssignedObj;
+    }
+
+    @Override
+    public List<TSRestaurantBuzzObj> showRestaurantBuzz(String userId,
+        String restaurantId) throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+
+            statement = connection.prepareStatement(RestaurantQueries.USER_RESTAURANT_ALL_RECO_REPLY_SELECT_SQL);
+            statement.setString(1, userId);
+            statement.setString(2, restaurantId);
+            resultset = statement.executeQuery();
+
+            List<RestaurantBuzzVO> restaurantBuzzVOList = new ArrayList<RestaurantBuzzVO>();
+
+            String replyId;
+            String replyText;
+            String recommenderUserUserId;
+            String replyDatetime;
+            String recorequestId;
+
+            while (resultset.next()) {
+                replyId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "USER_RESTAURANT_RECO.REPLY_ID"));
+
+                recommenderUserUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "USER_RESTAURANT_RECO.RECOMMENDER_USER_ID"));
+                replyDatetime = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "USER_RESTAURANT_RECO.UPDATED_DATETIME"));
+
+                recorequestId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "RECOREQUEST_REPLY_USER.RECOREQUEST_ID"));
+
+                replyText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "RECOREQUEST_REPLY_USER.REPLY_TEXT"));
+
+                RestaurantBuzzVO restaurantBuzzVO = new RestaurantBuzzVO(replyId,
+                        replyText, recommenderUserUserId, replyDatetime,
+                        recorequestId);
+
+                restaurantBuzzVOList.add(restaurantBuzzVO);
+            }
+
+            statement.close();
+
+            List<TSRestaurantBuzzObj> tsRestaurantBuzzObjList = new ArrayList<TSRestaurantBuzzObj>(restaurantBuzzVOList.size());
+
+            String recommenderUserName = null;
+            String recommenderUserPhoto = null;
+            String recommenderFacebookId = null;
+            List<TSUserProfileBasicObj> recommendersDetailsList = new ArrayList<TSUserProfileBasicObj>();
+
+            for (RestaurantBuzzVO restaurantBuzzVO : restaurantBuzzVOList) {
+                recommenderUserName = null;
+                recommenderUserPhoto = null;
+
+                statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+
+                statement.setString(1,
+                    restaurantBuzzVO.getRecommenderUserUserId());
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    recommenderFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "users.user_fb_id"));
+                    statement.close();
+
+                    statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
+                    statement.setString(1, recommenderFacebookId);
+                    resultset = statement.executeQuery();
+
+                    if (resultset.next()) {
+                        recommenderUserName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "facebook_user_data.name"));
+                        recommenderUserPhoto = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "facebook_user_data.picture"));
+                    }
+
+                    statement.close();
+                }
+
+                if (statement != null) {
+                    statement.close();
+                }
+
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FOLLOWEEFLAG_SELECT_SQL);
+                statement.setString(1,
+                    restaurantBuzzVO.getRecommenderUserUserId());
+                statement.setString(2, userId);
+
+                resultset = statement.executeQuery();
+
+                String recommendeeUserFolloweeFlag = "0"; // default
+
+                if (resultset.next()) {
+                    recommendeeUserFolloweeFlag = "1";
+                }
+
+                statement.close();
+
+                statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_SELECT_SQL);
+                statement.setString(1, restaurantBuzzVO.getRecorequestId());
+                statement.setString(2, userId);
+                resultset = statement.executeQuery();
+
+                String friendOrNot = null;
+
+                //only one result
+                if (resultset.next()) {
+                    friendOrNot = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "recorequest_ts_assigned.ASSIGNED_USERTYPE"));
+                } else {
+                    // invalid data case
+                    return null;
+                }
+
+                if (statement != null) {
+                    statement.close();
+                }
+
+                String recorequestText = null;
+
+                //-- this means userId is friend of recommendeeUserId and we should use the free text field
+                if ("user-assigned-friend".equals(friendOrNot) ||
+                        "system-assigned-friend".equals(friendOrNot)) {
+                    if (statement != null) {
+                        statement.close();
+                    }
+
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FRIEND_SELECT_SQL);
+                    statement.setString(1, restaurantBuzzVO.getRecorequestId());
+                    resultset = statement.executeQuery();
+
+                    if (resultset.next()) {
+                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.recorequest_free_text"));
+                    }
+
+                    statement.close();
+                } else if ("user-assigned-other".equals(friendOrNot) ||
+                        "system-assigned-other".equals(friendOrNot)) {
+                    if (statement != null) {
+                        statement.close();
+                    }
+
+                    statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_OTHER_SELECT_SQL);
+                    statement.setString(1, restaurantBuzzVO.getRecorequestId());
+                    resultset = statement.executeQuery();
+
+                    if (resultset.next()) {
+                        recorequestText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                    "recorequest_user.reco_request_template_sentences"));
+                    }
+
+                    statement.close();
+                }
+
+                if (statement != null) {
+                    statement.close();
+                }
+
+                TSUserProfileBasicObj recommenderUser = new TSUserProfileBasicObj();
+                recommenderUser.setName(recommenderUserName);
+                recommenderUser.setPhoto(recommenderUserPhoto);
+                recommenderUser.setUserId(restaurantBuzzVO.getRecommenderUserUserId());
+
+                TSRestaurantBuzzObj tsRestaurantBuzzObj = new TSRestaurantBuzzObj();
+                tsRestaurantBuzzObj.setRecommenderUser(recommenderUser);
+
+                tsRestaurantBuzzObj.setReplyText(restaurantBuzzVO.getReplyText());
+                tsRestaurantBuzzObj.setReplyDatetime(restaurantBuzzVO.getReplyDatetime());
+
+                tsRestaurantBuzzObj.setRecommenderUserFolloweeFlag(recommendeeUserFolloweeFlag);
+
+                tsRestaurantBuzzObj.setRecorequestText(recorequestText);
+
+                tsRestaurantBuzzObjList.add(tsRestaurantBuzzObj);
+            }
+
+            return tsRestaurantBuzzObjList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            throw new TasteSyncException("Error while showRestaurantBuzz " +
+                e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 }

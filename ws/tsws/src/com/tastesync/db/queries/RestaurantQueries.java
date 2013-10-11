@@ -248,4 +248,19 @@ public interface RestaurantQueries extends TSDBCommonQueries {
     public static String USERS_ID_SELECT_SQL = "" + "SELECT users.user_id, " +
         "       users.ts_user_id, " + "       users.user_fb_id " +
         "FROM   users " + "WHERE  user_fb_id = ? ";
+    
+    public static String USER_RESTAURANT_ALL_RECO_REPLY_SELECT_SQL = ""
+    		+ "SELECT USER_RESTAURANT_RECO.REPLY_ID, "
+    		+ "       USER_RESTAURANT_RECO.RECOMMENDER_USER_ID, "
+    		+ "       USER_RESTAURANT_RECO.UPDATED_DATETIME, "
+    		+ "       RECOREQUEST_REPLY_USER.RECOREQUEST_ID, "
+    		+ "       RECOREQUEST_REPLY_USER.REPLY_TEXT "
+    		+ "FROM   USER_RESTAURANT_RECO, "
+    		+ "       RECOREQUEST_REPLY_USER "
+    		+ "WHERE  USER_RESTAURANT_RECO.RECOMMENDEE_USER_ID = ? "
+    		+ "       AND USER_RESTAURANT_RECO.RESTAURANT_ID = ? "
+    		+ "       AND USER_RESTAURANT_RECO.REPLY_ID = RECOREQUEST_REPLY_USER.REPLY_ID "
+    		+ "ORDER BY user_restaurant_reco.UPDATED_DATETIME DESC ";
+    		
+    
 }

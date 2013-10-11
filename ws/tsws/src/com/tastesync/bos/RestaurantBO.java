@@ -10,6 +10,7 @@ import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSRestaurantPhotoObj;
 import com.tastesync.model.objects.TSRestaurantQuesionNonTsAssignedObj;
 import com.tastesync.model.objects.TSRestaurantTipsAPSettingsObj;
+import com.tastesync.model.objects.derived.TSRestaurantBuzzObj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
 import java.util.List;
@@ -57,4 +58,7 @@ public interface RestaurantBO {
         String userId, String restaurantId, String questionText,
         String postQuestionOnForum, String[] recommendersUserIdList,
         String[] friendsFacebookIdList) throws TasteSyncException;
+
+    List<TSRestaurantBuzzObj> showRestaurantBuzz(String userId, String restaurantId)
+        throws TasteSyncException;
 }

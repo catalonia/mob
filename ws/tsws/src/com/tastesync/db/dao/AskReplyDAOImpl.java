@@ -471,10 +471,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.setString(2, recoRequestId);
             statement.setString(3, userId);
             statement.executeUpdate();
-
-            if (statement != null) {
-                statement.close();
-            }
+            
+            statement.close();
 
             statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
             statement.setString(1, userId);
