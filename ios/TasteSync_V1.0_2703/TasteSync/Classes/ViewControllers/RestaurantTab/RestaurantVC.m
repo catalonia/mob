@@ -26,6 +26,8 @@
     NSString* _regionGerenal;
     TSCityObj* _cityObj;
     BOOL _isHaveCityObj;
+    int numberPage;
+    int currentPage;
 }
 
 typedef enum _TFSelect
@@ -110,7 +112,14 @@ typedef enum _TFSelect
     }
     
     
-    [segCtrCuisine removeAllSegments];
+    for (int i = 0; i< [[[CommonHelpers appDelegate] arrCuisine] count]; i++){
+        TSGlobalObj* cuisine = [[[CommonHelpers appDelegate] arrCuisine] objectAtIndex:i];
+        [segCtrCuisine insertSegmentWithTitle:cuisine.name atIndex:i animated:NO];
+    }
+    [self resizeSegmentsToFitTitles:segCtrCuisine];
+    
+    
+    
     [segCtrCuisine addTarget:self action:@selector(actionSegmentControl:) forControlEvents:UIControlEventValueChanged];
     [segCtrPrice addTarget:self action:@selector(actionSegmentControl:) forControlEvents:UIControlEventValueChanged];
     
@@ -138,17 +147,6 @@ typedef enum _TFSelect
     [self refreshView];
 }
 
--(void)reloadSegmentCuisine
-{
-    [segCtrCuisine removeAllSegments];
-    
-    for (int i = 0; i< [arrCuisine count]; i++){
-        TSGlobalObj* cuisine = [arrCuisine objectAtIndex:i];
-        [segCtrCuisine insertSegmentWithTitle:cuisine.name atIndex:i animated:NO];
-    }
-    [self resizeSegmentsToFitTitles:segCtrCuisine];
-    
-}
 
 - (void) initData
 {
@@ -232,6 +230,69 @@ typedef enum _TFSelect
     
     [self refreshView];
     
+    if (![_cityObj.cityName isEqualToString:@""]) {
+        [_arrData removeAllObjects];
+        [_arrDataRestaurant removeAllObjects];
+        [self requestRestaurant];
+        
+    }
+    
+    
+    
+}
+
+-(void)requestRestaurant
+{
+    int price = 0;
+    int cuisine = 0;
+    
+    NSString* listCuisine, *listPrice;
+    
+    for (TSGlobalObj* global in arrDataStickFilter) {
+        if (global.type == GlobalDataCuisine_1) {
+            if (cuisine == 0) {
+                listCuisine = global.uid;
+                cuisine++;
+            }
+            else
+                listCuisine = [listCuisine stringByAppendingString:[NSString stringWithFormat:@",%@",global.uid]];
+        }
+        if (global.type == GlobalDataPrice) {
+            if (price == 0) {
+                listPrice = global.uid;
+                price++;
+            }
+            else
+                listPrice = [listPrice stringByAppendingString:[NSString stringWithFormat:@",%@",global.uid]];
+        }
+    }
+    
+    NSString* rate;
+    
+    if (_rating == 0) {
+        rate = @"";
+    }
+    else
+        rate = [NSString stringWithFormat:@"%d",_rating];
+    
+    NSString* save = @"";
+    
+    if (saved) {
+        save = @"1";
+    }
+    
+    NSString* fav = @"";
+    
+    if (favs) {
+        rate = @"1";
+    }
+    
+    NSString* page = [NSString stringWithFormat:@"%d",currentPage];
+    
+    NSString* link = [NSString stringWithFormat:@"recosrestaurantsearchresults?userid=%@&restaurantid=%@&neighborhoodid=%@&cityid=%@&statename=%@&cuisineidtier1idlist=%@&priceidlist=%@&rating=%@&savedflag=%@&favflag=%@&dealflag=%@&chainflag=%@&paginationid=%@",[UserDefault userDefault].userID,@"",@"",_cityObj.uid,_cityObj.stateName,listCuisine,listPrice,rate,save,fav,@"",@"",page];
+    CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:3];
+    request.delegate = self;
+    [request startFormRequest];
 }
 
 - (void) refreshView
@@ -296,13 +357,13 @@ typedef enum _TFSelect
 
 - (IBAction)actionSaved:(id)sender
 {
-    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:3];
-    request.delegate = self;
-    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
-    [request setFormPostValue:@"3" forKey:@"type"];
-    [request setFormPostValue:@"0" forKey:@"from"];
-    [request setFormPostValue:@"0" forKey:@"to"];
-    [request startFormRequest];
+//    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:3];
+//    request.delegate = self;
+//    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+//    [request setFormPostValue:@"3" forKey:@"type"];
+//    [request setFormPostValue:@"0" forKey:@"from"];
+//    [request setFormPostValue:@"0" forKey:@"to"];
+//    [request startFormRequest];
     if (saved) {
         saved = NO;
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_saved73_off.png"] forButton:btSaved];
@@ -313,17 +374,16 @@ typedef enum _TFSelect
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_saved73_on.png"] forButton:btSaved];
         
     }
-    [self reloadInputData];
 }
 - (IBAction)actionFavs:(id)sender
 {
-    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:4];
-    request.delegate = self;
-    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
-    [request setFormPostValue:@"1" forKey:@"type"];
-    [request setFormPostValue:@"0" forKey:@"from"];
-    [request setFormPostValue:@"0" forKey:@"to"];
-    [request startFormRequest];
+//    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:4];
+//    request.delegate = self;
+//    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+//    [request setFormPostValue:@"1" forKey:@"type"];
+//    [request setFormPostValue:@"0" forKey:@"from"];
+//    [request setFormPostValue:@"0" forKey:@"to"];
+//    [request startFormRequest];
     if (favs) {
         favs = NO;
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_favs_small.png"] forButton:btFavs];
@@ -335,7 +395,6 @@ typedef enum _TFSelect
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_favs_small_on.png"] forButton:btFavs];
         
     }
-    [self reloadInputData];
 }
 - (IBAction)actionDeals:(id)sender
 {
@@ -378,7 +437,7 @@ typedef enum _TFSelect
 
     
     if (segCtr == segCtrCuisine) {
-        strObj = [arrCuisine objectAtIndex:segCtr.selectedSegmentIndex];
+        strObj = [[[CommonHelpers appDelegate] arrCuisine] objectAtIndex:segCtr.selectedSegmentIndex];
     }
     else
         if (segCtr == segCtrPrice) {
@@ -412,9 +471,6 @@ typedef enum _TFSelect
     }
     segCtr.selectedSegmentIndex = -1;
     
-    [self reloadInputData];
-    
-    
 }
 
 
@@ -425,7 +481,6 @@ typedef enum _TFSelect
 - (void) didRateWithValue:(int)count
 {
     self.rating = count;
-    [self reloadInputData];
     
 }
 
@@ -479,7 +534,7 @@ typedef enum _TFSelect
         if (cell==nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIndentifier];
         }
-        
+        //fix here
         TSGlobalObj *obj = [_arrDataFilter objectAtIndex:indexPath.row];
         cell.textLabel.text = obj.name;
        
@@ -553,6 +608,7 @@ typedef enum _TFSelect
         lbTypeRegions.hidden = YES;
         region = nil;
         _isHaveCityObj = NO;
+        _cityObj = nil;
     }
     
     
@@ -637,16 +693,7 @@ typedef enum _TFSelect
             NSLog(@"arrData Count:%d",self.arrData.count);
             [tbvFilter setFrame:CGRectMake(20, tbvFilter.frame.origin.y, tbvFilter.frame.size.width, tbvFilter.frame.size.height)];
         }
-       
         
-//        NSString *str = [NSString stringWithFormat:@"name MATCHES[cd] '%@.*'", [CommonHelpers trim:txt]];
-//        NSPredicate *predicate = [NSPredicate predicateWithFormat:str];
-//        
-//        NSArray *array = [self.arrDataRestaurant filteredArrayUsingPredicate:predicate];
-//        if(array)
-//        {
-//            self.arrDataFilter = [NSMutableArray arrayWithArray:array];
-//        }
     }
     else if(TFSelected == TFRegion)
     {
@@ -739,12 +786,12 @@ typedef enum _TFSelect
 {
     if (scrollView == scrollViewMain) {
 
-        debug(@"scrollViewMain ->scrollViewWillBeginDragging");
+        //debug(@"scrollViewMain ->scrollViewWillBeginDragging");
     }
     else if(scrollView == tbvResult)
     {
 //        scrollViewMain.scrollEnabled = NO;
-        debug(@"tbvResult ->scrollViewWillBeginDragging");
+       // debug(@"tbvResult ->scrollViewWillBeginDragging");
             
     }
 }
@@ -753,14 +800,35 @@ typedef enum _TFSelect
 {
     if (scrollView == scrollViewMain) {
         
-        debug(@"scrollViewMain ->scrollViewDidEndDragging");
+        //debug(@"scrollViewMain ->scrollViewDidEndDragging");
     }
     else if(scrollView == tbvResult)
     {
 //        scrollViewMain.scrollEnabled = YES;
-        debug(@"tbvResult ->scrollViewDidEndDragging");
+        //NSLog(@"%f", scrollView.contentOffset.y);
+        
+        //debug(@"tbvResult ->scrollViewDidEndDragging");
     }
 
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (scrollView == scrollViewMain) {
+        
+        //debug(@"scrollViewMain ->scrollViewDidEndDragging");
+    }
+    else if(scrollView == tbvResult)
+    {
+        if(scrollView.contentOffset.y == scrollView.contentSize.height - tbvResult.frame.size.height)
+        {
+            currentPage++;
+            if (currentPage <= numberPage) {
+                [self requestRestaurant];
+            }
+            
+        }
+    }
 }
 
 #pragma mark response Data
@@ -840,7 +908,6 @@ typedef enum _TFSelect
             global.restaurantObj = restaurantObj;
             [_arrDataRestaurant addObject:global];
         }
-        [self reloadSegmentCuisine];
         [tbvResult reloadData];
     }
     if (key == 2) {
@@ -863,104 +930,40 @@ typedef enum _TFSelect
         }
     }
     if (key == 3) {
-        NSMutableArray* arrayData = [response objectFromJSONString];
-        for (NSDictionary* dic in arrayData) {
-            RestaurantObj* obj = [[RestaurantObj alloc]init];
-            obj.uid = [dic objectForKey:@"restauarntId"];
-            obj.name = [dic objectForKey:@"restaurantName"];
-            [arrRestaurantSave addObject:obj];
-        }
-        
-    }
-    if (key == 4) {
-        NSMutableArray* arrayData = [response objectFromJSONString];
-        for (NSDictionary* dic in arrayData) {
-            RestaurantObj* obj = [[RestaurantObj alloc]init];
-            obj.uid = [dic objectForKey:@"restauarntId"];
-            obj.name = [dic objectForKey:@"restaurantName"];
-            [arrRestaurantFav addObject:obj];
-        }
-        
-    }
-}
-
--(void)reloadInputData
-{
-    int totalCuisine = 0, totalPrice = 0;
-    for (TSGlobalObj* obj in arrDataStickFilter) {
-        if (obj.type == GlobalDataCuisine_2) {
-            totalCuisine++;
-        }
-        if (obj.type == GlobalDataPrice) {
-            totalPrice++;
-        }
-    }
-    
-    [self.arrData removeAllObjects];
-    for (TSGlobalObj* obj in _arrDataRestaurant) {
-        int i = 0;
-        for (TSGlobalObj* global in arrDataStickFilter) {
-            if (global.type == GlobalDataCuisine_2) {
-                NSLog(@"%d",obj.restaurantObj.cuisineTier2Array.count);
-                if (![obj.restaurantObj.cuisineTier2Array containsObject:global]) {
-                    break;
-                }
-                else
-                    i++;
-            }
-        }
-        if (i == totalCuisine) {
-            if (totalPrice == 0) {
-                [self.arrData addObject:obj];
-            }
-            else
-            {
-                for (TSGlobalObj* global in arrDataStickFilter) {
-                    if (global.type == GlobalDataPrice) {
-                        if ([obj.restaurantObj.price intValue] == [global.uid intValue]) {
-                            [self.arrData addObject:obj];
-                        }
-                    }
-                }
-            }
+        NSDictionary* dicAll = [response objectFromJSONString];
+        numberPage = [[dicAll objectForKey:@"maxPaginationId"] integerValue];
+        currentPage = 0;
+        NSArray* array = [dicAll objectForKey:@"restaurantsSearchListTileObj"];
+        for (NSDictionary* dic in array) {
+            TSGlobalObj* global = [[TSGlobalObj alloc]init];
+            global.type = GlobalDataRestaurant;
             
+            
+            
+            global.uid = [dic objectForKey:@"restaurantId"];
+            global.name = [dic objectForKey:@"restaurantName"];
+            
+            RestaurantObj* restaurantObj = [[RestaurantObj alloc]init];
+            
+            restaurantObj.uid =  [dic objectForKey:@"restaurantId"];
+            restaurantObj.name = [dic objectForKey:@"restaurantName"];
+            restaurantObj.cuisineTier2 = [dic objectForKey:@"cuisineTier2Name"];
+            restaurantObj.price     = [dic objectForKey:@"price"];
+            restaurantObj.deal      =  [dic objectForKey:@"restaurantDealFlag"];
+            restaurantObj.rates     = [[dic objectForKey:@"restaurantRating"] floatValue];
+            
+            restaurantObj.lattitude     = [[dic objectForKey:@"restaurantLat"] floatValue];
+            restaurantObj.longtitude    = [[dic objectForKey:@"restaurantLong"] floatValue];
+            restaurantObj.cityObj = [[TSCityObj alloc]init];
+            restaurantObj.cityObj.cityName = [dic objectForKey:@"restaurantCity"];
+            
+            global.restaurantObj = restaurantObj;
+            [_arrDataRestaurant addObject:global];
         }
-    }
-    
-    if (_rating != 0) {
-        NSMutableArray* arrayTmp = [[NSMutableArray alloc]initWithArray:_arrData];
-        [_arrData removeAllObjects];
-        for (TSGlobalObj* obj in arrayTmp) {
-            if (obj.restaurantObj.rates == (float)_rating) {
-                [_arrData addObject:obj];
-            }
-        }
-        NSLog(@"Number restaurant: %d", [_arrData count]);
-    }
-    
-    if (saved) {
-        NSMutableArray* arrayTmp = [[NSMutableArray alloc]initWithArray:_arrData];
-        [_arrData removeAllObjects];
-        for (TSGlobalObj* obj in arrayTmp) {
-            if ([self isExist:arrRestaurantSave RestaurantID:obj.restaurantObj.uid]) {
-                [_arrData addObject:obj];
-            }
-        }
+        _arrData = _arrDataRestaurant;
+        [tbvResult reloadData];
         
     }
-    
-    if (favs) {
-        NSMutableArray* arrayTmp = [[NSMutableArray alloc]initWithArray:_arrData];
-        [_arrData removeAllObjects];
-        for (TSGlobalObj* obj in arrayTmp) {
-            if ([self isExist:arrRestaurantFav RestaurantID:obj.restaurantObj.uid]) {
-                [_arrData addObject:obj];
-            }
-        }
-        
-    }
-    
-    [tbvResult reloadData];
 }
 
 -(BOOL)isExist:(NSMutableArray*)array RestaurantID:(NSString*)uid
