@@ -406,7 +406,7 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "FROM   recorequest_cuisine_tier2 " +
         "WHERE  recorequest_cuisine_tier2.recorequest_id = ? ";
     public String RECOREQUEST_PRICE_SELECT_SQL = "" +
-        "SELECT recorequest_price.price_id" + "FROM   recorequest_price " +
+        "SELECT recorequest_price.price_id " + "FROM   recorequest_price " +
         "WHERE  recorequest_price.recorequest_id = ?" + "";
     public String RECOREQUEST_THEME_SELECT_SQL = "" +
         "SELECT recorequest_theme.theme_id " + "FROM   recorequest_theme " +
