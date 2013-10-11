@@ -733,8 +733,9 @@ public class RestaurantService extends BaseService {
         }
     }
 
-    @POST
+    @GET
     @Path("/buzz")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantBuzzObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
