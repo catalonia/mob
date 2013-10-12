@@ -164,7 +164,7 @@ public class RestaurantService extends BaseService {
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
         TSMenuObj tsMenuObj = null;
-        boolean responseDone = true;
+        boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 

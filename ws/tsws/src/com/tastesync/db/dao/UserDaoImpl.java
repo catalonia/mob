@@ -182,13 +182,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                     if (!user_current_profile.getHometown().trim().equals("")) {
                         TSCityObj city_infor = null;
 
-                        try {
-                            city_infor = mySQL.getCityInforByStateAndCityName(connection,
-                                    user_current_profile.getLocation(),
-                                    user_current_profile.getHometown());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        city_infor = mySQL.getCityInforByStateAndCityName(connection,
+                                user_current_profile.getLocation(),
+                                user_current_profile.getHometown());
 
                         if (city_infor != null) {
                             user_city_id = city_infor.getCityId();
@@ -337,11 +333,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                         //Update Facebook's friend infor
                         if ((profiles != null) && !profiles.isEmpty()) {
-                            Iterator<String> it = profiles.iterator();
-
-                            while (it.hasNext()) {
+                            for (String profile : profiles) {
                                 String item = null;
-                                item = (String) it.next();
+                                item = profile;
 
                                 //Check user' friends using TasteSync
                                 TSUserObj user_fb = null;
@@ -417,11 +411,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                         if ((list_friends_using_TasteSync != null) &&
                                 !list_friends_using_TasteSync.isEmpty()) {
-                            for (int i = 0;
-                                    i < list_friends_using_TasteSync.size();
-                                    i++) {
-                                TSUserObj obj = list_friends_using_TasteSync.get(i);
-
+                            for (TSUserObj tsUserObj : list_friends_using_TasteSync) {
                                 if (statement != null) {
                                     statement.close();
                                 }
@@ -429,7 +419,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                                 statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_DATETIME_UPDATE_SQL);
                                 statement.setString(1, dateNow);
                                 statement.setString(2, userID);
-                                statement.setString(3, obj.getUserId());
+                                statement.setString(3, tsUserObj.getUserId());
 
                                 int query = statement.executeUpdate();
                                 statement.close();
@@ -443,7 +433,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                                     statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_INSERT_SQL);
                                     statement.setString(1, indexFB);
                                     statement.setString(2, userID);
-                                    statement.setString(3, obj.getUserId());
+                                    statement.setString(3, tsUserObj.getUserId());
                                     statement.setString(4, "0");
                                     statement.setString(5, dateNow);
                                     statement.execute();
@@ -500,8 +490,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         statement.close();
 
                         if ((listFBObj != null) && !listFBObj.isEmpty()) {
-                            for (int i = 0; i < listFBObj.size(); i++) {
-                                String fbID = listFBObj.get(i);
+                            for (String fbID : listFBObj) {
                                 int j = 0;
 
                                 for (; j < listDatabaseFBObj.size(); j++) {
@@ -516,7 +505,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                                     int k = 0;
 
                                     for (; k < listDatabaseDeletedObj.size();
-                                            k++) {
+                                         k++) {
                                         String str = listDatabaseDeletedObj.get(k);
 
                                         if (fbID.equals(str)) {
@@ -544,9 +533,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                                 }
                             }
 
-                            for (int i = 0; i < listDatabaseFBObj.size();
-                                    i++) {
-                                String fbID = listDatabaseFBObj.get(i);
+                            for (String fbID : listDatabaseFBObj) {
                                 int j = 0;
 
                                 for (; j < listFBObj.size(); j++) {
@@ -594,7 +581,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 }
 
                 tsDataSource.commit();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
                 throw new TasteSyncException("login_fb " + e.getMessage());
             } finally {
@@ -621,7 +608,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             String userID = mySQL.getAutoUserLogByUserId(connection, userLogID);
             System.out.println("USERID" + userID);
             user = mySQL.getUserInformation(connection, userID);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -665,22 +652,18 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         Connection connection = null;
         PreparedStatement statement = null;
 
-        final String user_id_ps = userId;
-        final String dateNow_ps = dateNow;
-
         String id = dateNowAppend + "-" + userId + "-" +
             CommonFunctionsUtil.generateRandomString(4, 5);
-        String userLogId = id;
 
         //Update login time (users_log table)
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
             statement = connection.prepareStatement(UserQueries.USER_LOGIN_INSERT_SQL);
-            statement.setString(1, user_id_ps);
-            statement.setString(2, dateNow_ps);
-            statement.setString(3, dateNow_ps);
-            statement.setString(4, userLogId);
+            statement.setString(1, userId);
+            statement.setString(2, dateNow);
+            statement.setString(3, dateNow);
+            statement.setString(4, id);
             statement.execute();
             statement.close();
             tsDataSource.commit();
@@ -797,8 +780,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             if (!isCheckUSNC) {
                 for (Enumeration<Integer> e = array.keys();
                         e.hasMoreElements();) {
-                    Integer data = (Integer) e.nextElement();
-                    String index = (String) array.get(data);
+                    Integer data = e.nextElement();
+                    String index = array.get(data);
                     statement = connection.prepareStatement(UserQueries.USER_PRIVACY_SETTINGS_INSERT_SQL);
                     statement.setString(1, userId);
                     statement.setInt(2, data);
@@ -809,8 +792,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             } else {
                 for (Enumeration<Integer> e = array.keys();
                         e.hasMoreElements();) {
-                    Integer data = (Integer) e.nextElement();
-                    String index = (String) array.get(data);
+                    Integer data = e.nextElement();
+                    String index = array.get(data);
                     statement = connection.prepareStatement(UserQueries.USER_PRIVACY_SETTINGS_ID_UPDATE_SQL);
                     statement.setString(1, index);
                     statement.setString(2, userId);
@@ -823,7 +806,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             responseDone = true;
 
             tsDataSource.commit();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             responseDone = false;
         } finally {
@@ -896,7 +879,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                 return privacySettingsObj;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -938,7 +921,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             if (!isCheckUSNC) {
                 for (Enumeration<TSNotificationSettingsObj> e = array.keys();
                         e.hasMoreElements();) {
-                    TSNotificationSettingsObj data = (TSNotificationSettingsObj) e.nextElement();
+                    TSNotificationSettingsObj data = e.nextElement();
                     int index = array.get(data);
                     statement = connection.prepareStatement(UserQueries.USER_NOTIFICATION_SETTINGS_INSERT_SQL);
                     statement.setString(1, userId);
@@ -951,7 +934,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             } else {
                 for (Enumeration<TSNotificationSettingsObj> e = array.keys();
                         e.hasMoreElements();) {
-                    TSNotificationSettingsObj data = (TSNotificationSettingsObj) e.nextElement();
+                    TSNotificationSettingsObj data = e.nextElement();
                     int index = array.get(data);
                     statement = connection.prepareStatement(UserQueries.USER_NOTIFICATION_SETTINGS_ID_UPDATE_SQL);
                     statement.setString(1, data.getPhoneFlag());
@@ -966,7 +949,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             responseDone = true;
 
             tsDataSource.commit();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -1043,7 +1026,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                 return notifycation;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -1090,7 +1073,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             if (isCheckUSNC) {
                 for (Enumeration<TSSocialSettingsObj> e = array.keys();
                         e.hasMoreElements();) {
-                    TSSocialSettingsObj data = (TSSocialSettingsObj) e.nextElement();
+                    TSSocialSettingsObj data = e.nextElement();
                     int index = array.get(data);
 
                     statement = connection.prepareStatement(UserQueries.USER_USNC_UPDATE_SQL);
@@ -1103,7 +1086,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             } else {
                 for (Enumeration<TSSocialSettingsObj> e = array.keys();
                         e.hasMoreElements();) {
-                    TSSocialSettingsObj data = (TSSocialSettingsObj) e.nextElement();
+                    TSSocialSettingsObj data = e.nextElement();
                     int index = array.get(data);
 
                     statement = connection.prepareStatement(UserQueries.USER_USNC_INSERT_SQL);
@@ -1119,12 +1102,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             if (!isCheckUSNC_AP) {
                 for (Enumeration<TSSocialSettingsObj> e = array.keys();
                         e.hasMoreElements();) {
-                    TSSocialSettingsObj data = (TSSocialSettingsObj) e.nextElement();
+                    TSSocialSettingsObj data = e.nextElement();
                     int index = array.get(data);
 
                     for (Enumeration<Integer> e_AP = array_AP.keys();
                             e_AP.hasMoreElements();) {
-                        Integer data_AP = (Integer) e_AP.nextElement();
+                        Integer data_AP = e_AP.nextElement();
                         int index_AP = array_AP.get(data_AP);
 
                         if (data.getAuto_publishing()[data_AP - 1] != null) {
@@ -1142,12 +1125,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             } else {
                 for (Enumeration<TSSocialSettingsObj> e = array.keys();
                         e.hasMoreElements();) {
-                    TSSocialSettingsObj data = (TSSocialSettingsObj) e.nextElement();
+                    TSSocialSettingsObj data = e.nextElement();
                     int index = array.get(data);
 
                     for (Enumeration<Integer> e_AP = array_AP.keys();
                             e_AP.hasMoreElements();) {
-                        Integer data_AP = (Integer) e_AP.nextElement();
+                        Integer data_AP = e_AP.nextElement();
                         int index_AP = array_AP.get(data_AP);
 
                         if (data.getAuto_publishing()[data_AP - 1] != null) {
@@ -1169,7 +1152,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             responseDone = true;
 
             return Response.status(status).entity(tsSuccessObj).build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 
@@ -1298,7 +1281,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                 return social;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -1326,7 +1309,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            
+
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
 
             MySQL mySQL = new MySQL();
@@ -1335,7 +1318,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             String dayAppent = CommonFunctionsUtil.getCurrentDatetimeAppendField();
             String id = userId + "-" + dayAppent + "-" +
                 CommonFunctionsUtil.generateRandomString(4, 5);
-            
+
             statement = connection.prepareStatement(UserQueries.USER_CONTACT_SETTINGS_INSERT_SQL);
             statement.setString(1, id);
             statement.setString(2, userId);
@@ -1345,10 +1328,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.execute();
             statement.close();
             tsDataSource.commit();
-            
+
             return Response.status(status).entity(tsSuccessObj).build();
-        } catch (Exception e1) {
-            e1.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 
             TSErrorObj tsErrorObj = new TSErrorObj();
@@ -1357,6 +1340,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, null);
+
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
                 status = TSResponseStatusCode.ERROR.getValue();
 
@@ -1365,9 +1351,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                 return Response.status(status).entity(tsErrorObj).build();
             }
-
-            tsDataSource.close();
-            tsDataSource.closeConnection(connection, statement, null);
         }
     }
 
@@ -1381,7 +1364,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            
+
             statement = connection.prepareStatement(UserQueries.USER_REPORTED_INFO_INSERT_SQL);
             statement.setString(1, CommonFunctionsUtil.generateUniqueKey());
 
@@ -1395,9 +1378,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.close();
 
             tsDataSource.commit();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-            throw new TasteSyncException(e1.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(e.getMessage());
         } finally {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, null);
@@ -1424,7 +1407,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsSuccessObj.setSuccessMsg("Settings success!");
 
             return Response.status(status).entity(obj).build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
 
@@ -1434,6 +1417,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
             return Response.status(status).entity(tsErrorObj).build();
         } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, null, null);
+
             if (status != TSResponseStatusCode.SUCCESS.getValue()) {
                 status = TSResponseStatusCode.ERROR.getValue();
 
@@ -1514,9 +1500,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.close();
 
             if (statusFlag.equalsIgnoreCase("1") && (isExist == 1)) {
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(UserQueries.USER_FOLLOW_DATA_INSERT_SQL);
                 statement.setString(1,
@@ -1530,9 +1514,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.executeUpdate();
                 statement.close();
             } else if (statusFlag.equalsIgnoreCase("0") && (isExist == 2)) {
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(UserQueries.USER_FOLLOW_DATA_DELETE_SQL);
 
@@ -1543,7 +1525,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             tsDataSource.commit();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -1576,7 +1558,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.close();
 
             return followStatus;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -1661,7 +1643,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            
+
             MySQL mySQL = new MySQL();
 
             boolean isCheck = mySQL.checkUserFriendTasteSync(connection,
@@ -1690,9 +1672,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.execute();
                 statement.close();
             }
+
             tsDataSource.commit();
-            
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             response = false;
         } finally {
@@ -1743,7 +1725,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             } else {
                 response = 2;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             response = 3;
         } finally {
@@ -1777,7 +1759,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             statement.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             tsDataSource.close();
@@ -1810,7 +1792,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             statement.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -1828,12 +1810,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         Connection connection = null;
         PreparedStatement statement = null;
         boolean response = true;
-        List<String> restaurantId = askObj.getRestaurandId();
+        List<String> restaurantIdList = askObj.getRestaurandId();
 
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            
+
             if (askObj.getCuisineId() != null) {
                 statement = connection.prepareStatement(UserQueries.USER_CUISINE_INSERT_SQL);
                 statement.setString(1, askObj.getUserId());
@@ -1851,18 +1833,19 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.close();
             }
 
-            for (int i = 0; i < restaurantId.size(); i++) {
-                statement = connection.prepareStatement(UserQueries.USER_RESTAURANT_FAV_INSERT_SQL);
+            statement = connection.prepareStatement(UserQueries.USER_RESTAURANT_FAV_INSERT_SQL);
+
+            for (String restaurantId : restaurantIdList) {
                 statement.setString(1, askObj.getUserId());
-                statement.setString(2, restaurantId.get(i));
+                statement.setString(2, restaurantId);
                 statement.setInt(3, 3);
                 statement.setInt(4, 1);
                 statement.execute();
-                statement.close();
             }
+
+            statement.close();
             tsDataSource.commit();
-            
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             response = false;
             throw new TasteSyncException(e.getMessage());
@@ -1914,7 +1897,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.close();
 
             tsDataSource.commit();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             response = false;
             throw new TasteSyncException(e.getMessage());
@@ -1958,10 +1941,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 }
 
                 statement.close();
+                statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_CITY_SELECT_SQL);
 
-                for (int i = 0; i < cityData.size(); i++) {
-                    statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_CITY_SELECT_SQL);
-                    statement.setString(1, cityData.get(i));
+                for (String cityDataId : cityData) {
+                    statement.setString(1, cityDataId);
                     statement.setString(2, key + "%");
                     resultset = statement.executeQuery();
 
@@ -1970,11 +1953,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         mySQL.mapResultsetRowToTSRestaurantVO(obj, resultset);
                         listData.add(obj);
                     }
-
-                    statement.close();
                 }
+
+                statement.close();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -2059,7 +2042,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                     userId));
 
             return userProfileObj;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -2093,9 +2076,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.close();
 
             if (restaurantList.size() < 3) {
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(UserQueries.USER_RESTAURANT_RECO_SELECT_SQL +
                         " LIMIT 0 , " + (3 - restaurantList.size()));
@@ -2113,9 +2094,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             if (restaurantList.size() < 3) {
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(UserQueries.USER_RESTAURANT_SAVED_SELECT_SQL +
                         " LIMIT 0 , " + (3 - restaurantList.size()));
@@ -2133,9 +2112,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             if (restaurantList.size() < 3) {
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL +
                         " LIMIT 0 , " + (3 - restaurantList.size()));
@@ -2200,12 +2177,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 restaurant.setPhoto(photo);
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             return restaurantList;
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
             tsDataSource.close();
@@ -2275,9 +2251,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                             resultset.getString("RESTAURANT_ID")));
                 }
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
             }
 
             if ((type == GlobalVariables.RESTAURANT_PROFILE_DETAIL_TYPE_ALL) ||
@@ -2301,13 +2275,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.close();
             }
 
-            for (int i = 0; i < restaurantListId.size(); i++) {
+            for (String restaurantId : restaurantListId) {
                 if (statement != null) {
                     statement.close();
                 }
 
                 statement = connection.prepareStatement(UserQueries.RESTAURANT_SELECT_SQL);
-                statement.setString(1, restaurantListId.get(i));
+                statement.setString(1, restaurantId);
                 resultset = statement.executeQuery();
 
                 TSUserProfileRestaurantsObj restaurant = null;
@@ -2320,7 +2294,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.close();
                 statement = connection.prepareStatement(UserQueries.USER_RESTAURANT_FAV_CHECK_SELECT_SQL);
                 statement.setString(1, userId);
-                statement.setString(2, restaurantListId.get(i));
+                statement.setString(2, restaurantId);
                 resultset = statement.executeQuery();
 
                 if (resultset.next()) {
@@ -2332,7 +2306,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.close();
                 statement = connection.prepareStatement(UserQueries.USER_RESTAURANT_RECO_CHECK_SELECT_SQL);
                 statement.setString(1, userId);
-                statement.setString(2, restaurantListId.get(i));
+                statement.setString(2, restaurantId);
                 resultset = statement.executeQuery();
 
                 if (resultset.next()) {
@@ -2344,7 +2318,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.close();
                 statement = connection.prepareStatement(UserQueries.USER_RESTAURANT_SAVED_CHECK_SELECT_SQL);
                 statement.setString(1, userId);
-                statement.setString(2, restaurantListId.get(i));
+                statement.setString(2, restaurantId);
                 resultset = statement.executeQuery();
 
                 if (resultset.next()) {
@@ -2356,7 +2330,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.close();
                 statement = connection.prepareStatement(UserQueries.RESTAURANT_TIPS_TASTESYNC_CHECK_SELECT_SQL);
                 statement.setString(1, userId);
-                statement.setString(2, restaurantListId.get(i));
+                statement.setString(2, restaurantId);
                 resultset = statement.executeQuery();
 
                 if (resultset.next()) {
@@ -2367,13 +2341,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                 statement.close();
 
-                if (restaurant != null) {
-                    subRestaurantList.add(restaurant);
-                }
+                subRestaurantList.add(restaurant);
             }
 
             return subRestaurantList;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -2393,7 +2365,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            
+
             statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_CHECK_SELECT_SQL);
             System.out.println("UserQueries.USER_FRIEND_FB_CHECK_SELECT_SQL=" +
                 UserQueries.USER_FRIEND_FB_CHECK_SELECT_SQL);
@@ -2429,7 +2401,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             tsDataSource.commit();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
         } finally {
@@ -2461,9 +2433,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.close();
 
             tsDataSource.commit();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-            throw new TasteSyncException(e1.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(e.getMessage());
         } finally {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, null);
@@ -2515,7 +2487,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
         try {
             connection = tsDataSource.getConnection();
-            System.out.println("connection="+connection);
+            System.out.println("connection=" + connection);
             statement = connection.prepareStatement(UserQueries.CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL);
             resultset = statement.executeQuery();
 
@@ -2553,7 +2525,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
             data.setCuisine2(cuisine2);
             statement.close();
-            
+
             statement = connection.prepareStatement(UserQueries.OCCASION_DESCRIPTOR_SELECT_SQL);
             resultset = statement.executeQuery();
 
@@ -2642,6 +2614,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
             data.setWhoAreYou(whoareyou);
             statement.close();
+
+            return data;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
@@ -2649,8 +2623,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, resultset);
         }
-
-        return data;
     }
 
     @Override

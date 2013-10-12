@@ -497,11 +497,7 @@ public class MySQL {
             statement.close();
             System.out.println("Number row:" + i);
 
-            if (i != 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return i != 0;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -535,11 +531,7 @@ public class MySQL {
             statement.close();
             System.out.println("Number row:" + i);
 
-            if (i != 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return i != 0;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -573,11 +565,7 @@ public class MySQL {
             statement.close();
             System.out.println("Number row:" + i);
 
-            if (i != 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return i != 0;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -644,11 +632,7 @@ public class MySQL {
 
             statement.close();
 
-            if (i != 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return i != 0;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -785,11 +769,7 @@ public class MySQL {
 
             statement.close();
 
-            if (i != 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return i != 0;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -1005,9 +985,7 @@ public class MySQL {
             if (rs.next()) {
                 String cuisine_id = rs.getString("tier2_cuisine_id");
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(UserQueries.CUISINE_TIER2_DESCRIPTOR_SELECT_SQL);
                 statement.setString(1, cuisine_id);
@@ -1020,9 +998,7 @@ public class MySQL {
                 statement.close();
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;

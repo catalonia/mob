@@ -107,34 +107,46 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 mergedTextBuffer.append(cuisineId).append("");
             }
 
-            for (String cuisineId : cuisineTier2IdList) {
-                mergedTextBuffer.append("cuisine tier2 s:");
-                mergedTextBuffer.append(cuisineId).append("");
+            if (cuisineTier2IdList != null) {
+                for (String cuisineId : cuisineTier2IdList) {
+                    mergedTextBuffer.append("cuisine tier2 s:");
+                    mergedTextBuffer.append(cuisineId).append("");
+                }
             }
 
-            for (String priceId : priceIdList) {
-                mergedTextBuffer.append("priceId s:");
-                mergedTextBuffer.append(priceId).append("");
+            if (priceIdList != null) {
+                for (String priceId : priceIdList) {
+                    mergedTextBuffer.append("priceId s:");
+                    mergedTextBuffer.append(priceId).append("");
+                }
             }
 
-            for (String themeId : themeIdList) {
-                mergedTextBuffer.append("themeId s:");
-                mergedTextBuffer.append(themeId).append("");
+            if (themeIdList != null) {
+                for (String themeId : themeIdList) {
+                    mergedTextBuffer.append("themeId s:");
+                    mergedTextBuffer.append(themeId).append("");
+                }
             }
 
-            for (String whoareyouwithId : whoareyouwithIdList) {
-                mergedTextBuffer.append("whoareyouwithId s:");
-                mergedTextBuffer.append(whoareyouwithId).append("");
+            if (whoareyouwithIdList != null) {
+                for (String whoareyouwithId : whoareyouwithIdList) {
+                    mergedTextBuffer.append("whoareyouwithId s:");
+                    mergedTextBuffer.append(whoareyouwithId).append("");
+                }
             }
 
-            for (String typeOfRestaurantId : typeOfRestaurantIdList) {
-                mergedTextBuffer.append("typeOfRestaurantId s:");
-                mergedTextBuffer.append(typeOfRestaurantId).append("");
+            if (typeOfRestaurantIdList != null) {
+                for (String typeOfRestaurantId : typeOfRestaurantIdList) {
+                    mergedTextBuffer.append("typeOfRestaurantId s:");
+                    mergedTextBuffer.append(typeOfRestaurantId).append("");
+                }
             }
 
-            for (String occasionId : occasionIdList) {
-                mergedTextBuffer.append("occasionId s:");
-                mergedTextBuffer.append(occasionId).append("");
+            if (occasionIdList != null) {
+                for (String occasionId : occasionIdList) {
+                    mergedTextBuffer.append("occasionId s:");
+                    mergedTextBuffer.append(occasionId).append("");
+                }
             }
 
             if (cityId != null) {
@@ -261,12 +273,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (MySQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException(
@@ -275,12 +285,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException(
@@ -366,12 +374,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException("Error while creating reco request " +
@@ -410,9 +416,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 //only one result
                 //-- Pick only those friends' facebook ID who are TS users
                 if (resultset.next()) {
-                    if (statement != null) {
-                        statement.close();
-                    }
+                    statement.close();
 
                     statement = connection.prepareStatement(AskReplyQueries.USER_ID_FRM_FB_ID_SELECT_SQL);
                     statement.setString(1, friendsFacebookId);
@@ -421,9 +425,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     String friendId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                                 "users.user_id"));
 
-                    if (statement != null) {
-                        statement.close();
-                    }
+                    statement.close();
 
                     statement = connection.prepareStatement(AskReplyQueries.FRIEND_TRUSTED_FLAG_SELECT_SQL);
                     statement.setString(1, userId);
@@ -434,9 +436,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     String friendTrustedFlag = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                                 "user_friend_tastesync.FRIEND_TRUSTED_FLAG"));
 
-                    if (statement != null) {
-                        statement.close();
-                    }
+                    statement.close();
 
                     statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_INSERT_SQL);
                     statement.setString(1, "N");
@@ -448,9 +448,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     statement.setInt(7, 1);
                     statement.executeUpdate();
 
-                    if (statement != null) {
-                        statement.close();
-                    }
+                    statement.close();
                 } else {
                     nonassignedFacebookIdList.add(friendsFacebookId);
                     statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_NON_TS_ASSIGNED_INSERT_SQL);
@@ -482,9 +480,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 String facebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "users.user_fb_id"));
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(AskReplyQueries.HISTORICAL_USER_SHARED_DATA_INSERT_SQL);
 
@@ -504,9 +500,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.setString(1, userId);
                 statement.executeUpdate();
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
             } else {
                 System.out.println("FB ser Id does not exist for user id=" +
                     userId);
@@ -516,9 +510,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.setString(1, userId);
             statement.executeUpdate();
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             tsDataSource.commit();
 
@@ -526,12 +518,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException("Error while creating reco request " +
@@ -542,6 +532,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         }
     }
 
+    //TODO remove?
     public boolean submitSignupDetail(TSAskSubmitLoginObj askObj)
         throws TasteSyncException {
         return false;
@@ -550,7 +541,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     @Override
     public TSRecommendeeUserObj showRecommendationsShowLikes(String recoLikeId)
         throws TasteSyncException {
-        TSRecommendeeUserObj tsRecommendeeUserObj = null;
+        TSRecommendeeUserObj tsRecommendeeUserObj;
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
@@ -568,7 +559,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             String replyId = null;
             String recommendeeUserId = null;
             String replyText = null;
-            String recommendeeFacebookId = null;
+            String recommendeeFacebookId;
             String recommendeeUserName = null;
             String recommendeeUserPhoto = null;
 
@@ -579,9 +570,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 recommendeeUserId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "reco_like.like_user_id"));
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_SELECT_SQL);
                 statement.setString(1, replyId);
@@ -603,9 +592,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     recommendeeFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                                 "users.user_fb_id"));
 
-                    if (statement != null) {
-                        statement.close();
-                    }
+                    statement.close();
 
                     statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
                     statement.setString(1, recommendeeFacebookId);
@@ -643,12 +630,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException(
@@ -673,7 +658,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
         ResultSet resultsetInner = null;
 
-        String recommendedrestaurantsRestaurantId = null;
+        String recommendedrestaurantsRestaurantId;
         String recommendedrestaurantsRestaurantName = null;
 
         try {
@@ -686,9 +671,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             while (resultset.next()) {
                 recommendedrestaurantsRestaurantId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant_id"));
-
                 statementInner.setString(1, recommendedrestaurantsRestaurantId);
                 resultsetInner = statementInner.executeQuery();
+                recommendedrestaurantsRestaurantName = null;
 
                 if (resultsetInner.next()) {
                     recommendedrestaurantsRestaurantName = CommonFunctionsUtil.getModifiedValueString(resultsetInner.getString(
@@ -888,12 +873,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException("Error while creating reco request " +
@@ -949,12 +932,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (MySQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException("Error while creating reco request " +
@@ -962,12 +943,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException("Error while creating reco request " +
@@ -1011,9 +990,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 message = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "user_message.content"));
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
 
@@ -1053,9 +1030,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.close();
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             statement = connection.prepareStatement(AskReplyQueries.USER_MESSAGE_UPDATE_SQL);
             statement.setString(1, messageId);
@@ -1079,12 +1054,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException(
@@ -1123,9 +1096,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 return null;
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             tsDataSource.begin();
             //TODO first do select count(*). If needed, add data as fav or delete
@@ -1134,9 +1105,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.setString(2, userId);
             statement.executeUpdate();
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             String recommendeeUserFacebookId = null;
             String recommendeeUserName = null;
@@ -1148,9 +1117,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             //-- this means userId is friend of recommendeeUserId and we should use the free text field
             if ("user-assigned-friend".equals(friendOrNot) ||
                     "system-assigned-friend".equals(friendOrNot)) {
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_FRIEND_SELECT_SQL);
                 statement.setString(1, recorequestId);
@@ -1166,9 +1133,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.close();
             } else if ("user-assigned-other".equals(friendOrNot) ||
                     "system-assigned-other".equals(friendOrNot)) {
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_OTHER_SELECT_SQL);
                 statement.setString(1, recorequestId);
@@ -1184,9 +1149,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.close();
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
             statement.setString(1, recommendeeUserUserId);
@@ -1239,12 +1202,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException(
@@ -1368,20 +1329,16 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 }
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            statement.close();
 
             tsDataSource.commit();
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException(
@@ -1713,9 +1670,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 questionText = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant_question_user.question_text"));
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 if (questionRestaurantId != null) {
                     statement = connection.prepareStatement(AskReplyQueries.RESTAURANT_NAME_SELECT_SQL);
@@ -1730,9 +1685,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     statement.close();
                 }
 
-                if (statement != null) {
-                    statement.close();
-                }
+                statement.close();
 
                 statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
 
@@ -1743,9 +1696,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     questionUserFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                                 "users.user_fb_id"));
 
-                    if (statement != null) {
-                        statement.close();
-                    }
+                    statement.close();
 
                     statement = connection.prepareStatement(AskReplyQueries.FACEBOOK_USER_DATA_SELECT_SQL);
                     statement.setString(1, questionUserFacebookId);
@@ -1758,14 +1709,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                                     "facebook_user_data.picture"));
                     }
 
-                    if (statement != null) {
-                        statement.close();
-                    }
-                }
-
-                if (statement != null) {
                     statement.close();
                 }
+
+                statement.close();
 
                 statement = connection.prepareStatement(AskReplyQueries.USER_FOLLOW_DATA_SELECT);
 
@@ -1777,14 +1724,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     questionUserFolloweeFlag = "1";
                 }
 
-                if (statement != null) {
-                    statement.close();
-                }
-            }
-
-            if (statement != null) {
                 statement.close();
             }
+
+            statement.close();
 
             TSUserProfileBasicObj questionUser = new TSUserProfileBasicObj();
             questionUser.setName(questionUserName);
@@ -2410,10 +2353,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifRecorequestAnswerObj.setMaxPaginationId(String.valueOf(
                         tsRecoNotificationBaseObjElement.getMaxPaginationId()));
 
-                List<TSNotifRecoReplyObj> recoReplyList = new ArrayList<TSNotifRecoReplyObj>();
-                recoReplyList.add(tsNotifRecoReplyObj);
-
-                //tsNotifRecorequestAnswerObj.setRecoReply(recoReplyList);
+//                List<TSNotifRecoReplyObj> recoReplyList = new ArrayList<TSNotifRecoReplyObj>();
+//                recoReplyList.add(tsNotifRecoReplyObj);
+//                tsNotifRecorequestAnswerObj.setRecoReply(recoReplyList);
+                
                 List<String> allReplyIdFOrRequestIdList = new ArrayList<String>();
 
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
@@ -3299,12 +3242,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            if (tsDataSource != null) {
-                try {
-                    tsDataSource.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
 
             throw new TasteSyncException("Error while creating reco request " +
