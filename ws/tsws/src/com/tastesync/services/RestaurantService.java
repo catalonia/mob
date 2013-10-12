@@ -749,7 +749,7 @@ public class RestaurantService extends BaseService {
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
 
         boolean responseDone = false;
-        List<TSRestaurantBuzzObj> tsRestaurantBuzzObjList = null;
+        List<TSRestaurantBuzzObj> restaurantBuzzObjList = null;
 
         try {
             if (restaurantId == null) {
@@ -759,12 +759,12 @@ public class RestaurantService extends BaseService {
                 return Response.status(status).entity(tsErrorObj).build();
             }
 
-            tsRestaurantBuzzObjList = restaurantBO.showRestaurantBuzz(userId,
+            restaurantBuzzObjList = restaurantBO.showRestaurantBuzz(userId,
                     restaurantId);
 
             responseDone = true;
 
-            return Response.status(status).entity(tsRestaurantBuzzObjList)
+            return Response.status(status).entity(restaurantBuzzObjList)
                            .build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
