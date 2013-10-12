@@ -457,7 +457,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             resultset = statement.executeQuery();
 
             RestaurantBuzzVO restaurantBuzzVO = null;
-            TSRestaurantBuzzObj tsRestaurantBuzzObj = new TSRestaurantBuzzObj();
+            TSRestaurantBuzzObj tsRestaurantBuzzObj = null;
             String replyId;
             String replyText;
             String recommenderUserUserId;
