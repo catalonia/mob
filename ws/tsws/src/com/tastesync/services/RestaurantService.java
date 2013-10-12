@@ -740,8 +740,8 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantBuzz(@FormParam("userid")
-    String userId, @FormParam("restaurantid")
+    public Response showRestaurantBuzz(@QueryParam("userid")
+    String userId, @QueryParam("restaurantid")
     String restaurantId) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
@@ -752,6 +752,13 @@ public class RestaurantService extends BaseService {
         List<TSRestaurantBuzzObj> tsRestaurantBuzzObjList = null;
 
         try {
+            if (restaurantId == null) {
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+
+                return Response.status(status).entity(tsErrorObj).build();
+            }
+
             tsRestaurantBuzzObjList = restaurantBO.showRestaurantBuzz(userId,
                     restaurantId);
 
