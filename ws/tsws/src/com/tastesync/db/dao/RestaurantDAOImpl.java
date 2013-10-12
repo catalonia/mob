@@ -1226,7 +1226,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             String recommenderUserName = null;
             String recommenderUserPhoto = null;
             String recommenderFacebookId = null;
-            List<TSUserProfileBasicObj> recommendersDetailsList = new ArrayList<TSUserProfileBasicObj>();
 
             for (RestaurantBuzzVO restaurantBuzzVO : restaurantBuzzVOList) {
                 recommenderUserName = null;
@@ -1278,7 +1277,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_TS_ASSIGNED_SELECT_SQL);
                 statement.setString(1, restaurantBuzzVO.getRecorequestId());
-                statement.setString(2, userId);
+                statement.setString(2, restaurantBuzzVO.getRecommenderUserUserId());
                 resultset = statement.executeQuery();
 
                 String friendOrNot = null;
@@ -1331,6 +1330,9 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                     }
 
                     statement.close();
+                } else {
+                    // invalid data case
+                    return null;
                 }
 
                 if (statement != null) {
