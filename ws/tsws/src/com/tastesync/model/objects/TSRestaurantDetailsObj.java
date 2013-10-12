@@ -1,5 +1,7 @@
 package com.tastesync.model.objects;
 
+import com.tastesync.model.objects.derived.TSRestaurantBuzzObj;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class TSRestaurantDetailsObj implements Serializable {
     private String userRestaurantSavedFlag;
     private String userRestaurantFavFlag;
     private String userRestaurantTipFlag;
+    private TSRestaurantBuzzObj restaurantBuzz;
 
     @XmlElement
     public String getOpenNowFlag() {
@@ -60,6 +63,11 @@ public class TSRestaurantDetailsObj implements Serializable {
         return userRestaurantTipFlag;
     }
 
+    @XmlElement
+    public TSRestaurantBuzzObj getRestaurantBuzz() {
+        return restaurantBuzz;
+    }
+
     public void setOpenNowFlag(String openNowFlag) {
         this.openNowFlag = openNowFlag;
     }
@@ -90,5 +98,9 @@ public class TSRestaurantDetailsObj implements Serializable {
 
     public void setUserRestaurantTipFlag(String userRestaurantTipFlag) {
         this.userRestaurantTipFlag = userRestaurantTipFlag;
+    }
+
+    public void setRestaurantBuzz(TSRestaurantBuzzObj restaurantBuzz) {
+        this.restaurantBuzz = restaurantBuzz;
     }
 }
