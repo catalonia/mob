@@ -6,5 +6,5 @@ public interface CityQueries {
 	public static String CITY_KEY_STATE_SELECT_SQL = "SELECT * FROM cities WHERE state LIKE ?";
 	public static String CITY_KEY_CITY_SELECT_SQL = "SELECT * FROM cities WHERE city LIKE ?";
 	//city_neighbourhood
-	public static String CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL = "SELECT * FROM city_neighbourhood WHERE NEIGHBOURHOOD_DESC LIKE ?";
+	public static String CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL = "SELECT * FROM cities, city_neightbourhood WHERE city_neightbourhood.NEIGHBOURHOOD_DESC LIKE ? AND city_neightbourhood.CITYID = cities.city_id";
 }
