@@ -2718,28 +2718,28 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
         try {
             connection = tsDataSource.getConnection();
-            System.out.println("CityQueries.CITY_KEY_STATE_SELECT_SQL=" +
-                CityQueries.CITY_KEY_STATE_SELECT_SQL);
-            statement = connection.prepareStatement(CityQueries.CITY_KEY_STATE_SELECT_SQL);
-            statement.setString(1, key + "%");
-            resultset = statement.executeQuery();
-
-            while (resultset.next()) {
-                TSGlobalObj obj = new TSGlobalObj();
-                obj.setId(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.city_id")));
-                obj.setName(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.city")) + ", " +
-                    CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.state")));
-                System.out.println(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.city")) + ", " +
-                    CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.state")));
-                listCityObj.add(obj);
-            }
-
-            statement.close();
+//            System.out.println("CityQueries.CITY_KEY_STATE_SELECT_SQL=" +
+//                CityQueries.CITY_KEY_STATE_SELECT_SQL);
+//            statement = connection.prepareStatement(CityQueries.CITY_KEY_STATE_SELECT_SQL);
+//            statement.setString(1, key + "%");
+//            resultset = statement.executeQuery();
+//
+//            while (resultset.next()) {
+//                TSGlobalObj obj = new TSGlobalObj();
+//                obj.setId(CommonFunctionsUtil.getModifiedValueString(
+//                        resultset.getString("cities.city_id")));
+//                obj.setName(CommonFunctionsUtil.getModifiedValueString(
+//                        resultset.getString("cities.city")) + ", " +
+//                    CommonFunctionsUtil.getModifiedValueString(
+//                        resultset.getString("cities.state")));
+//                System.out.println(CommonFunctionsUtil.getModifiedValueString(
+//                        resultset.getString("cities.city")) + ", " +
+//                    CommonFunctionsUtil.getModifiedValueString(
+//                        resultset.getString("cities.state")));
+//                listCityObj.add(obj);
+//            }
+//
+//            statement.close();
 
             System.out.println("CityQueries.CITY_KEY_CITY_SELECT_SQL=" +
                 CityQueries.CITY_KEY_CITY_SELECT_SQL);
@@ -2755,6 +2755,18 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         resultset.getString("cities.city")) + ", " +
                     CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("cities.state")));
+                
+                TSCityObj cityObj = new TSCityObj();
+                cityObj.setCity(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.city")));
+                cityObj.setCityId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.city_id")));
+                cityObj.setCountry(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.country")));
+                cityObj.setState(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.state")));
+                obj.setCity(cityObj);
+                
                 System.out.println(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("cities.city")) + ", " +
                     CommonFunctionsUtil.getModifiedValueString(
@@ -2768,7 +2780,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 "CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL=" +
                 CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL);
-            statement.setString(1, key + "%");
+            statement.setString(1,"\"" + key + "%");
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -2779,26 +2791,41 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         resultset.getString(
                             "city_neighbourhood.NEIGHBOURHOOD_DESC")) + ", " +
                     CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("city_neighbourhood.CITY_NAME")));
-                listName.add(obj);
-                listCityID.add(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("city_neighbourhood.CITY_ID")));
+                        resultset.getString("city_neighbourhood.CITY_NAME")) + ", " + CommonFunctionsUtil.getModifiedValueString(
+                                resultset.getString("cities.state")));
+//                listName.add(obj);
+                
+                TSCityObj cityObj = new TSCityObj();
+                cityObj.setCity(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.city")));
+                cityObj.setCityId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.city_id")));
+                cityObj.setCountry(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.country")));
+                cityObj.setState(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.state")));
+                obj.setCity(cityObj);
+                
+                listCityObj.add(obj);
+                
+//                listCityID.add(CommonFunctionsUtil.getModifiedValueString(
+//                        resultset.getString("city_neighbourhood.CITY_ID")));
             }
 
             statement.close();
 
-            MySQL mySQL = new MySQL();
-
-            for (int i = 0; i < listCityID.size(); i++) {
-                String string = listCityID.get(i);
-                TSCityObj city = mySQL.getCityInforByCityID(connection, string);
-                TSGlobalObj globalObj = listName.get(i);
-                globalObj.setCity(city);
-                globalObj.setName(globalObj.getName() + ", " + city.getState());
-                System.out.println(globalObj.getName() + ", " +
-                    city.getState());
-                listCityObj.add(globalObj);
-            }
+//            MySQL mySQL = new MySQL();
+//
+//            for (int i = 0; i < listCityID.size(); i++) {
+//                String string = listCityID.get(i);
+//                TSCityObj city = mySQL.getCityInforByCityID(connection, string);
+//                TSGlobalObj globalObj = listName.get(i);
+//                globalObj.setCity(city);
+//                globalObj.setName(globalObj.getName() + ", " + city.getState());
+//                System.out.println(globalObj.getName() + ", " +
+//                    city.getState());
+//                listCityObj.add(globalObj);
+//            }
 
             System.out.println(listCityObj.size());
         } catch (SQLException e) {
