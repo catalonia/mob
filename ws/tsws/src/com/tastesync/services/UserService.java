@@ -23,7 +23,7 @@ import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.model.response.UserResponse;
 
-import com.tastesync.util.CommonFunctionsUtil;
+import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 

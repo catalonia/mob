@@ -18,7 +18,7 @@ import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
 import com.tastesync.model.objects.derived.TSRestaurantsTileSearchExtendedInfoObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 
-import com.tastesync.util.CommonFunctionsUtil;
+import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 

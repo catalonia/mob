@@ -19,7 +19,7 @@ import com.tastesync.model.objects.derived.TSRestaurantBuzzObj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 import com.tastesync.model.vo.RestaurantBuzzVO;
 
-import com.tastesync.util.CommonFunctionsUtil;
+import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
 
 import java.sql.Connection;

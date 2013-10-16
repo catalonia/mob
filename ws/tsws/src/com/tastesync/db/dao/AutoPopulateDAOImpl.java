@@ -10,7 +10,7 @@ import com.tastesync.model.objects.TSCuisineTier2Obj;
 import com.tastesync.model.objects.TSLocationSearchCitiesObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 
-import com.tastesync.util.CommonFunctionsUtil;
+import com.tastesync.common.utils.CommonFunctionsUtil;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;

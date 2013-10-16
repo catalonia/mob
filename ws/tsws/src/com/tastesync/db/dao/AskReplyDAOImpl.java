@@ -36,7 +36,7 @@ import com.tastesync.model.objects.derived.TSSenderUserObj;
 import com.tastesync.model.vo.NotifRecoReplyVO;
 import com.tastesync.model.vo.RecommendationsForYouVO;
 
-import com.tastesync.util.CommonFunctionsUtil;
+import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
 
 import java.io.IOException;

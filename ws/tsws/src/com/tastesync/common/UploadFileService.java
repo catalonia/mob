@@ -14,10 +14,7 @@ import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
-import com.tastesync.util.CommonFunctionsUtil;
-
-//import com.tastesync.helpers.CommonHelper;
-
+import com.tastesync.common.utils.CommonFunctionsUtil;
 
 public class UploadFileService {
 	
