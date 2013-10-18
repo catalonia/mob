@@ -22,8 +22,14 @@ public class TSRestaurantDetailsObj implements Serializable {
     private String userRestaurantFavFlag;
     private String userRestaurantTipFlag;
     private TSRestaurantBuzzObj restaurantBuzz;
+    private TSRestaurantExtendInfoObj restaurantExtendInfoObj;
 
     @XmlElement
+    public TSRestaurantExtendInfoObj getRestaurantExtendInfoObj() {
+		return restaurantExtendInfoObj;
+	}
+
+	@XmlElement
     public String getOpenNowFlag() {
         return openNowFlag;
     }
@@ -103,4 +109,10 @@ public class TSRestaurantDetailsObj implements Serializable {
     public void setRestaurantBuzz(TSRestaurantBuzzObj restaurantBuzz) {
         this.restaurantBuzz = restaurantBuzz;
     }
+    
+	public void setRestaurantExtendInfoObj(
+			TSRestaurantExtendInfoObj restaurantExtendInfoObj) {
+		this.restaurantExtendInfoObj = restaurantExtendInfoObj;
+	}
+
 }

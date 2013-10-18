@@ -3,6 +3,8 @@ package com.tastesync.services;
 import com.tastesync.bos.UserBo;
 import com.tastesync.bos.UserBoImpl;
 
+import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
@@ -23,7 +25,6 @@ import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.model.response.UserResponse;
 
-import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
@@ -155,7 +156,6 @@ public class UserService extends BaseService {
     })
     public Response loginAccount(@FormParam("userId")
     String userId) {
-        // TODO expire access token
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -213,7 +213,6 @@ public class UserService extends BaseService {
     })
     public Response getCity(@FormParam("key")
     String key) {
-        // TODO expire access token
         int status = TSResponseStatusCode.SUCCESS.getValue();
         List<TSGlobalObj> result = null;
         boolean responseDone = false;
@@ -1441,6 +1440,12 @@ public class UserService extends BaseService {
 
             if (responseDone) {
                 responseDone = true;
+
+                try {
+                    CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                } catch (com.tastesync.common.exception.TasteSyncException e) {
+                    e.printStackTrace();
+                }
 
                 return Response.status(status).entity(tsSuccessObj).build();
             } else {

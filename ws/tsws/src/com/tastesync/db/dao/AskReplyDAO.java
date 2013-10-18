@@ -38,13 +38,9 @@ public interface AskReplyDAO {
         String dealFlag, String chainFlag, String paginationId)
         throws TasteSyncException;
 
-    //TODO createRecoRequestTemplateText
     TSRecoRequestNonAssignedObj submitAskForRecommendationFriends(
         String userId, String recoRequestId, String recoRequestFriendText,
         String[] friendsFacebookIdList, String postRecoRequestOnFacebook)
-        throws TasteSyncException;
-
-    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj)
         throws TasteSyncException;
 
     TSRecoRequestObj showRecommendationsRequest(String userId,

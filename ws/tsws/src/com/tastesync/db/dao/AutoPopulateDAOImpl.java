@@ -37,11 +37,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                     valueColumnName)));
     }
 
-    public void populateLocationSearchTerms(String neighbourhood) {
-        //TYPE CITIES_LOCATION_SELECT_SQL
-        // TODO 
-    }
-
     @Override
     public JSONArray populateCuisineTier1() throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
@@ -479,7 +474,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
         tsRestaurantObj.setRestaurantHours(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.RESTAURANT_HOURS")));
 
-        //TODO
         //TODO - calculate from restaurantHours
         // e.g. {"monday":[["00:00","24:00"]],"tuesday":[["00:00","24:00"]],"wednesday":[["00:00","24:00"]],"thursday":[["00:00","24:00"]],"friday":[["00:00","24:00"]],"saturday":[["00:00","24:00"]],"sunday":[["00:00","24:00"]]}
         // e.g. {"monday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"tuesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"wednesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"thursday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"friday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"saturday":[["12:00","23:00","Dinner"]],"sunday":[["12:00","23:00","Dinner"]]}

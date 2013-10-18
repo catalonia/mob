@@ -342,4 +342,29 @@ public interface UserQueries extends TSDBCommonQueries {
  	public static String USER_DEVICE_INSERT_SQL = "INSERT INTO `user_device`(`USER_ID`, `device_token`, `updated_datetime`, `expiration_datetime`)"
  			+ "VALUES (?,?,?,?)";
  	public static String USER_DEVICE_SELECT_SQL = "SELECT * FROM `user_device` " + "WHERE USER_ID=?";
+ 	
+    public static String DEVICE_TOKEN_LOGOUT_DELETE_SQL = ""
+    		+ "DELETE FROM USER_DEVICE_OAUTH "
+    		+ "WHERE  USER_DEVICE_OAUTH.USER_ID = ? "
+    		+ "       AND USER_DEVICE_OAUTH.DEVICE_TOKEN = ?";
+
+    public static String DEVICE_TOKEN_LOGIN_INSERT_SQL = ""
+    		+ "INSERT INTO USER_DEVICE_OAUTH "
+    		+ "            (USER_DEVICE_OAUTH.DEVICE_TOKEN, "
+    		+ "             USER_DEVICE_OAUTH.DEVICE_TOKEN_EXPIRATION_DATETIME, "
+    		+ "             USER_DEVICE_OAUTH.DEVICE_TOKEN_UPDATED_DATETIME, "
+    		+ "             USER_DEVICE_OAUTH.MD5_OAUTH_TOKEN, "
+    		+ "             USER_DEVICE_OAUTH.OAUTH_EXPIRATION_DATETIME, "
+    		+ "             USER_DEVICE_OAUTH.OAUTH_TOKEN, "
+    		+ "             USER_DEVICE_OAUTH.OAUTH_UPDATED_DATETIME, "
+    		+ "             USER_DEVICE_OAUTH.USER_ID) "
+    		+ "VALUES      ( ?, "
+    		+ "              ?, "
+    		+ "              ?, "
+    		+ "              ?, "
+    		+ "              ?, "
+    		+ "              ?, "
+    		+ "              ?, "
+    		+ "              ? )";
+    
 }

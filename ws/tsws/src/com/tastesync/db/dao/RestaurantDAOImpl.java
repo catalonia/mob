@@ -103,7 +103,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         tsRestaurantObj.setRestaurantHours(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.RESTAURANT_HOURS")));
 
-        //TODO
         //TODO - calculate from restaurantHours
         // e.g. {"monday":[["00:00","24:00"]],"tuesday":[["00:00","24:00"]],"wednesday":[["00:00","24:00"]],"thursday":[["00:00","24:00"]],"friday":[["00:00","24:00"]],"saturday":[["00:00","24:00"]],"sunday":[["00:00","24:00"]]}
         // e.g. {"monday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"tuesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"wednesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"thursday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"friday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"saturday":[["12:00","23:00","Dinner"]],"sunday":[["12:00","23:00","Dinner"]]}
@@ -325,7 +324,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 String restaurantHours = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant.RESTAURANT_HOURS"));
 
-                //TODO
                 //TODO - calculate from restaurantHours
                 // e.g. {"monday":[["00:00","24:00"]],"tuesday":[["00:00","24:00"]],"wednesday":[["00:00","24:00"]],"thursday":[["00:00","24:00"]],"friday":[["00:00","24:00"]],"saturday":[["00:00","24:00"]],"sunday":[["00:00","24:00"]]}
                 // e.g. {"monday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"tuesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"wednesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"thursday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"friday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"saturday":[["12:00","23:00","Dinner"]],"sunday":[["12:00","23:00","Dinner"]]}
@@ -484,6 +482,12 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
             statement.close();
 
+            TSRestaurantExtendInfoObj tsRestaurantExtendInfoObj = null;
+            if ("0".equals(menuFlag) && "1".equals(moreInfoFlag)) {
+            	tsRestaurantExtendInfoObj = showRestaurantDetailMoreInfo(restaurantId);
+            }
+            
+            
             TSRestaurantBuzzObj tsRestaurantBuzzObj = getTSRestaurantBuzzObj(connection,
                     userId, restaurantBuzzVO);
 
@@ -497,6 +501,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             tsRestaurantDetailsObj.setDealHeadline("");
             tsRestaurantDetailsObj.setPhotoList(photoList);
             tsRestaurantDetailsObj.setRestaurantBuzz(tsRestaurantBuzzObj);
+            tsRestaurantDetailsObj.setRestaurantExtendInfoObj(tsRestaurantExtendInfoObj);
 
             return tsRestaurantDetailsObj;
         } catch (SQLException e1) {
@@ -847,7 +852,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         PreparedStatement statement = null;
         ResultSet resultset = null;
 
-        //TODO userRestaurantSavedFlag can be determined internally using count(*) as part of select
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
@@ -920,7 +924,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 statement.executeUpdate();
                 statement.close();
             } else if ("1".equals(userRestaurantFavFlag)) {
-                //TODO first do select count(*). If needed, add data as fav or delete
                 statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_FAV_INSERT_SQL);
                 statement.setString(1, restaurantId);
                 statement.setString(2, userId);

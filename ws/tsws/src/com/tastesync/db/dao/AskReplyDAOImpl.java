@@ -312,7 +312,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         Properties prop = new Properties();
 
         try {
-            ClassLoader loader = this.getClass().getClassLoader();
             //loader.getResourceAsStream("Resources/SomeConfig.xml");
             ifile = this.getClass().getClassLoader()
                         .getResourceAsStream("Resources/config.properties");
@@ -532,12 +531,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         }
     }
 
-    //TODO remove?
-    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj)
-        throws TasteSyncException {
-        return false;
-    }
-
     @Override
     public TSRecommendeeUserObj showRecommendationsShowLikes(String recoLikeId)
         throws TasteSyncException {
@@ -624,7 +617,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             tsRecommendeeUserObj.setRecommendeeUser(recommendeeUser);
             tsRecommendeeUserObj.setReplyId(replyId);
             tsRecommendeeUserObj.setReplyText(replyText);
-            tsRecommendeeUserObj.setAddedPoints("4"); //TODO Constant
+            tsRecommendeeUserObj.setAddedPoints("4"); 
 
             return tsRecommendeeUserObj;
         } catch (SQLException e) {
@@ -1520,7 +1513,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             tsRecommendationsForYouObj.setRecorequestText(recorequestText);
             tsRecommendationsForYouObj.setRestaurantsForYouObjList(restaurantsForYouObjList);
 
-            // update TODO
             tsDataSource.begin();
 
             for (String replyId : replyIdList) {
@@ -1989,7 +1981,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
         // get the corresponding results
 
-        //TODO call to algo!!
+        // call to algo!!
         RestaurantsSearchResultsOnlineCalc restaurantsSearchResultsOnlineCalc = new RestaurantsSearchResultsOnlineCalc();
 
         try {
@@ -3018,9 +3010,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             if (statement != null) {
                 statement.close();
             }
-
-            //TODO 
-            //Data entry and Push notifications
         } finally {
             if (statement != null) {
                 statement.close();

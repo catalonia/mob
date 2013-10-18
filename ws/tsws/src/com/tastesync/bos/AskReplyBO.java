@@ -23,12 +23,6 @@ public interface AskReplyBO {
         String[] occasionIdList, String neighborhoodId, String cityId,
         String stateName) throws TasteSyncException;
 
-    //TODO different thread - failover strategy - instant trigger / regular call for failed calls
-    //recreate parameters for routing from DB
-    void routeRecoRequestSearchToSimilarTasteUsers( // create template text based on different request parameters available in DB for
-                                                    // generating customised messages.
-    );
-
     String showAskForRecommendationFriends(String recoRequestId)
         throws TasteSyncException;
 

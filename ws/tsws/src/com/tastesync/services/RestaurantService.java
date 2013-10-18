@@ -3,6 +3,8 @@ package com.tastesync.services;
 import com.tastesync.bos.RestaurantBO;
 import com.tastesync.bos.RestaurantBOImpl;
 
+import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSCurrentRecommendedRestaurantDetailsObj;
@@ -18,7 +20,6 @@ import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.derived.TSRestaurantBuzzObj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 
-import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
@@ -708,6 +709,12 @@ public class RestaurantService extends BaseService {
 
             responseDone = true;
 
+            try {
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+            } catch (com.tastesync.common.exception.TasteSyncException e) {
+                e.printStackTrace();
+            }
+
             return Response.status(status)
                            .entity(tsRestaurantQuesionNonTsAssignedObj).build();
         } catch (TasteSyncException e) {
@@ -764,8 +771,7 @@ public class RestaurantService extends BaseService {
 
             responseDone = true;
 
-            return Response.status(status).entity(restaurantBuzzObjList)
-                           .build();
+            return Response.status(status).entity(restaurantBuzzObjList).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();

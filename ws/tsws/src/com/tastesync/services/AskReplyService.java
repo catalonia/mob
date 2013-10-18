@@ -3,6 +3,8 @@ package com.tastesync.services;
 import com.tastesync.bos.AskReplyBO;
 import com.tastesync.bos.AskReplyBOImpl;
 
+import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSErrorObj;
@@ -18,7 +20,6 @@ import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
 import com.tastesync.model.objects.derived.TSRestaurantsTileSearchExtendedInfoObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 
-import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
@@ -122,9 +123,11 @@ public class AskReplyService extends BaseService {
             tsKeyValueObj.setValueNameValue(recoRequestId);
             responseDone = true;
 
-            //TODO invoke via script!!
-            // userRecoAssigned.processAssignRecorequestToUsers(recoRequestId, recorequestIteration);
-            
+            try {
+                CommonFunctionsUtil.execAsync(TSConstants.TRIGGER_ALGO1_SCRIPT);
+            } catch (com.tastesync.common.exception.TasteSyncException e) {
+                e.printStackTrace();
+            }
             return Response.status(status).entity(tsKeyValueObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
@@ -167,7 +170,6 @@ public class AskReplyService extends BaseService {
         @FormParam("postonfacebook")
     String postRecoRequestOnFacebook) {
         //    	-- TODO: SAVE "POSTONFACEBOOK" IN HISTORICAL SHARED TABLE
-        //    	-- TODO: SEND MESSAGE TO LISTOFFRIENDSTSUSER
         //
         //    	-- For Loop over each friend in listOfFriends{facebookId}
         //    	-- solved for single facebookId below
@@ -194,6 +196,12 @@ public class AskReplyService extends BaseService {
                         friendsFacebookIdList), postRecoRequestOnFacebook);
 
             responseDone = true;
+
+            try {
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+            } catch (com.tastesync.common.exception.TasteSyncException e) {
+                e.printStackTrace();
+            }
 
             return Response.status(status).entity(tsRecoRequestNonAssignedObj)
                            .build();
@@ -364,6 +372,12 @@ public class AskReplyService extends BaseService {
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
 
+            try {
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+            } catch (com.tastesync.common.exception.TasteSyncException e) {
+                e.printStackTrace();
+            }
+
             return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
@@ -464,6 +478,7 @@ public class AskReplyService extends BaseService {
             previousMessageId = CommonFunctionsUtil.converStringAsNullIfNeeded(previousMessageId);
             newMessageRecipientUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(newMessageRecipientUserId);
             newMessageSenderUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(newMessageSenderUserId);
+
             if (newMessageRecipientUserId == null) {
                 status = TSResponseStatusCode.INVALIDDATA.getValue();
 
@@ -471,11 +486,17 @@ public class AskReplyService extends BaseService {
                 tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
                 responseDone = true;
 
+                try {
+                    CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                } catch (com.tastesync.common.exception.TasteSyncException e) {
+                    e.printStackTrace();
+                }
+
                 return Response.status(status)
                                .header("recipientyId", TSConstants.EMPTY)
                                .entity(tsErrorObj).build();
             }
-            
+
             askReplyBO.submitRecommendationMessageAnswer(newMessageText,
                 previousMessageId, newMessageRecipientUserId,
                 newMessageSenderUserId,
@@ -638,6 +659,12 @@ public class AskReplyService extends BaseService {
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
 
+            try {
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+            } catch (com.tastesync.common.exception.TasteSyncException e) {
+                e.printStackTrace();
+            }
+
             return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
@@ -765,8 +792,6 @@ public class AskReplyService extends BaseService {
     String userId, @FormParam("restaurantid")
     String restaurantId, @FormParam("likeflag")
     String likeFlag) {
-        //    	-- TODO: TODOs Left: Push notification
-
         //Should be triggered on every like or Un-like click. Should update Faves list of the user
 
         //parameters check
@@ -785,6 +810,12 @@ public class AskReplyService extends BaseService {
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             responseDone = true;
+
+            try {
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+            } catch (com.tastesync.common.exception.TasteSyncException e) {
+                e.printStackTrace();
+            }
 
             return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {

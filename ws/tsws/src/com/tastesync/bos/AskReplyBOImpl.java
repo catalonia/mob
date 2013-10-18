@@ -34,12 +34,6 @@ public class AskReplyBOImpl implements AskReplyBO {
             neighborhoodId, cityId, stateName);
     }
 
-    //TODO createRecoRequestTemplateText
-    @Override
-    public void routeRecoRequestSearchToSimilarTasteUsers() {
-        // TODO Implementation Logics
-    }
-
     @Override
     public String showAskForRecommendationFriends(String recoRequestId)
         throws TasteSyncException {

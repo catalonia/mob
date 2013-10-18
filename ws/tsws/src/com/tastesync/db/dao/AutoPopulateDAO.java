@@ -28,9 +28,6 @@ public interface AutoPopulateDAO {
     List<TSRestaurantObj> populateRestaurantSearchTerms(String key,
         String cityId) throws TasteSyncException;
 
-    void populateLocationSearchTerms(String neighbourhood)
-        throws TasteSyncException;
-
     List<TSLocationSearchCitiesObj> populateLocationSearchTerms()
         throws TasteSyncException;
 }

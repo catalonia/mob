@@ -122,7 +122,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "              OR usg_usnc_ap.usnc_id = 2 ) " +
         "       AND usg_usnc_ap.ap_id = 2 ";
 
-    //TODO test sysdate
+    // test sysdate
     public static String RESTAURANT_TIP_INSERT_SQL = "" +
         "INSERT INTO restaurant_tips_tastesync " +
         "            (restaurant_tips_tastesync.created, " +
@@ -159,7 +159,7 @@ public interface RestaurantQueries extends TSDBCommonQueries {
         "SELECT user_restaurant_fav.user_id " + "FROM   user_restaurant_fav " +
         "WHERE  user_restaurant_fav.user_id = ? " +
         "       AND user_restaurant_fav.restaurant_id = ? ";
-    //TODO
+    //
     public static String RESTAURANT_FAV_SELECT_SQL = "" +
         "SELECT count(*) from user_restaurant_fav " +
         "WHERE user_restaurant_fav.restaurant_id = ? " +
