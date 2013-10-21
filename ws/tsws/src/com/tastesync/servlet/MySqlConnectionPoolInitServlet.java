@@ -41,6 +41,7 @@ public class MySqlConnectionPoolInitServlet extends HttpServlet {
                 TSDataSource.setPoolDSInstance((BasicDataSource) envContext.lookup(
                         TSConstants.TSDB_JNDI));
             } catch (Exception e) {
+            	e.printStackTrace();
                 logger.error("init(ServletConfig)", e);
             }
         }
