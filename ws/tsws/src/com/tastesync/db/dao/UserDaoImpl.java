@@ -2872,7 +2872,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
-        if (1 != 1) {
+        if (1 == 1) {
         	return "testDeepinderRicksJags_OauthToken";
         }
         Connection connection = null;
