@@ -2898,7 +2898,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.setTimestamp(5,
                 CommonFunctionsUtil.getCurrentDateTimestamp());
             statement.setString(6, oAuthToken);
-            statement.setString(7, userId);
+            statement.setTimestamp(7,
+                    CommonFunctionsUtil.getCurrentDateTimestamp());
+            statement.setString(8, userId);
             statement.executeUpdate();
             statement.close();
 
