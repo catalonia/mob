@@ -2902,6 +2902,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.executeUpdate();
             statement.close();
 
+            tsDataSource.commit();
+
             //add to the response header
             return oAuthToken;
         } catch (SQLException e) {
