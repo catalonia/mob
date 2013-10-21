@@ -22,7 +22,6 @@ public class MySQL {
     public boolean checkEmailExist(Connection connection, String email)
         throws SQLException {
         boolean check = false;
-        TSUserObj user = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
 
@@ -32,11 +31,12 @@ public class MySQL {
             resultset = statement.executeQuery();
 
             if (resultset.next()) {
-                user = new TSUserObj();
-                MySQL.mapResultsetRowToTSUserVO(user, resultset);
+                check = true;
             }
 
             statement.close();
+            
+            return check;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -49,12 +49,6 @@ public class MySQL {
                 }
             }
         }
-
-        if (user != null) {
-            check = true;
-        }
-
-        return check;
     }
 
     //Get city information (by city id)
@@ -92,9 +86,9 @@ public class MySQL {
         return city;
     }
 
-    public TSCityObj addDeviceToken(Connection connection, String userID,
+    public void addDeviceToken(Connection connection, String userID,
         String devicetoken) throws SQLException {
-        TSCityObj city = null;
+        
         PreparedStatement statement = null;
         ResultSet resultset = null;
         boolean check = true;
@@ -132,8 +126,6 @@ public class MySQL {
                 }
             }
         }
-
-        return city;
     }
 
     public TSCityObj getCityInforByCityID(Connection connection, String cityID)
@@ -272,7 +264,6 @@ public class MySQL {
     public boolean checkFBUserDataExist(Connection connection, String user_fb_id)
         throws SQLException {
         boolean check = false;
-        TSFacebookUserDataObj fb_user_data = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
 
@@ -282,11 +273,12 @@ public class MySQL {
             resultset = statement.executeQuery();
 
             if (resultset.next()) {
-                fb_user_data = new TSFacebookUserDataObj();
-                MySQL.mapResultsetRowToTSFacebookVO(fb_user_data, resultset);
+                check = true;
             }
 
             statement.close();
+            
+            return check;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -299,12 +291,6 @@ public class MySQL {
                 }
             }
         }
-
-        if (fb_user_data != null) {
-            check = true;
-        }
-
-        return check;
     }
 
     public TSUserObj getUserInformationByFacebookID(Connection connection,

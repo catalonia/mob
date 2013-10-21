@@ -267,4 +267,16 @@ public class UserBoImpl implements UserBo {
 	{
 		return userDao.getCity(key);
 	}
+
+	@Override
+	public String getOAuthToken(String userId, String deviceToken)
+			throws TasteSyncException {
+		return userDao.getOAuthToken(userId, deviceToken);
+	}
+
+	@Override
+	public TSUserObj getUserInformationByEmail(String email)
+			throws TasteSyncException {
+		return userDao.getUserInformationByEmail(email);
+	}
 }

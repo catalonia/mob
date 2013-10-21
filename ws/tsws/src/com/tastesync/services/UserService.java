@@ -124,7 +124,19 @@ public class UserService extends BaseService {
             userResponse = userBo.login_fb(list_user_profile);
             responseDone = true;
 
-            return Response.status(status).entity(userResponse).build();
+            // get oauth token and add to the user
+            String deviceToken = list_user_profile.getDevice_token();
+            String oAuthToken = null;
+
+            if ((deviceToken != null) && !deviceToken.isEmpty()) {
+                String userId = userBo.getUserInformationByEmail(list_user_profile.getUser_profile_current()
+                                                                                  .getEmail())
+                                      .getUserId();
+                oAuthToken = userBo.getOAuthToken(userId, deviceToken);
+            }
+
+            return Response.status(status).header("oauth_token", oAuthToken)
+                           .entity(userResponse).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();

@@ -46,8 +46,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            System.out.println("RestaurantQueries.RESTAURANT_SELECT_SQL=" +
-                RestaurantQueries.RESTAURANT_SELECT_SQL);
             statement = connection.prepareStatement(RestaurantQueries.RESTAURANT_SELECT_SQL);
             statement.setString(1, restaurantId);
             resultset = statement.executeQuery();

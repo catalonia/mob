@@ -17,19 +17,23 @@ import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.model.response.UserResponse;
 
+import java.sql.Connection;
+
 import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+
 public interface UserDao {
-	UserResponse login(String email, String password) throws TasteSyncException;
+    UserResponse login(String email, String password) throws TasteSyncException;
 
-	UserResponse login_fb(TSListFacebookUserDataObj list_user_profile) throws TasteSyncException;
-	
-	boolean logout(String userId) throws TasteSyncException;
+    UserResponse login_fb(TSListFacebookUserDataObj list_user_profile)
+        throws TasteSyncException;
 
-	String loginAccount(String userId) throws TasteSyncException;
-	
+    boolean logout(String userId) throws TasteSyncException;
+
+    String loginAccount(String userId) throws TasteSyncException;
+
     TSUserObj selectUser(String userId) throws TasteSyncException;
 
     List<TSUserObj> selectUsers() throws TasteSyncException;
@@ -40,7 +44,8 @@ public interface UserDao {
     TSListPrivacySettingsObj showSettingsPrivacy(String userId)
         throws TasteSyncException;
 
-    boolean updateSettingsNotificationsRecoMessage(TSListNotificationSettingsObj notificationSetting)
+    boolean updateSettingsNotificationsRecoMessage(
+        TSListNotificationSettingsObj notificationSetting)
         throws TasteSyncException;
 
     TSListNotificationSettingsObj showSettingsNotifications(String userId)
@@ -49,20 +54,22 @@ public interface UserDao {
     TSListSocialSettingObj showSettingsSocial(String userId)
         throws TasteSyncException;
 
-    Response updateSettingsAutoPublishSettings(TSListSocialSettingObj social_setting_obj)
+    Response updateSettingsAutoPublishSettings(
+        TSListSocialSettingObj social_setting_obj) throws TasteSyncException;
+
+    Response submitSettingscontactUs(String userId, String order, String desc)
         throws TasteSyncException;
 
-    Response submitSettingscontactUs(String userId, String order, String desc) throws TasteSyncException;
-    
     Response showAboutTastesync(String aboutId) throws TasteSyncException;
-    
+
     void submitUserReport(String userId, String reportText,
         String reportedUser, String reportedByUser) throws TasteSyncException;
 
     TSUserProfileObj showMyProfileHome(String userId) throws TasteSyncException;
 
-    TSUserProfileObj showUserProfileHome(String userId, String viewerUserId) throws TasteSyncException;
-    
+    TSUserProfileObj showUserProfileHome(String userId, String viewerUserId)
+        throws TasteSyncException;
+
     List<TSFacebookUserDataObj> showProfileFollowing(String userId)
         throws TasteSyncException;
 
@@ -72,52 +79,63 @@ public interface UserDao {
     List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj>  showProfileFriends(String userId) throws TasteSyncException;
-    
-    List<String> showInviteFriends(String userId)
-            throws TasteSyncException;
-    
+    List<TSFacebookUserDataObj> showProfileFriends(String userId)
+        throws TasteSyncException;
+
+    List<String> showInviteFriends(String userId) throws TasteSyncException;
+
     List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)
         throws TasteSyncException;
 
     boolean getFollowStatus(String followeeUserId, String followerUserId)
-			throws TasteSyncException;
-    
+        throws TasteSyncException;
+
     void followUserStatusChange(String followeeUserId, String followerUserId,
         String statusFlag) throws TasteSyncException;
 
     boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException;
-    
+
     boolean submitTrustedFriendStatusChange(String userId, String dest_user_id,
-            String trustedFriendStatus) throws TasteSyncException;
-    
-    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj) throws TasteSyncException;
-    
-    int showTrustedFriend(String userId, String dest_user_id) throws TasteSyncException;
-    
-    boolean sendMessageToUser(String sender_ID, String recipient_ID, String content) 
-        	throws TasteSyncException;
-    
-    List<TSRestaurantObj> showRestaurantSuggestion(String key, String userId) 
-    		throws TasteSyncException;
-	
-    TSUserProfileObj getUserHomeProfile(String userId) throws TasteSyncException;
+        String trustedFriendStatus) throws TasteSyncException;
+
+    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj)
+        throws TasteSyncException;
+
+    int showTrustedFriend(String userId, String dest_user_id)
+        throws TasteSyncException;
+
+    boolean sendMessageToUser(String sender_ID, String recipient_ID,
+        String content) throws TasteSyncException;
+
+    List<TSRestaurantObj> showRestaurantSuggestion(String key, String userId)
+        throws TasteSyncException;
+
+    TSUserProfileObj getUserHomeProfile(String userId)
+        throws TasteSyncException;
 
     List<TSUserProfileRestaurantsObj> getUserProfileRestaurants(String userId,
-	int type, int from, int to)throws TasteSyncException;
-    
+        int type, int from, int to) throws TasteSyncException;
+
     void inviteFriend(String userId, String friendFBId)
-			throws TasteSyncException;
-    
-    void submitUserReport(String userId, String reportedUserId,
-			String reason) throws TasteSyncException;
-    
+        throws TasteSyncException;
+
+    void submitUserReport(String userId, String reportedUserId, String reason)
+        throws TasteSyncException;
+
     TSInitObj getAllData() throws TasteSyncException;
-    
+
     String getUserId(String userFBID) throws TasteSyncException;
-    
+
     List<TSCityObj> getCityName(String key) throws TasteSyncException;
-    
+
     List<TSGlobalObj> getCity(String key) throws TasteSyncException;
+
+    void deleteUserDeviceToken(String userId, String deviceToken)
+        throws TasteSyncException;
+
+    String getOAuthToken(String userId, String deviceToken)
+        throws TasteSyncException;
+
+    TSUserObj getUserInformationByEmail(String email) throws TasteSyncException;
 }

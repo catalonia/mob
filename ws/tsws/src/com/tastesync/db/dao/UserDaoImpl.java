@@ -49,7 +49,6 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -2860,5 +2859,140 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
 
         return listCityObj;
+    }
+
+    @Override
+    public void deleteUserDeviceToken(String userId, String deviceToken)
+        throws TasteSyncException {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public String getOAuthToken(String userId, String deviceToken)
+        throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            // TODO Auto-generated method stub
+            String oAuthToken = "testOAuthToken" +
+                CommonFunctionsUtil.generateUniqueKey();
+
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+            statement = connection.prepareStatement(UserQueries.DEVICE_TOKEN_LOGIN_INSERT_SQL);
+            statement.setString(1, deviceToken);
+            //TODO Expirration
+            statement.setTimestamp(2,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+
+            statement.setTimestamp(3,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+
+            //change to MD5
+            statement.setString(4, oAuthToken);
+            //TODO Expirration
+            statement.setTimestamp(5,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+            statement.setString(6, oAuthToken);
+            statement.setString(7, userId);
+            statement.executeUpdate();
+            statement.close();
+
+            //add to the response header
+            return oAuthToken;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            throw new TasteSyncException("Error while creating reco request " +
+                e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+    }
+
+    @Override
+    public TSUserObj getUserInformationByEmail(String email)
+        throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        TSUserObj tsUserObj = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            statement = connection.prepareStatement(UserQueries.USER_CHECK_EMAIL_STATUS_SELECT_SQL);
+            statement.setString(1, email);
+            statement.setString(2, String.valueOf("e"));
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                tsUserObj = new TSUserObj();
+                tsUserObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_ID")));
+                tsUserObj.setTsUserId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TS_USER_ID")));
+                tsUserObj.setTsUserEmail(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TS_USER_EMAIL")));
+                //tsUserObj.setTsUserPw(CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.TS_USER_PW")));
+                tsUserObj.setTsFirstName(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TS_FIRST_NAME")));
+                tsUserObj.setTsLastName(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TS_LAST_NAME")));
+                tsUserObj.setMaxInvites(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.MAX_INVITES")));
+                tsUserObj.setUserCreatedInitialDatetime(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "users.USER_CREATED_INITIAL_DATETIME")));
+                tsUserObj.setUserPoints(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_POINTS")));
+                tsUserObj.setTwitterUsrUrl(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TWITTER_USR_URL")));
+                tsUserObj.setUserDisabledFlag(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_DISABLED_FLAG")));
+                tsUserObj.setUserActivationKey(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_ACTIVATION_KEY")));
+                tsUserObj.setUserGender(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_GENDER")));
+                tsUserObj.setUserCityId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_CITY_ID")));
+                tsUserObj.setUserState(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_STATE")));
+                tsUserObj.setIsOnline(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.IS_ONLINE")));
+                tsUserObj.setUserCountry(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_COUNTRY")));
+                tsUserObj.setAbout(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.ABOUT")));
+                tsUserObj.setCurrentStatus(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.CURRENT_STATUS")));
+                tsUserObj.setUserFbId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_FB_ID")));
+            }
+
+            statement.close();
+
+            return tsUserObj;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(
+                "Error while getUserInformationByEmail " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 }

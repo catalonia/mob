@@ -5,13 +5,14 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 import com.tastesync.algo.model.vo.RestaurantsSearchResultsVO;
 import com.tastesync.algo.user.restaurant.RestaurantsSearchResultsOnlineCalc;
 
+import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
 import com.tastesync.db.queries.RestaurantQueries;
 
 import com.tastesync.exception.TasteSyncException;
 
-import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSNotifDidYouLikeObj;
 import com.tastesync.model.objects.TSNotifFollowupQuestionObj;
 import com.tastesync.model.objects.TSNotifMessageForYouObj;
@@ -36,8 +37,9 @@ import com.tastesync.model.objects.derived.TSSenderUserObj;
 import com.tastesync.model.vo.NotifRecoReplyVO;
 import com.tastesync.model.vo.RecommendationsForYouVO;
 
-import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
+
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -300,7 +302,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         }
     }
 
-    //TODO need to load in static block
+    // need to load in static block
     private String createRecoRequestTemplateText(String[] cuisineTier1IdList,
         String[] cuisineTier2IdList, String[] priceIdList,
         String[] themeIdList, String[] whoareyouwithIdList,
@@ -308,9 +310,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         String neighborhoodId, String cityId, String stateName)
         throws TasteSyncException {
         String templateString = null;
-        InputStream ifile = null;
+        String tempTemplateString = null;
+        StringBuffer finalTemplateString = new StringBuffer();
         Properties prop = new Properties();
-
+        InputStream ifile = null;
         try {
             //loader.getResourceAsStream("Resources/SomeConfig.xml");
             ifile = this.getClass().getClassLoader()
@@ -324,9 +327,185 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             //get the property value and print it out
             System.out.println("search.cuisine.location=" +
                 prop.getProperty("search.cuisine.location"));
+
+            StringBuffer textToBeReplaced = new StringBuffer();
+            textToBeReplaced.append(" ");
+
+            //TODO get cuisines desc
+            ArrayList<String> cuisineTier1IdDescList = new ArrayList<String>();
             templateString = prop.getProperty("search.cuisine.location");
 
-            //TODO use stringutil
+            for (int i = 0; i < cuisineTier1IdDescList.size(); ++i) {
+                textToBeReplaced.append(cuisineTier1IdDescList.get(i));
+
+                if (i != (cuisineTier1IdDescList.size() - 1)) {
+                    textToBeReplaced.append(", ");
+                }
+            }
+
+            tempTemplateString = StringUtils.replace(templateString,
+                    "<cuisine>", textToBeReplaced.toString());
+
+            //TODO Get location related info.
+            textToBeReplaced = new StringBuffer();
+            textToBeReplaced.append(neighborhoodId).append(", ").append(cityId);
+
+            tempTemplateString = StringUtils.replace(templateString,
+                    "<location>", textToBeReplaced.toString());
+
+            finalTemplateString.append(tempTemplateString);
+
+            cuisineTier1IdDescList = null;
+
+            //TODO get occasion desc
+            ArrayList<String> occasionIdDescList = new ArrayList<String>();
+
+            if (occasionIdDescList.size() > 0) {
+                templateString = prop.getProperty("search.occasion");
+            }
+
+            for (int i = 0; i < occasionIdDescList.size(); ++i) {
+                textToBeReplaced.append(occasionIdDescList.get(i));
+
+                if (i != (occasionIdDescList.size() - 1)) {
+                    textToBeReplaced.append("/");
+                }
+            }
+
+            if ((textToBeReplaced.toString() != null) &&
+                    !textToBeReplaced.toString().isEmpty()) {
+                tempTemplateString = StringUtils.replace(templateString,
+                        "<occasion>", textToBeReplaced.toString());
+                finalTemplateString.append(" ").append(tempTemplateString);
+            }
+
+            occasionIdDescList = null;
+
+            //TODO get whoareyouwith
+            ArrayList<String> whoareyouwithIdDescList = new ArrayList<String>();
+
+            if (whoareyouwithIdDescList.size() > 0) {
+                templateString = prop.getProperty("search.whoareyouwith");
+            }
+
+            for (int i = 0; i < whoareyouwithIdDescList.size(); ++i) {
+                textToBeReplaced.append(whoareyouwithIdDescList.get(i));
+
+                if (i != (whoareyouwithIdDescList.size() - 1)) {
+                    textToBeReplaced.append("/");
+                }
+            }
+
+            if ((textToBeReplaced.toString() != null) &&
+                    !textToBeReplaced.toString().isEmpty()) {
+                tempTemplateString = StringUtils.replace(templateString,
+                        "<whoareyouwith>", textToBeReplaced.toString());
+                finalTemplateString.append(" ").append(tempTemplateString);
+            }
+
+            whoareyouwithIdDescList = null;
+
+            //TODO get typeOfRestaurant 
+            ArrayList<String> typeOfRestaurantIdDescList = new ArrayList<String>();
+
+            if (typeOfRestaurantIdDescList.size() > 0) {
+                templateString = prop.getProperty("search.typeofrest");
+            }
+
+            for (int i = 0; i < typeOfRestaurantIdDescList.size(); ++i) {
+                textToBeReplaced.append(typeOfRestaurantIdDescList.get(i));
+
+                if (i != (typeOfRestaurantIdDescList.size() - 1)) {
+                    textToBeReplaced.append("/");
+                }
+            }
+
+            if ((textToBeReplaced.toString() != null) &&
+                    !textToBeReplaced.toString().isEmpty()) {
+                tempTemplateString = StringUtils.replace(templateString,
+                        "<typeofrest>", textToBeReplaced.toString());
+                finalTemplateString.append(" ").append(tempTemplateString);
+            }
+
+            typeOfRestaurantIdDescList = null;
+
+            //TODO get typeOfRestaurant 
+            ArrayList<String> themeIdDescList = new ArrayList<String>();
+
+            if (themeIdDescList.size() > 0) {
+                templateString = prop.getProperty("search.restaurant.theme");
+            }
+
+            for (int i = 0; i < themeIdDescList.size(); ++i) {
+                textToBeReplaced.append(themeIdDescList.get(i));
+
+                if (i != (themeIdDescList.size() - 1)) {
+                    textToBeReplaced.append("/");
+                }
+            }
+
+            if ((textToBeReplaced.toString() != null) &&
+                    !textToBeReplaced.toString().isEmpty()) {
+                tempTemplateString = StringUtils.replace(templateString,
+                        "<theme>", textToBeReplaced.toString());
+                finalTemplateString.append(" ").append(tempTemplateString);
+            }
+
+            themeIdDescList = null;
+
+            //TODO get typeOfRestaurant 
+            ArrayList<String> priceIdDescList = new ArrayList<String>();
+
+            //TODO define price id values 
+            int priceIdValueType = 0;
+
+            for (int i = 0; i < priceIdDescList.size(); ++i) {
+                if ((priceIdValueType < 1) &&
+                        "$".equals(priceIdDescList.get(i))) {
+                    priceIdValueType = 1;
+                }
+
+                if ((priceIdValueType < 2) &&
+                        "$$".equals(priceIdDescList.get(i))) {
+                    priceIdValueType = 2;
+                }
+
+                if ((priceIdValueType < 3) &&
+                        "$$$".equals(priceIdDescList.get(i))) {
+                    priceIdValueType = 3;
+                }
+
+                if ("$$$$".equals(priceIdDescList.get(i))) {
+                    priceIdValueType = 4;
+
+                    break;
+                }
+
+                if ("$$$$$".equals(priceIdDescList.get(i))) {
+                    priceIdValueType = 5;
+
+                    break;
+                }
+            }
+
+            if (priceIdValueType == 1) {
+                templateString = prop.getProperty("search.restaurant.price.1");
+                finalTemplateString.append(" ").append(tempTemplateString);
+            }
+
+            if (priceIdValueType <= 3) {
+                templateString = prop.getProperty(
+                        "search.restaurant.price.3.less");
+                finalTemplateString.append(" ").append(tempTemplateString);
+            }
+
+            if (priceIdValueType > 3) {
+                templateString = prop.getProperty(
+                        "search.restaurant.price.3.more");
+                finalTemplateString.append(" ").append(tempTemplateString);
+            }
+
+            return finalTemplateString.toString();
         } catch (IOException ex) {
             ex.printStackTrace();
             throw new TasteSyncException(ex.getMessage());
@@ -339,8 +518,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 }
             }
         }
-
-        return templateString;
     }
 
     @Override
@@ -468,7 +645,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.setString(2, recoRequestId);
             statement.setString(3, userId);
             statement.executeUpdate();
-            
+
             statement.close();
 
             statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
@@ -617,7 +794,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             tsRecommendeeUserObj.setRecommendeeUser(recommendeeUser);
             tsRecommendeeUserObj.setReplyId(replyId);
             tsRecommendeeUserObj.setReplyText(replyText);
-            tsRecommendeeUserObj.setAddedPoints("4"); 
+            tsRecommendeeUserObj.setAddedPoints("4");
 
             return tsRecommendeeUserObj;
         } catch (SQLException e) {
@@ -2345,10 +2522,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 tsNotifRecorequestAnswerObj.setMaxPaginationId(String.valueOf(
                         tsRecoNotificationBaseObjElement.getMaxPaginationId()));
 
-//                List<TSNotifRecoReplyObj> recoReplyList = new ArrayList<TSNotifRecoReplyObj>();
-//                recoReplyList.add(tsNotifRecoReplyObj);
-//                tsNotifRecorequestAnswerObj.setRecoReply(recoReplyList);
-                
+                //                List<TSNotifRecoReplyObj> recoReplyList = new ArrayList<TSNotifRecoReplyObj>();
+                //                recoReplyList.add(tsNotifRecoReplyObj);
+                //                tsNotifRecorequestAnswerObj.setRecoReply(recoReplyList);
                 List<String> allReplyIdFOrRequestIdList = new ArrayList<String>();
 
                 statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_REPLY_USER_ALL_REPLIES_SELECT_SQL);
@@ -2390,6 +2566,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
                     notifRecoReplyVOList.add(notifRecoReplyVO);
                 }
+
                 statement.close();
 
                 tsNotifRecorequestAnswerObj.setRecoActioned("1");
@@ -2397,6 +2574,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 for (NotifRecoReplyVO notifRecoReplyVOElement : notifRecoReplyVOList) {
                     if ("0".equals(notifRecoReplyVOElement.getReplyActioned())) {
                         tsNotifRecorequestAnswerObj.setRecoActioned("0");
+
                         break;
                     }
                 }
@@ -3220,11 +3398,13 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.executeUpdate();
             statement.close();
             statement = connection.prepareStatement(AskReplyQueries.MESSAGE_RESTAURANT_INSERT_SQL);
+
             for (String restaurantId : restaurantIdList) {
                 statement.setString(1, messageId);
                 statement.setString(2, restaurantId);
                 statement.executeUpdate();
             }
+
             statement.close();
 
             tsDataSource.commit();

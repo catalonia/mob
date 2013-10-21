@@ -123,4 +123,9 @@ public interface UserBo {
     List<TSCityObj> getCityName(String key) throws TasteSyncException;
     
     List<TSGlobalObj> getCity(String key) throws TasteSyncException;
+    
+    String getOAuthToken(String userId, String deviceToken)  throws TasteSyncException;
+
+    TSUserObj getUserInformationByEmail(String email) throws TasteSyncException;
+    
 }
