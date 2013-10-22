@@ -1,11 +1,12 @@
 package com.tastesync.model.objects;
 
 import java.io.Serializable;
-
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
 
 @XmlRootElement(name = "userprofile")
 public class TSUserProfileObj implements Serializable {
@@ -21,7 +22,7 @@ public class TSUserProfileObj implements Serializable {
 	private String numFollowees;
 	private String numFriendsOnTs;
 	private String numPoints;
-	private List<TSRestaurantView> restaurantList;
+	private List<TSRestaurantsTileSearchObj> restaurantList;
 
 	@XmlElement
 	public String getName() {
@@ -78,7 +79,8 @@ public class TSUserProfileObj implements Serializable {
 		return numPoints;
 	}
 
-	public List<TSRestaurantView> getRestaurantList() {
+	@XmlElement
+	public List<TSRestaurantsTileSearchObj> getRestaurantList() {
 		return restaurantList;
 	}
 
@@ -126,7 +128,7 @@ public class TSUserProfileObj implements Serializable {
 		this.numPoints = numPoints;
 	}
 
-	public void setRestaurantList(List<TSRestaurantView> restaurantList) {
+	public void setRestaurantList(List<TSRestaurantsTileSearchObj> restaurantList) {
 		this.restaurantList = restaurantList;
 	}
 
