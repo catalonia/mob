@@ -6,8 +6,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
-
 @XmlRootElement(name = "userprofile")
 public class TSUserProfileObj implements Serializable {
 	private static final long serialVersionUID = 3018045967607449545L;
@@ -22,7 +20,7 @@ public class TSUserProfileObj implements Serializable {
 	private String numFollowees;
 	private String numFriendsOnTs;
 	private String numPoints;
-	private List<TSRestaurantsTileSearchObj> restaurantList;
+	private List<TSRestaurantView> restaurantList;
 
 	@XmlElement
 	public String getName() {
@@ -80,7 +78,7 @@ public class TSUserProfileObj implements Serializable {
 	}
 
 	@XmlElement
-	public List<TSRestaurantsTileSearchObj> getRestaurantList() {
+	public List<TSRestaurantView> getRestaurantList() {
 		return restaurantList;
 	}
 
@@ -128,7 +126,7 @@ public class TSUserProfileObj implements Serializable {
 		this.numPoints = numPoints;
 	}
 
-	public void setRestaurantList(List<TSRestaurantsTileSearchObj> restaurantList) {
+	public void setRestaurantList(List<TSRestaurantView> restaurantList) {
 		this.restaurantList = restaurantList;
 	}
 
