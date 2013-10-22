@@ -2133,7 +2133,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 tsDataSource.closeConnection(connection, statement, resultset);
             }
         }
-    private List<TSRestaurantsTileSearchObj> getRestaurantListHomeProfile(
+    private List<TSRestaurantView> getRestaurantListHomeProfile(
         String userId) throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
@@ -2141,7 +2141,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         ResultSet resultset = null;
 
         try {
-            List<TSRestaurantsTileSearchObj> restaurantList = new ArrayList<TSRestaurantsTileSearchObj>();
+            List<TSRestaurantView> restaurantList = new ArrayList<TSRestaurantView>();
             List<String> restaurantIDList = new ArrayList<String>();
             connection = tsDataSource.getConnection();
             statement = connection.prepareStatement(UserQueries.USER_RESTAURANT_FAV_SELECT_SQL +
@@ -2201,61 +2201,57 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.close();
             }
 
-//            for (TSRestaurantsTileSearchObj restaurant : restaurantList) {
-//                if (statement != null) {
-//                    statement.close();
-//                }
-//
-//                statement = connection.prepareStatement(UserQueries.RESTAURANT_SELECT_SQL);
-//                statement.setString(1, restaurant.getId());
-//                resultset = statement.executeQuery();
-//
-//                if (resultset.next()) {
-//                    restaurant.setName(CommonFunctionsUtil.converStringAsNullIfNeeded(
-//                            resultset.getString("RESTAURANT_NAME")));
-//                }
-//
-//                statement.close();
-//
-//                statement = connection.prepareStatement(UserQueries.RESTAURANT_PHOTO_SELECT_SQL +
-//                        " LIMIT 0,1");
-//                statement.setString(1, restaurant.getId());
-//                statement.setString(1, restaurant.getId());
-//                resultset = statement.executeQuery();
-//
-//                TSRestaurantPhotoObj photo = new TSRestaurantPhotoObj();
-//
-//                if (resultset.next()) {
-//                    photo.setRestaurantId(restaurant.getId());
-//                    photo.setPhotoSource(CommonFunctionsUtil.converStringAsNullIfNeeded(
-//                            resultset.getString("PHOTO_SOURCE")));
-//                    photo.setPrefix(CommonFunctionsUtil.converStringAsNullIfNeeded(
-//                            resultset.getString("PREFIX")));
-//                    photo.setPhotoId(CommonFunctionsUtil.converStringAsNullIfNeeded(
-//                            resultset.getString("PHOTO_ID")));
-//                    photo.setSuffix(CommonFunctionsUtil.converStringAsNullIfNeeded(
-//                            resultset.getString("SUFFIX")));
-//                    photo.setWidth(CommonFunctionsUtil.converStringAsNullIfNeeded(
-//                            resultset.getString("WIDTH")));
-//                    photo.setHeight(CommonFunctionsUtil.converStringAsNullIfNeeded(
-//                            resultset.getString("HEIGHT")));
-//                    photo.setUltimateSourceName(CommonFunctionsUtil.converStringAsNullIfNeeded(
-//                            resultset.getString("ULTIMATE_SOURCE_NAME")));
-//                    photo.setUltimateSourceUrl(CommonFunctionsUtil.converStringAsNullIfNeeded(
-//                            resultset.getString("ULTIMATE_SOURCE_URL")));
-//                }
-//
-//                statement.close();
-//                restaurant.setPhoto(photo);
-//            }
-//
-//            statement.close();
-
             for (String restaurantID : restaurantIDList) {
-				TSRestaurantsTileSearchObj obj = getRestaurantTileSearchReslt(restaurantID);
-				restaurantList.add(obj);
-				
-			}
+                if (statement != null) {
+                    statement.close();
+                }
+                
+                TSRestaurantView restaurant = new TSRestaurantView();
+                restaurant.setId(restaurantID);
+
+                statement = connection.prepareStatement(UserQueries.RESTAURANT_PHOTO_SELECT_SQL +
+                        " LIMIT 0,1");
+                statement.setString(1, restaurantID);
+                resultset = statement.executeQuery();
+
+                TSRestaurantPhotoObj photo = new TSRestaurantPhotoObj();
+
+                if (resultset.next()) {
+                    photo.setRestaurantId(restaurantID);
+                    photo.setPhotoSource(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("PHOTO_SOURCE")));
+                    photo.setPrefix(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("PREFIX")));
+                    photo.setPhotoId(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("PHOTO_ID")));
+                    photo.setSuffix(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("SUFFIX")));
+                    photo.setWidth(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("WIDTH")));
+                    photo.setHeight(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("HEIGHT")));
+                    photo.setUltimateSourceName(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("ULTIMATE_SOURCE_NAME")));
+                    photo.setUltimateSourceUrl(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("ULTIMATE_SOURCE_URL")));
+                }
+
+                statement.close();
+                restaurant.setPhoto(photo);
+            
+                restaurantList.add(restaurant);
+            }
+            
+            for (TSRestaurantView restaurant : restaurantList) {
+                if (statement != null) {
+                    statement.close();
+                }
+                
+                TSRestaurantsTileSearchObj obj = getRestaurantTileSearchReslt(restaurant.getId());
+				restaurant.setInformation(obj);
+            }
+            
+            statement.close();
             
             return restaurantList;
         } catch (SQLException e) {
