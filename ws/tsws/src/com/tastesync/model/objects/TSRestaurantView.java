@@ -5,12 +5,14 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
+
 @XmlRootElement(name = "restaurantsUserProfileHome")
 public class TSRestaurantView implements Serializable {
 	private static final long serialVersionUID = 787783999243399741L;
 	private String id;
 	private TSRestaurantPhotoObj photo;
-	private String name;
+	private TSRestaurantsTileSearchObj information;
 
 	@XmlElement
 	public String getId() {
@@ -31,12 +33,12 @@ public class TSRestaurantView implements Serializable {
 	}
 
 	@XmlElement
-	public String getName() {
-		return name;
+	public TSRestaurantsTileSearchObj getInformation() {
+		return information;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setInformation(TSRestaurantsTileSearchObj information) {
+		this.information = information;
 	}
 
 }
