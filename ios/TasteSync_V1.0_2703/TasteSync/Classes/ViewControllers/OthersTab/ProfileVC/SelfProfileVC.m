@@ -30,6 +30,10 @@
     RestaurantObj *_restaurantObj3;
     NSMutableArray *_arryRestaurantsVisible;
     NSMutableArray *_arryListRestaurantShort;
+    
+    __weak IBOutlet UIActivityIndicatorView* activity1;
+    __weak IBOutlet UIActivityIndicatorView* activity2;
+    __weak IBOutlet UIActivityIndicatorView* activity3;
 }
 
 - (IBAction)actionBack:(id)sender;
@@ -330,6 +334,10 @@
             btRestaurant1.hidden = YES;
             btRestaurant2.hidden = YES;
             btRestaurant3.hidden = YES;
+            activity1.hidden = YES;
+            activity2.hidden = YES;
+            activity3.hidden = YES;
+            
             
         }
         if ([restaurantArray count] == 1) {
@@ -337,27 +345,36 @@
             lbRestaurant3.hidden = YES;
             btRestaurant2.hidden = YES;
             btRestaurant3.hidden = YES;
+            activity2.hidden = YES;
+            activity3.hidden = YES;
             
             NSDictionary* dicRes = [restaurantArray objectAtIndex:0];
             _restaurantObj1.uid = [dicRes objectForKey:@"id"];
-            _restaurantObj1.name = [dicRes objectForKey:@"name"];
+            
+            NSDictionary* dicInformation = [dicRes objectForKey:@"information"];
+            _restaurantObj1.name = [dicInformation objectForKey:@"restaurantName"];
+            _restaurantObj1.cuisineTier2 = [dicInformation objectForKey:@"cuisineTier2Name"];
+            _restaurantObj1.price = [dicInformation objectForKey:@"price"];
+            _restaurantObj1.cityObj.cityName = [dicInformation objectForKey:@"restaurantCity"];
+            _restaurantObj1.lattitude = [[dicInformation objectForKey:@"restaurantLat"] floatValue];
+            _restaurantObj1.longtitude = [[dicInformation objectForKey:@"restaurantLong"] floatValue];
+            _restaurantObj1.rates = [[dicInformation objectForKey:@"restaurantRating"] floatValue];
+            
             NSDictionary* photo = [dicRes objectForKey:@"photo"];
-            if (photo != NULL) {
-                NSString* server = [photo objectForKey:@"prefix"];
-                NSString* name = [photo objectForKey:@"suffix"];
-                if (name != (id)[NSNull null]) {
-                    NSRange range = NSMakeRange(0, 1);
-                    name = [name stringByReplacingCharactersInRange:range withString:@""];
-                    _restaurantObj1.imageUrl = [server stringByAppendingString:name];
-                }
-                else
-                    _restaurantObj1.imageUrl = @"";
+            NSString* str = [photo objectForKey:@"prefix"];
+            if (![str isKindOfClass:([NSNull class])]) {
+                _restaurantObj1.imageUrl = [NSString stringWithFormat:@"%@%@x%@%@",[photo objectForKey:@"prefix"],[photo objectForKey:@"width"],[photo objectForKey:@"height"],[photo objectForKey:@"suffix"]];
                 
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj1.imageUrl);
+                [NSThread detachNewThreadSelector:@selector(loadImageRestaurant1) toTarget:self withObject:nil];
+                [activity1 startAnimating];
+            }
+            else
+            {
+                activity1.hidden = YES;
             }
             
             lbRestaurant1.text = _restaurantObj1.name;
-            btRestaurant1.backgroundColor = [UIColor colorWithPatternImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj1.imageUrl]]]];
             
             [_arryRestaurantsVisible addObject:_restaurantObj1];
             
@@ -366,116 +383,170 @@
         if ([restaurantArray count] == 2) {
             lbRestaurant3.hidden = YES;
             btRestaurant3.hidden = YES;
+            activity3.hidden = YES;
             
             NSDictionary* dicRes = [restaurantArray objectAtIndex:0];
             _restaurantObj1.uid = [dicRes objectForKey:@"id"];
-            _restaurantObj1.name = [dicRes objectForKey:@"name"];
+            
+            NSDictionary* dicInformation = [dicRes objectForKey:@"information"];
+            _restaurantObj1.name = [dicInformation objectForKey:@"restaurantName"];
+            _restaurantObj1.cuisineTier2 = [dicInformation objectForKey:@"cuisineTier2Name"];
+            _restaurantObj1.price = [dicInformation objectForKey:@"price"];
+            _restaurantObj1.cityObj.cityName = [dicInformation objectForKey:@"restaurantCity"];
+            _restaurantObj1.lattitude = [[dicInformation objectForKey:@"restaurantLat"] floatValue];
+            _restaurantObj1.longtitude = [[dicInformation objectForKey:@"restaurantLong"] floatValue];
+            _restaurantObj1.rates = [[dicInformation objectForKey:@"restaurantRating"] floatValue];
+            
             NSDictionary* photo = [dicRes objectForKey:@"photo"];
-            if (photo != NULL) {
-                NSString* server = [photo objectForKey:@"prefix"];
-                NSString* name = [photo objectForKey:@"suffix"];
-                if (name != (id)[NSNull null]) {
-                    NSRange range = NSMakeRange(0, 1);
-                    name = [name stringByReplacingCharactersInRange:range withString:@""];
-                    _restaurantObj1.imageUrl = [server stringByAppendingString:name];
-                }
-                else
-                    _restaurantObj1.imageUrl = @"";
-                
+            NSString* str = [photo objectForKey:@"prefix"];
+            if (![str isKindOfClass:([NSNull class])]) {
+                _restaurantObj1.imageUrl = [NSString stringWithFormat:@"%@%@x%@%@",[photo objectForKey:@"prefix"],[photo objectForKey:@"width"],[photo objectForKey:@"height"],[photo objectForKey:@"suffix"]];
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj1.imageUrl);
+                [NSThread detachNewThreadSelector:@selector(loadImageRestaurant1) toTarget:self withObject:nil];
+                [activity1 startAnimating];
+            }
+            else
+            {
+                activity1.hidden = YES;
             }
             lbRestaurant1.text = _restaurantObj1.name;
             NSLog(@"lbRestaurant1.text: %@", [dicRes objectForKey:@"name"]);
-            btRestaurant1.backgroundColor = [UIColor colorWithPatternImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj1.imageUrl]]]];
             [_arryRestaurantsVisible addObject:_restaurantObj1];
             
             NSDictionary* dicRes2 = [restaurantArray objectAtIndex:1];
             _restaurantObj2.uid = [dicRes2 objectForKey:@"id"];
-            _restaurantObj2.name = [dicRes2 objectForKey:@"name"];
+            
+            NSDictionary* dicInformation2 = [dicRes2 objectForKey:@"information"];
+            _restaurantObj2.name = [dicInformation2 objectForKey:@"restaurantName"];
+            _restaurantObj2.cuisineTier2 = [dicInformation2 objectForKey:@"cuisineTier2Name"];
+            _restaurantObj2.price = [dicInformation2 objectForKey:@"price"];
+            _restaurantObj2.cityObj.cityName = [dicInformation2 objectForKey:@"restaurantCity"];
+            _restaurantObj2.lattitude = [[dicInformation2 objectForKey:@"restaurantLat"] floatValue];
+            _restaurantObj2.longtitude = [[dicInformation2 objectForKey:@"restaurantLong"] floatValue];
+            _restaurantObj2.rates = [[dicInformation2 objectForKey:@"restaurantRating"] floatValue];
+            
             NSDictionary* photo2 = [dicRes2 objectForKey:@"photo"];
-            if (photo2 != NULL) {
-                NSString* server = [photo2 objectForKey:@"prefix"];
-                NSString* name = [photo2 objectForKey:@"suffix"];
-                if (name != (id)[NSNull null]) {
-                    NSRange range = NSMakeRange(0, 1);
-                    name = [name stringByReplacingCharactersInRange:range withString:@""];
-                    _restaurantObj2.imageUrl = [server stringByAppendingString:name];
-                }
-                else
-                    _restaurantObj2.imageUrl = @"";
-                
+            NSString* str2 = [photo2 objectForKey:@"prefix"];
+            if (![str2 isKindOfClass:([NSNull class])]) {
+                _restaurantObj2.imageUrl = [NSString stringWithFormat:@"%@%@x%@%@",[photo2 objectForKey:@"prefix"],[photo2 objectForKey:@"width"],[photo2 objectForKey:@"height"],[photo2 objectForKey:@"suffix"]];
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj2.imageUrl);
+                [NSThread detachNewThreadSelector:@selector(loadImageRestaurant2) toTarget:self withObject:nil];
+                [activity2 startAnimating];
+            }
+            else
+            {
+                activity2.hidden = YES;
             }
             lbRestaurant2.text = _restaurantObj2.name;
-            btRestaurant2.backgroundColor = [UIColor colorWithPatternImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj2.imageUrl]]]];
             [_arryRestaurantsVisible addObject:_restaurantObj2];
             
         }
         if ([restaurantArray count] == 3) {
             NSDictionary* dicRes = [restaurantArray objectAtIndex:0];
             _restaurantObj1.uid = [dicRes objectForKey:@"id"];
-            _restaurantObj1.name = [dicRes objectForKey:@"name"];
+            
+            NSDictionary* dicInformation = [dicRes objectForKey:@"information"];
+            _restaurantObj1.name = [dicInformation objectForKey:@"restaurantName"];
+            _restaurantObj1.cuisineTier2 = [dicInformation objectForKey:@"cuisineTier2Name"];
+            _restaurantObj1.price = [dicInformation objectForKey:@"price"];
+            _restaurantObj1.cityObj.cityName = [dicInformation objectForKey:@"restaurantCity"];
+            _restaurantObj1.lattitude = [[dicInformation objectForKey:@"restaurantLat"] floatValue];
+            _restaurantObj1.longtitude = [[dicInformation objectForKey:@"restaurantLong"] floatValue];
+            _restaurantObj1.rates = [[dicInformation objectForKey:@"restaurantRating"] floatValue];
+            
             NSDictionary* photo = [dicRes objectForKey:@"photo"];
-            if (photo != NULL) {
-                NSString* server = [photo objectForKey:@"prefix"];
-                NSString* name = [photo objectForKey:@"suffix"];
-                if (name != (id)[NSNull null]) {
-                    NSRange range = NSMakeRange(0, 1);
-                    name = [name stringByReplacingCharactersInRange:range withString:@""];
-                    _restaurantObj1.imageUrl = [server stringByAppendingString:name];
-                }
-                else
-                    _restaurantObj1.imageUrl = @"";
-                
+            NSString* str = [photo objectForKey:@"prefix"];
+            if (![str isKindOfClass:([NSNull class])]) {
+                _restaurantObj1.imageUrl = [NSString stringWithFormat:@"%@%@x%@%@",[photo objectForKey:@"prefix"],[photo objectForKey:@"width"],[photo objectForKey:@"height"],[photo objectForKey:@"suffix"]];
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj1.imageUrl);
+                [NSThread detachNewThreadSelector:@selector(loadImageRestaurant1) toTarget:self withObject:nil];
+                [activity1 startAnimating];
+            }
+            else
+            {
+                activity1.hidden = YES;
             }
             lbRestaurant1.text = _restaurantObj1.name;
-            btRestaurant1.backgroundColor = [UIColor colorWithPatternImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj1.imageUrl]]]];
             [_arryRestaurantsVisible addObject:_restaurantObj1];
             
             NSDictionary* dicRes2 = [restaurantArray objectAtIndex:1];
             _restaurantObj2.uid = [dicRes2 objectForKey:@"id"];
-            _restaurantObj2.name = [dicRes2 objectForKey:@"name"];
+            
+            NSDictionary* dicInformation2 = [dicRes2 objectForKey:@"information"];
+            _restaurantObj2.name = [dicInformation2 objectForKey:@"restaurantName"];
+            _restaurantObj2.cuisineTier2 = [dicInformation2 objectForKey:@"cuisineTier2Name"];
+            _restaurantObj2.price = [dicInformation2 objectForKey:@"price"];
+            _restaurantObj2.cityObj.cityName = [dicInformation2 objectForKey:@"restaurantCity"];
+            _restaurantObj2.lattitude = [[dicInformation2 objectForKey:@"restaurantLat"] floatValue];
+            _restaurantObj2.longtitude = [[dicInformation2 objectForKey:@"restaurantLong"] floatValue];
+            _restaurantObj2.rates = [[dicInformation2 objectForKey:@"restaurantRating"] floatValue];
+            
             NSDictionary* photo2 = [dicRes2 objectForKey:@"photo"];
-            if (photo2 != NULL) {
-                NSString* server = [photo2 objectForKey:@"prefix"];
-                NSString* name = [photo2 objectForKey:@"suffix"];
-                if (name != (id)[NSNull null]) {
-                    NSRange range = NSMakeRange(0, 1);
-                    name = [name stringByReplacingCharactersInRange:range withString:@""];
-                    _restaurantObj2.imageUrl = [server stringByAppendingString:name];
-                }
-                else
-                    _restaurantObj2.imageUrl = @"";
-                
+            NSString* str2 = [photo2 objectForKey:@"prefix"];
+            if (![str2 isKindOfClass:([NSNull class])]) {
+                _restaurantObj2.imageUrl = [NSString stringWithFormat:@"%@%@x%@%@",[photo2 objectForKey:@"prefix"],[photo2 objectForKey:@"width"],[photo2 objectForKey:@"height"],[photo2 objectForKey:@"suffix"]];
                 NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj2.imageUrl);
+                [NSThread detachNewThreadSelector:@selector(loadImageRestaurant2) toTarget:self withObject:nil];
+                [activity2 startAnimating];
+            }
+            else
+            {
+                activity2.hidden = YES;
             }
             lbRestaurant2.text = _restaurantObj2.name;
-            btRestaurant2.backgroundColor = [UIColor colorWithPatternImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj2.imageUrl]]]];
             [_arryRestaurantsVisible addObject:_restaurantObj2];
             
             NSDictionary* dicRes3 = [restaurantArray objectAtIndex:2];
             _restaurantObj3.uid = [dicRes3 objectForKey:@"id"];
-            _restaurantObj3.name = [dicRes3 objectForKey:@"name"];
+            
+            NSDictionary* dicInformation3 = [dicRes3 objectForKey:@"information"];
+            _restaurantObj3.name = [dicInformation3 objectForKey:@"restaurantName"];
+            _restaurantObj3.cuisineTier2 = [dicInformation3 objectForKey:@"cuisineTier2Name"];
+            _restaurantObj3.price = [dicInformation3 objectForKey:@"price"];
+            _restaurantObj3.cityObj.cityName = [dicInformation3 objectForKey:@"restaurantCity"];
+            _restaurantObj3.lattitude = [[dicInformation3 objectForKey:@"restaurantLat"] floatValue];
+            _restaurantObj3.longtitude = [[dicInformation3 objectForKey:@"restaurantLong"] floatValue];
+            _restaurantObj3.rates = [[dicInformation3 objectForKey:@"restaurantRating"] floatValue];
+            
             NSDictionary* photo3 = [dicRes3 objectForKey:@"photo"];
-            if (photo3 != NULL) {
-                NSString* server = [photo3 objectForKey:@"prefix"];
-                NSString* name = [photo3 objectForKey:@"suffix"];
-                if (name != (id)[NSNull null]) {
-                    NSRange range = NSMakeRange(0, 1);
-                    name = [name stringByReplacingCharactersInRange:range withString:@""];
-                    _restaurantObj3.imageUrl = [server stringByAppendingString:name];
-                }
-                else
-                    _restaurantObj3.imageUrl = @"";
-                
-                NSLog(@"restaurantObj1.imageUrl: %@", _restaurantObj3.imageUrl);
+            NSString* str3 = [photo3 objectForKey:@"prefix"];
+            if (![str3 isKindOfClass:([NSNull class])]) {
+                _restaurantObj3.imageUrl = [NSString stringWithFormat:@"%@%@x%@%@",[photo3 objectForKey:@"prefix"],[photo3 objectForKey:@"width"],[photo3 objectForKey:@"height"],[photo3 objectForKey:@"suffix"]];
+                NSLog(@"restaurantObj2.imageUrl: %@", _restaurantObj3.imageUrl);
+                [NSThread detachNewThreadSelector:@selector(loadImageRestaurant3) toTarget:self withObject:nil];
+                [activity3 startAnimating];
+            }
+            else
+            {
+                activity3.hidden = YES;
             }
             lbRestaurant3.text = _restaurantObj3.name;
-            btRestaurant3.backgroundColor = [UIColor colorWithPatternImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj3.imageUrl]]]];
+            
             [_arryRestaurantsVisible addObject:_restaurantObj3];
         }
     }
+}
+
+-(void)loadImageRestaurant1
+{
+    [btRestaurant1 setImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj1.imageUrl]]] forState:UIControlStateHighlighted];
+    [btRestaurant1 setImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj1.imageUrl]]] forState:UIControlStateNormal];
+    [activity1 stopAnimating];
+    [activity1 setHidden:YES];
+}
+-(void)loadImageRestaurant2
+{
+    [btRestaurant2 setImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj2.imageUrl]]] forState:UIControlStateHighlighted];
+    [btRestaurant2 setImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj2.imageUrl]]] forState:UIControlStateNormal];
+    [activity2 stopAnimating];
+    [activity2 setHidden:YES];
+}
+-(void)loadImageRestaurant3
+{
+    [btRestaurant3 setImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj3.imageUrl]]] forState:UIControlStateHighlighted];
+    [btRestaurant3 setImage:[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_restaurantObj3.imageUrl]]] forState:UIControlStateNormal];
+    [activity3 stopAnimating];
+    [activity3 setHidden:YES];
 }
 
 -(void)getAboutText:(NSString *)text

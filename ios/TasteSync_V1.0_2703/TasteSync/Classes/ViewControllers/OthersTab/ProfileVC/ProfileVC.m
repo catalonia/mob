@@ -55,6 +55,8 @@
     facebookURL     = @"";
     twiterURL       = @"";
     blogURL    = @"";
+    lbYouFollow.text = [NSString stringWithFormat:@"You follow %@",_user.firstname];
+    lbAboutTitle.text = [NSString stringWithFormat:@"About %@", _user.firstname];
     
     _restaurantObj1 = [[RestaurantObj alloc]init];
     _restaurantObj2 = [[RestaurantObj alloc]init];
@@ -105,8 +107,9 @@
 
 - (void) configView
 {
-   lbName.text = [NSString stringWithFormat:@"%@ %@", _user.firstname, _user.lastname];
-
+    lbName.text = [NSString stringWithFormat:@"%@ %@", _user.firstname, _user.lastname];
+    lbAboutTitle.text = [NSString stringWithFormat:@"About %@", _user.firstname];
+    
     if (_user.city == nil) {
         _user.city = self.user.hometown_location;
     }
