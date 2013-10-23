@@ -11,7 +11,7 @@
 #import "CRequest.h"
 #import "JSONKit.h"
 
-@interface ResMenuVC : UIViewController<RequestDelegate>
+@interface ResMenuVC : UIViewController<RequestDelegate,UIWebViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrData;
 @property (nonatomic, strong) RestaurantObj *restaurantObj;

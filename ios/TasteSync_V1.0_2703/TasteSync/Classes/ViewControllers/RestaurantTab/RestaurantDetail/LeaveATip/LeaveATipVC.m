@@ -42,6 +42,7 @@
     [CommonHelpers setBackgroudImageForView:self.view];
     // Do any additional setup after loading the view from its nib.
     [self initUI];
+    lbRestaurantDetail.text = [CommonHelpers getInformationRestaurant:self.restaurantObj];
     NSString* link = [NSString stringWithFormat:@"aptips?userid=%@", [UserDefault userDefault].userID];
     CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet  RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:1];
     request.delegate = self;

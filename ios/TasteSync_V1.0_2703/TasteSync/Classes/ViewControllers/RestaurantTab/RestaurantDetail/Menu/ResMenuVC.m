@@ -18,6 +18,7 @@
     __weak IBOutlet UIView *viewRes;
     __weak IBOutlet UITableView *tbvmenu;
     __weak IBOutlet UIWebView* _webview;
+    __weak IBOutlet UIActivityIndicatorView* _activityIndicate;
     NSString* _url;
 }
 
@@ -58,8 +59,8 @@ restaurantObj=_restaurantObj;
     tbvmenu.separatorStyle = UITableViewCellSelectionStyleNone ;
     _webview.scrollView.showsHorizontalScrollIndicator = NO;
     _webview.scrollView.showsVerticalScrollIndicator = NO;
-    
-    
+    lbResDetail.text = [CommonHelpers getInformationRestaurant:_restaurantObj];
+
     
     NSString* link = [NSString stringWithFormat:@"menu?userid=%@&restaurantid=%@",[UserDefault userDefault].userID, self.restaurantObj.uid];
     NSLog(@"%@, %@", [UserDefault userDefault].userID, self.restaurantObj.uid);
@@ -220,6 +221,24 @@ restaurantObj=_restaurantObj;
     NSURL* url = [NSURL URLWithString:_url];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     [_webview setScalesPageToFit:YES];
+    [_activityIndicate startAnimating];
     [_webview loadRequest:request];
 }
+
+- (void)webViewDidFinishLoad:(UIWebView *)theWebView
+{
+    [_activityIndicate stopAnimating];
+    [_activityIndicate removeFromSuperview];
+//    NSString *jsCommand = [NSString stringWithFormat:@"document.body.style.zoom = 5.0;"];
+//    [_webview stringByEvaluatingJavaScriptFromString:jsCommand];
+//    CGSize contentSize = theWebView.scrollView.contentSize;
+//    CGSize viewSize = self.view.bounds.size;
+//    
+//    float rw = viewSize.width / contentSize.width;
+//    
+//    theWebView.scrollView.minimumZoomScale = rw;
+//    theWebView.scrollView.maximumZoomScale = rw;
+//    theWebView.scrollView.zoomScale = rw;
+}
+
 @end
