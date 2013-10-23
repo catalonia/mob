@@ -22,7 +22,7 @@ static UserDefault *globalObject;
 
 @synthesize isLocation,isNotification,
 user,emailID,password,
-loginStatus, userLogID, IPAdress;
+loginStatus, userLogID, IPAdress, cityObj;
 
 - (id) initWithId:(NSInteger)userID
 {
@@ -45,6 +45,7 @@ loginStatus, userLogID, IPAdress;
         self.loginStatus = [aDecoder decodeIntForKey:LOGIN_STATUS];
         
         self.user = [[UserObj alloc] init];
+        self.cityObj = [[TSCityObj alloc]init];
         
         self.user.email = [aDecoder decodeObjectForKey:User_EMAIL];
         self.user.password = [aDecoder decodeObjectForKey:User_PASSWORD];
@@ -59,6 +60,10 @@ loginStatus, userLogID, IPAdress;
         self.userID = [aDecoder decodeObjectForKey:UserID];
         self.IPAdress = [aDecoder decodeObjectForKey:IPADRESS];
         self.deviceToken = [aDecoder decodeObjectForKey:DEVICE_TOKEN];
+        self.cityObj.uid = [aDecoder decodeObjectForKey:CITY_ID];
+        self.cityObj.cityName = [aDecoder decodeObjectForKey:CITY_NAME];
+        self.cityObj.stateName = [aDecoder decodeObjectForKey:CITY_STATE];
+        self.cityObj.country = [aDecoder decodeObjectForKey:CITY_COUNTRY];
     }
     return self;
     
@@ -88,6 +93,10 @@ loginStatus, userLogID, IPAdress;
 
     [aCoder encodeObject:self.IPAdress forKey:IPADRESS];
     [aCoder encodeObject:self.deviceToken forKey:DEVICE_TOKEN];
+    [aCoder encodeObject:self.cityObj.uid forKey:CITY_ID];
+    [aCoder encodeObject:self.cityObj.cityName forKey:CITY_NAME];
+    [aCoder encodeObject:self.cityObj.stateName forKey:CITY_STATE];
+    [aCoder encodeObject:self.cityObj.country forKey:CITY_COUNTRY];
 //    [aCoder encodeInteger:self.zapiAccountId forKey:@"zapiAccountId"];
 //    [aCoder encodeObject:self.dictCart forKey:@"dictCart"];
 }

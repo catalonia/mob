@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "UserObj.h"
+#import "TSCityObj.h"
 
 #define IS_LOGIN    @"defaultIsLogin"
 #define IS_NOTIFICATION    @"defaultIsNotification"
@@ -28,6 +29,10 @@
 #define UserLogID @"User_LOG_ID"
 #define UserID @"User_ID"
 #define IPADRESS @"IPAdress"
+#define CITY_ID @"CITY_ID"
+#define CITY_NAME @"CITY_NAME"
+#define CITY_STATE @"CITY_STATE"
+#define CITY_COUNTRY @"CITY_COUNTRY"
 #define DEVICE_TOKEN @"DeviceToken"
 
 @interface UserDefault : NSObject<NSCoding>
@@ -50,6 +55,7 @@ typedef enum _LoginStatus
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSString *city,*state;
 @property (nonatomic, strong) UserObj *user;
+@property (nonatomic, strong) TSCityObj *cityObj;
 @property (nonatomic, strong) NSString *userLogID, *userID;
 @property (nonatomic, strong) NSString *IPAdress;
 @property (nonatomic, strong) NSString *deviceToken;

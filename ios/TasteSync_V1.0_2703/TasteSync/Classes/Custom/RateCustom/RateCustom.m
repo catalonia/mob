@@ -39,7 +39,7 @@
    
     [self resetValue];
     
-    if (0<rate && rate <1.3) {
+    if (0 < rate && rate < 1.3) {
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:IC_ON] forButton:btnPos_1];
 
     }
@@ -64,7 +64,7 @@
 
     }
 
-    else if ((rate >=2.9)&&(rate <3.4))
+    else if ((rate >= 2.9)&&(rate < 3.4))
     {
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:IC_ON] forButton:btnPos_1];
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:IC_ON] forButton:btnPos_2];
