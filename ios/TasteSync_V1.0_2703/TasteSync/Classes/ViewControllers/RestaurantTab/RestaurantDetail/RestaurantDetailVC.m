@@ -24,10 +24,12 @@
 @interface RestaurantDetailVC ()<UIScrollViewDelegate,ResShareViewDelegate,UIAlertViewDelegate>
 {
     __weak IBOutlet UIScrollView *scrollViewPhotos,*scrollViewMain;
-    __weak IBOutlet UIView *view1,*view2,*view3,*view4;
+    __weak IBOutlet UIView *view1,*view2,*view3,*view4,*viewImage, *viewDeal;
     __weak IBOutlet UILabel *lbName,*lbDetail,*lbsortMSg,*lbLongMsg;    
     __weak IBOutlet UIButton *btSave,*btUserQuestion,*btMore, *btMenu, *btMoreInfo,*btReviews,*btReserve,*btAddToMyFavorites , *btBack, *btRestaurant;
     
+    __weak IBOutlet UIImageView* _avatarImageView;
+    UserObj* _userBuzz;
     __weak IBOutlet UILabel* lbOpenNow, *lbDeal;
     BOOL isSaved, restaurantChains, isAddToMyFaves;
     RateCustom *rateCustom;    
@@ -107,7 +109,6 @@
     CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:1];
     request.delegate = self;
     [request startFormRequest];
-    
     
 }
 
@@ -444,19 +445,57 @@
         [self configView];
         
         NSArray* dicPhoto = [dicResponse objectForKey:@"photoList"];
-        for (NSDictionary* dic in dicPhoto) {
-            TSPhotoRestaurantObj* obj = [[TSPhotoRestaurantObj alloc]init];
-            obj.uid                              = [dic objectForKey:@"restaurantId"];
-            obj.photoId                       = [dic objectForKey:@"photoId"];
-            obj.prefix                          = [dic objectForKey:@"prefix"];
-            obj.suffix                           = [dic objectForKey:@"suffix"];
-            obj.width                           = [[dic objectForKey:@"width"] intValue];
-            obj.height                          = [[dic objectForKey:@"height"] intValue];
-            obj.ultimateSourceName = [dic objectForKey:@"ultimateSourceName"];
-            obj.ultimateSourceUrl      = [dic objectForKey:@"ultimateSourceUrl"];
-            obj.photoSource               =  [dic objectForKey:@"photoSource"];
-            [_arrayPhoto addObject:obj];
+        
+        if (dicPhoto.count > 0) {
+            for (NSDictionary* dic in dicPhoto) {
+                TSPhotoRestaurantObj* obj = [[TSPhotoRestaurantObj alloc]init];
+                obj.uid                              = [dic objectForKey:@"restaurantId"];
+                obj.photoId                       = [dic objectForKey:@"photoId"];
+                obj.prefix                          = [dic objectForKey:@"prefix"];
+                obj.suffix                           = [dic objectForKey:@"suffix"];
+                obj.width                           = [[dic objectForKey:@"width"] intValue];
+                obj.height                          = [[dic objectForKey:@"height"] intValue];
+                obj.ultimateSourceName = [dic objectForKey:@"ultimateSourceName"];
+                obj.ultimateSourceUrl      = [dic objectForKey:@"ultimateSourceUrl"];
+                obj.photoSource               =  [dic objectForKey:@"photoSource"];
+                [_arrayPhoto addObject:obj];
+            }
         }
+        else
+        {
+            btMenu.frame = CGRectMake(btMenu.frame.origin.x, 55, btMenu.frame.size.width, btMenu.frame.size.height);
+            btMoreInfo.frame = CGRectMake(btMoreInfo.frame.origin.x, 55, btMoreInfo.frame.size.width, btMoreInfo.frame.size.height);
+            viewImage.hidden = YES;
+        }
+        
+        NSDictionary* dic = [dicResponse objectForKey:@"restaurantBuzz"];
+        if (![dic  isKindOfClass:[NSNull class]]) {
+            _userBuzz = [[UserObj alloc]init];
+            lbLongMsg.text = [dic objectForKey:@"replyText"];
+            NSDictionary* dicUser = [dic objectForKey:@"recommenderUser"];
+            lbsortMSg.text = [NSString stringWithFormat:@"%@ recommends for you",[dicUser objectForKey:@"name"]];
+            _userBuzz.avatarUrl = [dicUser objectForKey:@"photo"];
+            _userBuzz.uid = [dicUser objectForKey:@"userId"];
+            [NSThread detachNewThreadSelector:@selector(loadImageUserObj) toTarget:self withObject:nil];
+        }
+        else
+        {
+            view4.frame = CGRectMake(view4.frame.origin.x, view4.frame.origin.y - 102, view4.frame.size.width, view4.frame.size.height);
+            viewImage.frame = CGRectMake(viewImage.frame.origin.x, viewImage.frame.origin.y - 102, viewImage.frame.size.width, viewImage.frame.size.height);
+            view2.hidden = YES;
+        }
+        
+        if (self.restaurantObj.isDeal) {
+            lbDeal.text = self.restaurantObj.deal;
+        }
+        else
+        {
+            view4.frame = CGRectMake(view4.frame.origin.x, view4.frame.origin.y - 43, view4.frame.size.width, view4.frame.size.height);
+            viewImage.frame = CGRectMake(viewImage.frame.origin.x, viewImage.frame.origin.y - 43, viewImage.frame.size.width, viewImage.frame.size.height);
+            view2.frame = CGRectMake(view2.frame.origin.x, view2.frame.origin.y - 43, view2.frame.size.width, view2.frame.size.height);
+            viewDeal.hidden = YES;
+        }
+        
         
         [self setupHorizontalScrollView];
     }
@@ -505,6 +544,13 @@
     
     TSPhotoRestaurantObj* obj = [_arrayPhoto objectAtIndex:tag - [_arrayPhoto count]];
     obj.image = image;
+}
+
+-(void)loadImageUserObj
+{
+    UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_userBuzz.avatarUrl]]];
+    _userBuzz.avatar = image;
+    _avatarImageView.image = image;
 }
 
 @end
