@@ -62,7 +62,7 @@
 
 - (void) initUI
 {
-    [scrollViewMain setContentSize:CGSizeMake(320, 440)];
+    [scrollViewMain setContentSize:CGSizeMake(320, 200)];
 }
 
 - (void)setStateForSwitchs:(NSMutableArray *)arrayState
