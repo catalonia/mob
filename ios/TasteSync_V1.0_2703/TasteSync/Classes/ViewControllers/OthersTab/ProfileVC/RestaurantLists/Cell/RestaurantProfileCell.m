@@ -28,7 +28,7 @@
     userObj.avatar = [UIImage imageNamed:@"avatar.png"];
     if (aRestaurantObj != nil) {
         lbRestaurantName.text = aRestaurantObj.name;
-        lbRestaurantDetail.text = @"Chinese, $$, New York, 5.0 mi";
+        lbRestaurantDetail.text = [CommonHelpers getInformationRestaurant:aRestaurantObj];
         lbRecommendations.text = @"Rorie S. wrote: xyz";
         
         if (restaurantObj.isFavs) {

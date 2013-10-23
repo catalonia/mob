@@ -94,7 +94,7 @@
     filterViewShown = FALSE;
     viewFilterExtends.hidden = YES;
     viewFilter.hidden = NO;
-    [tbvRestaurant setFrame:CGRectMake(10, 60, 300, 300)];
+    [tbvRestaurant setFrame:CGRectMake(10, 60, 300, 220)];
     [scrollViewMain setContentSize:CGSizeMake(320, 500)];
 }
 
@@ -104,7 +104,7 @@
         filterViewShown = FALSE;
         viewFilterExtends.hidden = YES;
         viewFilter.hidden = NO;
-        [tbvRestaurant setFrame:CGRectMake(10, 60, 300, 300)];
+        [tbvRestaurant setFrame:CGRectMake(10, 60, 300, 220)];
         [scrollViewMain setContentSize:CGSizeMake(320, 500)];
 
     
@@ -114,7 +114,7 @@
         filterViewShown = TRUE;
         viewFilterExtends.hidden = NO;
         viewFilter.hidden = YES;
-        [tbvRestaurant setFrame:CGRectMake(10, 240, 300, 300)];
+        [tbvRestaurant setFrame:CGRectMake(10, 240, 300, 220)];
         [scrollViewMain setContentSize:CGSizeMake(320, 600)];
 
     }
@@ -200,7 +200,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView==tbvRestaurant) {
-        static NSString *CellIndentifier = @"restaurant_profile_cell";
+        static NSString *CellIndentifier = @"RestaurantProfileCell";
         
         RestaurantProfileCell *cell = (RestaurantProfileCell *)[tableView dequeueReusableCellWithIdentifier:CellIndentifier];
         
@@ -219,7 +219,22 @@
    
     
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView==tbvRestaurant) {
+        static NSString *CellIndentifier = @"RestaurantProfileCell";
+        
+        RestaurantProfileCell *cell = (RestaurantProfileCell *)[tableView dequeueReusableCellWithIdentifier:CellIndentifier];
+        
+        if (cell==nil) {
+            NSLog(@"cell is nil");
+            cell =(RestaurantProfileCell *) [[[NSBundle mainBundle ] loadNibNamed:@"RestaurantProfileCell" owner:self options:nil] objectAtIndex:0];
+        }
+        
+        return cell.frame.size.height;
+    }
+    return 0;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -260,7 +275,7 @@
                 restaurantObj.lattitude = [[dic objectForKey:@"restaurantLat"] floatValue];
                 restaurantObj.longtitude = [[dic objectForKey:@"restaurantLong"] floatValue];
                 restaurantObj.price = [dic objectForKey:@"price"];
-                //restaurantObj.cuisineTier2.name = [dic objectForKey:@"cuisineTier2Name"];
+                restaurantObj.cuisineTier2 = [dic objectForKey:@"cuisineTier2Name"];
                 
                 TSCityObj* cityObj = [[TSCityObj alloc]init];
                 NSDictionary* dicCity = [dic objectForKey:@"restaurantCity"];
@@ -287,11 +302,16 @@
 }
 - (void) removeType:(RestaurantType)type
 {
+    NSMutableArray* array = [[NSMutableArray alloc] init];
     for (RestaurantObj* obj in _arrDataRestaurant) {
         if (obj.type == type) {
-            [self.arrDataRestaurant removeObject:obj];
+            [array addObject:obj];
         }
     }
+    for (int i = 0; i < [array count]; i++) {
+        [_arrDataRestaurant removeObject:[array objectAtIndex:i]];
+    }
+    
     [tbvRestaurant reloadData];
 }
 @end
