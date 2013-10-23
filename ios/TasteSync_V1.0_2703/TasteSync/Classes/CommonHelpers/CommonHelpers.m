@@ -296,7 +296,7 @@ void debug(NSString *format, ...)
         CLLocation *loc2 = [[CLLocation alloc]init];
         CLLocationDistance dist = [loc1 distanceFromLocation:loc2];
         float distanceMiles = (dist / 1609.344);  
-        retString = [retString stringByAppendingFormat:@", %f mi",distanceMiles];
+        retString = [retString stringByAppendingFormat:@", %.1f mi",distanceMiles];
     }
     
     if ([retString isEqualToString:@""]) {
