@@ -30,7 +30,7 @@ public interface UserDao {
     UserResponse login_fb(TSListFacebookUserDataObj list_user_profile)
         throws TasteSyncException;
 
-    boolean logout(String userId) throws TasteSyncException;
+    boolean logout(String userId, String deviceToken) throws TasteSyncException;
 
     String loginAccount(String userId) throws TasteSyncException;
 
@@ -130,9 +130,6 @@ public interface UserDao {
     List<TSCityObj> getCityName(String key) throws TasteSyncException;
 
     List<TSGlobalObj> getCity(String key) throws TasteSyncException;
-
-    void deleteUserDeviceToken(String userId, String deviceToken)
-        throws TasteSyncException;
 
     String getOAuthToken(String userId, String deviceToken)
         throws TasteSyncException;

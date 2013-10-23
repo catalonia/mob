@@ -1,11 +1,14 @@
 package com.tastesync.db.dao;
 
+import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
 import com.tastesync.db.queries.RestaurantQueries;
 
 import com.tastesync.exception.TasteSyncException;
 
+import com.tastesync.model.json.DayOpeningTiming;
 import com.tastesync.model.objects.TSCurrentRecommendedRestaurantDetailsObj;
 import com.tastesync.model.objects.TSMenuObj;
 import com.tastesync.model.objects.TSRestaurantDetailsObj;
@@ -19,16 +22,26 @@ import com.tastesync.model.objects.derived.TSRestaurantBuzzObj;
 import com.tastesync.model.objects.derived.TSRestaurantRecommendersDetailsObj;
 import com.tastesync.model.vo.RestaurantBuzzVO;
 
-import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
+
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 
 public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
@@ -77,6 +90,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                 resultset.getString("restaurant_menu.menu_mobileurl")));
     }
 
+    //TODO to be removed
     private void mapResultsetRowToTSRestaurantVO(
         TSRestaurantObj tsRestaurantObj, ResultSet resultset)
         throws SQLException {
@@ -101,11 +115,20 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         tsRestaurantObj.setRestaurantHours(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.RESTAURANT_HOURS")));
 
-        //TODO - calculate from restaurantHours
-        // e.g. {"monday":[["00:00","24:00"]],"tuesday":[["00:00","24:00"]],"wednesday":[["00:00","24:00"]],"thursday":[["00:00","24:00"]],"friday":[["00:00","24:00"]],"saturday":[["00:00","24:00"]],"sunday":[["00:00","24:00"]]}
-        // e.g. {"monday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"tuesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"wednesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"thursday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"friday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"saturday":[["12:00","23:00","Dinner"]],"sunday":[["12:00","23:00","Dinner"]]}
-        //FOR NY, Get today day and current time. check whether it falls
-        tsRestaurantObj.setOpenNowFlag("1");
+        String restaurantHours = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                    "restaurant.RESTAURANT_HOURS"));
+        Boolean openNow = isOpenNow(restaurantHours);
+
+        if (openNow != null) {
+            if (openNow) {
+                tsRestaurantObj.setOpenNowFlag("1");
+            } else {
+                tsRestaurantObj.setOpenNowFlag("0");
+            }
+        } else {
+            tsRestaurantObj.setOpenNowFlag(null);
+        }
+
         tsRestaurantObj.setRestaurantLat(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.RESTAURANT_LAT")));
 
@@ -127,6 +150,134 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
 
         tsRestaurantObj.setTbdOpenTableId(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("restaurant.TBD_OPENTABLE_ID")));
+    }
+
+    private Boolean isOpenNow(String jsonString) {
+        // read from file, convert it to user class
+        if ((jsonString == null) || jsonString.isEmpty()) {
+            return null;
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        DayOpeningTiming dayOpeningTiming;
+
+        try {
+            dayOpeningTiming = mapper.readValue(jsonString,
+                    DayOpeningTiming.class);
+
+            // display to console
+            System.out.println(dayOpeningTiming);
+
+            Date currentDate = new Date();
+
+            Date convertedUsEasternCurrentDate = CommonFunctionsUtil.convertJodaTimezoneFromCurrentTimezoneToEST(currentDate);
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(
+                        "US/Eastern"));
+            calendar.setTime(currentDate);
+
+            int day = calendar.get(Calendar.DAY_OF_WEEK);
+            List<List<String>> openTimings = null;
+
+            switch (day) {
+            case 1:
+                // "Sunday"
+                openTimings = dayOpeningTiming.getSunday();
+
+                break;
+
+            case 2:
+                // "Monday"
+                openTimings = dayOpeningTiming.getMonday();
+
+                break;
+
+            case 3:
+                System.out.print("Tueseday");
+                // "Tueseday"
+                openTimings = dayOpeningTiming.getTuesday();
+
+                break;
+
+            case 4:
+                // "Wednesday"
+                openTimings = dayOpeningTiming.getWednesday();
+
+                break;
+
+            case 5:
+                // "Thursday"
+                openTimings = dayOpeningTiming.getThursday();
+
+                break;
+
+            case 6:
+                // "Friday"
+                openTimings = dayOpeningTiming.getFriday();
+
+                break;
+
+            case 7:
+                // "Saturday"
+                openTimings = dayOpeningTiming.getSaturday();
+
+                break;
+            }
+
+            if ((openTimings == null) || (openTimings.size() == 0)) {
+                return null;
+            }
+
+            String openIntraDayOpeningTimings;
+            String closeIntraDayOpeningTimings;
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+
+            boolean openTimeNow = false;
+
+            for (List<String> intraDayOpeningTimings : openTimings) {
+                if (intraDayOpeningTimings.size() >= 2) {
+                    openIntraDayOpeningTimings = intraDayOpeningTimings.get(0);
+                    System.out.println("openIntraDayOpeningTimings.length()=" +
+                        openIntraDayOpeningTimings.length());
+
+                    if (openIntraDayOpeningTimings.length() == 4) {
+                        openIntraDayOpeningTimings = "0" +
+                            openIntraDayOpeningTimings;
+                    }
+
+                    closeIntraDayOpeningTimings = intraDayOpeningTimings.get(1);
+
+                    if (closeIntraDayOpeningTimings.length() == 4) {
+                        closeIntraDayOpeningTimings = "0" +
+                            closeIntraDayOpeningTimings;
+                    }
+
+                    if ((formatter.format(convertedUsEasternCurrentDate)
+                                      .compareTo(openIntraDayOpeningTimings) >= 0) &&
+                            (formatter.format(convertedUsEasternCurrentDate)
+                                          .compareTo(closeIntraDayOpeningTimings) <= 0)) {
+                        openTimeNow = true;
+
+                        break;
+                    }
+                }
+            }
+
+            System.out.println("openTimeNow=" + openTimeNow);
+
+            return openTimeNow;
+        } catch (JsonParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private void mapResultsetRowToTSRestaurantTipsAPSettingsVO(String userId,
@@ -314,19 +465,24 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             statement.setString(1, restaurantId);
             resultset = statement.executeQuery();
 
-            String openNowFlag = "0";
+            String openNowFlag = null;
             String moreInfoFlag = "0";
 
             //only one result
             if (resultset.next()) {
                 String restaurantHours = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant.RESTAURANT_HOURS"));
+                Boolean openNow = isOpenNow(restaurantHours);
 
-                //TODO - calculate from restaurantHours
-                // e.g. {"monday":[["00:00","24:00"]],"tuesday":[["00:00","24:00"]],"wednesday":[["00:00","24:00"]],"thursday":[["00:00","24:00"]],"friday":[["00:00","24:00"]],"saturday":[["00:00","24:00"]],"sunday":[["00:00","24:00"]]}
-                // e.g. {"monday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"tuesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"wednesday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"thursday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"friday":[["11:30","16:00","Lunch"],["17:00","23:00","Dinner"]],"saturday":[["12:00","23:00","Dinner"]],"sunday":[["12:00","23:00","Dinner"]]}
-                //FOR NY, Get today day and current time. check whether it falls
-                openNowFlag = "1";
+                if (openNow != null) {
+                    if (openNow) {
+                        openNowFlag = "1";
+                    } else {
+                        openNowFlag = "0";
+                    }
+                } else {
+                    openNowFlag = null;
+                }
 
                 String restaurantLat = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "restaurant.RESTAURANT_LAT"));
@@ -481,11 +637,11 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             statement.close();
 
             TSRestaurantExtendInfoObj tsRestaurantExtendInfoObj = null;
+
             if ("0".equals(menuFlag) && "1".equals(moreInfoFlag)) {
-            	tsRestaurantExtendInfoObj = showRestaurantDetailMoreInfo(restaurantId);
+                tsRestaurantExtendInfoObj = showRestaurantDetailMoreInfo(restaurantId);
             }
-            
-            
+
             TSRestaurantBuzzObj tsRestaurantBuzzObj = getTSRestaurantBuzzObj(connection,
                     userId, restaurantBuzzVO);
 
@@ -748,8 +904,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             String addressStr = addressBuffer.toString();
 
             if ((addressStr.length() > 2)) {
-                addressStr = addressStr.substring(0, addressStr.length() -
-                        2);
+                addressStr = addressStr.substring(0, addressStr.length() - 2);
             }
 
             tsRestaurantExtendInfoObj.setAddress(addressStr);

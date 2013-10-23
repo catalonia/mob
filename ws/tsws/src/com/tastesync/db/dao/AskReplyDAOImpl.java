@@ -34,6 +34,7 @@ import com.tastesync.model.objects.derived.TSRestaurantsForYouObj;
 import com.tastesync.model.objects.derived.TSRestaurantsTileSearchExtendedInfoObj;
 import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
+import com.tastesync.model.vo.DescriptorDataVO;
 import com.tastesync.model.vo.NotifRecoReplyVO;
 import com.tastesync.model.vo.RecommendationsForYouVO;
 
@@ -314,6 +315,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         StringBuffer finalTemplateString = new StringBuffer();
         Properties prop = new Properties();
         InputStream ifile = null;
+
         try {
             //loader.getResourceAsStream("Resources/SomeConfig.xml");
             ifile = this.getClass().getClassLoader()
@@ -328,11 +330,23 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             System.out.println("search.cuisine.location=" +
                 prop.getProperty("search.cuisine.location"));
 
+            DescriptorDataVO descriptorDataVO = getDescriptorDataForDifferentIds(cuisineTier1IdList,
+                    cuisineTier2IdList, priceIdList, themeIdList,
+                    whoareyouwithIdList, typeOfRestaurantIdList,
+                    occasionIdList, neighborhoodId, cityId, stateName);
+
+            ArrayList<String> cuisineTier1IdDescList = descriptorDataVO.getCuisineTier1IdDescList();
+            ArrayList<String> cuisineTier2IdDescList = descriptorDataVO.getCuisineTier2IdDescList();
+            ArrayList<String> occasionIdDescList = descriptorDataVO.getOccasionIdDescList();
+            ArrayList<String> whoareyouwithIdDescList = descriptorDataVO.getWhoareyouwithIdDescList();
+            ArrayList<String> typeOfRestaurantIdDescList = descriptorDataVO.getTypeOfRestaurantIdDescList();
+            ArrayList<String> themeIdDescList = descriptorDataVO.getThemeIdDescList();
+            ArrayList<String> priceIdDescList = descriptorDataVO.getPriceIdDescList();
+
             StringBuffer textToBeReplaced = new StringBuffer();
             textToBeReplaced.append(" ");
 
-            //TODO get cuisines desc
-            ArrayList<String> cuisineTier1IdDescList = new ArrayList<String>();
+            // get cuisines desc
             templateString = prop.getProperty("search.cuisine.location");
 
             for (int i = 0; i < cuisineTier1IdDescList.size(); ++i) {
@@ -357,9 +371,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             cuisineTier1IdDescList = null;
 
-            //TODO get occasion desc
-            ArrayList<String> occasionIdDescList = new ArrayList<String>();
-
+            //get occasion desc
             if (occasionIdDescList.size() > 0) {
                 templateString = prop.getProperty("search.occasion");
             }
@@ -381,9 +393,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             occasionIdDescList = null;
 
-            //TODO get whoareyouwith
-            ArrayList<String> whoareyouwithIdDescList = new ArrayList<String>();
-
+            // get whoareyouwith
             if (whoareyouwithIdDescList.size() > 0) {
                 templateString = prop.getProperty("search.whoareyouwith");
             }
@@ -405,9 +415,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             whoareyouwithIdDescList = null;
 
-            //TODO get typeOfRestaurant 
-            ArrayList<String> typeOfRestaurantIdDescList = new ArrayList<String>();
-
+            // get typeOfRestaurant 
             if (typeOfRestaurantIdDescList.size() > 0) {
                 templateString = prop.getProperty("search.typeofrest");
             }
@@ -429,9 +437,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             typeOfRestaurantIdDescList = null;
 
-            //TODO get typeOfRestaurant 
-            ArrayList<String> themeIdDescList = new ArrayList<String>();
-
+            //get typeOfRestaurant 
             if (themeIdDescList.size() > 0) {
                 templateString = prop.getProperty("search.restaurant.theme");
             }
@@ -453,10 +459,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             themeIdDescList = null;
 
-            //TODO get typeOfRestaurant 
-            ArrayList<String> priceIdDescList = new ArrayList<String>();
-
-            //TODO define price id values 
+            // define price id values 
             int priceIdValueType = 0;
 
             for (int i = 0; i < priceIdDescList.size(); ++i) {
@@ -504,6 +507,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                         "search.restaurant.price.3.more");
                 finalTemplateString.append(" ").append(tempTemplateString);
             }
+
+            System.out.println("finalTemplateString=" + finalTemplateString);
 
             return finalTemplateString.toString();
         } catch (IOException ex) {
@@ -3419,6 +3424,171 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             throw new TasteSyncException("Error while creating reco request " +
                 e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+    }
+
+    @Override
+    public DescriptorDataVO getDescriptorDataForDifferentIds(
+        String[] cuisineTier1IdList, String[] cuisineTier2IdList,
+        String[] priceIdList, String[] themeIdList,
+        String[] whoareyouwithIdList, String[] typeOfRestaurantIdList,
+        String[] occasionIdList, String neighborhoodId, String cityId,
+        String stateName) throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+
+            ArrayList<String> cuisineTier1IdDescList = new ArrayList<String>();
+            ArrayList<String> cuisineTier2IdDescList = new ArrayList<String>();
+            ArrayList<String> occasionIdDescList = new ArrayList<String>();
+            ArrayList<String> whoareyouwithIdDescList = new ArrayList<String>();
+            ArrayList<String> typeOfRestaurantIdDescList = new ArrayList<String>();
+            ArrayList<String> themeIdDescList = new ArrayList<String>();
+            ArrayList<String> priceIdDescList = new ArrayList<String>();
+
+            statement = connection.prepareStatement(AskReplyQueries.CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL);
+
+            if (cuisineTier1IdList != null) {
+                for (int i = 0; i < cuisineTier1IdList.length; ++i) {
+                    if (cuisineTier1IdList[i] != null) {
+                        statement.setString(1, cuisineTier1IdList[i]);
+                        resultset = statement.executeQuery();
+
+                        while (resultset.next()) {
+                            cuisineTier1IdDescList.add(CommonFunctionsUtil.getModifiedValueString(
+                                    resultset.getString("CUISINE_DESC")));
+                        }
+                    }
+                }
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.CUISINE_TIER2_DESCRIPTOR_ALL_SELECT_SQL);
+
+            if (cuisineTier2IdList != null) {
+                for (int i = 0; i < cuisineTier2IdList.length; ++i) {
+                    if (cuisineTier2IdList[i] != null) {
+                        statement.setString(1, cuisineTier2IdList[i]);
+                        resultset = statement.executeQuery();
+
+                        while (resultset.next()) {
+                            cuisineTier2IdDescList.add(CommonFunctionsUtil.getModifiedValueString(
+                                    resultset.getString("CUISINE_DESC")));
+                        }
+                    }
+                }
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.OCCASION_DESCRIPTOR_SELECT_SQL);
+
+            if (occasionIdList != null) {
+                for (int i = 0; i < occasionIdList.length; ++i) {
+                    if (occasionIdList[i] != null) {
+                        statement.setString(1, occasionIdList[i]);
+                        resultset = statement.executeQuery();
+
+                        while (resultset.next()) {
+                            occasionIdDescList.add(CommonFunctionsUtil.getModifiedValueString(
+                                    resultset.getString("occasion_desc")));
+                        }
+                    }
+                }
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.WHOAREYOUWITH_DESCRIPTOR_SELECT_SQL);
+
+            if (whoareyouwithIdList != null) {
+                for (int i = 0; i < whoareyouwithIdList.length; ++i) {
+                    if (whoareyouwithIdList[i] != null) {
+                        statement.setString(1, whoareyouwithIdList[i]);
+                        resultset = statement.executeQuery();
+
+                        while (resultset.next()) {
+                            whoareyouwithIdDescList.add(CommonFunctionsUtil.getModifiedValueString(
+                                    resultset.getString("whoareyouwith_desc")));
+                        }
+                    }
+                }
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.TYPEOFREST_DESCRIPTOR_SELECT_SQL);
+
+            if (typeOfRestaurantIdList != null) {
+                for (int i = 0; i < typeOfRestaurantIdList.length; ++i) {
+                    if (typeOfRestaurantIdList[i] != null) {
+                        statement.setString(1, typeOfRestaurantIdList[i]);
+                        resultset = statement.executeQuery();
+
+                        while (resultset.next()) {
+                            typeOfRestaurantIdDescList.add(CommonFunctionsUtil.getModifiedValueString(
+                                    resultset.getString("typeofrest_desc")));
+                        }
+                    }
+                }
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.THEME_DESCRIPTOR_SELECT_SQL);
+
+            if (themeIdList != null) {
+                for (int i = 0; i < themeIdList.length; ++i) {
+                    if (themeIdList[i] != null) {
+                        statement.setString(1, themeIdList[i]);
+                        resultset = statement.executeQuery();
+
+                        while (resultset.next()) {
+                            themeIdDescList.add(CommonFunctionsUtil.getModifiedValueString(
+                                    resultset.getString("THEME_DESC")));
+                        }
+                    }
+                }
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.PRICE_DESCRIPTOR_SELECT_SQL);
+
+            if (priceIdList != null) {
+                for (int i = 0; i < priceIdList.length; ++i) {
+                    if (priceIdList[i] != null) {
+                        statement.setString(1, priceIdList[i]);
+                        resultset = statement.executeQuery();
+
+                        while (resultset.next()) {
+                            priceIdDescList.add(CommonFunctionsUtil.getModifiedValueString(
+                                    resultset.getString("price_desc")));
+                        }
+                    }
+                }
+            }
+
+            statement.close();
+
+            DescriptorDataVO descriptorDataVO = new DescriptorDataVO(cuisineTier1IdDescList,
+                    cuisineTier2IdDescList, occasionIdDescList,
+                    whoareyouwithIdDescList, typeOfRestaurantIdDescList,
+                    themeIdDescList, priceIdDescList);
+
+            return descriptorDataVO;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(e.getMessage());
         } finally {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, resultset);

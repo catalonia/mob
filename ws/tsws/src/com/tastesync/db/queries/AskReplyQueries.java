@@ -8,8 +8,8 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "recorequest_user.RECOREQUEST_FREE_TEXT," +
         "recorequest_user.RECOREQUEST_PARAMETER_SELECTION_MERGED," +
         "recorequest_user.RECO_REQUEST_TEMPLATE_SENTENCES," +
-        "recorequest_user.ALGO1_IND" +
-        ")    VALUES    (" + "?," + "?," + "?," + "?," + "?," + "?, "+ "?" + ")";
+        "recorequest_user.ALGO1_IND" + ")    VALUES    (" + "?," + "?," + "?," +
+        "?," + "?," + "?, " + "?" + ")";
     public static final String RECOREQUEST_CUISINE_TIER1_INSERT_SQL = "insert into recorequest_cuisine_tier1 (" +
         "recorequest_cuisine_tier1.RECOREQUEST_ID," +
         "recorequest_cuisine_tier1.Cuisine_Tier1_ID" + ")  VALUES (" + "?," +
@@ -84,7 +84,8 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "             recorequest_ts_assigned.recorequest_id, " +
         "             recorequest_ts_assigned.algo1_ind) " +
         "VALUES      ( ?, " + "              ?, " + "              ?, " +
-        "              ?, " + "              ?, " + "              ?, "+"              ? )";
+        "              ?, " + "              ?, " + "              ?, " +
+        "              ? )";
     public static final String FB_ID_FRM_USER_ID_SELECT_SQL = "" +
         "SELECT users.user_fb_id " + "FROM   users " +
         "WHERE  users.user_id = ? ";
@@ -373,6 +374,27 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "       reco_like.like_recommender_viewed, " +
         "       reco_like.like_user_id " + "FROM   reco_like " +
         "WHERE  reco_like.id = ? ";
+    public static String CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL = "SELECT CUISINE_DESC " +
+        "FROM cuisine_tier1_descriptor WHERE CUISINE_VALID_CURRENT = '1' " +
+        "AND CUISIINE_ID = ? ";
+    public static String CUISINE_TIER2_DESCRIPTOR_ALL_SELECT_SQL = "SELECT CUISINE_DESC " +
+        "FROM cuisine_tier2_descriptor  WHERE CUISINE_VALID_CURRENT = '1' " +
+        "CUISIINE_ID = ?";
+    public static String OCCASION_DESCRIPTOR_SELECT_SQL = "SELECT occasion_desc " +
+        "FROM occasion_descriptor WHERE Occasion_VALID_CURRENT = '1' " +
+        "AND occasion_desc = ? ";
+    public static String PRICE_DESCRIPTOR_SELECT_SQL = "SELECT price_desc " +
+        "FROM price_descriptor WHERE price_VALID_CURRENT = '1' " +
+        "AND PRICE_ID = ?";
+    public static String THEME_DESCRIPTOR_SELECT_SQL = "SELECT THEME_DESC " +
+        "FROM theme_descriptor WHERE theme_VALID_CURRENT = '1' " +
+        "AND THEME_ID = ? ";
+    public static String TYPEOFREST_DESCRIPTOR_SELECT_SQL = "SELECT typeofrest_desc " +
+        "FROM typeofrest_descriptor WHERE typeofrest_VALID_CURRENT = '1' " +
+        "AND typeofrest_id = ? ";
+    public static String WHOAREYOUWITH_DESCRIPTOR_SELECT_SQL = "SELECT whoareyouwith_desc " +
+        "FROM whoareyouwith_descriptor WHERE whoareyouwith_VALID_CURRENT = '1' " +
+        "AND whoareyouwith_id = ? ";
     public String RECOREPLY_DIDIYOULIKE_SELECT_SQL = "" +
         "SELECT recoreply_didyoulike_notif.recorequest_id, " +
         "       recoreply_didyoulike_notif.notif_datetime, " +

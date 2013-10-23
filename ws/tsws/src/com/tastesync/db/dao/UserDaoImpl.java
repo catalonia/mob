@@ -3,12 +3,16 @@ package com.tastesync.db.dao;
 import com.tastesync.common.GlobalVariables;
 import com.tastesync.common.MySQL;
 import com.tastesync.common.PushService;
+import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
 import com.tastesync.db.queries.CityQueries;
 import com.tastesync.db.queries.RestaurantQueries;
 import com.tastesync.db.queries.UserQueries;
+
 import com.tastesync.exception.TasteSyncException;
+
 import com.tastesync.model.objects.TSAboutObj;
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
@@ -33,7 +37,7 @@ import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
 import com.tastesync.model.response.UserResponse;
-import com.tastesync.util.CommonFunctionsUtil;
+
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
@@ -42,11 +46,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -502,7 +506,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                                     int k = 0;
 
                                     for (; k < listDatabaseDeletedObj.size();
-                                         k++) {
+                                            k++) {
                                         String str = listDatabaseDeletedObj.get(k);
 
                                         if (fbID.equals(str)) {
@@ -591,7 +595,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean logout(String userLogID) throws TasteSyncException {
+    public boolean logout(String userLogID, String deviceToken)
+        throws TasteSyncException {
         TSUserObj user = null;
         MySQL mySQL = new MySQL();
         String dateNow = CommonFunctionsUtil.getCurrentDatetime();
@@ -601,18 +606,24 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
         try {
             connection = tsDataSource.getConnection();
+            tsDataSource.begin();
 
             String userID = mySQL.getAutoUserLogByUserId(connection, userLogID);
             System.out.println("USERID" + userID);
             user = mySQL.getUserInformation(connection, userID);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        if (user != null) {
-            try {
-                tsDataSource.begin();
+            if (1 != 1) {
+                //TODO First delete any token (s) associated with this device , then insert
+                //deleteUserDeviceToken(deviceToken);
+                statement = connection.prepareStatement(UserQueries.DEVICE_TOKEN_DELETE_SQL);
+                statement.setString(1, deviceToken);
+                statement.executeUpdate();
+                statement.close();
+            }
 
+            boolean logoutSuccess = false;
+
+            if (user != null) {
                 //Update IS_ONLINE status 
                 statement = connection.prepareStatement(UserQueries.USER_ONLINE_UPDATE_SQL);
                 statement.setString(1, String.valueOf("n"));
@@ -625,19 +636,20 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 statement.setString(2, userLogID);
                 statement.executeUpdate();
                 statement.close();
-                tsDataSource.commit();
-            } catch (SQLException e) {
-                e.printStackTrace();
 
-                return false;
-            } finally {
-                tsDataSource.close();
-                tsDataSource.closeConnection(connection, statement, null);
+                logoutSuccess = true;
             }
 
-            return true;
-        } else {
+            tsDataSource.commit();
+
+            return logoutSuccess;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
             return false;
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, null);
         }
     }
 
@@ -1973,8 +1985,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
-        
+
         System.out.println("ABCDE" + userId);
+
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
@@ -2048,93 +2061,95 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.closeConnection(connection, statement, resultset);
         }
     }
+
     private TSRestaurantsTileSearchObj getRestaurantTileSearchReslt(
-            String restaurantId) throws TasteSyncException {
-            //get different parameters based on recorequest id
-            TSDataSource tsDataSource = TSDataSource.getInstance();
+        String restaurantId) throws TasteSyncException {
+        //get different parameters based on recorequest id
+        TSDataSource tsDataSource = TSDataSource.getInstance();
 
-            Connection connection = null;
-            PreparedStatement statement = null;
-            ResultSet resultset = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
 
-            try {
-                connection = tsDataSource.getConnection();
+        try {
+            connection = tsDataSource.getConnection();
 
-                statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
-                statement.setString(1, restaurantId);
-                resultset = statement.executeQuery();
+            statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
 
-                String restaurantName = null;
-                String price = null;
+            String restaurantName = null;
+            String price = null;
 
-                String restaurantCity = null;
-                String restaurantLat = null;
-                String restaurantLong = null;
-                String restaurantDealFlag = null;
-                String restaurantRating = null;
+            String restaurantCity = null;
+            String restaurantLat = null;
+            String restaurantLong = null;
+            String restaurantDealFlag = null;
+            String restaurantRating = null;
 
-                while (resultset.next()) {
-                    restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "restaurant.restaurant_name"));
-                    price = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "restaurant.price_range"));
+            while (resultset.next()) {
+                restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.restaurant_name"));
+                price = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.price_range"));
 
-                    restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "restaurant.restaurant_name"));
+                restaurantName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.restaurant_name"));
 
-                    restaurantCity = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "cities.city"));
+                restaurantCity = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "cities.city"));
 
-                    restaurantLat = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "restaurant.restaurant_lat"));
-                    restaurantLong = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "restaurant.restaurant_lon"));
+                restaurantLat = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.restaurant_lat"));
+                restaurantLong = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.restaurant_lon"));
 
-                    restaurantDealFlag = null;
-                    restaurantRating = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "restaurant.factual_rating"));
-                }
-
-                statement.close();
-
-                String cuisineTier2Name = null;
-                statement = connection.prepareStatement(AskReplyQueries.CUISINE_DESC_ONE_RESTAURANT_SELECT_SQL);
-                statement.setString(1, restaurantId);
-                resultset = statement.executeQuery();
-
-                if (resultset.next()) {
-                    cuisineTier2Name = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                                "cuisine_desc"));
-                }
-
-                statement.close();
-
-                TSRestaurantsTileSearchObj tsRestaurantsTileSearchObj = new TSRestaurantsTileSearchObj();
-
-                tsRestaurantsTileSearchObj.setRestaurantId(restaurantId);
-                tsRestaurantsTileSearchObj.setRestaurantName(restaurantName);
-                tsRestaurantsTileSearchObj.setPrice(price);
-                tsRestaurantsTileSearchObj.setRestaurantName(restaurantName);
-                tsRestaurantsTileSearchObj.setRestaurantCity(restaurantCity);
-                tsRestaurantsTileSearchObj.setRestaurantLat(restaurantLat);
-                tsRestaurantsTileSearchObj.setRestaurantLong(restaurantLong);
-                tsRestaurantsTileSearchObj.setRestaurantDealFlag(restaurantDealFlag);
-                tsRestaurantsTileSearchObj.setRestaurantRating(restaurantRating);
-                tsRestaurantsTileSearchObj.setCuisineTier2Name(cuisineTier2Name);
-
-                return tsRestaurantsTileSearchObj;
-            } catch (SQLException e) {
-                e.printStackTrace();
-
-                throw new TasteSyncException(
-                    "Error while creating restaurant tips " + e.getMessage());
-            } finally {
-                tsDataSource.close();
-                tsDataSource.closeConnection(connection, statement, resultset);
+                restaurantDealFlag = null;
+                restaurantRating = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "restaurant.factual_rating"));
             }
+
+            statement.close();
+
+            String cuisineTier2Name = null;
+            statement = connection.prepareStatement(AskReplyQueries.CUISINE_DESC_ONE_RESTAURANT_SELECT_SQL);
+            statement.setString(1, restaurantId);
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                cuisineTier2Name = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "cuisine_desc"));
+            }
+
+            statement.close();
+
+            TSRestaurantsTileSearchObj tsRestaurantsTileSearchObj = new TSRestaurantsTileSearchObj();
+
+            tsRestaurantsTileSearchObj.setRestaurantId(restaurantId);
+            tsRestaurantsTileSearchObj.setRestaurantName(restaurantName);
+            tsRestaurantsTileSearchObj.setPrice(price);
+            tsRestaurantsTileSearchObj.setRestaurantName(restaurantName);
+            tsRestaurantsTileSearchObj.setRestaurantCity(restaurantCity);
+            tsRestaurantsTileSearchObj.setRestaurantLat(restaurantLat);
+            tsRestaurantsTileSearchObj.setRestaurantLong(restaurantLong);
+            tsRestaurantsTileSearchObj.setRestaurantDealFlag(restaurantDealFlag);
+            tsRestaurantsTileSearchObj.setRestaurantRating(restaurantRating);
+            tsRestaurantsTileSearchObj.setCuisineTier2Name(cuisineTier2Name);
+
+            return tsRestaurantsTileSearchObj;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            throw new TasteSyncException(
+                "Error while creating restaurant tips " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
         }
-    private List<TSRestaurantView> getRestaurantListHomeProfile(
-        String userId) throws TasteSyncException {
+    }
+
+    private List<TSRestaurantView> getRestaurantListHomeProfile(String userId)
+        throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -2150,8 +2165,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
-            	//
-            	restaurantIDList.add(CommonFunctionsUtil.converStringAsNullIfNeeded(resultset.getString("RESTAURANT_ID")));
+                //
+                restaurantIDList.add(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                        resultset.getString("RESTAURANT_ID")));
             }
 
             statement.close();
@@ -2165,7 +2181,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 resultset = statement.executeQuery();
 
                 while (resultset.next()) {
-                	restaurantIDList.add(CommonFunctionsUtil.converStringAsNullIfNeeded(resultset.getString("RESTAURANT_ID")));
+                    restaurantIDList.add(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("RESTAURANT_ID")));
                 }
 
                 statement.close();
@@ -2180,7 +2197,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 resultset = statement.executeQuery();
 
                 while (resultset.next()) {
-                	restaurantIDList.add(CommonFunctionsUtil.converStringAsNullIfNeeded(resultset.getString("RESTAURANT_ID")));
+                    restaurantIDList.add(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("RESTAURANT_ID")));
                 }
 
                 statement.close();
@@ -2195,7 +2213,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 resultset = statement.executeQuery();
 
                 while (resultset.next()) {
-                	restaurantIDList.add(CommonFunctionsUtil.converStringAsNullIfNeeded(resultset.getString("RESTAURANT_ID")));
+                    restaurantIDList.add(CommonFunctionsUtil.converStringAsNullIfNeeded(
+                            resultset.getString("RESTAURANT_ID")));
                 }
 
                 statement.close();
@@ -2205,7 +2224,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 if (statement != null) {
                     statement.close();
                 }
-                
+
                 TSRestaurantView restaurant = new TSRestaurantView();
                 restaurant.setId(restaurantID);
 
@@ -2238,21 +2257,21 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                 statement.close();
                 restaurant.setPhoto(photo);
-            
+
                 restaurantList.add(restaurant);
             }
-            
+
             for (TSRestaurantView restaurant : restaurantList) {
                 if (statement != null) {
                     statement.close();
                 }
-                
+
                 TSRestaurantsTileSearchObj obj = getRestaurantTileSearchReslt(restaurant.getId());
-				restaurant.setInformation(obj);
+                restaurant.setInformation(obj);
             }
-            
+
             statement.close();
-            
+
             return restaurantList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -2792,29 +2811,28 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
         try {
             connection = tsDataSource.getConnection();
-//            System.out.println("CityQueries.CITY_KEY_STATE_SELECT_SQL=" +
-//                CityQueries.CITY_KEY_STATE_SELECT_SQL);
-//            statement = connection.prepareStatement(CityQueries.CITY_KEY_STATE_SELECT_SQL);
-//            statement.setString(1, key + "%");
-//            resultset = statement.executeQuery();
-//
-//            while (resultset.next()) {
-//                TSGlobalObj obj = new TSGlobalObj();
-//                obj.setId(CommonFunctionsUtil.getModifiedValueString(
-//                        resultset.getString("cities.city_id")));
-//                obj.setName(CommonFunctionsUtil.getModifiedValueString(
-//                        resultset.getString("cities.city")) + ", " +
-//                    CommonFunctionsUtil.getModifiedValueString(
-//                        resultset.getString("cities.state")));
-//                System.out.println(CommonFunctionsUtil.getModifiedValueString(
-//                        resultset.getString("cities.city")) + ", " +
-//                    CommonFunctionsUtil.getModifiedValueString(
-//                        resultset.getString("cities.state")));
-//                listCityObj.add(obj);
-//            }
-//
-//            statement.close();
-
+            //            System.out.println("CityQueries.CITY_KEY_STATE_SELECT_SQL=" +
+            //                CityQueries.CITY_KEY_STATE_SELECT_SQL);
+            //            statement = connection.prepareStatement(CityQueries.CITY_KEY_STATE_SELECT_SQL);
+            //            statement.setString(1, key + "%");
+            //            resultset = statement.executeQuery();
+            //
+            //            while (resultset.next()) {
+            //                TSGlobalObj obj = new TSGlobalObj();
+            //                obj.setId(CommonFunctionsUtil.getModifiedValueString(
+            //                        resultset.getString("cities.city_id")));
+            //                obj.setName(CommonFunctionsUtil.getModifiedValueString(
+            //                        resultset.getString("cities.city")) + ", " +
+            //                    CommonFunctionsUtil.getModifiedValueString(
+            //                        resultset.getString("cities.state")));
+            //                System.out.println(CommonFunctionsUtil.getModifiedValueString(
+            //                        resultset.getString("cities.city")) + ", " +
+            //                    CommonFunctionsUtil.getModifiedValueString(
+            //                        resultset.getString("cities.state")));
+            //                listCityObj.add(obj);
+            //            }
+            //
+            //            statement.close();
             System.out.println("CityQueries.CITY_KEY_CITY_SELECT_SQL=" +
                 CityQueries.CITY_KEY_CITY_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_KEY_CITY_SELECT_SQL);
@@ -2829,7 +2847,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         resultset.getString("cities.city")) + ", " +
                     CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("cities.state")));
-                
+
                 TSCityObj cityObj = new TSCityObj();
                 cityObj.setCity(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("cities.city")));
@@ -2840,7 +2858,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 cityObj.setState(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("cities.state")));
                 obj.setCity(cityObj);
-                
+
                 System.out.println(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("cities.city")) + ", " +
                     CommonFunctionsUtil.getModifiedValueString(
@@ -2854,7 +2872,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 "CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL=" +
                 CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL);
-            statement.setString(1,"\"" + key + "%");
+            statement.setString(1, "\"" + key + "%");
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -2865,10 +2883,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         resultset.getString(
                             "city_neighbourhood.NEIGHBOURHOOD_DESC")) + ", " +
                     CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("city_neighbourhood.CITY_NAME")) + ", " + CommonFunctionsUtil.getModifiedValueString(
-                                resultset.getString("cities.state")));
-//                listName.add(obj);
-                
+                        resultset.getString("city_neighbourhood.CITY_NAME")) +
+                    ", " +
+                    CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.state")));
+
+                //                listName.add(obj);
                 TSCityObj cityObj = new TSCityObj();
                 cityObj.setCity(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("cities.city")));
@@ -2879,28 +2899,27 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 cityObj.setState(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("cities.state")));
                 obj.setCity(cityObj);
-                
+
                 listCityObj.add(obj);
-                
-//                listCityID.add(CommonFunctionsUtil.getModifiedValueString(
-//                        resultset.getString("city_neighbourhood.CITY_ID")));
+
+                //                listCityID.add(CommonFunctionsUtil.getModifiedValueString(
+                //                        resultset.getString("city_neighbourhood.CITY_ID")));
             }
 
             statement.close();
 
-//            MySQL mySQL = new MySQL();
-//
-//            for (int i = 0; i < listCityID.size(); i++) {
-//                String string = listCityID.get(i);
-//                TSCityObj city = mySQL.getCityInforByCityID(connection, string);
-//                TSGlobalObj globalObj = listName.get(i);
-//                globalObj.setCity(city);
-//                globalObj.setName(globalObj.getName() + ", " + city.getState());
-//                System.out.println(globalObj.getName() + ", " +
-//                    city.getState());
-//                listCityObj.add(globalObj);
-//            }
-
+            //            MySQL mySQL = new MySQL();
+            //
+            //            for (int i = 0; i < listCityID.size(); i++) {
+            //                String string = listCityID.get(i);
+            //                TSCityObj city = mySQL.getCityInforByCityID(connection, string);
+            //                TSGlobalObj globalObj = listName.get(i);
+            //                globalObj.setCity(city);
+            //                globalObj.setName(globalObj.getName() + ", " + city.getState());
+            //                System.out.println(globalObj.getName() + ", " +
+            //                    city.getState());
+            //                listCityObj.add(globalObj);
+            //            }
             System.out.println(listCityObj.size());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -2911,5 +2930,150 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
 
         return listCityObj;
+    }
+
+    @Override
+    public String getOAuthToken(String userId, String deviceToken)
+        throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        if (1 == 1) {
+            return "testDeepinderRicksJags_OauthToken";
+        }
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            // TODO Auto-generated method stub
+            String oAuthToken = "testOAuthToken" +
+                CommonFunctionsUtil.generateUniqueKey();
+
+            connection = tsDataSource.getConnection();
+
+            tsDataSource.begin();
+            //TODO First delete any token (s) associated with this device , then insert
+            //deleteUserDeviceToken(deviceToken);
+            statement = connection.prepareStatement(UserQueries.DEVICE_TOKEN_DELETE_SQL);
+            statement.setString(1, deviceToken);
+            statement.executeUpdate();
+            statement.close();
+
+            statement = connection.prepareStatement(UserQueries.DEVICE_TOKEN_INSERT_SQL);
+            statement.setString(1, deviceToken);
+            //TODO Expirration
+            statement.setTimestamp(2,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+
+            statement.setTimestamp(3,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+
+            //change to MD5
+            statement.setString(4, oAuthToken);
+            //TODO Expirration
+            statement.setTimestamp(5,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+            statement.setString(6, oAuthToken);
+            statement.setTimestamp(7,
+                CommonFunctionsUtil.getCurrentDateTimestamp());
+            statement.setString(8, userId);
+            statement.executeUpdate();
+            statement.close();
+
+            tsDataSource.commit();
+
+            //add to the response header
+            return oAuthToken;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            throw new TasteSyncException("Error while getOAuthToken " +
+                e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+    }
+
+    @Override
+    public TSUserObj getUserInformationByEmail(String email)
+        throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        TSUserObj tsUserObj = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            statement = connection.prepareStatement(UserQueries.USER_CHECK_EMAIL_STATUS_SELECT_SQL);
+            statement.setString(1, email);
+            statement.setString(2, String.valueOf("e"));
+            resultset = statement.executeQuery();
+
+            if (resultset.next()) {
+                tsUserObj = new TSUserObj();
+                tsUserObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_ID")));
+                tsUserObj.setTsUserId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TS_USER_ID")));
+                tsUserObj.setTsUserEmail(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TS_USER_EMAIL")));
+                //tsUserObj.setTsUserPw(CommonFunctionsUtil.getModifiedValueString(resultset.getString("users.TS_USER_PW")));
+                tsUserObj.setTsFirstName(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TS_FIRST_NAME")));
+                tsUserObj.setTsLastName(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TS_LAST_NAME")));
+                tsUserObj.setMaxInvites(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.MAX_INVITES")));
+                tsUserObj.setUserCreatedInitialDatetime(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString(
+                            "users.USER_CREATED_INITIAL_DATETIME")));
+                tsUserObj.setUserPoints(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_POINTS")));
+                tsUserObj.setTwitterUsrUrl(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TWITTER_USR_URL")));
+                tsUserObj.setUserDisabledFlag(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_DISABLED_FLAG")));
+                tsUserObj.setUserActivationKey(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_ACTIVATION_KEY")));
+                tsUserObj.setUserGender(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_GENDER")));
+                tsUserObj.setUserCityId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_CITY_ID")));
+                tsUserObj.setUserState(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_STATE")));
+                tsUserObj.setIsOnline(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.IS_ONLINE")));
+                tsUserObj.setUserCountry(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_COUNTRY")));
+                tsUserObj.setAbout(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.ABOUT")));
+                tsUserObj.setCurrentStatus(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.CURRENT_STATUS")));
+                tsUserObj.setUserFbId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_FB_ID")));
+            }
+
+            statement.close();
+
+            return tsUserObj;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(
+                "Error while getUserInformationByEmail " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
     }
 }

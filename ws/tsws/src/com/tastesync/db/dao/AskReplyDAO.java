@@ -2,7 +2,6 @@ package com.tastesync.db.dao;
 
 import com.tastesync.exception.TasteSyncException;
 
-import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSRecoNotificationBaseObj;
 import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.derived.TSRecoRequestNonAssignedObj;
@@ -12,6 +11,7 @@ import com.tastesync.model.objects.derived.TSRecommendationsForYouObj;
 import com.tastesync.model.objects.derived.TSRecommendeeUserObj;
 import com.tastesync.model.objects.derived.TSRestaurantsTileSearchExtendedInfoObj;
 import com.tastesync.model.objects.derived.TSSenderUserObj;
+import com.tastesync.model.vo.DescriptorDataVO;
 
 import java.util.List;
 
@@ -78,4 +78,10 @@ public interface AskReplyDAO {
 
     List<TSRecoNotificationBaseObj> showRecommendationsList(String userId,
         String paginationId) throws TasteSyncException;
+    
+    DescriptorDataVO getDescriptorDataForDifferentIds(String[] cuisineTier1IdList,
+            String[] cuisineTier2IdList, String[] priceIdList,
+            String[] themeIdList, String[] whoareyouwithIdList,
+            String[] typeOfRestaurantIdList, String[] occasionIdList,
+            String neighborhoodId, String cityId, String stateName) throws TasteSyncException;
 }
