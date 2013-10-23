@@ -23,7 +23,6 @@
     __weak IBOutlet UIButton *btSaved, *btFavs, *btDeals, *btShow, *btHide;
     __weak IBOutlet UISegmentedControl *segCtrCuisine, *segCtrPrice;
     
-    NSMutableArray *arrCuisine, *arrPrice;
     int _rating;
     BOOL saved, favs , deals, restaurantChains;
     
@@ -35,6 +34,7 @@
 }
 
 @property (nonatomic, strong) NSMutableArray *arrData, *arrDataFilter , *arrDataRestaurant , *arrDataRegion;
+@property (nonatomic,strong) NSString* recorequestID;
 
 @property (nonatomic, assign) BOOL notHomeScreen;
 @property (nonatomic, assign) int rating;

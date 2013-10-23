@@ -61,9 +61,19 @@ typedef enum _TFSelect
     _regionGerenal = @"";
     _restaurantGerenal = @"";
     _cityObj = [[TSCityObj alloc]init];
+    [self setDefaultCityObj];
     _isHaveCityObj = NO;
-    [self initUI];
+    
     [self initData];
+    [self initUI];
+}
+
+-(void)setDefaultCityObj;
+{
+    _cityObj.uid = @"11756";
+    _cityObj.country = @"us";
+    _cityObj.stateName = @"NY";
+    _cityObj.cityName = @"New York";
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,16 +93,28 @@ typedef enum _TFSelect
     {
         viewFilter1.hidden = YES;
         viewFilter2.hidden = NO;
+        
+        currentPage = 1;
+        NSString* link = [NSString stringWithFormat:@"recosidrestaurantsearchresults?userid=%@&recorequestid=%@&paginationid=%@",[UserDefault userDefault].userID,self.recorequestID,@"1"];
+        CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:3];
+        request.delegate = self;
+        [request startFormRequest];
+        
     }
     else
     {
         viewFilter1.hidden = NO;
         viewFilter2.hidden = YES;
+        
+        currentPage = 1;
+        
+        NSString* link = [NSString stringWithFormat:@"recosrestaurantsearchresults?userid=%@&restaurantid=%@&neighborhoodid=%@&cityid=%@&statename=%@&cuisineidtier1idlist=%@&priceidlist=%@&rating=%@&savedflag=%@&favflag=%@&dealflag=%@&chainflag=%@&paginationid=%@",[UserDefault userDefault].userID,@"",@"", _cityObj.uid, _cityObj.stateName,@"",@"",@"",@"",@"",@"",@"",@"1"];
+        CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:3];
+        request.delegate = self;
+        [request startFormRequest];
     }
     
     viewFilterExtends.hidden = YES;
-    
-    arrCuisine = [[NSMutableArray alloc]init];
     
     rateCustom = [[RateCustom alloc] initWithFrame:CGRectMake(20, 220, 150, 30)];
     [viewFilterExtends addSubview:rateCustom];
@@ -173,8 +195,6 @@ typedef enum _TFSelect
     
     arrRestaurantSave = [[NSMutableArray alloc]init];
     arrRestaurantFav  = [[NSMutableArray alloc]init];
-    arrCuisine = [[NSMutableArray alloc] init ];
-    arrPrice = [[NSMutableArray alloc] init];
     filterDict = [[NSMutableDictionary alloc] init];
     arrDataStickFilter = [[NSMutableArray alloc] init];
 }
@@ -228,14 +248,11 @@ typedef enum _TFSelect
                          
                      }];
     
+    currentPage = 1;
     [self refreshView];
     
-    if (![_cityObj.cityName isEqualToString:@""]) {
-        [_arrData removeAllObjects];
-        [_arrDataRestaurant removeAllObjects];
-        [self requestRestaurant];
-        
-    }
+    [_arrData removeAllObjects];
+    [self requestRestaurant];
     
     
     
@@ -247,6 +264,8 @@ typedef enum _TFSelect
     int cuisine = 0;
     
     NSString* listCuisine, *listPrice;
+    listCuisine = @"";
+    listPrice = @"";
     
     for (TSGlobalObj* global in arrDataStickFilter) {
         if (global.type == GlobalDataCuisine_1) {
@@ -290,6 +309,15 @@ typedef enum _TFSelect
     NSString* page = [NSString stringWithFormat:@"%d",currentPage];
     
     NSString* link = [NSString stringWithFormat:@"recosrestaurantsearchresults?userid=%@&restaurantid=%@&neighborhoodid=%@&cityid=%@&statename=%@&cuisineidtier1idlist=%@&priceidlist=%@&rating=%@&savedflag=%@&favflag=%@&dealflag=%@&chainflag=%@&paginationid=%@",[UserDefault userDefault].userID,@"",@"",_cityObj.uid,_cityObj.stateName,listCuisine,listPrice,rate,save,fav,@"",@"",page];
+    CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:3];
+    request.delegate = self;
+    [request startFormRequest];
+}
+
+-(void)requestWithRecorequestID
+{
+    NSString* page = [NSString stringWithFormat:@"%d",currentPage];
+    NSString* link = [NSString stringWithFormat:@"recosidrestaurantsearchresults?userid=%@&recorequestid=%@&paginationid=%@",[UserDefault userDefault].userID,self.recorequestID,page];
     CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:3];
     request.delegate = self;
     [request startFormRequest];
@@ -357,13 +385,6 @@ typedef enum _TFSelect
 
 - (IBAction)actionSaved:(id)sender
 {
-//    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:3];
-//    request.delegate = self;
-//    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
-//    [request setFormPostValue:@"3" forKey:@"type"];
-//    [request setFormPostValue:@"0" forKey:@"from"];
-//    [request setFormPostValue:@"0" forKey:@"to"];
-//    [request startFormRequest];
     if (saved) {
         saved = NO;
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_saved73_off.png"] forButton:btSaved];
@@ -377,13 +398,6 @@ typedef enum _TFSelect
 }
 - (IBAction)actionFavs:(id)sender
 {
-//    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:4];
-//    request.delegate = self;
-//    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
-//    [request setFormPostValue:@"1" forKey:@"type"];
-//    [request setFormPostValue:@"0" forKey:@"from"];
-//    [request setFormPostValue:@"0" forKey:@"to"];
-//    [request startFormRequest];
     if (favs) {
         favs = NO;
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_favs_small.png"] forButton:btFavs];
@@ -512,7 +526,7 @@ typedef enum _TFSelect
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView==tbvResult) {
-        static NSString *CellIndentifier = @"restaurant_cell";
+        static NSString *CellIndentifier = @"RestaurantCell";
         
         RestaurantCell *cell = (RestaurantCell *)[tableView dequeueReusableCellWithIdentifier:CellIndentifier];
         
@@ -546,6 +560,33 @@ typedef enum _TFSelect
         return cell;
     }
     
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView==tbvResult) {
+        static NSString *CellIndentifier = @"restaurant_cell";
+        
+        RestaurantCell *cell = (RestaurantCell *)[tableView dequeueReusableCellWithIdentifier:CellIndentifier];
+        
+        if (cell==nil) {
+            NSLog(@"cell is nil");
+            cell =(RestaurantCell *) [[[NSBundle mainBundle ] loadNibNamed:@"RestaurantCell" owner:self options:nil] objectAtIndex:0];
+        }
+        return cell.frame.size.height;
+    }
+    else
+    {
+        static NSString *CellIndentifier = @"cell";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIndentifier];
+        if (cell==nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIndentifier];
+        }
+        
+        
+        return cell.frame.size.height;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -608,7 +649,7 @@ typedef enum _TFSelect
         lbTypeRegions.hidden = YES;
         region = nil;
         _isHaveCityObj = NO;
-        _cityObj = nil;
+        [self setDefaultCityObj];
     }
     
     
@@ -823,8 +864,13 @@ typedef enum _TFSelect
         if(scrollView.contentOffset.y == scrollView.contentSize.height - tbvResult.frame.size.height)
         {
             currentPage++;
+            
             if (currentPage <= numberPage) {
-                [self requestRestaurant];
+                if (_notHomeScreen == NO) {
+                    [self requestRestaurant];
+                }
+                else
+                    [self requestWithRecorequestID];
             }
             
         }
@@ -838,8 +884,10 @@ typedef enum _TFSelect
     NSLog(@"response: %@",response);
     
     if (key == 1) {
-        [arrCuisine removeAllObjects];
         [_arrDataRestaurant removeAllObjects];
+        numberPage = -1;
+        currentPage = 1;
+        //[_arrData removeAllObjects];
         NSArray* array = [response objectFromJSONString];
         for (NSDictionary* dic in array) {
             TSGlobalObj* global = [[TSGlobalObj alloc]init];
@@ -879,22 +927,6 @@ typedef enum _TFSelect
                     global.name = [dicCuisine objectForKey:@"cuisineDesc"];
                     global.type = GlobalDataCuisine_2;
                     
-                    
-                    int i = 0;
-                    for (TSGlobalObj* obj in arrCuisine) {
-                        if (![obj.name isEqualToString:global.name]) {
-                            i++;
-                        }
-                        else
-                        {
-                            [restaurantObj.cuisineTier2Array addObject:obj];
-                        }
-                    }
-                    if (i == [arrCuisine count]) {
-                        [arrCuisine addObject:global];
-                        [restaurantObj.cuisineTier2Array addObject:global];
-                    }
-                    
                 }
             }
             
@@ -907,6 +939,7 @@ typedef enum _TFSelect
             
             global.restaurantObj = restaurantObj;
             [_arrDataRestaurant addObject:global];
+            
         }
         [tbvResult reloadData];
     }
@@ -932,7 +965,7 @@ typedef enum _TFSelect
     if (key == 3) {
         NSDictionary* dicAll = [response objectFromJSONString];
         numberPage = [[dicAll objectForKey:@"maxPaginationId"] integerValue];
-        currentPage = 0;
+        
         NSArray* array = [dicAll objectForKey:@"restaurantsSearchListTileObj"];
         for (NSDictionary* dic in array) {
             TSGlobalObj* global = [[TSGlobalObj alloc]init];
@@ -958,9 +991,9 @@ typedef enum _TFSelect
             restaurantObj.cityObj.cityName = [dic objectForKey:@"restaurantCity"];
             
             global.restaurantObj = restaurantObj;
-            [_arrDataRestaurant addObject:global];
+            [_arrData addObject:global];
         }
-        _arrData = _arrDataRestaurant;
+        //_arrData = _arrDataRestaurant;
         [tbvResult reloadData];
         
     }
