@@ -15,6 +15,7 @@
     __weak IBOutlet UILabel *lbtitle, *lbDetail,* lbNumberLike;
     __weak IBOutlet UIImageView *ivAvatar;
     __weak IBOutlet UIButton *btLike;
+    __weak IBOutlet UIActivityIndicatorView *activity;
 }
 
 - (IBAction)actionLike:(id)sender;

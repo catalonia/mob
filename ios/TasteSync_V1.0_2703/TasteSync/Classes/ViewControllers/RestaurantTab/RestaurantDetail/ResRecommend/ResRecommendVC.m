@@ -49,22 +49,11 @@ restaurantObj=_restaurantObj;
     [super viewDidLoad];
     [CommonHelpers setBackgroudImageForViewRestaurant:self.view];
     // Do any additional setup after loading the view from its nib.
-
-    if (!_arrData) {
-        self.arrData = [[NSMutableArray alloc] init ];
-        for (int i= 0; i<5; i++) {
-            UserObj *user = [[UserObj alloc] init];
-            user.firstname = @"Victor";
-            user.lastname = @"NGO";
-            user.avatar = [UIImage imageNamed:@"avatar.png"];
-            ResRecommendObj *obj = [[ResRecommendObj alloc] init];
-            obj.user = user;
-            obj.numberOfLikes = i+20;
-            obj.title = @"Victor N. recommends for Dinner";
-            obj.detail = @"haiz";
-            [self.arrData addObject:obj];
-        }
-    }
+    self.arrData = [[NSMutableArray alloc] init ];
+    NSString* link = [NSString stringWithFormat:@"buzz?userid=%@&restaurantid=%@",[UserDefault userDefault].userID,_restaurantObj.uid];
+    CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataRestaurant RQCategory:ApplicationForm withKey:1];
+    request.delegate = self;
+    [request startFormRequest];
     
     [self configView];
 
@@ -86,7 +75,7 @@ restaurantObj=_restaurantObj;
 {
     if (_restaurantObj) {
         lbName.text = _restaurantObj.name;
-        lbDetail.text = @"Chinese , $$, New York, 3.1 mi";
+        lbDetail.text = [CommonHelpers getInformationRestaurant:_restaurantObj];
     }
 }
 
@@ -145,12 +134,7 @@ restaurantObj=_restaurantObj;
     if (cell==nil) {
         NSLog(@"cell is nil");
         cell =(ResRecommendCell *) [[[NSBundle mainBundle ] loadNibNamed:@"ResRecommendCell" owner:self options:nil] objectAtIndex:0];
-       
-        
     }
-    
-    
-    
     ResRecommendObj *obj = [_arrData objectAtIndex:indexPath.row];
     [cell initForCell:obj];
     
@@ -162,13 +146,37 @@ restaurantObj=_restaurantObj;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ResRecommendDetailVC *vc = [[ResRecommendDetailVC alloc] initWithNibName:@"ResRecommendDetailVC" bundle:nil];
-    vc.resRecommendObj = [_arrData objectAtIndex:indexPath.row];
-    vc.restaurantObj = _restaurantObj;
-    [self.navigationController pushViewController:vc animated:YES];
+//    ResRecommendDetailVC *vc = [[ResRecommendDetailVC alloc] initWithNibName:@"ResRecommendDetailVC" bundle:nil];
+//    vc.resRecommendObj = [_arrData objectAtIndex:indexPath.row];
+//    vc.restaurantObj = _restaurantObj;
+//    [self.navigationController pushViewController:vc animated:YES];
     
     
 }
 
+
+-(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
+{
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"response: %@",response);
+    if (key == 1) {
+        [self.arrData removeAllObjects];
+        NSArray* array = [response objectFromJSONString];
+        for (NSDictionary* dicResponse in array) {
+            NSDictionary* dic = [dicResponse objectForKey:@"recommenderUser"];
+            UserObj *user = [[UserObj alloc] init];
+            user.name = [dic objectForKey:@"name"];
+            user.avatarUrl = [dic objectForKey:@"photo"];
+            user.uid = [dic objectForKey:@"userId"];
+            ResRecommendObj *obj = [[ResRecommendObj alloc] init];
+            obj.user = user;
+            obj.numberOfLikes = 0;
+            obj.title = [dicResponse objectForKey:@"recorequestText"];
+            obj.detail = [dicResponse objectForKey:@"replyText"];
+            [self.arrData addObject:obj];
+        }
+    }
+    
+}
 
 @end

@@ -25,7 +25,17 @@
     resRecommendObj = obj;
     lbtitle.text = obj.title;
     lbDetail.text = obj.detail;
-    ivAvatar.image = obj.user.avatar;
+    if (obj.user.avatar != nil) {
+        ivAvatar.image = obj.user.avatar;
+        [activity removeFromSuperview];
+    }
+    else
+    {
+        [activity startAnimating];
+        [NSThread detachNewThreadSelector:@selector(loadAvatar) toTarget:self withObject:nil];
+    }
+    
+    
     if (obj.numberOfLikes == 0) {
         lbNumberLike.hidden = YES;
     }
@@ -83,5 +93,12 @@
     [[[CommonHelpers appDelegate] tabbarBaseVC] actionProfile:resRecommendObj.user];
 }
 
-
+-(void)loadAvatar
+{
+    UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:resRecommendObj.user.avatarUrl]]];
+    resRecommendObj.user.avatar = image;
+    ivAvatar.image = image;
+    [activity stopAnimating];
+    [activity removeFromSuperview];
+}
 @end

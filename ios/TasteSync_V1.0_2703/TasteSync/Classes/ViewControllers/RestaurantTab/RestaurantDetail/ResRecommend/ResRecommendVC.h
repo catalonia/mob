@@ -11,7 +11,7 @@
 #import "RestaurantObj.h"
 #import "ResRecommendCell.h"
 
-@interface ResRecommendVC : UIViewController
+@interface ResRecommendVC : UIViewController<RequestDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrData;
 @property (nonatomic, strong) ResRecommendObj *resRecommendObj;

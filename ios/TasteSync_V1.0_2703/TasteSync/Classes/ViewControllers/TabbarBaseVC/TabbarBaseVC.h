@@ -24,7 +24,7 @@ typedef enum
 - (void) actionAsk;
 - (void) actionRecommendations;
 - (void) actionRestaurant;
-- (void) actionRestaurantViaAskTab;
+- (void) actionRestaurantViaAskTab:(NSString*)recorequestID;
 - (void) actionOthers;
 - (void) actionNewsfeed;
 - (void) actionProfile:(UserObj *) user;

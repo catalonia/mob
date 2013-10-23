@@ -216,13 +216,14 @@
     
 }
 
-- (void) actionRestaurantViaAskTab;
+- (void) actionRestaurantViaAskTab:(NSString*)recorequestID
 {
     RestaurantVC *vc = [[RestaurantVC alloc] initWithNibName:@"RestaurantVC" bundle:nil];
     vc.notHomeScreen = YES;
+    vc.recorequestID = recorequestID;
     
     NSArray *viewControllersArr = self.viewControllers;
-    if (viewControllersArr.count>2) {
+    if (viewControllersArr.count > 2) {
         self.selectedViewController = [viewControllersArr objectAtIndex:2];
         [(UINavigationController *)self.selectedViewController pushViewController:vc animated:YES];
     }
