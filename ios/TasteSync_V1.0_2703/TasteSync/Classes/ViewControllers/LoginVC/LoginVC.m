@@ -373,6 +373,12 @@
         NSDictionary* dic2 = [dic objectForKey:@"user"];
         NSString* userID = [dic2 objectForKey:@"userId"];
         [UserDefault userDefault].userID = userID;
+        TSCityObj* cityObj = [[TSCityObj alloc]init];
+        cityObj.uid = [dic2 objectForKey:@"userCityId"];
+        cityObj.cityName = [UserDefault userDefault].city;
+        cityObj.stateName = [dic2 objectForKey:@"userState"];
+        cityObj.country = [dic2 objectForKey:@"userCountry"];
+        [UserDefault userDefault].cityObj = cityObj;
         [UserDefault update];
         
         NSString* is_have_account = [dic objectForKey:@"is_have_account"];

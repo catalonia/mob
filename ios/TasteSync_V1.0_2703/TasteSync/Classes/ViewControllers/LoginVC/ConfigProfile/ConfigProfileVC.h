@@ -11,7 +11,7 @@
 
 @interface ConfigProfileVC : UIViewController<UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate,RequestDelegate>
 {
-    __weak IBOutlet UIView *viewMain, *viewUserInfo;
+    __weak IBOutlet UIView *viewMain, *viewUserInfo,*viewData;
     __weak IBOutlet UIScrollView *scrollViewMain;
     __weak IBOutlet UILabel *lbName, *lbLocation, *lbInfo;
     __weak IBOutlet UITextField *tfFriend, *tfCusine, *tfRestaurant1 , *tfRestaurant2, *tfRestaurant3, *tfRestaurant4, *tfRestaurant5;
@@ -20,6 +20,7 @@
     
     __weak IBOutlet UITableView *tbvFilter;
     __weak IBOutlet UILabel *lbTitle;
+    __weak IBOutlet UIImageView* imageProfile;
 }
 
 @property (nonatomic, strong) NSMutableArray *arrDataFriends, *arrDataCusine, *arrDataFilter;//*arrDataRestaurant,

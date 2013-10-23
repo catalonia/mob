@@ -12,6 +12,8 @@
 #import "JSONKit.h"
 #import "TSGlobalObj.h"
 
+#define viewInfoHeigh 52
+
 @interface ConfigProfileVC ()<UIGestureRecognizerDelegate,UIScrollViewDelegate>
 {
     UserDefault *userDefault;
@@ -70,7 +72,11 @@ typedef enum _TextFieldSelect
     
     [CommonHelpers setBackgroudImageForView:self.view];
     
-    // Do any additional setup after loading the view from its nib.
+    CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFriends" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:11];
+    request.delegate = self;
+    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    [request startFormRequest];
+    
     [self initUI];
    
     [self initData];
@@ -87,16 +93,6 @@ typedef enum _TextFieldSelect
 
 {
     [scrollViewMain setContentSize:CGSizeMake(320, 800)];
-/*
-    if ([CommonHelpers isiOS6]) {
-        NSDictionary *underlinerAtt =@{NSUnderlineStyleAttributeName : @1};
-        lbTitle.attributedText = [[NSAttributedString alloc] initWithString:@"Personalize your Experience!" attributes:underlinerAtt];
-    }
-    else
-    {
-        
-    }
- */
     
     ivAvatarFriend.image = nil;
   
@@ -158,12 +154,8 @@ typedef enum _TextFieldSelect
 
 - (IBAction)actionDone:(id)sender
 {
-    CRequest* request = [[CRequest alloc]initWithURL:@"submitSignupDetail" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationJson withKey:10    ];
-    [request setHeader:HeaderTypeJSON];
-    request.delegate = self;
     
     NSMutableDictionary *nameElements = [NSMutableDictionary dictionary];
-    
     [nameElements setObject:[UserDefault userDefault].userID forKey:@"userId"];
 
     if (inviteUserObj != nil) {
@@ -188,8 +180,19 @@ typedef enum _TextFieldSelect
     
     NSString* jsonString = [nameElements JSONString];
     NSLog(@"%@",jsonString);
-    [request setJSON:jsonString];
-    [request startRequest];
+    
+    
+    if (cuisineObj != nil && arrayRest.count!= 0 ) {
+        CRequest* request = [[CRequest alloc]initWithURL:@"submitSignupDetail" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationJson withKey:10    ];
+        [request setHeader:HeaderTypeJSON];
+        request.delegate = self;
+        [request setJSON:jsonString];
+        [request startRequest];
+    }
+    else
+    {
+        [CommonHelpers showInfoAlertWithTitle:@"TasteSync" message:@"Please enter empty data!" delegate:nil tag:0];
+    }
     
 }
 
@@ -455,7 +458,8 @@ typedef enum _TextFieldSelect
                           delay:0
                         options: UIViewAnimationCurveEaseIn
                      animations:^{
-                         viewMain.frame=CGRectMake(viewMain.frame.origin.x,-TBV_POINT_Y +30,viewMain.frame.size.width, viewMain.frame.size.height);
+                         viewMain.frame=CGRectMake(viewMain.frame.origin.x,-TBV_POINT_Y + 30 + 130,viewMain.frame.size.width, viewMain.frame.size.height);
+                         viewUserInfo.frame = CGRectMake(viewUserInfo.frame.origin.x,- TBV_POINT_Y + 30 - 119,viewUserInfo.frame.size.width, viewUserInfo.frame.size.height);
                      }
                      completion:^(BOOL finished){
                          debug(@"move done");
@@ -463,7 +467,7 @@ typedef enum _TextFieldSelect
                          
                      }];
     
-    [tbvFilter setFrame:CGRectMake(tbvFilter.frame.origin.x,TBV_POINT_Y, tbvFilter.frame.size.width, tbvFilter.frame.size.height)];
+    [tbvFilter setFrame:CGRectMake(tbvFilter.frame.origin.x,TBV_POINT_Y - 130, tbvFilter.frame.size.width, tbvFilter.frame.size.height)];
     
     return YES;
 }
@@ -611,28 +615,28 @@ typedef enum _TextFieldSelect
                     }
                 }
                 
-                for (RestaurantObj *restObj in arrayRestaurant) {
-                    
-                    NSString* strObj = restObj.name;
-                    
-                    NSString  *ustrObj =  [strObj uppercaseString];
-                    NSString *utxt =   [txt uppercaseString];
-                    
-                    int diff = strncmp([ustrObj UTF8String], [utxt UTF8String], utxt.length);
-                    
-                    debug(@"ustrObj -  utxt restaurent  -> %@ - %@ ",ustrObj,utxt);
-                    
-                    if ( diff == 0 ) {
-                        debug(@"added");
-                        [arrTmp addObject:restObj];
-                    }
-                }
-                
-                for (TSGlobalObj *global in _arrData) {
-                    if ([arrTmp containsObject:global]) {
-                        [arrTmp removeObject:global];
-                    }
-                }
+//                for (RestaurantObj *restObj in arrayRestaurant) {
+//                    
+//                    NSString* strObj = restObj.name;
+//                    
+//                    NSString  *ustrObj =  [strObj uppercaseString];
+//                    NSString *utxt =   [txt uppercaseString];
+//                    
+//                    int diff = strncmp([ustrObj UTF8String], [utxt UTF8String], utxt.length);
+//                    
+//                    debug(@"ustrObj -  utxt restaurent  -> %@ - %@ ",ustrObj,utxt);
+//                    
+//                    if ( diff == 0 ) {
+//                        debug(@"added");
+//                        [arrTmp addObject:restObj];
+//                    }
+//                }
+//                
+//                for (TSGlobalObj *global in _arrData) {
+//                    if ([arrTmp containsObject:global]) {
+//                        [arrTmp removeObject:global];
+//                    }
+//                }
                 
             }
             
@@ -640,23 +644,25 @@ typedef enum _TextFieldSelect
         break;
     }
    
-    
-    self.arrDataFilter = arrTmp;
-                 
-    if (self.arrDataFilter.count>0) {
-        tbvFilter.hidden = NO;
-        CGRect frame = tbvFilter.frame;
-        if (self.arrDataFilter.count>5) {
-            frame.size.height = 5*44;
-
+    if (textFieldSelected == TextFieldCusine || textFieldSelected == TextFieldFriend) {
+        self.arrDataFilter = arrTmp;
+        
+        if (self.arrDataFilter.count>0) {
+            tbvFilter.hidden = NO;
+            CGRect frame = tbvFilter.frame;
+            if (self.arrDataFilter.count>5) {
+                frame.size.height = 5*44;
+                
+            }
+            else{
+                frame.size.height = (_arrDataFilter.count) *44;
+                
+            }
+            [tbvFilter setFrame:frame];
+            [tbvFilter reloadData];
         }
-        else{
-            frame.size.height = (_arrDataFilter.count) *44;
-
-        }
-        [tbvFilter setFrame:frame];
-        [tbvFilter reloadData];
     }
+    
     
     
 }
@@ -689,7 +695,16 @@ typedef enum _TextFieldSelect
                           delay:0
                         options: UIViewAnimationCurveEaseIn
                      animations:^{
-                         viewMain.frame=CGRectMake(viewMain.frame.origin.x,0,viewMain.frame.size.width, viewMain.frame.size.height);
+                         if (viewUserInfo.frame.size.height == viewInfoHeigh) {
+                             viewMain.frame = CGRectMake(viewMain.frame.origin.x, 71 ,viewMain.frame.size.width, viewMain.frame.size.height);
+                             viewUserInfo.frame = CGRectMake(viewUserInfo.frame.origin.x,11,viewUserInfo.frame.size.width, viewUserInfo.frame.size.height);
+                         }
+                         else
+                         {
+                             viewMain.frame = CGRectMake(viewMain.frame.origin.x, 119 ,viewMain.frame.size.width, viewMain.frame.size.height);
+                             viewUserInfo.frame = CGRectMake(viewUserInfo.frame.origin.x,11,viewUserInfo.frame.size.width, viewUserInfo.frame.size.height);
+                         }
+                         
                      }
                      completion:^(BOOL finished){
                          debug(@"hideKeyBoard move done");
@@ -720,34 +735,109 @@ typedef enum _TextFieldSelect
 
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
-    if (key != 10) {
+    if(key == 11)
+    {
+        NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSDictionary* dic = [response objectFromJSONString];
+        NSArray* array = [dic objectForKey:@"friendTasteSync"];
+        NSMutableArray* arrayUser = [[NSMutableArray alloc]init];
+        for (NSDictionary* dic in array) {
+            [arrayUser addObject:[dic objectForKey:@"name"]];
+        }
+        if (arrayUser.count == 0) {
+            //imageProfile.frame = CGRectMake(imageProfile.frame.origin.x, imageProfile.frame.origin.y, imageProfile.frame.size.width, viewInfoHeigh);
+            [lbInfo removeFromSuperview];
+            viewUserInfo.frame = CGRectMake(viewUserInfo.frame.origin.x, viewUserInfo.frame.origin.y, viewUserInfo.frame.size.width, viewInfoHeigh);
+            viewMain.frame = CGRectMake(viewMain.frame.origin.x, viewMain.frame.origin.y - 48, viewMain.frame.size.width, viewMain.frame.size.height);
+            
+        }
+        else if (arrayUser.count > 3) {
+            lbInfo.text = [NSString stringWithFormat:@"%@, %@, %@ and %d other friends already use TasteSync", [arrayUser objectAtIndex:0], [arrayUser objectAtIndex:1], [arrayUser objectAtIndex:2], [arrayUser count] - 3];
+        }
+        else
+        {
+            int i = 0;
+            NSString* list;
+            for (NSString* str in arrayUser) {
+                if (i == 0)
+                    list = [arrayUser objectAtIndex:i];
+                else
+                    list = [list stringByAppendingString:[NSString stringWithFormat:@", %@",[arrayUser objectAtIndex:i]]];
+                i++;
+            }
+            lbInfo.text = [NSString stringWithFormat:@"%@ already use TasteSync", list];
+        }
+    }
+    else if (key != 10) {
         NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"%@",response);
         NSArray* arrayRestaurant = [response objectFromJSONString];
+        if (key == TextFieldRestaurant1) {
+            [arrayRestaurant1 removeAllObjects];
+        }
+        if (key == TextFieldRestaurant2) {
+            [arrayRestaurant2 removeAllObjects];
+        }
+        if (key == TextFieldRestaurant3) {
+            [arrayRestaurant3 removeAllObjects];
+        }
+        if (key == TextFieldRestaurant4) {
+            [arrayRestaurant4 removeAllObjects];
+        }
+        if (key == TextFieldRestaurant5) {
+            [arrayRestaurant5 removeAllObjects];
+        }
         for (NSDictionary* dic in arrayRestaurant) {
             TSGlobalObj* restObj = [[TSGlobalObj alloc]init];
             restObj.uid = [dic objectForKey:@"restaurantId"];
             restObj.name = [dic objectForKey:@"restaurantName"];
             if (key == TextFieldRestaurant1) {
-                [arrayRestaurant1 removeAllObjects];
                 [arrayRestaurant1 addObject:restObj];
             }
             if (key == TextFieldRestaurant2) {
-                [arrayRestaurant2 removeAllObjects];
                 [arrayRestaurant2 addObject:restObj];
             }
             if (key == TextFieldRestaurant3) {
-                [arrayRestaurant3 removeAllObjects];
                 [arrayRestaurant3 addObject:restObj];
             }
             if (key == TextFieldRestaurant4) {
-                [arrayRestaurant4 removeAllObjects];
                 [arrayRestaurant4 addObject:restObj];
             }
             if (key == TextFieldRestaurant5) {
-                [arrayRestaurant5 removeAllObjects];
                 [arrayRestaurant5 addObject:restObj];
             }
+        }
+        
+        
+        if (key == TextFieldRestaurant1) {
+            self.arrDataFilter = arrayRestaurant1;
+        }
+        if (key == TextFieldRestaurant2) {
+            self.arrDataFilter = arrayRestaurant2;
+        }
+        if (key == TextFieldRestaurant3) {
+            self.arrDataFilter = arrayRestaurant3;
+        }
+        if (key == TextFieldRestaurant4) {
+            self.arrDataFilter = arrayRestaurant4;
+        }
+        if (key == TextFieldRestaurant5) {
+            self.arrDataFilter = arrayRestaurant5;
+        }
+        
+        if (self.arrDataFilter.count>0) {
+            tbvFilter.hidden = NO;
+            CGRect frame = tbvFilter.frame;
+            if (self.arrDataFilter.count>5) {
+                frame.size.height = 5*44;
+                
+            }
+            else{
+                frame.size.height = (_arrDataFilter.count) *44;
+                
+            }
+            [tbvFilter setFrame:frame];
+            [tbvFilter reloadData];
         }
     }
     else
@@ -756,6 +846,10 @@ typedef enum _TextFieldSelect
         NSDictionary* dic = [response objectFromJSONString];
         if ([dic objectForKey:@"successMsg"] != nil) {
             [[CommonHelpers appDelegate] showAskTab];
+        }
+        else
+        {
+            [CommonHelpers showConfirmAlertWithTitle:@"TasteSync" message:@"Error! Your data incorrect!" delegate:nil tag:0];
         }
     }
 }
