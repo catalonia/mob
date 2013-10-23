@@ -271,12 +271,16 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
-            responseDone = userBo.logout(userId);
+            // TODO get from the header . 
+            String deviceToken = null;
+            responseDone = userBo.logout(userId, deviceToken);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             tsSuccessObj.setSuccessMsg("Logout success!");
             responseDone = true;
-
+            
+ 
+            
             return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
