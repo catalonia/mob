@@ -605,6 +605,7 @@ restaurantObj=_restaurantObj;
     if (key == 2) {
         NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"Response: %@",response);
+        [self.navigationController popViewControllerAnimated:YES];
     }
     if (key == 3) {
         NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
