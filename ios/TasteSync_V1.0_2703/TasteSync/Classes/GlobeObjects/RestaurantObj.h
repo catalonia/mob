@@ -40,6 +40,7 @@ typedef enum
 @property (nonatomic, assign) BOOL isCheckin;
 @property (nonatomic, assign) BOOL isLike;
 @property (nonatomic, strong) NSString *imageUrl;
+@property (nonatomic, strong) NSString *phone;
 @property (nonatomic, assign) int allowSize;
 
 @property(nonatomic,strong)  NSString* factualId, *factualRating, *priceRange, *restaurantHours, *sumVoteCount, *sumVoteValue, *tbdOpenTableId;
@@ -51,4 +52,39 @@ typedef enum
 @property(nonatomic,strong) TSCityObj* cityObj;
 @property(nonatomic,strong) NSMutableArray* recommendArray;
 
+@property(nonatomic,strong) NSString* website;
+@property(nonatomic,assign) BOOL healthyOptionsFlag;
+@property(nonatomic,assign) BOOL wifiFlag;
+@property(nonatomic,assign) BOOL payCashonlyFlag;
+@property(nonatomic,assign) BOOL reservationsFlag;
+@property(nonatomic,assign) BOOL open24HoursFlag;
+@property(nonatomic,assign) BOOL parkingFlag;
+@property(nonatomic,assign) BOOL parkingValetFlag;
+@property(nonatomic,assign) BOOL parkingFreeFlag;
+@property(nonatomic,assign) BOOL parkingGarageFlag;
+@property(nonatomic,assign) BOOL parkingLotFlag;
+@property(nonatomic,assign) BOOL parkingStreetFlag;
+@property(nonatomic,assign) BOOL parkingValidatedFlag;
+@property(nonatomic,assign) BOOL smokingFlag;
+@property(nonatomic,assign) BOOL accessibleWheelchairFlag;
+@property(nonatomic,assign) BOOL alcoholFlag;
+@property(nonatomic,assign) BOOL alcoholBarFlag;
+@property(nonatomic,assign) BOOL alcoholBeerWineFlag;
+@property(nonatomic,assign) BOOL alcoholByobFlag;
+@property(nonatomic,assign) BOOL groupsGoodForFlag;
+@property(nonatomic,assign) BOOL kidsGoodForFlag;
+@property(nonatomic,assign) BOOL kidsMenuFlag;
+@property(nonatomic,assign) BOOL mealBreakfastFlag;
+@property(nonatomic,assign) BOOL mealCaterFlag;
+@property(nonatomic,assign) BOOL mealDeliverFlag;
+@property(nonatomic,assign) BOOL mealDinnerFlag;
+@property(nonatomic,assign) BOOL mealLunchFlag;
+@property(nonatomic,assign) BOOL mealTakeoutFlag;
+@property(nonatomic,assign) BOOL optionsGlutenfreeFlag;
+@property(nonatomic,assign) BOOL optionsLowfatFlag;
+@property(nonatomic,assign) BOOL optionsOrganicFlag;
+@property(nonatomic,assign) BOOL optionsVeganFlag;
+@property(nonatomic,assign) BOOL optionsVegetarianFlag;
+@property(nonatomic,assign) BOOL roomPrivateFlag;
+@property(nonatomic,assign) BOOL seatingOutdoorFlag;
 @end

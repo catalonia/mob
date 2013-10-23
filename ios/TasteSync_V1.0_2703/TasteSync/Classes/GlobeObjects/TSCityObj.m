@@ -9,7 +9,8 @@
 #import "TSCityObj.h"
 
 @implementation TSCityObj
-@synthesize 
+@synthesize
+neighbourhoodID = _neighbourhoodID,
 uid                       = _uid,
 cityName            = _cityName,
 stateName          = _stateName,

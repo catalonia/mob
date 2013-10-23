@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface TSCityObj : NSObject
+@property(nonatomic,strong) NSString* neighbourhoodID;
 @property(nonatomic,strong) NSString* uid;
 @property(nonatomic,strong) NSString* cityName;
 @property(nonatomic,strong) NSString* stateName;
