@@ -32,12 +32,22 @@
 
 - (void) initForView :(RestaurantObj *) obj
 {
-    debug(@"initForView obj.name -> %@",obj.name);
     restaurantObj = obj;
+    debug(@"initForView obj.name -> %@, rate: %f",obj.name, obj.rates);
     rateCustom = [[RateCustom alloc] initWithFrame:CGRectMake(20, 40, 120, 20)];
-    [self addSubview:rateCustom];
-    [rateCustom setRateMedium:obj.rates];
-    rateCustom.allowedRate = NO;
+    if (obj.rates != 0) {
+        [rateCustom setRateMedium:obj.rates];
+        [self addSubview:rateCustom];
+        rateCustom.allowedRate = NO;
+    }
+    else
+    {
+        lbDetail.frame = CGRectMake(lbDetail.frame.origin.x, 37, lbDetail.frame.size.width, lbDetail.frame.size.height);
+        lbName.frame = CGRectMake(lbName.frame.origin.x, 19, lbName.frame.size.width, lbName.frame.size.height);
+        [rateCustom removeFromSuperview];
+    }
+    
+    
     if (obj.isDeal) {
         btDeal.hidden = NO;
     }
