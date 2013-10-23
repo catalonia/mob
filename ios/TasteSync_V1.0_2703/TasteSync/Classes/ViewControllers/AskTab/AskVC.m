@@ -206,7 +206,32 @@
 - (void) initData
 {
     self.arrData = [[NSMutableArray alloc] init ];
-    self.arrData = [[CommonHelpers appDelegate] arrDropdown];    
+    self.arrData = [[CommonHelpers appDelegate] arrDropdown];
+    
+    for (TSGlobalObj* global in [[CommonHelpers appDelegate] arrCuisine]) {
+        [self.arrData addObject:global];
+    }
+    
+    for (TSGlobalObj* global in [[CommonHelpers appDelegate] arrOccasion]) {
+        [self.arrData addObject:global];
+    }
+    
+    for (TSGlobalObj* global in [[CommonHelpers appDelegate] arrPrice]) {
+        [self.arrData addObject:global];
+    }
+    
+    for (TSGlobalObj* global in [[CommonHelpers appDelegate] arrTheme]) {
+        [self.arrData addObject:global];
+    }
+    
+    for (TSGlobalObj* global in [[CommonHelpers appDelegate] arrTypeOfRestaurant]) {
+        [self.arrData addObject:global];
+    }
+    
+    for (TSGlobalObj* global in [[CommonHelpers appDelegate] arrWhoAreUWith]) {
+        [self.arrData addObject:global];
+    }
+    
     self.arrDataRegion = [[NSMutableArray alloc] init];   
     _storeLocation = @"";
     self.arrDataFilter = [[NSMutableArray alloc] init];
@@ -407,24 +432,26 @@
         [request setFormPostValue:typeofrestaurantList forKey:@"typeofrestaurantidList"];
         [request setFormPostValue:occasionList             forKey:@"occasionidlist"];
         
-        [request setFormPostValue:@"neighborhoodid" forKey:@"neighborhoodid"];
-        [request setFormPostValue:@"typeofrestaurantidList" forKey:@"cityid"];
-        [request setFormPostValue:@"occasionidlist" forKey:@"statename"];
+//        [request setFormPostValue:@"neighborhoodid" forKey:@"neighborhoodid"];
+//        [request setFormPostValue:@"typeofrestaurantidList" forKey:@"cityid"];
+//        [request setFormPostValue:@"occasionidlist" forKey:@"statename"];
         
-        if (region.cityObj == nil) {
-            [request setFormPostValue:@"" forKey:@"neighborhoodid"];
-            [request setFormPostValue:region.uid forKey:@"cityid"];
-            [request setFormPostValue:[self parseStateFromCityObj:region.name] forKey:@"statename"];
-        }
-        else
-        {
-            [request setFormPostValue:region.uid forKey:@"neighborhoodid"];
+//        if (region.cityObj == nil) {
+            [request setFormPostValue:region.cityObj.neighbourhoodID forKey:@"neighborhoodid"];
             [request setFormPostValue:region.cityObj.uid forKey:@"cityid"];
             [request setFormPostValue:region.cityObj.stateName forKey:@"statename"];
-        }
+        
+        
+//        }//[self parseStateFromCityObj:region.name]
+//        else
+//        {
+//            [request setFormPostValue:region.uid forKey:@"neighborhoodid"];
+//            [request setFormPostValue:region.cityObj.uid forKey:@"cityid"];
+//            [request setFormPostValue:region.cityObj.stateName forKey:@"statename"];
+//        }
         request.delegate = self;
         [request startFormRequest];
-        NSLog(@"%@ - %d - %@", region.uid, region.type, region.name);
+        NSLog(@"%@ - %@ - %@", region.cityObj.neighbourhoodID, region.cityObj.uid, region.cityObj.stateName);
     
     }
 
@@ -908,18 +935,24 @@
             NSArray* array = [response objectFromJSONString];
         for (NSDictionary* dic in array) {
             TSGlobalObj* global = [[TSGlobalObj alloc]init];
-            global.uid = [dic objectForKey:@"id"];
+            global.uid = [NSString stringWithFormat:@"%@", [dic objectForKey:@"id"] ];
             global.name = [dic objectForKey:@"name"];
             global.type = GlobalDataCity;
             NSDictionary* name = [dic objectForKey:@"city"];
             TSCityObj* cityObj = nil;
             if (name != (id)[NSNull null]) {
-                cityObj.uid = [name objectForKey:@"cityId"];
+                cityObj = [[TSCityObj alloc]init];
+                cityObj.uid = [NSString stringWithFormat:@"%@", [name objectForKey:@"cityId"]];
+                if ([cityObj.uid isEqualToString:global.uid]) {
+                    cityObj.neighbourhoodID = @"";
+                }
+                else
+                    cityObj.neighbourhoodID = global.uid;
                 cityObj.country = [name objectForKey:@"country"];
                 cityObj.stateName = [name objectForKey:@"state"];
                 cityObj.cityName = [name objectForKey:@"city"];
             }
-
+            global.cityObj = cityObj;
             [_arrDataRegion addObject:global];
             [_arrDataFilter addObject:global];
         }

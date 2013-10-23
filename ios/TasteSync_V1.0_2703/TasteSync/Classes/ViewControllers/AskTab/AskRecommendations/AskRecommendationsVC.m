@@ -141,8 +141,8 @@
 - (IBAction)actionSkipThis:(id)sender
 {
     recommendationsSent = YES;
-
-    [[[CommonHelpers appDelegate] tabbarBaseVC] actionRestaurantViaAskTab];
+    
+    [[[CommonHelpers appDelegate] tabbarBaseVC] actionRestaurantViaAskTab:_recoRequestId];
 }
 - (IBAction)actionPostOnFb:(id)sender
 {
@@ -740,6 +740,9 @@
         questionAsk = [questionAsk stringByReplacingOccurrencesOfString:@"<Location>" withString:_location.name];
         _askSentences = questionAsk;
         tfAsk.text = _askSentences;
+    }
+    if (key == 2) {
+        
     }
 }
 
