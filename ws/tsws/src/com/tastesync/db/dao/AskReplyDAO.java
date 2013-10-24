@@ -13,6 +13,7 @@ import com.tastesync.model.objects.derived.TSRestaurantsTileSearchExtendedInfoOb
 import com.tastesync.model.objects.derived.TSSenderUserObj;
 import com.tastesync.model.vo.DescriptorDataVO;
 
+import java.sql.Connection;
 import java.util.List;
 
 
@@ -78,10 +79,5 @@ public interface AskReplyDAO {
 
     List<TSRecoNotificationBaseObj> showRecommendationsList(String userId,
         String paginationId) throws TasteSyncException;
-    
-    DescriptorDataVO getDescriptorDataForDifferentIds(String[] cuisineTier1IdList,
-            String[] cuisineTier2IdList, String[] priceIdList,
-            String[] themeIdList, String[] whoareyouwithIdList,
-            String[] typeOfRestaurantIdList, String[] occasionIdList,
-            String neighborhoodId, String cityId, String stateName) throws TasteSyncException;
+
 }

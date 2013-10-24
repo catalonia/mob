@@ -165,10 +165,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             String recoRequestId = userId +
                 CommonFunctionsUtil.generateUniqueKey();
 
-
-            String templateString = createRecoRequestTemplateText(cuisineTier1IdList,
-                    cuisineTier2IdList, priceIdList, themeIdList,
-                    whoareyouwithIdList, typeOfRestaurantIdList,
+            String templateString = createRecoRequestTemplateText(connection,
+                    cuisineTier1IdList, cuisineTier2IdList, priceIdList,
+                    themeIdList, whoareyouwithIdList, typeOfRestaurantIdList,
                     occasionIdList, neighborhoodId, cityId, stateName);
             statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_INSERT_SQL);
 
@@ -305,12 +304,12 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
     // need to load in static block
     // need to load in static block
-    public String createRecoRequestTemplateText(String[] cuisineTier1IdList,
-        String[] cuisineTier2IdList, String[] priceIdList,
-        String[] themeIdList, String[] whoareyouwithIdList,
-        String[] typeOfRestaurantIdList, String[] occasionIdList,
-        String neighborhoodId, String cityId, String stateName)
-        throws TasteSyncException {
+    public String createRecoRequestTemplateText(Connection connection,
+        String[] cuisineTier1IdList, String[] cuisineTier2IdList,
+        String[] priceIdList, String[] themeIdList,
+        String[] whoareyouwithIdList, String[] typeOfRestaurantIdList,
+        String[] occasionIdList, String neighborhoodId, String cityId,
+        String stateName) throws TasteSyncException {
         String templateString = null;
         String tempTemplateString = null;
         StringBuffer finalTemplateString = new StringBuffer();
@@ -327,10 +326,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             //TODO define the data with variable
             //get the property value and print it out
             // System.out.println(prop.toString());
-
-            DescriptorDataVO descriptorDataVO = getDescriptorDataForDifferentIds(cuisineTier1IdList,
-                    cuisineTier2IdList, priceIdList, themeIdList,
-                    whoareyouwithIdList, typeOfRestaurantIdList,
+            DescriptorDataVO descriptorDataVO = getDescriptorDataForDifferentIds(connection,
+                    cuisineTier1IdList, cuisineTier2IdList, priceIdList,
+                    themeIdList, whoareyouwithIdList, typeOfRestaurantIdList,
                     occasionIdList, neighborhoodId, cityId, stateName);
 
             ArrayList<String> cuisineTier1IdDescList = descriptorDataVO.getCuisineTier1IdDescList();
@@ -531,7 +529,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             }
 
             //System.out.println("finalTemplateString=" + finalTemplateString);
-
             return finalTemplateString.toString();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -3452,22 +3449,17 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         }
     }
 
-    @Override
     public DescriptorDataVO getDescriptorDataForDifferentIds(
-        String[] cuisineTier1IdList, String[] cuisineTier2IdList,
-        String[] priceIdList, String[] themeIdList,
-        String[] whoareyouwithIdList, String[] typeOfRestaurantIdList,
-        String[] occasionIdList, String neighborhoodId, String cityId,
-        String stateName) throws TasteSyncException {
-        TSDataSource tsDataSource = TSDataSource.getInstance();
-
-        Connection connection = null;
+        Connection connection, String[] cuisineTier1IdList,
+        String[] cuisineTier2IdList, String[] priceIdList,
+        String[] themeIdList, String[] whoareyouwithIdList,
+        String[] typeOfRestaurantIdList, String[] occasionIdList,
+        String neighborhoodId, String cityId, String stateName)
+        throws TasteSyncException {
         PreparedStatement statement = null;
         ResultSet resultset = null;
 
         try {
-            connection = tsDataSource.getConnection();
-
             ArrayList<String> cuisineTier1IdDescList = new ArrayList<String>();
             ArrayList<String> cuisineTier2IdDescList = new ArrayList<String>();
             ArrayList<String> occasionIdDescList = new ArrayList<String>();
@@ -3641,9 +3633,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
-        } finally {
-            tsDataSource.close();
-            tsDataSource.closeConnection(connection, statement, resultset);
         }
     }
 }
