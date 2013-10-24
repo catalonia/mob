@@ -379,10 +379,10 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "AND CUISINE_ID = ? ";
     public static String CUISINE_TIER2_DESCRIPTOR_ALL_SELECT_SQL = "SELECT CUISINE_DESC " +
         "FROM cuisine_tier2_descriptor  WHERE CUISINE_VALID_CURRENT = '1' " +
-        "CUISINE_ID = ?";
+        "AND CUISINE_ID = ?";
     public static String OCCASION_DESCRIPTOR_SELECT_SQL = "SELECT occasion_desc " +
         "FROM occasion_descriptor WHERE Occasion_VALID_CURRENT = '1' " +
-        "AND occasion_desc = ? ";
+        "AND occasion_id = ? ";
     public static String PRICE_DESCRIPTOR_SELECT_SQL = "SELECT price_desc " +
         "FROM price_descriptor WHERE price_VALID_CURRENT = '1' " +
         "AND PRICE_ID = ?";
@@ -395,6 +395,16 @@ public interface AskReplyQueries extends TSDBCommonQueries {
     public static String WHOAREYOUWITH_DESCRIPTOR_SELECT_SQL = "SELECT whoareyouwith_desc " +
         "FROM whoareyouwith_descriptor WHERE whoareyouwith_VALID_CURRENT = '1' " +
         "AND whoareyouwith_id = ? ";
+    public static String CITY_NAME_SELECT_SQL = "SELECT CITY " +
+        "FROM CITIES " + "WHERE CITY_ID=?";
+    public static String NEIGHBOURHOOD_NAME_SELECT_SQL = "SELECT NEIGHBOURHOOD_DESC " +
+        "FROM CITY_NEIGHBOURHOOD " + "WHERE NEIGHBOUR_ID=?";
+    public static String CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL = "SELECT city_neighbourhood.NEIGHBOUR_ID, " +
+        "city_neighbourhood.NEIGHBOURHOOD_DESC, " +
+        "city_neighbourhood.CITY_NAME, " + "cities.state, " + "cities.city " +
+        "FROM cities, city_neighbourhood " +
+        "WHERE city_neighbourhood.NEIGHBOURHOOD_DESC = ? " +
+        "AND city_neighbourhood.CITY_ID = cities.city_id";
     public String RECOREPLY_DIDIYOULIKE_SELECT_SQL = "" +
         "SELECT recoreply_didyoulike_notif.recorequest_id, " +
         "       recoreply_didyoulike_notif.notif_datetime, " +

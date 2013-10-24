@@ -2,7 +2,6 @@ package com.tastesync.db.dao;
 
 import com.tastesync.common.GlobalVariables;
 import com.tastesync.common.MySQL;
-import com.tastesync.common.PushService;
 import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
@@ -685,13 +684,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public String loginAccount(String userId) throws TasteSyncException {
         String dateNow = CommonFunctionsUtil.getCurrentDatetime();
-        String dateNowAppend = CommonFunctionsUtil.getCurrentDatetimeAppendField();
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
         PreparedStatement statement = null;
 
-        //String id = dateNowAppend + "-" + userId + "-" +
-          //  CommonFunctionsUtil.generateRandomString(4, 5);
         String id = CommonFunctionsUtil.generateUniqueKey();
 
         //Update login time (users_log table)
@@ -1920,7 +1916,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.setString(5, dayTime);
             statement.execute();
             statement.close();
-            //PushService push = new PushService();
             statement = connection.prepareStatement(UserQueries.USER_DEVICE_SELECT_SQL);
             statement.setString(1, recipient_ID);
 

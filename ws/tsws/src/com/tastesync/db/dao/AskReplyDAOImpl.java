@@ -304,7 +304,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     // need to load in static block
-    private String createRecoRequestTemplateText(String[] cuisineTier1IdList,
+    // need to load in static block
+    public String createRecoRequestTemplateText(String[] cuisineTier1IdList,
         String[] cuisineTier2IdList, String[] priceIdList,
         String[] themeIdList, String[] whoareyouwithIdList,
         String[] typeOfRestaurantIdList, String[] occasionIdList,
@@ -317,21 +318,15 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         InputStream ifile = null;
 
         try {
-        	if (1 == 1) {
-        		return "I am looking for a<cuisine>restaurant in <location>.";
-        	}
             //loader.getResourceAsStream("Resources/SomeConfig.xml");
             ifile = this.getClass().getClassLoader()
                         .getResourceAsStream("Resources/config.properties");
-            System.out.println("load ... Resources/config.properties");
-
             //load a properties file
             prop.load(ifile);
 
             //TODO define the data with variable
             //get the property value and print it out
-            System.out.println("search.cuisine.location=" +
-                prop.getProperty("search.cuisine.location"));
+            // System.out.println(prop.toString());
 
             DescriptorDataVO descriptorDataVO = getDescriptorDataForDifferentIds(cuisineTier1IdList,
                     cuisineTier2IdList, priceIdList, themeIdList,
@@ -352,20 +347,36 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             // get cuisines desc
             templateString = prop.getProperty("search.cuisine.location");
 
-            for (int i = 0; i < cuisineTier1IdDescList.size(); ++i) {
+            int cuisineTier1IdDescListSize = cuisineTier1IdDescList.size();
+
+            for (int i = 0; i < cuisineTier1IdDescListSize; ++i) {
                 textToBeReplaced.append(cuisineTier1IdDescList.get(i));
 
-                if (i != (cuisineTier1IdDescList.size() - 1)) {
+                if ((i != (cuisineTier1IdDescListSize - 1)) &&
+                        (i != (cuisineTier1IdDescListSize - 2))) {
                     textToBeReplaced.append(", ");
+                } else if ((cuisineTier1IdDescListSize > 1) &&
+                        (i == (cuisineTier1IdDescListSize - 2))) {
+                    textToBeReplaced.append(" or ");
+                } else if (i == (cuisineTier1IdDescListSize - 1)) {
+                    textToBeReplaced.append(" ");
                 }
             }
 
             tempTemplateString = StringUtils.replace(templateString,
                     "<cuisine>", textToBeReplaced.toString());
 
-            //TODO Get location related info.
+            templateString = tempTemplateString;
+
+            // Get location related info.
             textToBeReplaced = new StringBuffer();
-            textToBeReplaced.append(neighborhoodId).append(", ").append(cityId);
+
+            if ((neighborhoodId != null) && !neighborhoodId.isEmpty()) {
+                textToBeReplaced.append(descriptorDataVO.getNeighborhoodName())
+                                .append(", ");
+            }
+
+            textToBeReplaced.append(descriptorDataVO.getCityName());
 
             tempTemplateString = StringUtils.replace(templateString,
                     "<location>", textToBeReplaced.toString());
@@ -374,90 +385,95 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             cuisineTier1IdDescList = null;
 
+            textToBeReplaced = new StringBuffer();
+
             //get occasion desc
             if (occasionIdDescList.size() > 0) {
                 templateString = prop.getProperty("search.occasion");
-            }
 
-            for (int i = 0; i < occasionIdDescList.size(); ++i) {
-                textToBeReplaced.append(occasionIdDescList.get(i));
+                for (int i = 0; i < occasionIdDescList.size(); ++i) {
+                    textToBeReplaced.append(occasionIdDescList.get(i));
 
-                if (i != (occasionIdDescList.size() - 1)) {
-                    textToBeReplaced.append("/");
+                    if (i != (occasionIdDescList.size() - 1)) {
+                        textToBeReplaced.append("/");
+                    }
+                }
+
+                if ((textToBeReplaced.toString() != null) &&
+                        !textToBeReplaced.toString().isEmpty()) {
+                    tempTemplateString = StringUtils.replace(templateString,
+                            "<occasion>", textToBeReplaced.toString());
+                    finalTemplateString.append(" ").append(tempTemplateString);
                 }
             }
 
-            if ((textToBeReplaced.toString() != null) &&
-                    !textToBeReplaced.toString().isEmpty()) {
-                tempTemplateString = StringUtils.replace(templateString,
-                        "<occasion>", textToBeReplaced.toString());
-                finalTemplateString.append(" ").append(tempTemplateString);
-            }
-
             occasionIdDescList = null;
+            textToBeReplaced = new StringBuffer();
 
             // get whoareyouwith
             if (whoareyouwithIdDescList.size() > 0) {
                 templateString = prop.getProperty("search.whoareyouwith");
-            }
 
-            for (int i = 0; i < whoareyouwithIdDescList.size(); ++i) {
-                textToBeReplaced.append(whoareyouwithIdDescList.get(i));
+                for (int i = 0; i < whoareyouwithIdDescList.size(); ++i) {
+                    textToBeReplaced.append(whoareyouwithIdDescList.get(i));
 
-                if (i != (whoareyouwithIdDescList.size() - 1)) {
-                    textToBeReplaced.append("/");
+                    if (i != (whoareyouwithIdDescList.size() - 1)) {
+                        textToBeReplaced.append("/");
+                    }
+                }
+
+                if ((textToBeReplaced.toString() != null) &&
+                        !textToBeReplaced.toString().isEmpty()) {
+                    tempTemplateString = StringUtils.replace(templateString,
+                            "<whoareyouwith>", textToBeReplaced.toString());
+                    finalTemplateString.append(" ").append(tempTemplateString);
                 }
             }
 
-            if ((textToBeReplaced.toString() != null) &&
-                    !textToBeReplaced.toString().isEmpty()) {
-                tempTemplateString = StringUtils.replace(templateString,
-                        "<whoareyouwith>", textToBeReplaced.toString());
-                finalTemplateString.append(" ").append(tempTemplateString);
-            }
-
             whoareyouwithIdDescList = null;
+            textToBeReplaced = new StringBuffer();
 
             // get typeOfRestaurant 
             if (typeOfRestaurantIdDescList.size() > 0) {
                 templateString = prop.getProperty("search.typeofrest");
-            }
 
-            for (int i = 0; i < typeOfRestaurantIdDescList.size(); ++i) {
-                textToBeReplaced.append(typeOfRestaurantIdDescList.get(i));
+                for (int i = 0; i < typeOfRestaurantIdDescList.size(); ++i) {
+                    textToBeReplaced.append(typeOfRestaurantIdDescList.get(i));
 
-                if (i != (typeOfRestaurantIdDescList.size() - 1)) {
-                    textToBeReplaced.append("/");
+                    if (i != (typeOfRestaurantIdDescList.size() - 1)) {
+                        textToBeReplaced.append("/");
+                    }
+                }
+
+                if ((textToBeReplaced.toString() != null) &&
+                        !textToBeReplaced.toString().isEmpty()) {
+                    tempTemplateString = StringUtils.replace(templateString,
+                            "<typeofrest>", textToBeReplaced.toString());
+                    finalTemplateString.append(" ").append(tempTemplateString);
                 }
             }
 
-            if ((textToBeReplaced.toString() != null) &&
-                    !textToBeReplaced.toString().isEmpty()) {
-                tempTemplateString = StringUtils.replace(templateString,
-                        "<typeofrest>", textToBeReplaced.toString());
-                finalTemplateString.append(" ").append(tempTemplateString);
-            }
-
             typeOfRestaurantIdDescList = null;
+            textToBeReplaced = new StringBuffer();
 
             //get typeOfRestaurant 
             if (themeIdDescList.size() > 0) {
                 templateString = prop.getProperty("search.restaurant.theme");
-            }
 
-            for (int i = 0; i < themeIdDescList.size(); ++i) {
-                textToBeReplaced.append(themeIdDescList.get(i));
+                for (int i = 0; i < themeIdDescList.size(); ++i) {
+                    textToBeReplaced.append(themeIdDescList.get(i));
 
-                if (i != (themeIdDescList.size() - 1)) {
-                    textToBeReplaced.append("/");
+                    if (i != (themeIdDescList.size() - 1)) {
+                        textToBeReplaced.append("/");
+                    }
                 }
-            }
 
-            if ((textToBeReplaced.toString() != null) &&
-                    !textToBeReplaced.toString().isEmpty()) {
-                tempTemplateString = StringUtils.replace(templateString,
-                        "<theme>", textToBeReplaced.toString());
-                finalTemplateString.append(" ").append(tempTemplateString);
+                if ((textToBeReplaced.toString() != null) &&
+                        !textToBeReplaced.toString().isEmpty()) {
+                    tempTemplateString = StringUtils.replace(templateString,
+                            "<theme>", textToBeReplaced.toString());
+                    finalTemplateString.append(" ").append(tempTemplateString);
+                }
             }
 
             themeIdDescList = null;
@@ -465,53 +481,56 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             // define price id values 
             int priceIdValueType = 0;
 
-            for (int i = 0; i < priceIdDescList.size(); ++i) {
-                if ((priceIdValueType < 1) &&
-                        "$".equals(priceIdDescList.get(i))) {
-                    priceIdValueType = 1;
+            if (priceIdDescList.size() > 0) {
+                for (int i = 0; i < priceIdDescList.size(); ++i) {
+                    if ((priceIdValueType < 1) &&
+                            "$".equals(priceIdDescList.get(i))) {
+                        priceIdValueType = 1;
+                    }
+
+                    if ((priceIdValueType < 2) &&
+                            "$$".equals(priceIdDescList.get(i))) {
+                        priceIdValueType = 2;
+                    }
+
+                    if ((priceIdValueType < 3) &&
+                            "$$$".equals(priceIdDescList.get(i))) {
+                        priceIdValueType = 3;
+                    }
+
+                    if ("$$$$".equals(priceIdDescList.get(i))) {
+                        priceIdValueType = 4;
+
+                        break;
+                    }
+
+                    if ("$$$$$".equals(priceIdDescList.get(i))) {
+                        priceIdValueType = 5;
+
+                        break;
+                    }
                 }
 
-                if ((priceIdValueType < 2) &&
-                        "$$".equals(priceIdDescList.get(i))) {
-                    priceIdValueType = 2;
+                if (priceIdValueType == 1) {
+                    templateString = prop.getProperty(
+                            "search.restaurant.price.1");
+                    finalTemplateString.append(" ").append(templateString);
                 }
 
-                if ((priceIdValueType < 3) &&
-                        "$$$".equals(priceIdDescList.get(i))) {
-                    priceIdValueType = 3;
+                if (priceIdValueType <= 3) {
+                    templateString = prop.getProperty(
+                            "search.restaurant.price.3.less");
+                    finalTemplateString.append(" ").append(templateString);
                 }
 
-                if ("$$$$".equals(priceIdDescList.get(i))) {
-                    priceIdValueType = 4;
-
-                    break;
-                }
-
-                if ("$$$$$".equals(priceIdDescList.get(i))) {
-                    priceIdValueType = 5;
-
-                    break;
+                if (priceIdValueType > 3) {
+                    templateString = prop.getProperty(
+                            "search.restaurant.price.3.more");
+                    finalTemplateString.append(" ").append(templateString);
                 }
             }
 
-            if (priceIdValueType == 1) {
-                templateString = prop.getProperty("search.restaurant.price.1");
-                finalTemplateString.append(" ").append(tempTemplateString);
-            }
-
-            if (priceIdValueType <= 3) {
-                templateString = prop.getProperty(
-                        "search.restaurant.price.3.less");
-                finalTemplateString.append(" ").append(tempTemplateString);
-            }
-
-            if (priceIdValueType > 3) {
-                templateString = prop.getProperty(
-                        "search.restaurant.price.3.more");
-                finalTemplateString.append(" ").append(tempTemplateString);
-            }
-
-            System.out.println("finalTemplateString=" + finalTemplateString);
+            //System.out.println("finalTemplateString=" + finalTemplateString);
 
             return finalTemplateString.toString();
         } catch (IOException ex) {
@@ -3583,10 +3602,40 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.close();
 
+            String cityName = "";
+
+            if ((cityId != null) && !cityId.isEmpty()) {
+                statement = connection.prepareStatement(AskReplyQueries.CITY_NAME_SELECT_SQL);
+                statement.setString(1, cityId);
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    cityName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "CITY"));
+                }
+
+                statement.close();
+            }
+
+            String neighborhoodName = "";
+
+            if ((neighborhoodId != null) && !neighborhoodId.isEmpty()) {
+                statement = connection.prepareStatement(AskReplyQueries.NEIGHBOURHOOD_NAME_SELECT_SQL);
+                statement.setString(1, neighborhoodId);
+                resultset = statement.executeQuery();
+
+                if (resultset.next()) {
+                    neighborhoodName = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "NEIGHBOURHOOD_DESC"));
+                }
+
+                statement.close();
+            }
+
             DescriptorDataVO descriptorDataVO = new DescriptorDataVO(cuisineTier1IdDescList,
                     cuisineTier2IdDescList, occasionIdDescList,
                     whoareyouwithIdDescList, typeOfRestaurantIdDescList,
-                    themeIdDescList, priceIdDescList);
+                    themeIdDescList, priceIdDescList, cityName, neighborhoodName);
 
             return descriptorDataVO;
         } catch (SQLException e) {

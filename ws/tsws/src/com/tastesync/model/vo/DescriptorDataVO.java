@@ -14,22 +14,29 @@ public class DescriptorDataVO implements Serializable {
     private ArrayList<String> typeOfRestaurantIdDescList = new ArrayList<String>();
     private ArrayList<String> themeIdDescList = new ArrayList<String>();
     private ArrayList<String> priceIdDescList = new ArrayList<String>();
+    private String cityName = null;
+    private String neighborhoodName = null;
+    
 
     public DescriptorDataVO(ArrayList<String> cuisineTier1IdDescList,
-        ArrayList<String> cuisineTier2IdDescList,
-        ArrayList<String> occasionIdDescList,
-        ArrayList<String> whoareyouwithIdDescList,
-        ArrayList<String> typeOfRestaurantIdDescList,
-        ArrayList<String> themeIdDescList, ArrayList<String> priceIdDescList) {
-        super();
-        this.cuisineTier1IdDescList = cuisineTier1IdDescList;
-        this.cuisineTier2IdDescList = cuisineTier2IdDescList;
-        this.occasionIdDescList = occasionIdDescList;
-        this.whoareyouwithIdDescList = whoareyouwithIdDescList;
-        this.typeOfRestaurantIdDescList = typeOfRestaurantIdDescList;
-        this.themeIdDescList = themeIdDescList;
-        this.priceIdDescList = priceIdDescList;
-    }
+			ArrayList<String> cuisineTier2IdDescList,
+			ArrayList<String> occasionIdDescList,
+			ArrayList<String> whoareyouwithIdDescList,
+			ArrayList<String> typeOfRestaurantIdDescList,
+			ArrayList<String> themeIdDescList,
+			ArrayList<String> priceIdDescList, String cityName,
+			String neighborhoodName) {
+		super();
+		this.cuisineTier1IdDescList = cuisineTier1IdDescList;
+		this.cuisineTier2IdDescList = cuisineTier2IdDescList;
+		this.occasionIdDescList = occasionIdDescList;
+		this.whoareyouwithIdDescList = whoareyouwithIdDescList;
+		this.typeOfRestaurantIdDescList = typeOfRestaurantIdDescList;
+		this.themeIdDescList = themeIdDescList;
+		this.priceIdDescList = priceIdDescList;
+		this.cityName = cityName;
+		this.neighborhoodName = neighborhoodName;
+	}
 
     public ArrayList<String> getCuisineTier1IdDescList() {
         return cuisineTier1IdDescList;
@@ -58,4 +65,13 @@ public class DescriptorDataVO implements Serializable {
     public ArrayList<String> getPriceIdDescList() {
         return priceIdDescList;
     }
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public String getNeighborhoodName() {
+		return neighborhoodName;
+	}
+    
 }
