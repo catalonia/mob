@@ -26,6 +26,8 @@ public interface UserBo {
 	UserResponse login_fb(TSListFacebookUserDataObj list_user_profile) throws TasteSyncException;
 	
 	boolean logout(String userId, String deviceToken) throws TasteSyncException;
+	
+	boolean setStatus(String userId, String status) throws TasteSyncException;
 
 	String loginAccount(String userId) throws TasteSyncException;
 	

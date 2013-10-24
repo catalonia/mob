@@ -1,7 +1,6 @@
 package com.tastesync.db.dao;
 
 import com.tastesync.exception.TasteSyncException;
-
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
@@ -18,7 +17,6 @@ import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.model.response.UserResponse;
 
 import java.sql.Connection;
-
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -31,6 +29,8 @@ public interface UserDao {
         throws TasteSyncException;
 
     boolean logout(String userId, String deviceToken) throws TasteSyncException;
+    
+    boolean setStatus(String userId, String status) throws TasteSyncException;
 
     String loginAccount(String userId) throws TasteSyncException;
 

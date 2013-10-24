@@ -4,15 +4,12 @@ import com.tastesync.common.GlobalVariables;
 import com.tastesync.common.MySQL;
 import com.tastesync.common.PushService;
 import com.tastesync.common.utils.CommonFunctionsUtil;
-
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
 import com.tastesync.db.queries.CityQueries;
 import com.tastesync.db.queries.RestaurantQueries;
 import com.tastesync.db.queries.UserQueries;
-
 import com.tastesync.exception.TasteSyncException;
-
 import com.tastesync.model.objects.TSAboutObj;
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
@@ -37,7 +34,6 @@ import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
 import com.tastesync.model.response.UserResponse;
-
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
@@ -46,7 +42,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -140,6 +135,40 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         return response;
     }
 
+    @Override
+    public boolean setStatus(String userId, String status) throws TasteSyncException
+    {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+            tsDataSource.begin();
+
+            boolean logoutSuccess = false;
+                //Update IS_ONLINE status 
+            statement = connection.prepareStatement(UserQueries.USER_ONLINE_UPDATE_SQL);
+          	statement.setString(1, status);
+        	statement.setString(2, userId);
+           	statement.executeUpdate();
+          	statement.close();
+          	logoutSuccess = true;
+
+            tsDataSource.commit();
+
+            return logoutSuccess;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, null);
+        }
+    	
+    }
+    
     @Override
     public UserResponse login_fb(TSListFacebookUserDataObj list_user_profile)
         throws TasteSyncException {

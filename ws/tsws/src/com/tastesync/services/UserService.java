@@ -105,6 +105,62 @@ public class UserService extends BaseService {
     }
 
     @POST
+    @Path("/setStatus")
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response setStatus(@FormParam("userId") String userId, @FormParam("status") String statusUser) {
+    	int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        try {
+        	responseDone = userBo.setStatus(userId, statusUser);
+
+            if (responseDone) {
+                System.out.println("1");
+                responseDone = true;
+
+                TSSuccessObj tsSuccessObj = new TSSuccessObj();
+                tsSuccessObj.setSuccessMsg(statusUser);
+                responseDone = true;
+
+                return Response.status(status).entity(tsSuccessObj).build();
+            } else {
+                System.out.println("2");
+                status = TSResponseStatusCode.ERROR.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                responseDone = true;
+
+                return Response.status(status).entity(tsErrorObj).build();
+            }
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            System.out.println("3");
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+    
+    @POST
     @Path("/submitLoginFacebook")
     @Consumes({MediaType.APPLICATION_JSON
     })

@@ -2610,6 +2610,11 @@ struct enunciate_ns0_TSRestaurantDetailsObj {
   /**
    * (no documentation provided)
    */
+  struct enunciate_ns0_TSRestaurantExtendInfoObj *restaurantExtendInfoObj;
+
+  /**
+   * (no documentation provided)
+   */
   xmlChar *openNowFlag;
 
   /**
@@ -2651,6 +2656,11 @@ struct enunciate_ns0_TSRestaurantDetailsObj {
    * (no documentation provided)
    */
   xmlChar *userRestaurantTipFlag;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSRestaurantBuzzObj *restaurantBuzz;
 };
 
 /**
@@ -3500,7 +3510,7 @@ struct enunciate_ns0_TSRestaurantView {
   /**
    * (no documentation provided)
    */
-  xmlChar *name;
+  struct enunciate_ns0_TSRestaurantsTileSearchObj *information;
 };
 
 /**
@@ -5338,6 +5348,127 @@ static int xmlTextWriterWriteNs0TSRecommendersDetailsObjType(xmlTextWriterPtr wr
 static void freeNs0TSRecommendersDetailsObjType(struct enunciate_ns0_TSRecommendersDetailsObj *_tSRecommendersDetailsObj);
 
 #endif /* DEF_enunciate_ns0_TSRecommendersDetailsObj_H */
+#ifndef DEF_enunciate_ns0_TSRestaurantBuzzObj_H
+#define DEF_enunciate_ns0_TSRestaurantBuzzObj_H
+
+/**
+ * (no documentation provided)
+ */
+struct enunciate_ns0_TSRestaurantBuzzObj {
+
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recorequestText;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *replyText;
+
+  /**
+   * (no documentation provided)
+   */
+  struct enunciate_ns0_TSUserProfileBasicObj *recommenderUser;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *recommenderUserFolloweeFlag;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *replyDatetime;
+};
+
+/**
+ * Reads a TSRestaurantBuzzObj element from XML. The element to be read is "restsbuzz", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBuzzObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantBuzzObj *xml_read_enunciate_ns0_TSRestaurantBuzzObj(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantBuzzObj to XML under element name "restsbuzz".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+int xml_write_enunciate_ns0_TSRestaurantBuzzObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj);
+
+/**
+ * Frees a TSRestaurantBuzzObj.
+ *
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantBuzzObj(struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj);
+
+/**
+ * Reads a TSRestaurantBuzzObj element from XML. The element to be read is "restsbuzz", and
+ * it is assumed that the reader is already pointing to the element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBuzzObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantBuzzObj *xmlTextReaderReadNs0RestsbuzzElement(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantBuzzObj to XML under element name "restsbuzz".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0RestsbuzzElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj);
+
+/**
+ * Writes a TSRestaurantBuzzObj to XML under element name "restsbuzz".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0RestsbuzzElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj, int writeNamespaces);
+
+/**
+ * Frees the children of a TSRestaurantBuzzObj.
+ *
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj whose children are to be free.
+ */
+static void freeNs0RestsbuzzElement(struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj);
+
+/**
+ * Reads a TSRestaurantBuzzObj from XML. The reader is assumed to be at the start element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBuzzObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantBuzzObj *xmlTextReaderReadNs0TSRestaurantBuzzObjType(xmlTextReaderPtr reader);
+
+/**
+ * Writes a TSRestaurantBuzzObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to write.
+ * @return The bytes written (may be 0 in case of buffering) or -1 in case of error.
+ */
+static int xmlTextWriterWriteNs0TSRestaurantBuzzObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj);
+
+/**
+ * Frees the elements of a TSRestaurantBuzzObj.
+ *
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to free.
+ */
+static void freeNs0TSRestaurantBuzzObjType(struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj);
+
+#endif /* DEF_enunciate_ns0_TSRestaurantBuzzObj_H */
 #ifndef DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_H
 #define DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_H
 
@@ -18166,6 +18297,27 @@ static struct enunciate_ns0_TSRestaurantDetailsObj *xmlTextReaderReadNs0TSRestau
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantExtendInfoObj", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantExtendInfoObj of type {}TSRestaurantExtendInfoObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSRestaurantExtendInfoObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantExtendInfoObj of type {}TSRestaurantExtendInfoObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantDetailsObjType(_tSRestaurantDetailsObj);
+          free(_tSRestaurantDetailsObj);
+          return NULL;
+        }
+
+        _tSRestaurantDetailsObj->restaurantExtendInfoObj = ((struct enunciate_ns0_TSRestaurantExtendInfoObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "openNowFlag", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -18335,6 +18487,27 @@ static struct enunciate_ns0_TSRestaurantDetailsObj *xmlTextReaderReadNs0TSRestau
         _tSRestaurantDetailsObj->userRestaurantTipFlag = ((xmlChar*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "restaurantBuzz", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}restaurantBuzz of type {}TSRestaurantBuzzObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSRestaurantBuzzObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}restaurantBuzz of type {}TSRestaurantBuzzObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantDetailsObjType(_tSRestaurantDetailsObj);
+          free(_tSRestaurantDetailsObj);
+          return NULL;
+        }
+
+        _tSRestaurantDetailsObj->restaurantBuzz = ((struct enunciate_ns0_TSRestaurantBuzzObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
       else {
 #if DEBUG_ENUNCIATE > 1
         if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
@@ -18362,6 +18535,36 @@ static struct enunciate_ns0_TSRestaurantDetailsObj *xmlTextReaderReadNs0TSRestau
 static int xmlTextWriterWriteNs0TSRestaurantDetailsObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantDetailsObj *_tSRestaurantDetailsObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSRestaurantDetailsObj->restaurantExtendInfoObj != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantExtendInfoObj", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantExtendInfoObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSRestaurantExtendInfoObj for element {}restaurantExtendInfoObj...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSRestaurantExtendInfoObjType(writer, (_tSRestaurantDetailsObj->restaurantExtendInfoObj));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSRestaurantExtendInfoObj for element {}restaurantExtendInfoObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantExtendInfoObj. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSRestaurantDetailsObj->openNowFlag != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "openNowFlag", NULL);
     if (status < 0) {
@@ -18602,6 +18805,36 @@ static int xmlTextWriterWriteNs0TSRestaurantDetailsObjType(xmlTextWriterPtr writ
     }
     totalBytes += status;
   }
+  if (_tSRestaurantDetailsObj->restaurantBuzz != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restaurantBuzz", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}restaurantBuzz. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSRestaurantBuzzObj for element {}restaurantBuzz...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSRestaurantBuzzObjType(writer, (_tSRestaurantDetailsObj->restaurantBuzz));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSRestaurantBuzzObj for element {}restaurantBuzz. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}restaurantBuzz. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
 
   return totalBytes;
 }
@@ -18613,6 +18846,16 @@ static int xmlTextWriterWriteNs0TSRestaurantDetailsObjType(xmlTextWriterPtr writ
  */
 static void freeNs0TSRestaurantDetailsObjType(struct enunciate_ns0_TSRestaurantDetailsObj *_tSRestaurantDetailsObj) {
   int i;
+  if (_tSRestaurantDetailsObj->restaurantExtendInfoObj != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantExtendInfoObj of type enunciate_ns0_TSRestaurantDetailsObj...\n");
+#endif
+    freeNs0TSRestaurantExtendInfoObjType(_tSRestaurantDetailsObj->restaurantExtendInfoObj);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantExtendInfoObj of type enunciate_ns0_TSRestaurantDetailsObj...\n");
+#endif
+    free(_tSRestaurantDetailsObj->restaurantExtendInfoObj);
+  }
   if (_tSRestaurantDetailsObj->openNowFlag != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor openNowFlag of type enunciate_ns0_TSRestaurantDetailsObj...\n");
@@ -18694,6 +18937,16 @@ static void freeNs0TSRestaurantDetailsObjType(struct enunciate_ns0_TSRestaurantD
     printf("Freeing accessor userRestaurantTipFlag of type enunciate_ns0_TSRestaurantDetailsObj...\n");
 #endif
     free(_tSRestaurantDetailsObj->userRestaurantTipFlag);
+  }
+  if (_tSRestaurantDetailsObj->restaurantBuzz != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor restaurantBuzz of type enunciate_ns0_TSRestaurantDetailsObj...\n");
+#endif
+    freeNs0TSRestaurantBuzzObjType(_tSRestaurantDetailsObj->restaurantBuzz);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor restaurantBuzz of type enunciate_ns0_TSRestaurantDetailsObj...\n");
+#endif
+    free(_tSRestaurantDetailsObj->restaurantBuzz);
   }
 }
 #endif /* DEF_enunciate_ns0_TSRestaurantDetailsObj_M */
@@ -23917,16 +24170,16 @@ static struct enunciate_ns0_TSRestaurantView *xmlTextReaderReadNs0TSRestaurantVi
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
-        && xmlStrcmp(BAD_CAST "name", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlStrcmp(BAD_CAST "information", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
 #if DEBUG_ENUNCIATE > 1
-        printf("Attempting to read choice {}name of type {http://www.w3.org/2001/XMLSchema}string.\n");
+        printf("Attempting to read choice {}information of type {}TSRestaurantsTileSearchObj.\n");
 #endif
-        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        _child_accessor = xmlTextReaderReadNs0TSRestaurantsTileSearchObjType(reader);
         if (_child_accessor == NULL) {
 #if DEBUG_ENUNCIATE
-          printf("Failed to read choice {}name of type {http://www.w3.org/2001/XMLSchema}string.\n");
+          printf("Failed to read choice {}information of type {}TSRestaurantsTileSearchObj.\n");
 #endif
           //panic: unable to read the child element for some reason.
           freeNs0TSRestaurantViewType(_tSRestaurantView);
@@ -23934,7 +24187,7 @@ static struct enunciate_ns0_TSRestaurantView *xmlTextReaderReadNs0TSRestaurantVi
           return NULL;
         }
 
-        _tSRestaurantView->name = ((xmlChar*)_child_accessor);
+        _tSRestaurantView->information = ((struct enunciate_ns0_TSRestaurantsTileSearchObj*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
       else {
@@ -24024,22 +24277,22 @@ static int xmlTextWriterWriteNs0TSRestaurantViewType(xmlTextWriterPtr writer, st
     }
     totalBytes += status;
   }
-  if (_tSRestaurantView->name != NULL) {
-    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "name", NULL);
+  if (_tSRestaurantView->information != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "information", NULL);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write start element {}name. status: %i\n", status);
+      printf("Failed to write start element {}information. status: %i\n", status);
 #endif
       return status;
     }
     totalBytes += status;
 #if DEBUG_ENUNCIATE > 1
-    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}name...\n");
+    printf("writing type {}TSRestaurantsTileSearchObj for element {}information...\n");
 #endif
-    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantView->name));
+    status = xmlTextWriterWriteNs0TSRestaurantsTileSearchObjType(writer, (_tSRestaurantView->information));
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}name. status: %i\n", status);
+      printf("Failed to write type {}TSRestaurantsTileSearchObj for element {}information. status: %i\n", status);
 #endif
       return status;
     }
@@ -24048,7 +24301,7 @@ static int xmlTextWriterWriteNs0TSRestaurantViewType(xmlTextWriterPtr writer, st
     status = xmlTextWriterEndElement(writer);
     if (status < 0) {
 #if DEBUG_ENUNCIATE
-      printf("Failed to write end element {}name. status: %i\n", status);
+      printf("Failed to write end element {}information. status: %i\n", status);
 #endif
       return status;
     }
@@ -24085,15 +24338,15 @@ static void freeNs0TSRestaurantViewType(struct enunciate_ns0_TSRestaurantView *_
 #endif
     free(_tSRestaurantView->photo);
   }
-  if (_tSRestaurantView->name != NULL) {
+  if (_tSRestaurantView->information != NULL) {
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing type of accessor name of type enunciate_ns0_TSRestaurantView...\n");
+    printf("Freeing type of accessor information of type enunciate_ns0_TSRestaurantView...\n");
 #endif
-    freeXsStringType(_tSRestaurantView->name);
+    freeNs0TSRestaurantsTileSearchObjType(_tSRestaurantView->information);
 #if DEBUG_ENUNCIATE > 1
-    printf("Freeing accessor name of type enunciate_ns0_TSRestaurantView...\n");
+    printf("Freeing accessor information of type enunciate_ns0_TSRestaurantView...\n");
 #endif
-    free(_tSRestaurantView->name);
+    free(_tSRestaurantView->information);
   }
 }
 #endif /* DEF_enunciate_ns0_TSRestaurantView_M */
@@ -31610,6 +31863,511 @@ static void freeNs0TSRecommendersDetailsObjType(struct enunciate_ns0_TSRecommend
   }
 }
 #endif /* DEF_enunciate_ns0_TSRecommendersDetailsObj_M */
+#ifndef DEF_enunciate_ns0_TSRestaurantBuzzObj_M
+#define DEF_enunciate_ns0_TSRestaurantBuzzObj_M
+
+/**
+ * Reads a TSRestaurantBuzzObj element from XML. The element to be read is "restsbuzz", and
+ * it is assumed that the reader is pointing to the XML document (not the element).
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBuzzObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantBuzzObj *xml_read_enunciate_ns0_TSRestaurantBuzzObj(xmlTextReaderPtr reader) {
+  int status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+  return xmlTextReaderReadNs0RestsbuzzElement(reader);
+}
+
+/**
+ * Writes a TSRestaurantBuzzObj to XML under element name "restsbuzz".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+int xml_write_enunciate_ns0_TSRestaurantBuzzObj(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj) {
+  return xmlTextWriterWriteNs0RestsbuzzElementNS(writer, _tSRestaurantBuzzObj, 1);
+}
+
+/**
+ * Frees a TSRestaurantBuzzObj.
+ *
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to free.
+ */
+void free_enunciate_ns0_TSRestaurantBuzzObj(struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj) {
+  freeNs0TSRestaurantBuzzObjType(_tSRestaurantBuzzObj);
+  free(_tSRestaurantBuzzObj);
+}
+
+/**
+ * Reads a TSRestaurantBuzzObj element from XML. The element to be read is "restsbuzz", and
+ * it is assumed that the reader is pointing to that element.
+ *
+ * @param reader The XML reader.
+ * @return The TSRestaurantBuzzObj, or NULL in case of error.
+ */
+struct enunciate_ns0_TSRestaurantBuzzObj *xmlTextReaderReadNs0RestsbuzzElement(xmlTextReaderPtr reader) {
+  struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj = NULL;
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "restsbuzz", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Attempting to read root element {}restsbuzz.\n");
+#endif
+    _tSRestaurantBuzzObj = xmlTextReaderReadNs0TSRestaurantBuzzObjType(reader);
+  }
+#if DEBUG_ENUNCIATE
+  if (_tSRestaurantBuzzObj == NULL) {
+    if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+      printf("attempt to read {}restsbuzz failed. current element: {}%s\n",  xmlTextReaderConstLocalName(reader));
+    }
+    else {
+      printf("attempt to read {}restsbuzz failed. current element: {%s}%s\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+    }
+  }
+#endif
+
+  return _tSRestaurantBuzzObj;
+}
+
+/**
+ * Writes a TSRestaurantBuzzObj to XML under element name "restsbuzz".
+ * Does NOT write the namespace prefixes.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to write.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0RestsbuzzElement(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj) {
+  return xmlTextWriterWriteNs0RestsbuzzElementNS(writer, _tSRestaurantBuzzObj, 0);
+}
+
+/**
+ * Writes a TSRestaurantBuzzObj to XML under element name "restsbuzz".
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to write.
+ * @param writeNamespaces Whether to write the namespace prefixes.
+ * @return 1 if successful, 0 otherwise.
+ */
+static int xmlTextWriterWriteNs0RestsbuzzElementNS(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj, int writeNamespaces) {
+  int totalBytes = 0;
+  int status;
+
+  status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "restsbuzz", NULL);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write start element {}restsbuzz. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+#if DEBUG_ENUNCIATE > 1
+  printf("writing type {}TSRestaurantBuzzObj for root element {}restsbuzz...\n");
+#endif
+  status = xmlTextWriterWriteNs0TSRestaurantBuzzObjType(writer, _tSRestaurantBuzzObj);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to write type for start element {}restsbuzz. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  status = xmlTextWriterEndElement(writer);
+  if (status < 0) {
+#if DEBUG_ENUNCIATE
+    printf("unable to end element {}restsbuzz. status: %i\n", status);
+#endif
+    return status;
+  }
+  totalBytes += status;
+
+  return totalBytes;
+}
+
+/**
+ * Frees the children of a TSRestaurantBuzzObj.
+ *
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj whose children are to be free.
+ */
+static void freeNs0RestsbuzzElement(struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj) {
+  freeNs0TSRestaurantBuzzObjType(_tSRestaurantBuzzObj);
+}
+
+/**
+ * Reads a TSRestaurantBuzzObj from XML. The reader is assumed to be at the start element.
+ *
+ * @return the TSRestaurantBuzzObj, or NULL in case of error.
+ */
+static struct enunciate_ns0_TSRestaurantBuzzObj *xmlTextReaderReadNs0TSRestaurantBuzzObjType(xmlTextReaderPtr reader) {
+  int status, depth;
+  void *_child_accessor;
+  struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj = calloc(1, sizeof(struct enunciate_ns0_TSRestaurantBuzzObj));
+
+
+
+  if (xmlTextReaderIsEmptyElement(reader) == 0) {
+    depth = xmlTextReaderDepth(reader);//track the depth.
+    status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+
+    while (xmlTextReaderDepth(reader) > depth) {
+      if (status < 1) {
+        //panic: XML read error.
+#if DEBUG_ENUNCIATE
+        printf("Failure to advance to next child element.\n");
+#endif
+        freeNs0TSRestaurantBuzzObjType(_tSRestaurantBuzzObj);
+        free(_tSRestaurantBuzzObj);
+        return NULL;
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recorequestText", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recorequestText of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recorequestText of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantBuzzObjType(_tSRestaurantBuzzObj);
+          free(_tSRestaurantBuzzObj);
+          return NULL;
+        }
+
+        _tSRestaurantBuzzObj->recorequestText = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "replyText", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}replyText of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}replyText of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantBuzzObjType(_tSRestaurantBuzzObj);
+          free(_tSRestaurantBuzzObj);
+          return NULL;
+        }
+
+        _tSRestaurantBuzzObj->replyText = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recommenderUser", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recommenderUser of type {}TSUserProfileBasicObj.\n");
+#endif
+        _child_accessor = xmlTextReaderReadNs0TSUserProfileBasicObjType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recommenderUser of type {}TSUserProfileBasicObj.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantBuzzObjType(_tSRestaurantBuzzObj);
+          free(_tSRestaurantBuzzObj);
+          return NULL;
+        }
+
+        _tSRestaurantBuzzObj->recommenderUser = ((struct enunciate_ns0_TSUserProfileBasicObj*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "recommenderUserFolloweeFlag", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}recommenderUserFolloweeFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}recommenderUserFolloweeFlag of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantBuzzObjType(_tSRestaurantBuzzObj);
+          free(_tSRestaurantBuzzObj);
+          return NULL;
+        }
+
+        _tSRestaurantBuzzObj->recommenderUserFolloweeFlag = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "replyDatetime", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}replyDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}replyDatetime of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSRestaurantBuzzObjType(_tSRestaurantBuzzObj);
+          free(_tSRestaurantBuzzObj);
+          return NULL;
+        }
+
+        _tSRestaurantBuzzObj->replyDatetime = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else {
+#if DEBUG_ENUNCIATE > 1
+        if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
+          printf("unknown child element {}%s for type {}TSRestaurantBuzzObj.  Skipping...\n",  xmlTextReaderConstLocalName(reader));
+        }
+        else {
+          printf("unknown child element {%s}%s for type {}TSRestaurantBuzzObj. Skipping...\n", xmlTextReaderConstNamespaceUri(reader), xmlTextReaderConstLocalName(reader));
+        }
+#endif
+        status = xmlTextReaderSkipElement(reader);
+      }
+    }
+  }
+
+  return _tSRestaurantBuzzObj;
+}
+
+/**
+ * Writes a TSRestaurantBuzzObj to XML.
+ *
+ * @param writer The XML writer.
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to write.
+ * @return The total bytes written, or -1 on error;
+ */
+static int xmlTextWriterWriteNs0TSRestaurantBuzzObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj) {
+  int status, totalBytes = 0, i;
+  xmlChar *binaryData;
+  if (_tSRestaurantBuzzObj->recorequestText != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recorequestText", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recorequestText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestText...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantBuzzObj->recorequestText));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recorequestText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recorequestText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantBuzzObj->replyText != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "replyText", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}replyText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}replyText...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantBuzzObj->replyText));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}replyText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}replyText. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantBuzzObj->recommenderUser != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recommenderUser", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recommenderUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {}TSUserProfileBasicObj for element {}recommenderUser...\n");
+#endif
+    status = xmlTextWriterWriteNs0TSUserProfileBasicObjType(writer, (_tSRestaurantBuzzObj->recommenderUser));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {}TSUserProfileBasicObj for element {}recommenderUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recommenderUser. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantBuzzObj->recommenderUserFolloweeFlag != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "recommenderUserFolloweeFlag", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}recommenderUserFolloweeFlag. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}recommenderUserFolloweeFlag...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantBuzzObj->recommenderUserFolloweeFlag));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}recommenderUserFolloweeFlag. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}recommenderUserFolloweeFlag. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+  if (_tSRestaurantBuzzObj->replyDatetime != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "replyDatetime", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}replyDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}replyDatetime...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSRestaurantBuzzObj->replyDatetime));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}replyDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}replyDatetime. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
+
+  return totalBytes;
+}
+
+/**
+ * Frees the elements of a TSRestaurantBuzzObj.
+ *
+ * @param _tSRestaurantBuzzObj The TSRestaurantBuzzObj to free.
+ */
+static void freeNs0TSRestaurantBuzzObjType(struct enunciate_ns0_TSRestaurantBuzzObj *_tSRestaurantBuzzObj) {
+  int i;
+  if (_tSRestaurantBuzzObj->recorequestText != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recorequestText of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantBuzzObj->recorequestText);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recorequestText of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    free(_tSRestaurantBuzzObj->recorequestText);
+  }
+  if (_tSRestaurantBuzzObj->replyText != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor replyText of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantBuzzObj->replyText);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor replyText of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    free(_tSRestaurantBuzzObj->replyText);
+  }
+  if (_tSRestaurantBuzzObj->recommenderUser != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recommenderUser of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    freeNs0TSUserProfileBasicObjType(_tSRestaurantBuzzObj->recommenderUser);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recommenderUser of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    free(_tSRestaurantBuzzObj->recommenderUser);
+  }
+  if (_tSRestaurantBuzzObj->recommenderUserFolloweeFlag != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor recommenderUserFolloweeFlag of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantBuzzObj->recommenderUserFolloweeFlag);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor recommenderUserFolloweeFlag of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    free(_tSRestaurantBuzzObj->recommenderUserFolloweeFlag);
+  }
+  if (_tSRestaurantBuzzObj->replyDatetime != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor replyDatetime of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    freeXsStringType(_tSRestaurantBuzzObj->replyDatetime);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor replyDatetime of type enunciate_ns0_TSRestaurantBuzzObj...\n");
+#endif
+    free(_tSRestaurantBuzzObj->replyDatetime);
+  }
+}
+#endif /* DEF_enunciate_ns0_TSRestaurantBuzzObj_M */
 #ifndef DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_M
 #define DEF_enunciate_ns0_TSRestaurantCusineTier2Obj_M
 

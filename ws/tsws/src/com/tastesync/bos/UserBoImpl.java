@@ -2,9 +2,7 @@ package com.tastesync.bos;
 
 import com.tastesync.db.dao.UserDao;
 import com.tastesync.db.dao.UserDaoImpl;
-
 import com.tastesync.exception.TasteSyncException;
-
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
@@ -39,6 +37,11 @@ public class UserBoImpl implements UserBo {
 		return userDao.login_fb(list_user_profile);
 	}
     
+	@Override
+	public boolean setStatus(String userId, String status) throws TasteSyncException{
+		return userDao.setStatus(userId, status);
+	}
+	
     @Override
     public boolean logout(String userId, String deviceToken) throws TasteSyncException {
         return userDao.logout(userId, deviceToken);

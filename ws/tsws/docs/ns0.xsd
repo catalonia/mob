@@ -39,6 +39,7 @@
   <xs:element name="recommendations4u" type="TSRecommendationsObj"/>
   <xs:element name="recommendeeusers" type="TSRecommendeeUserObj"/>
   <xs:element name="recommenders" type="TSRecommendersDetailsObj"/>
+  <xs:element name="restsbuzz" type="TSRestaurantBuzzObj"/>
   <xs:element name="restaurantcuisinetier2" type="TSRestaurantCusineTier2Obj"/>
   <xs:element name="restaurantrecommenders" type="TSRestaurantRecommendersDetailsObj"/>
   <xs:element name="rests4u" type="TSRestaurantsForYouObj"/>
@@ -268,6 +269,7 @@
   </xs:complexType>
   <xs:complexType name="TSRestaurantDetailsObj">
     <xs:sequence>
+      <xs:element name="restaurantExtendInfoObj" type="TSRestaurantExtendInfoObj" minOccurs="0"/>
       <xs:element name="openNowFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="dealHeadline" type="xs:string" minOccurs="0"/>
       <xs:element name="photoList" type="TSRestaurantPhotoObj" minOccurs="0" maxOccurs="unbounded"/>
@@ -276,6 +278,7 @@
       <xs:element name="userRestaurantSavedFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="userRestaurantFavFlag" type="xs:string" minOccurs="0"/>
       <xs:element name="userRestaurantTipFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="restaurantBuzz" type="TSRestaurantBuzzObj" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSRestaurantExtendInfoObj">
@@ -367,7 +370,7 @@
     <xs:sequence>
       <xs:element name="id" type="xs:string" minOccurs="0"/>
       <xs:element name="photo" type="TSRestaurantPhotoObj" minOccurs="0"/>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="information" type="TSRestaurantsTileSearchObj" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSSocialAutoPubSettingsObj">
@@ -501,6 +504,15 @@
       <xs:element name="userId" type="xs:string" minOccurs="0"/>
       <xs:element name="name" type="xs:string" minOccurs="0"/>
       <xs:element name="photo" type="TSPhotoObj" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TSRestaurantBuzzObj">
+    <xs:sequence>
+      <xs:element name="recorequestText" type="xs:string" minOccurs="0"/>
+      <xs:element name="replyText" type="xs:string" minOccurs="0"/>
+      <xs:element name="recommenderUser" type="TSUserProfileBasicObj" minOccurs="0"/>
+      <xs:element name="recommenderUserFolloweeFlag" type="xs:string" minOccurs="0"/>
+      <xs:element name="replyDatetime" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSRestaurantCusineTier2Obj">
