@@ -347,16 +347,36 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             int cuisineTier1IdDescListSize = cuisineTier1IdDescList.size();
 
+            int cuisineTier2IdDescListSize = cuisineTier2IdDescList.size();
+
             for (int i = 0; i < cuisineTier1IdDescListSize; ++i) {
                 textToBeReplaced.append(cuisineTier1IdDescList.get(i));
 
-                if ((i != (cuisineTier1IdDescListSize - 1)) &&
-                        (i != (cuisineTier1IdDescListSize - 2))) {
+                if (cuisineTier2IdDescListSize == 0) {
+                    if ((i != (cuisineTier1IdDescListSize - 1)) &&
+                            (i != (cuisineTier1IdDescListSize - 2))) {
+                        textToBeReplaced.append(", ");
+                    } else if ((cuisineTier1IdDescListSize > 1) &&
+                            (i == (cuisineTier1IdDescListSize - 2))) {
+                        textToBeReplaced.append(" or ");
+                    } else if (i == (cuisineTier1IdDescListSize - 1)) {
+                        textToBeReplaced.append(" ");
+                    }
+                } else {
                     textToBeReplaced.append(", ");
-                } else if ((cuisineTier1IdDescListSize > 1) &&
-                        (i == (cuisineTier1IdDescListSize - 2))) {
+                }
+            }
+
+            for (int i = 0; i < cuisineTier2IdDescListSize; ++i) {
+                textToBeReplaced.append(cuisineTier2IdDescList.get(i));
+
+                if ((i != (cuisineTier2IdDescListSize - 1)) &&
+                        (i != (cuisineTier2IdDescListSize - 2))) {
+                    textToBeReplaced.append(", ");
+                } else if ((cuisineTier2IdDescListSize > 1) &&
+                        (i == (cuisineTier2IdDescListSize - 2))) {
                     textToBeReplaced.append(" or ");
-                } else if (i == (cuisineTier1IdDescListSize - 1)) {
+                } else if (i == (cuisineTier2IdDescListSize - 1)) {
                     textToBeReplaced.append(" ");
                 }
             }
