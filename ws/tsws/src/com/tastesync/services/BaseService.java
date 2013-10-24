@@ -19,7 +19,9 @@ public abstract class BaseService {
     public static Properties tsConfigProp = new Properties();
     static {
     	try {
-			loadProperties();
+    		if (1 != 1) {
+    			loadProperties();
+    		}
 		} catch (TasteSyncException e) {
 			e.printStackTrace();
 		}

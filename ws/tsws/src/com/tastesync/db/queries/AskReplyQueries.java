@@ -376,10 +376,10 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "WHERE  reco_like.id = ? ";
     public static String CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL = "SELECT CUISINE_DESC " +
         "FROM cuisine_tier1_descriptor WHERE CUISINE_VALID_CURRENT = '1' " +
-        "AND CUISIINE_ID = ? ";
+        "AND CUISINE_ID = ? ";
     public static String CUISINE_TIER2_DESCRIPTOR_ALL_SELECT_SQL = "SELECT CUISINE_DESC " +
         "FROM cuisine_tier2_descriptor  WHERE CUISINE_VALID_CURRENT = '1' " +
-        "CUISIINE_ID = ?";
+        "CUISINE_ID = ?";
     public static String OCCASION_DESCRIPTOR_SELECT_SQL = "SELECT occasion_desc " +
         "FROM occasion_descriptor WHERE Occasion_VALID_CURRENT = '1' " +
         "AND occasion_desc = ? ";

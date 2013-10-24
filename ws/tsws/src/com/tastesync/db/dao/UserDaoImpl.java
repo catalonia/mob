@@ -661,8 +661,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         Connection connection = null;
         PreparedStatement statement = null;
 
-        String id = dateNowAppend + "-" + userId + "-" +
-            CommonFunctionsUtil.generateRandomString(4, 5);
+        //String id = dateNowAppend + "-" + userId + "-" +
+          //  CommonFunctionsUtil.generateRandomString(4, 5);
+        String id = CommonFunctionsUtil.generateUniqueKey();
 
         //Update login time (users_log table)
         try {

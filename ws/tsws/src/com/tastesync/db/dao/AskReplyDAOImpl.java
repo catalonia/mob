@@ -317,6 +317,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         InputStream ifile = null;
 
         try {
+        	if (1 == 1) {
+        		return "I am looking for a<cuisine>restaurant in <location>.";
+        	}
             //loader.getResourceAsStream("Resources/SomeConfig.xml");
             ifile = this.getClass().getClassLoader()
                         .getResourceAsStream("Resources/config.properties");
