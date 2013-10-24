@@ -165,12 +165,12 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             String recoRequestId = userId +
                 CommonFunctionsUtil.generateUniqueKey();
 
-            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_INSERT_SQL);
 
             String templateString = createRecoRequestTemplateText(cuisineTier1IdList,
                     cuisineTier2IdList, priceIdList, themeIdList,
                     whoareyouwithIdList, typeOfRestaurantIdList,
                     occasionIdList, neighborhoodId, cityId, stateName);
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_USER_INSERT_SQL);
 
             statement.setString(1, recoRequestId);
             statement.setString(2, userId);
