@@ -3297,6 +3297,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.executeUpdate();
 
             statement.setString(1, "1");
+            statement.setInt(2, 5);
+            statement.setString(3, userId);
+            statement.executeUpdate();
+            
+            statement.setString(1, "1");
             statement.setInt(2, 6);
             statement.setString(3, userId);
             statement.executeUpdate();
