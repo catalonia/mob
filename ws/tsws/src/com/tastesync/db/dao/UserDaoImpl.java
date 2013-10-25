@@ -3140,7 +3140,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.setString(3, "0");
 
             statement.executeUpdate();
-            
+
             statement.setString(1, userId);
             statement.setInt(2, 4);
 
@@ -3205,7 +3205,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.setInt(3, 3);
             statement.setString(4, "0");
             statement.executeUpdate();
-            
+
             statement.setInt(1, 1);
             statement.setString(2, userId);
             statement.setInt(3, 4);
@@ -3325,7 +3325,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.setInt(2, 5);
             statement.setString(3, userId);
             statement.executeUpdate();
-            
+
             statement.setString(1, "1");
             statement.setInt(2, 6);
             statement.setString(3, userId);
