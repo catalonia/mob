@@ -130,4 +130,6 @@ public interface UserBo {
 
     TSUserObj getUserInformationByEmail(String email) throws TasteSyncException;
     
+    void initUserSettings(String userId) throws TasteSyncException;
+
 }

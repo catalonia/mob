@@ -135,4 +135,6 @@ public interface UserDao {
         throws TasteSyncException;
 
     TSUserObj getUserInformationByEmail(String email) throws TasteSyncException;
+    
+    void initUserSettings(String userId) throws TasteSyncException;
 }

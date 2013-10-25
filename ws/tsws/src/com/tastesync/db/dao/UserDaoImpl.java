@@ -3,12 +3,15 @@ package com.tastesync.db.dao;
 import com.tastesync.common.GlobalVariables;
 import com.tastesync.common.MySQL;
 import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AskReplyQueries;
 import com.tastesync.db.queries.CityQueries;
 import com.tastesync.db.queries.RestaurantQueries;
 import com.tastesync.db.queries.UserQueries;
+
 import com.tastesync.exception.TasteSyncException;
+
 import com.tastesync.model.objects.TSAboutObj;
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
@@ -33,6 +36,7 @@ import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.model.objects.derived.TSRestaurantsTileSearchObj;
 import com.tastesync.model.response.UserResponse;
+
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
@@ -41,6 +45,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -135,8 +140,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean setStatus(String userId, String status) throws TasteSyncException
-    {
+    public boolean setStatus(String userId, String status)
+        throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -146,13 +151,13 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.begin();
 
             boolean logoutSuccess = false;
-                //Update IS_ONLINE status 
+            //Update IS_ONLINE status 
             statement = connection.prepareStatement(UserQueries.USER_ONLINE_UPDATE_SQL);
-          	statement.setString(1, status);
-        	statement.setString(2, userId);
-           	statement.executeUpdate();
-          	statement.close();
-          	logoutSuccess = true;
+            statement.setString(1, status);
+            statement.setString(2, userId);
+            statement.executeUpdate();
+            statement.close();
+            logoutSuccess = true;
 
             tsDataSource.commit();
 
@@ -165,9 +170,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, null);
         }
-    	
     }
-    
+
     @Override
     public UserResponse login_fb(TSListFacebookUserDataObj list_user_profile)
         throws TasteSyncException {
@@ -3096,6 +3100,231 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             e.printStackTrace();
             throw new TasteSyncException(
                 "Error while getUserInformationByEmail " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+    }
+
+    @Override
+    public void initUserSettings(String userId) throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+
+            tsDataSource.begin();
+
+            statement = connection.prepareStatement(UserQueries.INIT_USER_USNC_INSERT_SQL);
+            statement.setString(1, userId);
+            statement.setInt(2, 1);
+
+            statement.setString(3, "1");
+
+            statement.executeUpdate();
+
+            statement.setString(1, userId);
+            statement.setInt(2, 2);
+
+            statement.setString(3, "0");
+
+            statement.executeUpdate();
+
+            statement.setString(1, userId);
+            statement.setInt(2, 4);
+
+            statement.setString(3, "0");
+
+            statement.executeUpdate();
+
+            statement.close();
+
+            statement = connection.prepareStatement(UserQueries.INIT_USER_USNC_AP_INSERT_SQL);
+
+            statement.setInt(1, 1);
+            statement.setString(2, userId);
+            statement.setInt(3, 1);
+            statement.setString(4, "0");
+            statement.executeUpdate();
+
+            statement.setInt(1, 2);
+            statement.setString(2, userId);
+            statement.setInt(3, 1);
+            statement.setString(4, "0");
+            statement.executeUpdate();
+
+            statement.setInt(1, 3);
+            statement.setString(2, userId);
+            statement.setInt(3, 1);
+            statement.setString(4, "0");
+            statement.executeUpdate();
+
+            statement.setInt(1, 1);
+            statement.setString(2, userId);
+            statement.setInt(3, 2);
+            statement.setString(4, "0");
+            statement.executeUpdate();
+
+            statement.setInt(1, 2);
+            statement.setString(2, userId);
+            statement.setInt(3, 2);
+            statement.setString(4, "0");
+            statement.executeUpdate();
+
+            statement.setInt(1, 3);
+            statement.setString(2, userId);
+            statement.setInt(3, 2);
+            statement.setString(4, "0");
+            statement.executeUpdate();
+
+            statement.setInt(1, 1);
+            statement.setString(2, userId);
+            statement.setInt(3, 4);
+            statement.setString(4, "0");
+            statement.executeUpdate();
+
+            statement.setInt(1, 2);
+            statement.setString(2, userId);
+            statement.setInt(3, 4);
+            statement.setString(4, "0");
+            statement.executeUpdate();
+
+            statement.setInt(1, 3);
+            statement.setString(2, userId);
+            statement.setInt(3, 4);
+            statement.setString(4, "0");
+            statement.executeUpdate();
+
+            statement.close();
+
+            statement = connection.prepareStatement(UserQueries.INIT_USER_NOTIFICATION_SETTINGS_INSERT_SQL);
+
+            statement.setString(1, "0");
+            statement.setString(2, "0");
+            statement.setInt(3, 1);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "0");
+            statement.setString(2, "1");
+            statement.setInt(3, 2);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "0");
+            statement.setString(2, "1");
+            statement.setInt(3, 3);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "0");
+            statement.setString(2, "1");
+            statement.setInt(3, 4);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "0");
+            statement.setString(2, "1");
+            statement.setInt(3, 5);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "0");
+            statement.setString(2, "1");
+            statement.setInt(3, 6);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "0");
+            statement.setString(2, "0");
+            statement.setInt(3, 7);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "0");
+            statement.setString(2, "0");
+            statement.setInt(3, 8);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "1");
+            statement.setString(2, "0");
+            statement.setInt(3, 9);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "1");
+            statement.setString(2, "0");
+            statement.setInt(3, 10);
+            statement.setString(4, null);
+            statement.setString(5, userId);
+            statement.executeUpdate();
+
+            statement.close();
+
+            statement = connection.prepareStatement(UserQueries.INIT_USER_PRIVACY_SETTINGS_INSERT_SQL);
+            statement.setString(1, "1");
+            statement.setInt(2, 1);
+            statement.setString(3, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "1");
+            statement.setInt(2, 2);
+            statement.setString(3, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "1");
+            statement.setInt(2, 3);
+            statement.setString(3, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "1");
+            statement.setInt(2, 4);
+            statement.setString(3, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "1");
+            statement.setInt(2, 6);
+            statement.setString(3, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "1");
+            statement.setInt(2, 7);
+            statement.setString(3, userId);
+            statement.executeUpdate();
+
+            statement.setString(1, "1");
+            statement.setInt(2, 8);
+            statement.setString(3, userId);
+            statement.executeUpdate();
+
+            statement.close();
+
+            tsDataSource.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            try {
+                tsDataSource.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            throw new TasteSyncException("Error while creating reco request " +
+                e.getMessage());
         } finally {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, resultset);
