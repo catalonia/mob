@@ -151,6 +151,7 @@ public class UserBoImpl implements UserBo {
     @Override
     public List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException {
+    	userDao.initUserSettings(userId);
         return userDao.showMyProfileFriends(userId);
     }
 
@@ -281,5 +282,11 @@ public class UserBoImpl implements UserBo {
 	public TSUserObj getUserInformationByEmail(String email)
 			throws TasteSyncException {
 		return userDao.getUserInformationByEmail(email);
+	}
+
+	@Override
+	public void initUserSettings(String userId) throws TasteSyncException {
+		userDao.initUserSettings(userId);
+		
 	}
 }
