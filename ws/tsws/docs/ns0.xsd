@@ -413,6 +413,7 @@
       <xs:element name="userFbId" type="xs:string" minOccurs="0"/>
       <xs:element name="about" type="xs:string" minOccurs="0"/>
       <xs:element name="currentStatus" type="xs:string" minOccurs="0"/>
+      <xs:element name="photo" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSUserProfileBasicObj">
@@ -425,6 +426,7 @@
   </xs:complexType>
   <xs:complexType name="TSUserProfileObj">
     <xs:sequence>
+      <xs:element name="userId" type="xs:string" minOccurs="0"/>
       <xs:element name="name" type="xs:string" minOccurs="0"/>
       <xs:element name="photo" type="xs:string" minOccurs="0"/>
       <xs:element name="facebookCity" type="xs:string" minOccurs="0"/>
@@ -437,6 +439,7 @@
       <xs:element name="numFriendsOnTs" type="xs:string" minOccurs="0"/>
       <xs:element name="numPoints" type="xs:string" minOccurs="0"/>
       <xs:element name="restaurantList" type="TSRestaurantView" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="cityId" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TSUserProfileRestaurantsObj">

@@ -2236,6 +2236,7 @@
 @interface ENUNCIATENS0TSUserProfileObj : NSObject <EnunciateXML>
 {
   @private
+    NSString *_userId;
     NSString *_name;
     NSString *_photo;
     NSString *_facebookCity;
@@ -2248,7 +2249,18 @@
     NSString *_numFriendsOnTs;
     NSString *_numPoints;
     NSArray *_restaurantList;
+    NSString *_cityId;
 }
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) userId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserId: (NSString *) newUserId;
 
 /**
  * (no documentation provided)
@@ -2369,6 +2381,16 @@
  * (no documentation provided)
  */
 - (void) setRestaurantList: (NSArray *) newRestaurantList;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) cityId;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCityId: (NSString *) newCityId;
 @end /* interface ENUNCIATENS0TSUserProfileObj */
 
 #endif /* DEF_ENUNCIATENS0TSUserProfileObj_H */
@@ -2401,6 +2423,7 @@
     NSString *_userFbId;
     NSString *_about;
     NSString *_currentStatus;
+    NSString *_photo;
 }
 
 /**
@@ -2602,6 +2625,16 @@
  * (no documentation provided)
  */
 - (void) setCurrentStatus: (NSString *) newCurrentStatus;
+
+/**
+ * (no documentation provided)
+ */
+- (NSString *) photo;
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPhoto: (NSString *) newPhoto;
 @end /* interface ENUNCIATENS0TSUserObj */
 
 #endif /* DEF_ENUNCIATENS0TSUserObj_H */

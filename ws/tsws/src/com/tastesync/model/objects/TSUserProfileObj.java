@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "userprofile")
 public class TSUserProfileObj implements Serializable {
 	private static final long serialVersionUID = 3018045967607449545L;
+	private String userId;
+	private String cityId;
 	private String name;
 	private String photo;
 	private String facebookCity;
@@ -22,6 +24,12 @@ public class TSUserProfileObj implements Serializable {
 	private String numPoints;
 	private List<TSRestaurantView> restaurantList;
 
+
+	@XmlElement
+	public String getUserId() {
+		return userId;
+	}
+	
 	@XmlElement
 	public String getName() {
 		return name;
@@ -82,6 +90,11 @@ public class TSUserProfileObj implements Serializable {
 		return restaurantList;
 	}
 
+	@XmlElement
+	public String getCityId() {
+		return cityId;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -128,6 +141,15 @@ public class TSUserProfileObj implements Serializable {
 
 	public void setRestaurantList(List<TSRestaurantView> restaurantList) {
 		this.restaurantList = restaurantList;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
+
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
 	}
 
 }

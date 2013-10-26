@@ -70,16 +70,16 @@ public interface UserDao {
     TSUserProfileObj showUserProfileHome(String userId, String viewerUserId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj> showProfileFollowing(String userId)
+    List<TSUserProfileObj> showProfileFollowing(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj> showProfileFollowers(String userId)
+    List<TSUserProfileObj> showProfileFollowers(String userId)
         throws TasteSyncException;
 
     List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSFacebookUserDataObj> showProfileFriends(String userId)
+    List<TSUserObj> showProfileFriends(String userId)
         throws TasteSyncException;
 
     List<String> showInviteFriends(String userId) throws TasteSyncException;
@@ -125,7 +125,7 @@ public interface UserDao {
 
     TSInitObj getAllData() throws TasteSyncException;
 
-    String getUserId(String userFBID) throws TasteSyncException;
+    TSFacebookUserDataObj getUserId(String userID) throws TasteSyncException;
 
     List<TSCityObj> getCityName(String key) throws TasteSyncException;
 

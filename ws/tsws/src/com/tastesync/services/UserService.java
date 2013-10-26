@@ -911,7 +911,7 @@ public class UserService extends BaseService {
     })
     public Response showProfileFollowing(@FormParam("userId")
     String userId) {
-        List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
+        List<TSUserProfileObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -954,7 +954,7 @@ public class UserService extends BaseService {
     })
     public Response showProfileFollowers(@FormParam("userId")
     String userId) {
-        List<TSFacebookUserDataObj> tsFacebookUserDataObjList = null;
+        List<TSUserProfileObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1047,7 +1047,7 @@ public class UserService extends BaseService {
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
 
-            List<TSFacebookUserDataObj> tsFacebookUserDataObjList = userBo.showProfileFriends(userId);
+            List<TSUserObj> tsFacebookUserDataObjList = userBo.showProfileFriends(userId);
             List<String> tsInviteFacebookUserDataObjList = userBo.showInviteFriends(userId);
 
             tsfriend = new TSFriendObj();
@@ -1651,14 +1651,14 @@ public class UserService extends BaseService {
     }
 
     @POST
-    @Path("/getUserId")
+    @Path("/getUserObject")
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response getUserId(@FormParam("userFBID")
+    public Response getUserId(@FormParam("userID")
     String userFBID) {
-        String userId = null;
+        TSFacebookUserDataObj userId = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -1666,11 +1666,9 @@ public class UserService extends BaseService {
         try {
             userId = userBo.getUserId(userFBID);
 
-            TSSuccessObj tsSuccessObj = new TSSuccessObj();
-            tsSuccessObj.setSuccessMsg(userId);
             responseDone = true;
 
-            return Response.status(status).entity(tsSuccessObj).build();
+            return Response.status(status).entity(userId).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();

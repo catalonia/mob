@@ -13,12 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="setStatus" key="selection"/>
+		<item value="getHomeProfile" key="selection"/>
 		<list key="findhistory">
-			<item value="setStatus"/>
-			<item value="USER_LOGIN_INSERT_SQL"/>
-			<item value="loginAccount"/>
-			<item value=".loginAccount"/>
+			<item value="getHomeProfile"/>
+			<item value="showProfileFriends"/>
+			<item value="showMyProfileFriends"/>
+			<item value="showProfileFollowers"/>
+			<item value="getUserHomeProfile"/>
+			<item value="getHome"/>
+			<item value="getUserId"/>
+			<item value="photo"/>
 		</list>
 		<list key="replacehistory">
 		</list>

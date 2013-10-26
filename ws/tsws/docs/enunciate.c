@@ -4030,6 +4030,11 @@ struct enunciate_ns0_TSUserObj {
    * (no documentation provided)
    */
   xmlChar *currentStatus;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *photo;
 };
 
 /**
@@ -4246,6 +4251,11 @@ struct enunciate_ns0_TSUserProfileObj {
   /**
    * (no documentation provided)
    */
+  xmlChar *userId;
+
+  /**
+   * (no documentation provided)
+   */
   xmlChar *name;
 
   /**
@@ -4307,6 +4317,11 @@ struct enunciate_ns0_TSUserProfileObj {
    * Size of the restaurantList array.
    */
   int _sizeof_restaurantList;
+
+  /**
+   * (no documentation provided)
+   */
+  xmlChar *cityId;
 };
 
 /**
@@ -25900,6 +25915,27 @@ static struct enunciate_ns0_TSUserObj *xmlTextReaderReadNs0TSUserObjType(xmlText
         _tSUserObj->currentStatus = ((xmlChar*)_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "photo", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}photo of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}photo of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSUserObjType(_tSUserObj);
+          free(_tSUserObj);
+          return NULL;
+        }
+
+        _tSUserObj->photo = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
       else {
 #if DEBUG_ENUNCIATE > 1
         if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
@@ -26527,6 +26563,36 @@ static int xmlTextWriterWriteNs0TSUserObjType(xmlTextWriterPtr writer, struct en
     }
     totalBytes += status;
   }
+  if (_tSUserObj->photo != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "photo", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}photo. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}photo...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSUserObj->photo));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}photo. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}photo. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
 
   return totalBytes;
 }
@@ -26737,6 +26803,16 @@ static void freeNs0TSUserObjType(struct enunciate_ns0_TSUserObj *_tSUserObj) {
     printf("Freeing accessor currentStatus of type enunciate_ns0_TSUserObj...\n");
 #endif
     free(_tSUserObj->currentStatus);
+  }
+  if (_tSUserObj->photo != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor photo of type enunciate_ns0_TSUserObj...\n");
+#endif
+    freeXsStringType(_tSUserObj->photo);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor photo of type enunciate_ns0_TSUserObj...\n");
+#endif
+    free(_tSUserObj->photo);
   }
 }
 #endif /* DEF_enunciate_ns0_TSUserObj_M */
@@ -27345,6 +27421,27 @@ static struct enunciate_ns0_TSUserProfileObj *xmlTextReaderReadNs0TSUserProfileO
         return NULL;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "userId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}userId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}userId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSUserProfileObjType(_tSUserProfileObj);
+          free(_tSUserProfileObj);
+          return NULL;
+        }
+
+        _tSUserProfileObj->userId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
         && xmlStrcmp(BAD_CAST "name", xmlTextReaderConstLocalName(reader)) == 0
         && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -27598,6 +27695,27 @@ static struct enunciate_ns0_TSUserProfileObj *xmlTextReaderReadNs0TSUserProfileO
         free(_child_accessor);
         status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
       }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+        && xmlStrcmp(BAD_CAST "cityId", xmlTextReaderConstLocalName(reader)) == 0
+        && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+        printf("Attempting to read choice {}cityId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+        _child_accessor = xmlTextReaderReadXsStringType(reader);
+        if (_child_accessor == NULL) {
+#if DEBUG_ENUNCIATE
+          printf("Failed to read choice {}cityId of type {http://www.w3.org/2001/XMLSchema}string.\n");
+#endif
+          //panic: unable to read the child element for some reason.
+          freeNs0TSUserProfileObjType(_tSUserProfileObj);
+          free(_tSUserProfileObj);
+          return NULL;
+        }
+
+        _tSUserProfileObj->cityId = ((xmlChar*)_child_accessor);
+        status = xmlTextReaderAdvanceToNextStartOrEndElement(reader);
+      }
       else {
 #if DEBUG_ENUNCIATE > 1
         if (xmlTextReaderConstNamespaceUri(reader) == NULL) {
@@ -27625,6 +27743,36 @@ static struct enunciate_ns0_TSUserProfileObj *xmlTextReaderReadNs0TSUserProfileO
 static int xmlTextWriterWriteNs0TSUserProfileObjType(xmlTextWriterPtr writer, struct enunciate_ns0_TSUserProfileObj *_tSUserProfileObj) {
   int status, totalBytes = 0, i;
   xmlChar *binaryData;
+  if (_tSUserProfileObj->userId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "userId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}userId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}userId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSUserProfileObj->userId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}userId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}userId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
   if (_tSUserProfileObj->name != NULL) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "name", NULL);
     if (status < 0) {
@@ -27985,6 +28133,36 @@ static int xmlTextWriterWriteNs0TSUserProfileObjType(xmlTextWriterPtr writer, st
     }
     totalBytes += status;
   }
+  if (_tSUserProfileObj->cityId != NULL) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cityId", NULL);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write start element {}cityId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+#if DEBUG_ENUNCIATE > 1
+    printf("writing type {http://www.w3.org/2001/XMLSchema}string for element {}cityId...\n");
+#endif
+    status = xmlTextWriterWriteXsStringType(writer, (_tSUserProfileObj->cityId));
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write type {http://www.w3.org/2001/XMLSchema}string for element {}cityId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+#if DEBUG_ENUNCIATE
+      printf("Failed to write end element {}cityId. status: %i\n", status);
+#endif
+      return status;
+    }
+    totalBytes += status;
+  }
 
   return totalBytes;
 }
@@ -27996,6 +28174,16 @@ static int xmlTextWriterWriteNs0TSUserProfileObjType(xmlTextWriterPtr writer, st
  */
 static void freeNs0TSUserProfileObjType(struct enunciate_ns0_TSUserProfileObj *_tSUserProfileObj) {
   int i;
+  if (_tSUserProfileObj->userId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor userId of type enunciate_ns0_TSUserProfileObj...\n");
+#endif
+    freeXsStringType(_tSUserProfileObj->userId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor userId of type enunciate_ns0_TSUserProfileObj...\n");
+#endif
+    free(_tSUserProfileObj->userId);
+  }
   if (_tSUserProfileObj->name != NULL) {
 #if DEBUG_ENUNCIATE > 1
     printf("Freeing type of accessor name of type enunciate_ns0_TSUserProfileObj...\n");
@@ -28117,6 +28305,16 @@ static void freeNs0TSUserProfileObjType(struct enunciate_ns0_TSUserProfileObj *_
     printf("Freeing accessor restaurantList of type enunciate_ns0_TSUserProfileObj...\n");
 #endif
     free(_tSUserProfileObj->restaurantList);
+  }
+  if (_tSUserProfileObj->cityId != NULL) {
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing type of accessor cityId of type enunciate_ns0_TSUserProfileObj...\n");
+#endif
+    freeXsStringType(_tSUserProfileObj->cityId);
+#if DEBUG_ENUNCIATE > 1
+    printf("Freeing accessor cityId of type enunciate_ns0_TSUserProfileObj...\n");
+#endif
+    free(_tSUserProfileObj->cityId);
   }
 }
 #endif /* DEF_enunciate_ns0_TSUserProfileObj_M */

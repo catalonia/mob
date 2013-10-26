@@ -18618,6 +18618,24 @@
 /**
  * (no documentation provided)
  */
+- (NSString *) userId
+{
+  return _userId;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setUserId: (NSString *) newUserId
+{
+  [newUserId retain];
+  [_userId release];
+  _userId = newUserId;
+}
+
+/**
+ * (no documentation provided)
+ */
 - (NSString *) name
 {
   return _name;
@@ -18831,8 +18849,27 @@
   _restaurantList = newRestaurantList;
 }
 
+/**
+ * (no documentation provided)
+ */
+- (NSString *) cityId
+{
+  return _cityId;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setCityId: (NSString *) newCityId
+{
+  [newCityId retain];
+  [_cityId release];
+  _cityId = newCityId;
+}
+
 - (void) dealloc
 {
+  [self setUserId: nil];
   [self setName: nil];
   [self setPhoto: nil];
   [self setFacebookCity: nil];
@@ -18845,6 +18882,7 @@
   [self setNumFriendsOnTs: nil];
   [self setNumPoints: nil];
   [self setRestaurantList: nil];
+  [self setCityId: nil];
   [super dealloc];
 }
 
@@ -19096,6 +19134,22 @@
     return YES;
   }
   if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "userId", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}userId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}userId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setUserId: __child];
+    return YES;
+  } //end "if choice"
+
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
     && xmlStrcmp(BAD_CAST "name", xmlTextReaderConstLocalName(reader)) == 0
     && xmlTextReaderConstNamespaceUri(reader) == NULL) {
 
@@ -19293,6 +19347,22 @@
     return YES;
   } //end "if choice"
 
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "cityId", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}cityId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}cityId of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setCityId: __child];
+    return YES;
+  } //end "if choice"
+
 
   return NO;
 }
@@ -19337,6 +19407,27 @@
 
   [super writeJAXBChildElements: writer];
 
+  if ([self userId]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "userId", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}userId."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}userId...");
+#endif
+    [[self userId] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}userId...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}userId."];
+    }
+  }
   if ([self name]) {
     status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "name", NULL);
     if (status < 0) {
@@ -19592,6 +19683,27 @@
                      format: @"Error writing end child element {}restaurantList."];
       }
     } //end item iterator.
+  }
+  if ([self cityId]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "cityId", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}cityId."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}cityId...");
+#endif
+    [[self cityId] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}cityId...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}cityId."];
+    }
   }
 }
 @end /* implementation ENUNCIATENS0TSUserProfileObj (JAXB) */
@@ -19965,6 +20077,24 @@
   _currentStatus = newCurrentStatus;
 }
 
+/**
+ * (no documentation provided)
+ */
+- (NSString *) photo
+{
+  return _photo;
+}
+
+/**
+ * (no documentation provided)
+ */
+- (void) setPhoto: (NSString *) newPhoto
+{
+  [newPhoto retain];
+  [_photo release];
+  _photo = newPhoto;
+}
+
 - (void) dealloc
 {
   [self setUserId: nil];
@@ -19987,6 +20117,7 @@
   [self setUserFbId: nil];
   [self setAbout: nil];
   [self setCurrentStatus: nil];
+  [self setPhoto: nil];
   [super dealloc];
 }
 
@@ -20557,6 +20688,22 @@
     return YES;
   } //end "if choice"
 
+  if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT
+    && xmlStrcmp(BAD_CAST "photo", xmlTextReaderConstLocalName(reader)) == 0
+    && xmlTextReaderConstNamespaceUri(reader) == NULL) {
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"Attempting to read choice {}photo of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+    __child = [NSString readXMLType: reader];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully read choice {}photo of type {http://www.w3.org/2001/XMLSchema}string.");
+#endif
+
+    [self setPhoto: __child];
+    return YES;
+  } //end "if choice"
+
 
   return NO;
 }
@@ -21019,6 +21166,27 @@
     if (status < 0) {
       [NSException raise: @"XMLWriteError"
                    format: @"Error writing end child element {}currentStatus."];
+    }
+  }
+  if ([self photo]) {
+    status = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "photo", NULL);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing start child element {}photo."];
+    }
+
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"writing element {}photo...");
+#endif
+    [[self photo] writeXMLType: writer];
+#if DEBUG_ENUNCIATE > 1
+    NSLog(@"successfully wrote element {}photo...");
+#endif
+
+    status = xmlTextWriterEndElement(writer);
+    if (status < 0) {
+      [NSException raise: @"XMLWriteError"
+                   format: @"Error writing end child element {}photo."];
     }
   }
 }

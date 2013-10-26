@@ -1625,11 +1625,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public List<TSFacebookUserDataObj> showProfileFriends(String userId)
+    public List<TSUserObj> showProfileFriends(String userId)
         throws TasteSyncException {
-        List<TSFacebookUserDataObj> list_data = new ArrayList<TSFacebookUserDataObj>();
-        List<String> dataID = new ArrayList<String>();
-        MySQL mySQL = new MySQL();
+        List<TSUserObj> list_data = new ArrayList<TSUserObj>();
 
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
@@ -1644,20 +1642,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
-                dataID.add(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("users.USER_FB_ID")));
+                TSUserObj userObj = new TSUserObj();
+                MySQL.mapResultsetRowToTSUserVO(userObj, resultset);
+                list_data.add(userObj);
             }
 
             statement.close();
-
-            int count = 0;
-
-            while (dataID.size() != count) {
-                TSFacebookUserDataObj obj = mySQL.getFacebookUserInformation(connection,
-                        dataID.get(count));
-                list_data.add(obj);
-                count++;
-            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
@@ -1776,9 +1766,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public List<TSFacebookUserDataObj> showProfileFollowing(String userId)
+    public List<TSUserProfileObj> showProfileFollowing(String userId)
         throws TasteSyncException {
-        ArrayList<TSFacebookUserDataObj> fbUsers = null;
+        ArrayList<TSUserProfileObj> fbUsers = null;
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -1789,12 +1779,29 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement = connection.prepareStatement(UserQueries.USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL);
             statement.setString(1, userId);
             resultset = statement.executeQuery();
-            fbUsers = new ArrayList<TSFacebookUserDataObj>();
+            fbUsers = new ArrayList<TSUserProfileObj>();
 
             while (resultset.next()) {
-                TSFacebookUserDataObj user = new TSFacebookUserDataObj();
-                MySQL.mapResultsetRowToTSFacebookVO(user, resultset);
-                fbUsers.add(user);
+            	TSUserProfileObj userProfileObj = new TSUserProfileObj();
+            	userProfileObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_ID")));
+            	userProfileObj.setName(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("facebook_user_data.NAME")));
+                userProfileObj.setPhoto(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("facebook_user_data.PICTURE")));
+                userProfileObj.setFacebookUrl(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("facebook_user_data.LINK")));
+                userProfileObj.setTwitterUrl(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TWITTER_USR_URL")));
+                userProfileObj.setBlogUrl(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.Blog_Url")));
+                userProfileObj.setFacebookCity(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.city")));
+                userProfileObj.setNumPoints(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_POINTS")));
+                userProfileObj.setAboutMeText(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.ABOUT")));
+                fbUsers.add(userProfileObj);
             }
 
             statement.close();
@@ -1809,9 +1816,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public List<TSFacebookUserDataObj> showProfileFollowers(String userId)
+    public List<TSUserProfileObj> showProfileFollowers(String userId)
         throws TasteSyncException {
-        ArrayList<TSFacebookUserDataObj> fbUsers = null;
+        ArrayList<TSUserProfileObj> fbUsers = null;
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -1822,15 +1829,33 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement = connection.prepareStatement(UserQueries.USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL);
             statement.setString(1, userId);
             resultset = statement.executeQuery();
-            fbUsers = new ArrayList<TSFacebookUserDataObj>();
+            fbUsers = new ArrayList<TSUserProfileObj>();
 
             while (resultset.next()) {
-                TSFacebookUserDataObj user = new TSFacebookUserDataObj();
-                MySQL.mapResultsetRowToTSFacebookVO(user, resultset);
-                fbUsers.add(user);
+            	TSUserProfileObj userProfileObj = new TSUserProfileObj();
+            	userProfileObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_ID")));
+            	userProfileObj.setName(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("facebook_user_data.NAME")));
+                userProfileObj.setPhoto(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("facebook_user_data.PICTURE")));
+                userProfileObj.setFacebookUrl(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("facebook_user_data.LINK")));
+                userProfileObj.setTwitterUrl(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.TWITTER_USR_URL")));
+                userProfileObj.setBlogUrl(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.Blog_Url")));
+                userProfileObj.setFacebookCity(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.city")));
+                userProfileObj.setNumPoints(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_POINTS")));
+                userProfileObj.setAboutMeText(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.ABOUT")));
+                fbUsers.add(userProfileObj);
             }
-
             statement.close();
+            
+            
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
@@ -2027,7 +2052,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             userProfileObj = new TSUserProfileObj();
 
             while (resultset.next()) {
-                userProfileObj.setName(CommonFunctionsUtil.getModifiedValueString(
+            	userProfileObj.setUserId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("users.USER_ID")));
+            	userProfileObj.setName(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("facebook_user_data.NAME")));
                 userProfileObj.setPhoto(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("facebook_user_data.PICTURE")));
@@ -2037,8 +2064,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         resultset.getString("users.TWITTER_USR_URL")));
                 userProfileObj.setBlogUrl(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("users.Blog_Url")));
+                userProfileObj.setCityId(CommonFunctionsUtil.getModifiedValueString(
+                        resultset.getString("cities.city_id")));
                 userProfileObj.setFacebookCity(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.city")));
+                        resultset.getString("cities.city")) + ", " + CommonFunctionsUtil.getModifiedValueString(
+                                resultset.getString("cities.state")));
                 userProfileObj.setNumPoints(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString("users.USER_POINTS")));
                 userProfileObj.setAboutMeText(CommonFunctionsUtil.getModifiedValueString(
@@ -2749,26 +2779,26 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public String getUserId(String userFBID) throws TasteSyncException {
+    public TSFacebookUserDataObj getUserId(String userID) throws TasteSyncException {
         String retString = null;
 
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
-
+        
+        TSFacebookUserDataObj obj = new TSFacebookUserDataObj();
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
             System.out.println("UserQueries.USERID_SELECT_SQL=" +
                 UserQueries.USERID_SELECT_SQL);
             statement = connection.prepareStatement(UserQueries.USERID_SELECT_SQL);
-            statement.setString(1, userFBID);
+            statement.setString(1, userID);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
-                retString = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
-                            "users.USER_ID"));
+                MySQL.mapResultsetRowToTSFacebookVO(obj, resultset);
             }
 
             statement.close();
@@ -2780,7 +2810,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.closeConnection(connection, statement, resultset);
         }
 
-        return retString;
+        return obj;
     }
 
     @Override

@@ -131,6 +131,7 @@
       <h2>Example XML</h2>
       <code class="prettyprint lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;userprofile&gt;
+  &lt;userId&gt;...&lt;/userId&gt;
   &lt;name&gt;...&lt;/name&gt;
   &lt;photo&gt;...&lt;/photo&gt;
   &lt;facebookCity&gt;...&lt;/facebookCity&gt;
@@ -171,9 +172,11 @@
     &lt;!--...--&gt;
   &lt;/restaurantList&gt;
   &lt;!--...more &quot;restaurantList&quot; elements...--&gt;
+  &lt;cityId&gt;...&lt;/cityId&gt;
 &lt;/userprofile&gt;</code>
       <h2>Example JSON</h2>
       <code class="prettyprint lang-js">{
+  &quot;userId&quot; : &quot;...&quot;,
   &quot;name&quot; : &quot;...&quot;,
   &quot;photo&quot; : &quot;...&quot;,
   &quot;facebookCity&quot; : &quot;...&quot;,
@@ -209,7 +212,8 @@
       &quot;restaurantDealFlag&quot; : &quot;...&quot;,
       &quot;restaurantRating&quot; : &quot;...&quot;
     }
-  }, ... ]
+  }, ... ],
+  &quot;cityId&quot; : &quot;...&quot;
 }</code>
 
       <div class="clear" />

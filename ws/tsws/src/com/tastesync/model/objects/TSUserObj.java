@@ -32,6 +32,7 @@ public class TSUserObj implements Serializable {
     private String about;
     private String currentStatus;
     private String userFbId;
+    private String photo;
 
     public TSUserObj() {
         super();
@@ -136,7 +137,12 @@ public class TSUserObj implements Serializable {
     public String getCurrentStatus() {
         return currentStatus;
     }
-
+    
+    @XmlElement
+	public String getPhoto() {
+		return photo;
+	}
+    
     public void setUserId(String userId) {
         this.userId = userId;
     }
@@ -231,4 +237,9 @@ public class TSUserObj implements Serializable {
         ", userCountry=" + userCountry + ", about=" + about +
         ", currentStatus=" + currentStatus + ", userFbId=" + userFbId + "]";
     }
+    
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 }

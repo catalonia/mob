@@ -123,13 +123,13 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public List<TSFacebookUserDataObj> showProfileFollowing(String userId)
+    public List<TSUserProfileObj> showProfileFollowing(String userId)
         throws TasteSyncException {
         return userDao.showProfileFollowing(userId);
     }
 
     @Override
-    public List<TSFacebookUserDataObj> showProfileFollowers(String userId)
+    public List<TSUserProfileObj> showProfileFollowers(String userId)
         throws TasteSyncException {
         return userDao.showProfileFollowers(userId);
     }
@@ -167,7 +167,7 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public List<TSFacebookUserDataObj> showProfileFriends(String userId)
+    public List<TSUserObj> showProfileFriends(String userId)
         throws TasteSyncException {
         return userDao.showProfileFriends(userId);
     }
@@ -255,9 +255,9 @@ public class UserBoImpl implements UserBo {
 	}
 	
 	@Override
-	public String getUserId(String userFBID) throws TasteSyncException
+	public TSFacebookUserDataObj getUserId(String userID) throws TasteSyncException
 	{
-		return userDao.getUserId(userFBID);
+		return userDao.getUserId(userID);
 	}
 	
 	@Override

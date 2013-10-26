@@ -877,7 +877,7 @@ WhoareyouwithDescriptor]]>
         </wadl:response>
       </wadl:method>
     </wadl:resource>
-    <wadl:resource path="/rest/user/getUserId">
+    <wadl:resource path="/rest/user/getUserObject">
       <wadl:method name="POST">
         <wadl:request/>
         <wadl:response>
@@ -885,7 +885,7 @@ WhoareyouwithDescriptor]]>
         </wadl:response>
       </wadl:method>
     </wadl:resource>
-    <wadl:resource path="/json/user/getUserId">
+    <wadl:resource path="/json/user/getUserObject">
       <wadl:method name="POST">
         <wadl:request/>
         <wadl:response>
