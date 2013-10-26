@@ -70,7 +70,7 @@ public interface UserQueries extends TSDBCommonQueries {
         "AND CURRENT_STATUS = ?";
     public static String USER_FBID_SELECT_SQL = "SELECT * FROM users WHERE User_FB_ID = ? AND CURRENT_STATUS = ?";
     public static String USER_FBID_UPDATE_SQL = "UPDATE users SET USER_FB_ID = ? WHERE USER_ID = ?";
-    public static String USERID_SELECT_SQL = "SELECT * FROM users WHERE USER_FB_ID = ?";
+    public static String USERID_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE USER_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID = ?)";
     public static String USER_FACEBOOK_ID_SELECT_SQL = "SELECT * FROM users WHERE USER_ID IN (SELECT user_friend_tastesync.FRIEND_ID FROM user_friend_tastesync WHERE USER_ID = ?)";
 
     // public static String USER_ID_UPDATE_SQL = "UPDATE users SET USER_ID = ?"+ ", TS_USER_ID = ?" +" WHERE Auto_User_ID = ?";
@@ -222,8 +222,9 @@ public interface UserQueries extends TSDBCommonQueries {
     public static String USER_CONTACT_SETTINGS_INSERT_SQL = "INSERT INTO user_contact_settings(UCS_ID, USER_ID, CONTACT_ID, CONTACT_DETAILS_DESC, CONTACT_DATETIME) VALUES (?, ?, ?, ?, ?)";
 
     // USER_FOLLOW
-    public static String USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWEE_USER_ID FROM user_follow_data WHERE FOLLOWER_USER_ID = ?))";
-    public static String USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL = "SELECT * FROM facebook_user_data WHERE User_FB_ID IN (SELECT USER_FB_ID FROM users WHERE USER_ID IN ( SELECT FOLLOWER_USER_ID FROM user_follow_data WHERE FOLLOWEE_USER_ID = ?))";
+    public static String USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL = "SELECT users.USER_ID, facebook_user_data.NAME,  facebook_user_data.PICTURE,  facebook_user_data.LINK,  users.TWITTER_USR_URL, users.Blog_Url,  cities.city,  users.USER_POINTS, users.ABOUT FROM users, facebook_user_data, cities WHERE  users.USER_FB_ID =  FACEBOOK_USER_DATA.User_FB_ID AND  users.USER_CITY_ID = cities.city_id AND  users.USER_ID IN (SELECT FOLLOWEE_USER_ID FROM user_follow_data WHERE FOLLOWER_USER_ID = ?)"; 
+    public static String USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL = "SELECT users.USER_ID, facebook_user_data.NAME,  facebook_user_data.PICTURE,  facebook_user_data.LINK,  users.TWITTER_USR_URL, users.Blog_Url,  cities.city,  users.USER_POINTS, users.ABOUT FROM users, facebook_user_data, cities WHERE  users.USER_FB_ID =  FACEBOOK_USER_DATA.User_FB_ID AND  users.USER_CITY_ID = cities.city_id AND  users.USER_ID IN (SELECT FOLLOWER_USER_ID FROM user_follow_data WHERE FOLLOWEE_USER_ID = ?)";
+
     public static String FACEBOOK_USER_DATA_SELECT_SQL = "SELECT user_friend_fb.USER_FRIEND_FB FROM user_friend_fb WHERE INVITATION_SENT_YN = '0' AND USER_ID = ?";
     public static String USER_FOLLOW_DATA_CHECK_SELECT_SQL = "SELECT * FROM user_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?";
     public static String USER_FOLLOW_DATA_INSERT_SQL = "INSERT INTO `user_follow_data`" +
@@ -264,7 +265,7 @@ public interface UserQueries extends TSDBCommonQueries {
     public static String USER_RESTAURANT_FAV_INSERT_SQL = "INSERT INTO user_restaurant_fav(USER_ID, RESTAURANT_ID, ALGO1_IND, ALGO2_IND) VALUES (?, ?, ?, ?)";
 
     // USER_HOME_PROFILE
-    public static String USERS_FACEBOOK_USER_DATA_CITIES_SELECT_SQL = "SELECT" +
+    public static String USERS_FACEBOOK_USER_DATA_CITIES_SELECT_SQL = "SELECT" + " cities.city_id, " + " cities.state, " + " users.USER_ID, " +
         " `facebook_user_data`.NAME, `facebook_user_data`.PICTURE, `facebook_user_data`.LINK, `users`.TWITTER_USR_URL, `users`.Blog_Url, `cities`.city, `users`.USER_POINTS, `users`.ABOUT" +
         " FROM users, facebook_user_data, cities" +
         " WHERE `users`.USER_FB_ID = `FACEBOOK_USER_DATA`.User_FB_ID" +
