@@ -323,9 +323,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             //load a properties file
             prop.load(ifile);
 
-            //TODO define the data with variable
             //get the property value and print it out
-            // System.out.println(prop.toString());
             DescriptorDataVO descriptorDataVO = getDescriptorDataForDifferentIds(connection,
                     cuisineTier1IdList, cuisineTier2IdList, priceIdList,
                     themeIdList, whoareyouwithIdList, typeOfRestaurantIdList,

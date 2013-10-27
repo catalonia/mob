@@ -166,9 +166,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             dayOpeningTiming = mapper.readValue(jsonString,
                     DayOpeningTiming.class);
 
-            // display to console
-            System.out.println(dayOpeningTiming);
-
             Date currentDate = new Date();
 
             Date convertedUsEasternCurrentDate = CommonFunctionsUtil.convertJodaTimezoneFromCurrentTimezoneToEST(currentDate);
@@ -237,9 +234,7 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
             for (List<String> intraDayOpeningTimings : openTimings) {
                 if (intraDayOpeningTimings.size() >= 2) {
                     openIntraDayOpeningTimings = intraDayOpeningTimings.get(0);
-                    System.out.println("openIntraDayOpeningTimings.length()=" +
-                        openIntraDayOpeningTimings.length());
-
+                   
                     if (openIntraDayOpeningTimings.length() == 4) {
                         openIntraDayOpeningTimings = "0" +
                             openIntraDayOpeningTimings;
@@ -262,8 +257,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
                     }
                 }
             }
-
-            System.out.println("openTimeNow=" + openTimeNow);
 
             return openTimeNow;
         } catch (JsonParseException e) {

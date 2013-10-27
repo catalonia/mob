@@ -357,9 +357,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
 
                 statement.close();
             } else if (key.equals("")) {
-                System.out.println(
-                    "AutoPopulateQueries.RESTAURANT_CITY_SELECT_SQL=" +
-                    AutoPopulateQueries.RESTAURANT_CITY_SELECT_SQL);
                 statement = connection.prepareStatement(AutoPopulateQueries.RESTAURANT_CITY_SELECT_SQL);
                 statement.setString(1, cityId);
                 resultset = statement.executeQuery();
@@ -372,9 +369,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
 
                 statement.close();
             } else {
-                System.out.println(
-                    "AutoPopulateQueries.RESTAURANT_CITY__KEY_SELECT_SQL=" +
-                    AutoPopulateQueries.RESTAURANT_CITY_KEY_SELECT_SQL);
                 statement = connection.prepareStatement(AutoPopulateQueries.RESTAURANT_CITY_KEY_SELECT_SQL);
                 statement.setString(1, key + "%");
                 statement.setString(2, cityId);
@@ -391,9 +385,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
 
             for (TSRestaurantObj tsRestaurantObj : listRest) {
                 List<TSCuisineTier2Obj> cuisineObj = new ArrayList<TSCuisineTier2Obj>();
-                System.out.println(
-                    "AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL=" +
-                    AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL);
                 statement = connection.prepareStatement(AutoPopulateQueries.CUISINE_TIE2_RESTAURANT_SELECT_SQL);
                 statement.setString(1, tsRestaurantObj.getRestaurantId());
                 resultset = statement.executeQuery();
@@ -418,9 +409,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
 
             for (TSRestaurantObj tsRestaurantObj : listRest) {
                 TSCityObj cityObj = new TSCityObj();
-                System.out.println(
-                    "AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL=" +
-                    AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL);
                 statement = connection.prepareStatement(AutoPopulateQueries.CITIES_RESTAURANT_SELECT_SQL);
                 statement.setString(1, tsRestaurantObj.getRestaurantId());
                 resultset = statement.executeQuery();

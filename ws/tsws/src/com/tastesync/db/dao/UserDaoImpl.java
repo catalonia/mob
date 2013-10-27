@@ -71,8 +71,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            System.out.println("UserQueries.USER_SELECT_LOGIN=" +
-                UserQueries.USER_LOGIN_SELECT_SQL);
             statement = connection.prepareStatement(UserQueries.USER_LOGIN_SELECT_SQL);
             statement.setString(1, email);
             statement.setString(2, password);
@@ -498,7 +496,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         statement.setString(2, "");
 
                         ResultSet resultSet = statement.executeQuery();
-                        System.out.println("Here");
 
                         while (resultSet.next()) {
                             listDatabaseFBObj.add(CommonFunctionsUtil.getModifiedValueString(
@@ -512,8 +509,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         statement.setString(2, "DELETED");
 
                         ResultSet resultSet2 = statement.executeQuery();
-                        System.out.println("Here");
-
+                        
                         while (resultSet2.next()) {
                             listDatabaseDeletedObj.add(CommonFunctionsUtil.getModifiedValueString(
                                     resultSet2.getString(
@@ -606,8 +602,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                     }
 
                     String deviceToken = list_user_profile.getDevice_token();
-                    System.out.println("Device token: " + deviceToken);
-
+                   
                     if (!deviceToken.equals("")) {
                         mySQL.addDeviceToken(connection, userID, deviceToken);
                     }
@@ -641,7 +636,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.begin();
 
             String userID = mySQL.getAutoUserLogByUserId(connection, userLogID);
-            System.out.println("USERID" + userID);
             user = mySQL.getUserInformation(connection, userID);
 
             if (1 != 1) {
@@ -714,8 +708,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, null);
         }
-
-        System.out.println(id);
 
         return id;
     }
@@ -1945,19 +1937,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             statement.setString(5, dayTime);
             statement.execute();
             statement.close();
-            statement = connection.prepareStatement(UserQueries.USER_DEVICE_SELECT_SQL);
-            statement.setString(1, recipient_ID);
-
-            ResultSet resultset = statement.executeQuery();
-            System.out.println("here");
-
-            while (resultset.next()) {
-                //push.pushMessage(CommonFunctionsUtil.getModifiedValueString(resultset.getString("user_device.device_token")), content);
-                System.out.println(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("user_device.device_token")));
-            }
-
-            statement.close();
 
             tsDataSource.commit();
         } catch (SQLException e) {
@@ -1999,7 +1978,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                     String cityId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                                 "city_neighbourhood.NEIGHBOUR_ID"));
                     String[] arrayID = cityId.split("-");
-                    System.out.println(arrayID[1]);
                     cityData.add(arrayID[1]);
                 }
 
@@ -2039,8 +2017,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultset = null;
-
-        System.out.println("ABCDE" + userId);
 
         try {
             connection = tsDataSource.getConnection();
@@ -2413,9 +2389,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 }
 
                 statement = connection.prepareStatement(UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL);
-                System.out.println(
-                    "UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL=" +
-                    UserQueries.RESTAURANT_TIPS_TASTESYNC_SELECT_SQL);
                 statement.setString(1, userId);
                 resultset = statement.executeQuery();
 
@@ -2519,8 +2492,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.begin();
 
             statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_CHECK_SELECT_SQL);
-            System.out.println("UserQueries.USER_FRIEND_FB_CHECK_SELECT_SQL=" +
-                UserQueries.USER_FRIEND_FB_CHECK_SELECT_SQL);
             statement.setString(1, userId);
             statement.setString(2, friendFBId);
             resultset = statement.executeQuery();
@@ -2528,9 +2499,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             if (resultset.next()) {
                 statement.close();
                 statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_UPDATE_SQL);
-                System.out.println("UserQueries.USER_FRIEND_FB_UPDATE_SQL=" +
-                    UserQueries.USER_FRIEND_FB_UPDATE_SQL);
-
                 statement.setTimestamp(1,
                     CommonFunctionsUtil.getCurrentDateTimestamp());
                 statement.setString(2, "1");
@@ -2541,8 +2509,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             } else {
                 statement.close();
                 statement = connection.prepareStatement(UserQueries.USER_FRIEND_FB_INSERT_SQL);
-                System.out.println("UserQueries.USER_FRIEND_FB_UPDATE_SQL=" +
-                    UserQueries.USER_FRIEND_FB_UPDATE_SQL);
                 statement.setString(1, userId);
                 statement.setString(2, friendFBId);
                 statement.setTimestamp(3,
@@ -2639,7 +2605,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
         try {
             connection = tsDataSource.getConnection();
-            System.out.println("connection=" + connection);
             statement = connection.prepareStatement(UserQueries.CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL);
             resultset = statement.executeQuery();
 
@@ -2790,8 +2755,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         try {
             connection = tsDataSource.getConnection();
             tsDataSource.begin();
-            System.out.println("UserQueries.USERID_SELECT_SQL=" +
-                UserQueries.USERID_SELECT_SQL);
             statement = connection.prepareStatement(UserQueries.USERID_SELECT_SQL);
             statement.setString(1, userID);
             resultset = statement.executeQuery();
@@ -2824,8 +2787,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         try {
             tsDataSource.begin();
             connection = tsDataSource.getConnection();
-            System.out.println("CityQueries.CITY_KEY_CITY_SELECT_SQL=" +
-                CityQueries.CITY_KEY_CITY_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_KEY_CITY_SELECT_SQL);
             statement.setString(1, key + "%");
             resultset = statement.executeQuery();
@@ -2892,8 +2853,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             //            }
             //
             //            statement.close();
-            System.out.println("CityQueries.CITY_KEY_CITY_SELECT_SQL=" +
-                CityQueries.CITY_KEY_CITY_SELECT_SQL);
+//            System.out.println("CityQueries.CITY_KEY_CITY_SELECT_SQL=" +
+//                CityQueries.CITY_KEY_CITY_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_KEY_CITY_SELECT_SQL);
             statement.setString(1, key + "%");
             resultset = statement.executeQuery();
@@ -2918,18 +2879,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         resultset.getString("cities.state")));
                 obj.setCity(cityObj);
 
-                System.out.println(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.city")) + ", " +
-                    CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString("cities.state")));
                 listCityObj.add(obj);
             }
 
             statement.close();
 
-            System.out.println(
-                "CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL=" +
-                CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL);
             statement = connection.prepareStatement(CityQueries.CITY_NEIGHBOURHOOD_KEY_DESC_SELECT_SQL);
             statement.setString(1, "\"" + key + "%");
             resultset = statement.executeQuery();
@@ -2979,7 +2933,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             //                    city.getState());
             //                listCityObj.add(globalObj);
             //            }
-            System.out.println(listCityObj.size());
+            //System.out.println(listCityObj.size());
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());

@@ -110,15 +110,16 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response setStatus(@FormParam("userId") String userId, @FormParam("status") String statusUser) {
-    	int status = TSResponseStatusCode.SUCCESS.getValue();
+    public Response setStatus(@FormParam("userId")
+    String userId, @FormParam("status")
+    String statusUser) {
+        int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
         try {
-        	responseDone = userBo.setStatus(userId, statusUser);
+            responseDone = userBo.setStatus(userId, statusUser);
 
             if (responseDone) {
-                System.out.println("1");
                 responseDone = true;
 
                 TSSuccessObj tsSuccessObj = new TSSuccessObj();
@@ -127,7 +128,6 @@ public class UserService extends BaseService {
 
                 return Response.status(status).entity(tsSuccessObj).build();
             } else {
-                System.out.println("2");
                 status = TSResponseStatusCode.ERROR.getValue();
 
                 TSErrorObj tsErrorObj = new TSErrorObj();
@@ -138,7 +138,6 @@ public class UserService extends BaseService {
             }
         } catch (TasteSyncException e) {
             e.printStackTrace();
-            System.out.println("3");
             status = TSResponseStatusCode.ERROR.getValue();
 
             TSErrorObj tsErrorObj = new TSErrorObj();
@@ -159,7 +158,7 @@ public class UserService extends BaseService {
             }
         }
     }
-    
+
     @POST
     @Path("/submitLoginFacebook")
     @Consumes({MediaType.APPLICATION_JSON
@@ -231,7 +230,6 @@ public class UserService extends BaseService {
             String result = userBo.loginAccount(userId);
 
             if (result != null) {
-                System.out.println("1");
                 responseDone = true;
 
                 TSSuccessObj tsSuccessObj = new TSSuccessObj();
@@ -240,7 +238,6 @@ public class UserService extends BaseService {
 
                 return Response.status(status).entity(tsSuccessObj).build();
             } else {
-                System.out.println("2");
                 status = TSResponseStatusCode.ERROR.getValue();
 
                 TSErrorObj tsErrorObj = new TSErrorObj();
@@ -251,7 +248,6 @@ public class UserService extends BaseService {
             }
         } catch (TasteSyncException e) {
             e.printStackTrace();
-            System.out.println("3");
             status = TSResponseStatusCode.ERROR.getValue();
 
             TSErrorObj tsErrorObj = new TSErrorObj();
@@ -287,7 +283,6 @@ public class UserService extends BaseService {
 
         try {
             result = userBo.getCity(key);
-            System.out.println("Count: " + result.size());
             responseDone = true;
 
             return Response.status(status).entity(result).build();
@@ -334,9 +329,7 @@ public class UserService extends BaseService {
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             tsSuccessObj.setSuccessMsg("Logout success!");
             responseDone = true;
-            
- 
-            
+
             return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
@@ -615,9 +608,7 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
-            System.out.println(userId);
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            System.out.println(userId);
             tsSocialSettingsObj = userBo.showSettingsSocial(userId);
             responseDone = true;
 
@@ -1514,7 +1505,8 @@ public class UserService extends BaseService {
                 responseDone = true;
 
                 try {
-                    CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                    CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT,
+                        TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
                 } catch (com.tastesync.common.exception.TasteSyncException e) {
                     e.printStackTrace();
                 }
