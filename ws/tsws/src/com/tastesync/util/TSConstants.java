@@ -28,8 +28,13 @@ public interface TSConstants {
     
     public static final int PAGINATION_GAP=10;
     
-    public static final String SEND_PUSH_NOTIFICATIONS_SCRIPT = "./scripts/pushnotification/SendPushNotifications.sh";
+    public static final String SEND_PUSH_NOTIFICATIONS_SCRIPT = "./pushnotification/SendPushNotificationsInstant.sh";
 
-    public static final String TRIGGER_ALGO1_SCRIPT = "./scripts/algo1/TriggerAlgo1.sh";
+    public static final String BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT = "SendPushNotificationsInstant";
+
+    
+    public static final String TRIGGER_ALGO1_SCRIPT = "./algo/TriggerAlgo1.sh";
+
+    public static final String BASENAME_TRIGGER_ALGO1_SCRIPT1 = "TriggerAlgo1";
 
 }

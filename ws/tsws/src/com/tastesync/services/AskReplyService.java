@@ -124,7 +124,7 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.TRIGGER_ALGO1_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.TRIGGER_ALGO1_SCRIPT+" "+recoRequestId, TSConstants.BASENAME_TRIGGER_ALGO1_SCRIPT1);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
@@ -198,7 +198,7 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
@@ -373,7 +373,7 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
@@ -487,7 +487,7 @@ public class AskReplyService extends BaseService {
                 responseDone = true;
 
                 try {
-                    CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                    CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
                 } catch (com.tastesync.common.exception.TasteSyncException e) {
                     e.printStackTrace();
                 }
@@ -660,7 +660,7 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
@@ -812,7 +812,7 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
