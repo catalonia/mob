@@ -3,6 +3,7 @@ package com.tastesync.bos;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSLocationSearchCitiesObj;
+import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 
 import org.codehaus.jettison.json.JSONArray;
@@ -30,4 +31,8 @@ public interface AutoPopulateBO {
 
     List<TSLocationSearchCitiesObj> populateLocationSearchTerms()
         throws TasteSyncException;
+    
+    List<TSRestaurantBasicObj> populateSuggestedRestaurantNames(
+            String restaurantKey, String cityId) throws TasteSyncException;
+
 }

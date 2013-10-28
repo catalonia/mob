@@ -7,6 +7,7 @@ import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSLocationSearchCitiesObj;
+import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
 
@@ -182,6 +183,57 @@ public class AutoPopulateService extends BaseService {
     }
 
     @POST
+    @Path("/suggestrestaurantnames")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantBasicObj.class)
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
+    })
+    @Produces({MediaType.APPLICATION_JSON
+    })
+    public Response populateSuggestedRestaurantNames(@FormParam("key")
+    String key, @FormParam("cityid")
+    String cityId) {
+        List<TSRestaurantBasicObj> tsRestaurantBasicObjList = null;
+
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        try {
+        	key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
+
+            cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
+
+            tsRestaurantBasicObjList = autoPopulateBO.populateSuggestedRestaurantNames(key,
+                    cityId);
+            responseDone = true;
+
+            return Response.status(status).entity(tsRestaurantBasicObjList).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status)
+                           .header(TSConstants.EX_CLASS,
+                e.getClass().getCanonicalName()).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
+    }
+    
+    @POST
     @Path("/restaurantSearchTerms")
     @org.codehaus.enunciate.jaxrs.TypeHint(JSONArray.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
@@ -197,6 +249,10 @@ public class AutoPopulateService extends BaseService {
         boolean responseDone = false;
 
         try {
+        	key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
+
+            cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
+
             listRestaurant = autoPopulateBO.populateRestaurantSearchTerms(key,
                     cityId);
             responseDone = true;

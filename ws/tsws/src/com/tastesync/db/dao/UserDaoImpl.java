@@ -2827,7 +2827,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         if (1 == 1) {
-            return "testDeepinderRicksJags_OauthToken";
+            return "testDeepinderRicksJags_OauthToken"+
+                    CommonFunctionsUtil.generateUniqueKey();
         }
 
         Connection connection = null;

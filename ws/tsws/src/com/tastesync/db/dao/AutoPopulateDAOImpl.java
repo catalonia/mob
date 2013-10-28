@@ -1,5 +1,7 @@
 package com.tastesync.db.dao;
 
+import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.db.pool.TSDataSource;
 import com.tastesync.db.queries.AutoPopulateQueries;
 
@@ -8,9 +10,8 @@ import com.tastesync.exception.TasteSyncException;
 import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSCuisineTier2Obj;
 import com.tastesync.model.objects.TSLocationSearchCitiesObj;
+import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
-
-import com.tastesync.common.utils.CommonFunctionsUtil;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -344,7 +345,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
         try {
             connection = tsDataSource.getConnection();
 
-            if (cityId.equals("")) {
+            if ((cityId == null) || cityId.isEmpty()) {
                 statement = connection.prepareStatement(AutoPopulateQueries.RESTAURANT_SELECT_SQL);
                 statement.setString(1, key + "%");
                 resultset = statement.executeQuery();
@@ -356,7 +357,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 }
 
                 statement.close();
-            } else if (key.equals("")) {
+            } else if ((key == null) || key.isEmpty()) {
                 statement = connection.prepareStatement(AutoPopulateQueries.RESTAURANT_CITY_SELECT_SQL);
                 statement.setString(1, cityId);
                 resultset = statement.executeQuery();
@@ -536,6 +537,71 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
             statement.close();
 
             return tsLocationSearchCitiesObjList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new TasteSyncException(e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
+        }
+    }
+
+    @Override
+    public List<TSRestaurantBasicObj> populateSuggestedRestaurantNames(
+        String restaurantKey, String cityId) throws TasteSyncException {
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+        List<TSRestaurantBasicObj> tsRestaurantBasicObjList = new ArrayList<TSRestaurantBasicObj>();
+
+        try {
+            connection = tsDataSource.getConnection();
+
+            TSRestaurantBasicObj tsRestaurantBasicObj = null;
+
+            if ((cityId != null) && (restaurantKey != null)) {
+                statement = connection.prepareStatement(AutoPopulateQueries.LIKE_RESTAURANT_CITY_SELECT_SQL);
+                statement.setString(1, cityId);
+                statement.setString(2, restaurantKey + "%");
+                resultset = statement.executeQuery();
+
+                while (resultset.next()) {
+                    tsRestaurantBasicObj = new TSRestaurantBasicObj();
+                    tsRestaurantBasicObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString("RESTAURANT_ID")));
+
+                    tsRestaurantBasicObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString("RESTAURANT_NAME")));
+
+                    tsRestaurantBasicObjList.add(tsRestaurantBasicObj);
+                }
+
+                statement.close();
+            } else if (((cityId == null) || cityId.isEmpty()) &&
+                    (restaurantKey != null)) {
+                statement = connection.prepareStatement(AutoPopulateQueries.LIKE_RESTAURANT_SELECT_SQL);
+                statement.setString(1, restaurantKey + "%");
+                resultset = statement.executeQuery();
+                tsRestaurantBasicObj = null;
+
+                while (resultset.next()) {
+                    tsRestaurantBasicObj = new TSRestaurantBasicObj();
+                    tsRestaurantBasicObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString("RESTAURANT_ID")));
+
+                    tsRestaurantBasicObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+                            resultset.getString("RESTAURANT_NAME")));
+
+                    tsRestaurantBasicObjList.add(tsRestaurantBasicObj);
+                }
+
+                statement.close();
+            } else {
+                tsRestaurantBasicObjList = null;
+            }
+
+            return tsRestaurantBasicObjList;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());

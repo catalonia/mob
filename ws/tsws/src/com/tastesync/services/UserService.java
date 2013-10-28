@@ -19,6 +19,7 @@ import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
 import com.tastesync.model.objects.TSListSocialSettingObj;
+import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.TSUserObj;
@@ -172,13 +173,13 @@ public class UserService extends BaseService {
             // get oauth token and add to the user
             String deviceToken = list_user_profile.getDevice_token();
             String oAuthToken = null;
-
-            if ((deviceToken != null) && !deviceToken.isEmpty()) {
+            
+            //if ((deviceToken != null) && !deviceToken.isEmpty()) {
                 String userId = userBo.getUserInformationByEmail(list_user_profile.getUser_profile_current()
                                                                                   .getEmail())
                                       .getUserId();
                 oAuthToken = userBo.getOAuthToken(userId, deviceToken);
-            }
+            //}
 
             return Response.status(status).header("oauth_token", oAuthToken)
                            .entity(userResponse).build();
@@ -261,6 +262,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/getCity")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSGlobalObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1640,6 +1642,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/getHomeProfile")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSUserProfileObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1652,6 +1655,20 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
+        	userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+            
             userProfileObj = userBo.getUserHomeProfile(userId);
             responseDone = true;
 
@@ -1681,6 +1698,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/getUserObject")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSFacebookUserDataObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1693,6 +1711,20 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
+        	userFBID = CommonFunctionsUtil.converStringAsNullIfNeeded(userFBID);
+            // if userId is null, error!
+            if (userFBID == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userFBID", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+            
             userId = userBo.getUserId(userFBID);
 
             responseDone = true;
@@ -1723,6 +1755,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showProfileRestaurants")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSUserProfileRestaurantsObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1768,6 +1801,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/inviteFriend")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1779,6 +1813,20 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
+        	userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+            
             userBo.inviteFriend(userId, friendFBId);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
@@ -1811,6 +1859,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitUserReport")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1855,6 +1904,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/getUserCity")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSCityObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON

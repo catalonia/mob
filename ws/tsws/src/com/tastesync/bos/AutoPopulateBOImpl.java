@@ -6,6 +6,7 @@ import com.tastesync.db.dao.AutoPopulateDAOImpl;
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSLocationSearchCitiesObj;
+import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 
 import org.codehaus.jettison.json.JSONArray;
@@ -63,4 +64,10 @@ public class AutoPopulateBOImpl implements AutoPopulateBO {
         throws TasteSyncException {
         return autoPopulateDAO.populateLocationSearchTerms();
     }
+
+	@Override
+	public List<TSRestaurantBasicObj> populateSuggestedRestaurantNames(
+			String restaurantKey, String cityId) throws TasteSyncException {
+		return autoPopulateDAO.populateSuggestedRestaurantNames(restaurantKey, cityId);
+	}
 }
