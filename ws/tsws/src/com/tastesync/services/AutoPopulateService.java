@@ -79,62 +79,6 @@ public class AutoPopulateService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/locationsearchtermsTest")
-    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    })
-    @Produces({MediaType.APPLICATION_JSON
-    })
-    public Response populateLocationSearchTermsValidation(
-        @QueryParam("neighbourhood")
-    String neighbourhood) {
-        //current: front end - sqllite only - neighbourhood+new year city
-
-        //server side validations - for input neighbourhood+new year city
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-        boolean responseDone = false;
-        neighbourhood = CommonFunctionsUtil.converStringAsNullIfNeeded(neighbourhood);
-
-        try {
-            //For now, put all valid neighbourdata for New York city only.
-            //TODO
-            String neighbourdataList = "Chinatown, Koreatown, Lower East Side, Two Bridges,Bay Terrace, New Springville, Rossville, Westerleigh, Willowbrook, Woodrow";
-            neighbourdataList.toLowerCase();
-
-            //Validate input neighbourhood 
-            if ((neighbourhood == null) ||
-                    neighbourdataList.contains(neighbourhood.toLowerCase())) {
-                status = TSResponseStatusCode.INVALIDDATA.getValue();
-
-                TSErrorObj tsErrorObj = new TSErrorObj();
-                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
-                responseDone = true;
-
-                return Response.status(status)
-                               .header("neighbourhood",
-                    (neighbourhood != null) ? neighbourhood : TSConstants.EMPTY)
-                               .entity(tsErrorObj).build();
-            }
-
-            TSSuccessObj tsSuccessObj = new TSSuccessObj();
-            responseDone = true;
-
-            return Response.status(status).entity(tsSuccessObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (!responseDone) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
-            }
-        }
-    }
-
     //-- -- -- -- -- -- -- -- -- -- -- -- populateMoodSearchTerms	-- -- -- -- -- -- -- -- -- -- -- -- 
     //-- -- -- -- Need standard solution for "Auto-complete" i.e. is it DB based or JQUERY etc	-- -- -- -- -- -- -- -- 
     /**

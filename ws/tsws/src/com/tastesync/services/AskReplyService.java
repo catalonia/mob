@@ -124,10 +124,13 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.TRIGGER_ALGO1_SCRIPT+" "+recoRequestId, TSConstants.BASENAME_TRIGGER_ALGO1_SCRIPT1);
+                CommonFunctionsUtil.execAsync(TSConstants.TRIGGER_ALGO1_SCRIPT +
+                    " " + recoRequestId,
+                    TSConstants.BASENAME_TRIGGER_ALGO1_SCRIPT1);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
+
             return Response.status(status).entity(tsKeyValueObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
@@ -175,7 +178,6 @@ public class AskReplyService extends BaseService {
         //    	-- solved for single facebookId below
         //
         //    	-- calculate1 Logic
-        TSRecoRequestNonAssignedObj tsRecoRequestNonAssignedObj = null;
 
         //parameters check
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -190,7 +192,7 @@ public class AskReplyService extends BaseService {
             friendsFacebookIdList = CommonFunctionsUtil.converStringAsNullIfNeeded(friendsFacebookIdList);
             postRecoRequestOnFacebook = CommonFunctionsUtil.converStringAsNullIfNeeded(postRecoRequestOnFacebook);
 
-            tsRecoRequestNonAssignedObj = askReplyBO.submitAskForRecommendationFriends(userId,
+            TSRecoRequestNonAssignedObj tsRecoRequestNonAssignedObj = askReplyBO.submitAskForRecommendationFriends(userId,
                     recoRequestId, recoRequestFriendText,
                     CommonFunctionsUtil.convertStringListAsArrayList(
                         friendsFacebookIdList), postRecoRequestOnFacebook);
@@ -198,7 +200,8 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT,
+                    TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
@@ -239,14 +242,13 @@ public class AskReplyService extends BaseService {
         @QueryParam("userid")
     String userId, @QueryParam("recorequestid")
     String recorequestId) {
-        TSRecoRequestObj tsRecoRequestObj = null;
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
         try {
-            tsRecoRequestObj = askReplyBO.showRecommendationsRequest(userId,
+            TSRecoRequestObj tsRecoRequestObj = askReplyBO.showRecommendationsRequest(userId,
                     recorequestId);
 
             if (tsRecoRequestObj == null) {
@@ -373,7 +375,8 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT,
+                    TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
@@ -413,14 +416,13 @@ public class AskReplyService extends BaseService {
         @QueryParam("userid")
     String userId, @QueryParam("recorequestid")
     String recorequestId) {
-        TSRecommendationsForYouObj tsRecommendationsForYou = null;
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
         try {
-            tsRecommendationsForYou = askReplyBO.showRecommendationsForYou(userId,
+            TSRecommendationsForYouObj tsRecommendationsForYou = askReplyBO.showRecommendationsForYou(userId,
                     recorequestId);
             responseDone = true;
 
@@ -487,7 +489,8 @@ public class AskReplyService extends BaseService {
                 responseDone = true;
 
                 try {
-                    CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                    CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT,
+                        TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
                 } catch (com.tastesync.common.exception.TasteSyncException e) {
                     e.printStackTrace();
                 }
@@ -541,8 +544,6 @@ public class AskReplyService extends BaseService {
         @QueryParam("messageid")
     String messageId, @QueryParam("recipientuserid")
     String recipientUserId) {
-        TSSenderUserObj tsSenderUserObj = null;
-
         int status = TSResponseStatusCode.SUCCESS.getValue();
         messageId = CommonFunctionsUtil.converStringAsNullIfNeeded(messageId);
         recipientUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(recipientUserId);
@@ -550,7 +551,7 @@ public class AskReplyService extends BaseService {
         boolean responseDone = false;
 
         try {
-            tsSenderUserObj = askReplyBO.showRecommendationMessage(messageId,
+            TSSenderUserObj tsSenderUserObj = askReplyBO.showRecommendationMessage(messageId,
                     recipientUserId);
             responseDone = true;
 
@@ -589,8 +590,6 @@ public class AskReplyService extends BaseService {
         @QueryParam("userid")
     String userId, @QueryParam("questionid")
     String questionId) {
-        TSRecommendationsFollowupObj tsRecommendationsFollowupObj = null;
-
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         questionId = CommonFunctionsUtil.converStringAsNullIfNeeded(questionId);
@@ -598,7 +597,7 @@ public class AskReplyService extends BaseService {
         boolean responseDone = false;
 
         try {
-            tsRecommendationsFollowupObj = askReplyBO.showRecommendationsFollowup(userId,
+            TSRecommendationsFollowupObj tsRecommendationsFollowupObj = askReplyBO.showRecommendationsFollowup(userId,
                     questionId);
             responseDone = true;
 
@@ -660,7 +659,8 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT,
+                    TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
@@ -700,8 +700,6 @@ public class AskReplyService extends BaseService {
         @QueryParam("recolikeid")
     String recoLikeId, @QueryParam("recommenderuserid")
     String recommenderUserId) {
-        TSRecommendeeUserObj tsRecommendeeUser = null;
-
         int status = TSResponseStatusCode.SUCCESS.getValue();
         recoLikeId = CommonFunctionsUtil.converStringAsNullIfNeeded(recoLikeId);
         recommenderUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(recommenderUserId);
@@ -709,7 +707,7 @@ public class AskReplyService extends BaseService {
         boolean responseDone = false;
 
         try {
-            tsRecommendeeUser = askReplyBO.showRecommendationsShowLikes(recoLikeId);
+            TSRecommendeeUserObj tsRecommendeeUser = askReplyBO.showRecommendationsShowLikes(recoLikeId);
             responseDone = true;
 
             return Response.status(status).entity(tsRecommendeeUser).build();
@@ -745,15 +743,13 @@ public class AskReplyService extends BaseService {
     public Response showRecommendationDidYouLike(
         @QueryParam("recorequestid")
     String recorequestId) {
-        List<TSRestaurantBasicObj> tsRestaurantObjList = null;
-
         int status = TSResponseStatusCode.SUCCESS.getValue();
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
         boolean responseDone = false;
 
         try {
-            tsRestaurantObjList = askReplyBO.showRecommendationDidYouLike(recorequestId);
+            List<TSRestaurantBasicObj> tsRestaurantObjList = askReplyBO.showRecommendationDidYouLike(recorequestId);
             responseDone = true;
 
             return Response.status(status).entity(tsRestaurantObjList).build();
@@ -812,7 +808,8 @@ public class AskReplyService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT,
+                    TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
@@ -853,9 +850,6 @@ public class AskReplyService extends BaseService {
     String userId, @QueryParam("recorequestid")
     String recoRequestId, @QueryParam("paginationid")
     String paginationId) {
-        TSRestaurantsTileSearchExtendedInfoObj tsRestaurantsTileSearchExtendedInfoObj =
-            null;
-
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
@@ -865,7 +859,8 @@ public class AskReplyService extends BaseService {
         boolean responseDone = false;
 
         try {
-            tsRestaurantsTileSearchExtendedInfoObj = askReplyBO.showListOfRestaurantsSearchResultsBasedOnRecoId(userId,
+            TSRestaurantsTileSearchExtendedInfoObj tsRestaurantsTileSearchExtendedInfoObj =
+                askReplyBO.showListOfRestaurantsSearchResultsBasedOnRecoId(userId,
                     recoRequestId, paginationId);
             responseDone = true;
 
@@ -918,9 +913,6 @@ public class AskReplyService extends BaseService {
     String dealFlag, @QueryParam("chainflag")
     String chainFlag, @QueryParam("paginationid")
     String paginationId) {
-        TSRestaurantsTileSearchExtendedInfoObj tsRestaurantsTileSearchExtendedInfoObj =
-            null;
-
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
@@ -939,7 +931,8 @@ public class AskReplyService extends BaseService {
         boolean responseDone = false;
 
         try {
-            tsRestaurantsTileSearchExtendedInfoObj = askReplyBO.showListOfRestaurantsSearchResults(userId,
+            TSRestaurantsTileSearchExtendedInfoObj tsRestaurantsTileSearchExtendedInfoObj =
+                askReplyBO.showListOfRestaurantsSearchResults(userId,
                     restaurantId, neighborhoodId, cityId, stateName,
                     CommonFunctionsUtil.convertStringListAsArrayList(
                         cuisineTier1IdList),
@@ -986,7 +979,6 @@ public class AskReplyService extends BaseService {
     String userId, @QueryParam("paginationid")
     String paginationId) {
         int status = TSResponseStatusCode.SUCCESS.getValue();
-        List<TSRecoNotificationBaseObj> recoNotificationBase = new ArrayList<TSRecoNotificationBaseObj>();
         boolean responseDone = false;
 
         // BO - DO- DBQuery
@@ -994,7 +986,8 @@ public class AskReplyService extends BaseService {
             //parameters check
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
             paginationId = CommonFunctionsUtil.converStringAsNullIfNeeded(paginationId);
-            recoNotificationBase = askReplyBO.showRecommendationsList(userId,
+
+            List<TSRecoNotificationBaseObj> recoNotificationBase = askReplyBO.showRecommendationsList(userId,
                     paginationId);
 
             responseDone = true;

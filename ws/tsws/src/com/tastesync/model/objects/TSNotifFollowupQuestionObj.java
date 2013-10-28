@@ -9,10 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class TSNotifFollowupQuestionObj extends TSRecoNotificationBaseObj
     implements Serializable {
     private static final long serialVersionUID = -5841007147194904300L;
-    String questionId;
-    String assignedDatetime;
-    String viewed;
-    String actioned;
+    private String questionId;
+    private String assignedDatetime;
+    private String viewed;
+    private String actioned;
     private TSUserProfileBasicObj questionUser;
     private String questionText;
 

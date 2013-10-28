@@ -11,7 +11,7 @@ public class TSRestaurantTipsAPSettingsObj implements Serializable {
     private static final long serialVersionUID = -3475916144296389812L;
     private String userId;
     private String autoPublishingSetting;
-    public APSETTINGTYPE apSettingType;
+    private APSETTINGTYPE apSettingType;
 
     @XmlElement
     public String getUserId() {

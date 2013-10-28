@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "notifrecoreply")
 public class TSNotifRecoReplyObj implements Serializable {
     private static final long serialVersionUID = -2924784723536826201L;
-    String replyId;
-    String repliedDatetime;
-    String viewed;
+    private String replyId;
+    private String repliedDatetime;
+    private String viewed;
 
     public TSNotifRecoReplyObj() {
         super();

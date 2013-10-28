@@ -7,6 +7,7 @@ import com.tastesync.common.utils.CommonFunctionsUtil;
 
 import com.tastesync.exception.TasteSyncException;
 
+import com.tastesync.model.objects.TSAboutObj;
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSErrorObj;
@@ -117,25 +118,14 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
-            responseDone = userBo.setStatus(userId, statusUser);
+            userBo.setStatus(userId, statusUser);
+            responseDone = true;
 
-            if (responseDone) {
-                responseDone = true;
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            tsSuccessObj.setSuccessMsg(statusUser);
+            responseDone = true;
 
-                TSSuccessObj tsSuccessObj = new TSSuccessObj();
-                tsSuccessObj.setSuccessMsg(statusUser);
-                responseDone = true;
-
-                return Response.status(status).entity(tsSuccessObj).build();
-            } else {
-                status = TSResponseStatusCode.ERROR.getValue();
-
-                TSErrorObj tsErrorObj = new TSErrorObj();
-                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-                responseDone = true;
-
-                return Response.status(status).entity(tsErrorObj).build();
-            }
+            return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -421,20 +411,13 @@ public class UserService extends BaseService {
 
         // BO - DO- DBQuery
         try {
-            responseDone = userBo.updateSettingsPrivacy(privacySettingObj);
+            userBo.updateSettingsPrivacy(privacySettingObj);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             tsSuccessObj.setSuccessMsg("Settings success!");
+            responseDone = true;
 
-            if (responseDone) {
-                return Response.status(status).entity(tsSuccessObj).build();
-            } else {
-                TSErrorObj tsErrorObj = new TSErrorObj();
-                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-                responseDone = true;
-
-                return Response.status(status).entity(tsErrorObj).build();
-            }
+            return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -644,8 +627,40 @@ public class UserService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response updateSettingsAutoPublishSettings(
-        TSListSocialSettingObj social_setting_obj) throws TasteSyncException {
-        return userBo.updateSettingsAutoPublishSettings(social_setting_obj);
+        TSListSocialSettingObj social_setting_obj) {
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        try {
+            userBo.updateSettingsAutoPublishSettings(social_setting_obj);
+            responseDone = true;
+
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            tsSuccessObj.setSuccessMsg("Settings success!");
+
+            return Response.status(status).entity(tsSuccessObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
     }
 
     @POST
@@ -657,8 +672,41 @@ public class UserService extends BaseService {
     public Response submitSettingscontactUs(@FormParam("userId")
     String userId, @FormParam("Contact_Order")
     String order, @FormParam("Contact_Desc")
-    String desc) throws TasteSyncException {
-        return userBo.submitSettingscontactUs(userId, order, desc);
+    String desc) {
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        try {
+            userBo.submitSettingscontactUs(userId, order, desc);
+
+            responseDone = true;
+
+            TSSuccessObj tsSuccessObj = new TSSuccessObj();
+            tsSuccessObj.setSuccessMsg("Settings success!");
+
+            return Response.status(status).entity(tsSuccessObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
     }
 
     @POST
@@ -668,8 +716,38 @@ public class UserService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showAboutTastesync(@FormParam("AboutId")
-    String aboutId) throws TasteSyncException {
-        return userBo.showAboutTastesync(aboutId);
+    String aboutId) {
+        int status = TSResponseStatusCode.SUCCESS.getValue();
+        boolean responseDone = false;
+
+        try {
+            TSAboutObj tsAboutObj = userBo.showAboutTastesync(aboutId);
+
+            responseDone = true;
+
+            return Response.status(status).entity(tsAboutObj).build();
+        } catch (TasteSyncException e) {
+            e.printStackTrace();
+            status = TSResponseStatusCode.ERROR.getValue();
+
+            TSErrorObj tsErrorObj = new TSErrorObj();
+
+            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+            responseDone = true;
+
+            return Response.status(status).entity(tsErrorObj).build();
+        } finally {
+            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
+                if (!responseDone) {
+                    status = TSResponseStatusCode.ERROR.getValue();
+
+                    TSErrorObj tsErrorObj = new TSErrorObj();
+                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
+
+                    return Response.status(status).entity(tsErrorObj).build();
+                }
+            }
+        }
     }
 
     @GET
@@ -1301,25 +1379,14 @@ public class UserService extends BaseService {
             dest_user_id = CommonFunctionsUtil.converStringAsNullIfNeeded(dest_user_id);
             trustedFriendStatus = CommonFunctionsUtil.converStringAsNullIfNeeded(trustedFriendStatus);
 
-            responseDone = userBo.submitTrustedFriendStatusChange(userId,
-                    dest_user_id, trustedFriendStatus);
+            userBo.submitTrustedFriendStatusChange(userId, dest_user_id,
+                trustedFriendStatus);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             tsSuccessObj.setSuccessMsg("Updating succesfully!");
+            responseDone = true;
 
-            if (responseDone) {
-                responseDone = true;
-
-                return Response.status(status).entity(tsSuccessObj).build();
-            } else {
-                status = TSResponseStatusCode.ERROR.getValue();
-
-                TSErrorObj tsErrorObj = new TSErrorObj();
-                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-                responseDone = true;
-
-                return Response.status(status).entity(tsErrorObj).build();
-            }
+            return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -1356,27 +1423,12 @@ public class UserService extends BaseService {
 
         // BO - DO- DBQuery
         try {
-            // System.out.println(restaurandId.get(0) + "" +
-            // restaurandId.get(1));
-            // System.out.println(invitedFriend.size());
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             tsSuccessObj.setSuccessMsg("Uploading successfully!");
-            //TODO improve
-            responseDone = userBo.submitSignupDetail(askObj);
+            userBo.submitSignupDetail(askObj);
+            responseDone = true;
 
-            if (responseDone) {
-                responseDone = true;
-
-                return Response.status(status).entity(tsSuccessObj).build();
-            } else {
-                status = TSResponseStatusCode.ERROR.getValue();
-
-                TSErrorObj tsErrorObj = new TSErrorObj();
-                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-                responseDone = true;
-
-                return Response.status(status).entity(tsErrorObj).build();
-            }
+            return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -1493,34 +1545,19 @@ public class UserService extends BaseService {
             senderID = CommonFunctionsUtil.converStringAsNullIfNeeded(senderID);
             recipientID = CommonFunctionsUtil.converStringAsNullIfNeeded(recipientID);
             content = CommonFunctionsUtil.converStringAsNullIfNeeded(content);
-
-            //TODO improve
-            responseDone = userBo.sendMessageToUser(senderID, recipientID,
-                    content);
+            userBo.sendMessageToUser(senderID, recipientID, content);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             tsSuccessObj.setSuccessMsg("Sending succesfully!");
 
-            if (responseDone) {
-                responseDone = true;
-
-                try {
-                    CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT,
-                        TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
-                } catch (com.tastesync.common.exception.TasteSyncException e) {
-                    e.printStackTrace();
-                }
-
-                return Response.status(status).entity(tsSuccessObj).build();
-            } else {
-                status = TSResponseStatusCode.ERROR.getValue();
-
-                TSErrorObj tsErrorObj = new TSErrorObj();
-                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-                responseDone = true;
-
-                return Response.status(status).entity(tsErrorObj).build();
+            try {
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT,
+                    TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
+            } catch (com.tastesync.common.exception.TasteSyncException e) {
+                e.printStackTrace();
             }
+
+            return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();

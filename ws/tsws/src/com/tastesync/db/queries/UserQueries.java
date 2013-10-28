@@ -115,12 +115,10 @@ public interface UserQueries extends TSDBCommonQueries {
     public static String USER_ID_FROM_USERLOG_SELECT_SQL = "SELECT * FROM users_log WHERE LOG_ID = ?";
     public static String USER_LOGOUT_INSERT_SQL = "" +
         "INSERT INTO `users_log` " + " (`users_log`.`log_id`, " +
-        " `users_log`.`login_datetime`, " +
-        " `users_log`.`logout_datetime`, " +
+        " `users_log`.`login_datetime`, " + " `users_log`.`logout_datetime`, " +
         " `users_log`.`user_id`, " +
-        " `users_log`.`users_created_latest_datetime`) " +
-        "VALUES ( ?, " + " ?, " + " ?, " +
-        " ?, " + " ? )";
+        " `users_log`.`users_created_latest_datetime`) " + "VALUES ( ?, " +
+        " ?, " + " ?, " + " ?, " + " ? )";
     public static String USER_LOGOUT_UPDATE_SQL = "UPDATE users_log " +
         "SET LOGOUT_DATETIME = ? " + "WHERE USER_ID = ?" +
         " AND LOGOUT_DATETIME IS NULL";
@@ -148,8 +146,7 @@ public interface UserQueries extends TSDBCommonQueries {
         "UPDATE `usg_usnc_ap` " +
         "SET `usg_usnc_ap`.`usnc_yn` = ? -- statusFlag " +
         "WHERE `usg_usnc_ap`.`user_id` = ? " + " AND -- userId " +
-        " `usg_usnc_ap`.`ap_id` = ? " +
-        " AND -- autoPublishingId " +
+        " `usg_usnc_ap`.`ap_id` = ? " + " AND -- autoPublishingId " +
         " `usg_usnc_ap`.`usnc_id` = ?-- socialNetworkId " + "";
     public static String USER_SOCIAL_APID_SELECT_SQL = "SELECT * FROM auto_publishing WHERE AP_ORDER = ?";
     public static String USER_SOCIAL_AP_SELECT_SQL = "SELECT * FROM auto_publishing";
@@ -211,8 +208,8 @@ public interface UserQueries extends TSDBCommonQueries {
         " `user_reported_info`.`reported_datetime`, " +
         " `user_reported_info`.`reported_reason`, " +
         " `user_reported_info`.`reported_user_id`, " +
-        " `user_reported_info`.`user_id`) " + "VALUES ( " +
-        "?," + "?," + "?," + "?," + "?" + ")";
+        " `user_reported_info`.`user_id`) " + "VALUES ( " + "?," + "?," + "?," +
+        "?," + "?" + ")";
 
     //USER_SOCIAL_NETWORK_CONNECTION
     public static String USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL = "SELECT * FROM user_social_network_connection WHERE USNC_ORDER = ?";
@@ -222,9 +219,8 @@ public interface UserQueries extends TSDBCommonQueries {
     public static String USER_CONTACT_SETTINGS_INSERT_SQL = "INSERT INTO user_contact_settings(UCS_ID, USER_ID, CONTACT_ID, CONTACT_DETAILS_DESC, CONTACT_DATETIME) VALUES (?, ?, ?, ?, ?)";
 
     // USER_FOLLOW
-    public static String USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL = "SELECT users.USER_ID, facebook_user_data.NAME,  facebook_user_data.PICTURE,  facebook_user_data.LINK,  users.TWITTER_USR_URL, users.Blog_Url,  cities.city,  users.USER_POINTS, users.ABOUT FROM users, facebook_user_data, cities WHERE  users.USER_FB_ID =  FACEBOOK_USER_DATA.User_FB_ID AND  users.USER_CITY_ID = cities.city_id AND  users.USER_ID IN (SELECT FOLLOWEE_USER_ID FROM user_follow_data WHERE FOLLOWER_USER_ID = ?)"; 
+    public static String USER_FOLLOW_DATA_FOLLOWING_SELECT_SQL = "SELECT users.USER_ID, facebook_user_data.NAME,  facebook_user_data.PICTURE,  facebook_user_data.LINK,  users.TWITTER_USR_URL, users.Blog_Url,  cities.city,  users.USER_POINTS, users.ABOUT FROM users, facebook_user_data, cities WHERE  users.USER_FB_ID =  FACEBOOK_USER_DATA.User_FB_ID AND  users.USER_CITY_ID = cities.city_id AND  users.USER_ID IN (SELECT FOLLOWEE_USER_ID FROM user_follow_data WHERE FOLLOWER_USER_ID = ?)";
     public static String USER_FOLLOW_DATA_FOLLOWERS_SELECT_SQL = "SELECT users.USER_ID, facebook_user_data.NAME,  facebook_user_data.PICTURE,  facebook_user_data.LINK,  users.TWITTER_USR_URL, users.Blog_Url,  cities.city,  users.USER_POINTS, users.ABOUT FROM users, facebook_user_data, cities WHERE  users.USER_FB_ID =  FACEBOOK_USER_DATA.User_FB_ID AND  users.USER_CITY_ID = cities.city_id AND  users.USER_ID IN (SELECT FOLLOWER_USER_ID FROM user_follow_data WHERE FOLLOWEE_USER_ID = ?)";
-
     public static String FACEBOOK_USER_DATA_SELECT_SQL = "SELECT user_friend_fb.USER_FRIEND_FB FROM user_friend_fb WHERE INVITATION_SENT_YN = '0' AND USER_ID = ?";
     public static String USER_FOLLOW_DATA_CHECK_SELECT_SQL = "SELECT * FROM user_follow_data WHERE FOLLOWER_USER_ID = ? AND FOLLOWEE_USER_ID = ?";
     public static String USER_FOLLOW_DATA_INSERT_SQL = "INSERT INTO `user_follow_data`" +
@@ -265,7 +261,8 @@ public interface UserQueries extends TSDBCommonQueries {
     public static String USER_RESTAURANT_FAV_INSERT_SQL = "INSERT INTO user_restaurant_fav(USER_ID, RESTAURANT_ID, ALGO1_IND, ALGO2_IND) VALUES (?, ?, ?, ?)";
 
     // USER_HOME_PROFILE
-    public static String USERS_FACEBOOK_USER_DATA_CITIES_SELECT_SQL = "SELECT" + " cities.city_id, " + " cities.state, " + " users.USER_ID, " +
+    public static String USERS_FACEBOOK_USER_DATA_CITIES_SELECT_SQL = "SELECT" +
+        " cities.city_id, " + " cities.state, " + " users.USER_ID, " +
         " `facebook_user_data`.NAME, `facebook_user_data`.PICTURE, `facebook_user_data`.LINK, `users`.TWITTER_USR_URL, `users`.Blog_Url, `cities`.city, `users`.USER_POINTS, `users`.ABOUT" +
         " FROM users, facebook_user_data, cities" +
         " WHERE `users`.USER_FB_ID = `FACEBOOK_USER_DATA`.User_FB_ID" +
@@ -371,22 +368,17 @@ public interface UserQueries extends TSDBCommonQueries {
         " USER_DEVICE_OAUTH.OAUTH_EXPIRATION_DATETIME, " +
         " USER_DEVICE_OAUTH.OAUTH_TOKEN, " +
         " USER_DEVICE_OAUTH.OAUTH_UPDATED_DATETIME, " +
-        " USER_DEVICE_OAUTH.USER_ID) " + "VALUES ( ?, " +
-        " ?, " + " ?, " + " ?, " +
-        " ?, " + " ?, " + " ?, " +
-        " ? )";
+        " USER_DEVICE_OAUTH.USER_ID) " + "VALUES ( ?, " + " ?, " + " ?, " +
+        " ?, " + " ?, " + " ?, " + " ?, " + " ? )";
     public static String INIT_USER_USNC_INSERT_SQL = "" +
         "INSERT INTO USER_USNC " + " (USER_USNC.USER_ID, " +
-        " USER_USNC.USNC_ID, " +
-        " USER_USNC.USNC_YN) " + "VALUES ( ?, " +
+        " USER_USNC.USNC_ID, " + " USER_USNC.USNC_YN) " + "VALUES ( ?, " +
         " ?, " + " ? )" + "ON DUPLICATE KEY UPDATE " +
         "USER_USNC.USNC_YN = USER_USNC.USNC_YN";
     public static String INIT_USER_USNC_AP_INSERT_SQL = "" +
         "INSERT INTO USG_USNC_AP " + " (USG_USNC_AP.AP_ID, " +
-        " USG_USNC_AP.USER_ID, " +
-        " USG_USNC_AP.USNC_ID, " +
-        " USG_USNC_AP.USNC_YN) " + "VALUES ( ?, " +
-        " ?, " + " ?, " + " ? ) " +
+        " USG_USNC_AP.USER_ID, " + " USG_USNC_AP.USNC_ID, " +
+        " USG_USNC_AP.USNC_YN) " + "VALUES ( ?, " + " ?, " + " ?, " + " ? ) " +
         "ON DUPLICATE KEY UPDATE " +
         "USG_USNC_AP.USNC_YN = USG_USNC_AP.USNC_YN";
     public static String INIT_USER_NOTIFICATION_SETTINGS_INSERT_SQL = "" +
@@ -395,17 +387,14 @@ public interface UserQueries extends TSDBCommonQueries {
         " USER_NOTIFICATION_SETTINGS.NS_MOBILE_FLAG, " +
         " USER_NOTIFICATION_SETTINGS.NSID, " +
         " USER_NOTIFICATION_SETTINGS.NSID_TYPE, " +
-        " USER_NOTIFICATION_SETTINGS.USER_ID) " +
-        "VALUES ( ?, " + " ?, " + " ?, " +
-        " ?, " + " ? ) " +
-        "ON DUPLICATE KEY UPDATE " +
+        " USER_NOTIFICATION_SETTINGS.USER_ID) " + "VALUES ( ?, " + " ?, " +
+        " ?, " + " ?, " + " ? ) " + "ON DUPLICATE KEY UPDATE " +
         "USER_NOTIFICATION_SETTINGS.NSID = USER_NOTIFICATION_SETTINGS.NSID ";
     public static String INIT_USER_PRIVACY_SETTINGS_INSERT_SQL = "" +
         "INSERT INTO USER_PRIVACY_SETTINGS " +
         " (USER_PRIVACY_SETTINGS.PRIVACY_FLAG, " +
         " USER_PRIVACY_SETTINGS.PRIVACY_ID, " +
-        " USER_PRIVACY_SETTINGS.USER_ID) " + "VALUES ( ?, " +
-        " ?, " + " ? ) " +
+        " USER_PRIVACY_SETTINGS.USER_ID) " + "VALUES ( ?, " + " ?, " + " ? ) " +
         "ON DUPLICATE KEY UPDATE " +
         "USER_PRIVACY_SETTINGS.PRIVACY_FLAG = USER_PRIVACY_SETTINGS.PRIVACY_FLAG";
 }

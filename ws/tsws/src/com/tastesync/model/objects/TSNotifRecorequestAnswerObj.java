@@ -14,12 +14,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class TSNotifRecorequestAnswerObj extends TSRecoNotificationBaseObj
     implements Serializable {
     private static final long serialVersionUID = -5467916798784916916L;
-    String recorequestId;
-    
-    String minViewedIndicator;
-    String recoActioned;
-    List<TSNotifRecoReplyObj> recoReply = new ArrayList<TSNotifRecoReplyObj>();
-    TSRecommendationsForYouObj recommendationsForYou;
+    private String recorequestId;
+
+    private String minViewedIndicator;
+    private String recoActioned;
+    private List<TSNotifRecoReplyObj> recoReply = new ArrayList<TSNotifRecoReplyObj>();
+    private TSRecommendationsForYouObj recommendationsForYou;
 
     public TSNotifRecorequestAnswerObj() {
         super();

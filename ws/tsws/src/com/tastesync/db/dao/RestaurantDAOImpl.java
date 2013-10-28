@@ -666,17 +666,14 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
         TSRestaurantBuzzObj tsRestaurantBuzzObj = null;
 
         if (restaurantBuzzVO != null) {
-            PreparedStatement statement = null;
-            ResultSet resultset = null;
-
             String recommenderUserName = null;
             String recommenderUserPhoto = null;
             String recommenderFacebookId = null;
 
-            statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
+            PreparedStatement statement = connection.prepareStatement(AskReplyQueries.FB_ID_FRM_USER_ID_SELECT_SQL);
 
             statement.setString(1, restaurantBuzzVO.getRecommenderUserUserId());
-            resultset = statement.executeQuery();
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 recommenderFacebookId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(

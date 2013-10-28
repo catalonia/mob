@@ -1,5 +1,7 @@
 package com.tastesync.common;
 
+import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.db.queries.CityQueries;
 import com.tastesync.db.queries.UserQueries;
 
@@ -9,8 +11,6 @@ import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSUserObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 
-import com.tastesync.common.utils.CommonFunctionsUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,24 +18,28 @@ import java.sql.SQLException;
 
 
 public class MySQL {
+    public MySQL() {
+        super();
+    }
+
     //Check email exist in the system
     public boolean checkEmailExist(Connection connection, String email)
         throws SQLException {
         boolean check = false;
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_CHECK_EMAIL_SELECT_SQL);
             statement.setString(1, email);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 check = true;
             }
 
             statement.close();
-            
+
             return check;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,13 +60,13 @@ public class MySQL {
         String state, String city_name) throws SQLException {
         TSCityObj city = null;
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(CityQueries.CITY_STATE_SELECT_SQL);
             statement.setString(1, state);
             statement.setString(2, city_name);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 city = new TSCityObj();
@@ -88,16 +92,15 @@ public class MySQL {
 
     public void addDeviceToken(Connection connection, String userID,
         String devicetoken) throws SQLException {
-        
         PreparedStatement statement = null;
-        ResultSet resultset = null;
         boolean check = true;
         String dateNowAppend = CommonFunctionsUtil.getCurrentDatetimeAppendField();
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_DEVICE_SELECT_SQL);
             statement.setString(1, userID);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 check = false;
@@ -132,12 +135,12 @@ public class MySQL {
         throws SQLException {
         TSCityObj city = null;
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(CityQueries.CITY_SELECT_SQL);
             statement.setString(1, cityID);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 city = new TSCityObj();
@@ -145,6 +148,8 @@ public class MySQL {
             }
 
             statement.close();
+
+            return city;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -157,21 +162,19 @@ public class MySQL {
                 }
             }
         }
-
-        return city;
     }
 
     public TSUserObj getUserInformationByEmail(Connection connection,
         String email) throws SQLException {
         TSUserObj user = null;
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_CHECK_EMAIL_STATUS_SELECT_SQL);
             statement.setString(1, email);
             statement.setString(2, String.valueOf("e"));
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 user = new TSUserObj();
@@ -179,6 +182,8 @@ public class MySQL {
             }
 
             statement.close();
+
+            return user;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -191,20 +196,18 @@ public class MySQL {
                 }
             }
         }
-
-        return user;
     }
 
     //not used!!
     public String getUserIDFromUserLogID(Connection connection, String userLogID)
         throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL);
             statement.setString(1, userLogID);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 return CommonFunctionsUtil.getModifiedValueString(resultset.getString(
@@ -232,12 +235,12 @@ public class MySQL {
         throws SQLException {
         String userId = "";
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_ID_FROM_USERLOG_SELECT_SQL);
             statement.setString(1, UserId);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 userId = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
@@ -245,6 +248,8 @@ public class MySQL {
             }
 
             statement.close();
+
+            return userId;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -257,27 +262,25 @@ public class MySQL {
                 }
             }
         }
-
-        return userId;
     }
 
     public boolean checkFBUserDataExist(Connection connection, String user_fb_id)
         throws SQLException {
         boolean check = false;
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.FACEBOOK_SELECT_SQL);
             statement.setString(1, user_fb_id);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 check = true;
             }
 
             statement.close();
-            
+
             return check;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -297,13 +300,13 @@ public class MySQL {
         String user_fb_id) throws SQLException {
         TSUserObj user = null;
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_FBID_SELECT_SQL);
             statement.setString(1, user_fb_id);
             statement.setString(2, String.valueOf("e"));
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 user = new TSUserObj();
@@ -311,6 +314,8 @@ public class MySQL {
             }
 
             statement.close();
+
+            return user;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -323,8 +328,6 @@ public class MySQL {
                 }
             }
         }
-
-        return user;
     }
 
     //Get user information (by user_id)
@@ -332,13 +335,13 @@ public class MySQL {
         throws SQLException {
         TSUserObj user = null;
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_STATUS_SELECT_SQL);
             statement.setString(1, user_id);
             statement.setString(2, String.valueOf("e"));
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 user = new TSUserObj();
@@ -346,6 +349,8 @@ public class MySQL {
             }
 
             statement.close();
+
+            return user;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -358,20 +363,18 @@ public class MySQL {
                 }
             }
         }
-
-        return user;
     }
 
     public TSFacebookUserDataObj getFacebookUserInformation(
         Connection connection, String User_FB_ID) throws SQLException {
         TSFacebookUserDataObj user = null;
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.FACEBOOK_SELECT_SQL);
             statement.setString(1, User_FB_ID);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             if (resultset.next()) {
                 user = new TSFacebookUserDataObj();
@@ -379,6 +382,8 @@ public class MySQL {
             }
 
             statement.close();
+
+            return user;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -391,19 +396,17 @@ public class MySQL {
                 }
             }
         }
-
-        return user;
     }
 
     public int getIDUserSocialNetworkConnection(Connection connection,
         int usncOrder) throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_SOCIAL_NETWORK_CONNECTION_ID_SELECT_SQL);
             statement.setInt(1, usncOrder);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int ret = 0;
 
@@ -433,12 +436,12 @@ public class MySQL {
     public int getIDAutoPublishing(Connection connection, int apOrder)
         throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_SELECT_SQL);
             statement.setInt(1, apOrder);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int retValue = 0;
 
@@ -467,12 +470,12 @@ public class MySQL {
     public boolean checkUserUSNC(Connection connection, String userId)
         throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_USNC_SELECT_SQL);
             statement.setString(1, userId);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int i = 0;
 
@@ -501,12 +504,12 @@ public class MySQL {
     public boolean checkUserUSNC_AP(Connection connection, String userId)
         throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_SOCIAL_APID_USERID_SELECT_SQL);
             statement.setString(1, userId);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int i = 0;
 
@@ -515,7 +518,6 @@ public class MySQL {
             }
 
             statement.close();
-            System.out.println("Number row:" + i);
 
             return i != 0;
         } catch (SQLException e) {
@@ -535,12 +537,12 @@ public class MySQL {
     public boolean checkNotificationDescriptor(Connection connection,
         String userId) throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_NOTIFICATION_SETTINGS_ID_SELECT_SQL);
             statement.setString(1, userId);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int i = 0;
 
@@ -569,12 +571,12 @@ public class MySQL {
     public int getIDNotificationDescriptor(Connection connection, int nsId_Order)
         throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.NOTIFICATION_DESCRIPTOR_SELECT_SQL);
             statement.setInt(1, nsId_Order);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int value = 0;
 
@@ -603,12 +605,12 @@ public class MySQL {
     public boolean checkPrivacyDescriptor(Connection connection, String userId)
         throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_PRIVACY_SETTINGS_ID_SELECT_SQL);
             statement.setString(1, userId);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int i = 0;
 
@@ -636,12 +638,12 @@ public class MySQL {
     public int getIDPrivacySettings(Connection connection, int privacyIdOrder)
         throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.PRIVACY_DESCRIPTOR_SELECT_SQL);
             statement.setInt(1, privacyIdOrder);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int value = 0;
 
@@ -670,12 +672,12 @@ public class MySQL {
     public int getIDContactSettings(Connection connection, int contact_order)
         throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.CONTACT_SETTINGS_DESCRIPTOR_SELECT_SQL);
             statement.setInt(1, contact_order);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int contactId = 0;
 
@@ -705,12 +707,12 @@ public class MySQL {
     public String getDescAbout(Connection connection, int ID_ORDER)
         throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.ABOUT_TASTESYNC_ELEMENT_DESCRIPTOR_SELECT_SQL);
             statement.setInt(1, ID_ORDER);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             String value = null;
 
@@ -739,13 +741,13 @@ public class MySQL {
     public boolean checkUserFriendTasteSync(Connection connection,
         String userId, String destUserId) throws SQLException {
         PreparedStatement statement = null;
-        ResultSet resultset = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.USER_FRIEND_TASTESYNC_CHECK_SELECT_SQL);
             statement.setString(1, userId);
             statement.setString(2, destUserId);
-            resultset = statement.executeQuery();
+
+            ResultSet resultset = statement.executeQuery();
 
             int i = 0;
 
@@ -813,7 +815,7 @@ public class MySQL {
                 resultset.getString("users.USER_FB_ID")));
     }
 
-    public static void mapResultsetRowToTSCityVO(TSCityObj tsCityObj,
+    private static void mapResultsetRowToTSCityVO(TSCityObj tsCityObj,
         ResultSet resultset) throws SQLException {
         tsCityObj.setCityId(CommonFunctionsUtil.getModifiedValueString(
                 resultset.getString("cities.city_id")));
@@ -944,14 +946,14 @@ public class MySQL {
                 resultset.getString("RESTAURANT_LON")));
 
         PreparedStatement statement = null;
-        ResultSet rs = null;
 
         try {
             statement = connection.prepareStatement(UserQueries.CITIES_SELECT_SQL);
             statement.setString(1,
                 CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                         "RESTAURANT_CITY_ID")));
-            rs = statement.executeQuery();
+
+            ResultSet rs = statement.executeQuery();
 
             TSCityObj city = new TSCityObj();
 
@@ -985,6 +987,8 @@ public class MySQL {
             }
 
             statement.close();
+
+            return restaurant;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -997,7 +1001,5 @@ public class MySQL {
                 }
             }
         }
-
-        return restaurant;
     }
 }

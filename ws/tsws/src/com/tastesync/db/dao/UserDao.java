@@ -1,6 +1,8 @@
 package com.tastesync.db.dao;
 
 import com.tastesync.exception.TasteSyncException;
+
+import com.tastesync.model.objects.TSAboutObj;
 import com.tastesync.model.objects.TSAskSubmitLoginObj;
 import com.tastesync.model.objects.TSCityObj;
 import com.tastesync.model.objects.TSFacebookUserDataObj;
@@ -16,10 +18,7 @@ import com.tastesync.model.objects.TSUserProfileObj;
 import com.tastesync.model.objects.TSUserProfileRestaurantsObj;
 import com.tastesync.model.response.UserResponse;
 
-import java.sql.Connection;
 import java.util.List;
-
-import javax.ws.rs.core.Response;
 
 
 public interface UserDao {
@@ -29,8 +28,8 @@ public interface UserDao {
         throws TasteSyncException;
 
     boolean logout(String userId, String deviceToken) throws TasteSyncException;
-    
-    boolean setStatus(String userId, String status) throws TasteSyncException;
+
+    void setStatus(String userId, String status) throws TasteSyncException;
 
     String loginAccount(String userId) throws TasteSyncException;
 
@@ -38,7 +37,7 @@ public interface UserDao {
 
     List<TSUserObj> selectUsers() throws TasteSyncException;
 
-    boolean updateSettingsPrivacy(TSListPrivacySettingsObj privacySettingObj)
+    void updateSettingsPrivacy(TSListPrivacySettingsObj privacySettingObj)
         throws TasteSyncException;
 
     TSListPrivacySettingsObj showSettingsPrivacy(String userId)
@@ -54,13 +53,13 @@ public interface UserDao {
     TSListSocialSettingObj showSettingsSocial(String userId)
         throws TasteSyncException;
 
-    Response updateSettingsAutoPublishSettings(
+    void updateSettingsAutoPublishSettings(
         TSListSocialSettingObj social_setting_obj) throws TasteSyncException;
 
-    Response submitSettingscontactUs(String userId, String order, String desc)
+    void submitSettingscontactUs(String userId, String order, String desc)
         throws TasteSyncException;
 
-    Response showAboutTastesync(String aboutId) throws TasteSyncException;
+    TSAboutObj showAboutTastesync(String aboutId) throws TasteSyncException;
 
     void submitUserReport(String userId, String reportText,
         String reportedUser, String reportedByUser) throws TasteSyncException;
@@ -79,8 +78,7 @@ public interface UserDao {
     List<TSUserObj> showMyProfileFriends(String userId)
         throws TasteSyncException;
 
-    List<TSUserObj> showProfileFriends(String userId)
-        throws TasteSyncException;
+    List<TSUserObj> showProfileFriends(String userId) throws TasteSyncException;
 
     List<String> showInviteFriends(String userId) throws TasteSyncException;
 
@@ -96,17 +94,17 @@ public interface UserDao {
     boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException;
 
-    boolean submitTrustedFriendStatusChange(String userId, String dest_user_id,
+    void submitTrustedFriendStatusChange(String userId, String dest_user_id,
         String trustedFriendStatus) throws TasteSyncException;
 
-    public boolean submitSignupDetail(TSAskSubmitLoginObj askObj)
+    public void submitSignupDetail(TSAskSubmitLoginObj askObj)
         throws TasteSyncException;
 
     int showTrustedFriend(String userId, String dest_user_id)
         throws TasteSyncException;
 
-    boolean sendMessageToUser(String sender_ID, String recipient_ID,
-        String content) throws TasteSyncException;
+    void sendMessageToUser(String sender_ID, String recipient_ID, String content)
+        throws TasteSyncException;
 
     List<TSRestaurantObj> showRestaurantSuggestion(String key, String userId)
         throws TasteSyncException;
@@ -135,6 +133,6 @@ public interface UserDao {
         throws TasteSyncException;
 
     TSUserObj getUserInformationByEmail(String email) throws TasteSyncException;
-    
+
     void initUserSettings(String userId) throws TasteSyncException;
 }

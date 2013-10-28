@@ -498,29 +498,29 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             int priceIdValueType = 0;
 
             if (priceIdDescList.size() > 0) {
-                for (int i = 0; i < priceIdDescList.size(); ++i) {
+                for (String priceIdDescListElement : priceIdDescList) {
                     if ((priceIdValueType < 1) &&
-                            "$".equals(priceIdDescList.get(i))) {
+                            "$".equals(priceIdDescListElement)) {
                         priceIdValueType = 1;
                     }
 
                     if ((priceIdValueType < 2) &&
-                            "$$".equals(priceIdDescList.get(i))) {
+                            "$$".equals(priceIdDescListElement)) {
                         priceIdValueType = 2;
                     }
 
                     if ((priceIdValueType < 3) &&
-                            "$$$".equals(priceIdDescList.get(i))) {
+                            "$$$".equals(priceIdDescListElement)) {
                         priceIdValueType = 3;
                     }
 
-                    if ("$$$$".equals(priceIdDescList.get(i))) {
+                    if ("$$$$".equals(priceIdDescListElement)) {
                         priceIdValueType = 4;
 
                         break;
                     }
 
-                    if ("$$$$$".equals(priceIdDescList.get(i))) {
+                    if ("$$$$$".equals(priceIdDescListElement)) {
                         priceIdValueType = 5;
 
                         break;
@@ -1656,8 +1656,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                     }
                 }
 
-                List<TSRecommendationsObj> recommendationsForYouList = new ArrayList<TSRecommendationsObj>();
-                recommendationsForYouList = getRecommendationsForRestaurantFromUsersList(userId,
+                List<TSRecommendationsObj> recommendationsForYouList = getRecommendationsForRestaurantFromUsersList(userId,
                         connection, recommenderUserIdList, replyTextList);
 
                 statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
@@ -2131,7 +2130,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             List<TSRestaurantsTileSearchObj> tsRestaurantsTileSearchObjList = new ArrayList<TSRestaurantsTileSearchObj>();
 
             for (String restaurantId : restaurantIdList) {
-                tsRestaurantsTileSearchObj = new TSRestaurantsTileSearchObj();
                 tsRestaurantsTileSearchObj = getRestaurantTileSearchReslt(restaurantId);
                 tsRestaurantsTileSearchObjList.add(tsRestaurantsTileSearchObj);
             }
@@ -2234,7 +2232,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         List<TSRestaurantsTileSearchObj> tsRestaurantsTileSearchObjList = new ArrayList<TSRestaurantsTileSearchObj>();
 
         for (String restaurantIdElement : restaurantIdList) {
-            tsRestaurantsTileSearchObj = new TSRestaurantsTileSearchObj();
             tsRestaurantsTileSearchObj = getRestaurantTileSearchReslt(restaurantIdElement);
             tsRestaurantsTileSearchObjList.add(tsRestaurantsTileSearchObj);
         }
@@ -2692,8 +2689,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                         }
                     }
 
-                    List<TSRecommendationsObj> recommendationsForYouList = new ArrayList<TSRecommendationsObj>();
-                    recommendationsForYouList = getRecommendationsForRestaurantFromUsersList(userId,
+                    List<TSRecommendationsObj> recommendationsForYouList = getRecommendationsForRestaurantFromUsersList(userId,
                             connection, recommenderUserIdList, replyTextList);
 
                     statement = connection.prepareStatement(AskReplyQueries.CITY_RESTAURANT_SELECT_SQL);
@@ -3292,8 +3288,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.NOTIFICATIONS_ALL_SELECT_SQL);
             statement.setString(1, userId);
 
-            int pagintionIndex = 0;
-            pagintionIndex = (Integer.valueOf(paginationId) - 1) * TSConstants.PAGINATION_GAP;
+            int pagintionIndex = (Integer.valueOf(paginationId) - 1) * TSConstants.PAGINATION_GAP;
 
             if (pagintionIndex < 0) {
                 pagintionIndex = 0;
@@ -3467,12 +3462,12 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         }
     }
 
-    public DescriptorDataVO getDescriptorDataForDifferentIds(
-        Connection connection, String[] cuisineTier1IdList,
-        String[] cuisineTier2IdList, String[] priceIdList,
-        String[] themeIdList, String[] whoareyouwithIdList,
-        String[] typeOfRestaurantIdList, String[] occasionIdList,
-        String neighborhoodId, String cityId, String stateName)
+    private DescriptorDataVO getDescriptorDataForDifferentIds(
+            Connection connection, String[] cuisineTier1IdList,
+            String[] cuisineTier2IdList, String[] priceIdList,
+            String[] themeIdList, String[] whoareyouwithIdList,
+            String[] typeOfRestaurantIdList, String[] occasionIdList,
+            String neighborhoodId, String cityId, String stateName)
         throws TasteSyncException {
         PreparedStatement statement = null;
         ResultSet resultset = null;
@@ -3489,9 +3484,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.CUISINE_TIER1_DESCRIPTOR_ALL_SELECT_SQL);
 
             if (cuisineTier1IdList != null) {
-                for (int i = 0; i < cuisineTier1IdList.length; ++i) {
-                    if (cuisineTier1IdList[i] != null) {
-                        statement.setString(1, cuisineTier1IdList[i]);
+                for (String cuisineTier1IdListElement : cuisineTier1IdList) {
+                    if (cuisineTier1IdListElement != null) {
+                        statement.setString(1, cuisineTier1IdListElement);
                         resultset = statement.executeQuery();
 
                         while (resultset.next()) {
@@ -3507,9 +3502,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.CUISINE_TIER2_DESCRIPTOR_ALL_SELECT_SQL);
 
             if (cuisineTier2IdList != null) {
-                for (int i = 0; i < cuisineTier2IdList.length; ++i) {
-                    if (cuisineTier2IdList[i] != null) {
-                        statement.setString(1, cuisineTier2IdList[i]);
+                for (String aCuisineTier2IdList : cuisineTier2IdList) {
+                    if (aCuisineTier2IdList != null) {
+                        statement.setString(1, aCuisineTier2IdList);
                         resultset = statement.executeQuery();
 
                         while (resultset.next()) {
@@ -3525,9 +3520,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.OCCASION_DESCRIPTOR_SELECT_SQL);
 
             if (occasionIdList != null) {
-                for (int i = 0; i < occasionIdList.length; ++i) {
-                    if (occasionIdList[i] != null) {
-                        statement.setString(1, occasionIdList[i]);
+                for (String occasionIdListElement : occasionIdList) {
+                    if (occasionIdListElement != null) {
+                        statement.setString(1, occasionIdListElement);
                         resultset = statement.executeQuery();
 
                         while (resultset.next()) {
@@ -3543,9 +3538,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.WHOAREYOUWITH_DESCRIPTOR_SELECT_SQL);
 
             if (whoareyouwithIdList != null) {
-                for (int i = 0; i < whoareyouwithIdList.length; ++i) {
-                    if (whoareyouwithIdList[i] != null) {
-                        statement.setString(1, whoareyouwithIdList[i]);
+                for (String whoareyouwithIdListElement : whoareyouwithIdList) {
+                    if (whoareyouwithIdListElement != null) {
+                        statement.setString(1, whoareyouwithIdListElement);
                         resultset = statement.executeQuery();
 
                         while (resultset.next()) {
@@ -3561,9 +3556,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.TYPEOFREST_DESCRIPTOR_SELECT_SQL);
 
             if (typeOfRestaurantIdList != null) {
-                for (int i = 0; i < typeOfRestaurantIdList.length; ++i) {
-                    if (typeOfRestaurantIdList[i] != null) {
-                        statement.setString(1, typeOfRestaurantIdList[i]);
+                for (String typeOfRestaurantIdListElement : typeOfRestaurantIdList) {
+                    if (typeOfRestaurantIdListElement != null) {
+                        statement.setString(1, typeOfRestaurantIdListElement);
                         resultset = statement.executeQuery();
 
                         while (resultset.next()) {
@@ -3579,9 +3574,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.THEME_DESCRIPTOR_SELECT_SQL);
 
             if (themeIdList != null) {
-                for (int i = 0; i < themeIdList.length; ++i) {
-                    if (themeIdList[i] != null) {
-                        statement.setString(1, themeIdList[i]);
+                for (String themeIdListElement : themeIdList) {
+                    if (themeIdListElement != null) {
+                        statement.setString(1, themeIdListElement);
                         resultset = statement.executeQuery();
 
                         while (resultset.next()) {
@@ -3597,9 +3592,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement = connection.prepareStatement(AskReplyQueries.PRICE_DESCRIPTOR_SELECT_SQL);
 
             if (priceIdList != null) {
-                for (int i = 0; i < priceIdList.length; ++i) {
-                    if (priceIdList[i] != null) {
-                        statement.setString(1, priceIdList[i]);
+                for (String priceIdListElement : priceIdList) {
+                    if (priceIdListElement != null) {
+                        statement.setString(1, priceIdListElement);
                         resultset = statement.executeQuery();
 
                         while (resultset.next()) {
@@ -3642,12 +3637,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 statement.close();
             }
 
-            DescriptorDataVO descriptorDataVO = new DescriptorDataVO(cuisineTier1IdDescList,
-                    cuisineTier2IdDescList, occasionIdDescList,
-                    whoareyouwithIdDescList, typeOfRestaurantIdDescList,
-                    themeIdDescList, priceIdDescList, cityName, neighborhoodName);
-
-            return descriptorDataVO;
+            return new DescriptorDataVO(cuisineTier1IdDescList,
+                cuisineTier2IdDescList, occasionIdDescList,
+                whoareyouwithIdDescList, typeOfRestaurantIdDescList,
+                themeIdDescList, priceIdDescList, cityName, neighborhoodName);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
