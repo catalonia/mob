@@ -40,6 +40,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -174,10 +176,9 @@ public class UserService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitLoginFacebook(
-        TSListFacebookUserDataObj list_user_profile) {
+        TSListFacebookUserDataObj list_user_profile,@Context HttpHeaders headers) {
         logger.debug(
             "---------------------------------------------------------------------------");
-
         UserResponse userResponse = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -1691,7 +1692,9 @@ public class UserService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response getHomeProfile(@FormParam("userId")
-    String userId) {
+    String userId,@Context HttpHeaders headers) {
+    	super.writeResponseheader(headers);
+    	
         TSUserProfileObj userProfileObj = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();

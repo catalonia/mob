@@ -25,6 +25,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -191,13 +193,14 @@ public class AutoPopulateService extends BaseService {
     public Response populateSuggestedRestaurantNames(
         @FormParam("key")
     String key, @FormParam("cityid")
-    String cityId) {
+    String cityId, @Context HttpHeaders headers) {
         List<TSRestaurantBasicObj> tsRestaurantBasicObjList = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
         try {
+        	super.writeResponseheader(headers);
             key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
 
             cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);

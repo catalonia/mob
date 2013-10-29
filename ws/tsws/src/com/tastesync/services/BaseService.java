@@ -3,6 +3,8 @@ package com.tastesync.services;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.tastesync.exception.TasteSyncException;
@@ -10,6 +12,8 @@ import com.tastesync.util.TSConstants;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 
@@ -54,5 +58,15 @@ public abstract class BaseService {
         return Response.status(status)
                        .header(TSConstants.EX_CLASS,
             e.getClass().getCanonicalName()).entity(e.getMessage()).build();
+    }
+    
+    public void writeResponseheader(@Context HttpHeaders headers) {
+    	Map<String, List<String>> map = headers.getRequestHeaders();
+    	System.out.println("Printing Response Header...\n");
+    	for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+    		System.out.println("Key : " + entry.getKey() 
+                               + " ,Value : " + entry.getValue());
+    	}
+    	System.out.println("\n Writting of header...  Done");
     }
 }
