@@ -571,7 +571,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                     tsRestaurantBasicObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
                             resultset.getString("RESTAURANT_ID")));
 
-                    tsRestaurantBasicObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
+                    tsRestaurantBasicObj.setRestaurantName(CommonFunctionsUtil.getModifiedValueString(
                             resultset.getString("RESTAURANT_NAME")));
 
                     tsRestaurantBasicObjList.add(tsRestaurantBasicObj);
