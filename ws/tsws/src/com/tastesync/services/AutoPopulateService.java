@@ -241,7 +241,7 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateRestaurantSearchTerms(@FormParam("key")
+    private Response populateRestaurantSearchTerms(@FormParam("key")
     String key, @FormParam("cityid")
     String cityId) {
         List<TSRestaurantObj> listRestaurant = null;
