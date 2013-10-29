@@ -26,9 +26,6 @@ public interface RestaurantDAO {
     List<TSRestaurantObj> showRestaurantsDetailsList()
         throws TasteSyncException;
 
-    TSCurrentRecommendedRestaurantDetailsObj showCurrentRestaurantRecommendedDetails(
-        String userId, String restaurantId) throws TasteSyncException;
-
     TSMenuObj showRestaurantDetailMenu(String restaurantId)
         throws TasteSyncException;
 

@@ -43,7 +43,7 @@ public interface UserBo {
     TSListPrivacySettingsObj showSettingsPrivacy(String userId)
         throws TasteSyncException;
 
-    boolean updateSettingsNotifications(
+    void updateSettingsNotifications(
         TSListNotificationSettingsObj notificationSetting)
         throws TasteSyncException;
 
@@ -61,11 +61,6 @@ public interface UserBo {
 
     TSAboutObj showAboutTastesync(String aboutId) throws TasteSyncException;
 
-    TSUserProfileObj showMyProfileHome(String userId) throws TasteSyncException;
-
-    TSUserProfileObj showUserProfileHome(String userId, String viewerUserId)
-        throws TasteSyncException;
-
     boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException;
 
@@ -78,15 +73,9 @@ public interface UserBo {
     List<TSUserProfileObj> showProfileFollowers(String userId)
         throws TasteSyncException;
 
-    List<TSUserObj> showMyProfileFriends(String userId)
-        throws TasteSyncException;
-
     List<TSUserObj> showProfileFriends(String userId) throws TasteSyncException;
 
     List<String> showInviteFriends(String userId) throws TasteSyncException;
-
-    List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)
-        throws TasteSyncException;
 
     boolean getFollowStatus(String followeeUserId, String followerUserId)
         throws TasteSyncException;

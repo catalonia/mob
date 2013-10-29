@@ -24,11 +24,10 @@ public class MySqlConnectionPoolInitServlet extends HttpServlet {
     * Logger for this class
     */
     private static final Logger logger = Logger.getLogger(MySqlConnectionPoolInitServlet.class);
-    private TSDataSource tsDataSource;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        tsDataSource = TSDataSource.getInstance();
+        TSDataSource tsDataSource = TSDataSource.getInstance();
 
         if (TSDataSource.getPoolDSInstance() == null) {
             InitialContext initContext;

@@ -56,55 +56,6 @@ public class RestaurantService extends BaseService {
     private RestaurantBO restaurantBO = new RestaurantBOImpl();
 
     @GET
-    @Path("/recodetails")
-    @org.codehaus.enunciate.jaxrs.TypeHint(TSCurrentRecommendedRestaurantDetailsObj.class)
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    })
-    @Produces({MediaType.APPLICATION_JSON
-    })
-    public Response showCurrentRestaurantRecommendedDetails(
-        @QueryParam("userid")
-    String userId, @QueryParam("restaurantid")
-    String restaurantId) {
-        TSCurrentRecommendedRestaurantDetailsObj tsCurrentRecommendedRestaurantDetailsObj =
-            null;
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-        restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
-
-        boolean responseDone = false;
-
-        try {
-            tsCurrentRecommendedRestaurantDetailsObj = restaurantBO.showCurrentRestaurantRecommendedDetails(userId,
-                    restaurantId);
-            responseDone = true;
-
-            return Response.status(status)
-                           .entity(tsCurrentRecommendedRestaurantDetailsObj)
-                           .build();
-        } catch (TasteSyncException e1) {
-            e1.printStackTrace();
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = true;
-
-            return Response.status(status).entity(tsErrorObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (!responseDone) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
-            }
-        }
-    }
-
-    @GET
     @Path("/details")
     @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantDetailsObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
@@ -352,7 +303,7 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantsDetailsList() {
+    private Response showRestaurantsDetailsList() {
         List<TSRestaurantObj> tsRestaurantObjList = null;
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();

@@ -310,8 +310,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         String[] whoareyouwithIdList, String[] typeOfRestaurantIdList,
         String[] occasionIdList, String neighborhoodId, String cityId,
         String stateName) throws TasteSyncException {
-        String templateString = null;
-        String tempTemplateString = null;
         StringBuffer finalTemplateString = new StringBuffer();
         Properties prop = new Properties();
         InputStream ifile = null;
@@ -341,7 +339,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             textToBeReplaced.append(" ");
 
             // get cuisines desc
-            templateString = prop.getProperty("search.cuisine.location");
+            String templateString = prop.getProperty("search.cuisine.location");
 
             int cuisineTier1IdDescListSize = cuisineTier1IdDescList.size();
 
@@ -379,7 +377,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 }
             }
 
-            tempTemplateString = StringUtils.replace(templateString,
+            String tempTemplateString = StringUtils.replace(templateString,
                     "<cuisine>", textToBeReplaced.toString());
 
             templateString = tempTemplateString;
@@ -871,7 +869,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         ResultSet resultsetInner = null;
 
         String recommendedrestaurantsRestaurantId;
-        String recommendedrestaurantsRestaurantName = null;
+        String recommendedrestaurantsRestaurantName;
 
         try {
             connection = tsDataSource.getConnection();
@@ -954,8 +952,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             List<String> recommenderUserIdList = new ArrayList<String>();
             List<String> replyIdList = new ArrayList<String>();
-            String recommenderUserIdValue = null;
-            String replyIdValue = null;
+            String recommenderUserIdValue;
+            String replyIdValue;
 
             while (resultset.next()) {
                 recommenderUserIdValue = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
@@ -986,7 +984,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
                     resultset = statement.executeQuery();
 
-                    int rowCount = 0;
+                    int rowCount;
 
                     if (resultset.next()) {
                         rowCount = resultset.getInt(1);
@@ -1172,7 +1170,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     @Override
     public TSSenderUserObj showRecommendationMessage(String messageId,
         String recipientUserId) throws TasteSyncException {
-        TSSenderUserObj tsSenderUserObj = null;
+      
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
@@ -1251,7 +1249,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             statement.close();
             tsDataSource.commit();
 
-            tsSenderUserObj = new TSSenderUserObj();
+            TSSenderUserObj tsSenderUserObj = new TSSenderUserObj();
 
             TSUserProfileBasicObj senderUser = new TSUserProfileBasicObj();
             senderUser.setName(senderUserName);
@@ -1304,6 +1302,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 friendOrNot = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "recorequest_ts_assigned.ASSIGNED_USERTYPE"));
             } else {
+            	System.out.println("invalid data case with recorequestId="+recorequestId +" and userId="+userId);
                 // invalid data case
                 return null;
             }

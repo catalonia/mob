@@ -47,6 +47,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
+
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public UserResponse login(String email, String password)
@@ -349,9 +350,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                         //Update Facebook's friend infor
                         if ((profiles != null) && !profiles.isEmpty()) {
                             for (String profile : profiles) {
-                                                                //Check user' friends using TasteSync
+                                //Check user' friends using TasteSync
                                 TSUserObj user_fb = mySQL.getUserInformationByFacebookID(connection,
-                                		profile);
+                                        profile);
 
                                 if (user_fb != null) {
                                     list_friends_using_TasteSync.add(user_fb);
@@ -891,15 +892,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 tsDataSource.closeConnection(connection, statement, resultset);
             }
         }
-
-        //return privacySettingsObj;
     }
 
     @Override
-    public boolean updateSettingsNotificationsRecoMessage(
+    public void updateSettingsNotifications(
         TSListNotificationSettingsObj notificationSetting)
         throws TasteSyncException {
-        boolean responseDone = false;
         String userId = notificationSetting.getUserId();
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
@@ -949,8 +947,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 }
             }
 
-            responseDone = true;
-
             tsDataSource.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -959,8 +955,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, null);
         }
-
-        return responseDone;
     }
 
     @Override
@@ -1160,6 +1154,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public TSListSocialSettingObj showSettingsSocial(String userId)
         throws TasteSyncException {
+        //TODO need to rewrite
         TSListSocialSettingObj social = null;
         TSDataSource tsDataSource = TSDataSource.getInstance();
         Connection connection = null;
@@ -1173,27 +1168,36 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             boolean isCheckUSNC = mySQL.checkUserUSNC(connection, userId);
             boolean isCheckUSNC_AP = mySQL.checkUserUSNC_AP(connection, userId);
 
-            Dictionary<Integer, Integer> arrayUSNC = new Hashtable<Integer, Integer>();
-
+            //TODO calculate arrayUSNC, arrayUSNC_AP
             int count = 0;
 
-            //TODO need to be improved!
-            for (int i = 1;
-                    mySQL.getIDUserSocialNetworkConnection(connection, i) != 0;
-                    i++) {
-                count++;
-                arrayUSNC.put(mySQL.getIDUserSocialNetworkConnection(
-                        connection, i), i);
+            Dictionary<Integer, Integer> arrayUSNC = new Hashtable<Integer, Integer>();
+
+            int key;
+
+            for (int i = 1; i > 0; ++i) {
+                key = mySQL.getIDUserSocialNetworkConnection(connection, i);
+
+                if (key == 0) {
+                    break;
+                }
+
+                arrayUSNC.put(key, i);
+                ++count;
             }
 
             Dictionary<Integer, Integer> arrayUSNC_AP = new Hashtable<Integer, Integer>();
             int count_AP = 0;
 
-            //TODO need to be improved!
-            for (int i = 1; mySQL.getIDAutoPublishing(connection, i) != 0;
-                    i++) {
-                count_AP++;
-                arrayUSNC_AP.put(mySQL.getIDAutoPublishing(connection, i), i);
+            for (int i = 1; i > 0; ++i) {
+                key = mySQL.getIDAutoPublishing(connection, i);
+
+                if (key == 0) {
+                    break;
+                }
+
+                arrayUSNC_AP.put(key, i);
+                ++count_AP;
             }
 
             if (!isCheckUSNC_AP && !isCheckUSNC) {
@@ -1267,8 +1271,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
                 tsDataSource.closeConnection(connection, statement, resultset);
             }
         }
-
-        //return social;
     }
 
     @Override
@@ -1369,12 +1371,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public TSUserProfileObj showMyProfileHome(String userId)
-        throws TasteSyncException {
-        return null;
-    }
-
-    @Override
     public boolean submitMyProfileAboutMe(String userId, String aboutMeText)
         throws TasteSyncException {
         boolean ret = true;
@@ -1399,6 +1395,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                 tsDataSource.commit();
             }
+
             return ret;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1407,7 +1404,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             tsDataSource.close();
             tsDataSource.closeConnection(connection, statement, null);
         }
-
     }
 
     @Override
@@ -1504,24 +1500,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
-    public List<TSUserObj> showMyProfileFriends(String userId)
-        throws TasteSyncException {
-        return null;
-    }
-
-    @Override
-    public List<TSUserProfileRestaurantsObj> showProfileRestaurants(
-        String userId) throws TasteSyncException {
-        return null;
-    }
-
-    @Override
-    public TSUserProfileObj showUserProfileHome(String userId,
-        String viewerUserId) throws TasteSyncException {
-        return null;
-    }
-
-    @Override
     public List<TSUserObj> showProfileFriends(String userId)
         throws TasteSyncException {
         List<TSUserObj> list_data = new ArrayList<TSUserObj>();
@@ -1545,6 +1523,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             statement.close();
+
             return list_data;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1696,6 +1675,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             statement.close();
+
             return fbUsers;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1746,6 +1726,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             statement.close();
+
             return fbUsers;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1887,6 +1868,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
                 statement.close();
             }
+
             return listData;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -2461,6 +2443,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             statement.close();
+
             return list_data;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -2643,6 +2626,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             statement.close();
+
             return obj;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -2685,6 +2669,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             }
 
             statement.close();
+
             return listCityObj;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -2827,8 +2812,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         if (1 == 1) {
-            return "testDeepinderRicksJags_OauthToken"+
-                    CommonFunctionsUtil.generateUniqueKey();
+            return "testDeepinderRicksJags_OauthToken" +
+            CommonFunctionsUtil.generateUniqueKey();
         }
 
         Connection connection = null;

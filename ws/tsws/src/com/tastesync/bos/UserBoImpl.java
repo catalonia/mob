@@ -79,10 +79,10 @@ public class UserBoImpl implements UserBo {
     }
 
     @Override
-    public boolean updateSettingsNotifications(
+    public void updateSettingsNotifications(
         TSListNotificationSettingsObj notificationSetting)
         throws TasteSyncException {
-        return userDao.updateSettingsNotificationsRecoMessage(notificationSetting);
+        userDao.updateSettingsNotifications(notificationSetting);
     }
 
     @Override
@@ -108,12 +108,6 @@ public class UserBoImpl implements UserBo {
         String reportedUser, String reportedByUser) throws TasteSyncException {
         userDao.submitUserReport(userId, reportText, reportedUser,
             reportedByUser);
-    }
-
-    @Override
-    public TSUserProfileObj showMyProfileHome(String userId)
-        throws TasteSyncException {
-        return userDao.showMyProfileHome(userId);
     }
 
     @Override
@@ -145,26 +139,6 @@ public class UserBoImpl implements UserBo {
         String followerUserId, String statusFlag) throws TasteSyncException {
         userDao.followUserStatusChange(followeeUserId, followerUserId,
             statusFlag);
-    }
-
-    @Override
-    public List<TSUserObj> showMyProfileFriends(String userId)
-        throws TasteSyncException {
-        userDao.initUserSettings(userId);
-
-        return userDao.showMyProfileFriends(userId);
-    }
-
-    @Override
-    public List<TSUserProfileRestaurantsObj> showProfileRestaurants(
-        String userId) throws TasteSyncException {
-        return userDao.showProfileRestaurants(userId);
-    }
-
-    @Override
-    public TSUserProfileObj showUserProfileHome(String userId,
-        String viewerUserId) throws TasteSyncException {
-        return userDao.showUserProfileHome(userId, viewerUserId);
     }
 
     @Override

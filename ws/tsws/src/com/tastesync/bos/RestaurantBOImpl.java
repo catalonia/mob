@@ -41,13 +41,6 @@ public class RestaurantBOImpl implements RestaurantBO {
     }
 
     @Override
-    public TSCurrentRecommendedRestaurantDetailsObj showCurrentRestaurantRecommendedDetails(
-        String userId, String restaurantId) throws TasteSyncException {
-        return restaurantDAO.showCurrentRestaurantRecommendedDetails(userId,
-            restaurantId);
-    }
-
-    @Override
     public TSMenuObj showRestaurantDetailMenu(String restaurantId)
         throws TasteSyncException {
         return restaurantDAO.showRestaurantDetailMenu(restaurantId);

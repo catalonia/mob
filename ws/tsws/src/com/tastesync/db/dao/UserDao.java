@@ -43,7 +43,7 @@ public interface UserDao {
     TSListPrivacySettingsObj showSettingsPrivacy(String userId)
         throws TasteSyncException;
 
-    boolean updateSettingsNotificationsRecoMessage(
+    void updateSettingsNotifications(
         TSListNotificationSettingsObj notificationSetting)
         throws TasteSyncException;
 
@@ -64,26 +64,15 @@ public interface UserDao {
     void submitUserReport(String userId, String reportText,
         String reportedUser, String reportedByUser) throws TasteSyncException;
 
-    TSUserProfileObj showMyProfileHome(String userId) throws TasteSyncException;
-
-    TSUserProfileObj showUserProfileHome(String userId, String viewerUserId)
-        throws TasteSyncException;
-
     List<TSUserProfileObj> showProfileFollowing(String userId)
         throws TasteSyncException;
 
     List<TSUserProfileObj> showProfileFollowers(String userId)
         throws TasteSyncException;
 
-    List<TSUserObj> showMyProfileFriends(String userId)
-        throws TasteSyncException;
-
     List<TSUserObj> showProfileFriends(String userId) throws TasteSyncException;
 
     List<String> showInviteFriends(String userId) throws TasteSyncException;
-
-    List<TSUserProfileRestaurantsObj> showProfileRestaurants(String userId)
-        throws TasteSyncException;
 
     boolean getFollowStatus(String followeeUserId, String followerUserId)
         throws TasteSyncException;

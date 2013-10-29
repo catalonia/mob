@@ -558,8 +558,6 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
         try {
             connection = tsDataSource.getConnection();
 
-            TSRestaurantBasicObj tsRestaurantBasicObj = null;
-
             if ((cityId != null) && (restaurantKey != null)) {
                 statement = connection.prepareStatement(AutoPopulateQueries.LIKE_RESTAURANT_CITY_SELECT_SQL);
                 statement.setString(1, cityId);
@@ -567,7 +565,7 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 resultset = statement.executeQuery();
 
                 while (resultset.next()) {
-                    tsRestaurantBasicObj = new TSRestaurantBasicObj();
+                    TSRestaurantBasicObj tsRestaurantBasicObj = new TSRestaurantBasicObj();
                     tsRestaurantBasicObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
                             resultset.getString("RESTAURANT_ID")));
 
@@ -583,10 +581,9 @@ public class AutoPopulateDAOImpl extends BaseDaoImpl implements AutoPopulateDAO 
                 statement = connection.prepareStatement(AutoPopulateQueries.LIKE_RESTAURANT_SELECT_SQL);
                 statement.setString(1, restaurantKey + "%");
                 resultset = statement.executeQuery();
-                tsRestaurantBasicObj = null;
 
                 while (resultset.next()) {
-                    tsRestaurantBasicObj = new TSRestaurantBasicObj();
+                    TSRestaurantBasicObj tsRestaurantBasicObj = new TSRestaurantBasicObj();
                     tsRestaurantBasicObj.setRestaurantId(CommonFunctionsUtil.getModifiedValueString(
                             resultset.getString("RESTAURANT_ID")));
 

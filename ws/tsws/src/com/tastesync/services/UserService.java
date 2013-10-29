@@ -19,7 +19,6 @@ import com.tastesync.model.objects.TSListFacebookUserDataObj;
 import com.tastesync.model.objects.TSListNotificationSettingsObj;
 import com.tastesync.model.objects.TSListPrivacySettingsObj;
 import com.tastesync.model.objects.TSListSocialSettingObj;
-import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
 import com.tastesync.model.objects.TSSuccessObj;
 import com.tastesync.model.objects.TSUserObj;
@@ -63,6 +62,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitLogin")
+    @org.codehaus.enunciate.jaxrs.TypeHint(UserResponse.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -108,6 +108,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/setStatus")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -119,6 +120,21 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             userBo.setStatus(userId, statusUser);
             responseDone = true;
 
@@ -152,6 +168,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitLoginFacebook")
+    @org.codehaus.enunciate.jaxrs.TypeHint(UserResponse.class)
     @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -173,14 +190,14 @@ public class UserService extends BaseService {
             // get oauth token and add to the user
             String deviceToken = list_user_profile.getDevice_token();
             String oAuthToken = null;
-            
-            //if ((deviceToken != null) && !deviceToken.isEmpty()) {
-                String userId = userBo.getUserInformationByEmail(list_user_profile.getUser_profile_current()
-                                                                                  .getEmail())
-                                      .getUserId();
-                oAuthToken = userBo.getOAuthToken(userId, deviceToken);
-            //}
 
+            //if ((deviceToken != null) && !deviceToken.isEmpty()) {
+            String userId = userBo.getUserInformationByEmail(list_user_profile.getUser_profile_current()
+                                                                              .getEmail())
+                                  .getUserId();
+            oAuthToken = userBo.getOAuthToken(userId, deviceToken);
+
+            //}
             return Response.status(status).header("oauth_token", oAuthToken)
                            .entity(userResponse).build();
         } catch (TasteSyncException e) {
@@ -208,6 +225,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/loginAccount")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -218,6 +236,21 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             String result = userBo.loginAccount(userId);
 
             if (result != null) {
@@ -303,17 +336,32 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitLogout")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitLogout(@FormParam("userLogId")
     String userId) {
-        // TODO expire access token
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
         try {
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             // TODO get from the header . 
             String deviceToken = null;
             responseDone = userBo.logout(userId, deviceToken);
@@ -348,6 +396,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showSettingsPrivacy")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSListPrivacySettingsObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -360,22 +409,24 @@ public class UserService extends BaseService {
 
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            tsPrivacySettingsObj = userBo.showSettingsPrivacy(userId);
 
-            if (tsPrivacySettingsObj != null) {
-                responseDone = true;
-
-                return Response.status(status).entity(tsPrivacySettingsObj)
-                               .build();
-            } else {
-                status = TSResponseStatusCode.ERROR.getValue();
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
 
                 TSErrorObj tsErrorObj = new TSErrorObj();
-                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
                 responseDone = true;
 
-                return Response.status(status).entity(tsErrorObj).build();
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
             }
+
+            tsPrivacySettingsObj = userBo.showSettingsPrivacy(userId);
+            responseDone = true;
+
+            return Response.status(status).entity(tsPrivacySettingsObj).build();
         } catch (TasteSyncException e1) {
             e1.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -402,6 +453,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitSettingsPrivacy")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -446,6 +498,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showSettingsNotifications")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSListNotificationSettingsObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -458,6 +511,20 @@ public class UserService extends BaseService {
 
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             tsNotificationSettingsObj = userBo.showSettingsNotifications(userId);
             responseDone = true;
 
@@ -489,6 +556,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/getAllData")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSInitObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -529,6 +597,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitSettingsNotifications")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -542,20 +611,9 @@ public class UserService extends BaseService {
         try {
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
             tsSuccessObj.setSuccessMsg("Settings Success!");
-            //TODO need to be improve!!!
-            responseDone = userBo.updateSettingsNotifications(notificationSetting);
+            userBo.updateSettingsNotifications(notificationSetting);
 
-            if (responseDone) {
-                responseDone = true;
-
-                return Response.status(status).entity(tsSuccessObj).build();
-            } else {
-                TSErrorObj tsErrorObj = new TSErrorObj();
-                tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-                responseDone = true;
-
-                return Response.status(status).entity(tsErrorObj).build();
-            }
+            return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -582,6 +640,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showSettingsSocial")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSListSocialSettingObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -594,6 +653,20 @@ public class UserService extends BaseService {
 
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             tsSocialSettingsObj = userBo.showSettingsSocial(userId);
             responseDone = true;
 
@@ -624,6 +697,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitSettingsSocial")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -667,6 +741,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitSettingsContactUs")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -679,6 +754,21 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             userBo.submitSettingscontactUs(userId, order, desc);
 
             responseDone = true;
@@ -713,6 +803,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showAboutTastesync")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSAboutObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -754,6 +845,7 @@ public class UserService extends BaseService {
 
     @GET
     @Path("/userdetails")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSUserObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -766,6 +858,20 @@ public class UserService extends BaseService {
 
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             tsUserObj = userBo.selectUser(userId);
             responseDone = true;
 
@@ -796,6 +902,7 @@ public class UserService extends BaseService {
 
     @GET
     @Path("/allusers")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSUserObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -836,6 +943,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/report")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -851,6 +959,20 @@ public class UserService extends BaseService {
         // BO - DO- DBQuery
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             reportText = CommonFunctionsUtil.converStringAsNullIfNeeded(reportText);
             reportedUser = CommonFunctionsUtil.converStringAsNullIfNeeded(reportedUser);
             reportedByUser = CommonFunctionsUtil.converStringAsNullIfNeeded(reportedByUser);
@@ -887,95 +1009,9 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/profile/me")
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    })
-    @Produces({MediaType.APPLICATION_JSON
-    })
-    public Response showMyProfileHome(@QueryParam("userId")
-    String userId) {
-        TSUserProfileObj tsUserProfileObj = null;
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-        boolean responseDone = false;
-
-        try {
-            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            tsUserProfileObj = userBo.showMyProfileHome(userId);
-            responseDone = true;
-
-            return Response.status(status).entity(tsUserProfileObj).build();
-        } catch (TasteSyncException e1) {
-            e1.printStackTrace();
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = true;
-
-            return Response.status(status).entity(tsErrorObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (!responseDone) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
-            }
-        }
-    }
-
-    @GET
-    @Path("/profile/user")
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    })
-    @Produces({MediaType.APPLICATION_JSON
-    })
-    public Response showUserProfileHome(@QueryParam("userId")
-    String userId, @QueryParam("viewerUserId")
-    String viewerUserId) {
-        TSUserProfileObj tsUserProfileObj = null;
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-        boolean responseDone = false;
-
-        try {
-            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            viewerUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(viewerUserId);
-
-            tsUserProfileObj = userBo.showUserProfileHome(userId, viewerUserId);
-            responseDone = true;
-
-            return Response.status(status).entity(tsUserProfileObj).build();
-        } catch (TasteSyncException e1) {
-            e1.printStackTrace();
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = true;
-
-            return Response.status(status).entity(tsErrorObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (!responseDone) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
-            }
-        }
-    }
-
     @POST
     @Path("/showProfileFollowing")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSUserProfileObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -988,6 +1024,20 @@ public class UserService extends BaseService {
 
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             tsFacebookUserDataObjList = userBo.showProfileFollowing(userId);
             responseDone = true;
 
@@ -1019,6 +1069,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showProfileFollowers")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSUserProfileObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1031,50 +1082,21 @@ public class UserService extends BaseService {
 
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            tsFacebookUserDataObjList = userBo.showProfileFollowers(userId);
-            responseDone = true;
 
-            return Response.status(status).entity(tsFacebookUserDataObjList)
-                           .build();
-        } catch (TasteSyncException e1) {
-            e1.printStackTrace();
-            status = TSResponseStatusCode.ERROR.getValue();
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
 
-            TSErrorObj tsErrorObj = new TSErrorObj();
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
 
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = true;
-
-            return Response.status(status).entity(tsErrorObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (!responseDone) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
             }
-        }
-    }
 
-    @GET
-    @Path("/showSignupDetail")
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    })
-    @Produces({MediaType.APPLICATION_JSON
-    })
-    public Response showSignupDetail(@FormParam("userId")
-    String userId) {
-        List<TSUserObj> tsFacebookUserDataObjList = null;
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-        boolean responseDone = false;
-
-        try {
-            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            tsFacebookUserDataObjList = userBo.showMyProfileFriends(userId);
+            tsFacebookUserDataObjList = userBo.showProfileFollowers(userId);
             responseDone = true;
 
             return Response.status(status).entity(tsFacebookUserDataObjList)
@@ -1105,6 +1127,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showProfileFriends")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSFriendObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1117,6 +1140,19 @@ public class UserService extends BaseService {
 
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
 
             List<TSUserObj> tsFacebookUserDataObjList = userBo.showProfileFriends(userId);
             List<String> tsInviteFacebookUserDataObjList = userBo.showInviteFriends(userId);
@@ -1151,51 +1187,9 @@ public class UserService extends BaseService {
         }
     }
 
-    @GET
-    @Path("/profile/restaurants")
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED
-    })
-    @Produces({MediaType.APPLICATION_JSON
-    })
-    public Response showProfileRestaurants(@QueryParam("userId")
-    String userId) {
-        List<TSUserProfileRestaurantsObj> tsUserProfileRestaurantsObjList = null;
-        int status = TSResponseStatusCode.SUCCESS.getValue();
-        boolean responseDone = false;
-
-        try {
-            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
-            tsUserProfileRestaurantsObjList = userBo.showProfileRestaurants(userId);
-            responseDone = true;
-
-            return Response.status(status)
-                           .entity(tsUserProfileRestaurantsObjList).build();
-        } catch (TasteSyncException e1) {
-            e1.printStackTrace();
-            status = TSResponseStatusCode.ERROR.getValue();
-
-            TSErrorObj tsErrorObj = new TSErrorObj();
-
-            tsErrorObj.setErrorMsg(TSConstants.ERROR_USER_SYSTEM_KEY);
-            responseDone = true;
-
-            return Response.status(status).entity(tsErrorObj).build();
-        } finally {
-            if (status != TSResponseStatusCode.SUCCESS.getValue()) {
-                if (!responseDone) {
-                    status = TSResponseStatusCode.ERROR.getValue();
-
-                    TSErrorObj tsErrorObj = new TSErrorObj();
-                    tsErrorObj.setErrorMsg(TSConstants.ERROR_UNKNOWN_SYSTEM_KEY);
-
-                    return Response.status(status).entity(tsErrorObj).build();
-                }
-            }
-        }
-    }
-
     @POST
     @Path("/submitMyProfileAboutMe")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1209,6 +1203,20 @@ public class UserService extends BaseService {
         // BO - DO- DBQuery
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             aboutMeText = CommonFunctionsUtil.converStringAsNullIfNeeded(aboutMeText);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
@@ -1254,6 +1262,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitFollowUserStatusChange")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1306,6 +1315,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showFollowStatus")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1362,6 +1372,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("submitTrustedFriendStatusChange")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1378,6 +1389,20 @@ public class UserService extends BaseService {
         // BO - DO- DBQuery
         try {
             userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             dest_user_id = CommonFunctionsUtil.converStringAsNullIfNeeded(dest_user_id);
             trustedFriendStatus = CommonFunctionsUtil.converStringAsNullIfNeeded(trustedFriendStatus);
 
@@ -1415,6 +1440,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/submitSignupDetail")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_JSON
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1457,6 +1483,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showTrustedFriend")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1531,6 +1558,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/sendMessageToUser")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSSuccessObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1586,6 +1614,7 @@ public class UserService extends BaseService {
 
     @POST
     @Path("/showRestaurantSuggestion")
+    @org.codehaus.enunciate.jaxrs.TypeHint(TSRestaurantObj.class)
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED
     })
     @Produces({MediaType.APPLICATION_JSON
@@ -1600,6 +1629,20 @@ public class UserService extends BaseService {
         // BO - DO- DBQuery
         try {
             key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
 
             response = userBo.showRestaurantSuggestion(key, userId);
 
@@ -1655,7 +1698,8 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
-        	userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
             // if userId is null, error!
             if (userId == null) {
                 status = TSResponseStatusCode.INVALIDDATA.getValue();
@@ -1668,7 +1712,7 @@ public class UserService extends BaseService {
                                .header("userId", TSConstants.EMPTY)
                                .entity(tsErrorObj).build();
             }
-            
+
             userProfileObj = userBo.getUserHomeProfile(userId);
             responseDone = true;
 
@@ -1711,7 +1755,8 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
-        	userFBID = CommonFunctionsUtil.converStringAsNullIfNeeded(userFBID);
+            userFBID = CommonFunctionsUtil.converStringAsNullIfNeeded(userFBID);
+
             // if userId is null, error!
             if (userFBID == null) {
                 status = TSResponseStatusCode.INVALIDDATA.getValue();
@@ -1724,7 +1769,7 @@ public class UserService extends BaseService {
                                .header("userFBID", TSConstants.EMPTY)
                                .entity(tsErrorObj).build();
             }
-            
+
             userId = userBo.getUserId(userFBID);
 
             responseDone = true;
@@ -1771,6 +1816,21 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             userProfileRestaurants = userBo.getUserProfileRestaurants(userId,
                     type, from, to);
             responseDone = true;
@@ -1813,7 +1873,8 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
-        	userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
             // if userId is null, error!
             if (userId == null) {
                 status = TSResponseStatusCode.INVALIDDATA.getValue();
@@ -1826,7 +1887,7 @@ public class UserService extends BaseService {
                                .header("userId", TSConstants.EMPTY)
                                .entity(tsErrorObj).build();
             }
-            
+
             userBo.inviteFriend(userId, friendFBId);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();
@@ -1872,6 +1933,21 @@ public class UserService extends BaseService {
         boolean responseDone = false;
 
         try {
+            userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
+
+            // if userId is null, error!
+            if (userId == null) {
+                status = TSResponseStatusCode.INVALIDDATA.getValue();
+
+                TSErrorObj tsErrorObj = new TSErrorObj();
+                tsErrorObj.setErrorMsg(TSConstants.ERROR_INVALID_INPUT_DATA_KEY);
+                responseDone = true;
+
+                return Response.status(status)
+                               .header("userId", TSConstants.EMPTY)
+                               .entity(tsErrorObj).build();
+            }
+
             userBo.submitUserReport(userId, reportedUserId, reason);
 
             TSSuccessObj tsSuccessObj = new TSSuccessObj();

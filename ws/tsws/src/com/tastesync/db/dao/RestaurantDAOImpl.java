@@ -786,13 +786,6 @@ public class RestaurantDAOImpl extends BaseDaoImpl implements RestaurantDAO {
     }
 
     @Override
-    public TSCurrentRecommendedRestaurantDetailsObj showCurrentRestaurantRecommendedDetails(
-        String userId, String restaurantId) throws TasteSyncException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public TSMenuObj showRestaurantDetailMenu(String restaurantId)
         throws TasteSyncException {
         TSDataSource tsDataSource = TSDataSource.getInstance();

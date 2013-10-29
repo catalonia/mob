@@ -3,15 +3,15 @@ package com.tastesync.services;
 import com.tastesync.bos.AutoPopulateBO;
 import com.tastesync.bos.AutoPopulateBOImpl;
 
+import com.tastesync.common.utils.CommonFunctionsUtil;
+
 import com.tastesync.exception.TasteSyncException;
 
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSLocationSearchCitiesObj;
 import com.tastesync.model.objects.TSRestaurantBasicObj;
 import com.tastesync.model.objects.TSRestaurantObj;
-import com.tastesync.model.objects.TSSuccessObj;
 
-import com.tastesync.common.utils.CommonFunctionsUtil;
 import com.tastesync.util.TSConstants;
 import com.tastesync.util.TSResponseStatusCode;
 
@@ -25,7 +25,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -189,7 +188,8 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateSuggestedRestaurantNames(@FormParam("key")
+    public Response populateSuggestedRestaurantNames(
+        @FormParam("key")
     String key, @FormParam("cityid")
     String cityId) {
         List<TSRestaurantBasicObj> tsRestaurantBasicObjList = null;
@@ -198,7 +198,7 @@ public class AutoPopulateService extends BaseService {
         boolean responseDone = false;
 
         try {
-        	key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
+            key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
 
             cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
 
@@ -206,7 +206,8 @@ public class AutoPopulateService extends BaseService {
                     cityId);
             responseDone = true;
 
-            return Response.status(status).entity(tsRestaurantBasicObjList).build();
+            return Response.status(status).entity(tsRestaurantBasicObjList)
+                           .build();
         } catch (TasteSyncException e) {
             e.printStackTrace();
             status = TSResponseStatusCode.ERROR.getValue();
@@ -232,7 +233,7 @@ public class AutoPopulateService extends BaseService {
             }
         }
     }
-    
+
     @POST
     @Path("/restaurantSearchTerms")
     @org.codehaus.enunciate.jaxrs.TypeHint(JSONArray.class)
@@ -249,7 +250,7 @@ public class AutoPopulateService extends BaseService {
         boolean responseDone = false;
 
         try {
-        	key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
+            key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
 
             cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
 
