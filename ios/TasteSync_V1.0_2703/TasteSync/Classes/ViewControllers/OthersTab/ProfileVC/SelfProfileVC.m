@@ -224,6 +224,7 @@
 - (IBAction)actionMoreRestaurant:(id)sender
 {
     RestaurantListsVC *vc = [[RestaurantListsVC alloc] initWithNibName:@"RestaurantListsVC" bundle:nil];
+    vc.userObj = [UserDefault userDefault].user;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

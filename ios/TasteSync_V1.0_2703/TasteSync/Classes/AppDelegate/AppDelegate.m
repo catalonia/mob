@@ -31,7 +31,7 @@ askSubmited=_askSubmited;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
     }
     
-    
+   
     
 //    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound)];
    
@@ -50,12 +50,27 @@ askSubmited=_askSubmited;
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    NSLog(@"12312");
+    NSLog(@"zoom in");
+    if ([UserDefault userDefault].user != nil) {
+        CRequest* request = [[CRequest alloc]initWithURL:@"setStatus" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+        request.delegate = self;
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+        [request setFormPostValue:@"n" forKey:@"status"];
+        [request startFormRequest];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    NSLog(@"abcde");
+    NSLog(@"zoom out");
+    
+    if ([UserDefault userDefault].user != nil) {
+        CRequest* request = [[CRequest alloc]initWithURL:@"setStatus" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+        request.delegate = self;
+        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+        [request setFormPostValue:@"y" forKey:@"status"];
+        [request startFormRequest];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -269,7 +284,8 @@ askSubmited=_askSubmited;
 
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
-    
+    NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",response);
 }
 
 #pragma mark Push Notifycation

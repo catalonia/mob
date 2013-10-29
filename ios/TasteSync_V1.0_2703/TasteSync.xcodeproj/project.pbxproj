@@ -215,7 +215,6 @@
 		5E7775EF16D5D69300B0F363 /* ResRecommendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E7775B616D5D69300B0F363 /* ResRecommendVC.m */; };
 		5E7775F016D5D69300B0F363 /* ResRecommendVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E7775B716D5D69300B0F363 /* ResRecommendVC.xib */; };
 		5E7775FA16D5D69300B0F363 /* RestaurantDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E7775CD16D5D69300B0F363 /* RestaurantDetailVC.m */; };
-		5E7775FB16D5D69300B0F363 /* RestaurantDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E7775CE16D5D69300B0F363 /* RestaurantDetailVC.xib */; };
 		5E7775FC16D5D69300B0F363 /* ResShareFB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E7775D216D5D69300B0F363 /* ResShareFB.m */; };
 		5E7775FD16D5D69300B0F363 /* ResShareFB.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E7775D316D5D69300B0F363 /* ResShareFB.xib */; };
 		5E7775FE16D5D69300B0F363 /* ResShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E7775D516D5D69300B0F363 /* ResShareView.m */; };
@@ -605,6 +604,16 @@
 		E05B563D17000897007B938B /* ic_like_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E05B563917000897007B938B /* ic_like_on@2x.png */; };
 		E05B563E17000897007B938B /* ic_like.png in Resources */ = {isa = PBXBuildFile; fileRef = E05B563A17000897007B938B /* ic_like.png */; };
 		E05B563F17000897007B938B /* ic_like@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E05B563B17000897007B938B /* ic_like@2x.png */; };
+		E627B6EB181A36F000E1A8D0 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E627B6EA181A36F000E1A8D0 /* libresolv.dylib */; };
+		E627B6ED181A372100E1A8D0 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E627B6EC181A372100E1A8D0 /* ImageIO.framework */; };
+		E627B6EF181A3C7000E1A8D0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E627B6EE181A3C7000E1A8D0 /* CoreData.framework */; };
+		E65BBC39181A50EC00C12751 /* SendMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E65BBC37181A50EC00C12751 /* SendMessageVC.m */; };
+		E65BBC3A181A50EC00C12751 /* SendMessageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65BBC38181A50EC00C12751 /* SendMessageVC.xib */; };
+		E65BBC3D181B102900C12751 /* RecommendationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E65BBC3C181B102900C12751 /* RecommendationCell.m */; };
+		E65BBC3F181B103600C12751 /* RecommendationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65BBC3E181B103600C12751 /* RecommendationCell.xib */; };
+		E65BBC41181B2F2E00C12751 /* RestaurantDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65BBC40181B2F2E00C12751 /* RestaurantDetailVC.xib */; };
+		E65BBC43181B2FE200C12751 /* social-networks-foursquare.20131010231035.png in Resources */ = {isa = PBXBuildFile; fileRef = E65BBC42181B2FE200C12751 /* social-networks-foursquare.20131010231035.png */; };
+		E689A26F1820DEE9009F29E8 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E689A26E1820DEE9009F29E8 /* Base64.m */; };
 		E68B84101805BF180033CC18 /* TSCuisineObj.m in Sources */ = {isa = PBXBuildFile; fileRef = E68B840F1805BF180033CC18 /* TSCuisineObj.m */; };
 /* End PBXBuildFile section */
 
@@ -836,7 +845,6 @@
 		5E7775B716D5D69300B0F363 /* ResRecommendVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResRecommendVC.xib; sourceTree = "<group>"; };
 		5E7775CC16D5D69300B0F363 /* RestaurantDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantDetailVC.h; sourceTree = "<group>"; };
 		5E7775CD16D5D69300B0F363 /* RestaurantDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantDetailVC.m; sourceTree = "<group>"; };
-		5E7775CE16D5D69300B0F363 /* RestaurantDetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestaurantDetailVC.xib; sourceTree = "<group>"; };
 		5E7775D116D5D69300B0F363 /* ResShareFB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResShareFB.h; sourceTree = "<group>"; };
 		5E7775D216D5D69300B0F363 /* ResShareFB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResShareFB.m; sourceTree = "<group>"; };
 		5E7775D316D5D69300B0F363 /* ResShareFB.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResShareFB.xib; sourceTree = "<group>"; };
@@ -1335,6 +1343,19 @@
 		E05B563917000897007B938B /* ic_like_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_like_on@2x.png"; sourceTree = "<group>"; };
 		E05B563A17000897007B938B /* ic_like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_like.png; sourceTree = "<group>"; };
 		E05B563B17000897007B938B /* ic_like@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_like@2x.png"; sourceTree = "<group>"; };
+		E627B6EA181A36F000E1A8D0 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
+		E627B6EC181A372100E1A8D0 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		E627B6EE181A3C7000E1A8D0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E65BBC36181A50EC00C12751 /* SendMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendMessageVC.h; sourceTree = "<group>"; };
+		E65BBC37181A50EC00C12751 /* SendMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendMessageVC.m; sourceTree = "<group>"; };
+		E65BBC38181A50EC00C12751 /* SendMessageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendMessageVC.xib; sourceTree = "<group>"; };
+		E65BBC3B181B102900C12751 /* RecommendationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendationCell.h; sourceTree = "<group>"; };
+		E65BBC3C181B102900C12751 /* RecommendationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendationCell.m; sourceTree = "<group>"; };
+		E65BBC3E181B103600C12751 /* RecommendationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecommendationCell.xib; sourceTree = "<group>"; };
+		E65BBC40181B2F2E00C12751 /* RestaurantDetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestaurantDetailVC.xib; sourceTree = "<group>"; };
+		E65BBC42181B2FE200C12751 /* social-networks-foursquare.20131010231035.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "social-networks-foursquare.20131010231035.png"; sourceTree = "<group>"; };
+		E689A26D1820DEE9009F29E8 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		E689A26E1820DEE9009F29E8 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		E68B840E1805BF180033CC18 /* TSCuisineObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCuisineObj.h; sourceTree = "<group>"; };
 		E68B840F1805BF180033CC18 /* TSCuisineObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCuisineObj.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1344,6 +1365,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E627B6EF181A3C7000E1A8D0 /* CoreData.framework in Frameworks */,
+				E627B6ED181A372100E1A8D0 /* ImageIO.framework in Frameworks */,
+				5E7D2C6916D3532900D85642 /* Foundation.framework in Frameworks */,
+				5E7D2C6716D3532900D85642 /* UIKit.framework in Frameworks */,
+				E627B6EB181A36F000E1A8D0 /* libresolv.dylib in Frameworks */,
 				5E7D2C9416D353C500D85642 /* MapKit.framework in Frameworks */,
 				C39F95A1179F719700C91BAA /* libz.dylib in Frameworks */,
 				C39F959F179F718800C91BAA /* MobileCoreServices.framework in Frameworks */,
@@ -1357,8 +1383,6 @@
 				5E7D2C8A16D3539900D85642 /* Accounts.framework in Frameworks */,
 				5E7D2C8B16D3539900D85642 /* AddressBook.framework in Frameworks */,
 				5E7D2C8C16D3539900D85642 /* AdSupport.framework in Frameworks */,
-				5E7D2C6716D3532900D85642 /* UIKit.framework in Frameworks */,
-				5E7D2C6916D3532900D85642 /* Foundation.framework in Frameworks */,
 				5E7D2C6B16D3532900D85642 /* CoreGraphics.framework in Frameworks */,
 				C30DA9B317BDA5DB00846D01 /* FacebookSDK.framework in Frameworks */,
 			);
@@ -1855,7 +1879,7 @@
 			children = (
 				5E7775CC16D5D69300B0F363 /* RestaurantDetailVC.h */,
 				5E7775CD16D5D69300B0F363 /* RestaurantDetailVC.m */,
-				5E7775CE16D5D69300B0F363 /* RestaurantDetailVC.xib */,
+				E65BBC40181B2F2E00C12751 /* RestaurantDetailVC.xib */,
 				5E7FE48116D776F000F976B4 /* LeaveATip */,
 				5E77757F16D5D69300B0F363 /* Menu */,
 				5E77758D16D5D69300B0F363 /* MoreInfo */,
@@ -2452,6 +2476,9 @@
 		5E7D2C6516D3532900D85642 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E627B6EE181A3C7000E1A8D0 /* CoreData.framework */,
+				E627B6EC181A372100E1A8D0 /* ImageIO.framework */,
+				E627B6EA181A36F000E1A8D0 /* libresolv.dylib */,
 				C30DA9B217BDA5DB00846D01 /* FacebookSDK.framework */,
 				C39F95A0179F719700C91BAA /* libz.dylib */,
 				C39F959E179F718800C91BAA /* MobileCoreServices.framework */,
@@ -2625,6 +2652,7 @@
 		5E8D3D0416D35AF700FF5EEC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				E689A26C1820DEE9009F29E8 /* Base64 */,
 				C399B33017E95C6300F83014 /* TextView */,
 				C3D180B5179F69AF007B71A0 /* JSONKit.h */,
 				C3D180B6179F69AF007B71A0 /* JSONKit.m */,
@@ -2647,6 +2675,7 @@
 		5E8D3D0916D35B1B00FF5EEC /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				E65BBC42181B2FE200C12751 /* social-networks-foursquare.20131010231035.png */,
 				5E5F179716DE04CD00852D6A /* old */,
 				5E5F165116DE025400852D6A /* slice */,
 			);
@@ -2799,6 +2828,9 @@
 				5E8D408E16D3669000FF5EEC /* LoginScreenVC */,
 				5E8D438116D37D6700FF5EEC /* ConfigProfile */,
 				5E8D409516D3669000FF5EEC /* SignUpVC */,
+				E65BBC36181A50EC00C12751 /* SendMessageVC.h */,
+				E65BBC37181A50EC00C12751 /* SendMessageVC.m */,
+				E65BBC38181A50EC00C12751 /* SendMessageVC.xib */,
 			);
 			path = LoginVC;
 			sourceTree = "<group>";
@@ -2950,6 +2982,9 @@
 				5EA0E3FC16F811A2002666D1 /* MoreUserRecommendationsVC.h */,
 				5EA0E3FD16F811A3002666D1 /* MoreUserRecommendationsVC.m */,
 				5EA0E3FE16F811A3002666D1 /* MoreUserRecommendationsVC.xib */,
+				E65BBC3B181B102900C12751 /* RecommendationCell.h */,
+				E65BBC3C181B102900C12751 /* RecommendationCell.m */,
+				E65BBC3E181B103600C12751 /* RecommendationCell.xib */,
 			);
 			path = Detail6;
 			sourceTree = "<group>";
@@ -3065,6 +3100,15 @@
 			path = ../RequestData;
 			sourceTree = "<group>";
 		};
+		E689A26C1820DEE9009F29E8 /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				E689A26D1820DEE9009F29E8 /* Base64.h */,
+				E689A26E1820DEE9009F29E8 /* Base64.m */,
+			);
+			path = Base64;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3138,6 +3182,7 @@
 				5E8D40EB16D36A4000FF5EEC /* RestaurantVC.xib in Resources */,
 				5E8D40F516D36A7700FF5EEC /* OthersTabVC.xib in Resources */,
 				5E8D438616D37DBB00FF5EEC /* ConfigProfileVC.xib in Resources */,
+				E65BBC41181B2F2E00C12751 /* RestaurantDetailVC.xib in Resources */,
 				5E98907816D47187003C305A /* AddRestaurantCell.xib in Resources */,
 				5E98907A16D47187003C305A /* FriendCell.xib in Resources */,
 				5E98907C16D47187003C305A /* FriendFilterCell.xib in Resources */,
@@ -3155,7 +3200,6 @@
 				5E7775EB16D5D69300B0F363 /* ResRecommendCell.xib in Resources */,
 				5E7775EE16D5D69300B0F363 /* ResRecommendDetailVC.xib in Resources */,
 				5E7775F016D5D69300B0F363 /* ResRecommendVC.xib in Resources */,
-				5E7775FB16D5D69300B0F363 /* RestaurantDetailVC.xib in Resources */,
 				5E7775FD16D5D69300B0F363 /* ResShareFB.xib in Resources */,
 				5E7775FF16D5D69300B0F363 /* ResShareView.xib in Resources */,
 				5E77762116D5F49700B0F363 /* FeedCell.xib in Resources */,
@@ -3393,6 +3437,7 @@
 				5E7FE96316E04B7000B60D74 /* ic_bt_cancel_on.png in Resources */,
 				5E7FE96416E04B7000B60D74 /* ic_bt_cancel_on@2x.png in Resources */,
 				5E7FE96516E04B7000B60D74 /* ic_bt_cancel.png in Resources */,
+				E65BBC3F181B103600C12751 /* RecommendationCell.xib in Resources */,
 				5E7FE96616E04B7000B60D74 /* ic_bt_cancel@2x.png in Resources */,
 				5E7FE96716E04B7000B60D74 /* ic_bt_favs_on.png in Resources */,
 				5E7FE96816E04B7000B60D74 /* ic_bt_favs_on@2x.png in Resources */,
@@ -3459,6 +3504,7 @@
 				5E7FE9D516E05B9200B60D74 /* ic_mail_ask.png in Resources */,
 				5E7FE9D616E05B9200B60D74 /* ic_mail_ask@2x.png in Resources */,
 				5E7FE9D716E05B9200B60D74 /* ic_message.png in Resources */,
+				E65BBC43181B2FE200C12751 /* social-networks-foursquare.20131010231035.png in Resources */,
 				5E7FE9D816E05B9200B60D74 /* ic_message@2x.png in Resources */,
 				5E7FE9D916E05B9200B60D74 /* ic_twitter.png in Resources */,
 				5E7FE9DA16E05B9200B60D74 /* ic_twitter@2x.png in Resources */,
@@ -3467,6 +3513,7 @@
 				5E7FE9F216E0ABDD00B60D74 /* ic_save_on.png in Resources */,
 				5E7FE9F316E0ABDD00B60D74 /* ic_save_on@2x.png in Resources */,
 				5E7FE9F616E0AC0000B60D74 /* ic_bt_deal_on.png in Resources */,
+				E65BBC3A181A50EC00C12751 /* SendMessageVC.xib in Resources */,
 				5E7FE9F716E0AC0000B60D74 /* ic_bt_deal_on@2x.png in Resources */,
 				5E7FE9FA16E0AD3C00B60D74 /* ic_bt_favs_small_on.png in Resources */,
 				5E7FE9FB16E0AD3C00B60D74 /* ic_bt_favs_small_on@2x.png in Resources */,
@@ -3606,6 +3653,7 @@
 				5E8D40B916D3669000FF5EEC /* LoginScreenVC.m in Sources */,
 				5E8D40BB16D3669000FF5EEC /* LoginVC.m in Sources */,
 				5E8D40BD16D3669000FF5EEC /* SignUpVC.m in Sources */,
+				E65BBC3D181B102900C12751 /* RecommendationCell.m in Sources */,
 				5E8D40D016D367D800FF5EEC /* NotificationObj.m in Sources */,
 				5E8D40D316D367EE00FF5EEC /* RestaurantObj.m in Sources */,
 				5E8D40D716D3689A00FF5EEC /* TabbarBaseVC.m in Sources */,
@@ -3646,6 +3694,8 @@
 				5E77762D16D5F49700B0F363 /* NewsFeedVC.m in Sources */,
 				5E77762F16D5F49700B0F363 /* FeedObj.m in Sources */,
 				5E77765416D5F8D200B0F363 /* NotificationCell.m in Sources */,
+				E65BBC39181A50EC00C12751 /* SendMessageVC.m in Sources */,
+				E689A26F1820DEE9009F29E8 /* Base64.m in Sources */,
 				5E77765916D5F8D200B0F363 /* RecommendDetail1.m in Sources */,
 				E68B84101805BF180033CC18 /* TSCuisineObj.m in Sources */,
 				5E77765B16D5F8D200B0F363 /* RecommendDetail2.m in Sources */,
@@ -3754,10 +3804,14 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"",
+					/usr/include/libxml2,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "6123AEE7-3F89-4D14-B905-CA10E750C55D";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6123AEE7-3F89-4D14-B905-CA10E750C55D";
 				SDKROOT = iphoneos6.1;
@@ -3781,11 +3835,15 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"",
+					/usr/include/libxml2,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "6123AEE7-3F89-4D14-B905-CA10E750C55D";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6123AEE7-3F89-4D14-B905-CA10E750C55D";
 				SDKROOT = iphoneos6.1;
@@ -3806,7 +3864,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TasteSync/TasteSync-Prefix.pch";
 				INFOPLIST_FILE = "TasteSync/TasteSync-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Volumes/DATA/TasteSync\\ IOS/TasteSync_V1.0_2703/TasteSync/Libraries/Facebook/FacebookChat-master/3RD_Library/XMPPFramework",
+				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6123AEE7-3F89-4D14-B905-CA10E750C55D";
@@ -3828,7 +3890,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TasteSync/TasteSync-Prefix.pch";
 				INFOPLIST_FILE = "TasteSync/TasteSync-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Volumes/DATA/TasteSync\\ IOS/TasteSync_V1.0_2703/TasteSync/Libraries/Facebook/FacebookChat-master/3RD_Library/XMPPFramework",
+				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6123AEE7-3F89-4D14-B905-CA10E750C55D";

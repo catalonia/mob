@@ -8,21 +8,29 @@
 
 #import "MoreUserRecommendationsVC.h"
 #import "CommonHelpers.h"
-#import "UserCell.h"
+#import "RecommendationCell.h"
 
 @interface MoreUserRecommendationsVC ()
-
+{
+    RestaurantObj* _restaurantObj;
+}
 @end
 
 @implementation MoreUserRecommendationsVC
 
 @synthesize arrData=_arrData;
-
+-(id)initWithRestaurantObj:(RestaurantObj*)restaurantObj
+{
+    self = [super initWithNibName:@"MoreUserRecommendationsVC" bundle:nil];
+    if (self) {
+        _restaurantObj = restaurantObj;
+    }
+    return self;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -31,16 +39,7 @@
 {
     [super viewDidLoad];
     [CommonHelpers setBackgroudImageForView:self.view];
-    
-    
-    self.arrData = [[NSMutableArray alloc] init ];
-    for (int i=0; i<10; i++) {
-        UserObj *user = [[UserObj alloc] init];
-        user.avatar = [UIImage imageNamed:@"avatar.png"];
-        user.firstname = @"Victor" ;
-        user.lastname = @"NGO";        
-        [self.arrData addObject:user];
-    }
+    self.arrData = _restaurantObj.recommendArray;
     
     
 }
@@ -80,29 +79,42 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIndentifier = @"user_cell";
+    static NSString *CellIndentifier = @"RecommendationCell";
     
-    UserCell *cell = (UserCell *)[tableView dequeueReusableCellWithIdentifier:CellIndentifier];
+    RecommendationCell *cell = (RecommendationCell *)[tableView dequeueReusableCellWithIdentifier:CellIndentifier];
     
     if (cell==nil) {
         NSLog(@"cell is nil");
-        cell =(UserCell *) [[[NSBundle mainBundle ] loadNibNamed:@"UserCell" owner:self options:nil] objectAtIndex:0];
+        cell =(RecommendationCell *) [[[NSBundle mainBundle ] loadNibNamed:@"RecommendationCell" owner:self options:nil] objectAtIndex:0];
         
         
     }
     
-    [cell initForView:[_arrData objectAtIndex:indexPath.row]];
+    [cell setUI:[_arrData objectAtIndex:indexPath.row]];
     
     return cell;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIndentifier = @"RecommendationCell";
+    
+    RecommendationCell *cell = (RecommendationCell *)[tableView dequeueReusableCellWithIdentifier:CellIndentifier];
+    
+    if (cell==nil) {
+        NSLog(@"cell is nil");
+        cell =(RecommendationCell *) [[[NSBundle mainBundle ] loadNibNamed:@"RecommendationCell" owner:self options:nil] objectAtIndex:0];
+    }
+    
+    return cell.frame.size.height;
+}
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    [[[CommonHelpers appDelegate] tabbarBaseVC ] actionProfile:[_arrData objectAtIndex:indexPath.row]];
+    //[[[CommonHelpers appDelegate] tabbarBaseVC ] actionProfile:[_arrData objectAtIndex:indexPath.row]];
 
 }
 @end

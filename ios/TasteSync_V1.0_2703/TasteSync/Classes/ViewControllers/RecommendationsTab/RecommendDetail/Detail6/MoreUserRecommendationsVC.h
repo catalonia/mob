@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RestaurantObj.h"
 
 @interface MoreUserRecommendationsVC : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
@@ -14,5 +15,7 @@
 }
 
 @property (nonatomic, strong) NSMutableArray *arrData;
+
+-(id)initWithRestaurantObj:(RestaurantObj*)restaurantObj;
 
 @end

@@ -600,14 +600,22 @@ typedef enum _TextFieldSelect
                 arrayRestaurant = arrayRestaurant5;
             }
             
-            if (txt.length >= 3) {
-                if (txt.length == 3) {
+            if (txt.length >= 1) {
+                if (txt.length == 1) {
                     if (![[txt uppercaseString] isEqualToString:[variableRestaurant objectAtIndex:(textFieldSelected - 1)]]) {
                         
-                        CRequest* request = [[CRequest alloc]initWithURL:@"showRestaurantSuggestion" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:textFieldSelected];
+//                        CRequest* request = [[CRequest alloc]initWithURL:@"showRestaurantSuggestion" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:textFieldSelected];
+//                        request.delegate = self;
+//                        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+//                        [request setFormPostValue:[txt uppercaseString] forKey:@"key"];
+//                        [request startFormRequest];
+
+                        TSGlobalObj* region = [CommonHelpers getDefaultCityObj];
+                        
+                        CRequest* request = [[CRequest alloc]initWithURL:@"suggestrestaurantnames" RQType:RequestTypePost RQData:RequestPopulate RQCategory:ApplicationForm withKey:1];
                         request.delegate = self;
-                        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
-                        [request setFormPostValue:[txt uppercaseString] forKey:@"key"];
+                        [request setFormPostValue:txt forKey:@"key"];
+                        [request setFormPostValue:region.cityObj.uid forKey:@"cityid"];
                         [request startFormRequest];
                         
                         NSLog(@"request here Value: %@ of Index: %d", [txt uppercaseString], textFieldSelected);

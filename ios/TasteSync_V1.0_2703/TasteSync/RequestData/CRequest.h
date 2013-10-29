@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
+#import <UIKit/UIKit.h>
 
 @protocol RequestDelegate <NSObject>
 
@@ -47,9 +48,11 @@ typedef enum
 @property(nonatomic,assign) id<RequestDelegate> delegate;
 @property(nonatomic,assign) int key;
 @property(nonatomic,assign) id userData;
+@property(nonatomic,assign) BOOL showIndicate;
 
 -(id)initWithURL:(NSString*)url RQType:(RequestType)type RQData:(RequestData)data RQCategory:(RequestCategory)category;
 -(id)initWithURL:(NSString*)url RQType:(RequestType)type RQData:(RequestData)data RQCategory:(RequestCategory)category withKey:(int)key;
+-(id)initWithLink:(NSString*)url RQType:(RequestType)type RQCategory:(RequestCategory)category withKey:(int)key;
 -(void)setHeader:(HeaderType)type;
 -(void)setJSON:(NSString*)JsonText;
 -(void)startRequest;

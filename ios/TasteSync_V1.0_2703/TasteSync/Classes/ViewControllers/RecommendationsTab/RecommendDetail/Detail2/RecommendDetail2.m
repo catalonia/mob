@@ -460,18 +460,19 @@ arrDataFilter=_arrDataFilter;;
         
     }
     
-    if (txt.length == 3) {
+    if (txt.length == 1) {
         if (![txt isEqualToString:requestText]) {
-            CRequest* request = [[CRequest alloc]initWithURL:@"restaurantSearchTerms" RQType:RequestTypePost RQData:RequestPopulate RQCategory:ApplicationForm withKey:1];
+            TSGlobalObj* region = [CommonHelpers getDefaultCityObj];
+            CRequest* request = [[CRequest alloc]initWithURL:@"suggestrestaurantnames" RQType:RequestTypePost RQData:RequestPopulate RQCategory:ApplicationForm withKey:1];
             request.delegate = self;
             [request setFormPostValue:txt forKey:@"key"];
-            [request setFormPostValue:@"" forKey:@"cityid"];
+            [request setFormPostValue:region.cityObj.uid forKey:@"cityid"];
             [request startFormRequest];
             
             requestText = txt;
         }
     }
-    if (txt.length >= 3) {
+    if (txt.length >= 1) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:str];
         
         NSArray *array = [self.arrDataRestaurant filteredArrayUsingPredicate:predicate];

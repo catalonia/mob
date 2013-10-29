@@ -38,10 +38,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    CRequest* request = [[CRequest alloc]initWithURL:@"showAboutTastesync" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
-    [request setFormPostValue:[NSString stringWithFormat:@"%d",_index] forKey:@"AboutId"];
-    request.delegate = self;
-    [request startFormRequest];
+//    CRequest* request = [[CRequest alloc]initWithURL:@"showAboutTastesync" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
+//    [request setFormPostValue:[NSString stringWithFormat:@"%d",_index] forKey:@"AboutId"];
+//    request.delegate = self;
+//    [request startFormRequest];
+    
+    if (_index == 2) {
+        NSString* url = @"http://v02.tastesync.com/terms.html";
+        NSURL* nsUrl = [NSURL URLWithString:url];
+        NSURLRequest* request = [NSURLRequest requestWithURL:nsUrl cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:30];
+        [_webView loadRequest:request];
+    }
+    if (_index == 3) {
+        NSString* url = @"http://v02.tastesync.com/privacy.html";
+        NSURL* nsUrl = [NSURL URLWithString:url];
+        NSURLRequest* request = [NSURLRequest requestWithURL:nsUrl cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:30];
+        [_webView loadRequest:request];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,14 +75,11 @@
 {
     NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if (response != NULL) {
-        
         NSDictionary* dic = [response objectFromJSONString];
         NSString* successStr = [dic objectForKey:@"content"];
-        
         _webView.backgroundColor = [UIColor whiteColor];
         _webView.scalesPageToFit = YES;
         _webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        
         [_webView loadHTMLString:successStr baseURL:[NSURL URLWithString:@""]];
     }
 }

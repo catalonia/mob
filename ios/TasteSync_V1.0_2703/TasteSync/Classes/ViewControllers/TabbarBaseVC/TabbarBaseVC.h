@@ -32,7 +32,7 @@ typedef enum
 - (void) actionSelectRestaurant:(RestaurantObj *) aRestaurantObj selectedIndex:(int)aSelectedIndex;
 - (void)hideTabBar;
 - (void)showTabBar;
-- (void) actionRecommendationsShowMore;
+- (void) actionRecommendationsShowMore:(RestaurantObj*)restaurantObj;
 - (void)gotoProfile:(UserObj*)obj;
 - (void) actionBackToSelectedIndex:(int) aSelectedIndex;
 

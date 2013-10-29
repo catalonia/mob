@@ -235,11 +235,16 @@
 - (void) actionProfile:(UserObj *) user
 {
     
-    CRequest* request = [[CRequest alloc]initWithURL:@"getUserId" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:TabbarRequestProfile];
-    request.delegate = self;
-    request.userData = user;
-    [request setFormPostValue:user.uid forKey:@"userFBID"];
-    [request startFormRequest];
+//    CRequest* request = [[CRequest alloc]initWithURL:@"getUserId" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:TabbarRequestProfile];
+//    request.delegate = self;
+//    request.userData = user;
+//    [request setFormPostValue:user.uid forKey:@"userFBID"];
+//    [request startFormRequest];
+    
+    ProfileVC *vc = [[ProfileVC alloc] initWithNibName:@"ProfileVC" bundle:nil];
+    vc.user = user;
+    vc.userID = user.uid;
+    [(UINavigationController *) self.selectedViewController pushViewController:vc animated:YES];
 }
 
 -(void)gotoProfile:(UserObj*)obj
@@ -252,8 +257,8 @@
 
 - (void) actionSelectRestaurant:(RestaurantObj *) aRestaurantObj selectedIndex:(int)aSelectedIndex;
 {
-    RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithNibName:@"RestaurantDetailVC" bundle:nil];
-    vc.restaurantObj = aRestaurantObj;
+    RestaurantDetailVC *vc = [[RestaurantDetailVC alloc] initWithRestaurantObj:aRestaurantObj];
+    //vc.restaurantObj = aRestaurantObj;
     vc.selectedIndex = aSelectedIndex;
     
     NSArray *viewControllersArr = self.viewControllers;
@@ -316,9 +321,9 @@
 
 #pragma mark - Global's method for RecommendationsTab
 
-- (void) actionRecommendationsShowMore
+- (void) actionRecommendationsShowMore:(RestaurantObj*)restaurantObj
 {
-    MoreUserRecommendationsVC *vc = [[MoreUserRecommendationsVC alloc] initWithNibName:@"MoreUserRecommendationsVC" bundle:nil];
+    MoreUserRecommendationsVC *vc = [[MoreUserRecommendationsVC alloc] initWithRestaurantObj:restaurantObj];
 
     [(UINavigationController *) self.selectedViewController pushViewController:vc animated:YES];
 }

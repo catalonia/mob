@@ -12,6 +12,7 @@
 #import "TagView.h"
 #import "TSGlobalObj.h"
 #import "TSCityObj.h"
+#import "SendMessageVC.h"
 
 @interface AskVC ()<TagObjDelegate,TagViewDelegate>
 {
@@ -43,23 +44,24 @@
 {
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:YES];
+    
     // Do any additional setup after loading the view from its nib.
     [self initUI];
     [self initData];
-
-}
-- (void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    region = [CommonHelpers getDefaultCityObj];
+    lbTypeRegions.hidden = YES;
+    tfRegion.text = region.name;
     if ([CommonHelpers appDelegate].askSubmited) {
         
         [CommonHelpers appDelegate].askSubmited = NO;
         [self initUI];
         [self initData];
-    
+        
     }
-
-    
+}
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -206,10 +208,22 @@
 - (void) initData
 {
     self.arrData = [[NSMutableArray alloc] init ];
-    self.arrData = [[CommonHelpers appDelegate] arrDropdown];
+    self.arrData = [[CommonHelpers appDelegate] arrCuisine];
     
-    for (TSGlobalObj* global in [[CommonHelpers appDelegate] arrCuisine]) {
-        [self.arrData addObject:global];
+    for (TSGlobalObj* global in [[CommonHelpers appDelegate] arrDropdown]) {
+        int i = 0;
+        for (TSGlobalObj* global2 in [[CommonHelpers appDelegate] arrCuisine])
+        {
+            NSString* str1 = [NSString stringWithFormat:@"%@", global.name];
+            NSString* str2 = [NSString stringWithFormat:@"%@", global2.name];
+            if ([str1 isEqualToString:str2]) {
+                break;
+            }
+            i++;
+        }
+        if (i == [[CommonHelpers appDelegate] arrCuisine].count) {
+            [self.arrData addObject:global];
+        }
     }
     
     for (TSGlobalObj* global in [[CommonHelpers appDelegate] arrOccasion]) {
@@ -345,6 +359,7 @@
 
     }
     [self refreshAskTextView];
+    
 
 }
 
@@ -431,7 +446,7 @@
         [request setFormPostValue:whoareyouList          forKey:@"whoareyouwithidlist"];
         [request setFormPostValue:typeofrestaurantList forKey:@"typeofrestaurantidList"];
         [request setFormPostValue:occasionList             forKey:@"occasionidlist"];
-        
+        NSLog(@"%@ - %@ - %@", region.cityObj.neighbourhoodID, region.cityObj.uid, region.cityObj.stateName);
 //        [request setFormPostValue:@"neighborhoodid" forKey:@"neighborhoodid"];
 //        [request setFormPostValue:@"typeofrestaurantidList" forKey:@"cityid"];
 //        [request setFormPostValue:@"occasionidlist" forKey:@"statename"];
@@ -649,7 +664,7 @@
             chooseRegion = TRUE;
             MOVE_POINT_Y = viewFilter.frame.size.height + 60;
             lbTypeRegions.hidden = YES;
-            region = nil;
+            region = [CommonHelpers getDefaultCityObj];
         }
         else
         {
@@ -815,10 +830,10 @@
         [tagView addTagDefault];
         [tagView setFrame:CGRectMake(tagView.frame.origin.x, tagView.frame.origin.y, tagView.frame.size.width, tagView.frame.size.height)];
     }
-    
+    //tfRegion.placeholder = @"New York, NY";
     //    lbTypeRegions.hidden = NO;
     if (region == nil) {
-        lbTypeRegions.hidden = NO;
+        //lbTypeRegions.hidden = NO;
         tfRegion.text = nil;
     }else
     {

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "TSGlobalObj.h"
 #import "CRequest.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface AskRecommendationsVC : UIViewController<UITableViewDataSource, UITableViewDelegate, RequestDelegate>
+@interface AskRecommendationsVC : UIViewController<UITableViewDataSource, UITableViewDelegate, RequestDelegate,MFMailComposeViewControllerDelegate>
 {
     __weak IBOutlet UIView *viewWaiting, *viewMain , *viewNotLogin, *viewLogin, *viewfacebook , *viewFriends;
     __weak IBOutlet UITableView *tbvResult, *tbvFilter;
@@ -29,6 +30,8 @@
 - (IBAction)actionPostOnFb:(id)sender;
 - (IBAction)actionRecommendations:(id)sender;
 - (IBAction)actionGotIt:(id)sender;
+- (IBAction)actionNoThanks:(id)sender;
+- (IBAction)actionSentEmail:(id)sender;
 
 // action view not login
 

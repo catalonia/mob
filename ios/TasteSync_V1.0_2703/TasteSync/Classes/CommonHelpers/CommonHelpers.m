@@ -99,6 +99,31 @@ void debug(NSString *format, ...)
     alrt = nil;
 }
 
++(TSCityObj*)setDefaultCityObj
+{
+    TSCityObj* cityObj = [[TSCityObj alloc]init];
+    cityObj.neighbourhoodID = @"";
+    cityObj.uid = @"11756";
+    cityObj.country = @"us";
+    cityObj.stateName = @"NY";
+    cityObj.cityName = @"New York";
+    return cityObj;
+}
+
++(TSGlobalObj*)getDefaultCityObj
+{
+    TSGlobalObj* globalObj = [[TSGlobalObj alloc]init];
+    globalObj.name = @"New York, NY";
+    TSCityObj* cityObj = [[TSCityObj alloc]init];
+    cityObj.neighbourhoodID = @"";
+    cityObj.uid = @"11756";
+    cityObj.country = @"us";
+    cityObj.stateName = @"NY";
+    cityObj.cityName = @"New York";
+    globalObj.cityObj = cityObj;
+    return globalObj;
+}
+
 + (void) setBackgroundImage:(UIImage *)image forButton:(UIButton *)button
 {
     [button setBackgroundImage:image forState:UIControlStateNormal];

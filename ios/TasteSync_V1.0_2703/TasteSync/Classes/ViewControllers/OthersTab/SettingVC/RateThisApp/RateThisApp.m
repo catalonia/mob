@@ -11,7 +11,7 @@
 
 @interface RateThisApp ()
 {
-    
+    __weak IBOutlet UIWebView* _webview;
 }
 - (IBAction)actionBack:(id)sender;
 - (IBAction)actionNewsfeed:(id)sender;
@@ -32,8 +32,14 @@
 {
     [super viewDidLoad];
     [CommonHelpers setBackgroudImageForView:self.view];
-
-    // Do any additional setup after loading the view from its nib.
+    
+    NSString* url = @"http://www.apple.com";
+    
+    NSURL* nsUrl = [NSURL URLWithString:url];
+    
+    NSURLRequest* request = [NSURLRequest requestWithURL:nsUrl cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:30];
+    
+    [_webview loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning

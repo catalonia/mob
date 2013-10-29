@@ -45,7 +45,7 @@
 
 - (void) initData
 {
-    self.arrAboutContent = [[NSMutableArray alloc] initWithObjects:@"Frequently Asked Questions",@"Terms of Service",@"Privacy Policy",@"Attribution", nil];
+    self.arrAboutContent = [[NSMutableArray alloc] initWithObjects:/*@"Frequently Asked Questions",*/@"Terms of Service",@"Privacy Policy"/*,@"Attribution"*/, nil];
 }
 
 #pragma mark- IBAction's Define
@@ -88,30 +88,30 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row) {
+//        case 0:
+//        {
+//            ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:1];
+//            [self.navigationController pushViewController:about animated:YES];
+//        }
+//            break;
         case 0:
-        {
-            ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:1];
-            [self.navigationController pushViewController:about animated:YES];
-        }
-            break;
-        case 1:
         {
             ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:2];
             [self.navigationController pushViewController:about animated:YES];
         }
             break;
-        case 2:
+        case 1:
         {
             ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:3];
             [self.navigationController pushViewController:about animated:YES];
         }
             break;
-        case 3:
-        {
-            ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:4];
-            [self.navigationController pushViewController:about animated:YES];
-        }
-            break;
+//        case 1:
+//        {
+//            ContentAboutUsVC* about = [[ContentAboutUsVC alloc] initWithId:4];
+//            [self.navigationController pushViewController:about animated:YES];
+//        }
+//            break;
             
         default:
             break;

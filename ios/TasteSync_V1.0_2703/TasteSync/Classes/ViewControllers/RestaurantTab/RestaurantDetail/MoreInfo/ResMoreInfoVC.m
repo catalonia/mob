@@ -120,12 +120,13 @@
 {
     NSString* str = [NSString stringWithFormat:@"%@",name];
     if ([str isEqualToString:@"true"]) {
-        UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, flagScroll.contentSize.height+5, 300, 20)];
-        label.text = [NSString stringWithFormat:@"%@: YES", key];
+        UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, flagScroll.contentSize.height+2, 300, 12)];
+        label.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
+        label.text = [NSString stringWithFormat:@"%@: Yes", key];
         label.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.0];
         label.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
         [flagScroll addSubview:label];
-        flagScroll.contentSize = CGSizeMake(flagScroll.contentSize.width, flagScroll.contentSize.height + 25);
+        flagScroll.contentSize = CGSizeMake(flagScroll.contentSize.width, flagScroll.contentSize.height + 15);
     }
 }
 

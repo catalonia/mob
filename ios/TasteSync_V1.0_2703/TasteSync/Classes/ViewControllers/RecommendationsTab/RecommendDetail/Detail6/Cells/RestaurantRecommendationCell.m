@@ -130,7 +130,7 @@
 - (IBAction)actionMore:(id)sender
 {
     debug(@"RestaurantRecommendationCell - > actionMore");
-    [[[CommonHelpers appDelegate] tabbarBaseVC] actionRecommendationsShowMore];
+    [[[CommonHelpers appDelegate] tabbarBaseVC] actionRecommendationsShowMore:_restaurantObj];
 }
 
 - (IBAction)actionAvatar:(id)sender

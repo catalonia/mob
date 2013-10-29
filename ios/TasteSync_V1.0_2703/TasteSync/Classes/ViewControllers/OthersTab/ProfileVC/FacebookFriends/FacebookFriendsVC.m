@@ -32,14 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
     [CommonHelpers setBackgroudImageForView:self.view];
     _friendArray = [[NSMutableArray alloc]initWithArray:[CommonHelpers appDelegate].arrDataFBFriends];
     CRequest* request = [[CRequest alloc]initWithURL:@"showProfileFriends" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm];
@@ -49,6 +41,14 @@
     
     [self initUI];
     [self initData];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -406,9 +406,21 @@
     
     NSMutableArray* arrayFriendReload = [[NSMutableArray alloc]init];
     int i = 0;
+    
     for (NSDictionary* dic in arrayFriend) {
-        UserObj *obj = [CommonHelpers getUserObj:dic];
-        [self.arrData1 addObject:obj];
+        
+        for (UserObj* userObj in _friendArray) {
+            NSString* tmpStr = [NSString stringWithFormat:@"%@",userObj.uid];
+            NSString* str2 = [NSString stringWithFormat:@"%@",[dic objectForKey:@"userFbId"]];
+            if ([tmpStr isEqualToString:str2]) {
+                UserObj* userObject = [[UserObj alloc]init];
+                userObject.uid = [dic objectForKey:@"userId"];
+                userObject.name = userObj.name;
+                userObject.avatarUrl = userObj.avatarUrl;
+                [self.arrData1 addObject:userObject];
+            }
+        }
+        
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         i++;
         [arrayFriendReload addObject:indexPath];

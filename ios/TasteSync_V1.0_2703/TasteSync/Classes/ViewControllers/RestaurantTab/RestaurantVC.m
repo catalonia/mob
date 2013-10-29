@@ -60,21 +60,13 @@ typedef enum _TFSelect
     // Do any additional setup after loading the view from its nib.
     _regionGerenal = @"";
     _restaurantGerenal = @"";
-    _cityObj = [[TSCityObj alloc]init];
-    [self setDefaultCityObj];
+    _cityObj = [CommonHelpers setDefaultCityObj];
     _isHaveCityObj = NO;
     
     [self initData];
     [self initUI];
 }
 
--(void)setDefaultCityObj;
-{
-    _cityObj.uid = @"11756";
-    _cityObj.country = @"us";
-    _cityObj.stateName = @"NY";
-    _cityObj.cityName = @"New York";
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -649,7 +641,7 @@ typedef enum _TFSelect
         lbTypeRegions.hidden = YES;
         region = nil;
         _isHaveCityObj = NO;
-        [self setDefaultCityObj];
+        _cityObj = [CommonHelpers setDefaultCityObj];
     }
     
     
@@ -701,20 +693,22 @@ typedef enum _TFSelect
     
     if (TFSelected == TFRestaurant) {
         
-        if (![txt isEqualToString:_restaurantGerenal] && txt.length == 3) {
+        if (![txt isEqualToString:_restaurantGerenal] && txt.length == 1) {
             NSLog(@"Start request restaurant");
             _restaurantGerenal = txt;
             
-            CRequest* request = [[CRequest alloc]initWithURL:@"restaurantSearchTerms" RQType:RequestTypePost RQData:RequestPopulate RQCategory:ApplicationForm withKey:1];
+            TSGlobalObj* region1 = [CommonHelpers getDefaultCityObj];
+            
+            CRequest* request = [[CRequest alloc]initWithURL:@"suggestrestaurantnames" RQType:RequestTypePost RQData:RequestPopulate RQCategory:ApplicationForm withKey:1];
             request.delegate = self;
             [request setFormPostValue:txt forKey:@"key"];
             if (_isHaveCityObj) 
                 [request setFormPostValue:_cityObj.uid forKey:@"cityid"];
             else
-                [request setFormPostValue:@"" forKey:@"cityid"];
+                [request setFormPostValue:region1.cityObj.uid forKey:@"cityid"];
             [request startFormRequest];
         }
-        if (txt.length >= 3) {
+        if (txt.length >= 1) {
             [self.arrDataFilter removeAllObjects];
             [self.arrData removeAllObjects];
             for (TSGlobalObj *strObj in self.arrDataRestaurant) {

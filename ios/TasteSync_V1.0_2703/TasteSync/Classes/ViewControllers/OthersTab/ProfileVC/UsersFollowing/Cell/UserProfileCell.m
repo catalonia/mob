@@ -32,7 +32,7 @@
         else
             ivAvatar.image = userObj.avatar;
         
-        lbName.text = [NSString stringWithFormat:@"%@ %@", anUserObj.firstname, anUserObj.lastname];
+        lbName.text = [NSString stringWithFormat:@"%@", anUserObj.name];
     }
     
     tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionAvatar:)];

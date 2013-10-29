@@ -11,6 +11,7 @@
 #import "FriendCell.h"
 #import "FriendFilterCell.h"
 #import "ConfigProfileVC.h"
+#import "Base64.h"
 
 @interface AskRecommendationsVC ()<FriendCellDelegate,UITextFieldDelegate,CFacebookDelegate>
 {
@@ -49,6 +50,7 @@
         NSString* link = [NSString stringWithFormat:@"recofriends?recorequestid=%@",recorequestID];
         CRequest* request = [[CRequest alloc]initWithURL:link RQType:RequestTypeGet RQData:RequestDataAsk RQCategory:ApplicationForm withKey:1];
         request.delegate = self;
+        request.showIndicate = YES;
         [request startFormRequest];
     }
     return self;
@@ -60,6 +62,7 @@
     [CommonHelpers setBackgroudImageForView:self.view];
 //    [self performSelector:@selector(initUI) withObject:nil afterDelay:1.0];
     [self initData];
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -124,7 +127,7 @@
     }
     
     [CommonHelpers setBackgroudImageForView:self.view];
-
+   
     
 }
 
@@ -158,6 +161,11 @@
 }
 - (IBAction)actionRecommendations:(id)sender
 {
+    [self sendRequest];
+}
+
+-(void)sendRequest
+{
     NSString* facebookID = @"";
     int i = 0;
     for (UserObj* obj in _arrData) {
@@ -182,19 +190,17 @@
     request.delegate = self;
     [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
     [request setFormPostValue:_recoRequestId forKey:@"recorequestid"];
-     [request setFormPostValue:tfAsk.text forKey:@"recorequestfriendtext"];
-     [request setFormPostValue:facebookID forKey:@"friendsfacebookidlist"];
+    [request setFormPostValue:tfAsk.text forKey:@"recorequestfriendtext"];
+    [request setFormPostValue:facebookID forKey:@"friendsfacebookidlist"];
     [request setFormPostValue:postOnFacebook forKey:@"postonfacebook"];
     [request startFormRequest];
-    
     btSkipThis.hidden = YES;
     btNewsfeed.hidden = NO;
     viewMain.hidden = YES;
     viewWaiting.hidden = NO;
     lbWaiting.text = @"Contacting friends for recommendations";
     recommendationsSent = YES;
-   [self performSelector:@selector(actionSkipThis:) withObject:nil afterDelay:1.0];
-
+    [self performSelector:@selector(actionSkipThis:) withObject:nil afterDelay:1.0];
 }
 
 - (IBAction)actionGotIt:(id)sender
@@ -210,10 +216,46 @@
 }
 - (IBAction)actionSkipAhead:(id)sender
 {
+    
     self.view = viewLogin;
     [self initUI];
 }
+- (IBAction)actionNoThanks:(id)sender
+{
+    
+    [self sendRequest];
+}
+- (IBAction)actionSentEmail:(id)sender
+{
+    
+    NSString* htmlParse = [NSString stringWithFormat:@"%@ Which restaurant would you recommend?<br>%@<br>", _askSentences, @"Sent via Tastesync"];
+    NSMutableString *emailBody = [[NSMutableString alloc] initWithString:@""];
+    [emailBody appendString:htmlParse];
+     UIImage *emailImage = [UIImage imageNamed:@"icon_72.png"];
+     //Convert the image into data
+     NSData *imageData = [NSData dataWithData:UIImagePNGRepresentation(emailImage)];
+     NSString *base64String = [imageData base64EncodedString];
+    [emailBody appendString:[NSString stringWithFormat:@"<p><b><img src='data:image/png;base64,%@'></b></p>",base64String]];
+    
 
+    
+    MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+    controller.mailComposeDelegate = self;
+    [controller setSubject:@"Need a restaurant recommendation"];
+    [controller setMessageBody:emailBody isHTML:YES];
+    if (controller)
+        [self presentViewController:controller animated:YES completion:nil];
+}
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError*)error;
+{
+    if (result == MFMailComposeResultSent) {
+        NSLog(@"It's away!");
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self sendRequest];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -667,77 +709,26 @@
     if (key == 1) {
         NSDictionary* dic = [response objectFromJSONString];
         NSString* questionAsk = [dic objectForKey:@"valueNameValue"];
-        NSString* cuisineList1 = @"";
-        NSString* cuisineList2 = @"";
-        NSString* priceList = @"";
-        NSString* themeList = @"";
-        NSString* whoareyouList = @"";
-        NSString* typeofrestaurantList = @"";
-        NSString* occasionList = @"";
+        NSString* cuisine = @"";
+        int count = 0;
         
-        CRequest* request = [[CRequest alloc]initWithURL:@"recosearch" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
-        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
+//        CRequest* request = [[CRequest alloc]initWithURL:@"recosearch" RQType:RequestTypePost RQData:RequestDataAsk RQCategory:ApplicationForm withKey:2];
+//        [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userid"];
         
         for (TSGlobalObj* global in _arrayData) {
-            if (global.type == GlobalDataCuisine_1 ) {
-                if (cuisineList1.length == 0) {
-                    cuisineList1 = global.name;
-                }
-                else
-                    cuisineList1 = [cuisineList1 stringByAppendingFormat:@", %@", global.name];
+            
+            
+            if (count == 0) {
+                cuisine = global.name;
             }
-            if (global.type == GlobalDataCuisine_2 ) {
-                if (cuisineList2.length == 0) {
-                    cuisineList2 = global.name;
-                }
-                else
-                    cuisineList2 = [cuisineList2 stringByAppendingFormat:@", %@", global.name];
+            else
+            {
+                cuisine = [cuisine stringByAppendingFormat:@", %@", global.name];
             }
-            if (global.type == GlobalDataOccasion ) {
-                if (occasionList.length == 0) {
-                    occasionList = global.name;
-                }
-                else
-                    occasionList = [occasionList stringByAppendingFormat:@", %@", global.name];
-            }
-            if (global.type == GlobalDataPrice ) {
-                if (priceList.length == 0) {
-                    priceList = global.name;
-                }
-                else
-                    priceList = [priceList stringByAppendingFormat:@", %@", global.name];
-            }
-            if (global.type == GlobalDataTheme ) {
-                if (themeList.length == 0) {
-                    themeList = global.name;
-                }
-                else
-                    themeList = [themeList stringByAppendingFormat:@", %@", global.name];
-            }
-            if (global.type == GlobalDataTypeOfRestaurant ) {
-                if (typeofrestaurantList.length == 0) {
-                    typeofrestaurantList = global.name;
-                }
-                else
-                    typeofrestaurantList = [typeofrestaurantList stringByAppendingFormat:@", %@", global.name];
-            }
-            if (global.type == GlobalDataWhoAreUWith ) {
-                if (whoareyouList.length == 0) {
-                    whoareyouList = global.name;
-                }
-                else
-                    whoareyouList = [whoareyouList stringByAppendingFormat:@", %@", global.name];
-            }
-            NSLog(@"%@ - %d - %@", global.name, global.type, global.uid);
+            count++;
         }
-        NSString* cuisine = @"";
-        if (![cuisineList2 isEqualToString:@""]) {
-            cuisine = [NSString stringWithFormat:@"%@, %@", cuisineList1, cuisineList2];
-        }
-        else
-            cuisine = cuisineList1;
-        questionAsk = [questionAsk stringByReplacingOccurrencesOfString:@"<Cuisine>" withString:cuisine];
-        questionAsk = [questionAsk stringByReplacingOccurrencesOfString:@"<Location>" withString:_location.name];
+        questionAsk = [questionAsk stringByReplacingOccurrencesOfString:@"<cuisine>" withString:cuisine];
+        questionAsk = [questionAsk stringByReplacingOccurrencesOfString:@"<location>" withString:_location.name];
         _askSentences = questionAsk;
         tfAsk.text = _askSentences;
     }

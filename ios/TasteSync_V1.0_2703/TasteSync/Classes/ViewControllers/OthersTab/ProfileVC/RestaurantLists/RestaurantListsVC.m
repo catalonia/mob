@@ -9,10 +9,14 @@
 #import "RestaurantListsVC.h"
 #import "CommonHelpers.h"
 
+#define NUMBER_LOAD 3;
+
 @interface RestaurantListsVC ()<UIActionSheetDelegate>
 {
     BOOL filterViewShown;
     BOOL isRecommended, isFavs, isTips, isSaved;
+    int _from, _to;
+    NSMutableArray* _arrayData;
 }
 
 @end
@@ -34,7 +38,10 @@
     [CommonHelpers setBackgroudImageForView:self.view];
     [self initUI];
     self.arrDataRestaurant = [[NSMutableArray alloc]init];
-    // Do any additional setup after loading the view from its nib.
+    _arrayData = [[NSMutableArray alloc]init];
+    _from = 0;
+    _to = NUMBER_LOAD;
+    [self requestData:RestaurantTypeNone from:_from to:_to];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -55,7 +62,7 @@
 
     viewFilterExtends.hidden = YES;
     if (_userObj) {
-        lbTitle.text = [NSString stringWithFormat:@"%@ %@'s Restaurant List",_userObj.firstname,_userObj.lastname];
+        lbTitle.text = [NSString stringWithFormat:@"%@'s Restaurant List",_userObj.name];
     }
     else
     {
@@ -63,14 +70,15 @@
     }
 }
 
-- (void)requestData:(RestaurantType)type
+- (void)requestData:(RestaurantType)type from:(int)from to:(int)to
 {
     CRequest* request = [[CRequest alloc]initWithURL:@"showProfileRestaurants" RQType:RequestTypePost RQData:RequestDataUser RQCategory:ApplicationForm withKey:type];
     request.delegate = self;
-    [request setFormPostValue:[UserDefault userDefault].userID forKey:@"userId"];
+    NSLog(@"User ID: %@", self.userObj.uid);
+    [request setFormPostValue:self.userObj.uid forKey:@"userId"];
     [request setFormPostValue:[NSString stringWithFormat:@"%d",type] forKey:@"type"];
-    [request setFormPostValue:@"0" forKey:@"from"];
-    [request setFormPostValue:@"0" forKey:@"to"];
+    [request setFormPostValue:[NSString stringWithFormat:@"%d",from] forKey:@"from"];
+    [request setFormPostValue:[NSString stringWithFormat:@"%d",to] forKey:@"to"];
     [request startFormRequest];
 }
 
@@ -96,12 +104,34 @@
     viewFilter.hidden = NO;
     [tbvRestaurant setFrame:CGRectMake(10, 60, 300, 220)];
     [scrollViewMain setContentSize:CGSizeMake(320, 500)];
+    [_arrDataRestaurant removeAllObjects];
+    for (RestaurantObj* obj in _arrayData) {
+        if ((obj.isFavs == isFavs && isFavs)|| (obj.isReco == isRecommended && isRecommended) || (obj.isSaved == isSaved && isSaved) || (obj.isTipFlag == isTips && isTips)) {
+            [_arrDataRestaurant addObject:obj];
+        }
+    }
+    [tbvRestaurant reloadData];
+    
+//    if (isRecommended) {
+//        [self requestData:RestaurantTypeRecomodation from:0 to:10];
+//    }
+//    else if (isFavs) {
+//        [self requestData:RestaurantTypeFavorated from:0 to:10];
+//    }
+//    else if (isSaved) {
+//        [self requestData:RestaurantTypeSaved from:0 to:10];
+//    }
+//    else if (isTips) {
+//        [self requestData:RestaurantTypeTips from:0 to:10];
+//    }
+//    else
+//        [self requestData:RestaurantTypeNone from:0 to:10];
 }
 
 - (IBAction)actionFilter:(id)sender
 {
     if (filterViewShown) {
-        filterViewShown = FALSE;
+        filterViewShown = NO;
         viewFilterExtends.hidden = YES;
         viewFilter.hidden = NO;
         [tbvRestaurant setFrame:CGRectMake(10, 60, 300, 220)];
@@ -111,7 +141,7 @@
     }
     else
     {
-        filterViewShown = TRUE;
+        filterViewShown = YES;
         viewFilterExtends.hidden = NO;
         viewFilter.hidden = YES;
         [tbvRestaurant setFrame:CGRectMake(10, 240, 300, 220)];
@@ -124,51 +154,43 @@
     UIButton *bt = (UIButton *) sender;
     if (bt== btRecommended) {
         if (isRecommended) {
-            isRecommended = FALSE;
-            [self removeType:RestaurantTypeRecomodation];
+            isRecommended = NO;
             [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_recommended.png"] forButton:btRecommended];
         }
         else
         {
-            isRecommended = TRUE;
-            [self requestData:RestaurantTypeRecomodation];
+            isRecommended = YES;
             [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_recommended_on.png"] forButton:btRecommended];
         }
     }
     else  if (bt== btFavs) {
         if (isFavs) {
-            isFavs = FALSE;
-            [self removeType:RestaurantTypeFavorated];
+            isFavs = NO;
             [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_favs.png"] forButton:btFavs];
         }
         else
         {
-            isFavs = TRUE;
-            [self requestData:RestaurantTypeFavorated];
+            isFavs = YES;
             [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_favs_on.png"] forButton:btFavs];
         }
     } else  if (bt== btTips) {
         if (isTips) {
-            isTips = FALSE;
-            [self removeType:RestaurantTypeTips];
+            isTips = NO;
             [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_tips.png"] forButton:btTips];
         }
         else
         {
-            isTips = TRUE;
-            [self requestData:RestaurantTypeTips];
+            isTips = YES;
             [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_tips_on.png"] forButton:btTips];
         }
     } else  if (bt== btSaved) {
         if (isSaved) {
-            isSaved = FALSE;
-            [self removeType:RestaurantTypeSaved];
+            isSaved = NO;
             [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_saved125_off.png"] forButton:btSaved];
         }
         else
         {
-            isSaved = TRUE;
-            [self requestData:RestaurantTypeSaved];
+            isSaved = YES;
             [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_saved125_on.png.png"] forButton:btSaved];
         }
     }
@@ -242,11 +264,20 @@
 
 }
 
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+//    if (scrollView.contentOffset.y == (tbvRestaurant.contentSize.height - tbvRestaurant.frame.size.height)) {
+//        _to += NUMBER_LOAD;
+//        [self requestData:RestaurantTypeNone from:_from to:_to];
+//    }
+    
+}
+
 -(void)responseData:(NSData *)data WithKey:(int)key UserData:(id)userData
 {
     NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"%@",response);
-        //[_arrDataRestaurant removeAllObjects];
+        //[_arrayData removeAllObjects];
         NSArray* array = [response objectFromJSONString];
         for (NSDictionary* dic in array) {
             NSString* restaurantID = [NSString stringWithFormat:@"%@", [dic objectForKey:@"restauarntId"]];
@@ -270,7 +301,10 @@
                 restaurantObj.isFavs                         =  [[dic objectForKey:@"userFavFlag"]  isEqualToString:@"1"]?YES:NO;
                 restaurantObj.isTipFlag                     =  [[dic objectForKey:@"userTipFlag"]  isEqualToString:@"1"]?YES:NO;
                 restaurantObj.isReco                        =  [[dic objectForKey:@"userRecommendedFlag"]  isEqualToString:@"1"]?YES:NO;
-                
+                restaurantObj.userFavFlag                   =  [[dic objectForKey:@"userFavFlag"] boolValue];
+                restaurantObj.userSavedFlag                 =  [[dic objectForKey:@"userSavedFlag"] boolValue];
+                restaurantObj.userRecommendedFlag           =  [[dic objectForKey:@"userRecommendedFlag"] boolValue];
+                restaurantObj.userTipFlag                   =  [[dic objectForKey:@"userTipFlag"] boolValue];
                 restaurantObj.rates = [[dic objectForKey:@"restaurantRating"] floatValue];
                 restaurantObj.lattitude = [[dic objectForKey:@"restaurantLat"] floatValue];
                 restaurantObj.longtitude = [[dic objectForKey:@"restaurantLong"] floatValue];
@@ -285,9 +319,10 @@
                 cityObj.cityName = [dicCity objectForKey:@"city"];
                 restaurantObj.cityObj = cityObj;
                 
-                [self.arrDataRestaurant addObject:restaurantObj];
+                [_arrayData addObject:restaurantObj];
             }
     }
+    _arrDataRestaurant = [[NSMutableArray alloc]initWithArray:_arrayData];
     [tbvRestaurant reloadData];
 }
 - (BOOL)checkRestaurant:(NSString*)str

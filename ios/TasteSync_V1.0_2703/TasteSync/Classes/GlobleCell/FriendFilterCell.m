@@ -59,7 +59,7 @@
     if (userObj) {
         
         if (/*[UserDefault userDefault].loginStatus != STASTUS_LOGIN_EMAIL_ID*/TRUE) {
-            lbName.text = [NSString stringWithFormat:@"%@ %@",userObj.firstname,userObj.lastname];
+            lbName.text = [NSString stringWithFormat:@"%@", userObj.name];
             
         }else
         {

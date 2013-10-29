@@ -89,7 +89,10 @@
     self.arrDataUser = [[NSMutableArray alloc] init];
     self.arrDataUser = [[CommonHelpers appDelegate] arrDataFBFriends];
     for (NSDictionary* dic in array) {
-        UserObj *obj = [CommonHelpers getUserObj:dic];
+        UserObj *obj = [[UserObj alloc]init];
+        obj.uid = [dic objectForKey:@"userId"];
+        obj.name = [dic objectForKey:@"name"];
+        obj.avatarUrl = [dic objectForKey:@"photo"];
         [self.arrData addObject:obj];
     }
 }

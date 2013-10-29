@@ -65,7 +65,7 @@
 
 - (void) initData
 {
-    self.arrSettingContent = [[NSMutableArray alloc] initWithObjects:@"Social Networks",@"Notification Settings", @"Privacy Settings",@"Contact TasteSync",@"Rate this App",@"About TasteSync",@"Log Out", nil];
+    self.arrSettingContent = [[NSMutableArray alloc] initWithObjects:@"Social Networks",@"Notification Settings", @"Privacy Settings",@"Contact TasteSync"/*,@"Rate this App"*/,@"About TasteSync",@"Log Out", nil];
 }
 
 #pragma mark- IBAction's Define
@@ -134,19 +134,19 @@
 
         }
             break;
+//        case 4:
+//        {
+//            [self goRate];
+//
+//        }
+//            break;
         case 4:
-        {
-            [self goRate];
-
-        }
-            break;
-        case 5:
         {
             [self goAboutTasteSync];
 
         }
             break;
-        case 6:
+        case 5:
         {
             [self goLogOut];
 
@@ -194,8 +194,8 @@
 - (void)goRate
 {
 
-    NSURL *url = [ [ NSURL alloc ] initWithString: @"http://www.apple.com" ];
-    [[UIApplication sharedApplication] openURL:url];
+    RateThisApp* rate = [[RateThisApp alloc]initWithNibName:@"RateThisApp" bundle:nil];
+    [self.navigationController pushViewController:rate animated:YES];
 }
 
 - (void)goLogOut
@@ -214,6 +214,10 @@
     NSString* successMessage = [dic objectForKey:@"successMsg"];
     
     if (successMessage != NULL) {
+        [UserDefault userDefault].userLogID = nil;
+        [UserDefault userDefault].user = nil;
+        [UserDefault userDefault].userID = nil;
+        [UserDefault update];
         [FBSession.activeSession closeAndClearTokenInformation];
         [FBSession.activeSession close];
         [FBSession setActiveSession:nil];

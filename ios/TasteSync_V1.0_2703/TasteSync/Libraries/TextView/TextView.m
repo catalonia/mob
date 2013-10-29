@@ -34,10 +34,17 @@
         _arrayItem = [[NSMutableArray alloc]init];
         htmlStr = @"";
         [_textView setValue: htmlStr forKey:@"contentToHTMLString"];
+        _textView.text = @"Tip: Use # before restaurant name";
     }
     return self;
 }
 #pragma mark TextView Delegate
+- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
+{
+    _textView.text = @"";
+    _textView.textColor = [UIColor blackColor];
+    return YES;
+}
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
     [self.delegate beginEditting];
@@ -72,9 +79,6 @@
     }
     
     return NO;
-}
-- (void)textViewDidChange:(UITextView *)textView
-{
 }
 
 - (void)textViewDidChangeSelection:(UITextView *)textView

@@ -291,11 +291,6 @@
         
     }
     
-    if (_restaurantObj.isOpenNow) 
-        lbOpenNow.text = @"Open Now";
-    else
-        lbOpenNow.text = @"";
-    
     if (_restaurantObj.isFavs) {
         [CommonHelpers setBackgroundImage:[UIImage imageNamed:@"ic_bt_addedtomyfaves.png"] forButton:btAddToMyFavorites];
     }
@@ -430,7 +425,18 @@
     NSLog(@"%@",response);
     if (key == 1) {
         NSDictionary* dicResponse = [response objectFromJSONString];
-        self.restaurantObj.isOpenNow                =  [[dicResponse objectForKey:@"openNowFlag"] isEqualToString:@"1"]?YES:NO;
+        NSString* str = [dicResponse objectForKey:@"openNowFlag"];
+        if (![str isKindOfClass:([NSNull class])]) {
+            self.restaurantObj.isOpenNow                =  [[dicResponse objectForKey:@"openNowFlag"] isEqualToString:@"1"]?YES:NO;
+            if (_restaurantObj.isOpenNow)
+                lbOpenNow.text = @"Open Now";
+            else
+                lbOpenNow.text = @"Closed Now";
+        }
+        else
+        {
+            lbOpenNow.text = @"";
+        }
         self.restaurantObj.deal                            =  [dicResponse objectForKey:@"dealHeadline"];
         if ([self.restaurantObj.deal isEqualToString:@""]) 
             self.restaurantObj.isDeal = NO;

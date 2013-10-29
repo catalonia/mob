@@ -13,6 +13,7 @@
 #import "GlobalVariables.h"
 #import "UserDefault.h"
 #import "ResShareView.h"
+#import "TSGlobalObj.h"
 //#import "ResShareFB.h"
 
 
@@ -59,4 +60,8 @@ void debug(NSString *format, ...);
 + (NSString*)getSymbolLocation:(NSString*)location;
 
 +(NSString*)getInformationRestaurant:(RestaurantObj*)obj;
+
++(TSCityObj*)setDefaultCityObj;
+
++(TSGlobalObj*)getDefaultCityObj;
 @end

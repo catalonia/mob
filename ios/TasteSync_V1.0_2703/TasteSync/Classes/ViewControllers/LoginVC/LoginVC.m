@@ -366,13 +366,14 @@
         NSString* response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"%@",response);
         NSDictionary* dic = [response objectFromJSONString];
-        NSString* userLogID = [dic objectForKey:@"user_log_id"];
-        [UserDefault userDefault].userLogID = userLogID;
+//        NSString* userLogID = [dic objectForKey:@"user_log_id"];
+//        [UserDefault userDefault].userLogID = userLogID;
         [UserDefault update];
         
         NSDictionary* dic2 = [dic objectForKey:@"user"];
         NSString* userID = [dic2 objectForKey:@"userId"];
         [UserDefault userDefault].userID = userID;
+        [UserDefault userDefault].user.uid = userID;
         TSCityObj* cityObj = [[TSCityObj alloc]init];
         cityObj.uid = [dic2 objectForKey:@"userCityId"];
         cityObj.cityName = [UserDefault userDefault].city;
@@ -391,7 +392,10 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
         
-        [self submitLogin];
+        
+        if ([UserDefault userDefault].userLogID == nil) {
+            [self submitLogin];
+        }
         
         AppDelegate* deleate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         [deleate getNotifications];

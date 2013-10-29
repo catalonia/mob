@@ -23,7 +23,7 @@
     if (anUserObj) {
         ivAvatar.hidden = NO;
         lbName.hidden = NO;
-        lbName.text = [NSString stringWithFormat:@"%@ %@", anUserObj.firstname, anUserObj.lastname];
+        lbName.text = [NSString stringWithFormat:@"%@", anUserObj.name];
         if (userObj.avatar == nil) {
             [NSThread detachNewThreadSelector:@selector(loadAvatar) toTarget:self withObject:nil];
         }

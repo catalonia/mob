@@ -252,6 +252,7 @@ done=_done;
 //                    user.location = [hometown_locationDict objectForKey:@"state"];
 //                }
                 
+                
                 if (i == 0) {
                     debug(@"Add user infor");
                     user.avatar                 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:user.avatarUrl]]];
