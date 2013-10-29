@@ -54,7 +54,7 @@ public interface AutoPopulateQueries extends TSDBCommonQueries {
 			+ "       RESTAURANT_NAME "
 			+ "FROM   RESTAURANT "
 			+ "WHERE  RESTAURANT.RESTAURANT_CITY_ID = ? "
-			+ "       AND RESTAURANT.RESTAURANT_NAME LIKE '?' "
+			+ "       AND RESTAURANT.RESTAURANT_NAME LIKE ? "
 			+ "ORDER  BY RESTAURANT_NAME ASC";
     
     public static final String RESTAURANT_SELECT_SQL = "SELECT * FROM restaurant WHERE restaurant.RESTAURANT_NAME LIKE ?";
