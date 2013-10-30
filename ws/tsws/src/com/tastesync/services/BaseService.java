@@ -60,13 +60,18 @@ public abstract class BaseService {
             e.getClass().getCanonicalName()).entity(e.getMessage()).build();
     }
     
-    public void writeResponseheader(@Context HttpHeaders headers) {
+    private void writeResponseheader(@Context HttpHeaders headers) {
     	Map<String, List<String>> map = headers.getRequestHeaders();
     	System.out.println("Printing Response Header...\n");
     	for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-    		System.out.println("Key : " + entry.getKey() 
-                               + " ,Value : " + entry.getValue());
+    		System.out.println("Key=" + entry.getKey() 
+                               + " ,Value=" + entry.getValue());
     	}
     	System.out.println("\n Writting of header...  Done");
+    }
+    
+    public void processHttpHeaders(@Context HttpHeaders headers) {
+    	//validate , version check
+    	writeResponseheader(headers);
     }
 }

@@ -69,9 +69,12 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitLogin(@FormParam("email")
+    public Response submitLogin(@Context
+    HttpHeaders headers, @FormParam("email")
     String email, @FormParam("password")
     String password) {
+        super.processHttpHeaders(headers);
+
         if (logger.isDebugEnabled()) {
             logger.debug("login - start");
         }
@@ -115,9 +118,12 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response setStatus(@FormParam("userId")
+    public Response setStatus(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId, @FormParam("status")
     String statusUser) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -175,10 +181,13 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitLoginFacebook(
-        TSListFacebookUserDataObj list_user_profile,@Context HttpHeaders headers) {
+    public Response submitLoginFacebook(@Context
+    HttpHeaders headers, TSListFacebookUserDataObj list_user_profile) {
+        super.processHttpHeaders(headers);
+
         logger.debug(
             "---------------------------------------------------------------------------");
+
         UserResponse userResponse = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -231,8 +240,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response loginAccount(@FormParam("userId")
+    public Response loginAccount(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -301,8 +313,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response getCity(@FormParam("key")
+    public Response getCity(@Context
+    HttpHeaders headers, @FormParam("key")
     String key) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         List<TSGlobalObj> result = null;
         boolean responseDone = false;
@@ -342,8 +357,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitLogout(@FormParam("userLogId")
+    public Response submitLogout(@Context
+    HttpHeaders headers, @FormParam("userLogId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -402,8 +420,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showSettingsPrivacy(@FormParam("userId")
+    public Response showSettingsPrivacy(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         TSListPrivacySettingsObj tsPrivacySettingsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -459,8 +480,10 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response updateSettingsPrivacy(
-        TSListPrivacySettingsObj privacySettingObj) {
+    public Response updateSettingsPrivacy(@Context
+    HttpHeaders headers, TSListPrivacySettingsObj privacySettingObj) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -504,8 +527,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showSettingsNotifications(@FormParam("userId")
+    public Response showSettingsNotifications(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         TSListNotificationSettingsObj tsNotificationSettingsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -562,7 +588,10 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showSettingsNotifications() {
+    public Response showSettingsNotifications(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         TSInitObj tsInitObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -603,8 +632,10 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response updateSettingsNotifications(
-        TSListNotificationSettingsObj notificationSetting) {
+    public Response updateSettingsNotifications(@Context
+    HttpHeaders headers, TSListNotificationSettingsObj notificationSetting) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -646,8 +677,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showSettingsSocial(@FormParam("userId")
+    public Response showSettingsSocial(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         TSListSocialSettingObj tsSocialSettingsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -704,7 +738,10 @@ public class UserService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response updateSettingsAutoPublishSettings(
-        TSListSocialSettingObj social_setting_obj) {
+        @Context
+    HttpHeaders headers, TSListSocialSettingObj social_setting_obj) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -747,10 +784,13 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitSettingscontactUs(@FormParam("userId")
+    public Response submitSettingscontactUs(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId, @FormParam("Contact_Order")
     String order, @FormParam("Contact_Desc")
     String desc) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -809,8 +849,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showAboutTastesync(@FormParam("AboutId")
+    public Response showAboutTastesync(@Context
+    HttpHeaders headers, @FormParam("AboutId")
     String aboutId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -851,8 +894,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showUserDetail(@QueryParam("userId")
+    public Response showUserDetail(@Context
+    HttpHeaders headers, @QueryParam("userId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         TSUserObj tsUserObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -908,7 +954,8 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showUsersDetailsList() {
+    private Response showUsersDetailsList(@Context
+    HttpHeaders headers) {
         List<TSUserObj> tsUserObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -949,11 +996,14 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitUserReport(@FormParam("userId")
+    public Response submitUserReport(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId, @FormParam("reportText")
     String reportText, @FormParam("reportedUser")
     String reportedUser, @FormParam("reportedByUser")
     String reportedByUser) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1017,8 +1067,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showProfileFollowing(@FormParam("userId")
+    public Response showProfileFollowing(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         List<TSUserProfileObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -1075,8 +1128,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showProfileFollowers(@FormParam("userId")
+    public Response showProfileFollowers(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         List<TSUserProfileObj> tsFacebookUserDataObjList = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -1133,8 +1189,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showProfileFriends(@FormParam("userId")
+    public Response showProfileFriends(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         TSFriendObj tsfriend = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -1195,9 +1254,12 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitMyProfileAboutMe(@FormParam("userId")
+    public Response submitMyProfileAboutMe(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId, @FormParam("Content")
     String aboutMeText) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1268,11 +1330,13 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitFollowUserStatusChange(
-        @FormParam("followeeUserId")
+    public Response submitFollowUserStatusChange(@Context
+    HttpHeaders headers, @FormParam("followeeUserId")
     String followeeUserId, @FormParam("followerUserId")
     String followerUserId, @FormParam("statusFlag")
     String statusFlag) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1321,10 +1385,12 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showFollowStatus(
-        @FormParam("followerUserId")
+    public Response showFollowStatus(@Context
+    HttpHeaders headers, @FormParam("followerUserId")
     String followerUserId, @FormParam("followeeUserId")
     String followeeUserId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1379,11 +1445,14 @@ public class UserService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitTrustedFriendStatusChange(
-        @FormParam("userId")
+        @Context
+    HttpHeaders headers, @FormParam("userId")
     String userId, @FormParam("destUserId")
     String dest_user_id,
         @FormParam("trustedFriendStatus")
     String trustedFriendStatus) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1446,7 +1515,10 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitSignupDetail(TSAskSubmitLoginObj askObj) {
+    public Response submitSignupDetail(@Context
+    HttpHeaders headers, TSAskSubmitLoginObj askObj) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1489,9 +1561,12 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showTrustedFriend(@FormParam("userId")
+    public Response showTrustedFriend(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId, @FormParam("destUserId")
     String dest_user_id) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1564,10 +1639,13 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response sendMessageToUser(@FormParam("senderID")
+    public Response sendMessageToUser(@Context
+    HttpHeaders headers, @FormParam("senderID")
     String senderID, @FormParam("recipientID")
     String recipientID, @FormParam("content")
     String content) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1620,9 +1698,12 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantSuggestion(@FormParam("key")
+    public Response showRestaurantSuggestion(@Context
+    HttpHeaders headers, @FormParam("key")
     String key, @FormParam("userId")
     String userId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         List<TSRestaurantObj> response = null;
         boolean responseDone = false;
@@ -1691,10 +1772,13 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response getHomeProfile(@FormParam("userId")
-    String userId,@Context HttpHeaders headers) {
-    	super.writeResponseheader(headers);
-    	
+    public Response getHomeProfile(@Context
+    HttpHeaders headers, @FormParam("userId")
+    String userId) {
+        super.processHttpHeaders(headers);
+
+        super.processHttpHeaders(headers);
+
         TSUserProfileObj userProfileObj = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -1750,8 +1834,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response getUserId(@FormParam("userID")
+    public Response getUserId(@Context
+    HttpHeaders headers, @FormParam("userID")
     String userFBID) {
+        super.processHttpHeaders(headers);
+
         TSFacebookUserDataObj userId = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -1808,11 +1895,14 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showProfileRestaurants(@FormParam("userId")
+    public Response showProfileRestaurants(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId, @FormParam("type")
     int type, @FormParam("from")
     int from, @FormParam("to")
     int to) {
+        super.processHttpHeaders(headers);
+
         List<TSUserProfileRestaurantsObj> userProfileRestaurants = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -1869,9 +1959,12 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response inviteFriend(@FormParam("userId")
+    public Response inviteFriend(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId, @FormParam("friendFBId")
     String friendFBId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1928,10 +2021,13 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitUserReport(@FormParam("userId")
+    public Response submitUserReport(@Context
+    HttpHeaders headers, @FormParam("userId")
     String userId, @FormParam("reportedUserId")
     String reportedUserId, @FormParam("reason")
     String reason) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -1988,8 +2084,11 @@ public class UserService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response getUserCity(@FormParam("key")
+    public Response getUserCity(@Context
+    HttpHeaders headers, @FormParam("key")
     String key) {
+        super.processHttpHeaders(headers);
+
         List<TSCityObj> neighbourhoodCityObj = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();

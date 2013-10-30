@@ -39,6 +39,7 @@ import javax.ws.rs.core.Response;
 public class AutoPopulateService extends BaseService {
     private AutoPopulateBO autoPopulateBO = new AutoPopulateBOImpl();
 
+    //TODO check
     @GET
     @Path("/locationsearchterms")
     @org.codehaus.enunciate.jaxrs.TypeHint(TSLocationSearchCitiesObj.class)
@@ -46,7 +47,10 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateLocationSearchTerms() {
+    public Response populateLocationSearchTerms(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         List<TSLocationSearchCitiesObj> tsLocationSearchCitiesObjList = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -103,7 +107,10 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateMoodSearchTerms() {
+    public Response populateMoodSearchTerms(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         JSONArray jsonArray = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -191,16 +198,18 @@ public class AutoPopulateService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response populateSuggestedRestaurantNames(
-        @FormParam("key")
+        @Context
+    HttpHeaders headers, @FormParam("key")
     String key, @FormParam("cityid")
-    String cityId, @Context HttpHeaders headers) {
+    String cityId) {
+        super.processHttpHeaders(headers);
+
         List<TSRestaurantBasicObj> tsRestaurantBasicObjList = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
         try {
-        	super.writeResponseheader(headers);
             key = CommonFunctionsUtil.converStringAsNullIfNeeded(key);
 
             cityId = CommonFunctionsUtil.converStringAsNullIfNeeded(cityId);
@@ -244,9 +253,13 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    private Response populateRestaurantSearchTerms(@FormParam("key")
+    private Response populateRestaurantSearchTerms(
+        @Context
+    HttpHeaders headers, @FormParam("key")
     String key, @FormParam("cityid")
     String cityId) {
+        super.processHttpHeaders(headers);
+
         List<TSRestaurantObj> listRestaurant = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -298,7 +311,10 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateCuisineTier1() {
+    public Response populateCuisineTier1(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         JSONArray jsonArray = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -340,7 +356,10 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateCuisineTier2() {
+    public Response populateCuisineTier2(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         JSONArray jsonArray = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -381,7 +400,10 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateOccasionDescriptor() {
+    public Response populateOccasionDescriptor(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         JSONArray jsonArray = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -422,7 +444,10 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populatePriceDescriptor() {
+    public Response populatePriceDescriptor(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         JSONArray jsonArray = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -463,7 +488,10 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateThemeDescriptor() {
+    public Response populateThemeDescriptor(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         JSONArray jsonArray = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -504,7 +532,10 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateTypeofrestDescriptor() {
+    public Response populateTypeofrestDescriptor(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         JSONArray jsonArray = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
@@ -545,7 +576,10 @@ public class AutoPopulateService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response populateWhoareyouwithDescriptor() {
+    public Response populateWhoareyouwithDescriptor(@Context
+    HttpHeaders headers) {
+        super.processHttpHeaders(headers);
+
         JSONArray jsonArray = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;

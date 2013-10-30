@@ -33,6 +33,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -53,7 +55,8 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitAskForRecommendationSearch(
-        @FormParam("userid")
+        @Context
+    HttpHeaders headers, @FormParam("userid")
     String userId, @FormParam("cuisinetier1idlist")
     String cuisineTier1IdList,
         @FormParam("cuisineiier2idlist")
@@ -69,6 +72,8 @@ public class AskReplyService extends BaseService {
     String neighborhoodId, @FormParam("cityid")
     String cityId, @FormParam("statename")
     String stateName) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         boolean responseDone = false;
@@ -163,7 +168,8 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitAskForRecommendationFriends(
-        @FormParam("userid")
+        @Context
+    HttpHeaders headers, @FormParam("userid")
     String userId, @FormParam("recorequestid")
     String recoRequestId,
         @FormParam("recorequestfriendtext")
@@ -172,6 +178,8 @@ public class AskReplyService extends BaseService {
     String friendsFacebookIdList,
         @FormParam("postonfacebook")
     String postRecoRequestOnFacebook) {
+        super.processHttpHeaders(headers);
+
         //    	-- TODO: SAVE "POSTONFACEBOOK" IN HISTORICAL SHARED TABLE
         //
         //    	-- For Loop over each friend in listOfFriends{facebookId}
@@ -238,10 +246,12 @@ public class AskReplyService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRecommendationsRequest(
-        @QueryParam("userid")
+    public Response showRecommendationsRequest(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("recorequestid")
     String recorequestId) {
+        super.processHttpHeaders(headers);
+
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
@@ -295,8 +305,11 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showAskForRecommendationFriends(
-        @QueryParam("recorequestid")
+        @Context
+    HttpHeaders headers, @QueryParam("recorequestid")
     String recoRequestId) {
+        super.processHttpHeaders(headers);
+
         boolean responseDone = false;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -347,13 +360,16 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitRecommendationRequestAnswer(
-        @FormParam("recorequestid")
+        @Context
+    HttpHeaders headers, @FormParam("recorequestid")
     String recorequestId,
         @FormParam("recommenderuserid")
     String recommenderUserId,
         @FormParam("restaurantidlist")
     String restaurantIdList, @FormParam("replytext")
     String replyText) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         boolean responseDone = false;
@@ -412,10 +428,12 @@ public class AskReplyService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRecommendationsForYou(
-        @QueryParam("userid")
+    public Response showRecommendationsForYou(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("recorequestid")
     String recorequestId) {
+        super.processHttpHeaders(headers);
+
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
@@ -459,7 +477,8 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitRecommendationMessageAnswer(
-        @FormParam("newmessagetext")
+        @Context
+    HttpHeaders headers, @FormParam("newmessagetext")
     String newMessageText,
         @FormParam("previousmessageid")
     String previousMessageId,
@@ -469,6 +488,8 @@ public class AskReplyService extends BaseService {
     String newMessageSenderUserId,
         @FormParam("restaurantidlist")
     String restaurantIdList) {
+        super.processHttpHeaders(headers);
+
         //parameters check
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
@@ -540,10 +561,12 @@ public class AskReplyService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRecommendationMessage(
-        @QueryParam("messageid")
+    public Response showRecommendationMessage(@Context
+    HttpHeaders headers, @QueryParam("messageid")
     String messageId, @QueryParam("recipientuserid")
     String recipientUserId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         messageId = CommonFunctionsUtil.converStringAsNullIfNeeded(messageId);
         recipientUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(recipientUserId);
@@ -586,10 +609,12 @@ public class AskReplyService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRecommendationsFollowup(
-        @QueryParam("userid")
+    public Response showRecommendationsFollowup(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("questionid")
     String questionId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         questionId = CommonFunctionsUtil.converStringAsNullIfNeeded(questionId);
@@ -634,11 +659,14 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitRecommendationFollowupAnswer(
-        @FormParam("userid")
+        @Context
+    HttpHeaders headers, @FormParam("userid")
     String userId, @FormParam("questiondid")
     String questionId, @FormParam("replytext")
     String replyText, @FormParam("restaurantidlist")
     String restaurantIdList) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         boolean responseDone = false;
@@ -696,10 +724,12 @@ public class AskReplyService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRecommendationsShowLikes(
-        @QueryParam("recolikeid")
+    public Response showRecommendationsShowLikes(@Context
+    HttpHeaders headers, @QueryParam("recolikeid")
     String recoLikeId, @QueryParam("recommenderuserid")
     String recommenderUserId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         recoLikeId = CommonFunctionsUtil.converStringAsNullIfNeeded(recoLikeId);
         recommenderUserId = CommonFunctionsUtil.converStringAsNullIfNeeded(recommenderUserId);
@@ -740,9 +770,11 @@ public class AskReplyService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRecommendationDidYouLike(
-        @QueryParam("recorequestid")
+    public Response showRecommendationDidYouLike(@Context
+    HttpHeaders headers, @QueryParam("recorequestid")
     String recorequestId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         recorequestId = CommonFunctionsUtil.converStringAsNullIfNeeded(recorequestId);
 
@@ -784,10 +816,13 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response submitRecommendationDidYouLikeLikes(
-        @FormParam("userid")
+        @Context
+    HttpHeaders headers, @FormParam("userid")
     String userId, @FormParam("restaurantid")
     String restaurantId, @FormParam("likeflag")
     String likeFlag) {
+        super.processHttpHeaders(headers);
+
         //Should be triggered on every like or Un-like click. Should update Faves list of the user
 
         //parameters check
@@ -846,10 +881,13 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showListOfRestaurantsSearchResultsBasedOnRecoId(
-        @QueryParam("userid")
+        @Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("recorequestid")
     String recoRequestId, @QueryParam("paginationid")
     String paginationId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
@@ -898,7 +936,8 @@ public class AskReplyService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showListOfRestaurantsSearchResults(
-        @QueryParam("userid")
+        @Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId, @QueryParam("neighborhoodid")
     String neighborhoodId, @QueryParam("cityid")
@@ -913,6 +952,8 @@ public class AskReplyService extends BaseService {
     String dealFlag, @QueryParam("chainflag")
     String chainFlag, @QueryParam("paginationid")
     String paginationId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
         restaurantId = CommonFunctionsUtil.converStringAsNullIfNeeded(restaurantId);
@@ -974,10 +1015,12 @@ public class AskReplyService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRecommendationsList(
-        @QueryParam("userid")
+    public Response showRecommendationsList(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("paginationid")
     String paginationId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 

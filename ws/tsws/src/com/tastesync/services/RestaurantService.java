@@ -7,7 +7,6 @@ import com.tastesync.common.utils.CommonFunctionsUtil;
 
 import com.tastesync.exception.TasteSyncException;
 
-import com.tastesync.model.objects.TSCurrentRecommendedRestaurantDetailsObj;
 import com.tastesync.model.objects.TSErrorObj;
 import com.tastesync.model.objects.TSMenuObj;
 import com.tastesync.model.objects.TSRestaurantDetailsObj;
@@ -39,6 +38,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -62,9 +63,12 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantDetail(@QueryParam("userid")
+    public Response showRestaurantDetail(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
+        super.processHttpHeaders(headers);
+
         //    	
         //    	-- -- -- -- -- -- -- -- -- -- -- -- showRestaurantDetail -- -- -- -- -- -- -- -- -- -- -- -- 
         //    	-- TODO: CALCULATE openNowFlag BASED ON HOURS
@@ -111,10 +115,12 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantDetailMenu(
-        @QueryParam("userid")
+    public Response showRestaurantDetailMenu(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
+        super.processHttpHeaders(headers);
+
         TSMenuObj tsMenuObj = null;
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -155,10 +161,12 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantDetailMoreInfo(
-        @QueryParam("userid")
+    public Response showRestaurantDetailMoreInfo(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
+        super.processHttpHeaders(headers);
+
         TSRestaurantExtendInfoObj tsRestaurantExtendInfoObj = null;
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -201,10 +209,12 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantDetailPhotos(
-        @QueryParam("userid")
+    public Response showRestaurantDetailPhotos(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
+        super.processHttpHeaders(headers);
+
         List<TSRestaurantPhotoObj> tsRestaurantPhotoObjList = null;
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -246,9 +256,11 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantDetail(
-        @QueryParam("restaurantid")
+    public Response showRestaurantDetail(@Context
+    HttpHeaders headers, @QueryParam("restaurantid")
     String restaurantId) {
+        super.processHttpHeaders(headers);
+
         TSRestaurantObj tsRestaurantObj = null;
         boolean responseDone = false;
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -343,12 +355,14 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitSaveOrUnsaveRestaurant(
-        @FormParam("userid")
+    public Response submitSaveOrUnsaveRestaurant(@Context
+    HttpHeaders headers, @FormParam("userid")
     String userId, @FormParam("restaurantid")
     String restaurantId,
         @FormParam("userrestaurantsavedflag")
     String userRestaurantSavedFlag) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -407,12 +421,14 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitAddOrRemoveFromFavs(
-        @FormParam("userid")
+    public Response submitAddOrRemoveFromFavs(@Context
+    HttpHeaders headers, @FormParam("userid")
     String userId, @FormParam("restaurantid")
     String restaurantId,
         @FormParam("userrestaurantfavflag")
     String userRestaurantFavFlag) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
 
@@ -476,8 +492,11 @@ public class RestaurantService extends BaseService {
     @Produces({MediaType.APPLICATION_JSON
     })
     public Response showRestaurantDetailTipAPSettings(
-        @QueryParam("userid")
+        @Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId) {
+        super.processHttpHeaders(headers);
+
         List<TSRestaurantTipsAPSettingsObj> tsRestaurantTipsAPSettingsObjList = null;
 
         int status = TSResponseStatusCode.SUCCESS.getValue();
@@ -521,13 +540,15 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitRestaurantDetailTip(
-        @FormParam("userid")
+    public Response submitRestaurantDetailTip(@Context
+    HttpHeaders headers, @FormParam("userid")
     String userId, @FormParam("restaurantid")
     String restaurantId, @FormParam("tiptext")
     String tipText, @FormParam("shareonfacebook")
     String shareOnFacebook, @FormParam("shareontwitter")
     String shareOnTwitter) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
         boolean responseDone = false;
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
@@ -571,10 +592,12 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantDetailAsk(
-        @QueryParam("userid")
+    public Response showRestaurantDetailAsk(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
+        super.processHttpHeaders(headers);
+
         TSRestaurantRecommendersDetailsObj tsRestaurantRecommendersDetailsObj = null;
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
@@ -619,8 +642,8 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response submitRestaurantDetailAsk(
-        @FormParam("userid")
+    public Response submitRestaurantDetailAsk(@Context
+    HttpHeaders headers, @FormParam("userid")
     String userId, @FormParam("restaurantid")
     String restaurantId, @FormParam("questiontext")
     String questionText,
@@ -630,6 +653,8 @@ public class RestaurantService extends BaseService {
     String recommendersUserIdList,
         @FormParam("friendsfacebookidlist")
     String friendsFacebookIdList) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         //check postQuestionOnForum is either 1 or 0
@@ -661,7 +686,8 @@ public class RestaurantService extends BaseService {
             responseDone = true;
 
             try {
-                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT, TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
+                CommonFunctionsUtil.execAsync(TSConstants.SEND_PUSH_NOTIFICATIONS_SCRIPT,
+                    TSConstants.BASENAME_SEND_PUSH_NOTIFICATIONS_SCRIPT);
             } catch (com.tastesync.common.exception.TasteSyncException e) {
                 e.printStackTrace();
             }
@@ -698,9 +724,12 @@ public class RestaurantService extends BaseService {
     })
     @Produces({MediaType.APPLICATION_JSON
     })
-    public Response showRestaurantBuzz(@QueryParam("userid")
+    public Response showRestaurantBuzz(@Context
+    HttpHeaders headers, @QueryParam("userid")
     String userId, @QueryParam("restaurantid")
     String restaurantId) {
+        super.processHttpHeaders(headers);
+
         int status = TSResponseStatusCode.SUCCESS.getValue();
 
         userId = CommonFunctionsUtil.converStringAsNullIfNeeded(userId);
