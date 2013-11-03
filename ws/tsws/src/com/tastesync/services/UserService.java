@@ -1529,6 +1529,7 @@ public class UserService extends BaseService {
             userBo.submitSignupDetail(askObj);
             responseDone = true;
 
+            userBo.initUserSettings(askObj.getUserId());
             return Response.status(status).entity(tsSuccessObj).build();
         } catch (TasteSyncException e) {
             e.printStackTrace();

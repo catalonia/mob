@@ -1170,7 +1170,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     @Override
     public TSSenderUserObj showRecommendationMessage(String messageId,
         String recipientUserId) throws TasteSyncException {
-      
         TSDataSource tsDataSource = TSDataSource.getInstance();
 
         Connection connection = null;
@@ -1302,7 +1301,9 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
                 friendOrNot = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
                             "recorequest_ts_assigned.ASSIGNED_USERTYPE"));
             } else {
-            	System.out.println("invalid data case with recorequestId="+recorequestId +" and userId="+userId);
+                System.out.println("invalid data case with recorequestId=" +
+                    recorequestId + " and userId=" + userId);
+
                 // invalid data case
                 return null;
             }
@@ -1999,21 +2000,7 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.close();
 
-            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER1_SELECT_SQL);
-            statement.setString(1, recoRequestId);
-            resultset = statement.executeQuery();
-
-            ArrayList<String> cuisineTier1IdList = new ArrayList<String>();
-
-            while (resultset.next()) {
-                cuisineTier1IdList.add(CommonFunctionsUtil.getModifiedValueString(
-                        resultset.getString(
-                            "recorequest_cuisine_tier1.cuisine_tier1_id")));
-            }
-
-            statement.close();
-
-            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER2_SELECT_SQL);
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER2_FROM_CUISINE_TIER1_SELECT_SQL);
             statement.setString(1, recoRequestId);
             resultset = statement.executeQuery();
 
@@ -2022,7 +2009,24 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
             while (resultset.next()) {
                 cuisineTier2IdList.add(CommonFunctionsUtil.getModifiedValueString(
                         resultset.getString(
-                            "recorequest_cuisine_tier2.cuisine_tier2_id")));
+                            "cuisine_tier_mapper.tier2_cuisine_id")));
+            }
+
+            statement.close();
+
+            statement = connection.prepareStatement(AskReplyQueries.RECOREQUEST_CUISINE_TIER2_SELECT_SQL);
+            statement.setString(1, recoRequestId);
+            resultset = statement.executeQuery();
+
+            String cuisineTier2Id = null;
+
+            while (resultset.next()) {
+                cuisineTier2Id = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                            "recorequest_cuisine_tier2.cuisine_tier2_id"));
+
+                if (!cuisineTier2IdList.contains(cuisineTier2Id)) {
+                    cuisineTier2IdList.add(cuisineTier2Id);
+                }
             }
 
             statement.close();
@@ -2094,9 +2098,6 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             statement.close();
 
-            String[] cuisineTier1IdArray = cuisineTier1IdList.isEmpty() ? null
-                                                                        : cuisineTier1IdList.toArray(new String[cuisineTier1IdList.size()]);
-
             String[] priceIdArray = priceIdList.isEmpty() ? null
                                                           : priceIdList.toArray(new String[priceIdList.size()]);
 
@@ -2119,9 +2120,8 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
             RestaurantsSearchResultsVO restaurantsSearchResultsVO = identifyRestaurantsSearchResults(userIdFrmDb,
                     recoRequestLocationNeighborhoodId,
-                    recoRequestLocationCityId, cuisineTier1IdArray,
-                    priceIdArray, paginationId, cuisineTier2IdArray,
-                    themeIdArray, whoareyouwithIdArray,
+                    recoRequestLocationCityId, priceIdArray, paginationId,
+                    cuisineTier2IdArray, themeIdArray, whoareyouwithIdArray,
                     typeOfRestaurantIdArray, occasionIdArray);
             List<String> restaurantIdList = restaurantsSearchResultsVO.getRestaurantIdList();
             TSRestaurantsTileSearchObj tsRestaurantsTileSearchObj = null;
@@ -2153,39 +2153,39 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     // for restaurant search based on reco request id related parameters 
     private RestaurantsSearchResultsVO identifyRestaurantsSearchResults(
         String userIdFrmDb, String recoRequestLocationNeighborhoodId,
-        String recoRequestLocationCityId, String[] cuisineTier1IdArray,
-        String[] priceIdArray, String paginationId,
-        String[] cuisineTier2IdArray, String[] themeIdArray,
-        String[] whoareyouwithIdArray, String[] typeOfRestaurantIdArray,
-        String[] occasionIdArray) throws TasteSyncException {
+        String recoRequestLocationCityId, String[] priceIdArray,
+        String paginationId, String[] cuisineTier2IdArray,
+        String[] themeIdArray, String[] whoareyouwithIdArray,
+        String[] typeOfRestaurantIdArray, String[] occasionIdArray)
+        throws TasteSyncException {
         return identifyRestaurantsSearchResults(userIdFrmDb, null,
             recoRequestLocationNeighborhoodId, recoRequestLocationCityId, null,
-            cuisineTier1IdArray, priceIdArray, null, null, null, null, null,
-            paginationId, cuisineTier2IdArray, themeIdArray,
-            whoareyouwithIdArray, typeOfRestaurantIdArray, occasionIdArray);
+            priceIdArray, null, null, null, null, null, paginationId,
+            cuisineTier2IdArray, themeIdArray, whoareyouwithIdArray,
+            typeOfRestaurantIdArray, occasionIdArray);
     }
 
     // for restaurant search based on city id related parameters 
     private RestaurantsSearchResultsVO identifyRestaurantsSearchResults(
         String userId, String restaurantId, String neighborhoodId,
-        String cityId, String stateName, String[] cuisineTier1IdList,
-        String[] priceIdList, String rating, String savedFlag, String favFlag,
-        String dealFlag, String chainFlag, String paginationId)
+        String cityId, String stateName, String[] priceIdList, String rating,
+        String savedFlag, String favFlag, String dealFlag, String chainFlag,
+        String paginationId, String[] cuisineTier2IdArray)
         throws TasteSyncException {
         return identifyRestaurantsSearchResults(userId, restaurantId,
-            neighborhoodId, cityId, stateName, cuisineTier1IdList, priceIdList,
-            rating, savedFlag, favFlag, dealFlag, chainFlag, paginationId,
-            null, null, null, null, null);
+            neighborhoodId, cityId, stateName, priceIdList, rating, savedFlag,
+            favFlag, dealFlag, chainFlag, paginationId, cuisineTier2IdArray,
+            null, null, null, null);
     }
 
     private RestaurantsSearchResultsVO identifyRestaurantsSearchResults(
         String userId, String restaurantId, String neighborhoodId,
-        String cityId, String stateName, String[] cuisineTier1IdArray,
-        String[] priceIdList, String rating, String savedFlag, String favFlag,
-        String dealFlag, String chainFlag, String paginationId,
-        String[] cuisineTier2IdArray, String[] themeIdArray,
-        String[] whoareyouwithIdArray, String[] typeOfRestaurantIdArray,
-        String[] occasionIdArray) throws TasteSyncException {
+        String cityId, String stateName, String[] priceIdList, String rating,
+        String savedFlag, String favFlag, String dealFlag, String chainFlag,
+        String paginationId, String[] cuisineTier2IdArray,
+        String[] themeIdArray, String[] whoareyouwithIdArray,
+        String[] typeOfRestaurantIdArray, String[] occasionIdArray)
+        throws TasteSyncException {
         List<String> restaurantIdList = new ArrayList<String>();
 
         if (restaurantId != null) {
@@ -2202,11 +2202,10 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
 
         try {
             return restaurantsSearchResultsOnlineCalc.showListOfRestaurantsSearchResults(userId,
-                restaurantId, neighborhoodId, cityId, stateName,
-                cuisineTier1IdArray, priceIdList, rating, savedFlag, favFlag,
-                dealFlag, chainFlag, paginationId, cuisineTier2IdArray,
-                themeIdArray, whoareyouwithIdArray, typeOfRestaurantIdArray,
-                occasionIdArray);
+                restaurantId, neighborhoodId, cityId, stateName, priceIdList,
+                rating, savedFlag, favFlag, dealFlag, chainFlag, paginationId,
+                cuisineTier2IdArray, themeIdArray, whoareyouwithIdArray,
+                typeOfRestaurantIdArray, occasionIdArray);
         } catch (com.tastesync.algo.exception.TasteSyncException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
@@ -2220,10 +2219,13 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         String[] priceIdList, String rating, String savedFlag, String favFlag,
         String dealFlag, String chainFlag, String paginationId)
         throws TasteSyncException {
+        //
+        String[] cuisineTier2IdArray = getCuisine2FromCuisine1Mapper(cuisineTier1IdList);
+
         RestaurantsSearchResultsVO restaurantsSearchResultsVO = identifyRestaurantsSearchResults(userId,
-                restaurantId, neighborhoodId, cityId, stateName,
-                cuisineTier1IdList, priceIdList, rating, savedFlag, favFlag,
-                dealFlag, chainFlag, paginationId);
+                restaurantId, neighborhoodId, cityId, stateName, priceIdList,
+                rating, savedFlag, favFlag, dealFlag, chainFlag, paginationId,
+                cuisineTier2IdArray);
         List<String> restaurantIdList = restaurantsSearchResultsVO.getRestaurantIdList();
 
         TSRestaurantsTileSearchObj tsRestaurantsTileSearchObj = null;
@@ -3462,11 +3464,11 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
     }
 
     private DescriptorDataVO getDescriptorDataForDifferentIds(
-            Connection connection, String[] cuisineTier1IdList,
-            String[] cuisineTier2IdList, String[] priceIdList,
-            String[] themeIdList, String[] whoareyouwithIdList,
-            String[] typeOfRestaurantIdList, String[] occasionIdList,
-            String neighborhoodId, String cityId, String stateName)
+        Connection connection, String[] cuisineTier1IdList,
+        String[] cuisineTier2IdList, String[] priceIdList,
+        String[] themeIdList, String[] whoareyouwithIdList,
+        String[] typeOfRestaurantIdList, String[] occasionIdList,
+        String neighborhoodId, String cityId, String stateName)
         throws TasteSyncException {
         PreparedStatement statement = null;
         ResultSet resultset = null;
@@ -3643,6 +3645,58 @@ public class AskReplyDAOImpl extends BaseDaoImpl implements AskReplyDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new TasteSyncException(e.getMessage());
+        }
+    }
+
+    @Override
+    public String[] getCuisine2FromCuisine1Mapper(String[] cuisineTier1IdList)
+        throws TasteSyncException {
+        if ((cuisineTier1IdList == null) || (cuisineTier1IdList.length == 0)) {
+            new ArrayList<String>();
+        }
+
+        List<String> cuisineTier2IdList = new ArrayList<String>();
+        TSDataSource tsDataSource = TSDataSource.getInstance();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultset = null;
+
+        try {
+            connection = tsDataSource.getConnection();
+
+            statement = connection.prepareStatement(AskReplyQueries.CUISINE_TIER2_FROM_CUISINE_TIER1_SELECT_SQL);
+
+            String cuisineTier2Id = null;
+
+            for (int i = 0; i < cuisineTier1IdList.length; ++i) {
+                statement.setString(1, cuisineTier1IdList[i]);
+                resultset = statement.executeQuery();
+
+                while (resultset.next()) {
+                    cuisineTier2Id = CommonFunctionsUtil.getModifiedValueString(resultset.getString(
+                                "CUISINE_TIER_MAPPER.TIER2_CUISINE_ID"));
+
+                    if (!cuisineTier2IdList.contains(cuisineTier2Id)) {
+                        cuisineTier2IdList.add(cuisineTier2Id);
+                    }
+                }
+            }
+
+            statement.close();
+
+            String[] cuisineTier2IdArray = cuisineTier2IdList.isEmpty() ? null
+                                                                        : cuisineTier2IdList.toArray(new String[cuisineTier2IdList.size()]);
+
+            return cuisineTier2IdArray;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            throw new TasteSyncException(
+                "Error while creating restaurant tips " + e.getMessage());
+        } finally {
+            tsDataSource.close();
+            tsDataSource.closeConnection(connection, statement, resultset);
         }
     }
 }

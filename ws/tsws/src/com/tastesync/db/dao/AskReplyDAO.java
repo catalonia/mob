@@ -80,4 +80,6 @@ public interface AskReplyDAO {
     List<TSRecoNotificationBaseObj> showRecommendationsList(String userId,
         String paginationId) throws TasteSyncException;
 
+    String[] getCuisine2FromCuisine1Mapper(String[] cuisineTier1IdList) throws TasteSyncException;
+    
 }

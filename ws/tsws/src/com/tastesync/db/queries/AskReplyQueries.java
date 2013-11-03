@@ -429,10 +429,15 @@ public interface AskReplyQueries extends TSDBCommonQueries {
         "FROM   recorequest_user, " + "       recorequest_location " +
         "WHERE  recorequest_user.recorequest_id = ? " +
         "       AND recorequest_user.recorequest_id = recorequest_location.recorequest_id ";
-    public String RECOREQUEST_CUISINE_TIER1_SELECT_SQL = "" +
-        "SELECT recorequest_cuisine_tier1.cuisine_tier1_id " +
-        "FROM   recorequest_cuisine_tier1 " +
-        "WHERE  recorequest_cuisine_tier1.recorequest_id = ? ";
+    public String RECOREQUEST_CUISINE_TIER2_FROM_CUISINE_TIER1_SELECT_SQL = "" +
+        "SELECT DISTINCT cuisine_tier_mapper.tier2_cuisine_id " +
+        "FROM   recorequest_cuisine_tier1, cuisine_tier_mapper " +
+        "WHERE  recorequest_cuisine_tier1.recorequest_id = ? " +
+        "AND recorequest_cuisine_tier1.Cuisine_Tier1_ID = cuisine_tier_mapper.tier1_cuisine_id";
+    public String CUISINE_TIER2_FROM_CUISINE_TIER1_SELECT_SQL = "" +
+        "SELECT DISTINCT CUISINE_TIER_MAPPER.TIER2_CUISINE_ID " +
+        "FROM   CUISINE_TIER_MAPPER " +
+        "WHERE  CUISINE_TIER_MAPPER.TIER1_CUISINE_ID = ? ";
     public String RECOREQUEST_CUISINE_TIER2_SELECT_SQL = "" +
         "SELECT recorequest_cuisine_tier2.cuisine_tier2_id " +
         "FROM   recorequest_cuisine_tier2 " +
